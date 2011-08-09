@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SoulCreator version="0.0.1">
+	<traits species="SpeciesAll">
+		<Virtue>
+			<trait name="Charity" age="Adult"/>
+			<trait name="Faith" age="Adult"/>
+			<trait name="Fortitude" age="Adult"/>
+			<trait name="Hope" age="Adult"/>
+			<trait name="Justice" age="Adult"/>
+			<trait name="Prudence" age="Adult"/>
+			<trait name="Temperance" age="Adult"/>
+			<trait name="Brave" age="Kid"/>
+			<trait name="Calm" age="Kid"/>
+			<trait name="Creative" age="Kid"/>
+			<trait name="Dependable" age="Kid"/>
+			<trait name="Fair" age="Kid"/>
+			<trait name="Friendly" age="Kid"/>
+			<trait name="Generous" age="Kid"/>
+			<trait name="Honest" age="Kid"/>
+			<trait name="Kind" age="Kid"/>
+			<trait name="Optimistic" age="Kid"/>
+		</Virtue>
+		<Vice>
+			<trait name="Envy" age="Adult"/>
+			<trait name="Gluttony" age="Adult"/>
+			<trait name="Greed" age="Adult"/>
+			<trait name="Lust" age="Adult"/>
+			<trait name="Pride" age="Adult"/>
+			<trait name="Sloth" age="Adult"/>
+			<trait name="Wrath" age="Adult"/>
+			<trait name="Brash" age="Kid"/>
+			<trait name="Cowardly" age="Kid"/>
+			<trait name="Cruel" age="Kid"/>
+			<trait name="Dishonest" age="Kid"/>
+			<trait name="Dull" age="Kid"/>
+			<trait name="Egoistical" age="Kid"/>
+			<trait name="Greedy" age="Kid"/>
+			<trait name="Hyperactive" age="Kid"/>
+			<trait name="Irresponsible" age="Kid"/>
+			<trait name="Violent" age="Kid"/>
+		</Vice>
+		<Attribute>
+			<Mental>
+				<trait name="Intelligence"/>
+				<trait name="Wits"/>
+				<trait name="Resolve"/>
+			</Mental>
+			<Physical>
+				<trait name="Strength"/>
+				<trait name="Dexterity"/>
+				<trait name="Stamina"/>
+			</Physical>
+			<Social>
+				<trait name="Presence"/>
+				<trait name="Manipulation"/>
+				<trait name="Composure"/>
+			</Social>
+		</Attribute>
+		<Skill>
+			<Mental>
+				<trait name="Academics" age="Adult">
+					<specialty>Anthropology</specialty>
+					<specialty>Architecture</specialty>
+					<specialty>Art</specialty>
+					<specialty>Criminology</specialty>
+					<specialty>English</specialty>
+					<specialty>Finance</specialty>
+					<specialty>Folklore</specialty>
+					<specialty>History</specialty>
+					<specialty>Law</specialty>
+					<specialty>Mathematics</specialty>
+					<specialty>Military Theory</specialty>
+					<specialty>Religion</specialty>
+					<specialty>Research</specialty>
+				</trait>
+				<trait name="Computer" era="Modern">
+					<specialty>Artificial Intelligence</specialty>
+					<specialty>Data Retrieval</specialty>
+					<specialty>Gaming</specialty>
+					<specialty>Graphics</specialty>
+					<specialty>Hacking</specialty>
+					<specialty>Internet</specialty>
+					<specialty>Music</specialty>
+					<specialty>Networking</specialty>
+					<specialty>Programming</specialty>
+					<specialty>Video</specialty>
+				</trait>
+				<trait name="Crafts">
+					<specialty>Automobiles</specialty>
+					<specialty>Aircraft</specialty>
+					<specialty>Cooking</specialty>
+					<specialty>Clothing</specialty>
+					<specialty>Demolitions</specialty>
+					<specialty>Explosives</specialty>
+					<specialty>Forging</specialty>
+					<specialty>Jury-Rigging</specialty>
+					<specialty>Knitting</specialty>
+					<specialty>Sculpting</specialty>
+					<specialty>Sewing</specialty>
+					<specialty>Smithing</specialty>
+					<specialty>Spinning</specialty>
+					<specialty>Woodworking</specialty>
+				</trait>
+				<trait name="Investigation">
+					<specialty>Artifacts</specialty>
+					<specialty>Autopsy</specialty>
+					<specialty>Diagnose</specialty>
+					<specialty>Crime Scenes</specialty>
+					<specialty>Cryptography</specialty>
+					<specialty>Dreams</specialty>
+					<specialty>Eavesdropping</specialty>
+					<specialty>Little Details</specialty>
+					<specialty>Puzzles</specialty>
+					<specialty>Research</specialty>
+					<specialty>Riddles</specialty>
+					<specialty>Scientific Experiments</specialty>
+					<specialty>Searching</specialty>
+					<specialty>Surveillance</specialty>
+					<specialty>Taste</specialty>
+				</trait>
+				<trait name="Medicine">
+					<specialty>Amputation</specialty>
+					<specialty>Emergency Care</specialty>
+					<specialty>First Aid</specialty>
+					<specialty>Human Biology</specialty>
+					<specialty>Illness</specialty>
+					<specialty>Pathology</specialty>
+					<specialty>Pharmaceuticals</specialty>
+					<specialty>Physical Therapy</specialty>
+					<specialty>Poisons</specialty>
+					<specialty>Surgery</specialty>
+					<specialty>Torture (to inflict pain)</specialty>
+				</trait>
+				<trait name="Occult">
+					<specialty>Cultural Beliefs</specialty>
+					<specialty>Curses</specialty>
+					<specialty>Exorcism</specialty>
+					<specialty>Fairy Tales</specialty>
+					<specialty>Ghosts</specialty>
+					<specialty>Local Legends</specialty>
+					<specialty>Magic</specialty>
+					<specialty>Monsters</specialty>
+					<specialty>Religious Rituals</specialty>
+					<specialty>Spirit Wilds</specialty>
+					<specialty>Superstitions</specialty>
+					<specialty>Witchcraft</specialty>
+					<specialty>Urban Legends</specialty>
+					<specialty>Voodoo</specialty>
+					<specialty>Changelings</specialty>
+					<specialty>Mages</specialty>
+					<specialty>Vampires</specialty>
+					<specialty>Werewolves</specialty>
+				</trait>
+				<trait name="Politics">
+					<specialty>Bribery</specialty>
+					<specialty>City Bureaucracy</specialty>
+					<specialty>Cliques</specialty>
+					<specialty>Elections</specialty>
+					<specialty>Federal</specialty>
+					<specialty>Gangs</specialty>
+					<specialty>High School</specialty>
+					<specialty>Local</specialty>
+					<specialty>Personal Rivalries</specialty>
+					<specialty>School Administration</specialty>
+					<specialty>State</specialty>
+					<specialty>Scandals</specialty>
+				</trait>
+				<trait name="Religion" era="Antique">
+					<specialty>Dogma</specialty>
+					<specialty>Omens</specialty>
+					<specialty>Pantheon</specialty>
+					<specialty>Rituals</specialty>
+					<specialty>Christianity</specialty>
+					<specialty>Muslim</specialty>
+					<specialty>Judaism</specialty>
+				</trait>
+				<trait name="Science" era="Modern">
+					<specialty>Biology</specialty>
+					<specialty>Chemistry</specialty>
+					<specialty>Geology</specialty>
+					<specialty>Hypnotherapy</specialty>
+					<specialty>Metallurgy</specialty>
+					<specialty>Physics</specialty>
+				</trait>
+				<trait name="Study" age="Kid">
+					<specialty>Art</specialty>
+					<specialty>Biology</specialty>
+					<specialty>Chemistry</specialty>
+					<specialty>English</specialty>
+					<specialty>Experimentation</specialty>
+					<specialty>Geology</specialty>
+					<specialty>History</specialty>
+					<specialty>Physics</specialty>
+					<specialty>Research</specialty>
+				</trait>
+				<trait name="Warfare" era="Antique">
+					<specialty>Ambushes</specialty>
+					<specialty>Barbarians</specialty>
+					<specialty>Fields of Fire</specialty>
+					<specialty>Troop Movements</specialty>
+					<specialty>Supply Lines</specialty>
+					<specialty>Terrain</specialty>
+					<specialty>Chess</specialty>
+				</trait>
+			</Mental>
+			<Physical>
+				<trait name="Archery" era="Antique">
+					<specialty>Long Shot</specialty>
+					<specialty>Trick Shot</specialty>
+					<specialty>Specific Kind of Weapon</specialty>
+				</trait>
+				<trait name="Athletics">
+					<specialty>Acrobatics</specialty>
+					<specialty>Climbing</specialty>
+					<specialty>Dance</specialty>
+					<specialty>Endurance</specialty>
+					<specialty>Kayaking</specialty>
+					<specialty>Long-Distance Running</specialty>
+					<specialty>Swimming</specialty>
+					<specialty>Throwing</specialty>
+				</trait>
+				<trait name="Brawl">
+					<specialty>Biting</specialty>
+					<specialty>Blocking</specialty>
+					<specialty>Boxing</specialty>
+					<specialty>Claws</specialty>
+					<specialty>Crush</specialty>
+					<specialty>Dirty Tricks</specialty>
+					<specialty>Grappling</specialty>
+					<specialty>Head-Butt</specialty>
+					<specialty>Lashing Out</specialty>
+					<specialty>Karate</specialty>
+					<specialty>Kung-Fu</specialty>
+					<specialty>Throws</specialty>
+				</trait>
+				<trait name="Drive" era="Modern">
+					<specialty>Big Cars</specialty>
+					<specialty>High-Performance Cars</specialty>
+					<specialty>Motorcycles</specialty>
+					<specialty>Off-Road</specialty>
+					<specialty>Pursuit</specialty>
+					<specialty>Tails</specialty>
+					<specialty>Stunts</specialty>
+				</trait>
+				<trait name="Firearms" era="Modern">
+					<specialty>Autofire</specialty>
+					<specialty>Close Range</specialty>
+					<specialty>Sniping</specialty>
+					<specialty>Submachine Guns</specialty>
+					<specialty>Target Shooting</specialty>
+					<specialty>Trick Shot</specialty>
+					<specialty>Specific Kind of Weapon</specialty>
+				</trait>
+				<trait name="Larceny">
+					<specialty>Alarm Systems</specialty>
+					<specialty>Concealing Stolen Goods</specialty>
+					<specialty>Lockpicking</specialty>
+					<specialty>Pickpocketing</specialty>
+					<specialty>Security Systems</specialty>
+					<specialty>Safecracking</specialty>
+					<specialty>Shoplifting</specialty>
+					<specialty>Sleight of Hand</specialty>
+				</trait>
+				<trait name="Ride" era="Antique">
+					<specialty>Chariot</specialty>
+					<specialty>Dangerous Conditions</specialty>
+					<specialty>Pursuit</specialty>
+					<specialty>Maintaining Speed</specialty>
+					<specialty>Quick Start</specialty>
+					<specialty>Stunts</specialty>
+				</trait>
+				<trait name="Stealth">
+					<specialty>Camouflage</specialty>
+					<specialty>Crowds</specialty>
+					<specialty>Hiding</specialty>
+					<specialty>Lurking</specialty>
+					<specialty>Moving Like a Cat</specialty>
+					<specialty>Darkness</specialty>
+					<specialty>Forest</specialty>
+					<specialty>Remaining Still</specialty>
+					<specialty>Shadowing</specialty>
+					<specialty>Shadows</specialty>
+					<specialty>Silent Running</specialty>
+					<specialty>Spying</specialty>
+					<specialty>Staying Quiet</specialty>
+				</trait>
+				<trait name="Survival">
+					<specialty>Foraging</specialty>
+					<specialty>Herbology</specialty>
+					<specialty>Hunting (Species)</specialty>
+					<specialty>Navigation</specialty>
+					<specialty>Meteorology</specialty>
+					<specialty>Shelter</specialty>
+					<specialty>Spirit Wilds</specialty>
+					<specialty>Streets</specialty>
+					<specialty>Urban Scavenging</specialty>
+					<specialty>Wilderness Scavenging</specialty>
+					<specialty>Weather</specialty>
+				</trait>
+				<trait name="Weaponry">
+					<specialty>Improvised Weapons</specialty>
+					<specialty>Specific Kind of Weapon</specialty>
+				</trait>
+			</Physical>
+			<Social>
+				<trait name="Animal Ken">
+					<specialty>Animal Needs</specialty>
+					<specialty>Sensing Imminent Attack</specialty>
+					<specialty>Specific Kind of Animal</specialty>
+					<specialty>Training</specialty>
+				</trait>
+				<trait name="Empathy">
+					<specialty>Emotion</specialty>
+					<specialty>Body Language</specialty>
+					<specialty>Boyfriends</specialty>
+					<specialty>Family</specialty>
+					<specialty>Lies</specialty>
+					<specialty>Motives</specialty>
+					<specialty>Personalities</specialty>
+				</trait>
+				<trait name="Expression">
+					<specialty>Classical Dance</specialty>
+					<specialty>Drama</specialty>
+					<specialty>Poetry</specialty>
+					<specialty>Exposés</specialty>
+					<specialty>Jokes</specialty>
+					<specialty>Music</specialty>
+					<specialty>Musical Instrument</specialty>
+					<specialty>Newspaper Articles</specialty>
+					<specialty>Oration</specialty>
+					<specialty>Preaching</specialty>
+					<specialty>Speeches</specialty>
+					<specialty>Storytelling</specialty>
+					<specialty>Theater</specialty>
+				</trait>
+				<trait name="Intimidation">
+					<specialty>Authority</specialty>
+					<specialty>Blackmail</specialty>
+					<specialty>Bluster</specialty>
+					<specialty>Eerie Presence</specialty>
+					<specialty>Loud</specialty>
+					<specialty>Physical Threats</specialty>
+					<specialty>Screaming</specialty>
+					<specialty>Stare-Downs</specialty>
+					<specialty>Torture (to gather information)</specialty>
+					<specialty>Veiled Threats</specialty>
+				</trait>
+				<trait name="Persuasion" age="Adult">
+					<specialty>Diplomacy</specialty>
+					<specialty>Fast-Talking</specialty>
+					<specialty>Inspiring Troops</specialty>
+					<specialty>Lulling</specialty>
+					<specialty>Money</specialty>
+					<specialty>Motivational Speeches</specialty>
+					<specialty>Sales Pitches</specialty>
+					<specialty>Seduction</specialty>
+				</trait>
+				<trait name="Socialize">
+					<specialty>Bar Hopping</specialty>
+					<specialty>Dress Balls</specialty>
+					<specialty>Etiquette</specialty>
+					<specialty>Formal Events</specialty>
+					<specialty>Frat Parties</specialty>
+					<specialty>Lower Class</specialty>
+					<specialty>Orgies</specialty>
+					<specialty>Partying</specialty>
+					<specialty>Sexual Techniques</specialty>
+					<specialty>State Dinners</specialty>
+				</trait>
+				<trait name="Streetwise">
+					<specialty>Avoiding Trouble</specialty>
+					<specialty>Black Market</specialty>
+					<specialty>Docks</specialty>
+					<specialty>Gangs</specialty>
+					<specialty>Rumors</specialty>
+					<specialty>Slave Dealing</specialty>
+					<specialty>Subway Net</specialty>
+					<specialty>Undercover Operations</specialty>
+				</trait>
+				<trait name="Subterfuge">
+					<specialty>Appear Innocent</specialty>
+					<specialty>Con Jobs</specialty>
+					<specialty>Disguises</specialty>
+					<specialty>Hiding Emotions</specialty>
+					<specialty>Lying</specialty>
+					<specialty>Misdirection</specialty>
+				</trait>
+			</Social>
+		</Skill>
+		<Merit>
+			<Mental>
+				<trait name="Danger Sense">
+					<value>2</value>
+					<effect value="+2">Detect impending ambush</effect>
+				</trait>
+				<trait name="Eidetic Memory">
+					<value>2</value>
+					<effect>New-photographic memory</effect>
+				</trait>
+				<trait name="EOD" max="2">
+					<value>2</value>
+					<prerequisite>Wits > 3 AND Dexterity > 3 AND Crafts (Demolitions) > 3</prerequisite>
+					<effect>No penalty for disarming explosives you did not build</effect>
+				</trait>
+				<trait name="Holistic Awareness">
+					<value>3</value>
+					<effect>???</effect>
+				</trait>
+			</Mental>
+			<Physical>
+				<trait name="Fast Reflexes">
+					<value>1</value>
+					<value>2</value>
+					<prerequisite>Dexterity > 2</prerequisite>
+					<effect value="+value">Initiative</effect>
+				</trait>
+			</Physical>
+		</Merit>
+	</traits>
+</SoulCreator>

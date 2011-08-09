@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SoulCreator version="0.0.1">
+	<traits species="Human">
+		<Merit>
+			<Mental>
+				<trait name="Enchanted Mortal">
+					<value>2</value>
+					<effect>The character is an enchanted mortal who was abducted into ...</effect>
+				</trait>
+			</Mental>
+			<Physical>
+			</Physical>
+		</Merit>
+	</traits>
+</SoulCreator>

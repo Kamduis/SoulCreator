@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SoulCreator version="0.0.1">
+	<traits species="Changeling" morale="Clarity" supertrait="Wyrd" fuel="Glamour">
+		<Skill>
+			<Mental>
+				<trait name="Medicine">
+					<specialty>Goblin Fruits</specialty>
+				</trait>
+				<trait name="Occult">
+					<specialty>Hedge</specialty>
+					<specialty>Fae</specialty>
+				</trait>
+			</Mental>
+			<Physical>
+				<trait name="Survival">
+					<specialty>Hedge</specialty>
+				</trait>
+			</Physical>
+		</Skill>
+	</traits>
+</SoulCreator>

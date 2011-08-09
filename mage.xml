@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SoulCreator version="0.0.1">
+	<traits species="Mage" morale="Wisdom" supertrait="Gnosis" fuel="Mana">
+	</traits>
+</SoulCreator>
