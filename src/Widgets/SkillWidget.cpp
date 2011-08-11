@@ -50,23 +50,23 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage.skills( categories.at( i ) ).count(); j++ ) {
-			CharaTrait *trait = new CharaTrait( this, type, categories.at( i ), storage.skills( categories.at( i ) ).at( j ) );
+		for ( int j = 0; j < storage.skillNames( categories.at( i ) ).count(); j++ ) {
+			CharaTrait *trait = new CharaTrait( this, type, categories.at( i ), storage.skillNames( categories.at( i ) ).at( j ) );
 			// Nur Fertigkeiten haben Spezialisierungen.
 			if ( type = cv_Trait::Skill ) {
 				// Es sollen die Spazialisierungen angezeigt werden können.
-				for ( int k = 0; k < storage.skillSpecialties( storage.skills( categories.at( i ) ).at( j ) ).count(); k++ ) {
-					trait->addSpecialty( storage.skillSpecialties( storage.skills( categories.at( i ) ).at( j ) ).at( k ) );
+				for ( int k = 0; k < storage.skillSpecialties( storage.skillNames( categories.at( i ) ).at( j ) ).count(); k++ ) {
+					trait->addSpecialty( storage.skillSpecialties( storage.skillNames( categories.at( i ) ).at( j ) ).at( k ) );
 				}
 				connect( trait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 				connect( trait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 			}
-			layout->addWidget( trait, i*storage.skills( categories.at( i ) ).count() + j + i, 0 );
+			layout->addWidget( trait, i*storage.skillNames( categories.at( i ) ).count() + j + i, 0 );
 		}
 	}
 
-	layout->setRowMinimumHeight( storage.skills( cv_Trait::Mental ).count(), Config::traitCategorySpace );
-	layout->setRowMinimumHeight( storage.skills( cv_Trait::Mental ).count() + storage.skills( cv_Trait::Physical ).count() + 1, Config::traitCategorySpace );
+	layout->setRowMinimumHeight( storage.skillNames( cv_Trait::Mental ).count(), Config::traitCategorySpace );
+	layout->setRowMinimumHeight( storage.skillNames( cv_Trait::Mental ).count() + storage.skillNames( cv_Trait::Physical ).count() + 1, Config::traitCategorySpace );
 }
 
 SkillWidget::~SkillWidget() {

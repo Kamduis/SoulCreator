@@ -64,19 +64,19 @@ QStringList StorageTemplate::traitNames( cv_Trait::Type type, cv_Trait::Category
 	return list;
 }
 
-QStringList StorageTemplate::virtues( cv_Trait::AgeFlag age ) const {
+QStringList StorageTemplate::virtueNames( cv_Trait::AgeFlag age ) const {
 	return traitNames( cv_Trait::Virtue, cv_Trait::CategoryNo, cv_Trait::EraAll, age );
 }
 
-QStringList StorageTemplate::vices( cv_Trait::AgeFlag age ) const {
+QStringList StorageTemplate::viceNames( cv_Trait::AgeFlag age ) const {
 	return traitNames( cv_Trait::Vice, cv_Trait::CategoryNo, cv_Trait::EraAll, age );
 }
 
-QStringList StorageTemplate::attributes( cv_Trait::Category category ) const {
+QStringList StorageTemplate::attributeNames( cv_Trait::Category category ) const {
 	return traitNames( cv_Trait::Attribute, category, cv_Trait::EraAll, cv_Trait::AgeAll );
 }
 
-QStringList StorageTemplate::skills( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
+QStringList StorageTemplate::skillNames( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
 	return traitNames( cv_Trait::Skill, category, era, age );
 }
 
@@ -98,8 +98,25 @@ QList< cv_TraitDetail > StorageTemplate::skillSpecialties( QString skillName ) c
 	return list;
 }
 
-QStringList StorageTemplate::merits( cv_Trait::Category category ) const {
+QStringList StorageTemplate::meritNames( cv_Trait::Category category ) const {
 	return traitNames( cv_Trait::Merit, category, cv_Trait::EraAll, cv_Trait::AgeAll );
+}
+
+
+QList< cv_Trait > StorageTemplate::merits( cv_Trait::Category category ) const {
+	QList< cv_Trait > traits = v_traits;
+	QList< cv_Trait > list;
+
+	for ( int i = 0; i < traits.count(); i++ ) {
+		if ( traits.at( i ).type == cv_Trait::Merit && traits.at( i ).category == category ) {
+			// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
+			if ( !list.contains( traits.at( i ) ) ) {
+				list.append( traits.at( i ) );
+			}
+		}
+	}
+
+	return list;
 }
 
 QList< int > StorageTemplate::meritValues( QString meritName ) const {
@@ -133,6 +150,24 @@ QString StorageTemplate::meritPrerequisites( QString meritName ) const {
 	return text;
 }
 
+QList< cv_Trait > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Category category ) {
+	QList< cv_Trait > traits;
+	cv_Trait trait;
+
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category ) {
+			trait = v_traits.at( i );
+			traits.append( trait );
+		}
+	}
+
+	if ( traits.isEmpty() ) {
+		qDebug() << Q_FUNC_INFO << "Trait Typ" << type << "mit Kategorie" << category << "existiert nicht!";
+// 		throw eTraitNotExisting();
+	}
+
+	return traits;
+}
 
 
 
@@ -165,7 +200,7 @@ cv_Trait StorageTemplate::trait( cv_Trait::Type type, cv_Trait::Category categor
 // }
 
 void StorageTemplate::appendSpecies( cv_Species species ) {
-	v_species.append(species);
+	v_species.append( species );
 }
 
 

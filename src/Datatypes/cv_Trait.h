@@ -229,17 +229,17 @@ class cv_Trait {
 		 **/
 		QList< int > possibleValues;
 		/**
-		 * Die Kategorie, der diese Eigenschaft angehört.
-		 *
-		 * \sa Category
-		 **/
-		Category category;
-		/**
 		 * Der Typ, dem diese Eigenschaft angehört.
 		 *
 		 * \sa Type
 		 **/
 		Type type;
+		/**
+		 * Die Kategorie, der diese Eigenschaft angehört.
+		 *
+		 * \sa Category
+		 **/
+		Category category;
 		/**
 		 * Welche Spezies über diese Eigenschaft verfügen.
 		 **/
@@ -266,6 +266,10 @@ class cv_Trait {
 		 * \note Das Format des Strings ist: (Strength > 4 AND Brawl > 3) OR Stamina < 2
 		 **/
 		QString prerequisites;
+		/**
+		 * Manche Eigenschaften (beispielsweise der Merit Language) müssen mit einem zusätzlichen erklärenden Text versehen werden können. Wenn das der Fall ist, wird diese Variable auf 'true' gesetzt.
+		 **/
+		bool custom;
 // 	QList<cv_TraitPrerequisiteAnd> prerequisites;	///< Eine Liste der Voraussetzungen. Die einzelnen Einträge dieser Liste sind ODER-verknüpft.
 
 		/**
@@ -273,13 +277,13 @@ class cv_Trait {
 		 *
 		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien zu erzeugen.
 		 **/
-		static QString toString(cv_Trait::Type type);
+		static QString toString( cv_Trait::Type type );
 		/**
 		 * Wandelt eine Kategorie in ihren Namen um.
 		 *
 		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien zu erzeugen.
 		 **/
-		static QString toString(cv_Trait::Category category);
+		static QString toString( cv_Trait::Category category );
 		/**
 		 * Wandelt den Namen einer Kategorie in den dazu passenden enum um.
 		 *
@@ -304,6 +308,13 @@ class cv_Trait {
 		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien in Flags umzuwandeln.
 		 **/
 		static cv_Trait::Age toAge( QString str );
+
+		/**
+		* Vergleich zwischen zwei Instanzen dieser Klasse.
+		*
+		* \todo Die Vergleiche sind noch nich tumfassend genug. Typ und Kategorie muß nich verglichen werden. etc.
+		**/
+		bool operator==( const cv_Trait &trait ) const;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( cv_Trait::Age )

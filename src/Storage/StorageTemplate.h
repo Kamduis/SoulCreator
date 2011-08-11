@@ -66,19 +66,19 @@ class StorageTemplate : public QObject {
 		/**
 		 * Gibt eine Liste aller verfügbaren Virtues aus.
 		 **/
-		QStringList virtues( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		QStringList virtueNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Liste aller verfügbaren Vices aus.
 		 **/
-		QStringList vices( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		QStringList viceNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Liste aller verfügbaren Vices aus.
 		 **/
-		QStringList attributes( cv_Trait::Category category ) const;
+		QStringList attributeNames( cv_Trait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller verfügbaren Vices aus.
 		 **/
-		QStringList skills( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		QStringList skillNames( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Liste aller Spezialisierungen der angegebenen Fertigkeit aus.
 		 **/
@@ -86,7 +86,11 @@ class StorageTemplate : public QObject {
 		/**
 		 * Gibt eine Liste aller verfügbaren Merits aus.
 		 **/
-		QStringList merits( cv_Trait::Category category ) const;
+		QList< cv_Trait > merits( cv_Trait::Category category ) const;
+		/**
+		 * Gibt eine Liste der Namen aller verfügbaren Merits aus.
+		 **/
+		QStringList meritNames( cv_Trait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller möglichen Werte aus, welche der Merit annehmen kann.
 		 **/
@@ -96,7 +100,17 @@ class StorageTemplate : public QObject {
 		 **/
 		QString meritPrerequisites( QString meritName ) const;
 		/**
+		 * Gibt Alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
+		 *
+		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
+		 **/
+		QList< cv_Trait > traits(cv_Trait::Type type, cv_Trait::Category category);
+		/**
 		 * Gibt die gesamte Eigenschaft zurück, welche über Typ, Kategorie und Name spezifiziert ist.
+		 *
+		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
+		 *
+		 * \todo Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren.
 		 **/
 		cv_Trait trait(cv_Trait::Type type, cv_Trait::Category category, QString name);
 
@@ -128,6 +142,8 @@ class StorageTemplate : public QObject {
 		void appendSpecies( cv_Species species );
 		/**
 		 * Fügt eine Eigenschaft hinzu.
+		 *
+		 * \todo Überprüfen, daß keine Eigenschaften doppelt an die Liste angehängt werden.
 		 **/
 		void appendTrait( cv_Trait trait );
 

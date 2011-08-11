@@ -234,6 +234,7 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 // 		qDebug() << Q_FUNC_INFO << trait.name;
 		trait.era = cv_Trait::toEra( attributes().value( "era" ).toString() );
 		trait.age = cv_Trait::toAge( attributes().value( "age" ).toString() );
+		trait.custom = attributes().value( "custom" ).toString() == QString("true");
 
 		while ( !atEnd() ) {
 			readNext();
@@ -248,7 +249,7 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 					cv_TraitDetail traitDetail;
 					traitDetail.name = specialtyName;
 					traitDetail.value = false;
-					traitDetail.species = sp;
+// 					traitDetail.species = sp;
 					trait.details.append( traitDetail );
 				} else if (name() == "value") {
 					int value = readElementText().toInt();

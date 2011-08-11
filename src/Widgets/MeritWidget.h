@@ -22,46 +22,39 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INFOWIDGET_H
-#define INFOWIDGET_H
+#ifndef MERITWIDGET_H
+#define MERITWIDGET_H
 
-#include <QGridLayout>
-
-#include "CharaSpecies.h"
+#include <QVBoxLayout>
 
 #include <QWidget>
 
 
 /**
- * @brief Das Widget, in welchem wichtige Informationen dargestellt werden.
+ * @brief Das Widget, in welchem sämtliche Merits angeordnet sind.
  *
- * Spezies, Namen etc. des Charakters werden hier dargestellt.
+ * Die Attribute werden in diesem Widget angeordnet.
  *
- * \todo Wenn die Spezies verändert wird, muß das Natürlich bei StorageCharacter auch verändert werden.
+ * \todo Später sollen nur soviele Merits dargestellt werden, wie der Charakter tatsächlich hat +1. Will der Nutzer einen zusätzlichen Merit hinzufügen, füllt er diese leere Meritzeile aus und das Widget fügt automatisch eine weitere Leere Zeile am Ende ein. Alle leeren Merit-Widgets bis auf das letzte werden automatisch gelöscht.
  **/
-class InfoWidget : public QWidget {
+class MeritWidget : public QWidget {
 		Q_OBJECT
 
 	public:
 		/**
 		 * Konstruktor
 		 **/
-		InfoWidget( QWidget *parent = 0 );
+		MeritWidget( QWidget *parent = 0 );
 		/**
 		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
 		 **/
-		~InfoWidget();
+		~MeritWidget();
 
 	private:
 		/**
 		 * In diesem Layout werden die Attribute angeordnet.
 		 **/
-		QGridLayout *layout;
-		/**
-		 * Eine Auswahlbox für die zur Verfügung stehenden Spezies.
-		 **/
-		CharaSpecies* speciesComboBox;
-
+		QVBoxLayout *layout;
 
 	public slots:
 

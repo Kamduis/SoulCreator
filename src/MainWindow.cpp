@@ -52,18 +52,19 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
 
-	connect( ui->actionOpen, SIGNAL( triggered( bool ) ), this, SLOT( openCharacter() ) );
-	connect( ui->actionSave, SIGNAL( triggered( bool ) ), this, SLOT( saveCharacter() ) );
-
 	// Ich muß diesen Timer verwenden, das Programm in seinen EventLoop eintritt. Nun wird das Hauptfenster im Hintergrund dargestellt und über qApp->quit() kann das Programm nun auch sauber beendet werden. DIe Zeit, welche der Timer zählt ist nicht wichtig, muß aber natürlich sehr kurz sein.
 // 	QTimer::singleShot( 200, this, SLOT( initialize() ) );
 	initialize();
+
+	connect( ui->actionOpen, SIGNAL( triggered( bool ) ), this, SLOT( openCharacter() ) );
+	connect( ui->actionSave, SIGNAL( triggered( bool ) ), this, SLOT( saveCharacter() ) );
 }
 
 MainWindow::~MainWindow() {
 	delete specialties;
 	delete skills;
 	delete attributes;
+	delete info;
 	delete writeCharacter;
 	delete readCharacter;
 	delete ui;
@@ -92,15 +93,17 @@ void MainWindow::storeTemplateData() {
 }
 
 void MainWindow::populateUi() {
-	info = new InfoWidget(this);
+	info = new InfoWidget( this );
 	// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
+	merits = new MeritWidget( this );
 
 	ui->layout_info->addWidget( info );
 	ui->layout_attributes->addWidget( attributes );
-	ui->layou_skills->addWidget( skills );
+	ui->layout_skills->addWidget( skills );
 	ui->layout_specialties->addWidget( specialties );
+	ui->layout_merits->addWidget( merits );
 
 	// Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
 	connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
@@ -137,15 +140,21 @@ void MainWindow::openCharacter() {
 
 	QString filePath = QFileDialog::getOpenFileName( this, tr( "Select Character File" ), savePath, tr( "WoD Characters (*.chr)" ) );
 
-	QFile* file = new QFile( filePath );
-	try {
-		readCharacter->read( file );
-	} catch ( eXmlVersion &e ) {
-		MessageBox::exception( this, e.message(), e.description() );
-	} catch ( eXmlError &e ) {
-		MessageBox::exception( this, e.message(), e.description() );
+	if ( !filePath.isEmpty() ) {
+		QFile* file = new QFile( filePath );
+
+		try {
+			readCharacter->read( file );
+		} catch ( eXmlVersion &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		} catch ( eXmlError &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		} catch ( eFileNotOpened &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		}
+
+		delete file;
 	}
-	delete file;
 }
 
 void MainWindow::saveCharacter() {
@@ -169,14 +178,20 @@ void MainWindow::saveCharacter() {
 
 	QString filePath = QFileDialog::getSaveFileName( this, tr( "Save Character" ), savePath + "/untitled.chr", tr( "WoD Characters (*.chr)" ) );
 
-	QFile* file = new QFile( filePath );
-	try {
-		writeCharacter->write( file );
-	} catch ( eXmlVersion &e ) {
-		MessageBox::exception( this, e.message(), e.description() );
-	} catch ( eXmlError &e ) {
-		MessageBox::exception( this, e.message(), e.description() );
+	if ( !filePath.isEmpty() ) {
+		QFile* file = new QFile( filePath );
+
+		try {
+			writeCharacter->write( file );
+		} catch ( eXmlVersion &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		} catch ( eXmlError &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		} catch ( eFileNotOpened &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		}
+
+		delete file;
 	}
-	delete file;
 }
 

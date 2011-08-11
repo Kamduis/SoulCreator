@@ -25,21 +25,38 @@
 #include <QGridLayout>
 #include <QDebug>
 
+#include "CharaComboTrait.h"
+#include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
+#include "../Storage/StorageTemplate.h"
 
-#include "InfoWidget.h"
+#include "MeritWidget.h"
 
 
-InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
-	layout = new QGridLayout( this );
+MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
+	layout = new QVBoxLayout( this );
 	setLayout( layout );
 
-	speciesComboBox = new CharaSpecies( this );
+	StorageTemplate storage;
 
-	layout->addWidget( speciesComboBox );
+	cv_Trait::Type type = cv_Trait::Merit;
+
+	QList< cv_Trait::Category > categories;
+	categories.append( cv_Trait::Mental );
+	categories.append( cv_Trait::Physical );
+	categories.append( cv_Trait::Social );
+
+	CharaComboTrait *trait = new CharaComboTrait( this, type );
+	for ( int i = 0; i < categories.count(); i++ ) {
+		for ( int j = 0; j < storage.meritNames( categories.at(i) ).count(); j++ ) {
+			trait->addName(storage.meritNames(categories.at(i)).at(j));
+// 			trait->addTrait(storage.merits(categories.at(i)).at(j));
+		}
+	}
+			layout->addWidget( trait );
 }
 
-InfoWidget::~InfoWidget() {
+MeritWidget::~MeritWidget() {
 	delete layout;
 }

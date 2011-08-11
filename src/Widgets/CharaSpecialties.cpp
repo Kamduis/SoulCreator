@@ -24,12 +24,12 @@
 
 #include <QDebug>
 
-#include "../Storage/StorageCharacter.h"
-
 #include "CharaSpecialties.h"
 
 
 CharaSpecialties::CharaSpecialties( QWidget* parent ) : TraitSpecialties( parent ) {
+	character = StorageCharacter::getInstance();
+
 	connect( this, SIGNAL( checkedSpecialtiesChanged( QStringList ) ), this, SLOT( saveSpecialties( QStringList ) ) );
 }
 
@@ -38,8 +38,6 @@ CharaSpecialties::~CharaSpecialties() {
 
 
 void CharaSpecialties::saveSpecialties( QStringList list ) {
-	StorageCharacter character;
-
 	QList< cv_TraitDetail > specialties;
 
 	for ( int i = 0; i < list.count(); i++ ) {
@@ -50,7 +48,7 @@ void CharaSpecialties::saveSpecialties( QStringList list ) {
 		qDebug() << Q_FUNC_INFO << "Speichere" << specialties.at( i ).name << "von" << skill();
 	}
 
-	character.setSkillSpecialties( skill(), specialties );
+	character->setSkillSpecialties( skill(), specialties );
 }
 
 

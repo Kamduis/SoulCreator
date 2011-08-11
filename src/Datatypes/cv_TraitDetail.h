@@ -47,10 +47,10 @@ struct cv_TraitDetail {
 	 * Ist die Zusatzeigenschaft aktiv. (Besitzt der Charakter diese Spezialisierung?)
 	 **/
 	bool value;
-	/**
-	 * Welche Spezies über diese Zusatzeigenschaft verfügen.
-	 **/
-	cv_Species::Species species;
+// 	/**
+// 	 * Welche Spezies über diese Zusatzeigenschaft verfügen.
+// 	 **/
+// 	cv_Species::Species species;
 
 	/**
 	 * Vergleich zwischen zwei Instanzen dieser Klasse.

@@ -56,45 +56,53 @@
 // //	storeTrait();
 // }
 TraitLine::TraitLine( QWidget *parent, QString name, int value ) : QWidget( parent ) {
-	QHBoxLayout *layout = new QHBoxLayout();
-	layout->setMargin( 0 );
-	setLayout( layout );
+	v_layout = new QHBoxLayout();
+	v_layout->setMargin( 0 );
+	setLayout( v_layout );
 
-	label_name = new QLabel( this );
+	v_label_name = new QLabel( this );
 	button = new QPushButton( this );
 	button->setText( tr( "Specialties" ) );
 	button->setCheckable( true );
 	traitDots = new TraitDots( this );
 
 	connect( traitDots, SIGNAL( valueChanged( int ) ), SIGNAL( valueChanged( int ) ) );
-	connect (traitDots, SIGNAL(valueChanged ( int )), this, SLOT(enableSpecialties (int)));
+	connect( traitDots, SIGNAL( valueChanged( int ) ), this, SLOT( enableSpecialties( int ) ) );
 	connect( button, SIGNAL( clicked( bool ) ), this, SIGNAL( specialtiesClicked( bool ) ) );
 
 	setName( name );
 	setValue( value );
 	// Damit auch bei der Programminitialisierung die Spezialisierungen richtig enabled oder disabled sind.
-	enableSpecialties(value);
+	enableSpecialties( value );
 
-	layout->addWidget( label_name );
-	layout->addStretch();
-	layout->addWidget( button );
-	layout->addWidget( traitDots );
+	v_layout->addWidget( v_label_name );
+	v_layout->addStretch();
+	v_layout->addWidget( button );
+	v_layout->addWidget( traitDots );
 
 }
 
 TraitLine::~TraitLine() {
 	delete traitDots;
-	delete label_name;
+	delete v_label_name;
 }
 
+
+QHBoxLayout* TraitLine::layout() const {
+	return v_layout;
+}
+
+QLabel* TraitLine::labelName() const {
+	return v_label_name;
+}
 
 
 QString TraitLine::name() const {
-	return label_name->text();
+	return v_label_name->text();
 }
 
 void TraitLine::setName( QString name ) {
-	label_name->setText( name );
+	v_label_name->setText( name );
 }
 
 int TraitLine::value() const {
@@ -128,9 +136,9 @@ void TraitLine::hideSpecialties( bool sw ) {
 
 void TraitLine::enableSpecialties( int number ) {
 	if ( number > 0 ) {
-		button->setEnabled(true);
+		button->setEnabled( true );
 	} else {
-		button->setEnabled(false);
+		button->setEnabled( false );
 	}
 }
 

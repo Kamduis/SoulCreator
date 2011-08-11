@@ -49,14 +49,13 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Social );
 
 	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage.attributes( categories.at(i) ).count(); j++ ) {
-			CharaTrait *trait = new CharaTrait( this, type, categories.at(i), storage.attributes( categories.at(i) ).at( j ), 1 );
+		for ( int j = 0; j < storage.attributeNames( categories.at(i) ).count(); j++ ) {
+			CharaTrait *trait = new CharaTrait( this, type, categories.at(i), storage.attributeNames( categories.at(i) ).at( j ), 1 );
 			// Zwischen den Attributsgruppen eine Spalte als Zwischenraum freilassen.
 			layout->addWidget( trait, j, 2*i );
 		}
 		if (i > 0) {
 			layout->setColumnMinimumWidth( (2*i)-1, Config::traitCategorySpace);
-			qDebug() << Q_FUNC_INFO << layout->columnMinimumWidth(2*i);
 		}
 	}
 

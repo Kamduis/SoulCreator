@@ -25,12 +25,8 @@
 #ifndef STORAGECHARACTER_H
 #define STORAGECHARACTER_H
 
-// #include <QList>
-// #include <QStringList>
-//
 #include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_NameList.h"
-// #include "../Read/ReadXmlTemplate.h"
 
 #include <QObject>
 
@@ -40,6 +36,11 @@
  * Wird ein Wert durch das Programm geändert, muß der Wert tatsächlich in dieser Klasse verändert werden. Denn der Inhalt dieser Klasse wird beim Speichern in eine Datei geschrieben und beim Laden wird diese Klasse aufgefüllt. Die Anzeige nimmt all ihre Daten aus dieser Klasse.
  *
  * Außerdem bietet diese Klasse angenehme Zugriffsfunktionen aus den Informationen, welche zum Programmstart aus den Template-Dateien geladen werden.
+ *
+ * \note Bei dieser Klasse handelt es sich um eine Singleton-Klasse. Es kann stets nur eine Instanz dieser Klasse existieren. Einen zeiger auf diese instanz erzeugt man mittels folgendem Code:
+ * \code
+ * StorageCharacter* character = StorageCharacter::getInstance();
+ * \endcode
  **/
 
 class StorageCharacter : public QObject {
@@ -53,17 +54,46 @@ class StorageCharacter : public QObject {
 // 		 **/
 // 		Q_PROPERTY( cv_NameList identities READ identities WRITE setIdentities NOTIFY identitiesChanged )
 
-	public:
+	private:
+		/*
+		 * Konstruktor
+		 *
+		 * Von außen Keine Instanz erzeugbar.
+		 **/
 		StorageCharacter( QObject* parent = 0 );
 		/**
-		 *Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
+		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
 		 **/
 		~StorageCharacter();
 
 		/**
+		 * Statischer Zeiger auf diese Klasse.
+		 **/
+		static StorageCharacter* p_instance;
+
+		/**
+		 * Nicht kopierbar.
+		 **/
+		StorageCharacter( const StorageCharacter* ) {}
+		/**
+		 * Nicht zuweisbar.
+		 **/
+		StorageCharacter* operator=( const StorageCharacter* ) {}
+
+	public:
+		/**
+		 * Über diese Funktion kann ein Zeiger auf diese Singleton-Klasse erzeugt werden.
+		 **/
+		static StorageCharacter* getInstance();
+		/**
+		 * Diese Funktion gibt eine Möglichkeit, die einzig existierende Instanz dieser Klasse zu zerstören.
+		 **/
+		static void destroy();
+		
+		/**
 		 * Gibt die Spezies des Charakters aus.
 		 **/
-		cv_Species species() const;
+		cv_Species::SpeciesFlag species() const;
 		/**
 		 * Gibt eine Liste aller Identitäten des Charkaters aus.
 		 **/
@@ -80,8 +110,10 @@ class StorageCharacter : public QObject {
 	private:
 		/**
 		 * Die Spezies des Charakters.
+		 *
+		 * Es lohnt nicht, hier die \ref cv_Species Klasse zu verwenden.
 		 **/
-		static cv_Species v_species;
+		static cv_Species::SpeciesFlag v_species;
 		/**
 		 * Eine Liste aller Identitäten des Charakters. Hierin werden alle seine zahlreichen Namen gespeichert.
 		 **/
@@ -96,12 +128,10 @@ class StorageCharacter : public QObject {
 	public slots:
 		/**
 		 * Legt die Spezies des Charakters fest.
+		 *
+		 * \bug Es wird zwar das Signal speciesChanged ausgesandt, wenn diese Funktion aufgerufen wird, aber natürlich nur an das Objekt, welches diese Klasse als Objekt erzeugt hat. Also nicht an jede Klasse mit einem Zeiger auf eine Instanz dieser Klasse. Deswegen werden die Widgets nicht verändert, wenn der Inhalt des statischen Objekts dieser Klasse über ein anderes Objekt dieser Klasse modifiziert wird. Möglicherweise ist es eine Lösung, diese Klasse als Singleton zu erzeugen.
 		 **/
-		void setSpecies(cv_Species species);
-// 		/**
-// 		 * Legt die Spezies des Charakters fest.
-// 		 **/
-// 		void setSpecies(cv_Species:: species);
+		void setSpecies( cv_Species::SpeciesFlag species );
 		/**
 		 * Fügt eine neue Identität an der angegebenen Stelle ein.
 		 **/
@@ -121,13 +151,20 @@ class StorageCharacter : public QObject {
 		 **/
 		void setSkillSpecialties( QString name /** Name der Fertigkeit, zu welcher diese Spezialisierungen gehören. */,
 								  QList< cv_TraitDetail > details /** Liste der Spezialisierungen. */
-								  );
+								);
+
+	private slots:
+// 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
 
 	signals:
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich der Wert einer Eigenschaft ändert.
 		**/
 		void valueChanged( int, cv_Trait::Type, cv_Trait::Category, QString );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich die Spezies des Charakters ändert.
+		**/
+		void speciesChanged( cv_Species::SpeciesFlag species );
 
 
 // 		/**

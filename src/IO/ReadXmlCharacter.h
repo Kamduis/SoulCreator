@@ -75,8 +75,15 @@ class ReadXmlCharacter : public ReadXml {
 		/**
 		 * Lese die Spezies aus dem gespeicherten Charakter.
 		 **/
-		void readSpecies();
-
+		void readSoulCreator();
+		/**
+		 * Lese die Eigenschaften aus dem gespeicherten Charakter.
+		 **/
+		void readTraits( cv_Trait::Type type );
+		/**
+		 * Lese die Eigenschaften aus dem gespeicherten Charakter.
+		 **/
+		void readTraits( cv_Trait::Type type, cv_Trait::Category category );
 };
 
 #endif

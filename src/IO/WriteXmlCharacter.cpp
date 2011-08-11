@@ -32,13 +32,14 @@
 
 
 WriteXmlCharacter::WriteXmlCharacter() : QXmlStreamWriter() {
-	character = new StorageCharacter( this );
+	character = StorageCharacter::getInstance();
 
 	setAutoFormatting( true );
 }
 
 WriteXmlCharacter::~WriteXmlCharacter() {
-	delete character;
+	// Da es sich um eine Singleton-Klasse handelt, kann ich sie nicht zerstören.
+// 	delete character;
 }
 
 void WriteXmlCharacter::write( QFile *file ) {
@@ -50,7 +51,7 @@ void WriteXmlCharacter::write( QFile *file ) {
 	writeStartDocument();
 	writeStartElement( Config::name() );
 	writeAttribute( "version", Config::version() );
-	writeTextElement( "species", "Human" );
+	writeTextElement( "species", cv_Species::toString(character->species() ));
 
 	writeCharacterTraits();
 
@@ -64,6 +65,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 	QList< cv_Trait::Type > types;
 	types.append( cv_Trait::Attribute );
 	types.append( cv_Trait::Skill );
+	types.append( cv_Trait::Merit );
 
 	QList< cv_Trait::Category > categories;
 	categories.append( cv_Trait::Mental );

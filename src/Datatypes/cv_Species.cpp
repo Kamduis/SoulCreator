@@ -22,31 +22,34 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "../Exceptions/Exception.h"
+
 #include "cv_Species.h"
 
 
-// QString cv_Species::toString(cv_Species::SpeciesFlag sp){
-// 	switch(sp){
-// 		case cv_Species::SpeciesNo:
-// 			return "SpeciesNo";
-// 		case cv_Species::Animal:
-// 			return "Animal";
-// 		case cv_Species::Human:
-// 			return "Human";
-// 		case cv_Species::Changeling:
-// 			return "Changeling";
-// 		case cv_Species::Mage:
-// 			return "Mage";
-// 		case cv_Species::Vampire:
-// 			return "Vampire";
-// 		case cv_Species::Werewolf:
-// 			return "Werewolf";
-// 		case cv_Species::SpeciesAll:
-// 			return "SpeciesAll";
-// 		default:
+QString cv_Species::toString(cv_Species::SpeciesFlag sp){
+	switch(sp){
+		case cv_Species::SpeciesNo:
+			return "SpeciesNo";
+		case cv_Species::Animal:
+			return "Animal";
+		case cv_Species::Human:
+			return "Human";
+		case cv_Species::Changeling:
+			return "Changeling";
+		case cv_Species::Mage:
+			return "Mage";
+		case cv_Species::Vampire:
+			return "Vampire";
+		case cv_Species::Werewolf:
+			return "Werewolf";
+		case cv_Species::SpeciesAll:
+			return "SpeciesAll";
+		default:
+			throw eSpeciesNotExisting(sp);
 // 			return "ERROR";
-// 	}
-// }
+	}
+}
 
 cv_Species::SpeciesFlag cv_Species::toSpecies(QString str){
 	if (str == "Animal")

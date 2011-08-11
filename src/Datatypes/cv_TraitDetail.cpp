@@ -29,5 +29,6 @@ bool cv_TraitDetail::operator==( const cv_TraitDetail& detail ) const {
 	if ( this == &detail ) {
 		return true;
 	}
-	return name == detail.name && value == detail.value;
+	return name == detail.name
+		   && value == detail.value;
 }

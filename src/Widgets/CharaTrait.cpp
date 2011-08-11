@@ -30,12 +30,14 @@
 
 
 CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category category, QString name, int value ) : TraitLine( parent, name, value ) {
-	character = new StorageCharacter( this );
+	character = StorageCharacter::getInstance();
 
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitValueChanged( int ) ) );
 	connect( this, SIGNAL( valueChanged( int, cv_Trait::Type, cv_Trait::Category, QString ) ), character, SLOT( setValue( int, cv_Trait::Type, cv_Trait::Category, QString ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
+	// Änderungen am Charakter im Speicher müssen dieses Widget aber auch aktualisieren.
+	connect( character, SIGNAL( valueChanged( int, cv_Trait::Type, cv_Trait::Category, QString ) ), this, SLOT( setValue( int, cv_Trait::Type, cv_Trait::Category, QString ) ) );
 
 	// Damit die Schaltfläche für die Spezialisierungen verborgen wird, wenn sie nicht nötig ist.
 // 	hideSpecialtyWidget(cv_Trait::Skill);
@@ -99,6 +101,13 @@ void CharaTrait::hideSpecialtyWidget( cv_Trait::Type type ) {
 	}
 }
 
+void CharaTrait::setValue( int value, cv_Trait::Type typeArg, cv_Trait::Category categoryArg, QString name ) {
+	if (typeArg == v_type && categoryArg == v_category && name == TraitLine::name()){
+		TraitLine::setValue(value);
+	}
+}
+
+
 
 
 
@@ -109,17 +118,17 @@ void CharaTrait::emitValueChanged( int value ) {
 void CharaTrait::emitSpecialtiesClicked( bool sw ) {
 	QList< cv_TraitDetail > list = v_specialties;
 
-	for (int i = 0; i < list.count(); i++){
-		for (int j = 0; j < character->traits(type(), category()).count(); j++){
-			for (int k = 0; k < character->traits(type(), category()).at(j).details.count(); k++){
-				if (list.at(i).name == character->traits(type(), category()).at(j).details.at(k).name){
-					cv_TraitDetail detail = list.at(i);
+	for ( int i = 0; i < list.count(); i++ ) {
+		for ( int j = 0; j < character->traits( type(), category() ).count(); j++ ) {
+			for ( int k = 0; k < character->traits( type(), category() ).at( j ).details.count(); k++ ) {
+				if ( list.at( i ).name == character->traits( type(), category() ).at( j ).details.at( k ).name ) {
+					cv_TraitDetail detail = list.at( i );
 					detail.value = true;
-					list.replace(i, detail);
+					list.replace( i, detail );
 				}
 			}
 		}
-		qDebug() << Q_FUNC_INFO << list.at(i).name << list.at(i).value;
+		qDebug() << Q_FUNC_INFO << list.at( i ).name << list.at( i ).value;
 	}
 
 	emit specialtiesClicked( sw, name(), list );

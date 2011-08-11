@@ -71,9 +71,18 @@ class TraitLine : public QWidget {
 		QString name() const;
 		int value() const;
 		int minimum() const;
+		/**
+		 * Einfacher Zugriff auf das Layout, damit ich es bei den Erben verändern kann.
+		 **/
+		QHBoxLayout* layout() const;
+		/**
+		 * Einfacher Zugriff auf das Layout, damit ich es bei den Erben verändern kann.
+		 **/
+		QLabel* labelName() const;
 
 	private:
-		QLabel *label_name;
+		QHBoxLayout *v_layout;
+		QLabel *v_label_name;
 		QPushButton *button;
 		TraitDots *traitDots;
 		TraitSpecialties *specialties;

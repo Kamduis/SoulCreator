@@ -120,10 +120,10 @@ class cv_Species {
 		 **/
 		QString fuel;
 
-// 		/**
-// 		 * Gibt den Namen der Spezies aus. Anders als name() dient diese statische funktion dazu, den enum SpeciesFlag als String zurückzugeben.
-// 		 **/
-// 		static QString toString( SpeciesFlag flag );
+		/**
+		 * Gibt den Namen der Spezies aus. Anders als name() dient diese statische funktion dazu, den enum SpeciesFlag als String zurückzugeben, was ich für das Speichern in den XML_Dateien benötige.
+		 **/
+		static QString toString( SpeciesFlag flag );
 		/**
 		 * Wandelt den Namen einer Spezies in den dazu passenden enum SpeciesFlag um.
 		 *

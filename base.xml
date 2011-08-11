@@ -104,7 +104,6 @@
 				<trait name="Investigation">
 					<specialty>Artifacts</specialty>
 					<specialty>Autopsy</specialty>
-					<specialty>Diagnose</specialty>
 					<specialty>Crime Scenes</specialty>
 					<specialty>Cryptography</specialty>
 					<specialty>Dreams</specialty>
@@ -166,13 +165,15 @@
 					<specialty>Scandals</specialty>
 				</trait>
 				<trait name="Religion" era="Antique">
-					<specialty>Dogma</specialty>
+					<specialty>Dogma (Christian)</specialty>
+					<specialty>Dogma (Islamic)</specialty>
+					<specialty>Dogma (Jewish)</specialty>
 					<specialty>Omens</specialty>
-					<specialty>Pantheon</specialty>
+					<specialty>Pantheon (Egyptian)</specialty>
+					<specialty>Pantheon (Greek)</specialty>
+					<specialty>Pantheon (Nordic)</specialty>
+					<specialty>Pantheon (Roman)</specialty>
 					<specialty>Rituals</specialty>
-					<specialty>Christianity</specialty>
-					<specialty>Muslim</specialty>
-					<specialty>Judaism</specialty>
 				</trait>
 				<trait name="Science" era="Modern">
 					<specialty>Biology</specialty>
@@ -205,9 +206,12 @@
 			</Mental>
 			<Physical>
 				<trait name="Archery" era="Antique">
+					<specialty>Long Bow</specialty>
 					<specialty>Long Shot</specialty>
+					<specialty>Short Bow</specialty>
+					<specialty>Sling</specialty>
 					<specialty>Trick Shot</specialty>
-					<specialty>Specific Kind of Weapon</specialty>
+					<specialty>Crossbow</specialty>
 				</trait>
 				<trait name="Athletics">
 					<specialty>Acrobatics</specialty>
@@ -216,6 +220,7 @@
 					<specialty>Endurance</specialty>
 					<specialty>Kayaking</specialty>
 					<specialty>Long-Distance Running</specialty>
+					<specialty>Sprinting</specialty>
 					<specialty>Swimming</specialty>
 					<specialty>Throwing</specialty>
 				</trait>
@@ -243,13 +248,16 @@
 					<specialty>Stunts</specialty>
 				</trait>
 				<trait name="Firearms" era="Modern">
+					<specialty>Assault rifles</specialty>
 					<specialty>Autofire</specialty>
 					<specialty>Close Range</specialty>
+					<specialty>Pistols</specialty>
+					<specialty>Revolvers</specialty>
+					<specialty>Rifles</specialty>
 					<specialty>Sniping</specialty>
 					<specialty>Submachine Guns</specialty>
 					<specialty>Target Shooting</specialty>
 					<specialty>Trick Shot</specialty>
-					<specialty>Specific Kind of Weapon</specialty>
 				</trait>
 				<trait name="Larceny">
 					<specialty>Alarm Systems</specialty>
@@ -287,7 +295,7 @@
 				<trait name="Survival">
 					<specialty>Foraging</specialty>
 					<specialty>Herbology</specialty>
-					<specialty>Hunting (Species)</specialty>
+					<specialty>Hunting (Specific Kind of Animal)</specialty>
 					<specialty>Navigation</specialty>
 					<specialty>Meteorology</specialty>
 					<specialty>Shelter</specialty>
@@ -298,16 +306,24 @@
 					<specialty>Weather</specialty>
 				</trait>
 				<trait name="Weaponry">
+					<specialty>Blunt Weapons</specialty>
+					<specialty>Flexible Weapons</specialty>
 					<specialty>Improvised Weapons</specialty>
-					<specialty>Specific Kind of Weapon</specialty>
+					<specialty>Knives</specialty>
+					<specialty>Polearms</specialty>
+					<specialty>Swords</specialty>
 				</trait>
 			</Physical>
 			<Social>
 				<trait name="Animal Ken">
 					<specialty>Animal Needs</specialty>
+					<specialty>Birds</specialty>
+					<specialty>Cats</specialty>
+					<specialty>Deer</specialty>
+					<specialty>Dogs</specialty>
 					<specialty>Sensing Imminent Attack</specialty>
-					<specialty>Specific Kind of Animal</specialty>
 					<specialty>Training</specialty>
+					<specialty>Wolves</specialty>
 				</trait>
 				<trait name="Empathy">
 					<specialty>Emotion</specialty>
@@ -391,20 +407,40 @@
 			<Mental>
 				<trait name="Danger Sense">
 					<value>2</value>
-					<effect value="+2">Detect impending ambush</effect>
+					<description>You gain a +2 modifier on reflexive Wits + Composure rolls to detect an impending ambush.</description>
 				</trait>
 				<trait name="Eidetic Memory">
 					<value>2</value>
-					<effect>New-photographic memory</effect>
+					<description>You have a near-photographic memory, being able to recall vast amounts of observed detail with astonishing accuracy.</description>
+				</trait>
+				<trait name="Encyclopedic Knowledge">
+					<value>4</value>
 				</trait>
 				<trait name="EOD" max="2">
 					<value>2</value>
-					<prerequisite>Wits > 3 AND Dexterity > 3 AND Crafts (Demolitions) > 3</prerequisite>
-					<effect>No penalty for disarming explosives you did not build</effect>
+					<prerequisite>(Wits > 2 OR Dexterity > 2) AND Crafts (Demolitions) > 2</prerequisite>
 				</trait>
 				<trait name="Holistic Awareness">
 					<value>3</value>
-					<effect>???</effect>
+				</trait>
+				<trait name="Hypnotic Voice">
+					<value>4</value>
+					<prerequisite>Persuasion > 2 OR Science (Hypnotherapy) > 2</prerequisite>
+				</trait>
+				<trait name="Language" custom="true">
+					<value>1</value>
+					<value>2</value>
+				</trait>
+				<trait name="Lucid Dreaming">
+					<value>2</value>
+					<prerequisite>Resolve > 2</prerequisite>
+				</trait>
+				<trait name="Meditative Mind">
+					<value>1</value>
+				</trait>
+				<trait name="Technophile">
+					<value>1</value>
+					<value>2</value>
 				</trait>
 			</Mental>
 			<Physical>

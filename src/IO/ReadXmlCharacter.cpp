@@ -34,11 +34,12 @@ QList< cv_Trait > ReadXmlCharacter::traitList;
 
 ReadXmlCharacter::ReadXmlCharacter() : ReadXml() {
 	storage = new StorageTemplate();
-	character = new StorageCharacter();
+	character = StorageCharacter::getInstance();
 }
 
 ReadXmlCharacter::~ReadXmlCharacter() {
-	delete character;
+	// Da es sich um eine Singleton-Klasse handelt, kann ich sie nicht zerstören.
+// 	delete character;
 	delete storage;
 }
 
@@ -56,7 +57,7 @@ bool ReadXmlCharacter::read( QFile *file ) {
 			QString elementVersion = attributes().value( "version" ).toString();
 
 			if ( checkXmlVersion( elementName, elementVersion ) ) {
-				readSpecies();
+				readSoulCreator();
 			}
 		}
 	}
@@ -69,7 +70,7 @@ bool ReadXmlCharacter::read( QFile *file ) {
 	closeFile( file );
 }
 
-void ReadXmlCharacter::readSpecies() {
+void ReadXmlCharacter::readSoulCreator() {
 	while ( !atEnd() ) {
 		readNext();
 
@@ -77,22 +78,82 @@ void ReadXmlCharacter::readSpecies() {
 			break;
 
 		if ( isStartElement() ) {
-			if ( name() == "species" ) {
+			QString elementName = name().toString();
+			if ( elementName == "species" ) {
 				QString speciesName = readElementText();
 
-				cv_Species species;
-				for (int i = 0; i < storage->species().count(); i++ ){
-					if (speciesName == storage->species().at(i).name) {
-						species = storage->species().at(i);
-						species.name = speciesName;
-						break;
-					}
-				}
+				character->setSpecies( cv_Species::toSpecies( speciesName ) );
+			} else if ( elementName == cv_Trait::toString( cv_Trait::Attribute )
+						|| elementName == cv_Trait::toString( cv_Trait::Skill ) ) {
+				qDebug() << Q_FUNC_INFO << elementName << "!";
+				readTraits( cv_Trait::toType( elementName ) );
+			} else {
+				readUnknownElement();
+			}
+		}
+	}
+}
 
-				character->setSpecies(species);
+void ReadXmlCharacter::readTraits( cv_Trait::Type type ) {
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			QString elementName = name().toString();
+			if ( elementName == cv_Trait::toString( cv_Trait::Mental )
+					|| elementName == cv_Trait::toString( cv_Trait::Physical )
+					|| elementName == cv_Trait::toString( cv_Trait::Social ) ) {
+				qDebug() << Q_FUNC_INFO << elementName;
+				readTraits( type, cv_Trait::toCategory( elementName ) );
 			} else
 				readUnknownElement();
 		}
 	}
 }
+
+void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category category ) {
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			QString elementName = name().toString();
+			if ( elementName == "trait" ) {
+				QString traitName = attributes().value( "name" ).toString();
+				int traitValue = attributes().value( "value" ).toString().toInt();
+				character->setValue( traitValue, type, category, traitName );
+
+				QList< cv_TraitDetail > list;
+				while ( !atEnd() ) {
+					readNext();
+
+					if ( isEndElement() )
+						break;
+
+					if ( isStartElement() ) {
+						QString elementName = name().toString();
+						if ( elementName == "specialty" ) {
+							QString specialty = readElementText();
+							cv_TraitDetail detail;
+							detail.name = specialty;
+							detail.value = true;
+							// An Liste anfügen.
+							list.append( detail );
+						} else
+							readUnknownElement();
+					}
+				}
+
+				character->setSkillSpecialties( traitName, list );
+			} else
+				readUnknownElement();
+		}
+	}
+}
+
 

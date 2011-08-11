@@ -31,6 +31,7 @@
 #include "Widgets/InfoWidget.h"
 #include "Widgets/AttributeWidget.h"
 #include "Widgets/SkillWidget.h"
+#include "Widgets/MeritWidget.h"
 #include "Widgets/CharaSpecialties.h"
 
 #include <QMainWindow>
@@ -45,7 +46,7 @@ class MainWindow;
  *
  * Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
  *
- * \todo Alles
+ * \todo Bei den Merits gibt es den effekt Custom. Den will ich aber eigentlich garnicht. Ich will den Inhalt einer Textbox speichern. Im Templete mag es dan custom=true geben, beim Speichern des Charakters aber muß es dann custom="Inhalt" sein. Außerdem gibt es dann beispielsweise den merit Language mehrfach. Muß also auch nach custom unterschieden werden.
  */
 
 class MainWindow : public QMainWindow {
@@ -79,6 +80,12 @@ class MainWindow : public QMainWindow {
 		 * In diesem Widget werden die Fertigkeiten in Spalten sortiert angezeigt.
 		 **/
 		SkillWidget* skills;
+		/**
+		 * In diesem Widget werden die Merits angezeigt.
+		 *
+		 * \todo Irgendwann soll die Anzahl der angezeigten Merits vom user durch klicken irgendwie erhöht werden können.
+		 **/
+		MeritWidget* merits;
 		/**
 		 * Das Widget für die Anzeige von Spezialisierungen einer Fertigkeit.
 		 **/

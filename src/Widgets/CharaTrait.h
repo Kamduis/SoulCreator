@@ -93,6 +93,14 @@ class CharaTrait : public TraitLine {
 		 **/
 		void hideSpecialtyWidget( cv_Trait::Type type );
 		void emitSpecialtiesClicked(bool sw);
+		/**
+		 * Ändert den Wert dieses Widget.
+		 *
+		 * \overload TraitLine::setValue() Diese Funktion wird direkt mit dem Speicher verbunden.
+		 *
+		 * \bug In dieser Funktion kann ich auf die Funktionen der Basisklasse nur mit Traitline::??? zuggreifen. Sehr seltsam. Aber es funktioniert.
+		 **/
+		void setValue( int value, cv_Trait::Type type, cv_Trait::Category category, QString name );
 
 	signals:
 		/**
