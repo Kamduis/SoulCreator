@@ -270,6 +270,10 @@ class cv_Trait {
 		 * Manche Eigenschaften (beispielsweise der Merit Language) müssen mit einem zusätzlichen erklärenden Text versehen werden können. Wenn das der Fall ist, wird diese Variable auf 'true' gesetzt.
 		 **/
 		bool custom;
+		/**
+		 * Jene Eigenschaften, die einen zusätzlichen erklärenden Text haben können (siehe \ref custom), können eben diese Text hier speichern.
+		 **/
+		QString customText;
 // 	QList<cv_TraitPrerequisiteAnd> prerequisites;	///< Eine Liste der Voraussetzungen. Die einzelnen Einträge dieser Liste sind ODER-verknüpft.
 
 		/**

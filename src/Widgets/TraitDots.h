@@ -36,6 +36,8 @@
  * Ein einfacher ganzzahliger Wert wirden in Form ausgefüllter Punkte dargestellt. Die bis zum Maximalwert übrigen Punkte sind nicht ausgefüllt.
  *
  * Es besteht die Möglichkeit aus der Menge an Werten zwischen \ref minimum und \ref maximum einige zu verbieten.
+ *
+ * \todo Wenn dieses Widget disabled wird, sollte die Farbe der Punkte grau werden.
  */
 
 class TraitDots : public QWidget {

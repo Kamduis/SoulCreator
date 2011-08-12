@@ -30,17 +30,23 @@
 
 
 CharaComboTrait::CharaComboTrait( QWidget* parent, cv_Trait::Type type, int value ) : CharaTrait( parent, type, cv_Trait::CategoryNo, "", value ) {
+	character = StorageCharacter::getInstance();
+
 	nameBox = new QComboBox( this );
 	nameBox->setInsertPolicy( QComboBox::InsertAlphabetically );
+	nameBox->addItem( "" );
 	customBox = new QLineEdit( this );
+	customBox->setHidden( true );
 
-	storage = new StorageTemplate(this);
+	storage = new StorageTemplate( this );
 
 	layout()->insertWidget( 0, nameBox );
 	layout()->insertWidget( 1, customBox );
 	labelName()->setHidden( true );
 
+	connect( nameBox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( enableWidget( int ) ) );
 	connect( nameBox, SIGNAL( currentIndexChanged( QString ) ), this, SLOT( changeParameters( QString ) ) );
+	connect( customBox, SIGNAL( editingFinished( ) ), this, SLOT( changeCustomText( ) ) );
 }
 
 CharaComboTrait::~CharaComboTrait() {
@@ -53,11 +59,17 @@ void CharaComboTrait::addName( QString name ) {
 	nameBox->addItem( name );
 }
 
+void CharaComboTrait::enableWidgets( int index ) {
+	qDebug() << Q_FUNC_INFO << "Momentan hat diese Funktion keinerlei Effekt!";
+}
+
+
 void CharaComboTrait::changeParameters( QString name ) {
-	setName(name);
-	
+	setName( name );
+
 	QList< cv_Trait::Type > types;
-	types.append(cv_Trait::Merit);
+	types.append( cv_Trait::Merit );
+	types.append( cv_Trait::Power );
 
 	QList< cv_Trait::Category > categories;
 	categories.append( cv_Trait::Mental );
@@ -66,15 +78,45 @@ void CharaComboTrait::changeParameters( QString name ) {
 
 	for ( int i = 0; i < types.count(); i++ ) {
 		for ( int j = 0; j < categories.count(); j++ ) {
-			for ( int k = 0; k < storage->traits(types.at(i), categories.at(j)).count(); k++){
-				if ( name == storage->traits(types.at(i), categories.at(j)).at(k).name ){
-					qDebug() << Q_FUNC_INFO << "Kümmere mich um" << storage->traits(types.at(i), categories.at(j)).at(k).name;
-					setType(storage->traits(types.at(i), categories.at(j)).at(k).type);
-					setCategory(storage->traits(types.at(i), categories.at(j)).at(k).category);
+			for ( int k = 0; k < storage->traits( types.at( i ), categories.at( j ) ).count(); k++ ) {
+				if ( name == storage->traits( types.at( i ), categories.at( j ) ).at( k ).name ) {
+					setType( storage->traits( types.at( i ), categories.at( j ) ).at( k ).type );
+					setCategory( storage->traits( types.at( i ), categories.at( j ) ).at( k ).category );
+
+					// Wenn die Eigenschaft zusätzlichen erklärenden Text beinhalten kann, muß das Textfeld auch angezeigt werden.
+					if ( storage->traits( types.at( i ), categories.at( j ) ).at( k ).custom ) {
+						customBox->setHidden( false );
+					} else {
+						customBox->setHidden( true );
+					}
 				}
 			}
 		}
 	}
 }
 
+void CharaComboTrait::changeCustomText( ) {
+	QList< cv_Trait::Type > types;
+	types.append( cv_Trait::Merit );
+	types.append( cv_Trait::Power );
+
+	QList< cv_Trait::Category > categories;
+	categories.append( cv_Trait::Mental );
+	categories.append( cv_Trait::Physical );
+	categories.append( cv_Trait::Social );
+
+	for ( int i = 0; i < types.count(); i++ ) {
+		for ( int j = 0; j < categories.count(); j++ ) {
+			for ( int k = 0; k < storage->traits( types.at( i ), categories.at( j ) ).count(); k++ ) {
+				if ( name() == storage->traits( types.at( i ), categories.at( j ) ).at( k ).name && storage->traits( types.at( i ), categories.at( j ) ).at( k ).custom ) {
+					// Eigenschaft aus Vorlage übernehmen und dann entsprechend des Widgets abändern.
+					cv_Trait trait = storage->traits( types.at( i ), categories.at( j ) ).at( k );
+					trait.customText = customBox->text();
+					trait.value = value();
+					character->addTrait( trait );
+				}
+			}
+		}
+	}
+}
 

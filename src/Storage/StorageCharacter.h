@@ -141,10 +141,6 @@ class StorageCharacter : public QObject {
 		 **/
 		void addIdentity( cv_Name name );
 		/**
-		 * Legt den Wert der über die Argumente spezifizierten Eigenschaft fest. Unterscheidet sich der Wert vom zuvor gespeicherten, wird automatisch das Signal valueChanged() ausgesandt.
-		 **/
-		void setValue( int value, cv_Trait::Type type, cv_Trait::Category category, QString name );
-		/**
 		 * Legt die Spezialisierungen des Charakters fest.
 		 *
 		 * \todo Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen.
@@ -152,19 +148,27 @@ class StorageCharacter : public QObject {
 		void setSkillSpecialties( QString name /** Name der Fertigkeit, zu welcher diese Spezialisierungen gehören. */,
 								  QList< cv_TraitDetail > details /** Liste der Spezialisierungen. */
 								);
+		/**
+		 * Fügt dem Speicher eine neue Eigenschaft hinzu.
+		 *
+		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
+		 *
+		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
+		 **/
+		void addTrait(cv_Trait trait);
 
 	private slots:
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
 
 	signals:
 		/**
-		* Dieses Signal wird ausgesandt, wann immer sich der Wert einer Eigenschaft ändert.
-		**/
-		void valueChanged( int, cv_Trait::Type, cv_Trait::Category, QString );
-		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Spezies des Charakters ändert.
 		**/
 		void speciesChanged( cv_Species::SpeciesFlag species );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
+		**/
+		void traitChanged( cv_Trait trait );
 
 
 // 		/**

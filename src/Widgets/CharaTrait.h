@@ -78,13 +78,6 @@ class CharaTrait : public TraitLine {
 		 **/
 		void setCategory( cv_Trait::Category category );
 		void addSpecialty(cv_TraitDetail specialty);
-// 		void removeSpecialty(QString text);
-		/**
-		 * Diese Methode füllt die Liste der angezeigten Spazialisierungen mit dem Inahlt der übergebenen Liste.
-		 *
-		 * \bug Momentan macht diese Funktion ... NICHTS!
-		 **/
-		void setSpecialties(QList< cv_TraitDetail > specialtyList);
 
 	private slots:
 		void emitValueChanged( int value );
@@ -93,26 +86,23 @@ class CharaTrait : public TraitLine {
 		 **/
 		void hideSpecialtyWidget( cv_Trait::Type type );
 		void emitSpecialtiesClicked(bool sw);
+
 		/**
-		 * Ändert den Wert dieses Widget.
-		 *
-		 * \overload TraitLine::setValue() Diese Funktion wird direkt mit dem Speicher verbunden.
-		 *
-		 * \bug In dieser Funktion kann ich auf die Funktionen der Basisklasse nur mit Traitline::??? zuggreifen. Sehr seltsam. Aber es funktioniert.
+		 * Ändert alle Parameter dieses Widgets, damit es der übergebenen Eigenschaft entspricht.
 		 **/
-		void setValue( int value, cv_Trait::Type type, cv_Trait::Category category, QString name );
+		void setTrait( cv_Trait trait );
 
 	signals:
-		/**
-		 * Dieses Signal wird ausgesandt, wann immer sich der Wert des Widgets ändert. Die zusätzlichen Argumente teilen \ref StorageCharacter mit, um welche Eigenschaft es sich handelt.
-		 **/
-		void valueChanged( int, cv_Trait::Type, cv_Trait::Category, QString );
 		/**
 		 * Dieses Signal wird ausgesandt, wann immer sich die Kategorie dieser Eigenschaft ändern sollte.
 		 *
 		 * Das wird zwar selten passieren, wenn das Widget erst einmal angelegt wurde (nie!), aber so kann ich einfach die Anzeige für die Spazialisierungen an und Ausschalten, wenn das Widget zu einer Fertigkeit gemacht wird.
 		 **/
 		void typeChanged( cv_Trait::Type );
+		/**
+		 * Dieses Signal wird ausgesandt, wann immer sich die Eigenschaft des Widgets ändert.
+		 **/
+		void traitChanged( cv_Trait trait );
 		/**
 		 * Der Knopf zum Anzeigen der Spazialisierungen wurde gedrückt.
 		 **/

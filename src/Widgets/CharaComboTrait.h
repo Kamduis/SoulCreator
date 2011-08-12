@@ -54,6 +54,8 @@ class CharaComboTrait : public CharaTrait {
 		~CharaComboTrait();
 
 	private:
+		StorageCharacter *character;
+
 		QComboBox* nameBox;
 		QLineEdit* customBox;
 
@@ -68,7 +70,24 @@ class CharaComboTrait : public CharaTrait {
 		void addName(QString names);
 
 	private slots:
+		/**
+		 * Wann immer Index 0 (also kein Merit) in der Combobox angezeigt wird, werden die Punkte disabled.
+		 *
+		 * \todo Mit Wirkung versehen, damit bei Index 0 keine Punkte vergeben werden können.
+		 *
+		 * \bug Momentan keine Wirkung!
+		 **/
+		void enableWidgets(int index);
+		/**
+		 * Wann immer der Merit verändert wird, den dieses Widget darstellt, muß auch Typ und Vor allem Kategorie mitverändert werden. Außerdem wird herausgefunden, ob erklärender text erlaubt ist und dieser ermöglicht.
+		 *
+		 * \todo Außerdem müssen die Werte zurückgesetzt werden.
+		 **/
 		void changeParameters(QString name);
+		/**
+		 * Wird der Erklärende text dieser Eigenschaft verändert, muß dies natürlich auch in StorageCharacter gespeichert werden.
+		 **/
+		void changeCustomText();
 
 	signals:
 };

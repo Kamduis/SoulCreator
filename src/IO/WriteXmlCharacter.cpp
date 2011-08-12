@@ -92,6 +92,10 @@ void WriteXmlCharacter::writeCharacterTraits() {
 				writeAttribute( "name", character->traits( types.at( i ), categories.at( j ) ).at( k ).name );
 				writeAttribute( "value", QString::number( character->traits( types.at( i ), categories.at( j ) ).at( k ).value ) );
 
+				if (character->traits( types.at( i ), categories.at( j ) ).at( k ).custom){
+					writeAttribute( "custom", character->traits( types.at( i ), categories.at( j ) ).at( k ).customText );
+				}
+
 // 				qDebug() << Q_FUNC_INFO << character->traits( types.at( i ), categories.at( j ) ).at( k ).details.count();
 // 				if ( types.at( i ) == cv_Trait::Skill ) {
 					for ( int l = 0; l < character->traits( types.at( i ), categories.at( j ) ).at( k ).details.count(); l++ ) {

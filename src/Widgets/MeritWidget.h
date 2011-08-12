@@ -36,6 +36,8 @@
  * Die Attribute werden in diesem Widget angeordnet.
  *
  * \todo Später sollen nur soviele Merits dargestellt werden, wie der Charakter tatsächlich hat +1. Will der Nutzer einen zusätzlichen Merit hinzufügen, füllt er diese leere Meritzeile aus und das Widget fügt automatisch eine weitere Leere Zeile am Ende ein. Alle leeren Merit-Widgets bis auf das letzte werden automatisch gelöscht.
+ *
+ * \todo In den Comboboxen sollen alle Merits angeboten werden, außer denen, die schon gewählt wurden.
  **/
 class MeritWidget : public QWidget {
 		Q_OBJECT

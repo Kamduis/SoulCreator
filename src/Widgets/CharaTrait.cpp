@@ -33,26 +33,17 @@ CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category
 	character = StorageCharacter::getInstance();
 
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitValueChanged( int ) ) );
-	connect( this, SIGNAL( valueChanged( int, cv_Trait::Type, cv_Trait::Category, QString ) ), character, SLOT( setValue( int, cv_Trait::Type, cv_Trait::Category, QString ) ) );
+	connect( this, SIGNAL( valueChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
 	// Änderungen am Charakter im Speicher müssen dieses Widget aber auch aktualisieren.
-	connect( character, SIGNAL( valueChanged( int, cv_Trait::Type, cv_Trait::Category, QString ) ), this, SLOT( setValue( int, cv_Trait::Type, cv_Trait::Category, QString ) ) );
+	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( setTrait( cv_Trait ) ) );
 
 	// Damit die Schaltfläche für die Spezialisierungen verborgen wird, wenn sie nicht nötig ist.
 // 	hideSpecialtyWidget(cv_Trait::Skill);
 	setType( type );
 	setCategory( category );
 }
-
-// CharaTrait::CharaTrait( QWidget *parent, QString name, int value ) : TraitLine( parent ) {
-// 	TraitLine( parent, name, value );
-//
-// 	character = new StorageCharacter( this );
-//
-// 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitValueChanged( int ) ) );
-// 	connect( this, SIGNAL( valueChanged( int, cv_Trait::Type, cv_Trait::Category, QString ) ), character, SLOT( setValue( int, cv_Trait::Type, cv_Trait::Category, QString ) ) );
-// }
 
 
 cv_Trait::Type CharaTrait::type() const {
@@ -82,15 +73,6 @@ void CharaTrait::addSpecialty( cv_TraitDetail specialty ) {
 	v_specialties.append( specialty );
 }
 
-// void CharaTrait::removeSpecialty( QString text ) {
-// // 	specialties->removeSpecialty(text);
-// }
-
-void CharaTrait::setSpecialties( QList< cv_TraitDetail > specialtyList ) {
-	qDebug() << Q_FUNC_INFO << "Warnung! Diese Funktion hat keinen Effekt!";
-// 	character->
-}
-
 
 
 void CharaTrait::hideSpecialtyWidget( cv_Trait::Type type ) {
@@ -101,9 +83,9 @@ void CharaTrait::hideSpecialtyWidget( cv_Trait::Type type ) {
 	}
 }
 
-void CharaTrait::setValue( int value, cv_Trait::Type typeArg, cv_Trait::Category categoryArg, QString name ) {
-	if (typeArg == v_type && categoryArg == v_category && name == TraitLine::name()){
-		TraitLine::setValue(value);
+void CharaTrait::setTrait( cv_Trait trait ) {
+	if ( type() == trait.type && category() == trait.category && name() == trait.name ) {
+		setValue( trait.value );
 	}
 }
 
@@ -111,8 +93,17 @@ void CharaTrait::setValue( int value, cv_Trait::Type typeArg, cv_Trait::Category
 
 
 
+
 void CharaTrait::emitValueChanged( int value ) {
-	emit valueChanged( value, type(), category(), name() );
+	cv_Trait trait;
+	trait.type = type();
+	trait.category = category();
+	trait.name = name();
+	trait.value = value;
+	// Eigenschaften, die mit diesem Widget dargestellt werden, haben keinen erklärenden Text.
+	trait.custom = false;
+	
+	emit traitChanged( trait );
 }
 
 void CharaTrait::emitSpecialtiesClicked( bool sw ) {

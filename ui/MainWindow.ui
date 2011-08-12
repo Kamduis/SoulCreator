@@ -54,7 +54,13 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QFrame" name="frame_attributes">
+           <widget class="QGroupBox" name="groupBox_attributes">
+            <property name="title">
+             <string>Attributes</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
             <layout class="QVBoxLayout" name="layout_attributes"/>
            </widget>
           </item>
@@ -65,12 +71,18 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QFrame" name="frame_skills">
+              <widget class="QGroupBox" name="groupBox_skills">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="title">
+                <string>Skills</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
                <layout class="QVBoxLayout" name="layout_skills"/>
               </widget>
@@ -89,7 +101,13 @@
               </spacer>
              </item>
              <item>
-              <widget class="QFrame" name="frame_merits">
+              <widget class="QGroupBox" name="groupBox_merits">
+               <property name="title">
+                <string>Merits</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
                <layout class="QVBoxLayout" name="layout_merits"/>
               </widget>
              </item>

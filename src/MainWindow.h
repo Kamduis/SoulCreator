@@ -47,6 +47,8 @@ class MainWindow;
  * Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
  *
  * \todo Bei den Merits gibt es den effekt Custom. Den will ich aber eigentlich garnicht. Ich will den Inhalt einer Textbox speichern. Im Templete mag es dan custom=true geben, beim Speichern des Charakters aber muß es dann custom="Inhalt" sein. Außerdem gibt es dann beispielsweise den merit Language mehrfach. Muß also auch nach custom unterschieden werden.
+ *
+ * \todo Ich muß in StorageCharacter nichts speichern, daß den Wert 0 hat. Das kann aus dem Speicher gelöscht werden.
  */
 
 class MainWindow : public QMainWindow {

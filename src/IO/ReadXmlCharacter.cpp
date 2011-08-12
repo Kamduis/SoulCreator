@@ -124,9 +124,19 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
 			if ( elementName == "trait" ) {
-				QString traitName = attributes().value( "name" ).toString();
-				int traitValue = attributes().value( "value" ).toString().toInt();
-				character->setValue( traitValue, type, category, traitName );
+				cv_Trait trait;
+				trait.name = attributes().value( "name" ).toString();
+				trait.type = type;
+				trait.category = category;
+				trait.value = attributes().value( "value" ).toString().toInt();
+				QString customText = attributes().value( "custom" ).toString();
+				if (customText.isEmpty()){
+					trait.custom = false;
+					trait.customText = "";
+				} else {
+					trait.custom = true;
+					trait.customText = customText;
+				}
 
 				QList< cv_TraitDetail > list;
 				while ( !atEnd() ) {
@@ -149,7 +159,9 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 					}
 				}
 
-				character->setSkillSpecialties( traitName, list );
+				trait.details = list;
+				
+				character->addTrait(trait);
 			} else
 				readUnknownElement();
 		}

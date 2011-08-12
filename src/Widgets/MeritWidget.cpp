@@ -47,14 +47,16 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
 
-	CharaComboTrait *trait = new CharaComboTrait( this, type );
-	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage.meritNames( categories.at(i) ).count(); j++ ) {
-			trait->addName(storage.meritNames(categories.at(i)).at(j));
-// 			trait->addTrait(storage.merits(categories.at(i)).at(j));
+	for ( int i = 0; i < 10; i++ ) {
+		CharaComboTrait *trait = new CharaComboTrait( this, type );
+		for ( int j = 0; j < categories.count(); j++ ) {
+			for ( int k = 0; k < storage.meritNames( categories.at( j ) ).count(); k++ ) {
+				trait->addName( storage.meritNames( categories.at( j ) ).at( k ) );
+			}
 		}
+		layout->addWidget( trait );
 	}
-			layout->addWidget( trait );
+	layout->addStretch();
 }
 
 MeritWidget::~MeritWidget() {
