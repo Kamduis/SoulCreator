@@ -27,6 +27,8 @@
 
 #include <QVBoxLayout>
 
+#include "../Storage/StorageTemplate.h"
+
 #include <QWidget>
 
 
@@ -54,13 +56,47 @@ class MeritWidget : public QWidget {
 
 	private:
 		/**
-		 * In diesem Layout werden die Attribute angeordnet.
+		 * In diesem Layout werden die Eigenschaften angeordnet.
 		 **/
 		QVBoxLayout *layout;
+		/**
+		 * Ein übergeordnetes Layout, um den Stretch am Ende einzufügen, ohne zu verhindern, daß das automastische Casten der Eigenschaften dadurch gestört wird.
+		 **/
+		QVBoxLayout *layoutTop;
+
+		/**
+		 * Zugriff auf alle zur Verfügung stehenden Eigenscahften.
+		 **/
+		StorageTemplate* storage;
+
+		/**
+		 * Der Typ, dem alle Eigenschaften in diesem Widget angehören sollen.
+		 **/
+		cv_Trait::Type type;
+		/**
+		 * Eine Liste der kategorien, die in diesem Widget gewünscht sind.
+		 **/
+		QList< cv_Trait::Category > categories;
 
 	public slots:
 
 	private slots:
+		/**
+		 * Fügt eine neue Eigenschaftsauswahl hinzu, sollte keine Eigenscahft ohne mit leerer Auswahl vorhanden sein.
+		 **/
+		void addWidget();
+		/**
+		 * Entfernt alle Eigenschaftsauswahlen, welche nicht notwendig sind. Also alle, die einen leeren Namen anzeigen bis auf eine.
+		 **/
+		void removeWidget();
+		/**
+		 * Sorgt dafür, daß alle angezeigten Eigenscahften nur jene Marits auswählen können, die nicht schon in einer anderen Eigenschaftsdarstellung ausgewählt sind.
+		 *
+		 * \todo Natürlich muß Sichergestellt werden, daß Eigenschaften mit erklärendem Text (Language), mehrfach ausgewählt werden können.
+		 *
+		 * \todo Die Liste wird zwar wieder aufgefüllt, wenn ein Merit-Widget gelöscht wird, aber erst wenn vorher ein anderer Merit ausgewählt wurde.
+		 **/
+		void refillNameList();
 
 	signals:
 };

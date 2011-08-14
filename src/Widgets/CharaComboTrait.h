@@ -65,9 +65,15 @@ class CharaComboTrait : public CharaTrait {
 		/**
 		 * Fügt einen Namen in die Combobox ein.
 		 *
+		 * \note Doppelte Einträge werden nicht hinzugefügt.
+		 * 
 		 * \todo Wenn in der Combobox der Name ausgewählt wird, muß CharaComboTrait automatisch Kategorie weitergeben.
 		 **/
 		void addName(QString names);
+		/**
+		 * Entfernt einen Namen aus der ComboBox
+		 **/
+		void removeName(QString names);
 
 	private slots:
 		/**
@@ -90,6 +96,7 @@ class CharaComboTrait : public CharaTrait {
 		void changeCustomText();
 
 	signals:
+		void nameChanged( QString name );
 };
 
 #endif

@@ -46,6 +46,7 @@ CharaComboTrait::CharaComboTrait( QWidget* parent, cv_Trait::Type type, int valu
 
 	connect( nameBox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( enableWidget( int ) ) );
 	connect( nameBox, SIGNAL( currentIndexChanged( QString ) ), this, SLOT( changeParameters( QString ) ) );
+	connect( nameBox, SIGNAL( currentIndexChanged( QString ) ), this, SIGNAL( nameChanged( QString ) ) );
 	connect( customBox, SIGNAL( editingFinished( ) ), this, SLOT( changeCustomText( ) ) );
 }
 
@@ -56,8 +57,21 @@ CharaComboTrait::~CharaComboTrait() {
 }
 
 void CharaComboTrait::addName( QString name ) {
-	nameBox->addItem( name );
+	QStringList names;
+
+	for ( int i = 0; i < nameBox->count(); i++ ) {
+		names.append( nameBox->itemText( i ) );
+	}
+
+	if ( !names.contains( name ) ) {
+		nameBox->addItem( name );
+	}
 }
+
+void CharaComboTrait::removeName( QString name ) {
+	nameBox->removeItem( nameBox->findText( name ) );
+}
+
 
 void CharaComboTrait::enableWidgets( int index ) {
 	qDebug() << Q_FUNC_INFO << "Momentan hat diese Funktion keinerlei Effekt!";
@@ -84,11 +98,18 @@ void CharaComboTrait::changeParameters( QString name ) {
 					setCategory( storage->traits( types.at( i ), categories.at( j ) ).at( k ).category );
 
 					// Wenn die Eigenschaft zusätzlichen erklärenden Text beinhalten kann, muß das Textfeld auch angezeigt werden.
+
 					if ( storage->traits( types.at( i ), categories.at( j ) ).at( k ).custom ) {
 						customBox->setHidden( false );
 					} else {
 						customBox->setHidden( true );
 					}
+
+// 					cv_Trait trait = storage->traits( types.at( i ), categories.at( j ) ).at( k );
+// 					trait.value = value();
+// // 					trait.details.clear();
+//
+// 					emit traitChanged( trait );
 				}
 			}
 		}

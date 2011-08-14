@@ -33,7 +33,7 @@ CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category
 	character = StorageCharacter::getInstance();
 
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitValueChanged( int ) ) );
-	connect( this, SIGNAL( valueChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
+// 	connect( this, SIGNAL( valueChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
 	// Änderungen am Charakter im Speicher müssen dieses Widget aber auch aktualisieren.
