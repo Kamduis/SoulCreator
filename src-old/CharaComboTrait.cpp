@@ -44,10 +44,19 @@ CharaComboTrait::CharaComboTrait( QWidget* parent, cv_Trait::Type type, int valu
 	layout()->insertWidget( 1, customBox );
 	labelName()->setHidden( true );
 
-	connect( nameBox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( enableWidget( int ) ) );
+	// Ich muß die Verbindung zu \ref StorageCharacter lösen, welche von der Elternklasse erstellt wurde, damit ich jetzt mit customText arbeit kann und eine neue Verbindung aufbaue.
+	qDebug() << Q_FUNC_INFO << disconnect( SIGNAL( valueChanged( int ) ) );
+
+	// Da ich eine neue Version von setTrait in diesem Kind erzeuge, muß ich die Verbindung zur Funktion der Elternklasse lösen.
+	qDebug() << Q_FUNC_INFO << disconnect( SIGNAL( traitChanged( cv_Trait ) ) );
+
+	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitTraitChanged() ) );
+	connect( this, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( setTrait(cv_Trait)) );
+	connect( customBox, SIGNAL( editingFinished( ) ), this, SLOT( emitTraitChanged() ) );
+	connect( this, SIGNAL( traitChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
+// 	connect( nameBox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( enableWidgets( int ) ) );
 	connect( nameBox, SIGNAL( currentIndexChanged( QString ) ), this, SLOT( changeParameters( QString ) ) );
 	connect( nameBox, SIGNAL( currentIndexChanged( QString ) ), this, SIGNAL( nameChanged( QString ) ) );
-	connect( customBox, SIGNAL( editingFinished( ) ), this, SLOT( changeCustomText( ) ) );
 }
 
 CharaComboTrait::~CharaComboTrait() {
@@ -55,6 +64,49 @@ CharaComboTrait::~CharaComboTrait() {
 	delete customBox;
 	delete nameBox;
 }
+
+bool CharaComboTrait::custom() const {
+	return v_custom;
+}
+void CharaComboTrait::setCustom( bool sw ) {
+	if ( v_custom != sw ) {
+		v_custom = sw;
+	}
+}
+
+QString CharaComboTrait::customText() const {
+	return customBox->text();
+}
+
+void CharaComboTrait::setTrait( cv_Trait trait ) {
+	qDebug() << Q_FUNC_INFO << "HIER!";
+
+	if ( type() == trait.type && category() == trait.category && name() == trait.name ) {
+		if ( !trait.custom || (trait.custom && customText() == trait.customText) ) {
+			setValue( trait.value );
+		}
+	}
+}
+
+
+void CharaComboTrait::emitTraitChanged() {
+	cv_Trait trait;
+	trait.type = type();
+	trait.category = category();
+	trait.name = name();
+	trait.value = value();
+	// Eigenschaften, die mit diesem Widget dargestellt werden, haben keinen erklärenden Text.
+	trait.custom = custom();
+	trait.customText = customText();
+
+	// Eigenschaften, die einen besonderen text haben, werden nur dann in den Speicher übertragen, wenn dieser Text auch existiert.
+	if ( !custom() || !customText().isEmpty() ) {
+		qDebug() << Q_FUNC_INFO << custom() << customText();
+		emit traitChanged( trait );
+	}
+}
+
+
 
 void CharaComboTrait::addName( QString name ) {
 	QStringList names;
@@ -73,9 +125,9 @@ void CharaComboTrait::removeName( QString name ) {
 }
 
 
-void CharaComboTrait::enableWidgets( int index ) {
-	qDebug() << Q_FUNC_INFO << "Momentan hat diese Funktion keinerlei Effekt!";
-}
+// void CharaComboTrait::enableWidgets( int index ) {
+// 	qDebug() << Q_FUNC_INFO << "Momentan hat diese Funktion keinerlei Effekt!";
+// }
 
 
 void CharaComboTrait::changeParameters( QString name ) {
@@ -96,10 +148,10 @@ void CharaComboTrait::changeParameters( QString name ) {
 				if ( name == storage->traits( types.at( i ), categories.at( j ) ).at( k ).name ) {
 					setType( storage->traits( types.at( i ), categories.at( j ) ).at( k ).type );
 					setCategory( storage->traits( types.at( i ), categories.at( j ) ).at( k ).category );
+					setCustom( storage->traits( types.at( i ), categories.at( j ) ).at( k ).custom );
 
 					// Wenn die Eigenschaft zusätzlichen erklärenden Text beinhalten kann, muß das Textfeld auch angezeigt werden.
-
-					if ( storage->traits( types.at( i ), categories.at( j ) ).at( k ).custom ) {
+					if ( custom() ) {
 						customBox->setHidden( false );
 					} else {
 						customBox->setHidden( true );
@@ -110,31 +162,6 @@ void CharaComboTrait::changeParameters( QString name ) {
 // // 					trait.details.clear();
 //
 // 					emit traitChanged( trait );
-				}
-			}
-		}
-	}
-}
-
-void CharaComboTrait::changeCustomText( ) {
-	QList< cv_Trait::Type > types;
-	types.append( cv_Trait::Merit );
-	types.append( cv_Trait::Power );
-
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::Mental );
-	categories.append( cv_Trait::Physical );
-	categories.append( cv_Trait::Social );
-
-	for ( int i = 0; i < types.count(); i++ ) {
-		for ( int j = 0; j < categories.count(); j++ ) {
-			for ( int k = 0; k < storage->traits( types.at( i ), categories.at( j ) ).count(); k++ ) {
-				if ( name() == storage->traits( types.at( i ), categories.at( j ) ).at( k ).name && storage->traits( types.at( i ), categories.at( j ) ).at( k ).custom ) {
-					// Eigenschaft aus Vorlage übernehmen und dann entsprechend des Widgets abändern.
-					cv_Trait trait = storage->traits( types.at( i ), categories.at( j ) ).at( k );
-					trait.customText = customBox->text();
-					trait.value = value();
-					character->addTrait( trait );
 				}
 			}
 		}

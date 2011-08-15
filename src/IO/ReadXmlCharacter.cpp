@@ -130,7 +130,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 				trait.category = category;
 				trait.value = attributes().value( "value" ).toString().toInt();
 				QString customText = attributes().value( "custom" ).toString();
-				if (customText.isEmpty()){
+				if ( customText.isEmpty() ) {
 					trait.custom = false;
 					trait.customText = "";
 				} else {
@@ -160,8 +160,8 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 				}
 
 				trait.details = list;
-				
-				character->addTrait(trait);
+
+				character->addTrait( trait );
 			} else
 				readUnknownElement();
 		}

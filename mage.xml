@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.0.1">
 	<traits species="Mage" morale="Wisdom" supertrait="Gnosis" fuel="Mana">
+		<Power>
+			<trait name="Death">
+				<cheap>Moros</cheap>
+			</trait>
+			<trait name="Fate">
+				<cheap>Acanthus</cheap>
+			</trait>
+			<trait name="Forces">
+				<cheap>Obrimos</cheap>
+			</trait>
+			<trait name="Life">
+				<cheap>Thyrsus</cheap>
+			</trait>
+			<trait name="Matter">
+				<cheap>Moros</cheap>
+			</trait>
+			<trait name="Mind">
+				<cheap>Mastigos</cheap>
+			</trait>
+			<trait name="Prime">
+				<cheap>Obrimos</cheap>
+			</trait>
+			<trait name="Space">
+				<cheap>Mastigos</cheap>
+			</trait>
+			<trait name="Spirit">
+				<cheap>Thyrsus</cheap>
+			</trait>
+			<trait name="Time">
+				<cheap>Acanthus</cheap>
+			</trait>
+		</Power>
 	</traits>
 </SoulCreator>

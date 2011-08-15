@@ -29,44 +29,43 @@
 #include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
-#include "../Storage/StorageTemplate.h"
-#include "../CMakeConfig.h"
 
 #include "SkillWidget.h"
 
 
 SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
-	layout = new QGridLayout( this );
+	layout = new QVBoxLayout( this );
 	setLayout( layout );
-
-	StorageTemplate storage;
 
 	cv_Trait::Type type = cv_Trait::Skill;
 
-	QList< cv_Trait::Category > categories;
 	categories.append( cv_Trait::Mental );
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
 
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage.skillNames( categories.at( i ) ).count(); j++ ) {
-			CharaTrait *trait = new CharaTrait( this, type, categories.at( i ), storage.skillNames( categories.at( i ) ).at( j ) );
+		for ( int j = 0; j < storage->skillNames( categories.at( i ) ).count(); j++ ) {
+			CharaTrait *trait = new CharaTrait( this, type, categories.at( i ), storage->skillNames( categories.at( i ) ).at( j ) );
 			// Nur Fertigkeiten haben Spezialisierungen.
 			if ( type = cv_Trait::Skill ) {
 				// Es sollen die Spazialisierungen angezeigt werden können.
-				for ( int k = 0; k < storage.skillSpecialties( storage.skillNames( categories.at( i ) ).at( j ) ).count(); k++ ) {
-					trait->addSpecialty( storage.skillSpecialties( storage.skillNames( categories.at( i ) ).at( j ) ).at( k ) );
+				for ( int k = 0; k < storage->skillSpecialties( storage->skillNames( categories.at( i ) ).at( j ) ).count(); k++ ) {
+					trait->addSpecialty( storage->skillSpecialties( storage->skillNames( categories.at( i ) ).at( j ) ).at( k ) );
 				}
 				connect( trait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 				connect( trait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 			}
-			layout->addWidget( trait, i*storage.skillNames( categories.at( i ) ).count() + j + i, 0 );
+			layout->addWidget( trait );
+		}
+		// Abstand zwischen den Kategorien, aber nicht am Ende.
+		if ( i < categories.count() - 1 ) {
+			layout->addSpacing( Config::traitCategorySpace );
 		}
 	}
 
-	layout->setRowMinimumHeight( storage.skillNames( cv_Trait::Mental ).count(), Config::traitCategorySpace );
-	layout->setRowMinimumHeight( storage.skillNames( cv_Trait::Mental ).count() + storage.skillNames( cv_Trait::Physical ).count() + 1, Config::traitCategorySpace );
+// 	layout->setRowMinimumHeight( storage->skillNames( cv_Trait::Mental ).count(), Config::traitCategorySpace );
+// 	layout->setRowMinimumHeight( storage->skillNames( cv_Trait::Mental ).count() + storage->skillNames( cv_Trait::Physical ).count() + 1, Config::traitCategorySpace );
 }
 
 SkillWidget::~SkillWidget() {
@@ -75,12 +74,16 @@ SkillWidget::~SkillWidget() {
 
 void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
 // 	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
-	
-	for (int i = 0; i < layout->count(); i++){
-		CharaTrait *trait = qobject_cast<CharaTrait*>(layout->itemAt(i)->widget());
 
-		if (trait->name() != skillName) {
-			trait->setSpecialtyButtonChecked(false);
+	for ( int i = 0; i < layout->count(); i++ ) {
+		// Wir wollen nur die Eigenschaftswidgekts, nicht die Abstandshalter!
+		if (i == storage->skillNames( categories.at( 0 ) ).count() || i == storage->skillNames( categories.at( 0 ) ).count() + storage->skillNames( categories.at( 1 ) ).count() + 1){
+			i++;
+		}
+		CharaTrait *trait = qobject_cast<CharaTrait*>( layout->itemAt( i )->widget() );
+
+		if ( trait->name() != skillName ) {
+			trait->setSpecialtyButtonChecked( false );
 // 			qDebug() << Q_FUNC_INFO << "Deaktivieren von" << trait->name();
 		}
 	}

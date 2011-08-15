@@ -29,38 +29,36 @@
 #include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
-#include "../Storage/StorageTemplate.h"
 
-#include "AttributeWidget.h"
+#include "AdvantagesWidget.h"
 
 
-AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
+AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	layout = new QGridLayout( this );
+	layout->setMargin(0);
 	setLayout( layout );
 
-	StorageTemplate storage;
+	character = StorageCharacter::getInstance();
 
-	cv_Trait::Type type = cv_Trait::Attribute;
+// 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::Mental );
-	categories.append( cv_Trait::Physical );
-	categories.append( cv_Trait::Social );
+	QLabel* labelSize = new QLabel(tr("Size"));
+	QLabel* labelSizeResult = new QLabel();
+	QLabel* labelSpeed = new QLabel(tr("Speed"));
+	QLabel* labelSpeedResult = new QLabel();
+	QLabel* labelInitiative = new QLabel(tr("Initiative"));
+	QLabel* labelDefense = new QLabel(tr("Defense"));
+	QLabel* labelArmor = new QLabel(tr("Armor"));
 
-	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage.attributeNames( categories.at(i) ).count(); j++ ) {
-			CharaTrait *trait = new CharaTrait( this, type, categories.at(i), storage.attributeNames( categories.at(i) ).at( j ) );
-			trait->setValue(1);
-			// Zwischen den Attributsgruppen eine Spalte als Zwischenraum freilassen.
-			layout->addWidget( trait, j, 2*i );
-		}
-		if (i > 0) {
-			layout->setColumnMinimumWidth( (2*i)-1, Config::traitCategorySpace);
-		}
-	}
-
+	layout->addWidget(labelSize, 0, 0);
+	layout->addWidget(labelSizeResult, 0, 1);
+	layout->addWidget(labelSpeed, 1, 0);
+	layout->addWidget(labelSpeedResult, 1, 1);
+	layout->addWidget(labelInitiative, 2, 0);
+	layout->addWidget(labelDefense, 3, 0);
+	layout->addWidget(labelArmor, 4, 0);
 }
 
-AttributeWidget::~AttributeWidget() {
+AdvantagesWidget::~AdvantagesWidget() {
 	delete layout;
 }

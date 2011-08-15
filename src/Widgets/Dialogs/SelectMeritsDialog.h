@@ -22,42 +22,47 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "CMakeConfig.h"
+#ifndef CHOOSEMERITSDIALOG_H
+#define CHOOSEMERITSDIALOG_H
 
-#include "Config.h"
+#include <QGridLayout>
 
-const int Config::traitCategorySpace = 10;
+#include <QDialog>
 
-const int Config::traitMultipleMax = 3;
 
-const int Config::displayTimeout = 10000;
-
-QString Config::name() {
-	return PROGRAM_NAME;
+namespace Ui {
+class SelectMeritsDialog;
 }
 
-QString Config::version() {
-	return QString::number( PROGRAM_VERSION_MAJOR ) +
-		   "." +
-		   QString::number( PROGRAM_VERSION_MINOR ) +
-		   "." +
-		   QString::number( PROGRAM_VERSION_CHANGE );
-}
+/**
+ * @brief Dialog zur Auswahl der darzustellenden Merits.
+ *
+ * Alle Merits darzustellen ist wohl etwas viel. Über diesen Dialog kann der Benutzer auswählen, welche und im Falle von Merits mit Zusatztext, wieviele er angezeigt haben möchte.
+ **/
+class SelectMeritsDialog : public QDialog {
+		Q_OBJECT
 
-QString Config::importantTextColorName() {
-	return "darkBlue";
-}
+	public:
+		/**
+		 * Konstruktor
+		 **/
+		SelectMeritsDialog( QWidget *parent = 0 );
+		/**
+		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
+		 **/
+		~SelectMeritsDialog();
 
-QColor Config::importantTextColor() {
-	return QColor( "importantTextColorName" );
-}
+	private:
+		/**
+		 * Graphische Benutzeroberfläche, erstellt mit dem Designer.
+		 */
+		Ui::SelectMeritsDialog* ui;
 
-QString Config::saveDir() {
-	return "save";
-}
+	public slots:
 
+	private slots:
 
+	signals:
+};
 
-
-Config::Config() {
-}
+#endif

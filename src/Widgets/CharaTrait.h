@@ -36,7 +36,7 @@
  *
  * Anders als \ref TraitLine, ist dieses Widget direkt mit der korrespondierenden Eigenschaft in der Klasse \ref StorageCharacter verknüpft. Ändert sich der Wert dort, wird automatisch dieses Widget entsprechend verändert. Gleichermaßen wird \ref StorageCharacter verändert, sollte der Benutzer dieses Widget ändern.
  *
- * \todo Bei einem Klick auf die Fertigkeit, sollen in einem Zusatz-Widget die Spezialisierungen angezeigt werden.
+ * \todo Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.
  **/
 
 class CharaTrait : public TraitLine {
@@ -46,7 +46,7 @@ class CharaTrait : public TraitLine {
 		/**
 		 * Konstruktor.
 		 **/
-		CharaTrait( QWidget *parent, cv_Trait::Type type, cv_Trait::Category category, QString name, int value = 0 );
+		CharaTrait( QWidget *parent, cv_Trait::Type type, cv_Trait::Category category, QString name, bool custom = false, int value = 0 );
 // 		/**
 // 		 * Konstruktor.
 // 		 **/
@@ -60,6 +60,10 @@ class CharaTrait : public TraitLine {
 		 * Gibt die Kategorie zurück, der die hier dargestellte Eigenschaft angehört.
 		 **/
 		cv_Trait::Category category() const;
+		/**
+		 * Gibt zurück, ob es sich um eine Eigenschaft mit einem besonderen Text handelt.
+		 **/
+		bool custom() const;
 
 	private:
 		StorageCharacter *character;
@@ -67,6 +71,7 @@ class CharaTrait : public TraitLine {
 		QList< cv_TraitDetail > v_specialties;
 		cv_Trait::Type v_type;
 		cv_Trait::Category v_category;
+		bool v_custom;
 
 	public slots:
 		/**
@@ -77,20 +82,30 @@ class CharaTrait : public TraitLine {
 		 * Legt die Kategorie der hier dargestellten Eigenschaft fest.
 		 **/
 		void setCategory( cv_Trait::Category category );
+		/**
+		 * Legt fest, ob es sich um eine Eigenschaft mit einem erklärenden Text handelt.
+		 **/
+		void setCustom(bool sw);
 		void addSpecialty(cv_TraitDetail specialty);
 
 	private slots:
-		void emitValueChanged( int value );
+		void emitTraitChanged( int value );
 		/**
 		 * Verbirgt die Schaltfläche für Spezialisierungen für alle Eigenschaften außer den Fertigkeiten.
 		 **/
 		void hideSpecialtyWidget( cv_Trait::Type type );
+		/**
+		 * Verbirgt die Textzeile für den Beschreibungstext bei allen, außer Merits mit custom=true.
+		 *
+		 * \todo Muß natürlich auch bei manchen Powers vorhanden sein.
+		 **/
+		void hideDescriptionWidget();
 		void emitSpecialtiesClicked(bool sw);
 
 		/**
 		 * Ändert alle Parameter dieses Widgets, damit es der übergebenen Eigenschaft entspricht.
 		 **/
-		void setTrait( cv_Trait trait );
+		virtual void setTrait( cv_Trait trait );
 
 	signals:
 		/**
@@ -99,6 +114,7 @@ class CharaTrait : public TraitLine {
 		 * Das wird zwar selten passieren, wenn das Widget erst einmal angelegt wurde (nie!), aber so kann ich einfach die Anzeige für die Spazialisierungen an und Ausschalten, wenn das Widget zu einer Fertigkeit gemacht wird.
 		 **/
 		void typeChanged( cv_Trait::Type );
+		void customChanged( bool sw);
 		/**
 		 * Dieses Signal wird ausgesandt, wann immer sich die Eigenschaft des Widgets ändert.
 		 **/

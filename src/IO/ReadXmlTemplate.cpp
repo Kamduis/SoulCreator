@@ -236,6 +236,10 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 		trait.age = cv_Trait::toAge( attributes().value( "age" ).toString() );
 		trait.custom = attributes().value( "custom" ).toString() == QString("true");
 
+// 		if (trait.custom){
+// 			qDebug() << Q_FUNC_INFO << trait.name << "ist besonders!";
+// 		}
+
 		while ( !atEnd() ) {
 			readNext();
 

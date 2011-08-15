@@ -25,7 +25,7 @@
 #include <QObject>
 #include <QDebug>
 
-#include "../Config/Config.h"
+#include "../../Config/Config.h"
 
 #include "MessageBox.h"
 

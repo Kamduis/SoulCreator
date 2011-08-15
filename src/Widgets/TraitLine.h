@@ -29,6 +29,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QLineEdit>
 
 #include "TraitDots.h"
 #include "TraitSpecialties.h"
@@ -48,6 +49,14 @@ class TraitLine : public QWidget {
 		 * \access name(), setName()
 		 **/
 		Q_PROPERTY( QString name READ name WRITE setName )
+		/**
+		 * Der beschreibende Text dieser Eigenschaft.
+		 *
+		 * \access text(), setText()
+		 *
+		 * \notifier textChanged()
+		 **/
+		Q_PROPERTY( QString text READ text WRITE setText NOTIFY textChanged )
 		/**
 		 * Der Wert, die hier dargestellten Eigenschaft.
 		 *
@@ -70,6 +79,7 @@ class TraitLine : public QWidget {
 
 		QString name() const;
 		int value() const;
+		QString text() const;
 		int minimum() const;
 		/**
 		 * Einfacher Zugriff auf das Layout, damit ich es bei den Erben verändern kann.
@@ -84,12 +94,14 @@ class TraitLine : public QWidget {
 		QHBoxLayout *v_layout;
 		QLabel *v_label_name;
 		QPushButton *button;
+		QLineEdit* lineEdit;
 		TraitDots *traitDots;
 		TraitSpecialties *specialties;
 
 	public slots:
 		void setName(QString text);
 		void setValue(int value);
+		void setText(QString text);
 		void setMinimum(int value);
 		/**
 		 * Mit dieser Methode verstecke ich die Liste der Spezialisierungen. Schließlich haben nur Fertigkeiten eine Notwendigkeit dafür.
@@ -99,12 +111,17 @@ class TraitLine : public QWidget {
 		 * Aktiviere oder Deaktiviere den Spezialisierungs-Knopf.
 		 **/
 		void setSpecialtyButtonChecked(bool sw = true);
+		/**
+		 * Mit dieser Methode verstecke ich die Textzeile, in welcher zusätzlicher Beschreibungstext eingegeben werden kann.
+		 **/
+		void hideDescription(bool sw = true);
 
 	private slots:
 		void enableSpecialties(int number);
 //		void storeTrait();
 
 	signals:
+		void textChanged(QString text);
 		void valueChanged ( int value );
 		/**
 		 * Der Knopf zum Anzeigen der Spazialisierungen wurde gedrückt.

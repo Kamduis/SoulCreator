@@ -32,6 +32,7 @@
 #include "Widgets/AttributeWidget.h"
 #include "Widgets/SkillWidget.h"
 #include "Widgets/MeritWidget.h"
+#include "Widgets/AdvantagesWidget.h"
 #include "Widgets/CharaSpecialties.h"
 
 #include <QMainWindow>
@@ -46,7 +47,11 @@ class MainWindow;
  *
  * Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
  *
- * \todo Bei den Merits gibt es den effekt Custom. Den will ich aber eigentlich garnicht. Ich will den Inhalt einer Textbox speichern. Im Templete mag es dan custom=true geben, beim Speichern des Charakters aber muß es dann custom="Inhalt" sein. Außerdem gibt es dann beispielsweise den merit Language mehrfach. Muß also auch nach custom unterschieden werden.
+ * \todo Laden von Merits eines Charakters.
+ *
+ * \todo CharaComboTrait wird nichtmehr verwendet, aber es muß einen Erben von CharaTrait geben, der mit Zusatztext umgehen kann. Vielelicht nichtmal einen Erben.
+ *
+ * \todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
  *
  * \todo Ich muß in StorageCharacter nichts speichern, daß den Wert 0 hat. Das kann aus dem Speicher gelöscht werden.
  */
@@ -87,11 +92,16 @@ class MainWindow : public QMainWindow {
 		 *
 		 * \todo Irgendwann soll die Anzahl der angezeigten Merits vom user durch klicken irgendwie erhöht werden können.
 		 **/
+// 		ComboTraitWidget* merits;
 		MeritWidget* merits;
 		/**
 		 * Das Widget für die Anzeige von Spezialisierungen einer Fertigkeit.
 		 **/
 		CharaSpecialties* specialties;
+		/**
+		 * Das Widget für die Anzeige von Spezialisierungen einer Fertigkeit.
+		 **/
+		AdvantagesWidget* advantages;
 		/**
 		 * Über diesen Zeiger kann die Klasse aufgerufen werden, welche für das Speichern des Charakters zuständig ist.
 		 **/

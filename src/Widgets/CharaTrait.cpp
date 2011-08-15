@@ -29,12 +29,14 @@
 #include "CharaTrait.h"
 
 
-CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category category, QString name, int value ) : TraitLine( parent, name, value ) {
+CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category category, QString name, bool custom, int value ) : TraitLine( parent, name, value ) {
 	character = StorageCharacter::getInstance();
 
-	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitValueChanged( int ) ) );
-// 	connect( this, SIGNAL( valueChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
+	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitTraitChanged( int ) ) );
+	connect( this, SIGNAL( traitChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
+	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
+	connect( this, SIGNAL( customChanged( bool ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
 	// Änderungen am Charakter im Speicher müssen dieses Widget aber auch aktualisieren.
 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( setTrait( cv_Trait ) ) );
@@ -43,6 +45,7 @@ CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category
 // 	hideSpecialtyWidget(cv_Trait::Skill);
 	setType( type );
 	setCategory( category );
+	setCustom( custom );
 }
 
 
@@ -68,6 +71,17 @@ void CharaTrait::setCategory( cv_Trait::Category category ) {
 	}
 }
 
+bool CharaTrait::custom() const {
+	return v_custom;
+}
+void CharaTrait::setCustom( bool sw ) {
+	if ( v_custom != sw ) {
+		v_custom = sw;
+
+		emit customChanged(sw);
+	}
+}
+
 
 void CharaTrait::addSpecialty( cv_TraitDetail specialty ) {
 	v_specialties.append( specialty );
@@ -83,9 +97,21 @@ void CharaTrait::hideSpecialtyWidget( cv_Trait::Type type ) {
 	}
 }
 
+void CharaTrait::hideDescriptionWidget() {
+	if ( type() == cv_Trait::Merit && custom() ) {
+		hideDescription( false );
+	} else {
+		hideDescription( true );
+	}
+}
+
 void CharaTrait::setTrait( cv_Trait trait ) {
+// 	qDebug() << Q_FUNC_INFO << "hier!";
+
 	if ( type() == trait.type && category() == trait.category && name() == trait.name ) {
-		setValue( trait.value );
+		if (custom() && text() == trait.customText){
+			setValue( trait.value );
+		}
 	}
 }
 
@@ -94,16 +120,19 @@ void CharaTrait::setTrait( cv_Trait trait ) {
 
 
 
-void CharaTrait::emitValueChanged( int value ) {
-	cv_Trait trait;
-	trait.type = type();
-	trait.category = category();
-	trait.name = name();
-	trait.value = value;
-	// Eigenschaften, die mit diesem Widget dargestellt werden, haben keinen erklärenden Text.
-	trait.custom = false;
-	
-	emit traitChanged( trait );
+void CharaTrait::emitTraitChanged( int value ) {
+	// Eigenschaften mit Beschreibungstext werden nur dann in den Speicher aktualisiert, wenn sie auch einen solchen text besitzen.
+	if (!custom() || !text().isEmpty()){
+		cv_Trait trait;
+		trait.type = type();
+		trait.category = category();
+		trait.name = name();
+		trait.value = value;
+		trait.custom = custom();
+		trait.customText = text();
+
+		emit traitChanged( trait );
+	}
 }
 
 void CharaTrait::emitSpecialtiesClicked( bool sw ) {

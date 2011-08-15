@@ -405,52 +405,274 @@
 		</Skill>
 		<Merit>
 			<Mental>
-				<trait name="Danger Sense">
+				<trait name="Danger Sense" creationOnly="true" source="WoD Core">
 					<value>2</value>
 					<description>You gain a +2 modifier on reflexive Wits + Composure rolls to detect an impending ambush.</description>
 				</trait>
-				<trait name="Eidetic Memory">
+				<trait name="Eidetic Memory" creationOnly="true" source="WoD Core">
 					<value>2</value>
 					<description>You have a near-photographic memory, being able to recall vast amounts of observed detail with astonishing accuracy.</description>
 				</trait>
-				<trait name="Encyclopedic Knowledge">
+				<trait name="Encyclopedic Knowledge" source="WoD Core">
 					<value>4</value>
 				</trait>
-				<trait name="EOD" max="2">
+				<trait name="EOD" max="2" source="WoD Armory">
 					<value>2</value>
 					<prerequisite>(Wits > 2 OR Dexterity > 2) AND Crafts (Demolitions) > 2</prerequisite>
 				</trait>
-				<trait name="Holistic Awareness">
+				<trait name="Holistic Awareness" source="WoD Core">
 					<value>3</value>
 				</trait>
-				<trait name="Hypnotic Voice">
+				<trait name="Hypnotic Voice" source="WoD Second Sight">
 					<value>4</value>
 					<prerequisite>Persuasion > 2 OR Science (Hypnotherapy) > 2</prerequisite>
 				</trait>
-				<trait name="Language" custom="true">
+				<trait name="Language" source="WoD Core" custom="true">
 					<value>1</value>
 					<value>2</value>
 				</trait>
-				<trait name="Lucid Dreaming">
+				<trait name="Lucid Dreaming" source="Changeling Core">
 					<value>2</value>
 					<prerequisite>Resolve > 2</prerequisite>
 				</trait>
-				<trait name="Meditative Mind">
+				<trait name="Meditative Mind" source="WoD Core">
 					<value>1</value>
 				</trait>
-				<trait name="Technophile">
+				<trait name="Technophile" source="WoD Armory">
 					<value>1</value>
 					<value>2</value>
 				</trait>
+				<trait name="Territorial Familiarity" source="Werewolf Blood of the Wolf">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+				</trait>
 			</Mental>
 			<Physical>
-				<trait name="Fast Reflexes">
+				<trait name="Ambidextrous" source="WoD Core">
+					<value>3</value>
+				</trait>
+				<trait name="Armored Fighting" source="WoD Armory Reloaded">
+					<value>2</value>
+					<value>4</value>
+					<prerequisite>Strength > 1 AND Stamina > 2</prerequisite>
+				</trait>
+				<trait name="Athletics Dodge" source="WoD Dogs of War">
+					<value>1</value>
+					<prerequisite>Dexterity > 1 AND Athletics > 0</prerequisite>
+				</trait>
+				<trait name="Brawling Dodge" source="WoD Core">
+					<value>1</value>
+					<prerequisite>Strength > 1 AND Brawl > 0</prerequisite>
+				</trait>
+				<trait name="Direction Sense" source="WoD Core">
+					<value>1</value>
+				</trait>
+				<trait name="Disarm" source="WoD Core">
+					<value>2</value>
+					<prerequisite>Dexterity > 2 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Entering Strike" source="WoD Armory Reloaded">
+					<value>2</value>
+					<prerequisite>Dexterity > 2 AND Brawl > 2</prerequisite>
+				</trait>
+				<trait name="Equipped Grappling" source="WoD Armory Reloaded">
+					<value>2</value>
+					<prerequisite>Dexterity > 2 AND Brawl > 1 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Fast Reflexes" source="WoD Core">
 					<value>1</value>
 					<value>2</value>
 					<prerequisite>Dexterity > 2</prerequisite>
 					<effect value="+value">Initiative</effect>
 				</trait>
+				<trait name="Fighting Finesse" source="WoD Core" custom="true">
+					<value>2</value>
+					<prerequisite>Dexterity > 2 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Firearm Retention" source="WoD Armory Reloaded">
+					<value>1</value>
+					<prerequisite>Wits > 1 AND Dexterity > 1 AND Brawl > 1 AND Firearms > 1</prerequisite>
+				</trait>
+				<trait name="Fleet of Foot" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<prerequisite>Strength > 1</prerequisite>
+					<effect value="+value">Speed</effect>
+				</trait>
+				<trait name="Giant" creationOnly="true" source="WoD Core">
+					<value>4</value>
+				</trait>
+				<trait name="Gunslinger" source="WoD Core">
+					<value>3</value>
+					<prerequisite>Dexterity > 2 AND Firearms > 2</prerequisite>
+				</trait>
+				<trait name="Iron Stamina" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<prerequisite>Stamina > 2 OR Resolve > 1</prerequisite>
+				</trait>
+				<trait name="Iron Stomach" source="WoD Core">
+					<value>2</value>
+					<prerequisite>Stamina > 1</prerequisite>
+				</trait>
+				<trait name="Natural Immunity" source="WoD Core">
+					<value>4</value>
+					<prerequisite>Stamina > 1</prerequisite>
+				</trait>
+				<trait name="Parkour" source="Promethean Strange Alchemies">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Dexterity > 2 AND Athletics > 1</prerequisite>
+				</trait>
+				<trait name="Quick Draw" source="WoD Core">
+					<value>1</value>
+					<prerequisite>Dexterity > 2</prerequisite>
+				</trait>
+				<trait name="Quick Healer" source="WoD Core">
+					<value>4</value>
+					<prerequisite>Stamina > 3</prerequisite>
+				</trait>
+				<trait name="Shield Bearer" source="WoD Armory Reloaded">
+					<value>4</value>
+					<prerequisite>Strength > 1</prerequisite>
+				</trait>
+				<trait name="Strong Back" source="WoD Core">
+					<value>1</value>
+					<prerequisite>Strength > 1</prerequisite>
+				</trait>
+				<trait name="Strong Lungs" source="WoD Core">
+					<value>3</value>
+					<prerequisite>Athletics > 2</prerequisite>
+				</trait>
+				<trait name="Stunt Driver" source="WoD Core">
+					<value>3</value>
+					<prerequisite>Dexterity > 2</prerequisite>
+				</trait>
+				<trait name="Stunt Rider" source="Vampire Requiem for Rome">
+					<value>3</value>
+					<prerequisite>Dexterity > 2</prerequisite>
+				</trait>
+				<trait name="Student of the Blade" source="WoD Armory Reloaded">
+					<value>1</value>
+					<prerequisite>Aggressive Light Sword > 0 OR Defensive Light Sword > 0</prerequisite>
+				</trait>
+				<trait name="Toxin Resistance" source="WoD Core">
+					<value>2</value>
+					<prerequisite>Stamina > 2</prerequisite>
+				</trait>
+				<trait name="Weaponry Dodge" source="WoD Core">
+					<value>1</value>
+					<prerequisite>Strength > 1 AND Weaponry > 0</prerequisite>
+				</trait>
+				<!--<trait name="Weapons to Empty Hands" source="WoD Armory Reloaded">
+					<value>1</value>
+					<prerequisite>Dexterity > 2 AND Brawl > 2 AND Weaponry > 2 AND Fighting Style >0</prerequisite>
+				</trait>-->
 			</Physical>
+			<Social>
+				<trait name="Allies" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Anonymity" source="Werewolf Blood of the Wolf">
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Resolve > 1 AND (Larceny > 1 OR Subterfuge > 1)</prerequisite>
+				</trait>
+				<!--<trait name="Barfly" source="WoD Core">
+					<value>1</value>
+				</trait>-->
+				<trait name="Contacts" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Fame" cutom="true" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+				</trait>
+				<trait name="Ghost Ally" source="WoD Second Sight">
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Inspiring" source="WoD Core">
+					<value>4</value>
+					<prerequisite>Presence > 3</prerequisite>
+				</trait>
+				<trait name="Luxury" source="Mage Seers of the Throne">
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Mentor" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="New Identity" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Noble Heritage" source="Vampire Requiem for Rome">
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Resources" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Retainer" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Site" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Status" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Striking Looks" source="WoD Core">
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Dream" source="Mage: The Awakening} Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+			</Social>
 		</Merit>
 	</traits>
 </SoulCreator>

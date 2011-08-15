@@ -107,6 +107,7 @@ void StorageCharacter::addTrait( cv_Trait trait ) {
 			if ( trait.custom ) {
 				// Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 				if ( trait.customText.isEmpty() ) {
+					qDebug() << Q_FUNC_INFO << "Ersetze" << trait.name << "NICHT!";
 					return;
 				} else if ( v_traits.at( i ).customText == trait.customText ) {
 					exists = true;
@@ -116,6 +117,7 @@ void StorageCharacter::addTrait( cv_Trait trait ) {
 			}
 		}
 
+		// Wenn ich die Eigenschaft schon finde, muß ich natürlich nicht bis zum Ende der Schleife laufen, sondern ersetze sie sofort und fertig.
 		if ( exists ) {
 			qDebug() << Q_FUNC_INFO << "Ersetze:" << trait.name;
 			v_traits.replace( i, trait );
@@ -124,7 +126,7 @@ void StorageCharacter::addTrait( cv_Trait trait ) {
 	}
 
 	if ( !exists ) {
-		qDebug() << Q_FUNC_INFO << "Füge hinzu:" << trait.name;
+// 		qDebug() << Q_FUNC_INFO << "Füge hinzu:" << trait.name << "mit" << trait.custom << "und" << trait.customText;
 		v_traits.append( trait );
 	}
 

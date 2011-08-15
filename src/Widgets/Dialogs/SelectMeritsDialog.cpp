@@ -22,42 +22,28 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "CMakeConfig.h"
+#include <QGridLayout>
+#include <QDebug>
 
-#include "Config.h"
+#include "../CharaTrait.h"
+#include "../../Datatypes/cv_Trait.h"
+#include "../../Exceptions/Exception.h"
+#include "../../Config/Config.h"
+#include "../../Storage/StorageTemplate.h"
 
-const int Config::traitCategorySpace = 10;
+#include "SelectMeritsDialog.h"
+#include "ui_SelectMeritsDialog.h"
 
-const int Config::traitMultipleMax = 3;
 
-const int Config::displayTimeout = 10000;
+SelectMeritsDialog::SelectMeritsDialog( QWidget *parent ) : QDialog( parent ), ui( new Ui::SelectMeritsDialog )  {
+	ui->setupUi( this );
 
-QString Config::name() {
-	return PROGRAM_NAME;
+	ui->pushButton_select->setIcon(style()->standardIcon(QStyle::SP_ArrowRight));
+	ui->pushButton_deselect->setIcon(style()->standardIcon(QStyle::SP_ArrowLeft));
+
+	connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
-QString Config::version() {
-	return QString::number( PROGRAM_VERSION_MAJOR ) +
-		   "." +
-		   QString::number( PROGRAM_VERSION_MINOR ) +
-		   "." +
-		   QString::number( PROGRAM_VERSION_CHANGE );
-}
-
-QString Config::importantTextColorName() {
-	return "darkBlue";
-}
-
-QColor Config::importantTextColor() {
-	return QColor( "importantTextColorName" );
-}
-
-QString Config::saveDir() {
-	return "save";
-}
-
-
-
-
-Config::Config() {
+SelectMeritsDialog::~SelectMeritsDialog() {
 }

@@ -106,6 +106,12 @@ class StorageTemplate : public QObject {
 		 **/
 		QList< cv_Trait > traits(cv_Trait::Type type, cv_Trait::Category category);
 		/**
+		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_Trait::Type), Kategorie (\ref cv_Trait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
+		 *
+		 * \todo Momentan arbeite ich nicht wirklich richtig mit den Flags in dieser Funktion. Ich muß momentan auf jedes einzelne existierende Flag prüfen. Das kann aber nicht der wahre Weg sein.
+		 **/
+		QStringList traitNames( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::EraAll, cv_Trait::AgeFlag age = cv_Trait::AgeAll ) const;
+		/**
 		 * Gibt die gesamte Eigenschaft zurück, welche über Typ, Kategorie und Name spezifiziert ist.
 		 *
 		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
@@ -124,12 +130,6 @@ class StorageTemplate : public QObject {
 		 **/
 		static QList< cv_Species > v_species;
 
-		/**
-		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_Trait::Type), Kategorie (\ref cv_Trait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
-		 *
-		 * \todo Momentan arbeite ich nicht wirklich richtig mit den Flags in dieser Funktion. Ich muß momentan auf jedes einzelne existierende Flag prüfen. Das kann aber nicht der wahre Weg sein.
-		 **/
-		QStringList traitNames( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const;
 
 	public slots:
 // 		/**

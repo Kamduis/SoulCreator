@@ -30,7 +30,7 @@
 #include <QDebug>
 
 #include "Widgets/TraitLine.h"
-#include "Widgets/MessageBox.h"
+#include "Widgets/Dialogs/MessageBox.h"
 #include "IO/ReadXmlTemplate.h"
 #include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
@@ -62,6 +62,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 MainWindow::~MainWindow() {
 	delete specialties;
+	delete advantages;
+	delete merits;
 	delete skills;
 	delete attributes;
 	delete info;
@@ -97,13 +99,16 @@ void MainWindow::populateUi() {
 	// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
+// 	merits = new ComboTraitWidget( this, cv_Trait::Merit );
 	merits = new MeritWidget( this );
+	advantages = new AdvantagesWidget(this);
 
 	ui->layout_info->addWidget( info );
 	ui->layout_attributes->addWidget( attributes );
 	ui->layout_skills->addWidget( skills );
-	ui->layout_specialties->addWidget( specialties );
 	ui->layout_merits->addWidget( merits );
+	ui->layout_specialties->addWidget( specialties );
+	ui->layout_advantages->addWidget( advantages );
 
 	// Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
 	connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );

@@ -67,9 +67,6 @@
           <item>
            <widget class="QFrame" name="frame_body">
             <layout class="QHBoxLayout" name="horizontalLayout">
-             <property name="margin">
-              <number>0</number>
-             </property>
              <item>
               <widget class="QGroupBox" name="groupBox_skills">
                <property name="sizePolicy">
@@ -101,15 +98,70 @@
               </spacer>
              </item>
              <item>
-              <widget class="QGroupBox" name="groupBox_merits">
-               <property name="title">
-                <string>Merits</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <layout class="QVBoxLayout" name="layout_merits"/>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <widget class="QGroupBox" name="groupBox_powers">
+                 <property name="title">
+                  <string>Powers</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <layout class="QVBoxLayout" name="layout_2">
+                  <item>
+                   <widget class="QScrollArea" name="scrollArea_3">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::NoFrame</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Plain</enum>
+                    </property>
+                    <property name="lineWidth">
+                     <number>0</number>
+                    </property>
+                    <property name="widgetResizable">
+                     <bool>true</bool>
+                    </property>
+                    <widget class="QWidget" name="scrollAreaWidgetContents_3">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>72</width>
+                       <height>72</height>
+                      </rect>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <layout class="QVBoxLayout" name="layout_powers"/>
+                    </widget>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox_merits">
+                 <property name="title">
+                  <string>Merits</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <layout class="QVBoxLayout" name="layout_merits"/>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </widget>
@@ -148,7 +200,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -161,9 +213,9 @@
    <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QDockWidget" name="dockWidget_preferences">
+  <widget class="QDockWidget" name="dockWidget_advantages">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -171,18 +223,32 @@
    <property name="minimumSize">
     <size>
      <width>160</width>
-     <height>44</height>
+     <height>93</height>
     </size>
    </property>
    <property name="features">
-    <set>QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>Advantages</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
-   <widget class="QWidget" name="dockWidget_preferencesContents"/>
+   <widget class="QWidget" name="dockWidget_advantagesContents">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <layout class="QVBoxLayout" name="layout_advantages"/>
+   </widget>
   </widget>
   <widget class="QDockWidget" name="dockWidget_specialties">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
    <property name="windowTitle">
     <string>Specialties</string>
    </property>

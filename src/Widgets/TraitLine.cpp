@@ -64,11 +64,13 @@ TraitLine::TraitLine( QWidget *parent, QString name, int value ) : QWidget( pare
 	button = new QPushButton( this );
 	button->setText( tr( "Specialties" ) );
 	button->setCheckable( true );
+	lineEdit = new QLineEdit( this );
 	traitDots = new TraitDots( this );
 
 	connect( traitDots, SIGNAL( valueChanged( int ) ), SIGNAL( valueChanged( int ) ) );
 	connect( traitDots, SIGNAL( valueChanged( int ) ), this, SLOT( enableSpecialties( int ) ) );
 	connect( button, SIGNAL( clicked( bool ) ), this, SIGNAL( specialtiesClicked( bool ) ) );
+	connect( lineEdit, SIGNAL( textChanged(QString)), this, SIGNAL( textChanged(QString)) );
 
 	setName( name );
 	setValue( value );
@@ -77,6 +79,7 @@ TraitLine::TraitLine( QWidget *parent, QString name, int value ) : QWidget( pare
 
 	v_layout->addWidget( v_label_name );
 	v_layout->addStretch();
+	v_layout->addWidget( lineEdit );
 	v_layout->addWidget( button );
 	v_layout->addWidget( traitDots );
 
@@ -100,10 +103,17 @@ QLabel* TraitLine::labelName() const {
 QString TraitLine::name() const {
 	return v_label_name->text();
 }
-
 void TraitLine::setName( QString name ) {
 	v_label_name->setText( name );
 }
+
+QString TraitLine::text() const {
+	return lineEdit->text();
+}
+void TraitLine::setText( QString text ) {
+	lineEdit->setText( text );
+}
+
 
 int TraitLine::value() const {
 	return traitDots->value();
@@ -139,6 +149,14 @@ void TraitLine::enableSpecialties( int number ) {
 		button->setEnabled( true );
 	} else {
 		button->setEnabled( false );
+	}
+}
+
+void TraitLine::hideDescription( bool sw ) {
+	if ( sw ) {
+		lineEdit->hide();
+	} else {
+		lineEdit->show();
 	}
 }
 

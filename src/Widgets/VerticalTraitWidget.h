@@ -22,45 +22,39 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MERITWIDGET_H
-#define MERITWIDGET_H
+#ifndef VERTICALTRAITWIDGET_H
+#define VERTICALTRAITWIDGET_H
 
 #include <QVBoxLayout>
-#include <QScrollArea>
-#include <QPushButton>
 
+#include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_TraitDetail.h"
-#include "Dialogs/SelectMeritsDialog.h"
 
 #include <QWidget>
 
 
 /**
- * @brief Das Widget, in welchem sämtliche Merits angeordnet sind.
+ * @brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
  *
- * \todo Einen Knopf erstellen, über den der benutzer angeben kann, welche Merits er denn wirklich alle angezeigt haben will.
- *
- * \todo Bei Merits mit Zusatztext (Language) in diesem men+ ein Zahlenfle dangeben, bei welchem der benutzer einstellen kann, wieviele verschiedene dieser scheinbar identischen merits er angezeigt haben will.
- *
- * \todo Eigenscahften mit Zusatztext benötigen mehr vertikalen Raum als die anderen. Sieht nicht gut aus.
- *
- * \todo in Wirklichkeit werden alle merits in das Widget gepackt, aber es werden alle versteckt, die der Benutzer nicht explizit angezeigt haben will.
+ * Die Eigenschaften werden in diesem Widget vertikal untereinander angeordnet.
  **/
-class MeritWidget : public QWidget {
+class VerticalTraitWidget : public QWidget {
 		Q_OBJECT
 
 	public:
-		MeritWidget( QWidget *parent = 0 );
+		VerticalTraitWidget( QWidget *parent = 0, cv_Trait::Type type = cv_Trait::Skill);
 		/**
 		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
 		 **/
-		~MeritWidget();
+		~VerticalTraitWidget();
+
+		/**
+		 * Der Zeiger auf das Layout ist public, damit ich in Erben darauf zugreifen kann.
+		 **/
+		QVBoxLayout *layout;
 
 	private:
-		QScrollArea* scrollArea;
-		QVBoxLayout* layout;
-		QPushButton* button;
-		SelectMeritsDialog* dialog;
+		cv_Trait::Type v_type;
 
 	public slots:
 

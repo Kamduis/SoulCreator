@@ -53,7 +53,16 @@ class CharaComboTrait : public CharaTrait {
 		 **/
 		~CharaComboTrait();
 
-	private:
+		/**
+		 * Gibt zurück, ob es sich um eine Eigenschaft mit einem besonderen Text handelt.
+		 **/
+		bool custom() const;
+		/**
+		 * Gibt den besonderen Text der Eigenschaft zurück.
+		 **/
+		QString customText() const;
+
+private:
 		StorageCharacter *character;
 
 		QComboBox* nameBox;
@@ -61,7 +70,19 @@ class CharaComboTrait : public CharaTrait {
 
 		StorageTemplate* storage;
 
+		bool v_custom;
+
 	public slots:
+		/**
+		 * Ändert alle Parameter dieses Widgets, damit es der übergebenen Eigenschaft entspricht.
+		 *
+		 * \note Eigenschaften mit Zusatztext können beliebig oft aufgerufen werden. Und sie können auch alle den selben Zusatztext haben. Allerdings erhalten sie dann auch stets alle den selben Wert, wenn der Zusatztext identisch ist.
+		 *
+		 * \note Abgeändert von CharaTrait::setTrait(), um auch mit custom() umgehen zu können.
+		 *
+		 * \overload CharaTrait::setTrait()
+		 **/
+		virtual void setTrait(cv_Trait trait);
 		/**
 		 * Fügt einen Namen in die Combobox ein.
 		 *
@@ -74,26 +95,32 @@ class CharaComboTrait : public CharaTrait {
 		 * Entfernt einen Namen aus der ComboBox
 		 **/
 		void removeName(QString names);
+		/**
+		 * Legt fest, ob es sich um eine Eigenschaft mit einem erklärenden Text handelt.
+		 **/
+		void setCustom(bool sw);
 
 	private slots:
 		/**
-		 * Wann immer Index 0 (also kein Merit) in der Combobox angezeigt wird, werden die Punkte disabled.
+		 * Sorgt dafür, daß alle notwendigen Informationen dieser Eigenschaft in den Speicher übertragen werden.
 		 *
-		 * \todo Mit Wirkung versehen, damit bei Index 0 keine Punkte vergeben werden können.
-		 *
-		 * \bug Momentan keine Wirkung!
+		 * \note Eigenschaften, die einen besonderen text besitzen, werden nur dann in den Speicher übertragen, wenn dieser besondere text auch existiert.
 		 **/
-		void enableWidgets(int index);
+		void emitTraitChanged();
+// 		/**
+// 		 * Wann immer Index 0 (also kein Merit) in der Combobox angezeigt wird, werden die Punkte disabled.
+// 		 *
+// 		 * \todo Mit Wirkung versehen, damit bei Index 0 keine Punkte vergeben werden können.
+// 		 *
+// 		 * \bug Momentan keine Wirkung!
+// 		 **/
+// 		void enableWidgets(int index);
 		/**
 		 * Wann immer der Merit verändert wird, den dieses Widget darstellt, muß auch Typ und Vor allem Kategorie mitverändert werden. Außerdem wird herausgefunden, ob erklärender text erlaubt ist und dieser ermöglicht.
 		 *
 		 * \todo Außerdem müssen die Werte zurückgesetzt werden.
 		 **/
 		void changeParameters(QString name);
-		/**
-		 * Wird der Erklärende text dieser Eigenschaft verändert, muß dies natürlich auch in StorageCharacter gespeichert werden.
-		 **/
-		void changeCustomText();
 
 	signals:
 		void nameChanged( QString name );

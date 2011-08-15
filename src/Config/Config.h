@@ -45,9 +45,13 @@ class Config {
 		 */
 		static QString version();
 		/**
-		 * Der Pixcelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
+		 * Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 		 */
 		static const int traitCategorySpace;
+		/**
+		 * Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
+		 */
+		static const int traitMultipleMax;
 		/**
 		 * Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 		 */

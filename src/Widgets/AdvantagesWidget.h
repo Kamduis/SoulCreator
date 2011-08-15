@@ -22,50 +22,48 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SKILLWIDGET_H
-#define SKILLWIDGET_H
+#ifndef ADVANTAGESEWIDGET_H
+#define ADVANTAGESEWIDGET_H
 
-#include <QVBoxLayout>
+#include <QGridLayout>
 
-#include "../Datatypes/cv_TraitDetail.h"
-#include "../Storage/StorageTemplate.h"
+#include "../Storage/StorageCharacter.h"
 
 #include <QWidget>
 
 
 /**
- * @brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
+ * @brief Das Widget, in welchem sämtliche berechneten Werte angeordnet sind.
  *
- * Die Attribute werden in diesem Widget angeordnet.
+ * Die Werte, welche aus den Eigenschaften des Charakters berechnet werden, kommen allesamt in dieses Widget.
  *
- * Wird bei irgendeiner Fertigkeit der Spazialisierungen-Knopf gedrückt, werden alle anderen Spezialisierungs-Knöpfe ausgeschalten.
+ * \todo Diese Klasse sollte nicht auf den Charakter im Speicher verweisen, sondern auf eine Berechnungsklasse, deren Signale dann direkt die Ergebnisse hier anzeigen lassen.
  **/
-class SkillWidget : public QWidget {
+class AdvantagesWidget : public QWidget {
 		Q_OBJECT
 
 	public:
-		SkillWidget( QWidget *parent = 0 );
+		/**
+		 * Konstruktor
+		 **/
+		AdvantagesWidget( QWidget *parent = 0 );
 		/**
 		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
 		 **/
-		~SkillWidget();
+		~AdvantagesWidget();
 
 	private:
-		QVBoxLayout* layout;
-		StorageTemplate* storage;
-
-		QList< cv_Trait::Category > categories;
+		/**
+		 * In diesem Layout werden die berechneten Charakterwerte angeordnet.
+		 **/
+		QGridLayout *layout;
+		StorageCharacter* character;
 
 	public slots:
 
 	private slots:
-		/**
-		 * Über diese Funktion werden alle anderen Spezialisierungs-Knöpfe deaktiviert, sobald einer aktiviert wird.
-		 **/
-		void toggleOffSpecialties(bool sw, QString skillName, QList< cv_TraitDetail > specialtyList);
 
 	signals:
-		void specialtiesClicked(bool sw, QString skillName, QList< cv_TraitDetail > specialtyList);
 };
 
 #endif

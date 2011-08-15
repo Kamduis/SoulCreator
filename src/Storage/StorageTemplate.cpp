@@ -54,6 +54,7 @@ QStringList StorageTemplate::traitNames( cv_Trait::Type type, cv_Trait::Category
 				if ( traits.at( i ).age.testFlag( age ) ) {
 					// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
 					if ( !list.contains( traits.at( i ).name ) ) {
+// 						qDebug() << Q_FUNC_INFO << "Gib aus" << traits.at( i ).name;
 						list.append( traits.at( i ).name );
 					}
 				}
@@ -162,7 +163,7 @@ QList< cv_Trait > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Catego
 	}
 
 	if ( traits.isEmpty() ) {
-		qDebug() << Q_FUNC_INFO << "Trait Typ" << type << "mit Kategorie" << category << "existiert nicht!";
+// 		qDebug() << Q_FUNC_INFO << "Trait Typ" << type << "mit Kategorie" << category << "existiert nicht!";
 // 		throw eTraitNotExisting();
 	}
 
@@ -186,7 +187,7 @@ cv_Trait StorageTemplate::trait( cv_Trait::Type type, cv_Trait::Category categor
 	}
 
 	if ( !trait_exists ) {
-		qDebug() << Q_FUNC_INFO << "Trait" << type << category << name << "existiert nicht!";
+// 		qDebug() << Q_FUNC_INFO << "Trait" << type << category << name << "existiert nicht!";
 // 		throw eTraitNotExisting();
 	}
 
@@ -205,7 +206,21 @@ void StorageTemplate::appendSpecies( cv_Species species ) {
 
 
 void StorageTemplate::appendTrait( cv_Trait trait ) {
-	v_traits.append( trait );
+	bool exists = false;
+	
+	for (int i = 0; i < v_traits.count(); i++){
+		if (v_traits.at(i).name == trait.name){
+			exists = true;
+			break;
+		}
+	}
+
+	if (!exists){
+// 		if (trait.custom){
+// 			qDebug() << Q_FUNC_INFO << trait.name << "ist besonders";
+// 		}
+		v_traits.append( trait );
+	}
 }
 
 
