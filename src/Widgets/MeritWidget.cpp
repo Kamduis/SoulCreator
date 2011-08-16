@@ -23,8 +23,7 @@
  */
 
 #include <QGridLayout>
-#include <QIcon>
-#include <QStyle>
+#include <QToolBox>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -48,13 +47,11 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 	layoutTop->addWidget( scrollArea );
 
-	QWidget* widget = new QWidget();
-	layout = new QVBoxLayout( widget );
+	QToolBox* toolBox = new QToolBox();
+	toolBox->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Expanding );
 
-	widget->setLayout( layout );
-	widget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Expanding );
-	scrollArea->setWidget( widget );
-	widget->show();
+	scrollArea->setWidget( toolBox );
+	toolBox->show();
 
 	StorageTemplate storage;
 
@@ -64,16 +61,23 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Mental );
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
+	categories.append( cv_Trait::Item );
+	categories.append( cv_Trait::FightingStyle );
 
-	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
-
+	// Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage.meritNames( categories.at( i ) ).count(); j++ ) {
+		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
+		QWidget* widgetMeritCategory = new QWidget();
+		QVBoxLayout* layoutMeritCategory = new QVBoxLayout();
+		widgetMeritCategory->setLayout(layoutMeritCategory);
+		toolBox->addItem(widgetMeritCategory, cv_Trait::toString(categories.at(i), true));
+		
+		for ( int j = 0; j < storage.merits( categories.at( i ) ).count(); j++ ) {
 // 			qDebug() << Q_FUNC_INFO << storage.meritNames( categories.at( i ) ).at(j) << "ist besonders";
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
-				CharaTrait *trait = new CharaTrait( this, type, categories.at( i ), storage.meritNames( categories.at( i ) ).at( j ), storage.merits( categories.at( i ) ).at( j ).custom );
-// 				trait->setCustom();
-				layout->addWidget( trait );
+// 				CharaTrait *trait = new CharaTrait( this, type, categories.at( i ), storage.meritNames( categories.at( i ) ).at( j ), storage.merits( categories.at( i ) ).at( j ).custom );
+				CharaTrait *charaTrait = new CharaTrait( this, storage.merits( categories.at( i ) ).at( j ) );
+				layoutMeritCategory->addWidget( charaTrait );
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
 				if ( !storage.merits( categories.at( i ) ).at( j ).custom ) {
@@ -84,7 +88,7 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 		// Abstand zwischen den Kategorien, aber nicht am Ende.
 		if ( i < categories.count() - 1 ) {
-			layout->addSpacing( Config::traitCategorySpace );
+			layoutMeritCategory->addSpacing( Config::traitCategorySpace );
 		}
 	}
 
@@ -103,7 +107,9 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 }
 
 MeritWidget::~MeritWidget() {
-	delete layout;
+	delete dialog;
+	delete button;
+	delete scrollArea;
 }
 
 

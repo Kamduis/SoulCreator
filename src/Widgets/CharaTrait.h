@@ -32,11 +32,13 @@
 #include "TraitLine.h"
 
 /**
- * @brief Mit den gespeicherten Werten vernetzte Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.
+ * \brief Mit den gespeicherten Werten vernetzte Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.
  *
  * Anders als \ref TraitLine, ist dieses Widget direkt mit der korrespondierenden Eigenschaft in der Klasse \ref StorageCharacter verknüpft. Ändert sich der Wert dort, wird automatisch dieses Widget entsprechend verändert. Gleichermaßen wird \ref StorageCharacter verändert, sollte der Benutzer dieses Widget ändern.
  *
  * \todo Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.
+ *
+ * \todo Ein Wrapper für die Prerequisites der Merits wird noch benötigt, damit ich sie disablen kann, wenn die Anforderungen nicht erfüllt sind.
  **/
 
 class CharaTrait : public TraitLine {
@@ -47,6 +49,10 @@ class CharaTrait : public TraitLine {
 		 * Konstruktor.
 		 **/
 		CharaTrait( QWidget *parent, cv_Trait::Type type, cv_Trait::Category category, QString name, bool custom = false, int value = 0 );
+		/**
+		 * An diesen Konstruktor kann direkt die Eigenschaft übergeben werden, welche dieses Widget anzeigt.
+		 **/
+		CharaTrait( QWidget *parent, cv_Trait trait );
 // 		/**
 // 		 * Konstruktor.
 // 		 **/
@@ -72,6 +78,12 @@ class CharaTrait : public TraitLine {
 		cv_Trait::Type v_type;
 		cv_Trait::Category v_category;
 		bool v_custom;
+		QString v_prerequisites;
+
+		/**
+		 * Hilfsfunktion, um bei überladenen Konstruktoren nicht alles doppelt aufrufen zu müssen.
+		 **/
+		void construction( cv_Trait::Type type, cv_Trait::Category category, QString name, bool custom, int value);
 
 	public slots:
 		/**
@@ -101,6 +113,10 @@ class CharaTrait : public TraitLine {
 		 **/
 		void hideDescriptionWidget();
 		void emitSpecialtiesClicked(bool sw);
+		/**
+		 * Sorgt dafür, daß das Widget disabled wird, wenn die Voraussetzungen nicht erfüllt sind.
+		 **/
+		void checkTraitPrerequisites();
 
 		/**
 		 * Ändert alle Parameter dieses Widgets, damit es der übergebenen Eigenschaft entspricht.

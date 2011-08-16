@@ -74,14 +74,14 @@ void WriteXmlCharacter::writeCharacterTraits() {
 
 	for ( int i = 0; i < types.count(); i++ ) {
 		try {
-			writeStartElement( cv_Trait::toString( types.at( i ) ) );
+			writeStartElement( cv_Trait::toXmlString( types.at( i ) ) );
 		} catch ( eTraitType &e ) {
 			qDebug() << Q_FUNC_INFO << e.message();
 		}
 
 		for ( int j = 0; j < categories.count(); j++ ) {
 			try {
-				writeStartElement( cv_Trait::toString( categories.at( j ) ) );
+				writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
 			} catch ( eTraitCategory &e ) {
 				qDebug() << Q_FUNC_INFO << e.message();
 			}

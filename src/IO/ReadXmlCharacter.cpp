@@ -83,8 +83,8 @@ void ReadXmlCharacter::readSoulCreator() {
 				QString speciesName = readElementText();
 
 				character->setSpecies( cv_Species::toSpecies( speciesName ) );
-			} else if ( elementName == cv_Trait::toString( cv_Trait::Attribute )
-						|| elementName == cv_Trait::toString( cv_Trait::Skill ) ) {
+			} else if ( elementName == cv_Trait::toXmlString( cv_Trait::Attribute )
+						|| elementName == cv_Trait::toXmlString( cv_Trait::Skill ) ) {
 				qDebug() << Q_FUNC_INFO << elementName << "!";
 				readTraits( cv_Trait::toType( elementName ) );
 			} else {
@@ -103,9 +103,9 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type ) {
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
-			if ( elementName == cv_Trait::toString( cv_Trait::Mental )
-					|| elementName == cv_Trait::toString( cv_Trait::Physical )
-					|| elementName == cv_Trait::toString( cv_Trait::Social ) ) {
+			if ( elementName == cv_Trait::toXmlString( cv_Trait::Mental )
+					|| elementName == cv_Trait::toXmlString( cv_Trait::Physical )
+					|| elementName == cv_Trait::toXmlString( cv_Trait::Social ) ) {
 				qDebug() << Q_FUNC_INFO << elementName;
 				readTraits( type, cv_Trait::toCategory( elementName ) );
 			} else

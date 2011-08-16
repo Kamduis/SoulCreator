@@ -209,7 +209,7 @@ void StorageTemplate::appendTrait( cv_Trait trait ) {
 	bool exists = false;
 	
 	for (int i = 0; i < v_traits.count(); i++){
-		if (v_traits.at(i).name == trait.name){
+		if (v_traits.at(i).type == trait.type && v_traits.at(i).name == trait.name){
 			exists = true;
 			break;
 		}

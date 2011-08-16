@@ -58,7 +58,6 @@ class MeritWidget : public QWidget {
 
 	private:
 		QScrollArea* scrollArea;
-		QVBoxLayout* layout;
 		QPushButton* button;
 		SelectMeritsDialog* dialog;
 

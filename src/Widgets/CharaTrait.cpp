@@ -24,15 +24,27 @@
 
 #include <QDebug>
 
-// #include "Storage.h"
+#include "../Parser/StringBoolParser.h"
+#include "../Exceptions/Exception.h"
 
 #include "CharaTrait.h"
 
 
 CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category category, QString name, bool custom, int value ) : TraitLine( parent, name, value ) {
+	construction( type, category, name, custom, value );
+}
+
+CharaTrait::CharaTrait( QWidget* parent, cv_Trait trait ) : TraitLine( parent, trait.name, trait.value ) {
+	construction( trait.type, trait.category, trait.name, trait.custom, trait.value );
+	v_prerequisites = trait.prerequisites;
+}
+
+
+void CharaTrait::construction( cv_Trait::Type type, cv_Trait::Category category, QString name, bool custom, int value ) {
 	character = StorageCharacter::getInstance();
 
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitTraitChanged( int ) ) );
+	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( checkTraitPrerequisites() ) );
 	connect( this, SIGNAL( traitChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
@@ -47,6 +59,8 @@ CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category
 	setCategory( category );
 	setCustom( custom );
 }
+
+
 
 
 cv_Trait::Type CharaTrait::type() const {
@@ -78,7 +92,7 @@ void CharaTrait::setCustom( bool sw ) {
 	if ( v_custom != sw ) {
 		v_custom = sw;
 
-		emit customChanged(sw);
+		emit customChanged( sw );
 	}
 }
 
@@ -109,7 +123,7 @@ void CharaTrait::setTrait( cv_Trait trait ) {
 // 	qDebug() << Q_FUNC_INFO << "hier!";
 
 	if ( type() == trait.type && category() == trait.category && name() == trait.name ) {
-		if (custom() && text() == trait.customText){
+		if ( custom() && text() == trait.customText ) {
 			setValue( trait.value );
 		}
 	}
@@ -122,7 +136,7 @@ void CharaTrait::setTrait( cv_Trait trait ) {
 
 void CharaTrait::emitTraitChanged( int value ) {
 	// Eigenschaften mit Beschreibungstext werden nur dann in den Speicher aktualisiert, wenn sie auch einen solchen text besitzen.
-	if (!custom() || !text().isEmpty()){
+	if ( !custom() || !text().isEmpty() ) {
 		cv_Trait trait;
 		trait.type = type();
 		trait.category = category();
@@ -154,3 +168,41 @@ void CharaTrait::emitSpecialtiesClicked( bool sw ) {
 	emit specialtiesClicked( sw, name(), list );
 }
 
+
+void CharaTrait::checkTraitPrerequisites() {
+	if ( !v_prerequisites.isEmpty() ) {
+		QString prerequisites = v_prerequisites;
+
+		QList< cv_Trait::Type > types;
+		types.append( cv_Trait::Attribute );
+		types.append( cv_Trait::Skill );
+		types.append( cv_Trait::Merit );
+
+		QList< cv_Trait::Category > categories;
+		categories.append( cv_Trait::Mental );
+		categories.append( cv_Trait::Physical );
+		categories.append( cv_Trait::Social );
+		categories.append( cv_Trait::FightingStyle );
+
+		for ( int i = 0; i < types.count();i++ ) {
+			for ( int j = 0; j < categories.count(); j++ ) {
+				for ( int k = 0; k < character->traits( types.at( i ), categories.at( j ) ).count(); k++ ) {
+					prerequisites.replace( character->traits( types.at( i ), categories.at( j ) ).at( k ).name, QString::number( character->traits( types.at( i ), categories.at( j ) ).at( k ).value ) );
+				}
+			}
+		}
+
+		StringBoolParser parser;
+		try {
+// 		qDebug() << Q_FUNC_INFO << name() << parser.validate( prerequisites );
+			if ( parser.validate( prerequisites ) ) {
+				this->setEnabled( true );
+			} else {
+				setValue( 0 );
+				this->setEnabled( false );
+			}
+		} catch ( Exception &e ) {
+			qDebug() << Q_FUNC_INFO << prerequisites << e.description() << e.message();
+		}
+	}
+}

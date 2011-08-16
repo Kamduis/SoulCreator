@@ -128,7 +128,9 @@ class cv_Trait {
 			CategoryNo,
 			Mental,
 			Physical,
-			Social
+			Social,
+			Item,
+			FightingStyle
 		};
 		/**
 		 * In welche Era findet diese Eigenschaft ihre Anwendung? In der Moderne oder in der Antike?
@@ -277,17 +279,23 @@ class cv_Trait {
 // 	QList<cv_TraitPrerequisiteAnd> prerequisites;	///< Eine Liste der Voraussetzungen. Die einzelnen Einträge dieser Liste sind ODER-verknüpft.
 
 		/**
-		 * Wandelt einen Typ in seinen Namen um.
+		 * Wandelt einen Typ in seinen in den Xml-Dateien gebräuchlichen Namen um.
 		 *
 		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien zu erzeugen.
 		 **/
-		static QString toString( cv_Trait::Type type );
+		static QString toXmlString( cv_Trait::Type type );
 		/**
-		 * Wandelt eine Kategorie in ihren Namen um.
+		 * Wandelt eine Kategorie in ihren in den Xml-Dateien gebräuchlichen Namen um.
 		 *
 		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien zu erzeugen.
 		 **/
-		static QString toString( cv_Trait::Category category );
+		static QString toXmlString( cv_Trait::Category category );
+		/**
+		 * Wandelt eine Kategorie in ihren realen Namen um.
+		 *
+		 * \note Diese Funktion unterscheidet sich insofern von toXmlString(), daß beispielsweise FightingStyle mit einem zusätzlichen Leerzeichen (Fighting Style) ausgegeben wird. Außerdem kann die Pluralform ausgegeben werden. Außerdem werden in dieser Funktion übersetzungen berücksichtigt.
+		 **/
+		static QString toString( cv_Trait::Category category, bool plural = false /** Ist dieses Argument true, wird die Pluralform der Kategorie ausgegeben. */ );
 		/**
 		 * Wandelt den Namen einer Kategorie in den dazu passenden enum um.
 		 *

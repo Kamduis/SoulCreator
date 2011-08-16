@@ -28,7 +28,7 @@
 #include "cv_Trait.h"
 
 
-QString cv_Trait::toString( cv_Trait::Type type ) {
+QString cv_Trait::toXmlString( cv_Trait::Type type ) {
 	switch ( type ) {
 		case cv_Trait::TypeNo:
 			return "TypeNo";
@@ -48,7 +48,7 @@ QString cv_Trait::toString( cv_Trait::Type type ) {
 	}
 }
 
-QString cv_Trait::toString( cv_Trait::Category category ) {
+QString cv_Trait::toXmlString( cv_Trait::Category category ) {
 	switch ( category ) {
 		case cv_Trait::CategoryNo:
 			return "CategoryNo";
@@ -58,11 +58,54 @@ QString cv_Trait::toString( cv_Trait::Category category ) {
 			return "Physical";
 		case cv_Trait::Social:
 			return "Social";
+		case cv_Trait::Item:
+			return "Item";
+		case cv_Trait::FightingStyle:
+			return "FightingStyle";
 		default:
 			throw eTraitCategory( category );
 // 			return "ERROR";
 	}
 }
+
+QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
+	if ( plural ) {
+		switch ( category ) {
+			case cv_Trait::CategoryNo:
+				return QObject::tr("Without Category");
+			case cv_Trait::Mental:
+				return QObject::tr("Mental");
+			case cv_Trait::Physical:
+				return QObject::tr("Physical");
+			case cv_Trait::Social:
+				return QObject::tr("Social");
+			case cv_Trait::Item:
+				return QObject::tr("Items");
+			case cv_Trait::FightingStyle:
+				return QObject::tr("Fighting Styles");
+			default:
+				throw eTraitCategory( category );
+		}
+	} else {
+		switch ( category ) {
+			case cv_Trait::CategoryNo:
+				return QObject::tr("Without Category");
+			case cv_Trait::Mental:
+				return QObject::tr("Mental");
+			case cv_Trait::Physical:
+				return QObject::tr("Physical");
+			case cv_Trait::Social:
+				return QObject::tr("Social");
+			case cv_Trait::Item:
+				return QObject::tr("Item");
+			case cv_Trait::FightingStyle:
+				return QObject::tr("Fighting Style");
+			default:
+				throw eTraitCategory( category );
+		}
+	}
+}
+
 
 cv_Trait::Category cv_Trait::toCategory( QString str ) {
 	if ( str == "Mental" )
@@ -71,6 +114,10 @@ cv_Trait::Category cv_Trait::toCategory( QString str ) {
 		return cv_Trait::Physical;
 	else if ( str == "Social" )
 		return cv_Trait::Social;
+	else if ( str == "Item" )
+		return cv_Trait::Item;
+	else if ( str == "FightingStyle" )
+		return cv_Trait::FightingStyle;
 	else
 		return cv_Trait::CategoryNo;
 }

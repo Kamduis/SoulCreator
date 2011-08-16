@@ -130,6 +130,7 @@ void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_Tra
 
 
 void MainWindow::activate() {
+	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal einen Wert ändern.
 }
 
 
