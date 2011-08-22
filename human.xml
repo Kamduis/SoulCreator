@@ -1,15 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.0.1">
+<SoulCreator version="0.0">
 	<traits species="Human">
 		<Merit>
-			<Mental>
-				<trait name="Enchanted Mortal">
+			<Species>
+				<trait name="Enchanted Mortal" source="Changeling The Equinox Road">
 					<value>2</value>
-					<effect>The character is an enchanted mortal who was abducted into ...</effect>
 				</trait>
-			</Mental>
-			<Physical>
-			</Physical>
+				<trait name="Locus Drinker" source="WoD Book of Spirits">
+					<value>3</value>
+				</trait>
+				<trait name="Residual Spirit Energy" source="WoD Book of Spirits">
+					<value>2</value>
+				</trait>
+				<trait name="Unseen Sense" custom="true" source="WoD Core">
+					<value>3</value>
+					<value>4</value>
+					<prerequisites>Wits > 1</prerequisites>
+				</trait>
+				<trait name="Unseen Sense (Spirits)" source="WoD Book of Spirits">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisites>Wits > 1</prerequisites>
+				</trait>
+			</Species>
+			<PsychicPhenomena>
+				<!--<trait name="AntiPsi" source="WoD Second Sight">
+					<value>5</value>
+					<prerequisites>No other Merits that confer psychic powers</prerequisites>
+				</trait>-->
+				<!--<trait name="Doubting Thomas" source="WoD Second Sight">
+					<value>1</value>
+					<prerequisites>No other Merits that confer psychic powers</prerequisites>
+				</trait>-->
+				<trait name="Psychic Resistance" source="WoD Second Sight">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+				</trait>
+			</PsychicPhenomena>
 		</Merit>
 	</traits>
 </SoulCreator>

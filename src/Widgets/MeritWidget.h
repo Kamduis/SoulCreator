@@ -58,8 +58,8 @@ class MeritWidget : public QWidget {
 
 	private:
 		QScrollArea* scrollArea;
-		QPushButton* button;
-		SelectMeritsDialog* dialog;
+// 		QPushButton* button;
+// 		SelectMeritsDialog* dialog;
 
 	public slots:
 

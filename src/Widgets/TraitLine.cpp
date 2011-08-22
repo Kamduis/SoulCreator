@@ -70,7 +70,7 @@ TraitLine::TraitLine( QWidget *parent, QString name, int value ) : QWidget( pare
 	connect( traitDots, SIGNAL( valueChanged( int ) ), SIGNAL( valueChanged( int ) ) );
 	connect( traitDots, SIGNAL( valueChanged( int ) ), this, SLOT( enableSpecialties( int ) ) );
 	connect( button, SIGNAL( clicked( bool ) ), this, SIGNAL( specialtiesClicked( bool ) ) );
-	connect( lineEdit, SIGNAL( textChanged(QString)), this, SIGNAL( textChanged(QString)) );
+	connect( lineEdit, SIGNAL( textChanged( QString ) ), this, SIGNAL( textChanged( QString ) ) );
 
 	setName( name );
 	setValue( value );
@@ -82,12 +82,14 @@ TraitLine::TraitLine( QWidget *parent, QString name, int value ) : QWidget( pare
 	v_layout->addWidget( lineEdit );
 	v_layout->addWidget( button );
 	v_layout->addWidget( traitDots );
-
 }
 
 TraitLine::~TraitLine() {
 	delete traitDots;
+	delete lineEdit;
+	delete button;
 	delete v_label_name;
+	delete v_layout;
 }
 
 
@@ -103,6 +105,7 @@ QLabel* TraitLine::labelName() const {
 QString TraitLine::name() const {
 	return v_label_name->text();
 }
+
 void TraitLine::setName( QString name ) {
 	v_label_name->setText( name );
 }
@@ -110,6 +113,7 @@ void TraitLine::setName( QString name ) {
 QString TraitLine::text() const {
 	return lineEdit->text();
 }
+
 void TraitLine::setText( QString text ) {
 	lineEdit->setText( text );
 }
@@ -121,6 +125,10 @@ int TraitLine::value() const {
 
 void TraitLine::setValue( int value ) {
 	traitDots->setValue( value );
+}
+
+void TraitLine::setPossibleValues( QList< int > valueList ) {
+	traitDots->setAllowedValues( &valueList );
 }
 
 int TraitLine::minimum() const {

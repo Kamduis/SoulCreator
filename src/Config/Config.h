@@ -41,9 +41,17 @@ class Config {
 		 */
 		static QString name();
 		/**
-		 * Die aktuelle Version des Programms.
+		 * Die aktuelle Version des Programms ausschließlich der Change-Nummer.
+		 *
+		 * Programme mit unterschieldicher Versionsnummer sind zueinander nicht notwendigerweise kompatibel.
 		 */
 		static QString version();
+		/**
+		 * Die aktuelle Version des Programms einschließlich der Change-Nummer.
+		 *
+		 * Unterscheiden sich Programme in ihrer Change-Nummer, aber der Rest ihrer Versionsnummer ist gleich, sollten eigentlich keine Kompatibilitätsprobleme mit den Template-Dateien und den gespeicherten Charakteren auftreten.
+		 */
+		static QString versionDetail();
 		/**
 		 * Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 		 */
@@ -72,6 +80,10 @@ class Config {
 		 * Das Standardverzeichnis, in welchem die zu speichernden Charaktere abgelegt werden sollen.
 		 **/
 		static QString saveDir();
+		/**
+		 * Eigenschaftshöchstwert.
+		 **/
+		static const int traitMax;
 
 	private:
 		Config();

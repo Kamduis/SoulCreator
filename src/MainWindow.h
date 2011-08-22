@@ -25,7 +25,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
+#include "Storage/StorageTemplate.h"
+#include "Storage/StorageCharacter.h"
 #include "IO/ReadXmlCharacter.h"
 #include "IO/WriteXmlCharacter.h"
 #include "Widgets/InfoWidget.h"
@@ -74,6 +75,15 @@ class MainWindow : public QMainWindow {
 		 * Graphische Benutzeroberfläche, erstellt mit dem Designer.
 		 */
 		Ui::MainWindow* ui;
+
+		/**
+		 * Zeiger auf die Klasse, welche sämtliche Eigenschaftsbezeichnungen enthält.
+		 */
+		StorageTemplate* storage;
+		/**
+		 * Zeiger auf die Klasse, welche sämtliche Charaterwerte enthält. Eine Änderung der Werte in dieser Klasse sorgen dafür, daß sich auch die Anzeige anpaßt. Und ändert man einen Wert in der Anzeige, wird automatisch die dadurch repräsentierte Eigenschaft in dieser Klasse verändert.
+		 */
+		StorageCharacter* character;
 
 		/**
 		 * In diesem Widget werden die Attribute in Spalten sortiert angezeigt.
@@ -140,6 +150,8 @@ class MainWindow : public QMainWindow {
 		 * Aktiviert die Anwendung zur Benutzung.
 		 *
 		 * Da die Anwendung bei Anzeige des LoginDialog deaktiviert ist, muß sie erst wieder aktiviert werden, ehe der Nutzer seine Eingaben machen kann. Natürlich soll die Anwendung nur für den angemeldeten Benutzer aktiviert werden.
+		 *
+		 * \bug Ich schalte einmal zwischen zwei Spezies hin und her. ist nicht ganz ungefählrich, da es im Falle nicht vorhandener Spezies zu einer Ausnahme kommt.
 		 */
 		void activate();
 		/**

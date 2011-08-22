@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.0.1">
+<SoulCreator version="0.0">
 	<traits species="Vampire" morale="Humanity" supertrait="Blood Potency" fuel="Vitae">
 		<Power>
 			<trait name="Animalism">

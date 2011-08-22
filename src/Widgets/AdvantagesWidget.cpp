@@ -23,6 +23,7 @@
  */
 
 #include <QGridLayout>
+#include <QSpinBox>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -38,27 +39,39 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	layout->setMargin(0);
 	setLayout( layout );
 
-	character = StorageCharacter::getInstance();
-
-// 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+	calcAdvantages = new CalcAdvantages(this);
 
 	QLabel* labelSize = new QLabel(tr("Size"));
-	QLabel* labelSizeResult = new QLabel();
+	QSpinBox* spinBoxSize = new QSpinBox(this);
+	spinBoxSize->setValue(0);
+
 	QLabel* labelSpeed = new QLabel(tr("Speed"));
-	QLabel* labelSpeedResult = new QLabel();
+	QSpinBox* spinBoxSpeed = new QSpinBox(this);
+	spinBoxSpeed->setValue(0);
+
 	QLabel* labelInitiative = new QLabel(tr("Initiative"));
+	
 	QLabel* labelDefense = new QLabel(tr("Defense"));
+	QSpinBox* spinBoxDefense = new QSpinBox(this);
+	spinBoxDefense->setValue(0);
+	
 	QLabel* labelArmor = new QLabel(tr("Armor"));
 
 	layout->addWidget(labelSize, 0, 0);
-	layout->addWidget(labelSizeResult, 0, 1);
+	layout->addWidget(spinBoxSize, 0, 1);
 	layout->addWidget(labelSpeed, 1, 0);
-	layout->addWidget(labelSpeedResult, 1, 1);
+	layout->addWidget(spinBoxSpeed, 1, 1);
 	layout->addWidget(labelInitiative, 2, 0);
 	layout->addWidget(labelDefense, 3, 0);
+	layout->addWidget(spinBoxDefense, 3, 1);
 	layout->addWidget(labelArmor, 4, 0);
+
+	connect(calcAdvantages, SIGNAL(speedChanged(int)), spinBoxSpeed, SLOT(setValue(int)));
+	connect(calcAdvantages, SIGNAL(sizeChanged(int)), spinBoxSize, SLOT(setValue(int)));
+	connect(calcAdvantages, SIGNAL(defenseChanged(int)), spinBoxDefense, SLOT(setValue(int)));
 }
 
 AdvantagesWidget::~AdvantagesWidget() {
+	delete calcAdvantages;
 	delete layout;
 }

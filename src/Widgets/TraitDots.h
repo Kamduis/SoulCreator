@@ -25,10 +25,11 @@
 #ifndef TRAITDOTS_H
 #define TRAITDOTS_H
 
-#include <QWidget>
 #include <QColor>
 #include <QList>
+#include <QEvent>
 
+#include <QWidget>
 
 /**
  * @brief Eine Darstellung von Werten in Form ausgefüllter Punkte.
@@ -148,6 +149,18 @@ class TraitDots : public QWidget {
 		 * Es wird ein zusätzlicher Wert verboten.
 		 **/
 		void addForbiddenValue( int value );
+		/**
+		 * Verbiete alle Werte.
+		 *
+		 * \note Es werden alle Werte verboten. Und zwar jeder Einzelne Wert zwischen minimum() und maximum() (einschließlich beider).
+		 *
+		 * \warning Gefährlich, da bei einer Veränderung von minimum() und maximum() die Verbotenen Werte nicht verändert werden.
+		 **/
+		void forbidAll();
+		/**
+		 * Verbiete keine Werte.
+		 **/
+		void forbidNone();
 
 	private slots:
 		void resetMinimumSize( int );
@@ -156,6 +169,7 @@ class TraitDots : public QWidget {
 		void paintEvent( QPaintEvent *event );
 		void mousePressEvent( QMouseEvent *event );
 		//void mouseDoubleClickEvent(QMouseEvent *event);
+		void changeEvent( QEvent *event );
 
 	signals:
 		// Dieses ignal wird immer ausgesandt, wenn ein Wert angegeben wird, selbst wenn dieser keine Änderung hervorruft.

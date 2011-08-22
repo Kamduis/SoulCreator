@@ -62,6 +62,14 @@ QString cv_Trait::toXmlString( cv_Trait::Category category ) {
 			return "Item";
 		case cv_Trait::FightingStyle:
 			return "FightingStyle";
+		case cv_Trait::DebateStyle:
+			return "DebateStyle";
+		case cv_Trait::ShadowRealm:
+			return "ShadowRealm";
+		case cv_Trait::PsychicPhenomena:
+			return "PsychicPhenomena";
+		case cv_Trait::Species:
+			return "Species";
 		default:
 			throw eTraitCategory( category );
 // 			return "ERROR";
@@ -83,6 +91,14 @@ QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
 				return QObject::tr("Items");
 			case cv_Trait::FightingStyle:
 				return QObject::tr("Fighting Styles");
+			case cv_Trait::DebateStyle:
+				return QObject::tr("Debate Styles");
+			case cv_Trait::ShadowRealm:
+				return QObject::tr("Shadow Realm");
+			case cv_Trait::PsychicPhenomena:
+				return QObject::tr("Psychic Phenomena");
+			case cv_Trait::Species:
+				return QObject::tr("Species");
 			default:
 				throw eTraitCategory( category );
 		}
@@ -100,27 +116,20 @@ QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
 				return QObject::tr("Item");
 			case cv_Trait::FightingStyle:
 				return QObject::tr("Fighting Style");
+			case cv_Trait::DebateStyle:
+				return QObject::tr("Debate Style");
+			case cv_Trait::ShadowRealm:
+				return QObject::tr("Shadow Realm");
+			case cv_Trait::PsychicPhenomena:
+				return QObject::tr("Psychic Phenomena");
+			case cv_Trait::Species:
+				return QObject::tr("Species");
 			default:
 				throw eTraitCategory( category );
 		}
 	}
 }
 
-
-cv_Trait::Category cv_Trait::toCategory( QString str ) {
-	if ( str == "Mental" )
-		return cv_Trait::Mental;
-	else if ( str == "Physical" )
-		return cv_Trait::Physical;
-	else if ( str == "Social" )
-		return cv_Trait::Social;
-	else if ( str == "Item" )
-		return cv_Trait::Item;
-	else if ( str == "FightingStyle" )
-		return cv_Trait::FightingStyle;
-	else
-		return cv_Trait::CategoryNo;
-}
 
 cv_Trait::Type cv_Trait::toType( QString str ) {
 	if ( str == "Virtue" )
@@ -141,6 +150,29 @@ cv_Trait::Type cv_Trait::toType( QString str ) {
 		return cv_Trait::Power;
 	else
 		return cv_Trait::TypeNo;
+}
+
+cv_Trait::Category cv_Trait::toCategory( QString str ) {
+	if ( str == "Mental" )
+		return cv_Trait::Mental;
+	else if ( str == "Physical" )
+		return cv_Trait::Physical;
+	else if ( str == "Social" )
+		return cv_Trait::Social;
+	else if ( str == "Item" )
+		return cv_Trait::Item;
+	else if ( str == "FightingStyle" )
+		return cv_Trait::FightingStyle;
+	else if ( str == "DebateStyle" )
+		return cv_Trait::DebateStyle;
+	else if ( str == "ShadowRealm" )
+		return cv_Trait::ShadowRealm;
+	else if ( str == "PsychicPhenomena" )
+		return cv_Trait::PsychicPhenomena;
+	else if ( str == "Species" )
+		return cv_Trait::Species;
+	else
+		return cv_Trait::CategoryNo;
 }
 
 cv_Trait::Era cv_Trait::toEra( QString str ) {
@@ -181,4 +213,12 @@ bool cv_Trait::operator==( const cv_Trait& trait ) const {
 				  && custom == trait.custom;
 
 	return result;
+}
+
+bool cv_Trait::operator<( const cv_Trait& trait ) const {
+	if ( this == &trait ) {
+		return false;
+	}
+
+	bool result = name < name;
 }

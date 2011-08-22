@@ -72,11 +72,19 @@ class StorageTemplate : public QObject {
 		 **/
 		QStringList viceNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
+		 * Gibt eine Liste aller verfügbaren Attribute aus.
+		 **/
+		QList< cv_Trait > attributes( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age =  cv_Trait::Adult ) const;
+		/**
 		 * Gibt eine Liste aller verfügbaren Vices aus.
 		 **/
 		QStringList attributeNames( cv_Trait::Category category ) const;
 		/**
-		 * Gibt eine Liste aller verfügbaren Vices aus.
+		 * Gibt eine Liste aller verfügbaren Fertigkeiten aus.
+		 **/
+		QList< cv_Trait > skills( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age =  cv_Trait::Adult ) const;
+		/**
+		 * Gibt eine Liste aller verfügbaren Fertigkeitsnamen aus.
 		 **/
 		QStringList skillNames( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
@@ -104,7 +112,7 @@ class StorageTemplate : public QObject {
 		 *
 		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
 		 **/
-		QList< cv_Trait > traits(cv_Trait::Type type, cv_Trait::Category category);
+		QList< cv_Trait > traits(cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_Trait::Type), Kategorie (\ref cv_Trait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
 		 *
@@ -119,6 +127,10 @@ class StorageTemplate : public QObject {
 		 * \todo Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren.
 		 **/
 		cv_Trait trait(cv_Trait::Type type, cv_Trait::Category category, QString name);
+		/**
+		 *Sortiert die Liste.
+		 **/
+		void sortTraits();
 
 	private:
 		/**

@@ -43,9 +43,9 @@ const QString ReadXmlTemplate::templateFile_werewolf = "../werewolf.xml";
 // QList<cv_Species> ReadXmlTemplate::speciesList;
 
 
-ReadXmlTemplate::ReadXmlTemplate() : ReadXml () {
+ReadXmlTemplate::ReadXmlTemplate() : ReadXml() {
 	storage = new StorageTemplate();
-	
+
 	file_base = new QFile( ReadXmlTemplate::templateFile_base );
 	file_human = new QFile( ReadXmlTemplate::templateFile_human );
 	file_changeling = new QFile( ReadXmlTemplate::templateFile_changeling );
@@ -90,7 +90,7 @@ void ReadXmlTemplate::readXml( QFile *device ) {
 			QString elementName = name().toString();
 			QString elementVersion = attributes().value( "version" ).toString();
 
-			if (checkXmlVersion(elementName, elementVersion)) {
+			if ( checkXmlVersion( elementName, elementVersion ) ) {
 				readSoulCreator();
 			}
 		}
@@ -126,7 +126,7 @@ void ReadXmlTemplate::readSoulCreator() {
 					species.fuel = attributes().value( "fuel" ).toString();
 
 					// Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
-					storage->appendSpecies(species);
+					storage->appendSpecies( species );
 
 					readTree( speciesFlag );
 				}
@@ -171,8 +171,9 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a ) {
 
 		if ( isStartElement() ) {
 			cv_Trait::Category category = cv_Trait::toCategory( name().toString() );
-
-// 			qDebug() << "Kategorie " << category << " gefunden.";
+// 			QString categoryString = name().toString();
+// 			cv_Trait::Category category = cv_Trait::toCategory( categoryString );
+// 			qDebug() << "Kategorie " << categoryString << " gefunden.";
 			readTraits( sp, a, category );
 		}
 	}
@@ -188,7 +189,16 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 		if ( isStartElement() ) {
 			if ( name() == "trait" ) {
 				cv_Trait trait = storeTraitData( sp, a, b );
-	
+
+				// Alle Eigenschaften können 0 als Wert haben, auch wenn dies nicht in den XML-Dateien steht.
+
+				if ( !trait.possibleValues.isEmpty() ) {
+					// Wenn ich diese Debug-Ausgabe weglasse, dauert der Programmstart \emph{viel} länger.
+// 					qDebug() << Q_FUNC_INFO << trait.name << trait.possibleValues;
+
+					trait.possibleValues.append( 0 );
+				}
+
 				storage->appendTrait( trait );
 
 // 				// Diese Funktion benötige ich, damit er zum nächsten trait-Eintrag springt.
@@ -228,13 +238,15 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 	trait.species = sp;
 	trait.type = a;
 	trait.category = b;
+	// Keinefalls darf ich zulassen, daß dieser Wert uninitialisiert bleibt, sonst führt das zu Problemen.
+	trait.value = 0;
 
 	if ( isStartElement() ) {
 		trait.name = attributes().value( "name" ).toString();
 // 		qDebug() << Q_FUNC_INFO << trait.name;
 		trait.era = cv_Trait::toEra( attributes().value( "era" ).toString() );
 		trait.age = cv_Trait::toAge( attributes().value( "age" ).toString() );
-		trait.custom = attributes().value( "custom" ).toString() == QString("true");
+		trait.custom = attributes().value( "custom" ).toString() == QString( "true" );
 
 // 		if (trait.custom){
 // 			qDebug() << Q_FUNC_INFO << trait.name << "ist besonders!";
@@ -255,12 +267,12 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 					traitDetail.value = false;
 // 					traitDetail.species = sp;
 					trait.details.append( traitDetail );
-				} else if (name() == "value") {
+				} else if ( name() == "value" ) {
 					int value = readElementText().toInt();
-					trait.possibleValues.append(value);
-				} else if (name() == "prerequisite") {
+					trait.possibleValues.append( value );
+				} else if ( name() == "prerequisite" ) {
 					QString text = readElementText();
-					trait.prerequisites.append(text);
+					trait.prerequisites.append( text );
 				} else {
 					readUnknownElement();
 				}

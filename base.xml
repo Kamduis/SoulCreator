@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.0.1">
+<SoulCreator version="0.0">
 	<traits species="SpeciesAll">
 		<Virtue>
 			<trait name="Charity" age="Adult"/>
@@ -416,16 +416,16 @@
 				<trait name="Encyclopedic Knowledge" source="WoD Core">
 					<value>4</value>
 				</trait>
-				<trait name="EOD" max="2" source="WoD Armory">
+				<trait name="EOD" source="WoD Armory">
 					<value>2</value>
-					<prerequisite>(Wits > 2 OR Dexterity > 2) AND Crafts (Demolitions) > 2</prerequisite>
+					<prerequisite>(Wits > 2 OR Dexterity > 2) AND Crafts.Demolitions > 2</prerequisite>
 				</trait>
 				<trait name="Holistic Awareness" source="WoD Core">
 					<value>3</value>
 				</trait>
 				<trait name="Hypnotic Voice" source="WoD Second Sight">
 					<value>4</value>
-					<prerequisite>Persuasion > 2 OR Science (Hypnotherapy) > 2</prerequisite>
+					<prerequisite>Persuasion > 2 OR Science.Hypnotherapy > 2</prerequisite>
 				</trait>
 				<trait name="Language" source="WoD Core" custom="true">
 					<value>1</value>
@@ -806,7 +806,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Strength > 1 AND Dexterity > 2 AND Composure > 2 AND Weaponry > 2 AND "Quick Draw"</prerequisite>
+					<prerequisite>Strength > 1 AND Dexterity > 2 AND Composure > 2 AND Weaponry > 2 AND Quick Draw > 0</prerequisite>
 				</trait>
 				<trait name="Flexible Weapons" source="WoD Armory Reloaded">
 					<value>1</value>
@@ -911,6 +911,69 @@
 					<prerequisite>Dexterity > 2 AND Resolve > 2 AND Firearms > 2 AND Stealth > 1</prerequisite>
 				</trait>
 			</FightingStyle>
+			<DebateStyle>
+				<trait name="Reason" source="Vampire Requiem for Rome">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Intelligence > 2 AND Academics > 0</prerequisite>
+				</trait>
+				<trait name="Rhetoric" source="Vampire Requiem for Rome">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Presence > 2 AND Expression > 0</prerequisite>
+				</trait>
+				<trait name="Theology" source="Vampire Requiem for Rome" era="Antique">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Presence > 1 AND Religion > 1 AND Expression > 0</prerequisite>
+				</trait>
+			</DebateStyle>
+			<ShadowRealm>
+				<trait name="Difficult to Ride" source="WoD Book of Spirits">
+					<value>4</value>
+					<prerequisite>Composure > 2 AND Resolve > 2</prerequisite>
+				</trait>
+				<trait name="Easy Ride" source="WoD Book of Spirits">
+					<value>2</value>
+					<prerequisite>Wits > 2</prerequisite>
+				</trait>
+				<trait name="Hollow Soul" source="WoD Book of Spirits">
+					<value>2</value>
+					<prerequisite>Easy Ride</prerequisite>
+				</trait>
+				<!--<trait name="Pleasing Aura" source="WoD Book of Spirits">
+					<value>3</value>
+					<prerequisite>Non-Werewolf</prerequisite>
+				</trait>-->
+				<!--<trait name="Saintly" source="WoD Book of Spirits">
+					<value>3</value>
+					<prerequisite>Non-Werewolf</prerequisite>
+				</trait>-->
+				<trait name="Shadow Contacts" source="WoD Book of Spirits">
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Shadowless Chambers" source="WoD Book of Spirits">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Spirit Tongue" source="WoD Book of Spirits">
+					<value>3</value>
+					<!--<prerequisite>Non-Werewolf</prerequisite>-->
+				</trait>
+			</ShadowRealm>
 		</Merit>
 	</traits>
 </SoulCreator>

@@ -145,8 +145,6 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 		if ( v_traits.at( i ).type == cv_Trait::Skill && v_traits.at( i ).name == name && v_traits.at( i ).value > 0 ) {
 			trait_exists = true;
 
-// 			qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << details.at(i).name << "zu Fertigkeit" << name << "hinzu";
-
 			cv_Trait trait = v_traits.at( i );
 			// Erst alle Spezialisieren löschen
 			trait.details.clear();
@@ -156,10 +154,13 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 			for ( int j = 0; j < details.count(); j++ ) {
 				cv_TraitDetail specialty;
 				specialty.name = details.at( j ).name;
+				qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << details.at( j ).name << "zu Fertigkeit" << name << "hinzu";
 				trait.details.append( specialty );
 			}
 
 			v_traits.replace( i, trait );
+
+			emit traitChanged( trait );
 
 			break;
 		}

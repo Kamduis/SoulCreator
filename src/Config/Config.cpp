@@ -32,11 +32,20 @@ const int Config::traitMultipleMax = 3;
 
 const int Config::displayTimeout = 10000;
 
+const int Config::traitMax = 5;
+
+
 QString Config::name() {
 	return PROGRAM_NAME;
 }
 
 QString Config::version() {
+	return QString::number( PROGRAM_VERSION_MAJOR ) +
+		   "." +
+		   QString::number( PROGRAM_VERSION_MINOR );
+}
+
+QString Config::versionDetail() {
 	return QString::number( PROGRAM_VERSION_MAJOR ) +
 		   "." +
 		   QString::number( PROGRAM_VERSION_MINOR ) +

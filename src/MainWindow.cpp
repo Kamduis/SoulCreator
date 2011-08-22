@@ -45,9 +45,11 @@
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow ) {
 	ui->setupUi( this );
 
-	this->setWindowTitle( Config::name() + " " + Config::version() );
+	this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
 	this->setWindowIcon( QIcon( ":/images/images/WoD.png" ) );
 
+	character = StorageCharacter::getInstance();
+	storage = new StorageTemplate(this);
 	readCharacter = new ReadXmlCharacter();
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
@@ -69,6 +71,7 @@ MainWindow::~MainWindow() {
 	delete info;
 	delete writeCharacter;
 	delete readCharacter;
+	delete storage;
 	delete ui;
 }
 
@@ -95,13 +98,19 @@ void MainWindow::storeTemplateData() {
 }
 
 void MainWindow::populateUi() {
+	
+	// Funktioniert nicht richtig.
+// 	// Bevor wir alles in der GUI anzeigen, wollen wir ersteinmal eine alphabetische Reihefolge garantieren.
+// 	// Ich weiß nicht, ob das bei den Attributen so gut ist.
+// 	storage->sortTraits();
+	
 	info = new InfoWidget( this );
 	// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
 // 	merits = new ComboTraitWidget( this, cv_Trait::Merit );
 	merits = new MeritWidget( this );
-	advantages = new AdvantagesWidget(this);
+	advantages = new AdvantagesWidget( this );
 
 	ui->layout_info->addWidget( info );
 	ui->layout_attributes->addWidget( attributes );
@@ -130,7 +139,57 @@ void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_Tra
 
 
 void MainWindow::activate() {
-	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal einen Wert ändern.
+	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
+	QList< cv_Trait::Type > types;
+	types.append( cv_Trait::Attribute );
+	types.append( cv_Trait::Skill );
+	types.append( cv_Trait::Merit );
+
+	QList< cv_Trait::Category > categoriesGeneral;
+	categoriesGeneral.append( cv_Trait::Mental );
+	categoriesGeneral.append( cv_Trait::Physical );
+	categoriesGeneral.append( cv_Trait::Social );
+
+	QList< cv_Trait::Category > categoriesMerits = categoriesGeneral;
+	categoriesMerits.append( cv_Trait::Item );
+	categoriesMerits.append( cv_Trait::FightingStyle );
+	categoriesMerits.append( cv_Trait::DebateStyle );
+	categoriesMerits.append( cv_Trait::ShadowRealm );
+	categoriesMerits.append( cv_Trait::PsychicPhenomena );
+	categoriesMerits.append( cv_Trait::Species );
+
+
+	QList< cv_Trait::Category > categories;
+
+	for ( int i = 0; i < types.count();i++ ) {
+
+		// Merits haben zusätzliche Kategorien.
+		if ( types.at( i ) == cv_Trait::Merit ) {
+			categories = categoriesMerits;
+		} else {
+			categories = categoriesGeneral;
+		}
+
+		for ( int j = 0; j < categories.count(); j++ ) {
+			for ( int k = 0; k < character->traits( types.at( i ), categories.at( j ) ).count(); k++ ) {
+				cv_Trait trait = character->traits( types.at( i ), categories.at( j ) ).at( k );
+				qDebug() << Q_FUNC_INFO << trait.name << trait.value;
+				// Alten Wert speichern
+				int valueOld = trait.value;
+				// Verändern, damit er auch wirklich \emph{verändert} wurde
+				trait.value = valueOld+1;
+				// In den Speicher schicken.
+				character->addTrait( trait );
+				// Wieder auf alten Wert zurücksetzen.
+				trait.value = valueOld;
+				character->addTrait( trait );
+			}
+		}
+	}
+
+	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
+	character->setSpecies(cv_Species::Changeling);
+	character->setSpecies(cv_Species::Human);
 }
 
 

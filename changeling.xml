@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.0.1">
+<SoulCreator version="0.0">
 	<traits species="Changeling" morale="Clarity" supertrait="Wyrd" fuel="Glamour">
 		<Skill>
 			<Mental>
@@ -17,5 +17,250 @@
 				</trait>
 			</Physical>
 		</Skill>
+		<Merit>
+			<Species>
+				<trait name="Arcadian Body" creationOnly="true" source="Changeling Rites of Spring">
+					<value>4</value>
+					<prerequisite>Intelligence > 2 OR Wits > 2 OR Resolve > 2 OR Strength > 2 OR Dexterity > 2 OR Stamina > 2 OR Presence > 2 OR Manipulation > 2 OR Composure > 2</prerequisite>
+				</trait>
+				<trait name="Arcadian Metabolism" source="Changeling Rites of Spring">
+					<value>4</value>
+				</trait>
+				<!--<trait name="Broken Mirror" custom="true" source="Changeling Core">
+					<value>1</value>
+					<prerequisite>Killing one's fetch</prerequisite>
+				</trait>-->
+				<trait name="Brownie's Boon" source="Changeling Rites of Spring">
+					<value>1</value>
+				</trait>
+				<trait name="Charmed Life" source="Changeling Rites of Spring">
+					<value>2</value>
+				</trait>
+				<trait name="Court Goodwill" custom="true" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Dual Kith" creationOnly="true" source="Changeling Rites of Spring">
+					<value>2</value>
+					<value>3</value>
+					<!--<effect>2 Kiths</effect>-->
+				</trait>
+				<trait name="Enchanting Performance" source="Changeling Rites of Spring">
+					<value>4</value>
+					<prerequisite>Expression > 2</prerequisite>
+				</trait>
+				<trait name="Fae Mount" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>5</value>
+				</trait>
+				<trait name="Fearie Favor" source="Changeling Rites of Spring">
+					<value>3</value>
+				</trait>
+				<trait name="Fearie Healing" source="Changeling Rites of Spring">
+					<value>3</value>
+				</trait>
+				<trait name="Gentriefied Bearing" source="Changeling Rites of Spring">
+					<value>4</value>
+					<prerequisite>Wyrd > 2</prerequisite>
+				</trait>
+				<trait name="Goblin Vow" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Harvest" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Hedge Beast Companion" source="Changeling Autumn Nightmares">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+				</trait>
+				<trait name="Hedge Gate Sense" source="Changeling Rites of Spring">
+					<value>1</value>
+				</trait>
+				<trait name="Hidden Life" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<prerequisite> <![CDATA[Fame < 1 AND Wyrd > 0]]></prerequisite>
+				</trait>
+				<trait name="Hobgoblin Trainer" source="Changeling Rites of Spring">
+					<value>2</value>
+				</trait>
+				<trait name="Hollow: Size" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Hollow: Amenities" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Hollow: Doors" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Hollow: Wards" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Archive" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Hollow: Size > 0 OR Hollow: Amenities > 0 OR Hollow: Doors > 0 OR Hollow: Wards > 0</prerequisite>
+				</trait>
+				<trait name="Workshop" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Hollow: Size > 0</prerequisite>
+				</trait>
+				<trait name="Ritual Doorway" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Hollow: Doors > 0</prerequisite>
+				</trait>
+				<trait name="Hob Kin" source="Changeling Rites of Spring">
+					<value>2</value>
+					<prerequisite>Hollow: Size > 0 OR Hollow: Amenities > 0 OR Hollow: Doors > 0 OR Hollow: Wards > 0</prerequisite>
+				</trait>
+				<trait name="Lethal Mien" source="Changeling Rites of Spring">
+					<value>2</value>
+					<prerequisite>Wyrd > 2</prerequisite>
+					<!--<effect>You deal lethal damage when brawling instead of bashing. If you already have an innate lethal attack thanks to your kith, the damage rating of that attack is increased by 1.</effect>-->
+				</trait>
+				<trait name="Long of Days" source="Changeling Rites of Spring">
+					<value>2</value>
+				</trait>
+				<trait name="Mantle" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Market Sense" source="Changeling Rites of Spring">
+					<value>1</value>
+				</trait>
+				<trait name="No Seeming" source="Changeling The Equinox Road">
+					<value>2</value>
+					<!--<effect>No seeming</effect>-->
+				</trait>
+				<trait name="Perfect Stillness" source="Changeling Rites of Spring">
+					<value>1</value>
+					<prerequisite>Stealth > 0</prerequisite>
+				</trait>
+				<trait name="Pledgesmith" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+				</trait>
+				<trait name="Prophet Circle" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Rigid Mask" source="Changeling Rites of Spring">
+					<value>2</value>
+					<prerequisite>Subterfuge > 1</prerequisite>
+				</trait>
+				<trait name="Siren Song" source="Changeling Rites of Spring">
+					<value>3</value>
+				</trait>
+				<trait name="Soul Sense" source="Changeling Rites of Spring">
+					<value>2</value>
+					<!--<prerequisite>A living Fetch</prerequisite>-->
+				</trait>
+				<trait name="Visionary Dreams" source="Changeling Rites of Spring">
+					<value>2</value>
+					<prerequisite>Wyrd > 2</prerequisite>
+				</trait>
+				<trait name="Wisdom of Dreams" source="Changeling Rites of Spring">
+					<value>3</value>
+					<prerequisite>Wyrd > 1</prerequisite>
+				</trait>
+				<trait name="Wyrdskill" source="Changeling The Equinox Road">
+					<value>1</value>
+					<prerequisite>Wyrd > 5</prerequisite>
+					<!--<effect>You bind another Skill to your Mien and seeming, and at every \Trait{Wyrd} dot gained starting at \Trait[6]{Wyrd}, you receives another free Specialty for the Skill chosen to be bound to one's \Trait{Wyrd}.</effect>
+					<effect>The experience cost to buy Skill dots in other Skills in the same area as your Wyrdskill increase to new dots $\times$4, and Specialties cost 4~XP.</effect>-->
+				</trait>
+				<trait name="Devotee" source="Changeling The Equinox Road">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Wyrd > 6</prerequisite>
+				</trait>
+				<trait name="Manymask" source="Changeling The Equinox Road">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Wyrd > 6</prerequisite>
+				</trait>
+				<trait name="Tokenmaster" source="Changeling The Equinox Road">
+					<value>3</value>
+					<prerequisite>Wyrd > 6</prerequisite>
+				</trait>
+				<trait name="Sublime" source="Changeling The Equinox Road">
+					<value>5</value>
+					<prerequisite>Wyrd > 8</prerequisite>
+				</trait>
+			</Species>
+			<FightingStyle>
+				<trait name="Dream Combat" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Empathy > 2 AND Wyrd > 2</prerequisite>
+				</trait>
+				<trait name="Hedge Duelist" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Wyrd > 2</prerequisite>
+				</trait>
+			</FightingStyle>
+		</Merit>
 	</traits>
 </SoulCreator>

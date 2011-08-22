@@ -49,7 +49,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 	for ( int i = 0; i < categories.count(); i++ ) {
 		for ( int j = 0; j < storage.attributeNames( categories.at(i) ).count(); j++ ) {
-			CharaTrait *trait = new CharaTrait( this, type, categories.at(i), storage.attributeNames( categories.at(i) ).at( j ) );
+			CharaTrait *trait = new CharaTrait( this, storage.attributes( categories.at(i) ).at( j ) );
 			trait->setValue(1);
 			// Zwischen den Attributsgruppen eine Spalte als Zwischenraum freilassen.
 			layout->addWidget( trait, j, 2*i );

@@ -43,7 +43,7 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 	scrollArea = new QScrollArea( this );
 	scrollArea->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Expanding );
 	scrollArea->setWidgetResizable( true );
-	scrollArea->setFrameStyle(0);
+	scrollArea->setFrameStyle( 0 );
 
 	layoutTop->addWidget( scrollArea );
 
@@ -63,20 +63,23 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Social );
 	categories.append( cv_Trait::Item );
 	categories.append( cv_Trait::FightingStyle );
+	categories.append( cv_Trait::DebateStyle );
+	categories.append( cv_Trait::ShadowRealm );
+	categories.append( cv_Trait::PsychicPhenomena );
+	categories.append( cv_Trait::Species );
 
 	// Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < categories.count(); i++ ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 		QWidget* widgetMeritCategory = new QWidget();
 		QVBoxLayout* layoutMeritCategory = new QVBoxLayout();
-		widgetMeritCategory->setLayout(layoutMeritCategory);
-		toolBox->addItem(widgetMeritCategory, cv_Trait::toString(categories.at(i), true));
-		
+		widgetMeritCategory->setLayout( layoutMeritCategory );
+		toolBox->addItem( widgetMeritCategory, cv_Trait::toString( categories.at( i ), true ) );
+
 		for ( int j = 0; j < storage.merits( categories.at( i ) ).count(); j++ ) {
-// 			qDebug() << Q_FUNC_INFO << storage.meritNames( categories.at( i ) ).at(j) << "ist besonders";
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
-// 				CharaTrait *trait = new CharaTrait( this, type, categories.at( i ), storage.meritNames( categories.at( i ) ).at( j ), storage.merits( categories.at( i ) ).at( j ).custom );
 				CharaTrait *charaTrait = new CharaTrait( this, storage.merits( categories.at( i ) ).at( j ) );
+				charaTrait->setValue(0);
 				layoutMeritCategory->addWidget( charaTrait );
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
@@ -85,30 +88,29 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 				}
 			}
 		}
-
-		// Abstand zwischen den Kategorien, aber nicht am Ende.
-		if ( i < categories.count() - 1 ) {
-			layoutMeritCategory->addSpacing( Config::traitCategorySpace );
-		}
+// 		// Abstand zwischen den Kategorien, aber nicht am Ende.
+// 		if ( i < categories.count() - 1 ) {
+// 			layoutMeritCategory->addSpacing( Config::traitCategorySpace );
+// 		}
 	}
 
-	dialog = new SelectMeritsDialog(this);
-
-	QHBoxLayout* layout_button = new QHBoxLayout();
-	layoutTop->addLayout( layout_button );
-	
-	button = new QPushButton();
-	button->setIcon( style()->standardIcon( QStyle::SP_FileDialogStart ) );
-	
-	layout_button->addStretch();
-	layout_button->addWidget( button );
-
-	connect(button, SIGNAL(clicked(bool)), dialog, SLOT(exec()));
+// 	dialog = new SelectMeritsDialog( this );
+// 
+// 	QHBoxLayout* layout_button = new QHBoxLayout();
+// 	layoutTop->addLayout( layout_button );
+// 
+// 	button = new QPushButton();
+// 	button->setIcon( style()->standardIcon( QStyle::SP_FileDialogStart ) );
+// 
+// 	layout_button->addStretch();
+// 	layout_button->addWidget( button );
+// 
+// 	connect( button, SIGNAL( clicked( bool ) ), dialog, SLOT( exec() ) );
 }
 
 MeritWidget::~MeritWidget() {
-	delete dialog;
-	delete button;
+// 	delete dialog;
+// 	delete button;
 	delete scrollArea;
 }
 

@@ -43,10 +43,13 @@ StringBoolParser::Token StringBoolParser::nextToken() {
 				actualToken = RPAR;
 				break;
 		}
+
 		if ( *srcPos == 'A' ) {
 			srcPos++;
+
 			if ( *srcPos == 'N' ) {
 				srcPos++;
+
 				if ( *srcPos == 'D' )
 					actualToken = AND;
 				else
@@ -54,43 +57,68 @@ StringBoolParser::Token StringBoolParser::nextToken() {
 			} else
 				srcPos--;
 		}
+
 		if ( *srcPos == 'O' ) {
 			srcPos++;
+
 			if ( *srcPos == 'R' )
 				actualToken = OR;
 		}
+
 		if ( *srcPos == '=' ) {
 			actualToken = EQUAL;
 		}
+
 		if ( *srcPos == '>' ) {
 			actualToken = GREATER;
 			srcPos++;
+
 			if ( *srcPos == '=' )
 				actualToken = GREATEREQUAL;
 			else
 				srcPos--;
 		}
+
 		if ( *srcPos == '<' ) {
 			actualToken = SMALLER;
 			srcPos++;
+
 			if ( *srcPos == '=' )
 				actualToken = SMALLEREQUAL;
 			else
 				srcPos--;
 		}
+
 		if ( *srcPos >= '0' && *srcPos <= '9' ) {
 			actualToken = NUMBER;
 			tokenNumberValue = 0;
 		}
+
 		while ( *srcPos >= '0' && *srcPos <= '9' ) {
 			tokenNumberValue *= 10;
 			tokenNumberValue += *srcPos - '0';
 			srcPos++;
 		}
+
 		if ( actualToken != NUMBER ) {
 			srcPos++;
 		}
+// 		// TEXT wird wie eine numerische 0 betrachtet.
+// 		if (( *srcPos >= 'a' && *srcPos <= 'z' ) || ( *srcPos >= 'A' && *srcPos <= 'Z' ) ) {
+// 			actualToken = TEXT;
+// 			tokenNumberValue = 0;
+// 			srcPos++;
+// 		}
+// 
+// 		while (( *srcPos >= 'a' && *srcPos <= 'z' ) || ( *srcPos >= 'A' && *srcPos <= 'Z' ) || *srcPos == '.' ) {
+// 			srcPos++;
+// 		}
+// 
+// 		if ( actualToken != TEXT ) {
+// 			srcPos++;
+// 		}
 	}
+
 	return actualToken;
 }
 
@@ -118,6 +146,8 @@ bool StringBoolParser::compare() {
 	} else
 		result = false;
 
+// 	qDebug() << Q_FUNC_INFO << result;
+
 	return result;
 }
 
@@ -125,8 +155,11 @@ bool StringBoolParser::compare() {
 bool StringBoolParser::paranthesis() {
 	bool result;
 
+// 	qDebug() << Q_FUNC_INFO << actualToken << ",";
+
 	switch ( actualToken ) {
 		case NUMBER:
+		case TEXT:
 			result = compare();
 			return result;
 
@@ -142,7 +175,7 @@ bool StringBoolParser::paranthesis() {
 		case END:
 			return false;
 	}
-	
+
 	throw Exception( "primary expected" );
 }
 
@@ -153,10 +186,15 @@ bool StringBoolParser::operatorOR() {
 
 	nextToken();
 
+// 	qDebug() << Q_FUNC_INFO << actualToken << ",";
+
 	while ( actualToken == OR ) {
 		nextToken();
 		result = operatorAND() || result;
 	}
+
+// 	qDebug() << Q_FUNC_INFO << result;
+
 	return result;
 }
 
@@ -167,8 +205,14 @@ bool StringBoolParser::operatorAND() {
 
 	while ( actualToken == AND ) {
 		nextToken();
+
+// 		qDebug() << Q_FUNC_INFO << actualToken << ",";
+
 		result = operatorAND() && result;
 	}
+
+// 	qDebug() << Q_FUNC_INFO << result;
+
 	return result;
 }
 

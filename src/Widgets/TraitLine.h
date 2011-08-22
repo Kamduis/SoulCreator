@@ -71,6 +71,13 @@ class TraitLine : public QWidget {
 		 * Dieser Konstruktor übergibt sämtliche Werte.
 		 **/
 // 		TraitLine(QWidget *parent = 0, cv_Trait::Type type = cv_Trait::TypeNo, cv_Trait::Category category = cv_Trait::CategoryNo, QString name = "", int value = 0);
+		/**
+		 * Simpler Konstruktor, der einige Werte übergeben kann.
+		 *
+		 * \bug Verbraucht viel zu viele Prozessorzyklen. Einige connections wurden auskommentiert aus debug-Zwecken. Programm zur zeit nicht funktionabel.
+		 *
+		 * \bug value ist wohl manchmal nicht initialisiert.
+		 **/
 		TraitLine(QWidget *parent = 0, QString name = "", int value = 0);
 		/**
 		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
@@ -101,6 +108,10 @@ class TraitLine : public QWidget {
 	public slots:
 		void setName(QString text);
 		void setValue(int value);
+		/**
+		 * Gibt alle Werte zurück, welche diese Zeile annehmen darf.
+		 **/
+		void setPossibleValues(QList<int> valueList);
 		void setText(QString text);
 		void setMinimum(int value);
 		/**

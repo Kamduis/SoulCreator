@@ -26,7 +26,14 @@
 
 #include "TraitDots.h"
 
+#include "valgrind/memcheck.h"
+
 TraitDots::TraitDots( QWidget *parent ) : QWidget( parent ) {
+	// Variablen initialisieren.
+	v_minimum = 0;
+	v_maximum = 5;
+	v_value = 0;
+
 	// Es gibt anfangs keine verbotenen Werte, also nur eine leere Liste erstellen
 	v_forbiddenValues = new QList<int>();
 
@@ -61,6 +68,8 @@ TraitDots::~TraitDots() {
 
 // Das automatisch ausgelöste paintEvent, das das Widget bei jeder Fensterveränderung neu zeichnet.
 void TraitDots::paintEvent( QPaintEvent * ) {
+	// Wenn das Widget disabled ist, muß ich den Alphakanal meiner Farben verändern.
+
 	static const int frameWidth = 16;
 	static const QPoint dotCenter = QPoint( 0, 0 );
 	QPoint shiftCenter = dotCenter;
@@ -78,8 +87,14 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 	double side = qMin( windowWidth, windowHeight );
 
 	painter.setRenderHint( QPainter::Antialiasing );
+	if (!isEnabled()){
+		painter.setOpacity(.5);
+	}
 	painter.translate( double( side / 2 ), double( height() / 2 ) );
 	painter.scale( side / double( dotDiameter ), side / double( dotDiameter ) );
+
+	painter.setPen( framePen );
+	painter.setBrush( v_colorFull );
 
 	painter.setPen( framePen );
 	painter.setBrush( v_colorFull );
@@ -87,12 +102,11 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 	painter.save();
 
 	for ( int i = 0; i < v_value; i++ ) {
-// 		// Seperator setzen, aber nicht am Anfang und nicht am Ende
-// 		if ( (i % MySeperatorStep) == 0 && i != 0 )
-//
-
 		shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 );
 		painter.drawEllipse( shiftCenter, dotRadius, dotRadius );
+// 		if (v_forbiddenValues->contains(i+1)){
+// 			painter.drawEllipse(shiftCenter, dotRadius/2, dotRadius/2);
+// 		}
 	}
 
 	painter.restore();
@@ -104,7 +118,20 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 	for ( int i = v_value; i < maximum(); i++ ) {
 		shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 );
 		painter.drawEllipse( shiftCenter, dotRadius, dotRadius );
+		
+		if (v_forbiddenValues->contains(i+1)){
+			int dotRadiusHalf = dotRadius/2;
+			painter.drawLine(shiftCenter.x()-dotRadiusHalf, shiftCenter.y()-dotRadiusHalf, shiftCenter.x()+dotRadiusHalf, shiftCenter.y()+dotRadiusHalf);
+			painter.drawLine(shiftCenter.x()-dotRadiusHalf, shiftCenter.y()+dotRadiusHalf, shiftCenter.x()+dotRadiusHalf, shiftCenter.y()-dotRadiusHalf);
+		}
 	}
+
+// 	for (int i = 0; i < v_forbiddenValues->count(); i++) {
+// 		shiftCenter = dotCenter + QPoint( 0 + dotDiameter * (v_forbiddenValues->at(i) - 1), 0 );
+// // 		painter.drawLine(shiftCenter.x()-dotDiameter/2, shiftCenter.y()-dotDiameter/2, shiftCenter.x()+dotDiameter/2, shiftCenter.y()+dotDiameter/2);
+// // 		painter.drawLine(shiftCenter.x()+dotDiameter/2, shiftCenter.y()-dotDiameter/2, shiftCenter.x()-dotDiameter/2, shiftCenter.y()+dotDiameter/2);
+// 		painter.drawEllipse(shiftCenter, dotRadius/2, dotRadius/2);
+// 	}
 
 	painter.restore();
 }
@@ -155,6 +182,11 @@ void TraitDots::mousePressEvent( QMouseEvent *event ) {
 //}
 
 
+void TraitDots::changeEvent( QEvent *event ) {
+	update();
+}
+
+
 int TraitDots::value() const {
 	return v_value;
 }
@@ -177,7 +209,7 @@ QColor TraitDots::colorFrame() const {
 
 
 
-// Ãndert sich der Maximalwert, ändert sich auch die minimale Breite, die das Widget in Anspruch nicmmt
+// Ändert sich der Maximalwert, ändert sich auch die minimale Breite, die das Widget in Anspruch nicmmt
 void TraitDots::resetMinimumSize( int sizeX ) {
 	setMinimumWidth( sizeX * v_minimumSizeY );
 }
@@ -190,7 +222,11 @@ void TraitDots::setValue( int valueArg ) {
 	if ( newValue >= 0 ) {
 		// Reduziere den zu setzenden Wert solange um 1, bis er unter dem Maximum und nicht in der v_forbiddenList liegt.
 		// NatÜrlich wird die Schleife abgebrochen, sollte dadurch der Wert auf 0 sinken.
-		while (( v_forbiddenValues->contains( newValue ) || newValue > maximum() ) && newValue > 0 ) {
+		// Ich beschleunige diese Abarbeitung, falls der Wert deutlich größer als maximum() ist.
+		if ( newValue > maximum() ) {
+			newValue = maximum();
+		}
+		while ( v_forbiddenValues->contains( newValue ) && newValue > 0 ) {
 			newValue--;
 		}
 
@@ -200,11 +236,11 @@ void TraitDots::setValue( int valueArg ) {
 		}
 
 		// Signal aussenden, wenn der Wert /verändert/ wurde
-		if ( newValue != value() ) {
-			// Wert verändern
+		if ( v_value != newValue ) {
 			v_value = newValue;
-			// Signal
+
 			emit valueChanged( newValue );
+
 			// neu zeichnen
 			update();
 		}
@@ -232,7 +268,7 @@ void TraitDots::setMaximum( int valueArg ) {
 			setMinimum( valueArg );
 
 		// Entferne das neue Maximum aus v_forbiddenList
-		// Diese Liste kann (rein theoretisch) mehrere identische Werte enthalten, also das agnze Über eine while-Schleife tun.
+		// Diese Liste kann (rein theoretisch) mehrere identische Werte enthalten, also das ganze Über eine while-Schleife tun.
 		while ( v_forbiddenValues->contains( valueArg ) ) {
 			v_forbiddenValues->removeAt( v_forbiddenValues->indexOf( valueArg ) );
 		}
@@ -245,15 +281,18 @@ void TraitDots::setMaximum( int valueArg ) {
 }
 
 void TraitDots::setMinimum( int valueArg ) {
+// 	qDebug() << Q_FUNC_INFO << "Valgrind:" << VALGRIND_CHECK_VALUE_IS_DEFINED(valueArg);
+// 	qDebug() << Q_FUNC_INFO << "Valgrind:" << VALGRIND_CHECK_MEM_IS_DEFINED(valueArg, sizeof(int));
+
 	// Negative Werte werden nicht Übernommen
 	if ( valueArg >= 0 ) {
 		v_minimum = valueArg;
 
 		// Ist das neue Minimum größer als das Maximum wird letzteres verändert, um dieses mindestens so groß wie das Minimum zu behalten.
-
 		if ( valueArg > maximum() )
 			setMaximum( valueArg );
 
+// 		qDebug() << Q_FUNC_INFO << "Valgrind:" << VALGRIND_CHECK_VALUE_IS_DEFINED(v_forbiddenValues);
 		// Entferne das neue Minimum aus v_forbiddenList.
 		// Diese Liste kann (rein theoretisch) mehrere identische Werte enthalten, also das agnze Über eine while-Schleife tun.
 		while ( v_forbiddenValues->contains( valueArg ) ) {
@@ -356,15 +395,28 @@ void TraitDots::setAllowedValues( QList<int> *values ) {
 // FÜgt einen erlaubten Wert hinzu
 void TraitDots::addAllowedValue( int value ) {
 	// value aus v_forbiddenList entfernen.
-	v_forbiddenValues->removeAll( value );
+	if ( v_forbiddenValues->contains( value ) ) {
+		v_forbiddenValues->removeAll( value );
+	}
 }
 
 
 // FÜgt einen verbotenen Wert hinzu
 void TraitDots::addForbiddenValue( int value ) {
-	// value aus v_forbiddenList entfernen.
-	v_forbiddenValues->removeAll( value );
-	v_forbiddenValues->append( value );
-	// Liste wieder sortieren
-	qSort( v_forbiddenValues->begin(), v_forbiddenValues->end() );
+	if ( !v_forbiddenValues->contains( value ) ) {
+		v_forbiddenValues->append( value );
+
+		// Liste wieder sortieren
+		qSort( v_forbiddenValues->begin(), v_forbiddenValues->end() );
+	}
+}
+
+
+void TraitDots::forbidAll() {
+	for ( int i = minimum(); i < maximum() + 1; i++ ) {
+		addForbiddenValue( i );
+	}
+}
+void TraitDots::forbidNone() {
+	v_forbiddenValues->clear();
 }

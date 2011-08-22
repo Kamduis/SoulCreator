@@ -49,8 +49,9 @@ VerticalTraitWidget::VerticalTraitWidget( QWidget *parent, cv_Trait::Type type )
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < categories.count(); i++ ) {
 		for ( int j = 0; j < storage.traitNames( v_type, categories.at( i ) ).count(); j++ ) {
-			CharaTrait *trait = new CharaTrait( this, v_type, categories.at( i ), storage.traitNames( v_type, categories.at( i ) ).at( j ) );
-			// Nur Fertigkeiten haben Spezialisierungen.
+// 			CharaTrait *trait = new CharaTrait( this, v_type, categories.at( i ), storage.traitNames( v_type, categories.at( i ) ).at( j ) );
+			CharaTrait *trait = new CharaTrait( this, storage.traits( v_type, categories.at( i ) ).at( j ) );
+// 			// Nur Fertigkeiten haben Spezialisierungen.
 			if ( type = cv_Trait::Skill ) {
 				// Es sollen die Spazialisierungen angezeigt werden können.
 				for ( int k = 0; k < storage.skillSpecialties( storage.skillNames( categories.at( i ) ).at( j ) ).count(); k++ ) {

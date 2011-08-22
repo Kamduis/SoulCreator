@@ -28,6 +28,7 @@
 #include <QGridLayout>
 
 #include "../Storage/StorageCharacter.h"
+#include "../Calc/CalcAdvantages.h"
 
 #include <QWidget>
 
@@ -57,7 +58,7 @@ class AdvantagesWidget : public QWidget {
 		 * In diesem Layout werden die berechneten Charakterwerte angeordnet.
 		 **/
 		QGridLayout *layout;
-		StorageCharacter* character;
+		CalcAdvantages* calcAdvantages;
 
 	public slots:
 

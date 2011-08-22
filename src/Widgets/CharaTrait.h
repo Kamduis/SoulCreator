@@ -48,7 +48,7 @@ class CharaTrait : public TraitLine {
 		/**
 		 * Konstruktor.
 		 **/
-		CharaTrait( QWidget *parent, cv_Trait::Type type, cv_Trait::Category category, QString name, bool custom = false, int value = 0 );
+		CharaTrait( QWidget *parent, cv_Trait::Type type, cv_Trait::Category category, cv_Species::Species species, QString name, bool custom = false, int value = 0 );
 		/**
 		 * An diesen Konstruktor kann direkt die Eigenschaft übergeben werden, welche dieses Widget anzeigt.
 		 **/
@@ -67,6 +67,10 @@ class CharaTrait : public TraitLine {
 		 **/
 		cv_Trait::Category category() const;
 		/**
+		 * Gibt die Spezies zurück, der die hier dargestellte Eigenschaft angehört.
+		 **/
+		cv_Species::Species species() const;
+		/**
 		 * Gibt zurück, ob es sich um eine Eigenschaft mit einem besonderen Text handelt.
 		 **/
 		bool custom() const;
@@ -77,13 +81,14 @@ class CharaTrait : public TraitLine {
 		QList< cv_TraitDetail > v_specialties;
 		cv_Trait::Type v_type;
 		cv_Trait::Category v_category;
+		cv_Species::Species v_species;
 		bool v_custom;
 		QString v_prerequisites;
 
 		/**
 		 * Hilfsfunktion, um bei überladenen Konstruktoren nicht alles doppelt aufrufen zu müssen.
 		 **/
-		void construction( cv_Trait::Type type, cv_Trait::Category category, QString name, bool custom, int value);
+		void construction( cv_Trait::Type type, cv_Trait::Category category, cv_Species::Species species, QString name, bool custom, int value);
 
 	public slots:
 		/**
@@ -94,6 +99,10 @@ class CharaTrait : public TraitLine {
 		 * Legt die Kategorie der hier dargestellten Eigenschaft fest.
 		 **/
 		void setCategory( cv_Trait::Category category );
+		/**
+		 * Legt fest, welche Spezies alles über diese Eigenschaft verfügen können.
+		 **/
+		void setSpecies( cv_Species::Species species );
 		/**
 		 * Legt fest, ob es sich um eine Eigenschaft mit einem erklärenden Text handelt.
 		 **/
@@ -114,9 +123,13 @@ class CharaTrait : public TraitLine {
 		void hideDescriptionWidget();
 		void emitSpecialtiesClicked(bool sw);
 		/**
-		 * Sorgt dafür, daß das Widget disabled wird, wenn die Voraussetzungen nicht erfüllt sind.
+		 * Sorgt dafür, daß das Widget disabled wird, wenn die Voraussetzungen nicht erfüllt sind. Diese Funktion überprüft nur, ob sich die Voraussetzungen verändert haben, weil sich diese eine Eigenschaft verändert hat.
 		 **/
-		void checkTraitPrerequisites();
+		void checkTraitPrerequisites( cv_Trait trait /** Veränderte Eigenscahft, die \emph{möglicherweise} Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */);
+		/**
+		 * Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.
+		 **/
+		void hideTraitIfNotAvailable( cv_Species::SpeciesFlag species );
 
 		/**
 		 * Ändert alle Parameter dieses Widgets, damit es der übergebenen Eigenschaft entspricht.
@@ -130,6 +143,10 @@ class CharaTrait : public TraitLine {
 		 * Das wird zwar selten passieren, wenn das Widget erst einmal angelegt wurde (nie!), aber so kann ich einfach die Anzeige für die Spazialisierungen an und Ausschalten, wenn das Widget zu einer Fertigkeit gemacht wird.
 		 **/
 		void typeChanged( cv_Trait::Type );
+// 		/**
+// 		 * Dieses Signal wird ausgesandt, wann immer sich die Spezies ändert, welcher diese Kategorie zugeordnet ist.
+// 		 **/
+// 		void speciesChanged( cv_Species::Species );
 		void customChanged( bool sw);
 		/**
 		 * Dieses Signal wird ausgesandt, wann immer sich die Eigenschaft des Widgets ändert.

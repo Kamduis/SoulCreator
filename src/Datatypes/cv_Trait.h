@@ -122,6 +122,26 @@ class cv_Trait {
 		 *     <td>Category::Social</td>
 		 *     <td>Gehört der sozialen Kategorie an.</td>
 		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::Item</td>
+		 *     <td>Gegenstände.</td>
+		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::FightingStyle</td>
+		 *     <td>Kampfstile.</td>
+		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::DebateStyle</td>
+		 *     <td>Debattierstile.</td>
+		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::PsychicPhenomena</td>
+		 *     <td>Psychische Phänomene wie Psi oder Hellsicht.</td>
+		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::Species</td>
+		 *     <td>Eigenschaften, welche ein Ausdruck der besonderen Spezies des Charakters sind.</td>
+		 *  </tr>
 		 *  </table>
 		 */
 		enum Category {
@@ -130,7 +150,11 @@ class cv_Trait {
 			Physical,
 			Social,
 			Item,
-			FightingStyle
+			FightingStyle,
+			DebateStyle,
+			ShadowRealm,
+			PsychicPhenomena,
+			Species
 		};
 		/**
 		 * In welche Era findet diese Eigenschaft ihre Anwendung? In der Moderne oder in der Antike?
@@ -324,9 +348,13 @@ class cv_Trait {
 		/**
 		* Vergleich zwischen zwei Instanzen dieser Klasse.
 		*
-		* \todo Die Vergleiche sind noch nich tumfassend genug. Typ und Kategorie muß nich verglichen werden. etc.
+		* \todo Die Vergleiche sind noch nicht umfassend genug. Typ und Kategorie muß nich verglichen werden. etc.
 		**/
 		bool operator==( const cv_Trait &trait ) const;
+		/**
+		* Vergleich zwischen zwei Instanzen dieser Klasse nach Reihenfolge. Wird für den qSort-Algorythmus benötigt.
+		**/
+		bool operator<( const cv_Trait &trait ) const;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( cv_Trait::Age )

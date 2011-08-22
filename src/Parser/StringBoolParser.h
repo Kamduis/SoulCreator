@@ -53,6 +53,7 @@ class StringBoolParser : public QObject {
 			LPAR,
 			RPAR,
 			NUMBER,
+			TEXT,
 			END,
 			ERROR
 		};

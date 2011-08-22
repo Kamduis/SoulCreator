@@ -39,6 +39,11 @@ StorageTemplate::StorageTemplate( QObject *parent ) : QObject( parent ) {
 StorageTemplate::~StorageTemplate() {
 }
 
+void StorageTemplate::sortTraits() {
+	qSort(v_traits);
+}
+
+
 QList< cv_Species > StorageTemplate::species() const {
 	return v_species;
 }
@@ -73,8 +78,16 @@ QStringList StorageTemplate::viceNames( cv_Trait::AgeFlag age ) const {
 	return traitNames( cv_Trait::Vice, cv_Trait::CategoryNo, cv_Trait::EraAll, age );
 }
 
+QList< cv_Trait > StorageTemplate::attributes( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
+	return traits( cv_Trait::Attribute, category, era, age );
+}
+
 QStringList StorageTemplate::attributeNames( cv_Trait::Category category ) const {
 	return traitNames( cv_Trait::Attribute, category, cv_Trait::EraAll, cv_Trait::AgeAll );
+}
+
+QList< cv_Trait > StorageTemplate::skills( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
+	return traits( cv_Trait::Skill, category, era, age );
 }
 
 QStringList StorageTemplate::skillNames( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
@@ -151,12 +164,12 @@ QString StorageTemplate::meritPrerequisites( QString meritName ) const {
 	return text;
 }
 
-QList< cv_Trait > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Category category ) {
+QList< cv_Trait > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
 	QList< cv_Trait > traits;
 	cv_Trait trait;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category ) {
+		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category && v_traits.at( i ).era.testFlag( era ) && v_traits.at( i ).age.testFlag( age ) ) {
 			trait = v_traits.at( i );
 			traits.append( trait );
 		}
@@ -207,18 +220,19 @@ void StorageTemplate::appendSpecies( cv_Species species ) {
 
 void StorageTemplate::appendTrait( cv_Trait trait ) {
 	bool exists = false;
-	
-	for (int i = 0; i < v_traits.count(); i++){
-		if (v_traits.at(i).type == trait.type && v_traits.at(i).name == trait.name){
+
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).type == trait.type && v_traits.at( i ).name == trait.name ) {
 			exists = true;
 			break;
 		}
 	}
 
-	if (!exists){
+	if ( !exists ) {
 // 		if (trait.custom){
 // 			qDebug() << Q_FUNC_INFO << trait.name << "ist besonders";
 // 		}
+// 		qDebug() << Q_FUNC_INFO << "Füge" << trait.name << "hinzu." << trait.category;
 		v_traits.append( trait );
 	}
 }
