@@ -41,6 +41,8 @@
  */
 class cv_Trait {
 	public:
+		cv_Trait();
+		
 		/**
 		 * Zu welchem Typus gehört die Eigenschaft? Attribut, Fertigkeit, Vorzug etc.
 		 *
@@ -135,8 +137,8 @@ class cv_Trait {
 		 *     <td>Debattierstile.</td>
 		 *  </tr>
 		 *  <tr>
-		 *     <td>Category::PsychicPhenomena</td>
-		 *     <td>Psychische Phänomene wie Psi oder Hellsicht.</td>
+		 *     <td>Category::Extraordinary</td>
+		 *     <td>Psychische Phänomene wie Psi oder Hellsicht. Auch mit Geistern in Verbindung stehende Merits.</td>
 		 *  </tr>
 		 *  <tr>
 		 *     <td>Category::Species</td>
@@ -152,8 +154,7 @@ class cv_Trait {
 			Item,
 			FightingStyle,
 			DebateStyle,
-			ShadowRealm,
-			PsychicPhenomena,
+			Extraordinary,
 			Species
 		};
 		/**

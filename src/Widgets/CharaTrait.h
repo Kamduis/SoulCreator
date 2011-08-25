@@ -90,6 +90,11 @@ class CharaTrait : public TraitLine {
 		 **/
 		void construction( cv_Trait::Type type, cv_Trait::Category category, cv_Species::Species species, QString name, bool custom, int value);
 
+		/**
+		 * Hilfsfunktion für checkTraitPrerequisites().
+		 **/
+		QString parsePrerequisites( QString text );
+
 	public slots:
 		/**
 		 * Legt den Typ der hier dargestellten Eigenschaft fest.
@@ -128,6 +133,8 @@ class CharaTrait : public TraitLine {
 		void checkTraitPrerequisites( cv_Trait trait /** Veränderte Eigenscahft, die \emph{möglicherweise} Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */);
 		/**
 		 * Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.
+		 *
+		 * Wenn nicht, werde sie versteckt und auf 0 gesetzt.
 		 **/
 		void hideTraitIfNotAvailable( cv_Species::SpeciesFlag species );
 

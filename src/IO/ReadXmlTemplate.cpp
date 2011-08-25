@@ -150,7 +150,7 @@ void ReadXmlTemplate::readTree( cv_Species::Species sp ) {
 // 				qDebug() << "Typ " << type << " gefunden.";
 				// Virtues und Vices haben keine Kategorie, also darf ich dort auch nicht so tief den Baum hinuntersteigen. Bei allen anderen aber muß ich erst die Kategorie einlesen.
 
-				if ( type == cv_Trait::Virtue || type == cv_Trait::Vice ) {
+				if ( type == cv_Trait::Virtue || type == cv_Trait::Vice || type == cv_Trait::Power ) {
 					readTraits( sp, type, cv_Trait::CategoryNo );
 				} else {
 					readTraits( sp, type );
@@ -189,6 +189,7 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 		if ( isStartElement() ) {
 			if ( name() == "trait" ) {
 				cv_Trait trait = storeTraitData( sp, a, b );
+// 				qDebug() << Q_FUNC_INFO << trait.name;
 
 				// Alle Eigenschaften können 0 als Wert haben, auch wenn dies nicht in den XML-Dateien steht.
 

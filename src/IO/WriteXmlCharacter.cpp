@@ -52,6 +52,8 @@ void WriteXmlCharacter::write( QFile *file ) {
 	writeStartElement( Config::name() );
 	writeAttribute( "version", Config::version() );
 	writeTextElement( "species", cv_Species::toString( character->species() ) );
+	writeTextElement( "superTrait", QString::number( character->superTrait() ) );
+	writeTextElement( "morality", QString::number( character->morality() ) );
 
 	writeCharacterTraits();
 
@@ -66,6 +68,10 @@ void WriteXmlCharacter::writeCharacterTraits() {
 	types.append( cv_Trait::Attribute );
 	types.append( cv_Trait::Skill );
 	types.append( cv_Trait::Merit );
+	types.append( cv_Trait::Power );
+
+	QList< cv_Trait::Category > categoriesNone;
+	categoriesNone.append( cv_Trait::CategoryNo );
 
 	QList< cv_Trait::Category > categoriesGeneral;
 	categoriesGeneral.append( cv_Trait::Mental );
@@ -76,11 +82,12 @@ void WriteXmlCharacter::writeCharacterTraits() {
 	categoriesMerits.append( cv_Trait::Item );
 	categoriesMerits.append( cv_Trait::FightingStyle );
 	categoriesMerits.append( cv_Trait::DebateStyle );
-	categoriesMerits.append( cv_Trait::ShadowRealm );
-	categoriesMerits.append( cv_Trait::PsychicPhenomena );
+	categoriesMerits.append( cv_Trait::Extraordinary );
 	categoriesMerits.append( cv_Trait::Species );
 
 	QList< cv_Trait::Category > categories;
+
+	QList< cv_Trait > list;
 
 	for ( int i = 0; i < types.count(); i++ ) {
 		try {
@@ -90,42 +97,49 @@ void WriteXmlCharacter::writeCharacterTraits() {
 		}
 
 		// Merits haben zusätzliche Kategorien.
-		if (types.at(i) == cv_Trait::Merit){
+		if ( types.at( i ) == cv_Trait::Merit ) {
 			categories = categoriesMerits;
+		} else if ( types.at( i ) == cv_Trait::Power ) {
+			categories = categoriesNone;
 		} else {
 			categories = categoriesGeneral;
 		}
 
 		for ( int j = 0; j < categories.count(); j++ ) {
-			try {
-				writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
-			} catch ( eTraitCategory &e ) {
-				qDebug() << Q_FUNC_INFO << e.message();
-			}
+			list = character->traits( types.at( i ), categories.at( j ) );
 
-			for ( int k = 0; k < character->traits( types.at( i ), categories.at( j ) ).count(); k++ ) {
-				// Eigenscahften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-				if ( character->traits( types.at( i ), categories.at( j ) ).at( k ).value != 0 ) {
-// 					qDebug() << Q_FUNC_INFO << character->traits( types.at( i ), categories.at( j ) ).at( k ).name;
-					writeStartElement( "trait" );
-					writeAttribute( "name", character->traits( types.at( i ), categories.at( j ) ).at( k ).name );
-					writeAttribute( "value", QString::number( character->traits( types.at( i ), categories.at( j ) ).at( k ).value ) );
-
-					if ( character->traits( types.at( i ), categories.at( j ) ).at( k ).custom ) {
-						writeAttribute( "custom", character->traits( types.at( i ), categories.at( j ) ).at( k ).customText );
-					}
-
-// 					qDebug() << Q_FUNC_INFO << character->traits( types.at( i ), categories.at( j ) ).at( k ).details.count();
-// 					if ( types.at( i ) == cv_Trait::Skill ) {
-					for ( int l = 0; l < character->traits( types.at( i ), categories.at( j ) ).at( k ).details.count(); l++ ) {
-// 						qDebug() << Q_FUNC_INFO << character->traits( types.at( i ), categories.at( j ) ).at( k ).details.at( l ).name;
-						writeTextElement( "specialty",  character->traits( types.at( i ), categories.at( j ) ).at( k ).details.at( l ).name );
-					}
-// 					}
-
-					writeEndElement();
+// 			qDebug() << Q_FUNC_INFO << "Type" << types.at(i) << "Category" << categories.at(j) << list.count();
+// 			if ( !list.isEmpty() ) {
+				try {
+					writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
+				} catch ( eTraitCategory &e ) {
+					qDebug() << Q_FUNC_INFO << e.message();
 				}
-			}
+
+				for ( int k = 0; k < list.count(); k++ ) {
+					// Eigenscahften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
+					if ( list.at( k ).value != 0 ) {
+// 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
+						writeStartElement( "trait" );
+						writeAttribute( "name", list.at( k ).name );
+						writeAttribute( "value", QString::number( list.at( k ).value ) );
+
+						if ( list.at( k ).custom ) {
+							writeAttribute( "custom", list.at( k ).customText );
+						}
+
+// 					qDebug() << Q_FUNC_INFO << list.at( k ).details.count();
+// 					if ( types.at( i ) == cv_Trait::Skill ) {
+						for ( int l = 0; l < list.at( k ).details.count(); l++ ) {
+// 						qDebug() << Q_FUNC_INFO << list.at( k ).details.at( l ).name;
+							writeTextElement( "specialty",  list.at( k ).details.at( l ).name );
+						}
+// 					}t
+
+						writeEndElement();
+					}
+				}
+// 			}
 
 			writeEndElement();
 		}

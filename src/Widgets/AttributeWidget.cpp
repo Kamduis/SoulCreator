@@ -22,7 +22,8 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGridLayout>
+#include <QVBoxLayout>
+#include <QGroupBox>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -35,8 +36,27 @@
 
 
 AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
-	layout = new QGridLayout( this );
+	layout = new QHBoxLayout( this );
 	setLayout( layout );
+
+	QFrame* frame = new QFrame( this );
+	layout->addWidget( frame );
+
+	QVBoxLayout* layoutHeader = new QVBoxLayout();
+	frame->setLayout( layoutHeader );
+
+	QLabel* labelPower = new QLabel( tr( "Power" ) );
+	labelPower->setAlignment( Qt::AlignRight );
+
+	QLabel* labelFinesse = new QLabel( tr( "Finesse" ) );
+	labelFinesse->setAlignment( Qt::AlignRight );
+
+	QLabel* labelResistance = new QLabel( tr( "Resistance" ) );
+	labelResistance->setAlignment( Qt::AlignRight );
+
+	layoutHeader->addWidget( labelPower, 0, 0 );
+	layoutHeader->addWidget( labelFinesse, 1, 0 );
+	layoutHeader->addWidget( labelResistance, 2, 0 );
 
 	StorageTemplate storage;
 
@@ -47,18 +67,23 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
 
+	QList< cv_Trait > list;
+
 	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage.attributeNames( categories.at(i) ).count(); j++ ) {
-			CharaTrait *trait = new CharaTrait( this, storage.attributes( categories.at(i) ).at( j ) );
-			trait->setValue(1);
-			// Zwischen den Attributsgruppen eine Spalte als Zwischenraum freilassen.
-			layout->addWidget( trait, j, 2*i );
-		}
-		if (i > 0) {
-			layout->setColumnMinimumWidth( (2*i)-1, Config::traitCategorySpace);
+		list = storage.attributes( categories.at( i ) );
+		QGroupBox* categoriesBox = new QGroupBox();
+		QVBoxLayout* layoutCategories = new QVBoxLayout();
+		categoriesBox->setLayout( layoutCategories );
+
+		layout->addWidget( categoriesBox );
+
+		for ( int j = 0; j < list.count(); j++ ) {
+			CharaTrait *trait = new CharaTrait( this, list.at( j ) );
+			trait->setValue( 0 );
+			trait->setValue( 1 );
+			layoutCategories->addWidget( trait );
 		}
 	}
-
 }
 
 AttributeWidget::~AttributeWidget() {

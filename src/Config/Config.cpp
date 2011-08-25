@@ -27,12 +27,15 @@
 #include "Config.h"
 
 const int Config::traitCategorySpace = 10;
-
 const int Config::traitMultipleMax = 3;
-
 const int Config::displayTimeout = 10000;
-
 const int Config::traitMax = 5;
+const int Config::moralityTraitMax = 10;
+const int Config::derangementMoralityTraitMax = 7;
+const int Config::moralityTraitDefaultValue = 7;
+const int Config::willpowerMax = 10;
+const int Config::superTraitMax = 10;
+const int Config::superTraitDefaultValue = 1;
 
 
 QString Config::name() {

@@ -22,39 +22,34 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ATTRIBUTEWIDGET_H
-#define ATTRIBUTEWIDGET_H
+#ifndef POWERWIDGET_H
+#define POWERWIDGET_H
 
-#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QScrollArea>
+#include <QPushButton>
+
+#include "../Datatypes/cv_TraitDetail.h"
+#include "Dialogs/SelectMeritsDialog.h"
 
 #include <QWidget>
 
 
 /**
- * @brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
- *
- * Die Attribute werden in diesem Widget angeordnet.
- *
- * \todo Alles
+ * @brief Das Widget, in welchem sämtliche Übernatürlichen Kräfte angeordnet sind.
  **/
-class AttributeWidget : public QWidget {
+class PowerWidget : public QWidget {
 		Q_OBJECT
 
 	public:
-		/**
-		 * Konstruktor
-		 **/
-		AttributeWidget( QWidget *parent = 0 );
+		PowerWidget( QWidget *parent = 0 );
 		/**
 		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
 		 **/
-		~AttributeWidget();
+		~PowerWidget();
 
 	private:
-		/**
-		 * In diesem Layout werden die Attribute angeordnet.
-		 **/
-		QHBoxLayout *layout;
+		QScrollArea* scrollArea;
 
 	public slots:
 

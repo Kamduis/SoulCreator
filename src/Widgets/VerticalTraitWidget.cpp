@@ -46,16 +46,25 @@ VerticalTraitWidget::VerticalTraitWidget( QWidget *parent, cv_Trait::Type type )
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
 
+	QList< cv_Trait > list;
+	QList< cv_Trait > listSkills;
+	QList< cv_TraitDetail > listDetails;
+
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage.traitNames( v_type, categories.at( i ) ).count(); j++ ) {
+		list = storage.traits( v_type, categories.at( i ) );
+		listSkills = storage.skills( categories.at( i ) );
+		
+		for ( int j = 0; j < list.count(); j++ ) {
 // 			CharaTrait *trait = new CharaTrait( this, v_type, categories.at( i ), storage.traitNames( v_type, categories.at( i ) ).at( j ) );
-			CharaTrait *trait = new CharaTrait( this, storage.traits( v_type, categories.at( i ) ).at( j ) );
+			CharaTrait *trait = new CharaTrait( this, list.at( j ) );
 // 			// Nur Fertigkeiten haben Spezialisierungen.
 			if ( type = cv_Trait::Skill ) {
+				listDetails = storage.skillSpecialties( listSkills.at( j ).name );
+				
 				// Es sollen die Spazialisierungen angezeigt werden können.
-				for ( int k = 0; k < storage.skillSpecialties( storage.skillNames( categories.at( i ) ).at( j ) ).count(); k++ ) {
-					trait->addSpecialty( storage.skillSpecialties( storage.skillNames( categories.at( i ) ).at( j ) ).at( k ) );
+				for ( int k = 0; k < listDetails.count(); k++ ) {
+					trait->addSpecialty( listDetails.at( k ) );
 				}
 			}
 			layout->addWidget( trait );
@@ -70,6 +79,54 @@ VerticalTraitWidget::VerticalTraitWidget( QWidget *parent, cv_Trait::Type type )
 // 	layout->setRowMinimumHeight( storage.traitNames( v_type, cv_Trait::Mental ).count(), Config::traitCategorySpace );
 // 	layout->setRowMinimumHeight( storage.traitNames( v_type, cv_Trait::Mental ).count() + storage.traitNames( type, cv_Trait::Physical ).count() + 1, Config::traitCategorySpace );
 }
+
+
+// VerticalTraitWidget::VerticalTraitWidget( QWidget *parent, cv_Trait::Type type ) : QWidget( parent )  {
+// 	layout = new QVBoxLayout( this );
+// 	setLayout( layout );
+// 
+// 	StorageTemplate storage;
+// 
+// 	v_type = type;
+// 
+// 	QList< cv_Trait::Category > categories;
+// 	categories.append( cv_Trait::Mental );
+// 	categories.append( cv_Trait::Physical );
+// 	categories.append( cv_Trait::Social );
+// 
+// 	QStringList stringList;
+// 	QList< cv_Trait > list;
+// 	QList< cv_TraitDetail > detailList;
+// 
+// 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
+// 	for ( int i = 0; i < categories.count(); i++ ) {
+// 		stringList = storage.traitNames( v_type, categories.at( i ) );
+// 
+// 		for ( int j = 0; j < stringList.count(); j++ ) {
+// 			list = storage.traits( v_type, categories.at( i ) );
+// 
+// // 			CharaTrait *trait = new CharaTrait( this, v_type, categories.at( i ), storage.traitNames( v_type, categories.at( i ) ).at( j ) );
+// 			CharaTrait *trait = new CharaTrait( this, list.at( j ) );
+// // 			// Nur Fertigkeiten haben Spezialisierungen.
+// 			if ( type = cv_Trait::Skill ) {
+// 				detailList = storage.skillSpecialties( storage.skillNames( categories.at( i ) ).at( j ) );
+// 				// Es sollen die Spazialisierungen angezeigt werden können.
+// 				for ( int k = 0; k < detailList.count(); k++ ) {
+// 					trait->addSpecialty( detailList.at( k ) );
+// 				}
+// 			}
+// 			layout->addWidget( trait );
+// 		}
+// 
+// 		// Nur Abstand zwischen den Kategorien, nicht am Ende.
+// // 		if (i < categories.count()-1){
+// // 			layout->addSpacing(Config::traitCategorySpace);
+// // 		}
+// 	}
+// 
+// // 	layout->setRowMinimumHeight( storage.traitNames( v_type, cv_Trait::Mental ).count(), Config::traitCategorySpace );
+// // 	layout->setRowMinimumHeight( storage.traitNames( v_type, cv_Trait::Mental ).count() + storage.traitNames( type, cv_Trait::Physical ).count() + 1, Config::traitCategorySpace );
+// }
 
 VerticalTraitWidget::~VerticalTraitWidget() {
 	delete layout;

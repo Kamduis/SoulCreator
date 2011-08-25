@@ -82,28 +82,27 @@ QList< cv_Trait > StorageTemplate::attributes( cv_Trait::Category category, cv_T
 	return traits( cv_Trait::Attribute, category, era, age );
 }
 
-QStringList StorageTemplate::attributeNames( cv_Trait::Category category ) const {
-	return traitNames( cv_Trait::Attribute, category, cv_Trait::EraAll, cv_Trait::AgeAll );
-}
+// QStringList StorageTemplate::attributeNames( cv_Trait::Category category ) const {
+// 	return traitNames( cv_Trait::Attribute, category, cv_Trait::EraAll, cv_Trait::AgeAll );
+// }
 
 QList< cv_Trait > StorageTemplate::skills( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
 	return traits( cv_Trait::Skill, category, era, age );
 }
 
-QStringList StorageTemplate::skillNames( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
-	return traitNames( cv_Trait::Skill, category, era, age );
-}
+// QStringList StorageTemplate::skillNames( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
+// 	return traitNames( cv_Trait::Skill, category, era, age );
+// }
 
 QList< cv_TraitDetail > StorageTemplate::skillSpecialties( QString skillName ) const {
-	QList< cv_Trait > traits = v_traits;
 	QList< cv_TraitDetail > list;
 
-	for ( int i = 0; i < traits.count(); i++ ) {
-		if ( traits.at( i ).name == skillName ) {
-			for ( int j = 0; j < traits.at( i ).details.count(); j++ ) {
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).name == skillName ) {
+			for ( int j = 0; j < v_traits.at( i ).details.count(); j++ ) {
 				// Es kann vorkommen, daß mehrere Spezialisierungen doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
-				if ( !list.contains( traits.at( i ).details.at( j ) ) ) {
-					list.append( traits.at( i ).details.at( j ) );
+				if ( !list.contains( v_traits.at( i ).details.at( j ) ) ) {
+					list.append( v_traits.at( i ).details.at( j ) );
 				}
 			}
 		}
@@ -112,20 +111,19 @@ QList< cv_TraitDetail > StorageTemplate::skillSpecialties( QString skillName ) c
 	return list;
 }
 
-QStringList StorageTemplate::meritNames( cv_Trait::Category category ) const {
-	return traitNames( cv_Trait::Merit, category, cv_Trait::EraAll, cv_Trait::AgeAll );
-}
+// QStringList StorageTemplate::meritNames( cv_Trait::Category category ) const {
+// 	return traitNames( cv_Trait::Merit, category, cv_Trait::EraAll, cv_Trait::AgeAll );
+// }
 
 
 QList< cv_Trait > StorageTemplate::merits( cv_Trait::Category category ) const {
-	QList< cv_Trait > traits = v_traits;
 	QList< cv_Trait > list;
 
-	for ( int i = 0; i < traits.count(); i++ ) {
-		if ( traits.at( i ).type == cv_Trait::Merit && traits.at( i ).category == category ) {
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).type == cv_Trait::Merit && v_traits.at( i ).category == category ) {
 			// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
-			if ( !list.contains( traits.at( i ) ) ) {
-				list.append( traits.at( i ) );
+			if ( !list.contains( v_traits.at( i ) ) ) {
+				list.append( v_traits.at( i ) );
 			}
 		}
 	}
@@ -162,6 +160,21 @@ QString StorageTemplate::meritPrerequisites( QString meritName ) const {
 	}
 
 	return text;
+}
+
+QList< cv_Trait > StorageTemplate::powers( cv_Trait::Category category ) const {
+	QList< cv_Trait > list;
+
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).type == cv_Trait::Power && v_traits.at( i ).category == category ) {
+			// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
+			if ( !list.contains( v_traits.at( i ) ) ) {
+				list.append( v_traits.at( i ) );
+			}
+		}
+	}
+
+	return list;
 }
 
 QList< cv_Trait > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {

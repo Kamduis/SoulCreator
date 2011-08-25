@@ -22,7 +22,6 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGridLayout>
 #include <QSpinBox>
 #include <QDebug>
 
@@ -35,43 +34,176 @@
 
 
 AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
-	layout = new QGridLayout( this );
-	layout->setMargin(0);
+	calcAdvantages = new CalcAdvantages( this );
+	moralityWidget = new MoralityWidget( this );
+	storage = new StorageTemplate( this );
+	character = StorageCharacter::getInstance();
+
+	layout = new QVBoxLayout( this );
+	layout->setMargin( 0 );
+
+	advantagesLayout = new QGridLayout();
+	advantagesLayout->setColumnMinimumWidth( 1, 0 );
+
 	setLayout( layout );
 
-	calcAdvantages = new CalcAdvantages(this);
+	layout->addLayout( advantagesLayout );
 
-	QLabel* labelSize = new QLabel(tr("Size"));
-	QSpinBox* spinBoxSize = new QSpinBox(this);
-	spinBoxSize->setValue(0);
+	QLabel* labelSize = new QLabel( tr( "Size:" ) );
+	QLabel* labelSizeValue = new QLabel( this );
+	labelSizeValue->setNum( 0 );
 
-	QLabel* labelSpeed = new QLabel(tr("Speed"));
-	QSpinBox* spinBoxSpeed = new QSpinBox(this);
-	spinBoxSpeed->setValue(0);
+	QLabel* labelInitiative = new QLabel( tr( "Initiative:" ) );
+	QLabel* labelInitiativeValue = new QLabel( this );
+	labelInitiativeValue->setNum( 0 );
 
-	QLabel* labelInitiative = new QLabel(tr("Initiative"));
-	
-	QLabel* labelDefense = new QLabel(tr("Defense"));
-	QSpinBox* spinBoxDefense = new QSpinBox(this);
-	spinBoxDefense->setValue(0);
-	
-	QLabel* labelArmor = new QLabel(tr("Armor"));
+	QLabel* labelSpeed = new QLabel( tr( "Speed:" ) );
+	QLabel* labelSpeedValue = new QLabel( this );
+	labelSpeedValue->setNum( 0 );
 
-	layout->addWidget(labelSize, 0, 0);
-	layout->addWidget(spinBoxSize, 0, 1);
-	layout->addWidget(labelSpeed, 1, 0);
-	layout->addWidget(spinBoxSpeed, 1, 1);
-	layout->addWidget(labelInitiative, 2, 0);
-	layout->addWidget(labelDefense, 3, 0);
-	layout->addWidget(spinBoxDefense, 3, 1);
-	layout->addWidget(labelArmor, 4, 0);
+	QLabel* labelDefense = new QLabel( tr( "Defense:" ) );
+	QLabel* labelDefenseValue = new QLabel( this );
+	labelDefenseValue->setNum( 0 );
 
-	connect(calcAdvantages, SIGNAL(speedChanged(int)), spinBoxSpeed, SLOT(setValue(int)));
-	connect(calcAdvantages, SIGNAL(sizeChanged(int)), spinBoxSize, SLOT(setValue(int)));
-	connect(calcAdvantages, SIGNAL(defenseChanged(int)), spinBoxDefense, SLOT(setValue(int)));
+	QLabel* labelArmor = new QLabel( tr( "Armor:" ) );
+	QSpinBox* spinBoxArmor = new QSpinBox( this );
+	spinBoxArmor->setMinimum( 0 );
+
+	advantagesLayout->addWidget( labelSize, 0, 0 );
+	advantagesLayout->addWidget( labelSizeValue, 0, 1 );
+	advantagesLayout->addWidget( labelInitiative, 1, 0 );
+	advantagesLayout->addWidget( labelInitiativeValue, 1, 1 );
+	advantagesLayout->addWidget( labelSpeed, 2, 0 );
+	advantagesLayout->addWidget( labelSpeedValue, 2, 1 );
+	advantagesLayout->addWidget( labelDefense, 3, 0 );
+	advantagesLayout->addWidget( labelDefenseValue, 3, 1 );
+	advantagesLayout->addWidget( labelArmor, 4, 0 );
+	advantagesLayout->addWidget( spinBoxArmor, 4, 1 );
+
+	QLabel* labelHealth = new QLabel( tr( "Health" ) );
+	labelHealth->setAlignment( Qt::AlignHCenter );
+
+	QHBoxLayout* layoutHealthDots = new QHBoxLayout();
+
+	dotsHealth = new TraitDots( );
+	dotsHealth->setReadOnly(true);
+
+	layoutHealthDots->addStretch();
+	layoutHealthDots->addWidget( dotsHealth );
+	layoutHealthDots->addStretch();
+
+	layout->addSpacing( Config::traitCategorySpace );
+
+	layout->addWidget( labelHealth );
+	layout->addLayout( layoutHealthDots );
+
+
+	QLabel* labelWill = new QLabel( tr( "Willpower" ) );
+	labelWill->setAlignment( Qt::AlignHCenter );
+
+	QHBoxLayout* layoutWillDots = new QHBoxLayout();
+
+	TraitDots* dotsWill = new TraitDots( );
+	dotsWill->setMaximum( Config::superTraitMax );
+	dotsWill->setReadOnly(true);
+
+	layoutWillDots->addStretch();
+	layoutWillDots->addWidget( dotsWill );
+	layoutWillDots->addStretch();
+
+	layout->addSpacing( Config::traitCategorySpace );
+
+	layout->addWidget( labelWill );
+	layout->addLayout( layoutWillDots );
+
+
+	labelSuper = new QLabel( tr( "Super" ) );
+	labelSuper->setAlignment( Qt::AlignHCenter );
+
+	QHBoxLayout* layoutSuperDots = new QHBoxLayout();
+
+	dotsSuper = new TraitDots( );
+	dotsSuper->setMaximum( Config::superTraitMax );
+	dotsSuper->setReadOnly(true);
+
+	layoutSuperDots->addStretch();
+	layoutSuperDots->addWidget( dotsSuper );
+	layoutSuperDots->addStretch();
+
+	layout->addSpacing( Config::traitCategorySpace );
+
+	layout->addWidget( labelSuper );
+	layout->addLayout( layoutSuperDots );
+
+	layout->addSpacing( Config::traitCategorySpace );
+
+	layout->addWidget( moralityWidget );
+
+	layout->addStretch();
+
+	connect( calcAdvantages, SIGNAL( sizeChanged( int ) ), labelSizeValue, SLOT( setNum( int ) ) );
+	connect( calcAdvantages, SIGNAL( initiativeChanged( int ) ), labelInitiativeValue, SLOT( setNum( int ) ) );
+	connect( calcAdvantages, SIGNAL( speedChanged( int ) ), labelSpeedValue, SLOT( setNum( int ) ) );
+	connect( calcAdvantages, SIGNAL( defenseChanged( int ) ), labelDefenseValue, SLOT( setNum( int ) ) );
+	connect( calcAdvantages, SIGNAL( healthChanged( int ) ), this, SLOT( printHealth( int ) ) );
+	connect( calcAdvantages, SIGNAL( willpowerChanged( int ) ), dotsWill, SLOT( setValue(int)) );
+// 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( changeSuper( cv_Trait ) ) );
+// 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), this, SLOT( emitSuperChanged( int ) ) );
+// 	connect( this, SIGNAL( superChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
+	connect( dotsSuper, SIGNAL( valueChanged( int ) ), character, SLOT( setSuperTrait( int ) ) );
+	connect( character, SIGNAL( superTraitChanged( int ) ), dotsSuper, SLOT( setValue( int ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideSuper( cv_Species::SpeciesFlag ) ) );
+
+	dotsSuper->setValue( Config::superTraitDefaultValue );
 }
 
 AdvantagesWidget::~AdvantagesWidget() {
+	delete dotsSuper;
+	delete labelSuper;
+	delete dotsHealth;
+	delete storage;
+	delete moralityWidget;
 	delete calcAdvantages;
 	delete layout;
 }
+
+
+void AdvantagesWidget::printHealth( int value ) {
+	dotsHealth->setMaximum( value );
+	dotsHealth->setValue( value );
+}
+
+void AdvantagesWidget::hideSuper( cv_Species::SpeciesFlag species ) {
+	if ( species == cv_Species::Human ) {
+		labelSuper->setHidden( true );
+		dotsSuper->setHidden( true );
+	} else {
+		labelSuper->setHidden( false );
+		dotsSuper->setHidden( false );
+
+		for ( int i = 0; i < storage->species().count(); i++ ) {
+			if ( cv_Species::toSpecies( storage->species().at( i ).name ) == species ) {
+				labelSuper->setText( storage->species().at( i ).supertrait );
+			}
+		}
+
+	}
+}
+
+// void AdvantagesWidget::changeSuper( cv_Trait trait ) {
+// 	if ( trait.type == cv_Trait::Super ) {
+// 		dotsSuper->setValue( trait.value );
+// 	}
+// }
+
+
+// void AdvantagesWidget::emitSuperChanged( int value ) {
+// 	cv_Trait trait;
+// 	trait.name = "Super";
+// 	trait.value = value;trait.type = cv_Trait::Super;
+// 	trait.category = cv_Trait::CategoryNo;
+//
+// 	emit superChanged(trait);
+// }
+
+

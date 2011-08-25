@@ -31,7 +31,10 @@
 
 /**
  * \brief Diese Klasse führt die berechnung der abgeleiteten Eigenschaften durch.
+ *
+ * Die hier deklarierten Berechnungsfunktionen werden zwar bei der Änderung jeder Eigenschaft aufgerufen, aber berechnen die Werte nur, wenn eine Eigenschaft verändert wurde, welche Einfluß auf das Ergebnis nimmt. Sie geben allerdings immer das Ergebnis der berechnung aus. Entweder den neuen Wert, oder den alten Wert, der in dieser Klasse gespeichert wird.
  */
+
 class CalcAdvantages : public QObject {
 		Q_OBJECT
 
@@ -41,13 +44,26 @@ class CalcAdvantages : public QObject {
 	private:
 		StorageCharacter* character;
 
-	public slots:
+		int v_size;
+		int v_initiative;
+		int v_speed;
+		int v_defense;
+		int v_health;
+		int v_willpower;
+
+	private slots:
 		/**
 		 * Berechnung der Größe des Charakters.
 		 *
 		 * \todo Bislang nur vom Merit Size abhängig. Nicht von anderen Merits oder dem Alter (Kinder haben Size = 4).
 		 **/
 		int calcSize( cv_Trait trait );
+		/**
+		 * Berechnung der Initiative des Charakters.
+		 *
+		 * \todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig.
+		 **/
+		int calcInitiative( cv_Trait trait );
 		/**
 		 * Berechnung der Geschwindigkeit des Charakters.
 		 *
@@ -60,11 +76,48 @@ class CalcAdvantages : public QObject {
 		 * \todo Bislang nicht von der Spezies abhängig. Tiere haben stets das größere von Dex und Wits als Defense.
 		 **/
 		int calcDefense( cv_Trait trait );
+		/**
+		 * Berechnung der Gesundheit.
+		 *
+		 * Dieser Slot wird nur bei einer Veränderung von Stamina angesprochen. Für eine Veränderung der Größe gibt es einen extra slot (siehe calcHealth( int size )).
+		 **/
+		int calcHealth( cv_Trait trait );
+		/**
+		 * Berechnung der Willenskraft.
+		 **/
+		int calcWillpower( cv_Trait trait );
+		/**
+		 * Berechnung der Gesundheit.
+		 *
+		 * Dieser Slot wird nur bei einer Veränderung der Größe angesprochen. Für eine Veränderung der Stamina gibt es einen extra slot (siehe calcHealth( cv_Trait trait )).
+		 **/
+		int calcHealth( int size );
 
 	signals:
-		void sizeChanged(int);
-		void speedChanged(int);
-		void defenseChanged(int);
+		/**
+		 * Size hat sich verändert.
+		 **/
+		void sizeChanged( int );
+		/**
+		 * Initiative hat sich verändert.
+		 **/
+		void initiativeChanged( int );
+		/**
+		 * Speed hat sich verändert.
+		 **/
+		void speedChanged( int );
+		/**
+		 * Defense hat sich verändert.
+		 **/
+		void defenseChanged( int );
+		/**
+		 * Health hat sich verändert.
+		 **/
+		void healthChanged( int );
+		/**
+		 * Die Willenskraft hat sich verändert.
+		 **/
+		void willpowerChanged( int );
 };
 
 #endif

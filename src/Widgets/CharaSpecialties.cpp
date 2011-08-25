@@ -45,7 +45,7 @@ void CharaSpecialties::saveSpecialties( QStringList list ) {
 		detail.name = list.at( i );
 		specialties.append( detail );
 
-		qDebug() << Q_FUNC_INFO << "Speichere" << specialties.at( i ).name << "von" << skill();
+// 		qDebug() << Q_FUNC_INFO << "Speichere" << specialties.at( i ).name << "von" << skill();
 	}
 
 	character->setSkillSpecialties( skill(), specialties );

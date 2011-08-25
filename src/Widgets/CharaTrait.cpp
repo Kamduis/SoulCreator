@@ -37,15 +37,22 @@ CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category
 
 CharaTrait::CharaTrait( QWidget* parent, cv_Trait trait ) : TraitLine( parent, trait.name, trait.value ) {
 	construction( trait.type, trait.category, trait.species, trait.name, trait.custom, trait.value );
-	if (!trait.possibleValues.isEmpty()){
-		setPossibleValues(trait.possibleValues);
+
+	if ( !trait.possibleValues.isEmpty() ) {
+		setPossibleValues( trait.possibleValues );
 // 		qDebug() << Q_FUNC_INFO << trait.name << trait.possibleValues;
 	}
+
 	v_prerequisites = trait.prerequisites;
 }
 
 
 void CharaTrait::construction( cv_Trait::Type type, cv_Trait::Category category, cv_Species::Species species, QString name, bool custom, int value ) {
+	v_type = cv_Trait::TypeNo;
+	v_category = cv_Trait::CategoryNo;
+	v_species = cv_Species::SpeciesNo;
+	v_custom = false;
+
 	character = StorageCharacter::getInstance();
 
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitTraitChanged( int ) ) );
@@ -85,6 +92,7 @@ void CharaTrait::setType( cv_Trait::Type type ) {
 cv_Trait::Category CharaTrait::category() const {
 	return v_category;
 }
+
 void CharaTrait::setCategory( cv_Trait::Category category ) {
 	if ( v_category != category ) {
 		v_category = category;
@@ -94,6 +102,7 @@ void CharaTrait::setCategory( cv_Trait::Category category ) {
 cv_Species::Species CharaTrait::species() const {
 	return v_species;
 }
+
 void CharaTrait::setSpecies( cv_Species::Species species ) {
 	if ( v_species != species ) {
 		v_species = species;
@@ -105,6 +114,7 @@ void CharaTrait::setSpecies( cv_Species::Species species ) {
 bool CharaTrait::custom() const {
 	return v_custom;
 }
+
 void CharaTrait::setCustom( bool sw ) {
 	if ( v_custom != sw ) {
 		v_custom = sw;
@@ -129,7 +139,7 @@ void CharaTrait::hideSpecialtyWidget( cv_Trait::Type type ) {
 }
 
 void CharaTrait::hideDescriptionWidget() {
-	if ( type() == cv_Trait::Merit && custom() ) {
+	if ( custom() ) {
 		hideDescription( false );
 	} else {
 		hideDescription( true );
@@ -137,10 +147,8 @@ void CharaTrait::hideDescriptionWidget() {
 }
 
 void CharaTrait::setTrait( cv_Trait trait ) {
-// 	qDebug() << Q_FUNC_INFO << "hier!";
-
 	if ( type() == trait.type && category() == trait.category && name() == trait.name ) {
-		if ( custom() && text() == trait.customText ) {
+		if ( !custom() || text() == trait.customText ) {
 			setValue( trait.value );
 		}
 	}
@@ -157,10 +165,14 @@ void CharaTrait::emitTraitChanged( int value ) {
 		cv_Trait trait;
 
 		// Wenn es die Eigenschaft schon im Speicher gibt, hole ich mir die Parameter natürlich von dort und ändere nur den Wert
-		for ( int i = 0; i < character->traits( type(), category() ).count();i++ ) {
-			if ( name() == character->traits( type(), category() ).at( i ).name ) {
-				trait = character->traits( type(), category() ).at( i );
+
+		QList< cv_Trait > list = character->traits( type(), category() );
+
+		for ( int i = 0; i < list.count();i++ ) {
+			if ( name() == list.at( i ).name ) {
+				trait = list.at( i );
 				trait.value = value;
+				trait.customText = text();
 				emit traitChanged( trait );
 				return;
 			}
@@ -172,6 +184,8 @@ void CharaTrait::emitTraitChanged( int value ) {
 		trait.value = value;
 		trait.custom = custom();
 		trait.customText = text();
+
+// 		qDebug() << Q_FUNC_INFO << "Dies ist ein Test, den ich nicht verstehe!" << name() << text();
 		// Lieber nicht. Das sind nicht die ausgewählten, sondern die \emph{möglichen} Spezialisierungen.
 // 		trait.details = v_specialties;
 
@@ -181,17 +195,19 @@ void CharaTrait::emitTraitChanged( int value ) {
 
 void CharaTrait::emitSpecialtiesClicked( bool sw ) {
 	QList< cv_TraitDetail > list = v_specialties;
+	QList< cv_Trait > traitList = character->traits( type(), category() );
 
 	for ( int i = 0; i < list.count(); i++ ) {
-		for ( int j = 0; j < character->traits( type(), category() ).count(); j++ ) {
-			for ( int k = 0; k < character->traits( type(), category() ).at( j ).details.count(); k++ ) {
-				if ( list.at( i ).name == character->traits( type(), category() ).at( j ).details.at( k ).name ) {
+		for ( int j = 0; j < traitList.count(); j++ ) {
+			for ( int k = 0; k < traitList.at( j ).details.count(); k++ ) {
+				if ( list.at( i ).name == traitList.at( j ).details.at( k ).name ) {
 					cv_TraitDetail detail = list.at( i );
 					detail.value = true;
 					list.replace( i, detail );
 				}
 			}
 		}
+
 // 		qDebug() << Q_FUNC_INFO << list.at( i ).name << list.at( i ).value;
 	}
 
@@ -202,78 +218,13 @@ void CharaTrait::emitSpecialtiesClicked( bool sw ) {
 void CharaTrait::checkTraitPrerequisites( cv_Trait trait ) {
 // 	qDebug() << Q_FUNC_INFO << name() << v_prerequisites;
 	if ( !v_prerequisites.isEmpty() && v_prerequisites.contains( trait.name ) ) {
-// 		qDebug() << Q_FUNC_INFO << trait.name;
-		QString prerequisites = v_prerequisites;
-
-		QList< cv_Trait::Type > types;
-		types.append( cv_Trait::Attribute );
-		types.append( cv_Trait::Skill );
-		types.append( cv_Trait::Merit );
-
-		QList< cv_Trait::Category > categoriesGeneral;
-		categoriesGeneral.append( cv_Trait::Mental );
-		categoriesGeneral.append( cv_Trait::Physical );
-		categoriesGeneral.append( cv_Trait::Social );
-
-		QList< cv_Trait::Category > categoriesMerits = categoriesGeneral;
-		categoriesMerits.append( cv_Trait::Item );
-		categoriesMerits.append( cv_Trait::FightingStyle );
-		categoriesMerits.append( cv_Trait::DebateStyle );
-		categoriesMerits.append( cv_Trait::ShadowRealm );
-		categoriesMerits.append( cv_Trait::PsychicPhenomena );
-		categoriesMerits.append( cv_Trait::Species );
-
-		QList< cv_Trait::Category > categories;
-
-		// Ersetze alle Atrtribute, Fertigkeiten etc. in dem Textstring mit den entsprechenden Zahlen, damit diese später über den Parser ausgewertet werden können.
-		// Nicht vorhandene Werte verbleiben natürlich in Textform und werden vom Parser wie 0en behandelt.
-		if ( prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
-			for ( int i = 0; i < types.count();i++ ) {
-
-				// Merits haben zusätzliche Kategorien.
-				if ( types.at( i ) == cv_Trait::Merit ) {
-					categories = categoriesMerits;
-				} else {
-					categories = categoriesGeneral;
-				}
-
-				for ( int j = 0; j < categories.count(); j++ ) {
-					for ( int k = 0; k < character->traits( types.at( i ), categories.at( j ) ).count(); k++ ) {
-						// Ersetzen der Fertigkeitsspezialisierungen von dem Format Fertigkeit.Spezialisierung mit Fertigkeitswert, wenn Spezialisierung existiert oder 0, wenn nicht.
-						if ( types.at( i ) == cv_Trait::Skill && prerequisites.contains('.') ) {
-							QString testSkill = character->traits( types.at( i ), categories.at( j ) ).at( k ).name + ".";
-// 							qDebug() << Q_FUNC_INFO << "Prozessiere" << name() << ":" << testSkill;
-							if ( prerequisites.contains( testSkill ) ) {
-// 								qDebug() << Q_FUNC_INFO << name() << "Fertigkeit: " << character->traits( types.at( i ), categories.at( j ) ).at( k ).name << "mit" << prerequisites;
-								QString specialisation = prerequisites.right( prerequisites.indexOf( testSkill ) - testSkill.count() + 1 );
-								specialisation = specialisation.left( specialisation.indexOf( ' ' ) );
-// 								qDebug() << Q_FUNC_INFO << "Spezialisierung ist" << specialisation;
-								for ( int l = 0; l < character->traits( types.at( i ), categories.at( j ) ).at( k ).details.count(); l++ ) {
-// 									qDebug() << Q_FUNC_INFO << character->traits( types.at( i ), categories.at( j ) ).at( k ).details.at( l ).name << "existiert";
-
-									// Fertigkeiten mit Spezialisierungsanforderungen werden mit dem Fertigkeitswert ersetzt, wenn Spez existiert, ansonsten mit 0.
-									if ( specialisation == character->traits( types.at( i ), categories.at( j ) ).at( k ).details.at( l ).name ) {
-										prerequisites.replace( testSkill + specialisation, QString::number( character->traits( types.at( i ), categories.at( j ) ).at( k ).value ) );
-// 										qDebug() << Q_FUNC_INFO << name() << "Fertigkeit nach Spezialisierungsersetzung" << character->traits( types.at( i ), categories.at( j ) ).at( k ).name << "mit" << prerequisites;
-										break;
-									} else {
-										prerequisites.replace( testSkill + specialisation, 0 );
-									}
-								}
-							}
-						} else {
-							// Ersetzen von Eigenschaftsnamen mit ihren Werten.
-							prerequisites.replace( character->traits( types.at( i ), categories.at( j ) ).at( k ).name, QString::number( character->traits( types.at( i ), categories.at( j ) ).at( k ).value ) );
-						}
-					}
-				}
-			}
-		}
+		QString prerequisites = parsePrerequisites( v_prerequisites );
 
 		// Alles was an Wörtern übriggeblieben ist durch 0 ersetzen.
-		// Wäre schön, wenn das der parser könnte, da kriege ich das aber nicht hin.
+		// Wäre schön, wenn das der Parser könnte, da kriege ich das aber nicht hin.
 		QString replacementText;
 		QRegExp rx( "([a-zA-Z]+)\\s*[<>=]+" );
+
 		while ( prerequisites.contains( rx ) ) {
 // 			qDebug() << Q_FUNC_INFO << name() << prerequisites;
 			prerequisites.replace( "AND", "999" );
@@ -285,39 +236,85 @@ void CharaTrait::checkTraitPrerequisites( cv_Trait trait ) {
 			prerequisites.replace( "88", "OR" );
 		}
 
-// 		qDebug() << Q_FUNC_INFO << name() << prerequisites;
-
 		StringBoolParser parser;
+
 		try {
-// 		qDebug() << Q_FUNC_INFO << name() << parser.validate( prerequisites );
 			if ( parser.validate( prerequisites ) ) {
 				this->setEnabled( true );
-// 				qDebug() << Q_FUNC_INFO << "true";
 			} else {
 				setValue( 0 );
 				this->setEnabled( false );
-// 				qDebug() << Q_FUNC_INFO << "false";
 			}
 		} catch ( Exception &e ) {
-// 			qDebug() << Q_FUNC_INFO << name() << prerequisites << e.description() << e.message();
-			MessageBox::exception(this, e.message(), e.description());
-// 			qDebug() << Q_FUNC_INFO << name() << prerequisites;
+			qDebug() << Q_FUNC_INFO << name() << prerequisites << e.description() << e.message();
+			MessageBox::exception( this, e.message(), e.description() );
 		}
 	}
 }
 
 
+QString CharaTrait::parsePrerequisites( QString text ) {
+	QString prerequisites = text;
+
+	// Ersetze alle Atrtribute, Fertigkeiten etc. in dem Textstring mit den entsprechenden Zahlen, damit diese später über den Parser ausgewertet werden können.
+	// Nicht vorhandene Werte verbleiben natürlich in Textform und werden vom Parser wie 0en behandelt.
+
+	if ( prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
+		QList< cv_Trait > list = character->traitsAll();
+
+		for ( int k = 0; k < list.count(); k++ ) {
+			// Ersetzen der Fertigkeitsspezialisierungen von dem Format Fertigkeit.Spezialisierung mit Fertigkeitswert, wenn Spezialisierung existiert oder 0, wenn nicht.
+			if ( prerequisites.contains( '.' ) && list.at( k ).type == cv_Trait::Skill && list.at( k ).details.count() > 0 ) {
+				QString testSkill = list.at( k ).name + ".";
+
+				if ( prerequisites.contains( testSkill ) ) {
+					QString specialisation = prerequisites.right( prerequisites.indexOf( testSkill ) - testSkill.count() + 1 );
+					specialisation = specialisation.left( specialisation.indexOf( ' ' ) );
+
+					for ( int l = 0; l < list.at( k ).details.count(); l++ ) {
+						// Fertigkeiten mit Spezialisierungsanforderungen werden mit dem Fertigkeitswert ersetzt, wenn Spez existiert, ansonsten mit 0.
+						if ( specialisation == list.at( k ).details.at( l ).name ) {
+							prerequisites.replace( testSkill + specialisation, QString::number( list.at( k ).value ) );
+
+							// Wenn alle Worte ersetzt wurden, kann ich aus den Schleifen raus.
+
+							if ( !prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
+								return prerequisites;
+							}
+						} else {
+							prerequisites.replace( testSkill + specialisation, "0" );
+
+							// Wenn alle Worte ersetzt wurden, kann ich aus den Schleifen raus.
+
+							if ( !prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
+								return prerequisites;
+							}
+						}
+					}
+				}
+			} else {
+				// Ersetzen von Eigenschaftsnamen mit ihren Werten.
+				prerequisites.replace( list.at( k ).name, QString::number( list.at( k ).value ) );
+
+				// Wenn alle Worte ersetzt wurden, kann ich aus den Schleifen raus.
+
+				if ( !prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
+					return prerequisites;
+				}
+			}
+		}
+	} else {
+		qDebug() << Q_FUNC_INFO << "Nicht durch die Schleifen." << name();
+	}
+}
+
+
 void CharaTrait::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {
-// 	for ( int i = 0; i < character->traits( type(), category() ).count();i++ ) {
-// 		if ( character->traits( type(), category() ).at( i ).name == name() ) {
-// 	qDebug() << Q_FUNC_INFO << name() << species();
 	if ( species().testFlag( sp ) ) {
 		setHidden( false );
 	} else {
+		setValue(0);
 		setHidden( true );
 	}
-// 			return;
-// 		}
-// 	}
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.0">
+<SoulCreator version="0.1">
 	<traits species="SpeciesAll">
 		<Virtue>
 			<trait name="Charity" age="Adult"/>
@@ -647,7 +647,7 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
-				<trait name="Retainer" source="WoD Core">
+				<trait name="Retainer" custom="true" source="WoD Core">
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>
@@ -936,7 +936,7 @@
 					<prerequisite>Presence > 1 AND Religion > 1 AND Expression > 0</prerequisite>
 				</trait>
 			</DebateStyle>
-			<ShadowRealm>
+			<Extraordinary>
 				<trait name="Difficult to Ride" source="WoD Book of Spirits">
 					<value>4</value>
 					<prerequisite>Composure > 2 AND Resolve > 2</prerequisite>
@@ -947,7 +947,7 @@
 				</trait>
 				<trait name="Hollow Soul" source="WoD Book of Spirits">
 					<value>2</value>
-					<prerequisite>Easy Ride</prerequisite>
+					<prerequisite>Easy Ride > 0</prerequisite>
 				</trait>
 				<!--<trait name="Pleasing Aura" source="WoD Book of Spirits">
 					<value>3</value>
@@ -973,7 +973,7 @@
 					<value>3</value>
 					<!--<prerequisite>Non-Werewolf</prerequisite>-->
 				</trait>
-			</ShadowRealm>
+			</Extraordinary>
 		</Merit>
 	</traits>
 </SoulCreator>

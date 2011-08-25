@@ -25,8 +25,13 @@
 #ifndef ADVANTAGESEWIDGET_H
 #define ADVANTAGESEWIDGET_H
 
+#include <QVBoxLayout>
 #include <QGridLayout>
+#include <QLabel>
 
+#include "TraitDots.h"
+#include "MoralityWidget.h"
+#include "../Storage/StorageTemplate.h"
 #include "../Storage/StorageCharacter.h"
 #include "../Calc/CalcAdvantages.h"
 
@@ -38,7 +43,7 @@
  *
  * Die Werte, welche aus den Eigenschaften des Charakters berechnet werden, kommen allesamt in dieses Widget.
  *
- * \todo Diese Klasse sollte nicht auf den Charakter im Speicher verweisen, sondern auf eine Berechnungsklasse, deren Signale dann direkt die Ergebnisse hier anzeigen lassen.
+ * \todo Armor und Superattribut müssen noch gespeichert werden, wenn der Charakter gespeichert wird.
  **/
 class AdvantagesWidget : public QWidget {
 		Q_OBJECT
@@ -57,14 +62,27 @@ class AdvantagesWidget : public QWidget {
 		/**
 		 * In diesem Layout werden die berechneten Charakterwerte angeordnet.
 		 **/
-		QGridLayout *layout;
+		QVBoxLayout *layout;
+		QGridLayout *advantagesLayout;
+		StorageTemplate* storage;
+		StorageCharacter* character;
 		CalcAdvantages* calcAdvantages;
+		MoralityWidget* moralityWidget;
+
+		QLabel* labelSuper;
+		TraitDots* dotsHealth;
+		TraitDots* dotsSuper;
 
 	public slots:
 
 	private slots:
+		void printHealth(int value);
+		void hideSuper(cv_Species::SpeciesFlag species);
+// 		void changeSuper(cv_Trait trait);
+// 		void emitSuperChanged(int value);
 
 	signals:
+// 		void superChanged(cv_Trait trait);
 };
 
 #endif

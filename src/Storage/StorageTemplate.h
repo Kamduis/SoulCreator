@@ -75,18 +75,18 @@ class StorageTemplate : public QObject {
 		 * Gibt eine Liste aller verfügbaren Attribute aus.
 		 **/
 		QList< cv_Trait > attributes( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age =  cv_Trait::Adult ) const;
-		/**
-		 * Gibt eine Liste aller verfügbaren Vices aus.
-		 **/
-		QStringList attributeNames( cv_Trait::Category category ) const;
+// 		/**
+// 		 * Gibt eine Liste aller verfügbaren Vices aus.
+// 		 **/
+// 		QStringList attributeNames( cv_Trait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller verfügbaren Fertigkeiten aus.
 		 **/
 		QList< cv_Trait > skills( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age =  cv_Trait::Adult ) const;
-		/**
-		 * Gibt eine Liste aller verfügbaren Fertigkeitsnamen aus.
-		 **/
-		QStringList skillNames( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+// 		/**
+// 		 * Gibt eine Liste aller verfügbaren Fertigkeitsnamen aus.
+// 		 **/
+// 		QStringList skillNames( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Liste aller Spezialisierungen der angegebenen Fertigkeit aus.
 		 **/
@@ -95,10 +95,10 @@ class StorageTemplate : public QObject {
 		 * Gibt eine Liste aller verfügbaren Merits aus.
 		 **/
 		QList< cv_Trait > merits( cv_Trait::Category category ) const;
-		/**
-		 * Gibt eine Liste der Namen aller verfügbaren Merits aus.
-		 **/
-		QStringList meritNames( cv_Trait::Category category ) const;
+// 		/**
+// 		 * Gibt eine Liste der Namen aller verfügbaren Merits aus.
+// 		 **/
+// 		QStringList meritNames( cv_Trait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller möglichen Werte aus, welche der Merit annehmen kann.
 		 **/
@@ -107,6 +107,10 @@ class StorageTemplate : public QObject {
 		 * Gibt ein Logische Verkettung von Voraussetzungen aus, die zu erfüllen ist, um den Merit wählen zu können.
 		 **/
 		QString meritPrerequisites( QString meritName ) const;
+		/**
+		 * Gibt eine Liste aller verfügbaren übernatürlichen Kräfte aus.
+		 **/
+		QList< cv_Trait > powers( cv_Trait::Category category ) const;
 		/**
 		 * Gibt Alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		 *

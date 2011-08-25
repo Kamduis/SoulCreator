@@ -28,6 +28,23 @@
 #include "cv_Trait.h"
 
 
+cv_Trait::cv_Trait() {
+	name = "";
+	value = 0;
+// 	possibleValues;
+	type = cv_Trait::TypeNo;
+	category = cv_Trait::CategoryNo;
+	species = cv_Species::SpeciesNo;
+	era = cv_Trait::EraNo;
+	age = cv_Trait::AgeNo;
+// 	details;
+	prerequisites = "";
+	custom = false;
+	customText = "";
+}
+
+
+
 QString cv_Trait::toXmlString( cv_Trait::Type type ) {
 	switch ( type ) {
 		case cv_Trait::TypeNo:
@@ -42,6 +59,8 @@ QString cv_Trait::toXmlString( cv_Trait::Type type ) {
 			return "Skill";
 		case cv_Trait::Merit:
 			return "Merit";
+		case cv_Trait::Power:
+			return "Power";
 		default:
 			throw eTraitType( type );
 // 			return "ERROR";
@@ -64,10 +83,8 @@ QString cv_Trait::toXmlString( cv_Trait::Category category ) {
 			return "FightingStyle";
 		case cv_Trait::DebateStyle:
 			return "DebateStyle";
-		case cv_Trait::ShadowRealm:
-			return "ShadowRealm";
-		case cv_Trait::PsychicPhenomena:
-			return "PsychicPhenomena";
+		case cv_Trait::Extraordinary:
+			return "Extraordinary";
 		case cv_Trait::Species:
 			return "Species";
 		default:
@@ -80,50 +97,46 @@ QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
 	if ( plural ) {
 		switch ( category ) {
 			case cv_Trait::CategoryNo:
-				return QObject::tr("Without Category");
+				return QObject::tr( "Without Category" );
 			case cv_Trait::Mental:
-				return QObject::tr("Mental");
+				return QObject::tr( "Mental" );
 			case cv_Trait::Physical:
-				return QObject::tr("Physical");
+				return QObject::tr( "Physical" );
 			case cv_Trait::Social:
-				return QObject::tr("Social");
+				return QObject::tr( "Social" );
 			case cv_Trait::Item:
-				return QObject::tr("Items");
+				return QObject::tr( "Items" );
 			case cv_Trait::FightingStyle:
-				return QObject::tr("Fighting Styles");
+				return QObject::tr( "Fighting Styles" );
 			case cv_Trait::DebateStyle:
-				return QObject::tr("Debate Styles");
-			case cv_Trait::ShadowRealm:
-				return QObject::tr("Shadow Realm");
-			case cv_Trait::PsychicPhenomena:
-				return QObject::tr("Psychic Phenomena");
+				return QObject::tr( "Debate Styles" );
+			case cv_Trait::Extraordinary:
+				return QObject::tr( "Extraordinary" );
 			case cv_Trait::Species:
-				return QObject::tr("Species");
+				return QObject::tr( "Species" );
 			default:
 				throw eTraitCategory( category );
 		}
 	} else {
 		switch ( category ) {
 			case cv_Trait::CategoryNo:
-				return QObject::tr("Without Category");
+				return QObject::tr( "Without Category" );
 			case cv_Trait::Mental:
-				return QObject::tr("Mental");
+				return QObject::tr( "Mental" );
 			case cv_Trait::Physical:
-				return QObject::tr("Physical");
+				return QObject::tr( "Physical" );
 			case cv_Trait::Social:
-				return QObject::tr("Social");
+				return QObject::tr( "Social" );
 			case cv_Trait::Item:
-				return QObject::tr("Item");
+				return QObject::tr( "Item" );
 			case cv_Trait::FightingStyle:
-				return QObject::tr("Fighting Style");
+				return QObject::tr( "Fighting Style" );
 			case cv_Trait::DebateStyle:
-				return QObject::tr("Debate Style");
-			case cv_Trait::ShadowRealm:
-				return QObject::tr("Shadow Realm");
-			case cv_Trait::PsychicPhenomena:
-				return QObject::tr("Psychic Phenomena");
+				return QObject::tr( "Debate Style" );
+			case cv_Trait::Extraordinary:
+				return QObject::tr( "Extraordinary" );
 			case cv_Trait::Species:
-				return QObject::tr("Species");
+				return QObject::tr( "Species" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -165,10 +178,8 @@ cv_Trait::Category cv_Trait::toCategory( QString str ) {
 		return cv_Trait::FightingStyle;
 	else if ( str == "DebateStyle" )
 		return cv_Trait::DebateStyle;
-	else if ( str == "ShadowRealm" )
-		return cv_Trait::ShadowRealm;
-	else if ( str == "PsychicPhenomena" )
-		return cv_Trait::PsychicPhenomena;
+	else if ( str == "Extraordinary" )
+		return cv_Trait::Extraordinary;
 	else if ( str == "Species" )
 		return cv_Trait::Species;
 	else

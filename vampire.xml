@@ -1,6 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.0">
+<SoulCreator version="0.1">
 	<traits species="Vampire" morale="Humanity" supertrait="Blood Potency" fuel="Vitae">
+		<Merit>
+			<Species>
+				<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
+					<value>1</value>
+					<prerequisite>Politics > 0 OR Occult > 0 OR Streetwise > 0</prerequisite>
+				</trait>
+				<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
+					<value>2</value>
+					<prerequisite>superTrait > 5</prerequisite>
+				</trait>
+				<trait name="Domain: Location" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Fealty > 0</prerequisite>
+				</trait>
+				<trait name="Domain: Security" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Fealty > 0</prerequisite>
+				</trait>
+				<trait name="Domain: Size" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Fealty > 0</prerequisite>
+				</trait>
+				<trait name="Tenant" custom="true" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Domain: Size > 0</prerequisite>
+				</trait>
+				<trait name="Vassal" custom="true" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Domain: Size > 0</prerequisite>
+				</trait>
+				<trait name="Feeding Ground" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<!--<prerequisite>Fealty > 0</prerequisite>-->
+				</trait>
+				<trait name="Haven: Size" source="Vampire Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Haven: Security" source="Vampire Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Tomb" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Haven: Size > 0 OR Haven: Security > 0</prerequisite>
+				</trait>
+				<trait name="Herd" source="Vampire Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Lordly Palette" source="Vampire Ventrue">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+				</trait>
+				<trait name="Patron" source="Vampire Requiem for Rome">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Status.Camarilla > 2 OR Status.Wing > 2</prerequisite>
+				</trait>
+				<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
+					<value>2</value>
+					<prerequisite><![CDATA[superTrait > 2 AND morality < 6 AND AGE > 99]]></prerequisite>
+				</trait>
+				<trait name="Swarm Mind" source="Vampire Gangrel">
+					<value>2</value>
+					<prerequisite>Protean > 3</prerequisite>
+				</trait>
+			</Species>
+		</Merit>
 		<Power>
 			<trait name="Animalism">
 				<cheap>Gangrel</cheap>

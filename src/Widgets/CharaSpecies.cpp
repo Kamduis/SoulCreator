@@ -32,6 +32,8 @@
 
 
 CharaSpecies::CharaSpecies( QWidget* parent ): QComboBox( parent ) {
+	v_species = cv_Species::SpeciesNo;
+	
 	character = StorageCharacter::getInstance();
 	StorageTemplate storage;
 
@@ -58,7 +60,7 @@ cv_Species::SpeciesFlag CharaSpecies::species() const {
 	return v_species;
 }
 void CharaSpecies::setSpecies( cv_Species::SpeciesFlag species ) {
-	qDebug() << Q_FUNC_INFO << "Funktion zum Ändern der Spezies wird aufgerufen!";
+// 	qDebug() << Q_FUNC_INFO << "Funktion zum Ändern der Spezies wird aufgerufen!";
 
 	if ( v_species != species ) {
 		v_species = species;

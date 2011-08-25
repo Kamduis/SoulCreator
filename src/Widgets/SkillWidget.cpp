@@ -43,16 +43,25 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
 
+	QList< cv_Trait > list;
+	QList< cv_TraitDetail > listDetails;
+
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < categories.count(); i++ ) {
-		for ( int j = 0; j < storage->skillNames( categories.at( i ) ).count(); j++ ) {
-			CharaTrait *charaTrait = new CharaTrait( this, storage->skills( categories.at( i ) ).at( j ) );
+		list = storage->skills( categories.at( i ) );
+
+		for ( int j = 0; j < list.count(); j++ ) {
+			CharaTrait *charaTrait = new CharaTrait( this, list.at( j ) );
+			// Wert definitiv ändern, damit alle Werte in den Charakter-Speicher übernommen werden.
+			charaTrait->setValue( 5 );
 			charaTrait->setValue( 0 );
 			// Nur Fertigkeiten haben Spezialisierungen.
 			if ( type = cv_Trait::Skill ) {
 				// Es sollen die Spazialisierungen angezeigt werden können.
-				for ( int k = 0; k < storage->skillSpecialties( storage->skillNames( categories.at( i ) ).at( j ) ).count(); k++ ) {
-					charaTrait->addSpecialty( storage->skillSpecialties( storage->skillNames( categories.at( i ) ).at( j ) ).at( k ) );
+				listDetails = storage->skillSpecialties( list.at( j ).name );
+
+				for ( int k = 0; k < listDetails.count(); k++ ) {
+					charaTrait->addSpecialty( listDetails.at( k ) );
 				}
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
@@ -75,10 +84,13 @@ SkillWidget::~SkillWidget() {
 
 void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
 // 	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
+	QList< cv_Trait > list;
 
 	for ( int i = 0; i < layout->count(); i++ ) {
+		list = storage->skills( categories.at( 0 ) );
+
 		// Wir wollen nur die Eigenschaftswidgekts, nicht die Abstandshalter!
-		if ( i == storage->skillNames( categories.at( 0 ) ).count() || i == storage->skillNames( categories.at( 0 ) ).count() + storage->skillNames( categories.at( 1 ) ).count() + 1 ) {
+		if ( i == list.count() || i == list.count() + storage->skills( categories.at( 1 ) ).count() + 1 ) {
 			i++;
 		}
 		CharaTrait *trait = qobject_cast<CharaTrait*>( layout->itemAt( i )->widget() );

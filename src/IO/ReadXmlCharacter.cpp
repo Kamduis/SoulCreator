@@ -81,11 +81,15 @@ void ReadXmlCharacter::readSoulCreator() {
 			QString elementName = name().toString();
 			if ( elementName == "species" ) {
 				QString speciesName = readElementText();
-
 				character->setSpecies( cv_Species::toSpecies( speciesName ) );
-			} else if ( elementName == cv_Trait::toXmlString( cv_Trait::Attribute )
-						|| elementName == cv_Trait::toXmlString( cv_Trait::Skill ) ) {
-				qDebug() << Q_FUNC_INFO << elementName << "!";
+			} else if ( elementName == "superTrait" ) {
+				int superTraitValue = readElementText().toInt();
+				character->setSuperTrait( superTraitValue );
+			} else if ( elementName == "morality" ) {
+				int moralityValue = readElementText().toInt();
+				character->setMorality( moralityValue );
+			} else if ( elementName != cv_Trait::toXmlString( cv_Trait::TypeNo ) ) {
+// 				qDebug() << Q_FUNC_INFO << elementName << "!";
 				readTraits( cv_Trait::toType( elementName ) );
 			} else {
 				readUnknownElement();
@@ -103,13 +107,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type ) {
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
-			if ( elementName == cv_Trait::toXmlString( cv_Trait::Mental )
-					|| elementName == cv_Trait::toXmlString( cv_Trait::Physical )
-					|| elementName == cv_Trait::toXmlString( cv_Trait::Social ) ) {
-				qDebug() << Q_FUNC_INFO << elementName;
-				readTraits( type, cv_Trait::toCategory( elementName ) );
-			} else
-				readUnknownElement();
+			readTraits( type, cv_Trait::toCategory( elementName ) );
 		}
 	}
 }

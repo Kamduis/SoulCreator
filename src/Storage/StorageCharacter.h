@@ -99,13 +99,27 @@ class StorageCharacter : public QObject {
 		 **/
 		cv_NameList identities() const;
 		/**
+		 * Gibt eine Liste \emph{aller} Eigenschaften des Charkaters aus.
+		 **/
+		QList< cv_Trait > traitsAll() const;
+		/**
 		 * Gibt eine Liste aller Eigenscahften des Charkaters aus, welche über die Argumente spezifiziert sind.
+		 *
+		 * \bug Sehr zeitaufwendige Funktion, da bei jedem aufruf eine Liste mühsam gefüllt wird. Und diese Funktion wird \emph{oft} aufgerufen.
 		 **/
 		QList< cv_Trait > traits( cv_Trait::Type type, cv_Trait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller Attribute des Charkaters aus.
 		 **/
 		QList< cv_Trait > attributes( cv_Trait::Category category ) const;
+		/**
+		 * Gibt den Wert des Super-Attributs aus.
+		 **/
+		int superTrait() const;
+		/**
+		 * Gibt den Wert der Moral aus.
+		 **/
+		int morality() const;
 
 	private:
 		/**
@@ -122,8 +136,12 @@ class StorageCharacter : public QObject {
 		 * Eine Liste sämtlicher Eigenschaften des Charakters.
 		 *
 		 * \todo Sollte ich nicht so machen. So werden ja alle Daten aus dem Template in den Charkater geschrieben. ich woll dort aber nur stehen haben, was auch der Charkater hat. Insbesondere bei Spezialisierungen ist das wichtig. Vielleicht einfach die Spazialisierungen wieder rauslöschen.
+		 *
+		 * \todo Anstatt alles in einer Liste zu haben, die ich dann auswerte, sollte ich vielleicht für jeden Typ und jede Kategorie eine eigene Liste haben und wenn ich dann etwas ausgebe, hänge ich die Listen zur not einfach aneinander an. Geht schneller als bei der Speziellen ausgabe inhalt für inhalt an eine neue Liste zu kleben.
 		 **/
 		static QList< cv_Trait > v_traits;
+		static int v_superTrait;
+		static int v_morality;
 
 	public slots:
 		/**
@@ -156,6 +174,18 @@ class StorageCharacter : public QObject {
 		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 		 **/
 		void addTrait(cv_Trait trait);
+		/**
+		 * Verändert den Wert des Super-Attributs.
+		 *
+		 * Bei einer Veränderung wird das Signal superTraitChanged() ausgesandt.
+		 **/
+		void setSuperTrait(int value);
+		/**
+		 * Verändert den Wert der Moral.
+		 *
+		 * Bei einer Veränderung wird das Signal moralityChanged() ausgesandt.
+		 **/
+		void setMorality(int value);
 
 	private slots:
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
@@ -169,6 +199,14 @@ class StorageCharacter : public QObject {
 		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
 		**/
 		void traitChanged( cv_Trait trait );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich der Wert des Super-Attributs verändert.
+		**/
+		void superTraitChanged( int value );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich der Wert der Moral verändert.
+		**/
+		void moralityChanged( int value );
 
 
 // 		/**

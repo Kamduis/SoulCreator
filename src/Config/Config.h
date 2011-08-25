@@ -84,6 +84,30 @@ class Config {
 		 * Eigenschaftshöchstwert.
 		 **/
 		static const int traitMax;
+		/**
+		 * Höchstwert der Moral.
+		 **/
+		static const int moralityTraitMax;
+		/**
+		 * Höchstwert der Moral bei der ein Charakter eine Geistesstörung haben kann.
+		 **/
+		static const int derangementMoralityTraitMax;
+		/**
+		 * Startwert der Moral.
+		 **/
+		static const int moralityTraitDefaultValue;
+		/**
+		 * Höchstwert der Willenskraft.
+		 **/
+		static const int willpowerMax;
+		/**
+		 * Höchstwert der besonderen übernatürlichen Eigenschaft.
+		 **/
+		static const int superTraitMax;
+		/**
+		 * Startwert der besonderen übernatürlichen Eigenschaft.
+		 **/
+		static const int superTraitDefaultValue;
 
 	private:
 		Config();

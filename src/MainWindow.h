@@ -33,6 +33,7 @@
 #include "Widgets/AttributeWidget.h"
 #include "Widgets/SkillWidget.h"
 #include "Widgets/MeritWidget.h"
+#include "Widgets/PowerWidget.h"
 #include "Widgets/AdvantagesWidget.h"
 #include "Widgets/CharaSpecialties.h"
 
@@ -100,10 +101,15 @@ class MainWindow : public QMainWindow {
 		/**
 		 * In diesem Widget werden die Merits angezeigt.
 		 *
-		 * \todo Irgendwann soll die Anzahl der angezeigten Merits vom user durch klicken irgendwie erhöht werden können.
+		 * \todo Irgendwann soll die Anzahl der angezeigten Merits (mit Beschreibungstext) vom user durch klicken irgendwie erhöht werden können.
 		 **/
-// 		ComboTraitWidget* merits;
 		MeritWidget* merits;
+		/**
+		 * In diesem Widget werden die übernatürlichen Kräfte angezeigt.
+		 *
+		 * \todo Irgendwann soll die Anzahl der angezeigten Kräfte (mit Beschreibungstext) vom user durch klicken irgendwie erhöht werden können.
+		 **/
+		PowerWidget* powers;
 		/**
 		 * Das Widget für die Anzeige von Spezialisierungen einer Fertigkeit.
 		 **/
@@ -120,6 +126,13 @@ class MainWindow : public QMainWindow {
 		 * Über diesen Zeiger kann die Klasse aufgerufen werden, welche für das Speichern des Charakters zuständig ist.
 		 **/
 		WriteXmlCharacter* writeCharacter;
+
+		/**
+		 * Eine Simple Funktion, um alle Werte im gerade geöffneten Charater auf den selben Wert zu setzen.
+		 *
+		 * \warning Es wird nicht garantiert, daß dieser Wert angenommen wird. Manche Eigenschaften (MErits) können nicht beliebige Werte annehmen. Dann wird der nächstkleinere Wert angenommen.
+		 **/
+		void setCharacterValues( int value /** Der Wert, den alle Eigenschaften annehmen sollen */);
 
 	public slots:
 
@@ -162,6 +175,16 @@ class MainWindow : public QMainWindow {
 		 * Über diese Funktion wird erst der Dialog aufgerufen zum Aussuchen des Speicherortes und danach dann das Schreiben des Charakters in eine XML-Datei eingeletiet.
 		 **/
 		void saveCharacter();
+		/**
+		 * Zeigt den Informationsdialog für dieses Programm an.
+		 **/
+		void aboutApp();
+		/**
+		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen.
+		 *
+		 * Dadurch bleibt mehr Platz für die Merits.
+		 **/
+		void hidePowers(cv_Species::SpeciesFlag species);
 
 	signals:
 };

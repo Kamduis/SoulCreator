@@ -44,12 +44,18 @@
 class TraitDots : public QWidget {
 		Q_OBJECT
 		/**
+		 * Bestimmt, ob das Widget vom Benutzer direkt verändert werden kann.
+		 *
+		 * \access editable(), setEditable()
+		 **/
+		Q_PROPERTY( bool editable READ editable WRITE setEditable )
+		/**
 		 * Speichert den aktuellen Wert des Widgets.
 		 *
 		 * Dieser Wert stellt die Zahl der ausgefüllten Punkte dar. Die Gesamtzahl der dargestellten Punkte ist in \ref maximum gespeichert.
 		 *
 		 * Soll value auf einen Wert gesetzt werden, der über dem Maximum liegt, wird er nur auf das Maximum gesetzt, soll er unter das Minimum gesetzt werden, wird er auf Minimum gesetzt.
-		 * 
+		 *
 		 * Soll value auf einen verbotenen Wert gesetzt werden, wird er auf den nächstkleineren, erlaubten Wert gesetzt.
 		 *
 		 * \access value(), setValue()
@@ -101,6 +107,7 @@ class TraitDots : public QWidget {
 		 **/
 		~TraitDots();
 
+		bool readOnly() const;
 		int value() const;
 		int maximum() const;
 		int minimum() const;
@@ -110,6 +117,7 @@ class TraitDots : public QWidget {
 
 	private:
 		int v_minimumSizeY;
+		bool v_readOnly;
 		int v_value;
 		int v_maximum;
 		int v_minimum;
@@ -123,6 +131,7 @@ class TraitDots : public QWidget {
 		QList<int> *v_forbiddenValues;
 
 	public slots:
+		void setReadOnly( bool );
 		void setValue( int );
 		void setMaximum( int );
 		void setMinimum( int );

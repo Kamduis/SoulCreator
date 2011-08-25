@@ -32,6 +32,7 @@ TraitDots::TraitDots( QWidget *parent ) : QWidget( parent ) {
 	// Variablen initialisieren.
 	v_minimum = 0;
 	v_maximum = 5;
+	v_readOnly = false;
 	v_value = 0;
 
 	// Es gibt anfangs keine verbotenen Werte, also nur eine leere Liste erstellen
@@ -87,10 +88,13 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 	double side = qMin( windowWidth, windowHeight );
 
 	painter.setRenderHint( QPainter::Antialiasing );
-	if (!isEnabled()){
-		painter.setOpacity(.5);
+
+	if ( !isEnabled() ) {
+		painter.setOpacity( .5 );
 	}
+
 	painter.translate( double( side / 2 ), double( height() / 2 ) );
+
 	painter.scale( side / double( dotDiameter ), side / double( dotDiameter ) );
 
 	painter.setPen( framePen );
@@ -118,11 +122,11 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 	for ( int i = v_value; i < maximum(); i++ ) {
 		shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 );
 		painter.drawEllipse( shiftCenter, dotRadius, dotRadius );
-		
-		if (v_forbiddenValues->contains(i+1)){
-			int dotRadiusHalf = dotRadius/2;
-			painter.drawLine(shiftCenter.x()-dotRadiusHalf, shiftCenter.y()-dotRadiusHalf, shiftCenter.x()+dotRadiusHalf, shiftCenter.y()+dotRadiusHalf);
-			painter.drawLine(shiftCenter.x()-dotRadiusHalf, shiftCenter.y()+dotRadiusHalf, shiftCenter.x()+dotRadiusHalf, shiftCenter.y()-dotRadiusHalf);
+
+		if ( v_forbiddenValues->contains( i + 1 ) ) {
+			int dotRadiusHalf = dotRadius / 2;
+			painter.drawLine( shiftCenter.x() - dotRadiusHalf, shiftCenter.y() - dotRadiusHalf, shiftCenter.x() + dotRadiusHalf, shiftCenter.y() + dotRadiusHalf );
+			painter.drawLine( shiftCenter.x() - dotRadiusHalf, shiftCenter.y() + dotRadiusHalf, shiftCenter.x() + dotRadiusHalf, shiftCenter.y() - dotRadiusHalf );
 		}
 	}
 
@@ -139,34 +143,48 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 
 // Anklicken
 void TraitDots::mousePressEvent( QMouseEvent *event ) {
-	// den ursprÜnglichen Wert speichern
-	int oldValue = value();
+	if ( !v_readOnly ) {
+		// den ursprÜnglichen Wert speichern
+		int oldValue = value();
 
-	// Die Position des Mauszeigers beim Klicken wird errechnet. Dabei soll die Mitte der linken Seite der Position (0, 0) entsprechen.
-	QPointF mousePoint = event->pos() - rect().bottomLeft() - QPoint( 0, rect().height() / 2 );
+		// Die Position des Mauszeigers beim Klicken wird errechnet. Dabei soll die Mitte der linken Seite der Position (0, 0) entsprechen.
+		QPointF mousePoint = event->pos() - rect().bottomLeft() - QPoint( 0, rect().height() / 2 );
 
-	// Welche Breite haben die Punkte? Das bestimme ich je nachdem, ob das Fenster zu breit ist, sie alle aufzunehmen, oder zu hoch, aus Höhe bzw. Breite.
-	double windowWidth = double( width() ) / maximum();
-	double windowHeight = double( height() );
-	double dotDiameter = qMin( windowWidth, windowHeight );
+		// Welche Breite haben die Punkte? Das bestimme ich je nachdem, ob das Fenster zu breit ist, sie alle aufzunehmen, oder zu hoch, aus Höhe bzw. Breite.
+		double windowWidth = double( width() ) / maximum();
+		double windowHeight = double( height() );
+		double dotDiameter = qMin( windowWidth, windowHeight );
 
-	// Hierdurch entspricht der neue Wert dem Punkt, auf den geklickt wurde
-	int newValue = int( mousePoint.x() / dotDiameter ) + 1;
+		// Hierdurch entspricht der neue Wert dem Punkt, auf den geklickt wurde
+		int newValue = int( mousePoint.x() / dotDiameter ) + 1;
 
-	// Dadurch kann ich aber den Wert 0 nicht erreichen.
-	// Also Abfrage einbauen, damit der Wert 0 wird, wenn der Wert bereits 1 war und wieder auf 1 geklickt wird,
+		// Dadurch kann ich aber den Wert 0 nicht erreichen.
+		// Also Abfrage einbauen, damit der Wert 0 wird, wenn der Wert bereits 1 war und wieder auf 1 geklickt wird,
 
-	if ( oldValue == 1 && newValue == 1 )
-		setValue( 0 );
-	else
-		setValue( newValue );
+		if ( oldValue == 1 && newValue == 1 )
+			setValue( 0 );
+		else
+			setValue( newValue );
 
-	// Signal senden, wenn der neue Wert sich vom alten unterscheidet.
-	// Dieses Signal soll nur ausgesendet werden, wenn der User den Wert ändert, nicht wenn programmtechnisch der Wert verändert wird. DafÜr existiert das signal valueChanged( int ).
-	if ( value() != oldValue ) {
-		emit valueClicked( value() );
+		// Signal senden, wenn der neue Wert sich vom alten unterscheidet.
+		// Dieses Signal soll nur ausgesendet werden, wenn der User den Wert ändert, nicht wenn programmtechnisch der Wert verändert wird. DafÜr existiert das signal valueChanged( int ).
+		if ( value() != oldValue ) {
+			emit valueClicked( value() );
+		}
 	}
 }
+
+
+bool TraitDots::readOnly() const {
+	return v_readOnly;
+}
+
+void TraitDots::setReadOnly( bool sw ) {
+	if ( v_readOnly != sw ) {
+		v_readOnly = sw;
+	}
+}
+
 
 
 // Ist anatomisch nicht sehr sinnvoll
@@ -190,18 +208,23 @@ void TraitDots::changeEvent( QEvent *event ) {
 int TraitDots::value() const {
 	return v_value;
 }
+
 int TraitDots::maximum() const {
 	return v_maximum;
 }
+
 int TraitDots::minimum() const {
 	return v_minimum;
 }
+
 QColor TraitDots::colorEmpty() const {
 	return v_colorEmpty;
 }
+
 QColor TraitDots::colorFull() const {
 	return v_colorFull;
 }
+
 QColor TraitDots::colorFrame() const {
 	return v_colorFrame;
 }
@@ -219,6 +242,7 @@ void TraitDots::setValue( int valueArg ) {
 	int newValue = valueArg;
 
 	// Negative Werte werden nicht Übernommen
+
 	if ( newValue >= 0 ) {
 		// Reduziere den zu setzenden Wert solange um 1, bis er unter dem Maximum und nicht in der v_forbiddenList liegt.
 		// NatÜrlich wird die Schleife abgebrochen, sollte dadurch der Wert auf 0 sinken.
@@ -226,6 +250,7 @@ void TraitDots::setValue( int valueArg ) {
 		if ( newValue > maximum() ) {
 			newValue = maximum();
 		}
+
 		while ( v_forbiddenValues->contains( newValue ) && newValue > 0 ) {
 			newValue--;
 		}
@@ -289,6 +314,7 @@ void TraitDots::setMinimum( int valueArg ) {
 		v_minimum = valueArg;
 
 		// Ist das neue Minimum größer als das Maximum wird letzteres verändert, um dieses mindestens so groß wie das Minimum zu behalten.
+
 		if ( valueArg > maximum() )
 			setMaximum( valueArg );
 
@@ -417,6 +443,7 @@ void TraitDots::forbidAll() {
 		addForbiddenValue( i );
 	}
 }
+
 void TraitDots::forbidNone() {
 	v_forbiddenValues->clear();
 }

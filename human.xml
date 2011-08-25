@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.0">
-	<traits species="Human">
+<SoulCreator version="0.1">
+	<traits species="Human" morale="Morality" supertrait="None" fuel="None">
 		<Merit>
 			<Species>
 				<trait name="Enchanted Mortal" source="Changeling The Equinox Road">
@@ -25,7 +25,7 @@
 					<prerequisites>Wits > 1</prerequisites>
 				</trait>
 			</Species>
-			<PsychicPhenomena>
+			<Extraordinary>
 				<!--<trait name="AntiPsi" source="WoD Second Sight">
 					<value>5</value>
 					<prerequisites>No other Merits that confer psychic powers</prerequisites>
@@ -39,7 +39,7 @@
 					<value>2</value>
 					<value>3</value>
 				</trait>
-			</PsychicPhenomena>
+			</Extraordinary>
 		</Merit>
 	</traits>
 </SoulCreator>

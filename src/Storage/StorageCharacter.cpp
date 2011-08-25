@@ -31,10 +31,13 @@
 
 StorageCharacter* StorageCharacter::p_instance = 0;
 
+int StorageCharacter::v_superTrait = 0;
+int StorageCharacter::v_morality = 0;
 
 StorageCharacter* StorageCharacter::getInstance( ) {
 	if ( !p_instance )
 		p_instance = new StorageCharacter( );
+
 	return p_instance;
 }
 
@@ -63,7 +66,7 @@ void StorageCharacter::setSpecies( cv_Species::SpeciesFlag species ) {
 	if ( v_species != species ) {
 		v_species = species;
 
-		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
+// 		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
 
 		emit speciesChanged( species );
 	}
@@ -82,13 +85,16 @@ void StorageCharacter::addIdentity( cv_Name name ) {
 	insertIdentity( index, name );
 }
 
+QList< cv_Trait > StorageCharacter::traitsAll() const {
+	return v_traits;
+}
+
 QList< cv_Trait > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Category category ) const {
-	QList< cv_Trait > traits = v_traits;
 	QList< cv_Trait > list;
 
-	for ( int i = 0; i < traits.count(); i++ ) {
-		if ( traits.at( i ).type == type && traits.at( i ).category == category ) {
-			list.append( traits.at( i ) );
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category ) {
+			list.append( v_traits.at( i ) );
 		}
 	}
 
@@ -107,9 +113,10 @@ void StorageCharacter::addTrait( cv_Trait trait ) {
 			if ( trait.custom ) {
 				// Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 				if ( trait.customText.isEmpty() ) {
-					qDebug() << Q_FUNC_INFO << "Ersetze" << trait.name << "NICHT!";
+// 					qDebug() << Q_FUNC_INFO << "Ersetze" << trait.name << "NICHT!";
 					return;
 				} else if ( v_traits.at( i ).customText == trait.customText ) {
+// 					qDebug() << Q_FUNC_INFO << "Klicke" << trait.name << "mit" << trait.customText;
 					exists = true;
 				}
 			} else {
@@ -119,7 +126,7 @@ void StorageCharacter::addTrait( cv_Trait trait ) {
 
 		// Wenn ich die Eigenschaft schon finde, muß ich natürlich nicht bis zum Ende der Schleife laufen, sondern ersetze sie sofort und fertig.
 		if ( exists ) {
-			qDebug() << Q_FUNC_INFO << "Ersetze:" << trait.name;
+// 			qDebug() << Q_FUNC_INFO << "Ersetze:" << trait.name << trait.customText << "mit" << trait.value;
 			v_traits.replace( i, trait );
 			break;
 		}
@@ -150,11 +157,13 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 			trait.details.clear();
 
 			// Dann neu setzen.
+			int detailsCount = details.count();
 
-			for ( int j = 0; j < details.count(); j++ ) {
+			for ( int j = 0; j < detailsCount; j++ ) {
 				cv_TraitDetail specialty;
 				specialty.name = details.at( j ).name;
-				qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << details.at( j ).name << "zu Fertigkeit" << name << "hinzu";
+				specialty.value = true;
+// 				qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << specialty.name << "zu Fertigkeit" << name << "hinzu";
 				trait.details.append( specialty );
 			}
 
@@ -169,6 +178,28 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 	// Existiert die Fertigkeit nicht, für die eine Spezialisierung eingetragen werden soll, muß etwas getan werden. Anlegen ist aber nicht dier richtige Lösung (welcher Wert denn?).
 	if ( !trait_exists ) {
 		qDebug() << Q_FUNC_INFO << "Spezialisierungen nicht angelegt, da Fertigkeit" << name << "nicht existiert.";
+	}
+}
+
+int StorageCharacter::superTrait() const {
+	return v_superTrait;
+}
+void StorageCharacter::setSuperTrait( int value ) {
+	if ( v_superTrait != value ) {
+		v_superTrait = value;
+		emit superTraitChanged( value );
+	}
+}
+
+int StorageCharacter::morality() const
+{
+	return v_morality;
+}
+void StorageCharacter::setMorality( int value )
+{
+	if (v_morality != value){
+		v_morality = value;
+		emit moralityChanged(value);
 	}
 }
 
