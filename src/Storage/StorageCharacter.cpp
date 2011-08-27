@@ -105,6 +105,14 @@ QList< cv_Trait > StorageCharacter::attributes( cv_Trait::Category category ) co
 	return traits( cv_Trait::Attribute, category );
 }
 
+QList< cv_Trait > StorageCharacter::skills( cv_Trait::Category category ) const {
+	return traits( cv_Trait::Skill, category );
+}
+
+QList< cv_Trait > StorageCharacter::merits( cv_Trait::Category category ) const {
+	return traits( cv_Trait::Merit, category );
+}
+
 void StorageCharacter::addTrait( cv_Trait trait ) {
 	bool exists = false;
 

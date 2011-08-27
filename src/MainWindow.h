@@ -36,6 +36,7 @@
 #include "Widgets/PowerWidget.h"
 #include "Widgets/AdvantagesWidget.h"
 #include "Widgets/CharaSpecialties.h"
+#include "Draw/DrawSheet.h"
 
 #include <QMainWindow>
 
@@ -49,13 +50,9 @@ class MainWindow;
  *
  * Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
  *
- * \todo Laden von Merits eines Charakters.
- *
- * \todo CharaComboTrait wird nichtmehr verwendet, aber es muß einen Erben von CharaTrait geben, der mit Zusatztext umgehen kann. Vielelicht nichtmal einen Erben.
- *
  * \todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
  *
- * \todo Ich muß in StorageCharacter nichts speichern, daß den Wert 0 hat. Das kann aus dem Speicher gelöscht werden.
+ * \bug Language mit Zusatztext wird nicht geladen. Bzw. wird schon geladen, aber nicht richtig dargestellt.
  */
 
 class MainWindow : public QMainWindow {
@@ -179,6 +176,10 @@ class MainWindow : public QMainWindow {
 		 * Zeigt den Informationsdialog für dieses Programm an.
 		 **/
 		void aboutApp();
+		/**
+		 * Druckt den angezeigten Charakter aus.
+		 **/
+		void printCharacter();
 		/**
 		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen.
 		 *

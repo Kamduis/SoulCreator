@@ -109,6 +109,15 @@ class Config {
 		 **/
 		static const int superTraitDefaultValue;
 
+		/**
+		 * Schriftgröße für den normalen Text auf dem ausdruckbaren Charakterbogen.
+		 **/
+		static const qreal textSizeFactorPrintNormal;
+		/**
+		 * Schriftgröße für den kleinen Text auf dem ausdruckbaren Charakterbogen.
+		 **/
+		static const qreal textSizeFactorPrintSmall;
+
 	private:
 		Config();
 };

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>811</width>
     <height>600</height>
    </rect>
   </property>
@@ -38,7 +38,7 @@
          <x>0</x>
          <y>0</y>
          <width>594</width>
-         <height>514</height>
+         <height>520</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -193,14 +193,16 @@
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionPrint"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>23</height>
+     <width>811</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -209,6 +211,8 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionPrint"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -255,11 +259,7 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
-    <layout class="QVBoxLayout" name="layout_advantages">
-     <property name="margin">
-      <number>0</number>
-     </property>
-    </layout>
+    <layout class="QVBoxLayout" name="layout_advantages"/>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockWidget_specialties">
@@ -285,7 +285,7 @@
     <string>&amp;Save</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+O</string>
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionOpen">
@@ -293,7 +293,7 @@
     <string>&amp;Open</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+S</string>
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -301,7 +301,17 @@
     <string>About...</string>
    </property>
   </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>&amp;Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources/resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

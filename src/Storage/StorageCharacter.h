@@ -113,6 +113,14 @@ class StorageCharacter : public QObject {
 		 **/
 		QList< cv_Trait > attributes( cv_Trait::Category category ) const;
 		/**
+		 * Gibt eine Liste aller Fertigkeiten des Charkaters aus.
+		 **/
+		QList< cv_Trait > skills( cv_Trait::Category category ) const;
+		/**
+		 * Gibt eine Liste aller Merits des Charkaters aus.
+		 **/
+		QList< cv_Trait > merits( cv_Trait::Category category ) const;
+		/**
 		 * Gibt den Wert des Super-Attributs aus.
 		 **/
 		int superTrait() const;

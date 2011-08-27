@@ -46,9 +46,9 @@ class TraitDots : public QWidget {
 		/**
 		 * Bestimmt, ob das Widget vom Benutzer direkt verändert werden kann.
 		 *
-		 * \access editable(), setEditable()
+		 * \access readOnly(), setReadOnly()
 		 **/
-		Q_PROPERTY( bool editable READ editable WRITE setEditable )
+		Q_PROPERTY( bool readOnly READ readOnly WRITE setReadOnly )
 		/**
 		 * Speichert den aktuellen Wert des Widgets.
 		 *

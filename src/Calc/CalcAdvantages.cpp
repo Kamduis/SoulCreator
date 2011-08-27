@@ -26,15 +26,16 @@
 
 #include "CalcAdvantages.h"
 
+int CalcAdvantages::v_size = 0;
+int CalcAdvantages::v_initiative = 0;
+int CalcAdvantages::v_speed = 0;
+int CalcAdvantages::v_defense = 0;
+int CalcAdvantages::v_health = 0;
+int CalcAdvantages::v_willpower = 0;
+
+
 CalcAdvantages::CalcAdvantages( QObject* parent ): QObject( parent ) {
 	character = StorageCharacter::getInstance();
-
-	v_size = 0;
-	v_initiative = 0;
-	v_speed = 0;
-	v_defense = 0;
-	v_health = 0;
-	v_willpower = 0;
 
 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( calcSize( cv_Trait ) ) );
 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( calcInitiative( cv_Trait ) ) );
@@ -45,6 +46,25 @@ CalcAdvantages::CalcAdvantages( QObject* parent ): QObject( parent ) {
 	connect( this, SIGNAL( sizeChanged( int ) ), this, SLOT( calcHealth( int ) ) );
 }
 
+
+int CalcAdvantages::size() const {
+	return v_size;
+}
+int CalcAdvantages::initiative() const {
+	return v_initiative;
+}
+int CalcAdvantages::speed() const {
+	return v_speed;
+}
+int CalcAdvantages::defense() const {
+	return v_defense;
+}
+int CalcAdvantages::health() const {
+	return v_health;
+}
+int CalcAdvantages::willpower() const {
+	return v_willpower;
+}
 
 int CalcAdvantages::calcSize( cv_Trait trait ) {
 	if ( trait.type == cv_Trait::Merit && trait.name == "Giant" ) {

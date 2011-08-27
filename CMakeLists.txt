@@ -20,7 +20,7 @@ find_package(Qt4 REQUIRED)
 
 # The version number.
 set (PROGRAM_VERSION_MAJOR 0)
-set (PROGRAM_VERSION_MINOR 1)
+set (PROGRAM_VERSION_MINOR 2)
 set (PROGRAM_VERSION_CHANGE 0)
 
 # configure a header file to pass some of the CMake settings to the source code
@@ -75,7 +75,7 @@ add_executable(SoulCreator
 target_link_libraries(SoulCreator
 	${QT_QTCORE_LIBRARY}
 	${QT_QTGUI_LIBRARY}
-	${QT_QTSQL_LIBRARY}
+# 	${QT_QTSQL_LIBRARY}
 # 	${KDE4_KDEUI_LIBS}# KDE-Bibliotheken
 )
 

@@ -41,15 +41,22 @@ class CalcAdvantages : public QObject {
 	public:
 		CalcAdvantages( QObject* parent = 0 );
 
+		int size() const;
+		int initiative() const;
+		int speed() const;
+		int defense() const;
+		int health() const;
+		int willpower() const;
+
 	private:
 		StorageCharacter* character;
 
-		int v_size;
-		int v_initiative;
-		int v_speed;
-		int v_defense;
-		int v_health;
-		int v_willpower;
+		static int v_size;
+		static int v_initiative;
+		static int v_speed;
+		static int v_defense;
+		static int v_health;
+		static int v_willpower;
 
 	private slots:
 		/**

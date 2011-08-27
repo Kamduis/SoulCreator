@@ -37,6 +37,9 @@ const int Config::willpowerMax = 10;
 const int Config::superTraitMax = 10;
 const int Config::superTraitDefaultValue = 1;
 
+const qreal Config::textSizeFactorPrintNormal = 0.45;
+const qreal Config::textSizeFactorPrintSmall = 0.35;
+
 
 QString Config::name() {
 	return PROGRAM_NAME;

@@ -25,7 +25,9 @@
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
+#include <QPrintDialog>
 #include <QMessageBox>
+#include <QPrinter>
 #include <QTimer>
 #include <QDebug>
 
@@ -48,6 +50,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
 	this->setWindowIcon( QIcon( ":/images/images/WoD.png" ) );
 
+	// Hübsche Symbole
+	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
+	ui->actionSave->setIcon( style()->standardIcon( QStyle::SP_DriveFDIcon ) );
+	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
+
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
 	readCharacter = new ReadXmlCharacter();
@@ -58,9 +65,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 // 	QTimer::singleShot( 200, this, SLOT( initialize() ) );
 	initialize();
 
-	connect( ui->actionOpen, SIGNAL( triggered( bool ) ), this, SLOT( openCharacter() ) );
-	connect( ui->actionSave, SIGNAL( triggered( bool ) ), this, SLOT( saveCharacter() ) );
-	connect ( ui->actionAbout, SIGNAL ( activated() ), this, SLOT ( aboutApp() ) );
+	connect( ui->actionOpen, SIGNAL( triggered() ), this, SLOT( openCharacter() ) );
+	connect( ui->actionSave, SIGNAL( triggered() ), this, SLOT( saveCharacter() ) );
+	connect( ui->actionPrint, SIGNAL( triggered() ), this, SLOT( printCharacter() ) );
+	connect( ui->actionAbout, SIGNAL( triggered() ), this, SLOT( aboutApp() ) );
 }
 
 MainWindow::~MainWindow() {
@@ -74,6 +82,10 @@ MainWindow::~MainWindow() {
 	delete writeCharacter;
 	delete readCharacter;
 	delete storage;
+
+	// Ganz am Schluß lösche ich natürlich auch den Charakterspeicher, welcher ja als Singleton-Klasse realisiert wurde.
+	character->destroy();
+
 	delete ui;
 }
 
@@ -126,11 +138,7 @@ void MainWindow::populateUi() {
 	connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 
 	// Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
-	connect(character, SIGNAL(speciesChanged(cv_Species::SpeciesFlag)), this, SLOT(hidePowers(cv_Species::SpeciesFlag)));
-
-	// Hübsche Symbole
-	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
-	ui->actionSave->setIcon( style()->standardIcon( QStyle::SP_DriveFDIcon ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hidePowers( cv_Species::SpeciesFlag ) ) );
 }
 
 void MainWindow::showCharacterTraits() {
@@ -171,19 +179,19 @@ void MainWindow::activate() {
 }
 
 
-void MainWindow::aboutApp(){
-	QString aboutText = tr ( "<h1>%1</h1>" ).arg(Config::name()) +
-		tr ( "<h2>Version: %1</h2>" ).arg(Config::version()) +
-		tr ( "<p>Copyright (C) 2011 by Victor von Rhein<br>" ) +
-		tr ( "EMail: goliath@caern.de</p>" ) +
-		tr ( "<h2>GNU General Public License</h2>" ) +
-		tr ( "<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>" ) +
-		tr ( "<p>This program is distributed in the hope that it will be useful, but <i>without any warranty</i>; without even the implied warranty of <i>merchantability</i> or <i>fitness for a particular purpose</i>. See the GNU General Public License for more details.</p>" ) +
-		tr ( "<p>You should have received a copy of the GNU General Public License along with this program. If not, see <a>http://www.gnu.org/licenses/</a>.</p>" ) +
-		tr ( "<h2>World of Darkness</h2>" ) +
-		tr ( "<p>World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requiem, Werewolf: The Forsaken, White Wolf, the White Wolf-Logo and all referring terms and symbols are copyrighted by White Wolf Inc.</p>");
+void MainWindow::aboutApp() {
+	QString aboutText = tr( "<h1>%1</h1>" ).arg( Config::name() ) +
+						tr( "<h2>Version: %1</h2>" ).arg( Config::version() ) +
+						tr( "<p>Copyright (C) 2011 by Victor von Rhein<br>" ) +
+						tr( "EMail: goliath@caern.de</p>" ) +
+						tr( "<h2>GNU General Public License</h2>" ) +
+						tr( "<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>" ) +
+						tr( "<p>This program is distributed in the hope that it will be useful, but <i>without any warranty</i>; without even the implied warranty of <i>merchantability</i> or <i>fitness for a particular purpose</i>. See the GNU General Public License for more details.</p>" ) +
+						tr( "<p>You should have received a copy of the GNU General Public License along with this program. If not, see <a>http://www.gnu.org/licenses/</a>.</p>" ) +
+						tr( "<h2>World of Darkness</h2>" ) +
+						tr( "<p>World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requiem, Werewolf: The Forsaken, White Wolf, the White Wolf-Logo and all referring terms and symbols are copyrighted by White Wolf Inc.</p>" );
 
-	QMessageBox::about ( this, tr ( "About %1" ).arg(Config::name()), aboutText );
+	QMessageBox::about( this, tr( "About %1" ).arg( Config::name() ), aboutText );
 }
 
 
@@ -271,9 +279,33 @@ void MainWindow::setCharacterValues( int value ) {
 
 
 void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
-	if (species == cv_Species::Human){
-		ui->groupBox_powers->setHidden(true);
+	if ( species == cv_Species::Human ) {
+		ui->groupBox_powers->setHidden( true );
 	} else {
-		ui->groupBox_powers->setHidden(false);
+		ui->groupBox_powers->setHidden( false );
 	}
 }
+
+
+void MainWindow::printCharacter() {
+	QPrinter* printer = new QPrinter();
+	QPrintDialog printDialog( printer, this );
+
+// 	printer->setOutputFormat( QPrinter::PdfFormat );
+// 	printer->setPaperSize( QPrinter::A4 );
+// 	printer->setOutputFileName( "Soul.pdf" );
+
+	if ( printDialog.exec() == QDialog::Accepted ) {
+		DrawSheet drawSheet( this, printer );
+
+		try {
+			drawSheet.print();
+		} catch ( eSpeciesNotExisting &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		}
+
+	}
+
+	delete printer;
+}
+
