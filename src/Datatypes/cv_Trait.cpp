@@ -93,6 +93,50 @@ QString cv_Trait::toXmlString( cv_Trait::Category category ) {
 	}
 }
 
+QString cv_Trait::toString( cv_Trait::Type type, bool plural ) {
+	if ( plural ) {
+		switch ( type ) {
+			case cv_Trait::TypeNo:
+				return QObject::tr( "Without Types" );
+			case cv_Trait::Virtue:
+				return QObject::tr( "Virtues" );
+			case cv_Trait::Vice:
+				return QObject::tr( "Vices" );
+			case cv_Trait::Attribute:
+				return QObject::tr( "Attributes" );
+			case cv_Trait::Skill:
+				return QObject::tr( "Skills" );
+			case cv_Trait::Merit:
+				return QObject::tr( "Merits" );
+			case cv_Trait::Power:
+				return QObject::tr( "Powers" );
+			default:
+				throw eTraitType( type );
+// 			return "ERROR";
+		}
+	} else {
+		switch ( type ) {
+			case cv_Trait::TypeNo:
+				return QObject::tr( "Without Type" );
+			case cv_Trait::Virtue:
+				return QObject::tr( "Virtue" );
+			case cv_Trait::Vice:
+				return QObject::tr( "Vice" );
+			case cv_Trait::Attribute:
+				return QObject::tr( "Attribute" );
+			case cv_Trait::Skill:
+				return QObject::tr( "Skill" );
+			case cv_Trait::Merit:
+				return QObject::tr( "Merit" );
+			case cv_Trait::Power:
+				return QObject::tr( "Power" );
+			default:
+				throw eTraitType( type );
+// 			return "ERROR";
+		}
+	}
+}
+
 QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
 	if ( plural ) {
 		switch ( category ) {
@@ -213,6 +257,7 @@ bool cv_Trait::operator==( const cv_Trait& trait ) const {
 	}
 
 	bool result = name == trait.name
+
 				  && value == trait.value
 				  && type == trait.type
 				  && category == trait.category

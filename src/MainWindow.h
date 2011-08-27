@@ -131,6 +131,11 @@ class MainWindow : public QMainWindow {
 		 **/
 		void setCharacterValues( int value /** Der Wert, den alle Eigenschaften annehmen sollen */);
 
+		/**
+		 * Hier definiere ich Handgriffe, die der Benutzer eigentlich von Hand ausführen soll. Aber da ich das Programm teste, geht die beständig selbe Handlung auf den Geist.
+		 **/
+		void shortcut();
+
 	public slots:
 
 	private slots:
@@ -178,12 +183,12 @@ class MainWindow : public QMainWindow {
 		void aboutApp();
 		/**
 		 * Druckt den angezeigten Charakter aus.
+		 *
+		 * \todo Die Abkürzung wieder entfernen, wenn ich mit dem Einrichten der Exportwerte fertig bin.
 		 **/
 		void printCharacter();
 		/**
-		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen.
-		 *
-		 * Dadurch bleibt mehr Platz für die Merits.
+		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
 		 **/
 		void hidePowers(cv_Species::SpeciesFlag species);
 

@@ -56,6 +56,11 @@ class DrawSheet : public QObject {
 		QPrinter* v_printer;
 		StorageCharacter* character;
 		CalcAdvantages* calcAdvantages;
+		
+		/**
+		 * Diese globale Variable legt fest, ob bei einer Überschreitung der Eigenschaftshöchstwerte eine Ausnahme geworfen wird (false/Standardverhalten), oder die Grenzen einfach fest durchgesetzt werden.
+		 **/
+		bool v_enforceTraitLimits;
 
 		/**
 		 * Der horizontale Radius eines Punkts auf dem Charakterbogen.
@@ -84,6 +89,11 @@ class DrawSheet : public QObject {
 		 **/
 		void construct();
 
+		/**
+		 * Mit dieser Hilfsfunktion für drawMerits() werden die passenden Merits aus dem Charakter geholt.
+		 **/
+		QList< cv_Trait > getMerits(int maxNumber);
+
 	public slots:
 		/**
 		 * Legt den QPrinter fest, mit dem diese Klasse auf den Drucker zeichnen wird.
@@ -92,7 +102,7 @@ class DrawSheet : public QObject {
 		/**
 		 * Jetzt wird gezeichnet und gedruckt.
 		 **/
-		void print();
+		void print( bool enforceTraitLimits = false /** Wird dieser Schalter auf true gesetzt (standardmäßig ist er false), werden die Grenzen für die maximale Anzahl durchgesetzt, auch wenn dadurch nicht alle Eigenschaften des Charakters auf Papier gebannt werden. */ );
 
 	private slots:
 		/**
@@ -116,12 +126,17 @@ class DrawSheet : public QObject {
 						   );
 		/**
 		 * Diese Funktion malt die Fertigkeitspunkte aus und schreibt die Spezialisierungen.
+		 *
+		 * \warning Aufgrund der vorgefertigten Charakterbögen, können nur eine begrenzte Anzahl von Meritzs auf Papier gebannt werden.
+		 *
+		 * \exception 
 		 **/
 		void drawMerits( QPainter* painter,
 							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt des ersten Attributs. */,
 							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt des ersten Attributs. */,
 							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Fertigkeiten derselben Kategorie. */,
-							 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */
+							 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
+							 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
 						   );
 		/**
 		 * Zeichne die berechneten Eigenschaften.

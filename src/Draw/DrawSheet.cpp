@@ -43,11 +43,12 @@ DrawSheet::DrawSheet( QObject* parent, QPrinter* printer ) : QObject( parent ) {
 void DrawSheet::construct() {
 	// Vorsicht, ist ein Zeiger.
 	v_printer = 0;
+	v_enforceTraitLimits = false;
 	v_dotDiameterH = 1;
 	v_dotDiameterV = 1;
 	v_textHeight = 0;
 	v_textDotsHeightDifference = 0;
-	v_colorFill = QColor( 0, 0, 0 );
+	v_colorFill = QColor( 255, 0, 0 );
 
 	character = StorageCharacter::getInstance();
 	calcAdvantages = new CalcAdvantages( this );
@@ -62,7 +63,9 @@ void DrawSheet::setPrinter( QPrinter* printer ) {
 }
 
 
-void DrawSheet::print() {
+void DrawSheet::print(bool enforceTraitLimits) {
+	v_enforceTraitLimits = enforceTraitLimits;
+	
 	QPainter painter;
 
 	painter.begin( v_printer );
@@ -89,13 +92,87 @@ void DrawSheet::print() {
 
 	QRectF target( 0.0, 0.0, static_cast<double>( v_printer->width() ), static_cast<double>( v_printer->height() ) );
 
-	v_dotDiameterH = target.width() / 86.5;
-	v_dotDiameterV = target.height() / 122;
+	v_dotDiameterH = target.width() * 0.01156;
+	v_dotDiameterV = target.height() * 0.0082;
 
-	v_textHeight = target.height() / 55;
-	v_textDotsHeightDifference = target.height() / 500;
+	v_textHeight = target.height() * 0.0182;
+	v_textDotsHeightDifference = target.height() * 0.002;
+
+	qreal dotSizeFactor = 1.27;
+
+	qreal offsetHAttributes = target.width() * 0.36;
+	qreal offsetVAttributes = target.height() * 0.152;
+	qreal distanceHAttributes = target.width() * 0.2764;
+	qreal distanceVAttributes = target.height() * 0.0158;
+
+	qreal offsetHSkills = target.width() * 0.338;
+	qreal offsetVSkills = target.height() * 0.235;
+	qreal distanceVSkills = target.height() * 0.0179;
+	qreal distanceVCat = target.height() * 0.1735;
+	qreal textWidthSkills = target.width() * 0.23;
+
+	int meritsMax = 17;
+	qreal offsetHMerits = target.width() * 0.66;
+	qreal offsetVMerits = offsetVSkills;
+	qreal distanceVMerits = target.height() * 0.0178;
+	qreal textWidthMerits = target.width() * 0.247;
+
+	qreal offsetHAdvantages = target.width() * 0.9823;
+	qreal offsetVAdvantages = target.height() * 0.2119;
+	qreal distanceVAdvantages = target.height() * 0.022;
+	qreal textWidthAdvantages = target.width() * 0.174;
+
+	qreal offsetHHealth = target.width() * 0.766;
+	qreal offsetVHealth = target.height() * 0.3532;
+	qreal distanceHHealth = target.height() * 0.0117;
+
+	qreal offsetHWillpower = target.width() * 0.77503;
+	qreal offsetVWillpower = target.height() * 0.4145;
+	qreal distanceHWillpower = distanceHHealth;
+
+	qreal offsetHMorality = target.width() * 0.9565;
+	qreal offsetVMorality = target.height() * 0.608;
+	qreal distanceVMorality = target.height() * 0.0144;
+
+	if ( character->species() == cv_Species::Human ) {
+		// Werte bleiben, wie sie zuvor definiert wurden.
+	} else if ( character->species() == cv_Species::Changeling ) {
+		offsetHAttributes = target.width() * 0.3525;
+		offsetVAttributes = target.height() * 0.1775;
+		distanceHAttributes = target.width() * 0.257;
+		distanceVAttributes = target.height() * 0.016;
+
+		offsetHSkills = target.width() * 0.296;
+		offsetVSkills = target.height() * 0.2615;
+		distanceVCat = target.height() * 0.1665;
+		textWidthSkills = target.width() * 0.14;
+
+		meritsMax = 14;
+		offsetHMerits = target.width() * 0.6085;
+		offsetVMerits = target.height() * 0.4255;
+		textWidthMerits = target.width() * 0.237;
+
+		offsetHAdvantages = target.width() * 0.936;
+		offsetVAdvantages = target.height() * 0.238;
+
+		offsetHHealth = target.width() * 0.686;
+		offsetVHealth = target.height() * 0.3725;
+
+		offsetHWillpower = target.width() * 0.7255;
+		offsetVWillpower = target.height() * 0.4275;
+
+		offsetHMorality = target.width() * 0.909;
+		offsetVMorality = target.height() * 0.716;
+		distanceVMorality = target.height() * 0.0143;
+	} else if ( character->species() == cv_Species::Mage ) {
+	} else if ( character->species() == cv_Species::Vampire ) {
+	} else if ( character->species() == cv_Species::Werewolf ) {
+	} else {
+		throw eSpeciesNotExisting( character->species() );
+	}
 
 	QFont characterFont;
+
 	characterFont.setPointSize( v_textHeight*Config::textSizeFactorPrintNormal );
 
 	painter.setFont( characterFont );
@@ -106,52 +183,12 @@ void DrawSheet::print() {
 
 	painter.drawImage( target, image, source );
 
-	qreal offsetHAttributes = target.width() / 2.772;
-	qreal offsetVAttributes = target.height() / 6.575;
-	qreal distanceHAttributes = target.width() / 3.618;
-	qreal distanceVAttributes = target.height() / 63.4;
-
 	drawAttributes( &painter, offsetHAttributes, offsetVAttributes, distanceHAttributes, distanceVAttributes );
-
-	qreal offsetHSkills = target.width() / 2.961;
-	qreal offsetVSkills = target.height() / 4.25;
-	qreal distanceVSkills = target.height() / 56;
-	qreal distanceVCat = target.height() / 5.765;
-	qreal textWidthSkills = target.width() / 4.35;
-
 	drawSkills( &painter, offsetHSkills, offsetVSkills, distanceVSkills, distanceVCat, textWidthSkills );
-
-	qreal offsetHMerits = target.width() / 1.516;
-	qreal offsetVMerits = offsetVSkills;
-	qreal distanceVMerits = target.height() / 56.2;
-	qreal textWidthMerits = target.width() / 4.05;
-
-	drawMerits( &painter, offsetHMerits, offsetVMerits, distanceVMerits, textWidthMerits );
-
-	qreal offsetHAdvantages = target.width() / 1.018;
-	qreal offsetVAdvantages = target.height() / 4.72;
-	qreal distanceVAdvantages = target.height() / 45;
-	qreal textWidthAdvantages = target.width() / 5.75;
-
+	drawMerits( &painter, offsetHMerits, offsetVMerits, distanceVMerits, textWidthMerits, meritsMax );
 	drawAdvantages( &painter, offsetHAdvantages, offsetVAdvantages, distanceVAdvantages, textWidthAdvantages );
-
-	qreal offsetHHealth = target.width() * 0.766;
-	qreal offsetVHealth = target.height() / 2.8316;
-	qreal distanceHHealth = target.height() / 85.5;
-	qreal dotSizeFactor = 1.27;
-
 	drawHealth( &painter, offsetHHealth, offsetVHealth, distanceHHealth, dotSizeFactor );
-
-	qreal offsetHWillpower = target.width() * 0.77503;
-	qreal offsetVWillpower = target.height() * 0.4145;
-	qreal distanceHWillpower = distanceHHealth;
-
 	drawWillpower( &painter, offsetHWillpower, offsetVWillpower, distanceHWillpower, dotSizeFactor );
-
-	qreal offsetHMorality = target.width() * 0.9565;
-	qreal offsetVMorality = target.height() * 0.608;
-	qreal distanceVMorality = target.height() * 0.0144;
-
 	drawMorality( &painter, offsetHMorality, offsetVMorality, distanceVMorality );
 
 	painter.restore();
@@ -233,7 +270,7 @@ void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qre
 	}
 }
 
-void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth ) {
+QList< cv_Trait > DrawSheet::getMerits( int maxNumber ) {
 	QList< cv_Trait::Category > categories;
 	categories.append( cv_Trait::Mental );
 	categories.append( cv_Trait::Physical );
@@ -247,15 +284,35 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 	QList< cv_Trait > list;
 	QList< cv_Trait > listToUse;
 
+	int iter = 0;
+
 	for ( int i = 0; i < categories.count(); i++ ) {
 		list = character->merits( categories.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			if ( list.at( j ).value > 0 ) {
+				iter++;
 				listToUse.append( list.at( j ) );
+			}
+
+			// Sobald keine Eigenschaften mehr auf den Charakterbogen passen, hören wir auf, weitere hinzuzuschreiben. Das gilt natürlich nur, wenn maxNumber größer als 0 ist.
+			if ( maxNumber > 0 && iter >= maxNumber ) {
+				if ( v_enforceTraitLimits ) {
+					break;
+				} else {
+					throw eTraitsExceedSheetCapacity( cv_Trait::Merit, maxNumber );
+				}
 			}
 		}
 	}
+
+	return listToUse;
+}
+
+
+void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth, int maxNumber ) {
+	QList< cv_Trait > listToUse;
+	listToUse = getMerits( maxNumber );
 
 	for ( int j = 0; j < listToUse.count(); j++ ) {
 		for ( int k = 0; k < listToUse.at( j ).value; k++ ) {
@@ -279,7 +336,7 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 			QFont lclFont;
 			lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
 			painter->setFont( lclFont );
-			painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText );
+			painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText + " " );
 			painter->restore();
 		}
 	}
@@ -327,7 +384,7 @@ void DrawSheet::drawMorality( QPainter* painter, qreal offsetH, qreal offsetV, q
 	int value = character->morality();
 
 	for ( int i = 0; i < value; i++ ) {
-		QRect dotsRect = QRect( offsetH, offsetV - distanceV*i, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
+		QRect dotsRect = QRect( offsetH, offsetV - distanceV * i, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
 		painter->drawEllipse( dotsRect );
 	}
 }

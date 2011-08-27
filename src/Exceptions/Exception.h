@@ -251,6 +251,26 @@ class eTraitType : public eTrait {
 
 
 /**
+ * @brief Ausnahme, falls beim Audrucken ein Fehler entsteht.
+ *
+ * Ein unspezifizierter Fehler beim Ausdruck ist aufgetreten.
+ */
+class ePrint : public Exception {
+	public:
+		ePrint();
+};
+
+/**
+ * @brief Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.
+ *
+ * Aufgrund vorgefertigter Charakterbögen können je nach Typ nur eine gewissen Anzahl der entsprechenden Eigenschaften darauf aufgebracht werden. Stehen im Generator mehr dieser Eigenschaften, als gedruckt werden können, tritt diese Ausnahme auf.
+ */
+class eTraitsExceedSheetCapacity : public ePrint {
+	public:
+		eTraitsExceedSheetCapacity( cv_Trait::Type type, int maxNumber );
+};
+
+/**
  * @brief Ausnahme, falls Fehler bei einer Eingabe auftreten.
  *
  * Falsche oder Fehlende Eingabe führt zu dieser Ausnahme.

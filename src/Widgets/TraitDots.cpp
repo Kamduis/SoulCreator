@@ -26,7 +26,7 @@
 
 #include "TraitDots.h"
 
-#include "valgrind/memcheck.h"
+// #include "valgrind/memcheck.h"
 
 TraitDots::TraitDots( QWidget *parent ) : QWidget( parent ) {
 	// Variablen initialisieren.

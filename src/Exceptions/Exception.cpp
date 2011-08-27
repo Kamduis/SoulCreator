@@ -111,10 +111,11 @@ eSpecies::eSpecies() : Exception() {
 	setDescription( QObject::tr( "There is a problem with a character species." ) );
 }
 
-eSpeciesNotExisting::eSpeciesNotExisting(cv_Species::SpeciesFlag species) : eSpecies() {
+eSpeciesNotExisting::eSpeciesNotExisting( cv_Species::SpeciesFlag species ) : eSpecies() {
 	setMessage( QObject::tr( "Character Species Problem" ) );
-	setDescription( QObject::tr( "Species %1 is missing." ).arg(species) );
+	setDescription( QObject::tr( "Species %1 is missing." ).arg( species ) );
 }
+
 eSpeciesNotExisting::eSpeciesNotExisting() : eSpecies() {
 	setMessage( QObject::tr( "Character Species Problem" ) );
 	setDescription( QObject::tr( "Species is missing." ) );
@@ -133,13 +134,24 @@ eTraitNotExisting::eTraitNotExisting() : eTrait() {
 
 eTraitCategory::eTraitCategory( cv_Trait::Category category ) : eTrait() {
 	setMessage( QObject::tr( "Category of a Trait not valid" ) );
-	setDescription( QObject::tr( "The Category %1 is not valid at this point." ).arg( QString::number(category) ) );
+	setDescription( QObject::tr( "The Category %1 is not valid at this point." ).arg( QString::number( category ) ) );
 }
 
 eTraitType::eTraitType( cv_Trait::Type type ) : eTrait() {
 	setMessage( QObject::tr( "Type of a Trait not valid" ) );
-	setDescription( QObject::tr( "The Type %1 is not valid at this point." ).arg( QString::number(type) ) );
+	setDescription( QObject::tr( "The Type %1 is not valid at this point." ).arg( QString::number( type ) ) );
 }
+
+
+ePrint::ePrint() : Exception() {
+	setMessage( QObject::tr( "Printing Problem" ) );
+	setDescription( QObject::tr( "There is a problem while trying to print the character sheet." ) );
+}
+
+eTraitsExceedSheetCapacity::eTraitsExceedSheetCapacity( cv_Trait::Type type, int maxNumber ) : ePrint() {
+	setMessage( QObject::tr( "Too many %1 to print on character sheet." ).arg( cv_Trait::toString( type, true ) ));
+				setDescription( QObject::tr( "Trying to print too many %1. The character sheet hat only room for %2" ).arg( cv_Trait::toString( type, true ) ).arg( maxNumber ) );
+			}
 
 
 eEntry::eEntry() : Exception() {

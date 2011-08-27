@@ -288,24 +288,56 @@ void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
 
 
 void MainWindow::printCharacter() {
+	// Vorsicht, eine Abkürzung, die ich nur für das Testen verwenden sollte.
+	shortcut();
+	
 	QPrinter* printer = new QPrinter();
 	QPrintDialog printDialog( printer, this );
 
-// 	printer->setOutputFormat( QPrinter::PdfFormat );
-// 	printer->setPaperSize( QPrinter::A4 );
-// 	printer->setOutputFileName( "Soul.pdf" );
+	printer->setOutputFormat( QPrinter::PdfFormat );
+	printer->setPaperSize( QPrinter::A4 );
+	printer->setOutputFileName( "print.pdf" );
 
-	if ( printDialog.exec() == QDialog::Accepted ) {
+// 	if ( printDialog.exec() == QDialog::Accepted ) {
 		DrawSheet drawSheet( this, printer );
 
 		try {
 			drawSheet.print();
 		} catch ( eSpeciesNotExisting &e ) {
 			MessageBox::exception( this, e.message(), e.description() );
+		} catch (eTraitsExceedSheetCapacity &e) {
+			MessageBox::warning(this, e.message(), e.description() + tr("\n Printing will be done without the exceeding number of traits."));
+			drawSheet.print( true );
 		}
-
-	}
+// 	}
 
 	delete printer;
 }
 
+
+
+
+
+
+void MainWindow::shortcut() {
+	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled1.chr";
+
+	if ( !filePath.isEmpty() ) {
+		QFile* file = new QFile( filePath );
+
+		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
+		setCharacterValues( 0 );
+
+		try {
+			readCharacter->read( file );
+		} catch ( eXmlVersion &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		} catch ( eXmlError &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		} catch ( eFileNotOpened &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		}
+
+		delete file;
+	}
+}
