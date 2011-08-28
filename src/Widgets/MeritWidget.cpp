@@ -27,10 +27,8 @@
 #include <QDebug>
 
 #include "CharaTrait.h"
-#include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
-#include "../Storage/StorageTemplate.h"
 #include "../CMakeConfig.h"
 
 #include "MeritWidget.h"
@@ -47,37 +45,38 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 	layoutTop->addWidget( scrollArea );
 
-	QToolBox* toolBox = new QToolBox();
+	toolBox = new QToolBox();
 	toolBox->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Expanding );
 
 	scrollArea->setWidget( toolBox );
 	toolBox->show();
 
-	StorageTemplate storage;
+	storage = new StorageTemplate( this );
 
 	cv_Trait::Type type = cv_Trait::Merit;
 
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::Mental );
-	categories.append( cv_Trait::Physical );
-	categories.append( cv_Trait::Social );
-	categories.append( cv_Trait::Item );
-	categories.append( cv_Trait::FightingStyle );
-	categories.append( cv_Trait::DebateStyle );
-	categories.append( cv_Trait::Extraordinary );
-	categories.append( cv_Trait::Species );
+	v_categories.clear();
+	v_categories.append( cv_Trait::Mental );
+	v_categories.append( cv_Trait::Physical );
+	v_categories.append( cv_Trait::Social );
+	v_categories.append( cv_Trait::Item );
+	v_categories.append( cv_Trait::FightingStyle );
+	v_categories.append( cv_Trait::DebateStyle );
+	v_categories.append( cv_Trait::Extraordinary );
+	v_categories.append( cv_Trait::Species );
 
 	QList< cv_Trait > list;
 
 	// Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
-	for ( int i = 0; i < categories.count(); i++ ) {
+
+	for ( int i = 0; i < v_categories.count(); i++ ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 		QWidget* widgetMeritCategory = new QWidget();
 		QVBoxLayout* layoutMeritCategory = new QVBoxLayout();
 		widgetMeritCategory->setLayout( layoutMeritCategory );
-		toolBox->addItem( widgetMeritCategory, cv_Trait::toString( categories.at( i ), true ) );
+		toolBox->addItem( widgetMeritCategory, cv_Trait::toString( v_categories.at( i ), true ) );
 
-		list = storage.merits( categories.at( i ) );
+		list = storage->merits( v_categories.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
@@ -87,12 +86,16 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 				charaTrait->setValue( 0 );
 				layoutMeritCategory->addWidget( charaTrait );
 
+				connect( charaTrait, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( countMerits( cv_Trait ) ) );
+
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
+
 				if ( !list.at( j ).custom ) {
 					break;
 				}
 			}
 		}
+
 // 		// Abstand zwischen den Kategorien, aber nicht am Ende.
 // 		if ( i < categories.count() - 1 ) {
 // 			layoutMeritCategory->addSpacing( Config::traitCategorySpace );
@@ -100,24 +103,46 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 	}
 
 // 	dialog = new SelectMeritsDialog( this );
-// 
+//
 // 	QHBoxLayout* layout_button = new QHBoxLayout();
 // 	layoutTop->addLayout( layout_button );
-// 
+//
 // 	button = new QPushButton();
 // 	button->setIcon( style()->standardIcon( QStyle::SP_FileDialogStart ) );
-// 
+//
 // 	layout_button->addStretch();
 // 	layout_button->addWidget( button );
-// 
+//
 // 	connect( button, SIGNAL( clicked( bool ) ), dialog, SLOT( exec() ) );
 }
 
 MeritWidget::~MeritWidget() {
+	delete storage;
+	delete toolBox;
 // 	delete dialog;
 // 	delete button;
 	delete scrollArea;
 }
 
 
+void MeritWidget::countMerits( cv_Trait trait ) {
+	QList< cv_Trait > list = character->merits( trait.category );
+
+	int numberInCategory = 0;
+
+	for ( int i = 0; i < list.count(); i++ ) {
+		if ( list.at( i ).value > 0 ) {
+			numberInCategory++;
+		}
+	}
+
+	// Index der veränderten Kategorie in Liste suchen und dann die toolBox-Seite mit der identischen Indexzahl anpassen.
+	int categoryIndex = v_categories.indexOf( trait.category );
+
+	if ( numberInCategory > 0 ) {
+		toolBox->setItemText( categoryIndex, cv_Trait::toString( v_categories.at( categoryIndex ), true ) + " (" + QString::number( numberInCategory ) + ")" );
+	} else {
+		toolBox->setItemText( categoryIndex, cv_Trait::toString( v_categories.at( categoryIndex ), true ) );
+	}
+}
 

@@ -38,6 +38,8 @@
  * @brief Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.
  *
  * Simple Eigenschaften wie Attribute haben nur Name und Wert. Bei Fertigkeiten kommen bereits die Spezialisierungen hinzu, bei  Vorzügen noch die Einschränkungen etc.
+ *
+ * \todo Eine Möglichkeit, wie ich die volle Liste der Typen und Kategorien für anderen Klassen abrufbar machen kann, damit sie nicht immer von Hand erstellt werden muß. Es müßte bei den Listen für die Kategorien unterschieden werden zwischen Attributen/Fertigkeiten (nur mental, physisch und sozial) Merits (nahezu alle Kategorien), Kräften (nur CategoryNo) etc.
  */
 class cv_Trait {
 	public:

@@ -27,8 +27,12 @@
 
 #include <QVBoxLayout>
 #include <QScrollArea>
+#include <QToolBox>
 #include <QPushButton>
 
+#include "../Storage/StorageTemplate.h"
+#include "../Storage/StorageCharacter.h"
+#include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_TraitDetail.h"
 #include "Dialogs/SelectMeritsDialog.h"
 
@@ -38,16 +42,21 @@
 /**
  * @brief Das Widget, in welchem sämtliche Merits angeordnet sind.
  *
- * \todo Einen Knopf erstellen, über den der benutzer angeben kann, welche Merits er denn wirklich alle angezeigt haben will.
+ * \todo In jedem Reiter der Toolbox sollte in Klammern die Anzahl der Merits mit Wert stehen, damit der benutzer gleich weiß, wieviele Merits sein Charakter hat und wo er sie hat.
+ *
+ * \todo Einen Knopf erstellen, über den der Benutzer angeben kann, welche Merits er denn wirklich alle angezeigt haben will.
  *
  * \todo Bei Merits mit Zusatztext (Language) in diesem men+ ein Zahlenfle dangeben, bei welchem der benutzer einstellen kann, wieviele verschiedene dieser scheinbar identischen merits er angezeigt haben will.
  *
- * \todo Eigenscahften mit Zusatztext benötigen mehr vertikalen Raum als die anderen. Sieht nicht gut aus.
+ * \todo Eigenschaften mit Zusatztext benötigen mehr vertikalen Raum als die anderen. Sieht nicht gut aus.
  **/
 class MeritWidget : public QWidget {
 		Q_OBJECT
 
 	public:
+		/**
+		 * Konstruktor.
+		 **/
 		MeritWidget( QWidget *parent = 0 );
 		/**
 		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
@@ -56,14 +65,35 @@ class MeritWidget : public QWidget {
 
 	private:
 		QScrollArea* scrollArea;
+		QToolBox* toolBox;
 // 		QPushButton* button;
 // 		SelectMeritsDialog* dialog;
+		StorageTemplate* storage;
+		StorageCharacter* character;
+		
+
+		/**
+		 * Damit ich nicht auch in anderen Funktionen stets alle Kategorien zusammensuchen muß, wird das hier global definiert und im Konstruktor gefüllt.
+		 **/
+		QList< cv_Trait::Category > v_categories;
 
 	public slots:
 
 	private slots:
+		/**
+		 * Zält die Merits in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
+		 *
+		 * Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
+		 *
+		 * \bug Merits mit Zusatztext werden nicht gezählt. Kann sein, daß das nur auftritt wenn nichts in der Textbox steht. Ist dann kein Problem, da es ohnehin nicht möglich sein dürfte, Werte einzugeben, wenn Zusatext nicht angegeben ist.
+		 **/
+		void countMerits(cv_Trait trait);
 
 	signals:
+// 		/**
+// 		 * Die Anzahl der Angewählten Merits hat sich verändert, also wird dieses Signal gesandt.
+// 		 **/
+// 		numberOfMeritsChanged(cv_Trait::Category category /** Die Anzahl der Merits in dieser Kategorie hat sich verändert. */ );
 };
 
 #endif

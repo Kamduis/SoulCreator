@@ -159,8 +159,8 @@ void DrawSheet::print() {
 		offsetVMerits = target.height() * 0.4255;
 		textWidthMerits = target.width() * 0.237;
 
-		offsetHAdvantages = target.width() * 0.936;
-		offsetVAdvantages = target.height() * 0.238;
+		offsetHAdvantages = target.width() * 0.79;
+		offsetVAdvantages = target.height() * 0.237;
 
 		offsetHHealth = target.width() * 0.686;
 		offsetVHealth = target.height() * 0.3725;
