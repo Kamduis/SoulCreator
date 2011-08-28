@@ -43,7 +43,6 @@ DrawSheet::DrawSheet( QObject* parent, QPrinter* printer ) : QObject( parent ) {
 void DrawSheet::construct() {
 	// Vorsicht, ist ein Zeiger.
 	v_printer = 0;
-	v_enforceTraitLimits = false;
 	v_dotDiameterH = 1;
 	v_dotDiameterV = 1;
 	v_textHeight = 0;
@@ -63,9 +62,7 @@ void DrawSheet::setPrinter( QPrinter* printer ) {
 }
 
 
-void DrawSheet::print(bool enforceTraitLimits) {
-	v_enforceTraitLimits = enforceTraitLimits;
-	
+void DrawSheet::print() {
 	QPainter painter;
 
 	painter.begin( v_printer );
@@ -111,11 +108,17 @@ void DrawSheet::print(bool enforceTraitLimits) {
 	qreal distanceVCat = target.height() * 0.1735;
 	qreal textWidthSkills = target.width() * 0.23;
 
-	int meritsMax = 17;
+	int maxMerits = 17;
 	qreal offsetHMerits = target.width() * 0.66;
 	qreal offsetVMerits = offsetVSkills;
 	qreal distanceVMerits = target.height() * 0.0178;
 	qreal textWidthMerits = target.width() * 0.247;
+
+	int maxPowers = 0;
+	qreal offsetHPowers = 0;
+	qreal offsetVPowers = 0;
+	qreal distanceVPowers = 0;
+	qreal textWidthPowers = 0;
 
 	qreal offsetHAdvantages = target.width() * 0.9823;
 	qreal offsetVAdvantages = target.height() * 0.2119;
@@ -124,11 +127,15 @@ void DrawSheet::print(bool enforceTraitLimits) {
 
 	qreal offsetHHealth = target.width() * 0.766;
 	qreal offsetVHealth = target.height() * 0.3532;
-	qreal distanceHHealth = target.height() * 0.0117;
+	qreal distanceHHealth = target.width() * 0.017;
 
 	qreal offsetHWillpower = target.width() * 0.77503;
 	qreal offsetVWillpower = target.height() * 0.4145;
 	qreal distanceHWillpower = distanceHHealth;
+
+	qreal offsetHSuper = 0;
+	qreal offsetVSuper = 0;
+	qreal distanceHSuper = 0;
 
 	qreal offsetHMorality = target.width() * 0.9565;
 	qreal offsetVMorality = target.height() * 0.608;
@@ -137,17 +144,17 @@ void DrawSheet::print(bool enforceTraitLimits) {
 	if ( character->species() == cv_Species::Human ) {
 		// Werte bleiben, wie sie zuvor definiert wurden.
 	} else if ( character->species() == cv_Species::Changeling ) {
-		offsetHAttributes = target.width() * 0.3525;
-		offsetVAttributes = target.height() * 0.1775;
+		offsetHAttributes = target.width() * 0.352;
+		offsetVAttributes = target.height() * 0.177;
 		distanceHAttributes = target.width() * 0.257;
 		distanceVAttributes = target.height() * 0.016;
 
-		offsetHSkills = target.width() * 0.296;
-		offsetVSkills = target.height() * 0.2615;
+		offsetHSkills = target.width() * 0.2955;
+		offsetVSkills = target.height() * 0.261;
 		distanceVCat = target.height() * 0.1665;
 		textWidthSkills = target.width() * 0.14;
 
-		meritsMax = 14;
+		maxMerits = 14;
 		offsetHMerits = target.width() * 0.6085;
 		offsetVMerits = target.height() * 0.4255;
 		textWidthMerits = target.width() * 0.237;
@@ -161,9 +168,19 @@ void DrawSheet::print(bool enforceTraitLimits) {
 		offsetHWillpower = target.width() * 0.7255;
 		offsetVWillpower = target.height() * 0.4275;
 
+		offsetHSuper = target.width() * 0.73015;
+		offsetVSuper = target.height() * 0.4887;
+		distanceHSuper = target.width() * 0.016;
+
 		offsetHMorality = target.width() * 0.909;
 		offsetVMorality = target.height() * 0.716;
 		distanceVMorality = target.height() * 0.0143;
+
+		maxPowers = 8;
+		offsetHPowers = offsetHMerits;
+		offsetVPowers = offsetVSkills;
+		distanceVPowers = distanceVMerits;
+		textWidthPowers = textWidthMerits;
 	} else if ( character->species() == cv_Species::Mage ) {
 	} else if ( character->species() == cv_Species::Vampire ) {
 	} else if ( character->species() == cv_Species::Werewolf ) {
@@ -185,11 +202,16 @@ void DrawSheet::print(bool enforceTraitLimits) {
 
 	drawAttributes( &painter, offsetHAttributes, offsetVAttributes, distanceHAttributes, distanceVAttributes );
 	drawSkills( &painter, offsetHSkills, offsetVSkills, distanceVSkills, distanceVCat, textWidthSkills );
-	drawMerits( &painter, offsetHMerits, offsetVMerits, distanceVMerits, textWidthMerits, meritsMax );
+	drawMerits( &painter, offsetHMerits, offsetVMerits, distanceVMerits, textWidthMerits, maxMerits );
 	drawAdvantages( &painter, offsetHAdvantages, offsetVAdvantages, distanceVAdvantages, textWidthAdvantages );
 	drawHealth( &painter, offsetHHealth, offsetVHealth, distanceHHealth, dotSizeFactor );
 	drawWillpower( &painter, offsetHWillpower, offsetVWillpower, distanceHWillpower, dotSizeFactor );
 	drawMorality( &painter, offsetHMorality, offsetVMorality, distanceVMorality );
+
+	if ( character->species() != cv_Species::Human ) {
+		drawPowers( &painter, offsetHPowers, offsetVPowers, distanceVPowers, textWidthPowers, maxPowers );
+		drawSuper( &painter, offsetHSuper, offsetVSuper, distanceHSuper, dotSizeFactor );
+	}
 
 	painter.restore();
 
@@ -270,49 +292,16 @@ void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qre
 	}
 }
 
-QList< cv_Trait > DrawSheet::getMerits( int maxNumber ) {
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::Mental );
-	categories.append( cv_Trait::Physical );
-	categories.append( cv_Trait::Social );
-	categories.append( cv_Trait::Item );
-	categories.append( cv_Trait::FightingStyle );
-	categories.append( cv_Trait::DebateStyle );
-	categories.append( cv_Trait::Extraordinary );
-	categories.append( cv_Trait::Species );
-
-	QList< cv_Trait > list;
-	QList< cv_Trait > listToUse;
-
-	int iter = 0;
-
-	for ( int i = 0; i < categories.count(); i++ ) {
-		list = character->merits( categories.at( i ) );
-
-		for ( int j = 0; j < list.count(); j++ ) {
-			if ( list.at( j ).value > 0 ) {
-				iter++;
-				listToUse.append( list.at( j ) );
-			}
-
-			// Sobald keine Eigenschaften mehr auf den Charakterbogen passen, hören wir auf, weitere hinzuzuschreiben. Das gilt natürlich nur, wenn maxNumber größer als 0 ist.
-			if ( maxNumber > 0 && iter >= maxNumber ) {
-				if ( v_enforceTraitLimits ) {
-					break;
-				} else {
-					throw eTraitsExceedSheetCapacity( cv_Trait::Merit, maxNumber );
-				}
-			}
-		}
-	}
-
-	return listToUse;
-}
-
 
 void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth, int maxNumber ) {
 	QList< cv_Trait > listToUse;
-	listToUse = getMerits( maxNumber );
+
+	try {
+		listToUse = getTraits( cv_Trait::Merit, maxNumber );
+	} catch ( eTraitsExceedSheetCapacity &e ) {
+		listToUse = getTraits( cv_Trait::Merit, maxNumber, true );
+		emit enforcedTraitLimits( cv_Trait::Merit );
+	}
 
 	for ( int j = 0; j < listToUse.count(); j++ ) {
 		for ( int k = 0; k < listToUse.at( j ).value; k++ ) {
@@ -387,4 +376,100 @@ void DrawSheet::drawMorality( QPainter* painter, qreal offsetH, qreal offsetV, q
 		QRect dotsRect = QRect( offsetH, offsetV - distanceV * i, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
 		painter->drawEllipse( dotsRect );
 	}
+}
+
+void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth, int maxNumber ) {
+	QList< cv_Trait > listToUse;
+
+	try {
+		listToUse = getTraits( cv_Trait::Power, maxNumber );
+	} catch ( eTraitsExceedSheetCapacity &e ) {
+		listToUse = getTraits( cv_Trait::Power, maxNumber, true );
+		emit enforcedTraitLimits( cv_Trait::Power );
+	}
+
+	for ( int j = 0; j < listToUse.count(); j++ ) {
+		for ( int k = 0; k < listToUse.at( j ).value; k++ ) {
+			// Punkte malen.
+			QRectF dotsRect( offsetH + v_dotDiameterH*k, offsetV + distanceV*j, v_dotDiameterH, v_dotDiameterV );
+			painter->drawEllipse( dotsRect );
+		}
+
+		QString name = listToUse.at( j ).name;
+
+		QString customText = listToUse.at( j ).customText;
+
+		// Namen
+		QRect textRect( offsetH - textWidth, offsetV - v_textDotsHeightDifference + distanceV*j, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, name );
+
+		// Zusatztext
+
+		if ( !customText.isEmpty() ) {
+			painter->save();
+			QFont lclFont;
+			lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
+			painter->setFont( lclFont );
+			painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText + " " );
+			painter->restore();
+		}
+	}
+}
+
+void DrawSheet::drawSuper( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal dotSizeFactor ) {
+	int value = character->superTrait();
+
+	for ( int i = 0; i < value; i++ ) {
+		QRect dotsRect = QRect( offsetH + distanceH * i, offsetV, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
+		painter->drawEllipse( dotsRect );
+	}
+}
+
+
+
+
+
+
+QList< cv_Trait > DrawSheet::getTraits( cv_Trait::Type type, int maxNumber, bool enforceTraitLimits ) {
+	QList< cv_Trait::Category > categories;
+	categories.append( cv_Trait::CategoryNo );
+
+	if ( type == cv_Trait::Merit ) {
+		categories.append( cv_Trait::Mental );
+		categories.append( cv_Trait::Physical );
+		categories.append( cv_Trait::Social );
+		categories.append( cv_Trait::Item );
+		categories.append( cv_Trait::FightingStyle );
+		categories.append( cv_Trait::DebateStyle );
+		categories.append( cv_Trait::Extraordinary );
+		categories.append( cv_Trait::Species );
+	}
+
+	QList< cv_Trait > list;
+
+	QList< cv_Trait > listToUse;
+
+	int iter = 0;
+
+	for ( int i = 0; i < categories.count(); i++ ) {
+		list = character->traits( type, categories.at( i ) );
+
+		for ( int j = 0; j < list.count(); j++ ) {
+			if ( list.at( j ).value > 0 ) {
+				iter++;
+				listToUse.append( list.at( j ) );
+			}
+
+			// Sobald keine Eigenschaften mehr auf den Charakterbogen passen, hören wir auf, weitere hinzuzuschreiben. Das gilt natürlich nur, wenn maxNumber größer als 0 ist.
+			if ( maxNumber > 0 && iter >= maxNumber ) {
+				if ( enforceTraitLimits ) {
+					break;
+				} else {
+					throw eTraitsExceedSheetCapacity( type, maxNumber );
+				}
+			}
+		}
+	}
+
+	return listToUse;
 }

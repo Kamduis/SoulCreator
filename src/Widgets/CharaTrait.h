@@ -38,7 +38,7 @@
  *
  * \todo Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.
  *
- * \todo Ein Wrapper für die Prerequisites der Merits wird noch benötigt, damit ich sie disablen kann, wenn die Anforderungen nicht erfüllt sind.
+ * \todo Den Parser \ref StringBoolParser erweitern, damit übriggebliebener Text nach den Ersetzungen der Eigesncahften durch ihre Werte mit 0 gleichgesetzt wird. Aktuell mache ich das durch Stringmanipulation, aber das ist natürlich langsamer.
  **/
 
 class CharaTrait : public TraitLine {

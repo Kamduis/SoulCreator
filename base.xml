@@ -654,14 +654,14 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
-				<trait name="Site" source="Vampire Damnation City">
+				<trait name="Site" custom="true" source="Vampire Damnation City">
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
 				</trait>
-				<trait name="Status" source="WoD Core">
+				<trait name="Status" custom="true" source="WoD Core">
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>

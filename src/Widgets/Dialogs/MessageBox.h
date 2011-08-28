@@ -44,7 +44,7 @@ class MessageBox : public QMessageBox {
 		/**
 		 * Standardisierte Dialogbox für die Mitteilung einer Ausnahme an den Benutzer. Dient bislang Debug-Zwecken und sind noch keine normierten Fehlermeldungen.
 		 *
-		 * \todo Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann. Dies ist natürlich nicht einfach nur über diese Klasse zu lössen sondern wird Änderungen in der \ref Exception -Klasse erfordern.
+		 * \todo Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann und nicht nur als Debug-Hilfe dienen kann. Dies wird auch Änderungen in der \ref Exception -Klasse erfordern.
 		 **/
 		static StandardButton exception ( QWidget *parent /** Elternfenster dieses modalen Dialogs. */,
 										  QString message /** Die kurze und informative Benachrichtigung an den Benutzer. */,
@@ -53,8 +53,6 @@ class MessageBox : public QMessageBox {
 		 * Standardisierte Dialogbox für die Mitteilung einer Ausnahme an den Benutzer. Dient bislang Debug-Zwecken und sind noch keine normierten Fehlermeldungen.
 		 *
 		 * Dies ist eine überladene Methode der Funktion \ref MessageBox::exception( QWidget *parent, QString message, QString description ).
-		 *
-		 * \todo Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann. Dies ist natürlich nicht einfach nur über diese Klasse zu lössen sondern wird Änderungen in der \ref Exception -Klasse erfordern.
 		 **/
 		static StandardButton exception ( QWidget *parent /** Elternfenster dieses modalen Dialogs. */,
 										  Exception error /** Die Excpetionklasse. */ );
@@ -62,8 +60,6 @@ class MessageBox : public QMessageBox {
 		 * Standardisierte Dialogbox für die Mitteilung einer Ausnahme an den Benutzer. Dient bislang Debug-Zwecken und sind noch keine normierten Fehlermeldungen.
 		 *
 		 * Dies ist eine überladene Methode der Funktion \ref MessageBox::exception( QWidget *parent, QString message, QString description ).
-		 *
-		 * \todo Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann. Dies ist natürlich nicht einfach nur über diese Klasse zu lössen sondern wird Änderungen in der \ref Exception -Klasse erfordern.
 		 **/
 		static StandardButton exception ( QWidget *parent );
 

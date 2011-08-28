@@ -36,9 +36,9 @@
  *
  * Ein einfacher ganzzahliger Wert wirden in Form ausgefüllter Punkte dargestellt. Die bis zum Maximalwert übrigen Punkte sind nicht ausgefüllt.
  *
- * Es besteht die Möglichkeit aus der Menge an Werten zwischen \ref minimum und \ref maximum einige zu verbieten.
+ * Wird das Widget disabled, wird der Alphakanal genutzt, um die Punkte teilweise durchsichtig zu machen und sie so grau erscheinen zu lassen.
  *
- * \todo Wenn dieses Widget disabled wird, sollte die Farbe der Punkte grau werden.
+ * Es besteht die Möglichkeit aus der Menge an Werten zwischen \ref minimum und \ref maximum einige zu verbieten.
  */
 
 class TraitDots : public QWidget {

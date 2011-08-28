@@ -37,8 +37,6 @@
  * @brief Diese Spezialisierungen werden direkt mit dem Charakter verknüpft.
  *
  * \todo Es wäre toll, wenn der Benutzer eigene Spezialisierungen eintragen könnte, zusätzlich zu denen, die schon angeboten werden.
- *
- * \todo Es gibt Spezialisierungen, welche einen zusätzlichen Text haben. Beispielsweise Language (Deutsch) usw. Diese haben in den XML-Dateien einen zusätzliche Option (custom="true")
  **/
 class CharaSpecialties : public TraitSpecialties {
 	Q_OBJECT

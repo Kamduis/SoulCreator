@@ -43,8 +43,6 @@
  * \todo Bei Merits mit Zusatztext (Language) in diesem men+ ein Zahlenfle dangeben, bei welchem der benutzer einstellen kann, wieviele verschiedene dieser scheinbar identischen merits er angezeigt haben will.
  *
  * \todo Eigenscahften mit Zusatztext benötigen mehr vertikalen Raum als die anderen. Sieht nicht gut aus.
- *
- * \todo in Wirklichkeit werden alle merits in das Widget gepackt, aber es werden alle versteckt, die der Benutzer nicht explizit angezeigt haben will.
  **/
 class MeritWidget : public QWidget {
 		Q_OBJECT

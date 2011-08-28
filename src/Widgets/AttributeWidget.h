@@ -34,8 +34,6 @@
  * @brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
  *
  * Die Attribute werden in diesem Widget angeordnet.
- *
- * \todo Alles
  **/
 class AttributeWidget : public QWidget {
 		Q_OBJECT

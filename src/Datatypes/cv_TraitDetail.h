@@ -35,8 +35,6 @@
  * @brief Speichert die zusätzlichen Parameter einer Eigenschaft.
  *
  * Bei Fertigkeiten sind diese zusätzlichen Parameter die Spezialisierungen, bei Merits die zusätzlichen Informationen.
- *
- * \todo Z. B. der Vorzug "Contacts" gibt 1 Kontakt für jeden Punkt. Diese einzelnen Kontakte werden dann in diesem struct abgelegt.
  */
 struct cv_TraitDetail {
 	/**

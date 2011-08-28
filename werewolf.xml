@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.2">
 	<traits species="Werewolf" morale="Harmony" supertrait="Primal Urge" fuel="Essence">
+		<Super>
+			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
+			<supertrait fuelMax="11" fuelPerTurn="1" traitMax="5">2</supertrait>
+			<supertrait fuelMax="12" fuelPerTurn="2" traitMax="5">3</supertrait>
+			<supertrait fuelMax="13" fuelPerTurn="2" traitMax="5">4</supertrait>
+			<supertrait fuelMax="14" fuelPerTurn="3" traitMax="5">5</supertrait>
+			<supertrait fuelMax="15" fuelPerTurn="4" traitMax="6">6</supertrait>
+			<supertrait fuelMax="20" fuelPerTurn="5" traitMax="7">7</supertrait>
+			<supertrait fuelMax="30" fuelPerTurn="7" traitMax="8">8</supertrait>
+			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
+			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
+		</Super>
 		<Merit>
 			<Species>
 				<trait name="Auspice Blessing" custom="true" source="Werewolf The Rage">

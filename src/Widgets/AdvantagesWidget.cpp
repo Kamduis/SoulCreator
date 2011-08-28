@@ -124,7 +124,6 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 
 	dotsSuper = new TraitDots( );
 	dotsSuper->setMaximum( Config::superTraitMax );
-	dotsSuper->setReadOnly(true);
 
 	layoutSuperDots->addStretch();
 	layoutSuperDots->addWidget( dotsSuper );

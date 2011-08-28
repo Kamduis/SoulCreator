@@ -41,8 +41,6 @@
  * Diese Klasse dient dazu einen möglichst simplen Zugriff auf die Eigenschaften der WoD-Charaktere zu bieten. Dazu werden die Eigenschaften und all ihre Zusatzinformationen aus den xml-Dateien gelesen und in Listen gespeichert.
  *
  * Es wird nur in die Datei geschrieben, was auch wirklich benötigt wird (Speicherplatz sparen).
- *
- * \todo Viel. Bislang werden nur Attribute und Fertigkeiten gespeichert.
  */
 class WriteXmlCharacter : public QObject, public QXmlStreamWriter {
 	Q_OBJECT

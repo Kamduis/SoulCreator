@@ -44,6 +44,8 @@
  * Die Werte, welche aus den Eigenschaften des Charakters berechnet werden, kommen allesamt in dieses Widget.
  *
  * \todo Armor und Superattribut müssen noch gespeichert werden, wenn der Charakter gespeichert wird.
+ *
+ * \todo Eine fuelWidget-Klasse muß erstellt und hier eingefügt werden, damit auch Mana, Glamour etc. angezeigt wird. Und zwar soviel, wie in den Template-DAteien festgelegt wird.
  **/
 class AdvantagesWidget : public QWidget {
 		Q_OBJECT

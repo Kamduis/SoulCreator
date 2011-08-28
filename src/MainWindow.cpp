@@ -53,6 +53,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	// Hübsche Symbole
 	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
 	ui->actionSave->setIcon( style()->standardIcon( QStyle::SP_DriveFDIcon ) );
+	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 
 	character = StorageCharacter::getInstance();
@@ -67,6 +68,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( ui->actionOpen, SIGNAL( triggered() ), this, SLOT( openCharacter() ) );
 	connect( ui->actionSave, SIGNAL( triggered() ), this, SLOT( saveCharacter() ) );
+	connect( ui->actionExport, SIGNAL( triggered() ), this, SLOT( exportCharacter() ) );
 	connect( ui->actionPrint, SIGNAL( triggered() ), this, SLOT( printCharacter() ) );
 	connect( ui->actionAbout, SIGNAL( triggered() ), this, SLOT( aboutApp() ) );
 }
@@ -287,34 +289,80 @@ void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
 }
 
 
-void MainWindow::printCharacter() {
+void MainWindow::exportCharacter() {
 	// Vorsicht, eine Abkürzung, die ich nur für das Testen verwenden sollte.
 	shortcut();
-	
+
+// 	QString appPath = QApplication::applicationDirPath();
+//
+// 	// Pfad zum Speicherverzeichnis
+// 	QString savePath = appPath + "/" + Config::saveDir();
+//
+// 	// Wenn Unterverzeichnis nicht existiert, erstelle es
+// 	QDir dir( appPath );
+//
+// 	try {
+// 		if ( !dir.mkdir( savePath ) ) {
+// 			if ( !QDir( savePath ).exists() ) {
+// 				throw eDirNotCreated( dir.absolutePath() );
+// 			}
+// 		}
+// 	} catch ( eDirNotCreated &e ) {
+// 		MessageBox::exception( this, e.description(), e.message() );
+// 	}
+//
+// 	QString filePath = QFileDialog::getSaveFileName( this, tr( "Export Character" ), savePath + "/untitled.pdf", tr( "Charactersheet (*.pdf)" ) );
+
+	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled.pdf";
+
 	QPrinter* printer = new QPrinter();
 	QPrintDialog printDialog( printer, this );
 
 	printer->setOutputFormat( QPrinter::PdfFormat );
 	printer->setPaperSize( QPrinter::A4 );
-	printer->setOutputFileName( "print.pdf" );
+	printer->setFullPage( true );
+	printer->setOutputFileName( filePath );
 
-// 	if ( printDialog.exec() == QDialog::Accepted ) {
+	DrawSheet drawSheet( this, printer );
+
+	connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_Trait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_Trait::Type ) ));
+
+	try {
+		drawSheet.print();
+	} catch ( eSpeciesNotExisting &e ) {
+	MessageBox::exception( this, e.message(), e.description() );
+	}
+
+	delete printer;
+}
+
+void MainWindow::printCharacter() {
+	QPrinter* printer = new QPrinter();
+	QPrintDialog printDialog( printer, this );
+
+// 	printer->setOutputFormat( QPrinter::PdfFormat );
+	printer->setPaperSize( QPrinter::A4 );
+// 	printer->setOutputFileName( "print.pdf" );
+
+	if ( printDialog.exec() == QDialog::Accepted ) {
 		DrawSheet drawSheet( this, printer );
+
+		connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_Trait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_Trait::Type ) ));
 
 		try {
 			drawSheet.print();
 		} catch ( eSpeciesNotExisting &e ) {
 			MessageBox::exception( this, e.message(), e.description() );
-		} catch (eTraitsExceedSheetCapacity &e) {
-			MessageBox::warning(this, e.message(), e.description() + tr("\n Printing will be done without the exceeding number of traits."));
-			drawSheet.print( true );
 		}
-// 	}
+	}
 
 	delete printer;
 }
 
 
+void MainWindow::messageEnforcedTraitLimits( cv_Trait::Type type ) {
+	MessageBox::warning( this, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_Trait::toString( type, true ) ) );
+}
 
 
 

@@ -37,6 +37,8 @@
  * \brief Führt das Drucken des Charakters aus.
  *
  * Mit Hilfe dieser Klasse können die Charakterwerte auf Papier gebannt werden.
+ *
+ * \todo Es fehlen noch alle außer Menschen und Changelings. Und bei den Changelings fehlt auch noch Glamour.
  **/
 
 class DrawSheet : public QObject {
@@ -52,16 +54,16 @@ class DrawSheet : public QObject {
 		 **/
 		DrawSheet( QObject* parent, QPrinter* printer );
 
+		/**
+		 * Jetzt wird gezeichnet und gedruckt.
+		 **/
+		void print();
+
 	private:
 		QPrinter* v_printer;
 		StorageCharacter* character;
 		CalcAdvantages* calcAdvantages;
 		
-		/**
-		 * Diese globale Variable legt fest, ob bei einer Überschreitung der Eigenschaftshöchstwerte eine Ausnahme geworfen wird (false/Standardverhalten), oder die Grenzen einfach fest durchgesetzt werden.
-		 **/
-		bool v_enforceTraitLimits;
-
 		/**
 		 * Der horizontale Radius eines Punkts auf dem Charakterbogen.
 		 **/
@@ -91,18 +93,16 @@ class DrawSheet : public QObject {
 
 		/**
 		 * Mit dieser Hilfsfunktion für drawMerits() werden die passenden Merits aus dem Charakter geholt.
+		 *
+		 * Diese globale Variable legt fest, ob bei einer Überschreitung der Eigenschaftshöchstwerte eine Ausnahme geworfen wird (false/Standardverhalten), oder die Grenzen einfach fest durchgesetzt werden.
 		 **/
-		QList< cv_Trait > getMerits(int maxNumber);
+		QList< cv_Trait > getTraits( cv_Trait::Type type, int maxNumber, bool enforceTraitLimits = false /** Wird dieser Schalter auf true gesetzt (standardmäßig ist er false), werden die Grenzen für die maximale Anzahl durchgesetzt, auch wenn dadurch nicht alle Eigenschaften des Charakters auf Papier gebannt werden. */);
 
 	public slots:
 		/**
 		 * Legt den QPrinter fest, mit dem diese Klasse auf den Drucker zeichnen wird.
 		 **/
 		void setPrinter( QPrinter* printer );
-		/**
-		 * Jetzt wird gezeichnet und gedruckt.
-		 **/
-		void print( bool enforceTraitLimits = false /** Wird dieser Schalter auf true gesetzt (standardmäßig ist er false), werden die Grenzen für die maximale Anzahl durchgesetzt, auch wenn dadurch nicht alle Eigenschaften des Charakters auf Papier gebannt werden. */ );
 
 	private slots:
 		/**
@@ -118,8 +118,8 @@ class DrawSheet : public QObject {
 		 * Diese Funktion malt die Fertigkeitspunkte aus und schreibt die Spezialisierungen.
 		 **/
 		void drawSkills( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt des ersten Attributs. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt des ersten Attributs. */,
+							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
 							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Fertigkeiten derselben Kategorie. */,
 							 qreal distanceVCat = 0 /** Vertikaler Abstand zwischen der ersten Fertigkeit einer Kategorie und der ersten Fertigkeit der nächsten Kategorie. */,
 							 qreal textWidth = 0 /** Textbreite, der für die Spezialisierungen zur Verfügung steht. */
@@ -132,8 +132,8 @@ class DrawSheet : public QObject {
 		 * \exception 
 		 **/
 		void drawMerits( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt des ersten Attributs. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt des ersten Attributs. */,
+							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
 							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Fertigkeiten derselben Kategorie. */,
 							 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
 							 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
@@ -176,6 +176,33 @@ class DrawSheet : public QObject {
 							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Punkten. */,
 							 qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der Punktgröße für die Moral. */
 						   );
+		/**
+		 * Zeichne die übernatürlichen Kräfte.
+		 **/
+		void drawPowers( QPainter* painter,
+							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Kräften. */,
+							 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
+							 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
+						   );
+		/**
+		 * Zeichne die übernatürliche Eigenschaft (Wyrd, Gnosis etc.)
+		 **/
+		void drawSuper( QPainter* painter,
+							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+							 qreal distanceH = 0 /** Horizontaler Abstand zwischen den Punkten. */,
+							 qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der hier genutzten Punktgröße. */
+						   );
+
+	signals:
+		/**
+		 * Dieses Signal wird ausgesandt, wann immer ein Eigenschaftstyp nicht auf die vorgegebene Charakterbogen-Matrix paßt.
+		 *
+		 * \warning Aktuell ist das Programm so beschaffen, daß dieses Signal ausgesandt wird der Druck aber fortgesetzt wird, wobei jedoch die überzähligen Eigenschaften ignoriert werden.
+		 **/
+		void enforcedTraitLimits( cv_Trait::Type type /** Dieses Argument teilt mit, bei der Bearbeitung welchen Eigenschaftstyps das Limit überschritten wurde. */ );
 };
 
 #endif

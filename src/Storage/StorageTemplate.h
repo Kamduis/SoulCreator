@@ -119,8 +119,6 @@ class StorageTemplate : public QObject {
 		QList< cv_Trait > traits(cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_Trait::Type), Kategorie (\ref cv_Trait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
-		 *
-		 * \todo Momentan arbeite ich nicht wirklich richtig mit den Flags in dieser Funktion. Ich muß momentan auf jedes einzelne existierende Flag prüfen. Das kann aber nicht der wahre Weg sein.
 		 **/
 		QStringList traitNames( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::EraAll, cv_Trait::AgeFlag age = cv_Trait::AgeAll ) const;
 		/**
@@ -159,7 +157,7 @@ class StorageTemplate : public QObject {
 		/**
 		 * Fügt eine Eigenschaft hinzu.
 		 *
-		 * \todo Überprüfen, daß keine Eigenschaften doppelt an die Liste angehängt werden.
+		 * \warning Es werden nur eigenschaften hinzugefügt, die nicht schon existieren.
 		 **/
 		void appendTrait( cv_Trait trait );
 

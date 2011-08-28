@@ -37,7 +37,7 @@
  *
  * Spezies, Namen etc. des Charakters werden hier dargestellt.
  *
- * \todo Wenn die Spezies verändert wird, muß das Natürlich bei StorageCharacter auch verändert werden.
+ * \todo Bislanbg wird nur die Spezies dargestellt. Name, Organisation etc. fehlen alle noch.
  **/
 class InfoWidget : public QWidget {
 		Q_OBJECT
