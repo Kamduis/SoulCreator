@@ -271,6 +271,17 @@ class eTraitsExceedSheetCapacity : public ePrint {
 };
 
 /**
+ * @brief Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll.
+ *
+ * Aufgrund vorgefertigter Charakterbögen können gewisse Teiel des charkaters nicht in beliebiger Höhe dargestellt werden.
+ */
+class eValueExceedsSheetCapacity : public ePrint {
+	public:
+		eValueExceedsSheetCapacity( int value, QString name );
+};
+
+
+/**
  * @brief Ausnahme, falls Fehler bei einer Eingabe auftreten.
  *
  * Falsche oder Fehlende Eingabe führt zu dieser Ausnahme.

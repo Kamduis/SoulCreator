@@ -93,7 +93,7 @@ class ReadXmlTemplate : public ReadXml {
 		/**
 		 * Arbeitet den Leseprozeß ab.
 		 **/
-		void process(QFile *device);
+		void process( QFile *device );
 		/**
 		 * Die erste Ebene in der Abarbeitung des XML-Baumes. Kontrolliert, ob es sich um eine Zuässige Template-DAtei für dieses Programm handelt und gibt dann die Leseoperation an readSoulCreator() weiter.
 		 *
@@ -101,7 +101,7 @@ class ReadXmlTemplate : public ReadXml {
 		 *
 		 * \todo Momentan wird trotz Argument immer nur die basis-Datei abgearbeitet.
 		 **/
-		void readXml(QFile *device);
+		void readXml( QFile *device );
 		/**
 		 * Die zweite Ebene des XML-Baumes wird einegelesen. Es wird gespeichert, für welche Spezies dieser Zweig vorgesehen ist. Daraufhin wird die Arbeit an readTree() weitergegeben.
 		 *
@@ -114,20 +114,24 @@ class ReadXmlTemplate : public ReadXml {
 		 * - Virtues und Vices werden mit cv_Trait::CategoryNo bewertet (sie sind weder mental noch physisch oder sozial). Sie werden daraufhin mit der Funktion readTraits(cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Categories b) weitergelesen.
 		 * - Alle anderen Eigenschaften werden mit der Funktion readTraits(cv_Species::Species sp, cv_Trait::Type a) weitergelesen.
 		 **/
-		void readTree(cv_Species::Species sp);
+		void readTree( cv_Species::Species sp );
 		/**
 		 * Diese Funktion ließt die Kategorie dieser Eigenschaft aus (mental, physisch oder sozial) und dann wird das Weiterlesen der Funktion readTraits(cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Categories b) überlassen.
 		 **/
-		void readTraits(cv_Species::Species sp, cv_Trait::Type a);
+		void readTraits( cv_Species::Species sp, cv_Trait::Type a );
 		/**
 		 * Die einzelnen Eigenschaften werden ausgelesen. Das tatsächliche Auslesen der Parameter erfolgt aber über die in readTraits(cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Categories b) aufgerufene Funktion readInList(cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Categories b). Diese werden dann in in die Liste traitList eingefügt.
 		 **/
-		void readTraits(cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b);
+		void readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b );
 		/**
 		 * In dieser Funktion werden die einzelnen Parameter einer Eigenschaft im Datentyp cv_Trait gespeichert.
 		 **/
-		cv_Trait storeTraitData(cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b);
+		cv_Trait storeTraitData( cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b );
 // 		void readinList_prerequisites(cv_TraitPrerequisiteAnd &prerequisiteAnd);
+		/**
+		 * Mit dieser Funktion werden die daten über die besondere Eigenschaft der spezies ausgelsen: Eigenschaftsmaxima, Energiespeicher etc.
+		 **/
+		void readSuperTrait( cv_Species::Species sp );
 };
 
 #endif

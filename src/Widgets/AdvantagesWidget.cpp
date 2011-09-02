@@ -23,6 +23,7 @@
  */
 
 #include <QSpinBox>
+#include <QDialog>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -43,7 +44,7 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	layout->setMargin( 0 );
 
 	advantagesLayout = new QGridLayout();
-	advantagesLayout->setColumnMinimumWidth( 1, 0 );
+// 	advantagesLayout->setColumnMinimumWidth( 1, 0 );
 
 	setLayout( layout );
 
@@ -86,7 +87,7 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	QHBoxLayout* layoutHealthDots = new QHBoxLayout();
 
 	dotsHealth = new TraitDots( );
-	dotsHealth->setReadOnly(true);
+	dotsHealth->setReadOnly( true );
 
 	layoutHealthDots->addStretch();
 	layoutHealthDots->addWidget( dotsHealth );
@@ -105,7 +106,7 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 
 	TraitDots* dotsWill = new TraitDots( );
 	dotsWill->setMaximum( Config::superTraitMax );
-	dotsWill->setReadOnly(true);
+	dotsWill->setReadOnly( true );
 
 	layoutWillDots->addStretch();
 	layoutWillDots->addWidget( dotsWill );
@@ -124,6 +125,9 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 
 	dotsSuper = new TraitDots( );
 	dotsSuper->setMaximum( Config::superTraitMax );
+	dotsSuper->setMinimum(Config::superTraitMin);
+	// Damit später der Wert stimmt muß ich irgendeinen Wert != 1 geben, sonst wird kein Signal gesandt.
+	dotsSuper->setValue(9);
 
 	layoutSuperDots->addStretch();
 	layoutSuperDots->addWidget( dotsSuper );
@@ -133,6 +137,29 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 
 	layout->addWidget( labelSuper );
 	layout->addLayout( layoutSuperDots );
+
+
+	labelFuel = new QLabel( tr( "Fuel" ) );
+	labelFuel->setAlignment( Qt::AlignHCenter );
+
+	QHBoxLayout* layoutFuelSquares = new QHBoxLayout();
+
+	squaresFuel = new Squares();
+	squaresFuel->setColumnMax( 10 );
+	squaresFuel->setMaximum( storage->fuelMax( character->species(), character->superTrait() ) );
+
+	fuelPerTurn = new QLabel( tr( "1" ) );
+	fuelPerTurn->setAlignment( Qt::AlignCenter );
+
+	layoutFuelSquares->addWidget( squaresFuel );
+	layoutFuelSquares->addStretch();
+	layoutFuelSquares->addWidget( fuelPerTurn );
+
+	layout->addSpacing( Config::traitCategorySpace );
+
+	layout->addWidget( labelFuel );
+	layout->addLayout( layoutFuelSquares );
+
 
 	layout->addSpacing( Config::traitCategorySpace );
 
@@ -145,18 +172,22 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	connect( calcAdvantages, SIGNAL( speedChanged( int ) ), labelSpeedValue, SLOT( setNum( int ) ) );
 	connect( calcAdvantages, SIGNAL( defenseChanged( int ) ), labelDefenseValue, SLOT( setNum( int ) ) );
 	connect( calcAdvantages, SIGNAL( healthChanged( int ) ), this, SLOT( printHealth( int ) ) );
-	connect( calcAdvantages, SIGNAL( willpowerChanged( int ) ), dotsWill, SLOT( setValue(int)) );
+	connect( calcAdvantages, SIGNAL( willpowerChanged( int ) ), dotsWill, SLOT( setValue( int ) ) );
 // 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( changeSuper( cv_Trait ) ) );
 // 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), this, SLOT( emitSuperChanged( int ) ) );
 // 	connect( this, SIGNAL( superChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), character, SLOT( setSuperTrait( int ) ) );
 	connect( character, SIGNAL( superTraitChanged( int ) ), dotsSuper, SLOT( setValue( int ) ) );
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideSuper( cv_Species::SpeciesFlag ) ) );
+	connect( character, SIGNAL( superTraitChanged( int ) ), this, SLOT( setFuelMaximum(int)) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( setFuelMaximum(cv_Species::SpeciesFlag)) );
 
 	dotsSuper->setValue( Config::superTraitDefaultValue );
 }
 
 AdvantagesWidget::~AdvantagesWidget() {
+	delete fuelPerTurn;
+	delete squaresFuel;
 	delete dotsSuper;
 	delete labelSuper;
 	delete dotsHealth;
@@ -176,18 +207,46 @@ void AdvantagesWidget::hideSuper( cv_Species::SpeciesFlag species ) {
 	if ( species == cv_Species::Human ) {
 		labelSuper->setHidden( true );
 		dotsSuper->setHidden( true );
+
+		labelFuel->setHidden( true );
+		squaresFuel->setHidden( true );
+		fuelPerTurn->setHidden(true);
 	} else {
 		labelSuper->setHidden( false );
 		dotsSuper->setHidden( false );
 
+		labelFuel->setHidden( false );
+		squaresFuel->setHidden( false );
+		fuelPerTurn->setHidden(false);
+
 		for ( int i = 0; i < storage->species().count(); i++ ) {
 			if ( cv_Species::toSpecies( storage->species().at( i ).name ) == species ) {
 				labelSuper->setText( storage->species().at( i ).supertrait );
+				labelFuel->setText( storage->species().at( i ).fuel );
 			}
 		}
 
 	}
 }
+
+void AdvantagesWidget::setFuelMaximum( cv_Species::SpeciesFlag species ) {
+	int maximum = storage->fuelMax( species, character->superTrait() );
+	squaresFuel->setMaximum(maximum);
+
+	int perTurn = storage->fuelPerTurn( species, character->superTrait() );
+	fuelPerTurn->setText(tr("%1/Turn").arg(perTurn));
+}
+
+void AdvantagesWidget::setFuelMaximum( int value ) {
+	int maximum = storage->fuelMax( character->species(), value );
+	squaresFuel->setMaximum(maximum);
+
+	int perTurn = storage->fuelPerTurn( character->species(), value );
+	fuelPerTurn->setText(tr("%1/Turn").arg(perTurn));
+}
+
+
+
 
 // void AdvantagesWidget::changeSuper( cv_Trait trait ) {
 // 	if ( trait.type == cv_Trait::Super ) {

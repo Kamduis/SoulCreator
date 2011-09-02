@@ -149,9 +149,14 @@ ePrint::ePrint() : Exception() {
 }
 
 eTraitsExceedSheetCapacity::eTraitsExceedSheetCapacity( cv_Trait::Type type, int maxNumber ) : ePrint() {
-	setMessage( QObject::tr( "Too many %1 to print on character sheet." ).arg( cv_Trait::toString( type, true ) ));
-				setDescription( QObject::tr( "Trying to print too many %1. The character sheet hat only room for %2" ).arg( cv_Trait::toString( type, true ) ).arg( maxNumber ) );
-			}
+	setMessage( QObject::tr( "Too many %1 to print on character sheet." ).arg( cv_Trait::toString( type, true ) ) );
+	setDescription( QObject::tr( "Trying to print too many %1. The character sheet hat only room for %2" ).arg( cv_Trait::toString( type, true ) ).arg( maxNumber ) );
+}
+
+eValueExceedsSheetCapacity::eValueExceedsSheetCapacity( int value, QString name ) : ePrint() {
+	setMessage( QObject::tr( "A value exceeds the capacity of the Charactersheet." ) );
+	setDescription( QObject::tr( "The character sheet has no room for %1 %2" ).arg( QString::number( value ) ).arg( name ) );
+}
 
 
 eEntry::eEntry() : Exception() {

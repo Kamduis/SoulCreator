@@ -48,7 +48,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->setupUi( this );
 
 	this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
-	this->setWindowIcon( QIcon( ":/images/images/WoD.png" ) );
+	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
 	// Hübsche Symbole
 	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
@@ -325,12 +325,12 @@ void MainWindow::exportCharacter() {
 
 	DrawSheet drawSheet( this, printer );
 
-	connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_Trait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_Trait::Type ) ));
+	connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_Trait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_Trait::Type ) ) );
 
 	try {
 		drawSheet.print();
 	} catch ( eSpeciesNotExisting &e ) {
-	MessageBox::exception( this, e.message(), e.description() );
+		MessageBox::exception( this, e.message(), e.description() );
 	}
 
 	delete printer;
@@ -347,7 +347,7 @@ void MainWindow::printCharacter() {
 	if ( printDialog.exec() == QDialog::Accepted ) {
 		DrawSheet drawSheet( this, printer );
 
-		connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_Trait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_Trait::Type ) ));
+		connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_Trait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_Trait::Type ) ) );
 
 		try {
 			drawSheet.print();

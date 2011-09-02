@@ -59,6 +59,8 @@ QString cv_Trait::toXmlString( cv_Trait::Type type ) {
 			return "Skill";
 		case cv_Trait::Merit:
 			return "Merit";
+		case cv_Trait::Super:
+			return "Super";
 		case cv_Trait::Power:
 			return "Power";
 		default:
@@ -108,6 +110,8 @@ QString cv_Trait::toString( cv_Trait::Type type, bool plural ) {
 				return QObject::tr( "Skills" );
 			case cv_Trait::Merit:
 				return QObject::tr( "Merits" );
+			case cv_Trait::Super:
+				return QObject::tr( "Supertraits" );
 			case cv_Trait::Power:
 				return QObject::tr( "Powers" );
 			default:
@@ -128,6 +132,8 @@ QString cv_Trait::toString( cv_Trait::Type type, bool plural ) {
 				return QObject::tr( "Skill" );
 			case cv_Trait::Merit:
 				return QObject::tr( "Merit" );
+			case cv_Trait::Super:
+				return QObject::tr( "Supertrait" );
 			case cv_Trait::Power:
 				return QObject::tr( "Power" );
 			default:
@@ -199,8 +205,8 @@ cv_Trait::Type cv_Trait::toType( QString str ) {
 		return cv_Trait::Skill;
 	else if ( str == "Merit" )
 		return cv_Trait::Merit;
-	else if ( str == "Morale" )
-		return cv_Trait::Morale;
+// 	else if ( str == "Morale" )
+// 		return cv_Trait::Morale;
 	else if ( str == "Super" )
 		return cv_Trait::Super;
 	else if ( str == "Power" )

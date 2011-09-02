@@ -1,11 +1,20 @@
 <RCC>
-  <qresource prefix="images">
+  <qresource prefix="icons">
     <file>images/WoD.png</file>
   </qresource>
-  <qresource prefix="characterSheet">
-    <file>images/Charactersheet-Human.png</file>
-    <file>images/Charactersheet-Changeling-1.png</file>
-    <file>images/Charactersheet-Mage-1.png</file>
-    <file>images/Charactersheet-Werewolf-1.png</file>
+  <qresource prefix="template">
+    <file>xml/base.xml</file>
+    <file>xml/changeling.xml</file>
+    <file>xml/human.xml</file>
+    <file>xml/mage.xml</file>
+    <file>xml/vampire.xml</file>
+    <file>xml/werewolf.xml</file>
+  </qresource>
+  <qresource prefix="characterSheets">
+    <file>images/Charactersheet-Changeling-1.jpg</file>
+    <file>images/Charactersheet-Human.jpg</file>
+    <file>images/Charactersheet-Mage-1.jpg</file>
+    <file>images/Charactersheet-Werewolf-1.jpg</file>
+    <file>images/Charactersheet-Changeling-1.jpg</file>
   </qresource>
 </RCC>

@@ -98,7 +98,7 @@ class cv_Trait {
 			Attribute,
 			Skill,
 			Merit,
-			Morale,
+// 			Morale,
 			Super,
 			Power
 		};

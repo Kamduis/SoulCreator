@@ -34,6 +34,7 @@ const int Config::moralityTraitMax = 10;
 const int Config::derangementMoralityTraitMax = 7;
 const int Config::moralityTraitDefaultValue = 7;
 const int Config::willpowerMax = 10;
+const int Config::superTraitMin = 1;
 const int Config::superTraitMax = 10;
 const int Config::superTraitDefaultValue = 1;
 

@@ -30,6 +30,7 @@
 #include <QLabel>
 
 #include "TraitDots.h"
+#include "Squares.h"
 #include "MoralityWidget.h"
 #include "../Storage/StorageTemplate.h"
 #include "../Storage/StorageCharacter.h"
@@ -72,14 +73,19 @@ class AdvantagesWidget : public QWidget {
 		MoralityWidget* moralityWidget;
 
 		QLabel* labelSuper;
+		QLabel* labelFuel;
 		TraitDots* dotsHealth;
 		TraitDots* dotsSuper;
+		Squares* squaresFuel;
+		QLabel* fuelPerTurn;
 
 	public slots:
 
 	private slots:
 		void printHealth(int value);
 		void hideSuper(cv_Species::SpeciesFlag species);
+		void setFuelMaximum(cv_Species::SpeciesFlag species);
+		void setFuelMaximum(int value);
 // 		void changeSuper(cv_Trait trait);
 // 		void emitSuperChanged(int value);
 

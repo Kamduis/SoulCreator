@@ -24,13 +24,15 @@
 
 #include <QDebug>
 
+#include "../Config/Config.h"
 #include "../Exceptions/Exception.h"
 
 #include "StorageTemplate.h"
 
 
-QList< cv_Trait > StorageTemplate::v_traits;
 QList< cv_Species > StorageTemplate::v_species;
+QList< cv_Trait > StorageTemplate::v_traits;
+QList< cv_SuperEffect > StorageTemplate::v_superEffects;
 
 
 StorageTemplate::StorageTemplate( QObject *parent ) : QObject( parent ) {
@@ -40,7 +42,7 @@ StorageTemplate::~StorageTemplate() {
 }
 
 void StorageTemplate::sortTraits() {
-	qSort(v_traits);
+	qSort( v_traits );
 }
 
 
@@ -251,6 +253,45 @@ void StorageTemplate::appendTrait( cv_Trait trait ) {
 }
 
 
+void StorageTemplate::appendSuperEffect( cv_SuperEffect effect ) {
+	v_superEffects.append( effect );
+}
+
+int StorageTemplate::traitMax( cv_Species::Species species, int value ) {
+	if ( species == cv_Species::Human ) {
+		return Config::traitMax;
+	} else {
+		for ( int i = 0; i < v_superEffects.count(); i++ ) {
+			if ( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
+				return v_superEffects.at( i ).traitMax;
+			}
+		}
+	}
+}
+
+int StorageTemplate::fuelMax( cv_Species::Species species, int value ) {
+	if ( species == cv_Species::Human ) {
+		return 0;
+	} else {
+		for ( int i = 0; i < v_superEffects.count(); i++ ) {
+			if ( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
+				return v_superEffects.at( i ).fuelMax;
+			}
+		}
+	}
+}
+
+int StorageTemplate::fuelPerTurn( cv_Species::Species species, int value ) {
+	if ( species == cv_Species::Human ) {
+		return 0;
+	} else {
+		for ( int i = 0; i < v_superEffects.count(); i++ ) {
+			if ( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
+				return v_superEffects.at( i ).fuelPerTurn;
+			}
+		}
+	}
+}
 
 
 

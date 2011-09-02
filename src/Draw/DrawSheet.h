@@ -63,7 +63,7 @@ class DrawSheet : public QObject {
 		QPrinter* v_printer;
 		StorageCharacter* character;
 		CalcAdvantages* calcAdvantages;
-		
+
 		/**
 		 * Der horizontale Radius eines Punkts auf dem Charakterbogen.
 		 **/
@@ -96,7 +96,7 @@ class DrawSheet : public QObject {
 		 *
 		 * Diese globale Variable legt fest, ob bei einer Überschreitung der Eigenschaftshöchstwerte eine Ausnahme geworfen wird (false/Standardverhalten), oder die Grenzen einfach fest durchgesetzt werden.
 		 **/
-		QList< cv_Trait > getTraits( cv_Trait::Type type, int maxNumber, bool enforceTraitLimits = false /** Wird dieser Schalter auf true gesetzt (standardmäßig ist er false), werden die Grenzen für die maximale Anzahl durchgesetzt, auch wenn dadurch nicht alle Eigenschaften des Charakters auf Papier gebannt werden. */);
+		QList< cv_Trait > getTraits( cv_Trait::Type type, int maxNumber, bool enforceTraitLimits = false /** Wird dieser Schalter auf true gesetzt (standardmäßig ist er false), werden die Grenzen für die maximale Anzahl durchgesetzt, auch wenn dadurch nicht alle Eigenschaften des Charakters auf Papier gebannt werden. */ );
 
 	public slots:
 		/**
@@ -118,26 +118,26 @@ class DrawSheet : public QObject {
 		 * Diese Funktion malt die Fertigkeitspunkte aus und schreibt die Spezialisierungen.
 		 **/
 		void drawSkills( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
-							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Fertigkeiten derselben Kategorie. */,
-							 qreal distanceVCat = 0 /** Vertikaler Abstand zwischen der ersten Fertigkeit einer Kategorie und der ersten Fertigkeit der nächsten Kategorie. */,
-							 qreal textWidth = 0 /** Textbreite, der für die Spezialisierungen zur Verfügung steht. */
-						   );
+						 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+						 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+						 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Fertigkeiten derselben Kategorie. */,
+						 qreal distanceVCat = 0 /** Vertikaler Abstand zwischen der ersten Fertigkeit einer Kategorie und der ersten Fertigkeit der nächsten Kategorie. */,
+						 qreal textWidth = 0 /** Textbreite, der für die Spezialisierungen zur Verfügung steht. */
+					   );
 		/**
 		 * Diese Funktion malt die Fertigkeitspunkte aus und schreibt die Spezialisierungen.
 		 *
 		 * \warning Aufgrund der vorgefertigten Charakterbögen, können nur eine begrenzte Anzahl von Meritzs auf Papier gebannt werden.
 		 *
-		 * \exception 
+		 * \exception
 		 **/
 		void drawMerits( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
-							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Fertigkeiten derselben Kategorie. */,
-							 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
-							 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
-						   );
+						 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+						 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+						 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Fertigkeiten derselben Kategorie. */,
+						 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
+						 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
+					   );
 		/**
 		 * Zeichne die berechneten Eigenschaften.
 		 **/
@@ -151,50 +151,67 @@ class DrawSheet : public QObject {
 		 * Zeichne die Willenskraft
 		 **/
 		void drawHealth( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
-							 qreal distanceH = 0 /** Horizontaler Abstand zwischen den Punkten. */,
-							 qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der Punktgröße für die Gesundheit. */
-						   );
+						 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+						 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+						 qreal distanceH = 0 /** Horizontaler Abstand zwischen den Punkten. */,
+						 qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der Punktgröße für die Gesundheit. */
+					   );
 		/**
 		 * Zeichne die Willenskraft
 		 **/
 		void drawWillpower( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
-							 qreal distanceH = 0 /** Horizontaler Abstand zwischen den Punkten. */,
-							 qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der Punktgröße für die Willenskraft. */
-						   );
+							qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+							qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+							qreal distanceH = 0 /** Horizontaler Abstand zwischen den Punkten. */,
+							qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der Punktgröße für die Willenskraft. */
+						  );
 		/**
 		 * Zeichne die Moral.
 		 *
 		 * \note Man bedenke, daß der \emph{erste} Punkte bei der Moral der unterste Punkt ist.
 		 **/
 		void drawMorality( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
-							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Punkten. */,
-							 qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der Punktgröße für die Moral. */
-						   );
+						   qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+						   qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+						   qreal distanceV = 0 /** Vertikaler Abstand zwischen den Punkten. */,
+						   qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der Punktgröße für die Moral. */
+						 );
 		/**
 		 * Zeichne die übernatürlichen Kräfte.
 		 **/
 		void drawPowers( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
-							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Kräften. */,
-							 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
-							 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
-						   );
+						 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+						 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
+						 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Kräften. */,
+						 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
+						 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
+					   );
 		/**
 		 * Zeichne die übernatürliche Eigenschaft (Wyrd, Gnosis etc.)
 		 **/
 		void drawSuper( QPainter* painter,
-							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
-							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
-							 qreal distanceH = 0 /** Horizontaler Abstand zwischen den Punkten. */,
-							 qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der hier genutzten Punktgröße. */
-						   );
+						qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+						qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
+						qreal distanceH = 0 /** Horizontaler Abstand zwischen den Punkten. */,
+						qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der hier genutzten Punktgröße. */
+					  );
+		/**
+		 * Streiche die überzähligen Kästchen der Energie.
+		 **/
+		void drawFuelMax( QPainter* painter,
+						  qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und rechter Kante des letzten Kästchens. */,
+						  qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und Oberkante der zweiten Kästchenzeile. */,
+						  qreal distanceH = 0 /** Der Abstand zwischen zwei Kästchen. */,
+						  qreal widthpPerSquare = 0 /** Die Breite zwischen dem Anfang eines Kästchens zum Anfang des nächsten. */
+						);
+		/**
+		 * Trage die maximale rate ein, mit welcher der Charakter seine Energie ausgeben kann.
+		 **/
+		void drawFuelPerTurn( QPainter* painter,
+							  qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und Buchstabe. */,
+							  qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und Buchstabe. */,
+							  qreal distanceH = 0 /** Horizontzale Breite des Textes. */
+							);
 
 	signals:
 		/**

@@ -1,0 +1,979 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SoulCreator version="0.3">
+	<traits species="SpeciesAll">
+		<Virtue>
+			<trait name="Charity" age="Adult"/>
+			<trait name="Faith" age="Adult"/>
+			<trait name="Fortitude" age="Adult"/>
+			<trait name="Hope" age="Adult"/>
+			<trait name="Justice" age="Adult"/>
+			<trait name="Prudence" age="Adult"/>
+			<trait name="Temperance" age="Adult"/>
+			<trait name="Brave" age="Kid"/>
+			<trait name="Calm" age="Kid"/>
+			<trait name="Creative" age="Kid"/>
+			<trait name="Dependable" age="Kid"/>
+			<trait name="Fair" age="Kid"/>
+			<trait name="Friendly" age="Kid"/>
+			<trait name="Generous" age="Kid"/>
+			<trait name="Honest" age="Kid"/>
+			<trait name="Kind" age="Kid"/>
+			<trait name="Optimistic" age="Kid"/>
+		</Virtue>
+		<Vice>
+			<trait name="Envy" age="Adult"/>
+			<trait name="Gluttony" age="Adult"/>
+			<trait name="Greed" age="Adult"/>
+			<trait name="Lust" age="Adult"/>
+			<trait name="Pride" age="Adult"/>
+			<trait name="Sloth" age="Adult"/>
+			<trait name="Wrath" age="Adult"/>
+			<trait name="Brash" age="Kid"/>
+			<trait name="Cowardly" age="Kid"/>
+			<trait name="Cruel" age="Kid"/>
+			<trait name="Dishonest" age="Kid"/>
+			<trait name="Dull" age="Kid"/>
+			<trait name="Egoistical" age="Kid"/>
+			<trait name="Greedy" age="Kid"/>
+			<trait name="Hyperactive" age="Kid"/>
+			<trait name="Irresponsible" age="Kid"/>
+			<trait name="Violent" age="Kid"/>
+		</Vice>
+		<Attribute>
+			<Mental>
+				<trait name="Intelligence"/>
+				<trait name="Wits"/>
+				<trait name="Resolve"/>
+			</Mental>
+			<Physical>
+				<trait name="Strength"/>
+				<trait name="Dexterity"/>
+				<trait name="Stamina"/>
+			</Physical>
+			<Social>
+				<trait name="Presence"/>
+				<trait name="Manipulation"/>
+				<trait name="Composure"/>
+			</Social>
+		</Attribute>
+		<Skill>
+			<Mental>
+				<trait name="Academics" age="Adult">
+					<specialty>Anthropology</specialty>
+					<specialty>Architecture</specialty>
+					<specialty>Art</specialty>
+					<specialty>Criminology</specialty>
+					<specialty>English</specialty>
+					<specialty>Finance</specialty>
+					<specialty>Folklore</specialty>
+					<specialty>History</specialty>
+					<specialty>Law</specialty>
+					<specialty>Mathematics</specialty>
+					<specialty>Military Theory</specialty>
+					<specialty>Religion</specialty>
+					<specialty>Research</specialty>
+				</trait>
+				<trait name="Computer" era="Modern">
+					<specialty>Artificial Intelligence</specialty>
+					<specialty>Data Retrieval</specialty>
+					<specialty>Gaming</specialty>
+					<specialty>Graphics</specialty>
+					<specialty>Hacking</specialty>
+					<specialty>Internet</specialty>
+					<specialty>Music</specialty>
+					<specialty>Networking</specialty>
+					<specialty>Programming</specialty>
+					<specialty>Video</specialty>
+				</trait>
+				<trait name="Crafts">
+					<specialty>Automobiles</specialty>
+					<specialty>Aircraft</specialty>
+					<specialty>Cooking</specialty>
+					<specialty>Clothing</specialty>
+					<specialty>Demolitions</specialty>
+					<specialty>Explosives</specialty>
+					<specialty>Forging</specialty>
+					<specialty>Jury-Rigging</specialty>
+					<specialty>Knitting</specialty>
+					<specialty>Sculpting</specialty>
+					<specialty>Sewing</specialty>
+					<specialty>Smithing</specialty>
+					<specialty>Spinning</specialty>
+					<specialty>Woodworking</specialty>
+				</trait>
+				<trait name="Investigation">
+					<specialty>Artifacts</specialty>
+					<specialty>Autopsy</specialty>
+					<specialty>Crime Scenes</specialty>
+					<specialty>Cryptography</specialty>
+					<specialty>Dreams</specialty>
+					<specialty>Eavesdropping</specialty>
+					<specialty>Little Details</specialty>
+					<specialty>Puzzles</specialty>
+					<specialty>Research</specialty>
+					<specialty>Riddles</specialty>
+					<specialty>Scientific Experiments</specialty>
+					<specialty>Searching</specialty>
+					<specialty>Surveillance</specialty>
+					<specialty>Taste</specialty>
+				</trait>
+				<trait name="Medicine">
+					<specialty>Amputation</specialty>
+					<specialty>Emergency Care</specialty>
+					<specialty>First Aid</specialty>
+					<specialty>Human Biology</specialty>
+					<specialty>Illness</specialty>
+					<specialty>Pathology</specialty>
+					<specialty>Pharmaceuticals</specialty>
+					<specialty>Physical Therapy</specialty>
+					<specialty>Poisons</specialty>
+					<specialty>Surgery</specialty>
+					<specialty>Torture (to inflict pain)</specialty>
+				</trait>
+				<trait name="Occult">
+					<specialty>Cultural Beliefs</specialty>
+					<specialty>Curses</specialty>
+					<specialty>Exorcism</specialty>
+					<specialty>Fairy Tales</specialty>
+					<specialty>Ghosts</specialty>
+					<specialty>Local Legends</specialty>
+					<specialty>Magic</specialty>
+					<specialty>Monsters</specialty>
+					<specialty>Religious Rituals</specialty>
+					<specialty>Spirit Wilds</specialty>
+					<specialty>Superstitions</specialty>
+					<specialty>Witchcraft</specialty>
+					<specialty>Urban Legends</specialty>
+					<specialty>Voodoo</specialty>
+					<specialty>Changelings</specialty>
+					<specialty>Mages</specialty>
+					<specialty>Vampires</specialty>
+					<specialty>Werewolves</specialty>
+				</trait>
+				<trait name="Politics">
+					<specialty>Bribery</specialty>
+					<specialty>City Bureaucracy</specialty>
+					<specialty>Cliques</specialty>
+					<specialty>Elections</specialty>
+					<specialty>Federal</specialty>
+					<specialty>Gangs</specialty>
+					<specialty>High School</specialty>
+					<specialty>Local</specialty>
+					<specialty>Personal Rivalries</specialty>
+					<specialty>School Administration</specialty>
+					<specialty>State</specialty>
+					<specialty>Scandals</specialty>
+				</trait>
+				<trait name="Religion" era="Antique">
+					<specialty>Dogma (Christian)</specialty>
+					<specialty>Dogma (Islamic)</specialty>
+					<specialty>Dogma (Jewish)</specialty>
+					<specialty>Omens</specialty>
+					<specialty>Pantheon (Egyptian)</specialty>
+					<specialty>Pantheon (Greek)</specialty>
+					<specialty>Pantheon (Nordic)</specialty>
+					<specialty>Pantheon (Roman)</specialty>
+					<specialty>Rituals</specialty>
+				</trait>
+				<trait name="Science" era="Modern">
+					<specialty>Biology</specialty>
+					<specialty>Chemistry</specialty>
+					<specialty>Geology</specialty>
+					<specialty>Hypnotherapy</specialty>
+					<specialty>Metallurgy</specialty>
+					<specialty>Physics</specialty>
+				</trait>
+				<trait name="Study" age="Kid">
+					<specialty>Art</specialty>
+					<specialty>Biology</specialty>
+					<specialty>Chemistry</specialty>
+					<specialty>English</specialty>
+					<specialty>Experimentation</specialty>
+					<specialty>Geology</specialty>
+					<specialty>History</specialty>
+					<specialty>Physics</specialty>
+					<specialty>Research</specialty>
+				</trait>
+				<trait name="Warfare" era="Antique">
+					<specialty>Ambushes</specialty>
+					<specialty>Barbarians</specialty>
+					<specialty>Fields of Fire</specialty>
+					<specialty>Troop Movements</specialty>
+					<specialty>Supply Lines</specialty>
+					<specialty>Terrain</specialty>
+					<specialty>Chess</specialty>
+				</trait>
+			</Mental>
+			<Physical>
+				<trait name="Archery" era="Antique">
+					<specialty>Long Bow</specialty>
+					<specialty>Long Shot</specialty>
+					<specialty>Short Bow</specialty>
+					<specialty>Sling</specialty>
+					<specialty>Trick Shot</specialty>
+					<specialty>Crossbow</specialty>
+				</trait>
+				<trait name="Athletics">
+					<specialty>Acrobatics</specialty>
+					<specialty>Climbing</specialty>
+					<specialty>Dance</specialty>
+					<specialty>Endurance</specialty>
+					<specialty>Kayaking</specialty>
+					<specialty>Long-Distance Running</specialty>
+					<specialty>Sprinting</specialty>
+					<specialty>Swimming</specialty>
+					<specialty>Throwing</specialty>
+				</trait>
+				<trait name="Brawl">
+					<specialty>Biting</specialty>
+					<specialty>Blocking</specialty>
+					<specialty>Boxing</specialty>
+					<specialty>Claws</specialty>
+					<specialty>Crush</specialty>
+					<specialty>Dirty Tricks</specialty>
+					<specialty>Grappling</specialty>
+					<specialty>Head-Butt</specialty>
+					<specialty>Lashing Out</specialty>
+					<specialty>Karate</specialty>
+					<specialty>Kung-Fu</specialty>
+					<specialty>Throws</specialty>
+				</trait>
+				<trait name="Drive" era="Modern">
+					<specialty>Big Cars</specialty>
+					<specialty>High-Performance Cars</specialty>
+					<specialty>Motorcycles</specialty>
+					<specialty>Off-Road</specialty>
+					<specialty>Pursuit</specialty>
+					<specialty>Tails</specialty>
+					<specialty>Stunts</specialty>
+				</trait>
+				<trait name="Firearms" era="Modern">
+					<specialty>Assault rifles</specialty>
+					<specialty>Autofire</specialty>
+					<specialty>Close Range</specialty>
+					<specialty>Pistols</specialty>
+					<specialty>Revolvers</specialty>
+					<specialty>Rifles</specialty>
+					<specialty>Sniping</specialty>
+					<specialty>Submachine Guns</specialty>
+					<specialty>Target Shooting</specialty>
+					<specialty>Trick Shot</specialty>
+				</trait>
+				<trait name="Larceny">
+					<specialty>Alarm Systems</specialty>
+					<specialty>Concealing Stolen Goods</specialty>
+					<specialty>Lockpicking</specialty>
+					<specialty>Pickpocketing</specialty>
+					<specialty>Security Systems</specialty>
+					<specialty>Safecracking</specialty>
+					<specialty>Shoplifting</specialty>
+					<specialty>Sleight of Hand</specialty>
+				</trait>
+				<trait name="Ride" era="Antique">
+					<specialty>Chariot</specialty>
+					<specialty>Dangerous Conditions</specialty>
+					<specialty>Pursuit</specialty>
+					<specialty>Maintaining Speed</specialty>
+					<specialty>Quick Start</specialty>
+					<specialty>Stunts</specialty>
+				</trait>
+				<trait name="Stealth">
+					<specialty>Camouflage</specialty>
+					<specialty>Crowds</specialty>
+					<specialty>Hiding</specialty>
+					<specialty>Lurking</specialty>
+					<specialty>Moving Like a Cat</specialty>
+					<specialty>Darkness</specialty>
+					<specialty>Forest</specialty>
+					<specialty>Remaining Still</specialty>
+					<specialty>Shadowing</specialty>
+					<specialty>Shadows</specialty>
+					<specialty>Silent Running</specialty>
+					<specialty>Spying</specialty>
+					<specialty>Staying Quiet</specialty>
+				</trait>
+				<trait name="Survival">
+					<specialty>Foraging</specialty>
+					<specialty>Herbology</specialty>
+					<specialty>Hunting (Specific Kind of Animal)</specialty>
+					<specialty>Navigation</specialty>
+					<specialty>Meteorology</specialty>
+					<specialty>Shelter</specialty>
+					<specialty>Spirit Wilds</specialty>
+					<specialty>Streets</specialty>
+					<specialty>Urban Scavenging</specialty>
+					<specialty>Wilderness Scavenging</specialty>
+					<specialty>Weather</specialty>
+				</trait>
+				<trait name="Weaponry">
+					<specialty>Blunt Weapons</specialty>
+					<specialty>Flexible Weapons</specialty>
+					<specialty>Improvised Weapons</specialty>
+					<specialty>Knives</specialty>
+					<specialty>Polearms</specialty>
+					<specialty>Swords</specialty>
+				</trait>
+			</Physical>
+			<Social>
+				<trait name="Animal Ken">
+					<specialty>Animal Needs</specialty>
+					<specialty>Birds</specialty>
+					<specialty>Cats</specialty>
+					<specialty>Deer</specialty>
+					<specialty>Dogs</specialty>
+					<specialty>Sensing Imminent Attack</specialty>
+					<specialty>Training</specialty>
+					<specialty>Wolves</specialty>
+				</trait>
+				<trait name="Empathy">
+					<specialty>Emotion</specialty>
+					<specialty>Body Language</specialty>
+					<specialty>Boyfriends</specialty>
+					<specialty>Family</specialty>
+					<specialty>Lies</specialty>
+					<specialty>Motives</specialty>
+					<specialty>Personalities</specialty>
+				</trait>
+				<trait name="Expression">
+					<specialty>Classical Dance</specialty>
+					<specialty>Drama</specialty>
+					<specialty>Poetry</specialty>
+					<specialty>Exposés</specialty>
+					<specialty>Jokes</specialty>
+					<specialty>Music</specialty>
+					<specialty>Musical Instrument</specialty>
+					<specialty>Newspaper Articles</specialty>
+					<specialty>Oration</specialty>
+					<specialty>Preaching</specialty>
+					<specialty>Speeches</specialty>
+					<specialty>Storytelling</specialty>
+					<specialty>Theater</specialty>
+				</trait>
+				<trait name="Intimidation">
+					<specialty>Authority</specialty>
+					<specialty>Blackmail</specialty>
+					<specialty>Bluster</specialty>
+					<specialty>Eerie Presence</specialty>
+					<specialty>Loud</specialty>
+					<specialty>Physical Threats</specialty>
+					<specialty>Screaming</specialty>
+					<specialty>Stare-Downs</specialty>
+					<specialty>Torture (to gather information)</specialty>
+					<specialty>Veiled Threats</specialty>
+				</trait>
+				<trait name="Persuasion" age="Adult">
+					<specialty>Diplomacy</specialty>
+					<specialty>Fast-Talking</specialty>
+					<specialty>Inspiring Troops</specialty>
+					<specialty>Lulling</specialty>
+					<specialty>Money</specialty>
+					<specialty>Motivational Speeches</specialty>
+					<specialty>Sales Pitches</specialty>
+					<specialty>Seduction</specialty>
+				</trait>
+				<trait name="Socialize">
+					<specialty>Bar Hopping</specialty>
+					<specialty>Dress Balls</specialty>
+					<specialty>Etiquette</specialty>
+					<specialty>Formal Events</specialty>
+					<specialty>Frat Parties</specialty>
+					<specialty>Lower Class</specialty>
+					<specialty>Orgies</specialty>
+					<specialty>Partying</specialty>
+					<specialty>Sexual Techniques</specialty>
+					<specialty>State Dinners</specialty>
+				</trait>
+				<trait name="Streetwise">
+					<specialty>Avoiding Trouble</specialty>
+					<specialty>Black Market</specialty>
+					<specialty>Docks</specialty>
+					<specialty>Gangs</specialty>
+					<specialty>Rumors</specialty>
+					<specialty>Slave Dealing</specialty>
+					<specialty>Subway Net</specialty>
+					<specialty>Undercover Operations</specialty>
+				</trait>
+				<trait name="Subterfuge">
+					<specialty>Appear Innocent</specialty>
+					<specialty>Con Jobs</specialty>
+					<specialty>Disguises</specialty>
+					<specialty>Hiding Emotions</specialty>
+					<specialty>Lying</specialty>
+					<specialty>Misdirection</specialty>
+				</trait>
+			</Social>
+		</Skill>
+		<Merit>
+			<Mental>
+				<trait name="Danger Sense" creationOnly="true" source="WoD Core">
+					<value>2</value>
+					<description>You gain a +2 modifier on reflexive Wits + Composure rolls to detect an impending ambush.</description>
+				</trait>
+				<trait name="Eidetic Memory" creationOnly="true" source="WoD Core">
+					<value>2</value>
+					<description>You have a near-photographic memory, being able to recall vast amounts of observed detail with astonishing accuracy.</description>
+				</trait>
+				<trait name="Encyclopedic Knowledge" source="WoD Core">
+					<value>4</value>
+				</trait>
+				<trait name="EOD" source="WoD Armory">
+					<value>2</value>
+					<prerequisite>(Wits > 2 OR Dexterity > 2) AND Crafts.Demolitions > 2</prerequisite>
+				</trait>
+				<trait name="Holistic Awareness" source="WoD Core">
+					<value>3</value>
+				</trait>
+				<trait name="Hypnotic Voice" source="WoD Second Sight">
+					<value>4</value>
+					<prerequisite>Persuasion > 2 OR Science.Hypnotherapy > 2</prerequisite>
+				</trait>
+				<trait name="Language" source="WoD Core" custom="true">
+					<value>1</value>
+					<value>2</value>
+				</trait>
+				<trait name="Lucid Dreaming" source="Changeling Core">
+					<value>2</value>
+					<prerequisite>Resolve > 2</prerequisite>
+				</trait>
+				<trait name="Meditative Mind" source="WoD Core">
+					<value>1</value>
+				</trait>
+				<trait name="Technophile" source="WoD Armory">
+					<value>1</value>
+					<value>2</value>
+				</trait>
+				<trait name="Territorial Familiarity" source="Werewolf Blood of the Wolf">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+				</trait>
+			</Mental>
+			<Physical>
+				<trait name="Ambidextrous" source="WoD Core">
+					<value>3</value>
+				</trait>
+				<trait name="Armored Fighting" source="WoD Armory Reloaded">
+					<value>2</value>
+					<value>4</value>
+					<prerequisite>Strength > 1 AND Stamina > 2</prerequisite>
+				</trait>
+				<trait name="Athletics Dodge" source="WoD Dogs of War">
+					<value>1</value>
+					<prerequisite>Dexterity > 1 AND Athletics > 0</prerequisite>
+				</trait>
+				<trait name="Brawling Dodge" source="WoD Core">
+					<value>1</value>
+					<prerequisite>Strength > 1 AND Brawl > 0</prerequisite>
+				</trait>
+				<trait name="Direction Sense" source="WoD Core">
+					<value>1</value>
+				</trait>
+				<trait name="Disarm" source="WoD Core">
+					<value>2</value>
+					<prerequisite>Dexterity > 2 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Entering Strike" source="WoD Armory Reloaded">
+					<value>2</value>
+					<prerequisite>Dexterity > 2 AND Brawl > 2</prerequisite>
+				</trait>
+				<trait name="Equipped Grappling" source="WoD Armory Reloaded">
+					<value>2</value>
+					<prerequisite>Dexterity > 2 AND Brawl > 1 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Fast Reflexes" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<prerequisite>Dexterity > 2</prerequisite>
+					<effect value="+value">Initiative</effect>
+				</trait>
+				<trait name="Fighting Finesse" source="WoD Core" custom="true">
+					<value>2</value>
+					<prerequisite>Dexterity > 2 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Firearm Retention" source="WoD Armory Reloaded">
+					<value>1</value>
+					<prerequisite>Wits > 1 AND Dexterity > 1 AND Brawl > 1 AND Firearms > 1</prerequisite>
+				</trait>
+				<trait name="Fleet of Foot" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<prerequisite>Strength > 1</prerequisite>
+					<effect value="+value">Speed</effect>
+				</trait>
+				<trait name="Giant" creationOnly="true" source="WoD Core">
+					<value>4</value>
+				</trait>
+				<trait name="Gunslinger" source="WoD Core">
+					<value>3</value>
+					<prerequisite>Dexterity > 2 AND Firearms > 2</prerequisite>
+				</trait>
+				<trait name="High Performance Driving" source="WoD Midnight Roads">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Dexterity > 2 AND Resolve > 1 AND Drive > 1</prerequisite>
+				</trait>
+				<trait name="Iron Stamina" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<prerequisite>Stamina > 2 OR Resolve > 1</prerequisite>
+				</trait>
+				<trait name="Iron Stomach" source="WoD Core">
+					<value>2</value>
+					<prerequisite>Stamina > 1</prerequisite>
+				</trait>
+				<trait name="Natural Immunity" source="WoD Core">
+					<value>4</value>
+					<prerequisite>Stamina > 1</prerequisite>
+				</trait>
+				<trait name="Parkour" source="Promethean Strange Alchemies">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Dexterity > 2 AND Athletics > 1</prerequisite>
+				</trait>
+				<trait name="Quick Draw" source="WoD Core">
+					<value>1</value>
+					<prerequisite>Dexterity > 2</prerequisite>
+				</trait>
+				<trait name="Quick Healer" source="WoD Core">
+					<value>4</value>
+					<prerequisite>Stamina > 3</prerequisite>
+				</trait>
+				<trait name="Shield Bearer" source="WoD Armory Reloaded">
+					<value>4</value>
+					<prerequisite>Strength > 1</prerequisite>
+				</trait>
+				<trait name="Strong Back" source="WoD Core">
+					<value>1</value>
+					<prerequisite>Strength > 1</prerequisite>
+				</trait>
+				<trait name="Strong Lungs" source="WoD Core">
+					<value>3</value>
+					<prerequisite>Athletics > 2</prerequisite>
+				</trait>
+				<trait name="Stunt Driver" source="WoD Core">
+					<value>3</value>
+					<prerequisite>Dexterity > 2</prerequisite>
+				</trait>
+				<trait name="Stunt Rider" source="Vampire Requiem for Rome">
+					<value>3</value>
+					<prerequisite>Dexterity > 2</prerequisite>
+				</trait>
+				<trait name="Student of the Blade" source="WoD Armory Reloaded">
+					<value>1</value>
+					<prerequisite>Aggressive Light Sword > 0 OR Defensive Light Sword > 0</prerequisite>
+				</trait>
+				<trait name="Toxin Resistance" source="WoD Core">
+					<value>2</value>
+					<prerequisite>Stamina > 2</prerequisite>
+				</trait>
+				<trait name="Weaponry Dodge" source="WoD Core">
+					<value>1</value>
+					<prerequisite>Strength > 1 AND Weaponry > 0</prerequisite>
+				</trait>
+				<!--<trait name="Weapons to Empty Hands" source="WoD Armory Reloaded">
+					<value>1</value>
+					<prerequisite>Dexterity > 2 AND Brawl > 2 AND Weaponry > 2 AND Fighting Style >0</prerequisite>
+				</trait>-->
+			</Physical>
+			<Social>
+				<trait name="Allies" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Anonymity" source="Werewolf Blood of the Wolf">
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Resolve > 1 AND (Larceny > 1 OR Subterfuge > 1)</prerequisite>
+				</trait>
+				<!--<trait name="Barfly" source="WoD Core">
+					<value>1</value>
+				</trait>-->
+				<trait name="Contacts" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Fame" cutom="true" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+				</trait>
+				<trait name="Ghost Ally" source="WoD Second Sight">
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Inspiring" source="WoD Core">
+					<value>4</value>
+					<prerequisite>Presence > 3</prerequisite>
+				</trait>
+				<trait name="Luxury" source="Mage Seers of the Throne">
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Mentor" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="New Identity" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Noble Heritage" source="Vampire Requiem for Rome">
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Resources" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Retainer" custom="true" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Site" custom="true" source="Vampire Damnation City">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Status" custom="true" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Striking Looks" source="WoD Core">
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Dream" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+			</Social>
+			<Item>
+				<trait name="Artifact" source="Mage Core">
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<value>6</value>
+					<value>7</value>
+					<value>8</value>
+					<value>9</value>
+					<value>10</value>
+				</trait>
+				<trait name="Enhanced Item" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Imbued Item" source="Mage Core">
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<value>6</value>
+					<value>7</value>
+					<value>8</value>
+					<value>9</value>
+					<value>10</value>
+				</trait>
+				<trait name="Token" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<value>6</value>
+					<value>7</value>
+					<value>8</value>
+					<value>9</value>
+					<value>10</value>
+				</trait>
+				<trait name="Cursed Item" source="WoD Book of Spirits">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+			</Item>
+			<FightingStyle>
+				<trait name="Aggressive Striking" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Strength > 2 AND Stamina > 1 AND Brawl > 1</prerequisite>
+				</trait>
+				<trait name="Aikido" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Wits > 1 AND Dexterity > 1 AND Brawl > 1</prerequisite>
+				</trait>
+				<trait name="Brute Force" source="Promethean Strange Alchemies">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Strength > 2 AND Brawl > 2</prerequisite>
+				</trait>
+				<trait name="Defensive Striking" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Strength > 1 AND Dexterity > 1 AND Stamina > 1 AND Brawl > 1</prerequisite>
+				</trait>
+				<trait name="Grappling" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Strength > 1 AND Dexterity > 2 AND Stamina > 2 AND Brawl > 1</prerequisite>
+				</trait>
+				<trait name="Judo" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Wits > 1 AND Dexterity > 1 AND Athletics > 1 AND Brawl > 1</prerequisite>
+				</trait>
+				<trait name="Krav Maga" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Wits > 2 AND Strength > 1 AND Dexterity > 2 AND Brawl > 2</prerequisite>
+				</trait>
+				<trait name="Oinna" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Dexterity > 2 AND Brawl > 1</prerequisite>
+				</trait>
+				<trait name="Aggressive Light Sword" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Dexterity > 2 AND Weaponry > 2</prerequisite>
+				</trait>
+				<trait name="Defensive Light Sword" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Strength > 1 AND Dexterity > 2 AND Composure > 2 AND Weaponry > 2 AND Quick Draw > 0</prerequisite>
+				</trait>
+				<trait name="Flexible Weapons" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Strength > 2 AND Dexterity > 2 AND Weaponry > 2</prerequisite>
+				</trait>
+				<trait name="Formation Tactics" source="Vampire Requiem for Rome">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Strength > 1 AND Stamina > 2 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Gladiatorial" source="Vampire Requiem for Rome">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Strength > 2 AND Presence > 1 AND Weaponry > 2</prerequisite>
+				</trait>
+				<trait name="Knife Fighting" source="WoD Armory">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Dexterity > 2 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Langschwert" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Strength > 2 AND Weaponry > 2</prerequisite>
+				</trait>
+				<trait name="Shurikenjutsu" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Dexterity > 2 AND Athletics > 1</prerequisite>
+				</trait>
+				<trait name="Spear and Bayonet Fighting" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Strength > 2 AND Dexterity > 1 AND Weaponry > 2</prerequisite>
+				</trait>
+				<trait name="Staff Fighting" source="WoD Armory">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Strength > 2 AND Dexterity > 1 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Stick Fighting" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Dexterity > 2 AND Weaponry > 2</prerequisite>
+				</trait>
+				<trait name="Sword and Shield" source="WoD Armory Reloaded">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Strength > 2 AND Dexterity > 1 AND Stamina > 1 AND Weaponry > 1</prerequisite>
+				</trait>
+				<trait name="Two Weapons" source="WoD Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Dexterity > 2 AND Weaponry > 2</prerequisite>
+				</trait>
+				<trait name="Archery" source="WoD Armory">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Strength > 1 AND Dexterity > 1 AND Athletics > 1</prerequisite>
+				</trait>
+				<trait name="Combat Marksmanship" source="WoD Armory">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Strength > 1 AND Dexterity > 1 AND Composure > 2 AND Firearms > 1</prerequisite>
+				</trait>
+				<trait name="Sniping" source="WoD Armory">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Dexterity > 2 AND Resolve > 2 AND Firearms > 2 AND Stealth > 1</prerequisite>
+				</trait>
+			</FightingStyle>
+			<DebateStyle>
+				<trait name="Reason" source="Vampire Requiem for Rome">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Intelligence > 2 AND Academics > 0</prerequisite>
+				</trait>
+				<trait name="Rhetoric" source="Vampire Requiem for Rome">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Presence > 2 AND Expression > 0</prerequisite>
+				</trait>
+				<trait name="Theology" source="Vampire Requiem for Rome" era="Antique">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>Presence > 1 AND Religion > 1 AND Expression > 0</prerequisite>
+				</trait>
+			</DebateStyle>
+			<Extraordinary>
+				<trait name="Difficult to Ride" source="WoD Book of Spirits">
+					<value>4</value>
+					<prerequisite>Composure > 2 AND Resolve > 2</prerequisite>
+				</trait>
+				<trait name="Easy Ride" source="WoD Book of Spirits">
+					<value>2</value>
+					<prerequisite>Wits > 2</prerequisite>
+				</trait>
+				<trait name="Hollow Soul" source="WoD Book of Spirits">
+					<value>2</value>
+					<prerequisite>Easy Ride > 0</prerequisite>
+				</trait>
+				<!--<trait name="Pleasing Aura" source="WoD Book of Spirits">
+					<value>3</value>
+					<prerequisite>Non-Werewolf</prerequisite>
+				</trait>-->
+				<!--<trait name="Saintly" source="WoD Book of Spirits">
+					<value>3</value>
+					<prerequisite>Non-Werewolf</prerequisite>
+				</trait>-->
+				<trait name="Shadow Contacts" source="WoD Book of Spirits">
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Shadowless Chambers" source="WoD Book of Spirits">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Spirit Tongue" source="WoD Book of Spirits">
+					<value>3</value>
+					<!--<prerequisite>Non-Werewolf</prerequisite>-->
+				</trait>
+			</Extraordinary>
+		</Merit>
+	</traits>
+</SoulCreator>

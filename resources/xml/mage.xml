@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SoulCreator version="0.3">
+	<traits species="Mage" morale="Wisdom" supertrait="Gnosis" fuel="Mana">
+		<Super>
+			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
+			<supertrait fuelMax="11" fuelPerTurn="2" traitMax="5">2</supertrait>
+			<supertrait fuelMax="12" fuelPerTurn="3" traitMax="5">3</supertrait>
+			<supertrait fuelMax="13" fuelPerTurn="4" traitMax="5">4</supertrait>
+			<supertrait fuelMax="14" fuelPerTurn="5" traitMax="5">5</supertrait>
+			<supertrait fuelMax="15" fuelPerTurn="6" traitMax="6">6</supertrait>
+			<supertrait fuelMax="20" fuelPerTurn="7" traitMax="7">7</supertrait>
+			<supertrait fuelMax="30" fuelPerTurn="8" traitMax="8">8</supertrait>
+			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
+			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
+		</Super>
+		<Merit>
+			<Social>
+				<trait name="Sleepwalker Retainer" custom="true" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+			</Social>
+			<Species>
+				<trait name="Destiny" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Familiar" source="Mage Core">
+					<value>3</value>
+					<value>4</value>
+				</trait>
+				<trait name="Gesture Lore" source="Mage Tome of the Mysteries">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Dexterity > 2 AND Occult > 2</prerequisite>
+				</trait>
+				<trait name="Ghost Familiar" source="Mage Summoners">
+					<value>3</value>
+				</trait>
+				<trait name="Goetic Familiar" source="Mage Grimoire of Grimoires">
+					<value>3</value>
+					<value>4</value>
+				</trait>
+				<trait name="High Speech" source="Mage Core">
+					<value>1</value>
+				</trait>
+				<trait name="Atlantean Hesychia" source="Mage Secrets of the ruined Temple">
+					<value>1</value>
+					<prerequisite>High Speech > 0</prerequisite>
+				</trait>
+				<trait name="Glyph Lore" source="Mage Tome of the Mysteries">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>High Speech > 0 AND Intelligence > 2 AND Occult > 2</prerequisite>
+				</trait>
+				<trait name="Occultation" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<prerequisite><![CDATA[Fame < 1]]></prerequisite>
+				</trait>
+				<trait name="Ritual Synergy" source="Mage Tome of the Mysteries">
+					<value>3</value>
+					<value>5</value>
+					<prerequisite>Gnosis > 2 OR Gnosis > 4</prerequisite>
+				</trait>
+				<trait name="Sanctum: Size" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Sanctum: Security" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Alchemical Lab" source="Mage Tome of the Mysteries">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+				</trait>
+				<trait name="Guardian Ghost" source="Mage Sanctum and Sigil">
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+				</trait>
+				<trait name="Guardian Spirit" source="Mage Sanctum and Sigil">
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+				</trait>
+				<trait name="Hallow" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+				</trait>
+				<trait name="Library" source="Mage Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+				</trait>
+				<trait name="Sanctum Gauntlet" source="Mage Sanctum and Sigil">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+				</trait>
+				<trait name="Summoning Circle" source="Mage Summoners">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+				</trait>
+				<trait name="Thrall" custom="true" source="Mage Core">
+					<value>3</value>
+				</trait>
+			</Species>
+		</Merit>
+		<Power>
+			<trait name="Death">
+				<cheap>Moros</cheap>
+			</trait>
+			<trait name="Fate">
+				<cheap>Acanthus</cheap>
+			</trait>
+			<trait name="Forces">
+				<cheap>Obrimos</cheap>
+			</trait>
+			<trait name="Life">
+				<cheap>Thyrsus</cheap>
+			</trait>
+			<trait name="Matter">
+				<cheap>Moros</cheap>
+			</trait>
+			<trait name="Mind">
+				<cheap>Mastigos</cheap>
+			</trait>
+			<trait name="Prime">
+				<cheap>Obrimos</cheap>
+			</trait>
+			<trait name="Space">
+				<cheap>Mastigos</cheap>
+			</trait>
+			<trait name="Spirit">
+				<cheap>Thyrsus</cheap>
+			</trait>
+			<trait name="Time">
+				<cheap>Acanthus</cheap>
+			</trait>
+		</Power>
+	</traits>
+</SoulCreator>

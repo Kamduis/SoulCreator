@@ -101,6 +101,10 @@ class Config {
 		 **/
 		static const int willpowerMax;
 		/**
+		 * Mindestwert der besonderen übernatürlichen Eigenschaft.
+		 **/
+		static const int superTraitMin;
+		/**
 		 * Höchstwert der besonderen übernatürlichen Eigenschaft.
 		 **/
 		static const int superTraitMax;

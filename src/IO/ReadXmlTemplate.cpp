@@ -24,18 +24,26 @@
 
 #include <QDebug>
 
+#include "../Datatypes/cv_SuperEffect.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
 
 #include "ReadXmlTemplate.h"
 
 
-const QString ReadXmlTemplate::templateFile_base = "../base.xml";
-const QString ReadXmlTemplate::templateFile_human = "../human.xml";
-const QString ReadXmlTemplate::templateFile_changeling = "../changeling.xml";
-const QString ReadXmlTemplate::templateFile_mage = "../mage.xml";
-const QString ReadXmlTemplate::templateFile_vampire = "../vampire.xml";
-const QString ReadXmlTemplate::templateFile_werewolf = "../werewolf.xml";
+const QString ReadXmlTemplate::templateFile_base = ":/template/xml/base.xml";
+const QString ReadXmlTemplate::templateFile_human = ":/template/xml/human.xml";
+const QString ReadXmlTemplate::templateFile_changeling = ":/template/xml/changeling.xml";
+const QString ReadXmlTemplate::templateFile_mage = ":/template/xml/mage.xml";
+const QString ReadXmlTemplate::templateFile_vampire = ":/template/xml/vampire.xml";
+const QString ReadXmlTemplate::templateFile_werewolf = ":/template/xml/werewolf.xml";
+// const QString ReadXmlTemplate::templateFile_base = "../resources/xml/base.xml";
+// const QString ReadXmlTemplate::templateFile_human = "../resources/xml/human.xml";
+// const QString ReadXmlTemplate::templateFile_changeling = "../resources/xml/changeling.xml";
+// const QString ReadXmlTemplate::templateFile_mage = "../resources/xml/mage.xml";
+// const QString ReadXmlTemplate::templateFile_vampire = "../resources/xml/vampire.xml";
+// const QString ReadXmlTemplate::templateFile_werewolf = "../resources/xml/werewolf.xml";
+
 //const QString ReadXmlTemplate::templateFile = "../test.dat";
 
 // QList< cv_Trait > ReadXmlTemplate::traitList;
@@ -152,6 +160,8 @@ void ReadXmlTemplate::readTree( cv_Species::Species sp ) {
 
 				if ( type == cv_Trait::Virtue || type == cv_Trait::Vice || type == cv_Trait::Power ) {
 					readTraits( sp, type, cv_Trait::CategoryNo );
+				} else if ( type == cv_Trait::Super ) {
+					readSuperTrait( sp );
 				} else {
 					readTraits( sp, type );
 				}
@@ -162,7 +172,32 @@ void ReadXmlTemplate::readTree( cv_Species::Species sp ) {
 	}
 }
 
+void ReadXmlTemplate::readSuperTrait( cv_Species::Species sp ) {
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			if ( name() == "supertrait" ) {
+				cv_SuperEffect superEffect;
+				superEffect.species = sp;
+				superEffect.fuelMax = attributes().value( "fuelMax" ).toString().toInt();
+				superEffect.fuelPerTurn = attributes().value( "fuelPerTurn" ).toString().toInt();
+				superEffect.traitMax = attributes().value( "traitMax" ).toString().toInt();
+				superEffect.value = readElementText().toInt();
+
+				storage->appendSuperEffect( superEffect);
+			} else
+				readUnknownElement();
+		}
+	}
+}
+
+
 void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a ) {
+
 	while ( !atEnd() ) {
 		readNext();
 
@@ -283,3 +318,5 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 
 	return trait;
 }
+
+

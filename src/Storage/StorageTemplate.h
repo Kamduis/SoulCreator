@@ -30,7 +30,7 @@
 
 #include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_NameList.h"
-// #include "../IO/ReadXmlTemplate.h"
+#include "../Datatypes/cv_SuperEffect.h"
 
 #include <QObject>
 
@@ -130,20 +130,36 @@ class StorageTemplate : public QObject {
 		 **/
 		cv_Trait trait(cv_Trait::Type type, cv_Trait::Category category, QString name);
 		/**
-		 *Sortiert die Liste.
+		 * Sortiert die Liste.
 		 **/
 		void sortTraits();
 
+		/**
+		 * Gibt den Maximalwert der Eigenschaften aus. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
+		 **/
+		int traitMax( cv_Species::Species species, int value );
+		/**
+		 * Gibt den Maximalwert der Energieeigenscahft aus. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
+		 **/
+		int fuelMax( cv_Species::Species species, int value );
+		/**
+		 * Gibt aus, wieviel Energie pro Runde maximal ausgegeben werden kann. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
+		 **/
+		int fuelPerTurn( cv_Species::Species species, int value );
+
 	private:
+		/**
+		 * Eine Liste sämtlicher verfügbaren Spezies.
+		 **/
+		static QList< cv_Species > v_species;
 		/**
 		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
 		 **/
 		static QList< cv_Trait > v_traits;
 		/**
-		 * Eine Liste sämtlicher verfügbaren Spezies.
+		 * Eine Liste über die Effekte der Supereigenschaft.
 		 **/
-		static QList< cv_Species > v_species;
-
+		static QList< cv_SuperEffect > v_superEffects;
 
 	public slots:
 // 		/**
@@ -160,6 +176,10 @@ class StorageTemplate : public QObject {
 		 * \warning Es werden nur eigenschaften hinzugefügt, die nicht schon existieren.
 		 **/
 		void appendTrait( cv_Trait trait );
+		/**
+		 * Fügt einen Effekt eines Superattributs hinzu.
+		 **/
+		void appendSuperEffect( cv_SuperEffect effect );
 
 
 

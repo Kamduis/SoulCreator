@@ -26,6 +26,7 @@
 #include <QPainter>
 #include <QDebug>
 
+#include "../Storage/StorageTemplate.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
 
@@ -43,6 +44,7 @@ DrawSheet::DrawSheet( QObject* parent, QPrinter* printer ) : QObject( parent ) {
 void DrawSheet::construct() {
 	// Vorsicht, ist ein Zeiger.
 	v_printer = 0;
+
 	v_dotDiameterH = 1;
 	v_dotDiameterV = 1;
 	v_textHeight = 0;
@@ -72,15 +74,15 @@ void DrawSheet::print() {
 	QImage image;
 
 	if ( character->species() == cv_Species::Human ) {
-		image = QImage( ":/characterSheet/images/Charactersheet-Human.png" );
+		image = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" );
 	} else if ( character->species() == cv_Species::Changeling ) {
-		image = QImage( ":/characterSheet/images/Charactersheet-Changeling-1.png" );
+		image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" );
 	} else if ( character->species() == cv_Species::Mage ) {
-		image = QImage( ":/characterSheet/images/Charactersheet-Mage-1.png" );
+		image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" );
 	} else if ( character->species() == cv_Species::Vampire ) {
-		image = QImage( ":/characterSheet/images/Charactersheet-Vampire-1.png" );
+		image = QImage( ":/characterSheet/images/Charactersheet-Vampire-1.jpg" );
 	} else if ( character->species() == cv_Species::Werewolf ) {
-		image = QImage( ":/characterSheet/images/Charactersheet-Werewolf-1.png" );
+		image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" );
 	} else {
 		throw eSpeciesNotExisting( character->species() );
 	}
@@ -137,6 +139,15 @@ void DrawSheet::print() {
 	qreal offsetVSuper = 0;
 	qreal distanceHSuper = 0;
 
+	qreal offsetHFuel = 0;
+	qreal offsetVFuel = 0;
+	qreal distanceHFuel = 0;
+	qreal squareSizeFuel = 0;
+
+	qreal offsetHFuelPerTurn = 0;
+	qreal offsetVFuelPerTurn = 0;
+	qreal distanceHFuelPerTurn = 0;
+
 	qreal offsetHMorality = target.width() * 0.9565;
 	qreal offsetVMorality = target.height() * 0.608;
 	qreal distanceVMorality = target.height() * 0.0144;
@@ -176,6 +187,15 @@ void DrawSheet::print() {
 		offsetVMorality = target.height() * 0.716;
 		distanceVMorality = target.height() * 0.0143;
 
+		offsetHFuel = target.width() * 0.861;
+		offsetVFuel = target.height() * 0.544;
+		distanceHFuel = target.width() * 0.0032;
+		squareSizeFuel = target.width() * 0.014;
+
+		offsetHFuelPerTurn = target.width() * 0.865;
+		offsetVFuelPerTurn = target.height() * 0.527;
+		distanceHFuelPerTurn = target.height() * 0.045;
+
 		maxPowers = 8;
 		offsetHPowers = offsetHMerits;
 		offsetVPowers = offsetVSkills;
@@ -211,6 +231,8 @@ void DrawSheet::print() {
 	if ( character->species() != cv_Species::Human ) {
 		drawPowers( &painter, offsetHPowers, offsetVPowers, distanceVPowers, textWidthPowers, maxPowers );
 		drawSuper( &painter, offsetHSuper, offsetVSuper, distanceHSuper, dotSizeFactor );
+		drawFuelMax( &painter, offsetHFuel, offsetVFuel, distanceHFuel, squareSizeFuel );
+		drawFuelPerTurn( &painter, offsetHFuelPerTurn, offsetVFuelPerTurn, distanceHFuelPerTurn );
 	}
 
 	painter.restore();
@@ -423,6 +445,47 @@ void DrawSheet::drawSuper( QPainter* painter, qreal offsetH, qreal offsetV, qrea
 		QRect dotsRect = QRect( offsetH + distanceH * i, offsetV, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
 		painter->drawEllipse( dotsRect );
 	}
+}
+
+void DrawSheet::drawFuelMax( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal widthPerSquare ) {
+	StorageTemplate storage;
+	int value = storage.fuelMax( character->species(), character->superTrait() );
+
+	if ( value > 20 ) {
+		QString fuel;
+
+		for ( int i = 0; i < storage.species().count(); i++ ) {
+			if ( cv_Species::toSpecies( storage.species().at( i ).name ) == character->species() ) {
+				fuel = storage.species().at( i ).fuel;
+				break;
+			}
+		}
+
+		throw eValueExceedsSheetCapacity( value, fuel );
+	}
+
+	painter->save();
+
+	painter->setOpacity(0.5);
+
+	for ( int i = 0; i < 20 - value; i++ ) {
+		QRect fuelRect = QRect( offsetH - (widthPerSquare + distanceH) * i, offsetV, -widthPerSquare, widthPerSquare );
+// 		painter->drawLine( fuelRect.bottomLeft(), fuelRect.topRight() );
+// 		painter->drawLine( fuelRect.topLeft(), fuelRect.bottomRight() );
+		painter->drawRect(fuelRect);
+	}
+
+	painter->restore();
+}
+
+void DrawSheet::drawFuelPerTurn( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH )
+{
+	StorageTemplate storage;
+	int value = storage.fuelPerTurn( character->species(), character->superTrait() );
+
+	QRect textRect = QRect(offsetH, offsetV, distanceH, v_textHeight );
+	painter->drawText(textRect, Qt::AlignHCenter | Qt::AlignBottom, QString::number(value) );
+// 	painter->drawRect(textRect);
 }
 
 
