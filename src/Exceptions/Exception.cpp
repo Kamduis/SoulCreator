@@ -160,16 +160,30 @@ eValueExceedsSheetCapacity::eValueExceedsSheetCapacity( int value, QString name 
 
 
 eEntry::eEntry() : Exception() {
-	setMessage( QObject::tr( "Entry Problem" ) );
+	setMessage( QObject::tr( "Entry Problem." ) );
 	setDescription( QObject::tr( "There is a problem with an expected Input." ) );
 }
 
 eUserEntry::eUserEntry() : eEntry() {
-	setMessage( QObject::tr( "User Entry Problem" ) );
+	setMessage( QObject::tr( "User Entry Problem." ) );
 	setDescription( QObject::tr( "There is a problem with an expected User Input." ) );
 }
 
 eMissingUserEntry::eMissingUserEntry() : eUserEntry() {
-	setMessage( QObject::tr( "Missing User Entry" ) );
+	setMessage( QObject::tr( "Missing User Entry." ) );
 	setDescription( QObject::tr( "An expected User Input is missing." ) );
+}
+
+
+eWerewolfShape::eWerewolfShape() {
+	setMessage( QObject::tr( "Problem with werewolf shape." ) );
+	setDescription( QObject::tr( "A Probklem regarding a shape of the werewolf has occured." ) );
+}
+eWerewolfShapeNotExisting::eWerewolfShapeNotExisting( cv_Shape::WerewolfShape shape ): eWerewolfShape() {
+	setMessage( QObject::tr( "Shape not existing." ) );
+	setDescription( QObject::tr( "The chosen Shape %1 does not exist." ).arg(shape) );
+}
+eWerewolfShapeNotExisting::eWerewolfShapeNotExisting( QString shape ): eWerewolfShape() {
+	setMessage( QObject::tr( "Shape not existing." ) );
+	setDescription( QObject::tr( "The chosen Shape %1 does not exist." ).arg(shape) );
 }

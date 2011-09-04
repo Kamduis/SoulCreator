@@ -290,30 +290,29 @@ void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
 
 
 void MainWindow::exportCharacter() {
-	// Vorsicht, eine Abkürzung, die ich nur für das Testen verwenden sollte.
-	shortcut();
+// 	// Vorsicht, eine Abkürzung, die ich nur für das Testen verwenden sollte.
+// 	shortcut();
+// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled.pdf";
 
-// 	QString appPath = QApplication::applicationDirPath();
-//
-// 	// Pfad zum Speicherverzeichnis
-// 	QString savePath = appPath + "/" + Config::saveDir();
-//
-// 	// Wenn Unterverzeichnis nicht existiert, erstelle es
-// 	QDir dir( appPath );
-//
-// 	try {
-// 		if ( !dir.mkdir( savePath ) ) {
-// 			if ( !QDir( savePath ).exists() ) {
-// 				throw eDirNotCreated( dir.absolutePath() );
-// 			}
-// 		}
-// 	} catch ( eDirNotCreated &e ) {
-// 		MessageBox::exception( this, e.description(), e.message() );
-// 	}
-//
-// 	QString filePath = QFileDialog::getSaveFileName( this, tr( "Export Character" ), savePath + "/untitled.pdf", tr( "Charactersheet (*.pdf)" ) );
+	QString appPath = QApplication::applicationDirPath();
 
-	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled.pdf";
+	// Pfad zum Speicherverzeichnis
+	QString savePath = appPath + "/" + Config::saveDir();
+
+	// Wenn Unterverzeichnis nicht existiert, erstelle es
+	QDir dir( appPath );
+
+	try {
+		if ( !dir.mkdir( savePath ) ) {
+			if ( !QDir( savePath ).exists() ) {
+				throw eDirNotCreated( dir.absolutePath() );
+			}
+		}
+	} catch ( eDirNotCreated &e ) {
+		MessageBox::exception( this, e.description(), e.message() );
+	}
+
+	QString filePath = QFileDialog::getSaveFileName( this, tr( "Export Character" ), savePath + "/untitled.pdf", tr( "Charactersheet (*.pdf)" ) );
 
 	QPrinter* printer = new QPrinter();
 	QPrintDialog printDialog( printer, this );
@@ -367,25 +366,25 @@ void MainWindow::messageEnforcedTraitLimits( cv_Trait::Type type ) {
 
 
 
-void MainWindow::shortcut() {
-	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled1.chr";
-
-	if ( !filePath.isEmpty() ) {
-		QFile* file = new QFile( filePath );
-
-		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
-		setCharacterValues( 0 );
-
-		try {
-			readCharacter->read( file );
-		} catch ( eXmlVersion &e ) {
-			MessageBox::exception( this, e.message(), e.description() );
-		} catch ( eXmlError &e ) {
-			MessageBox::exception( this, e.message(), e.description() );
-		} catch ( eFileNotOpened &e ) {
-			MessageBox::exception( this, e.message(), e.description() );
-		}
-
-		delete file;
-	}
-}
+// void MainWindow::shortcut() {
+// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled1.chr";
+// 
+// 	if ( !filePath.isEmpty() ) {
+// 		QFile* file = new QFile( filePath );
+// 
+// 		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
+// 		setCharacterValues( 0 );
+// 
+// 		try {
+// 			readCharacter->read( file );
+// 		} catch ( eXmlVersion &e ) {
+// 			MessageBox::exception( this, e.message(), e.description() );
+// 		} catch ( eXmlError &e ) {
+// 			MessageBox::exception( this, e.message(), e.description() );
+// 		} catch ( eFileNotOpened &e ) {
+// 			MessageBox::exception( this, e.message(), e.description() );
+// 		}
+// 
+// 		delete file;
+// 	}
+// }

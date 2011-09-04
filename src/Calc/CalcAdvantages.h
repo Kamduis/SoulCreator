@@ -26,6 +26,8 @@
 #define CALCADVANTAGES_H
 
 #include "../Storage/StorageCharacter.h"
+#include "../Config/Config.h"
+#include "../Datatypes/cv_Shape.h"
 
 #include <QObject>
 
@@ -41,9 +43,9 @@ class CalcAdvantages : public QObject {
 	public:
 		CalcAdvantages( QObject* parent = 0 );
 
-		int size() const;
-		int initiative() const;
-		int speed() const;
+		int size( cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo ) const;
+		int initiative(cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo) const;
+		int speed(cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo) const;
 		int defense() const;
 		int health() const;
 		int willpower() const;

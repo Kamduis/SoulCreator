@@ -24,6 +24,8 @@
 
 #include <QtGui>
 
+#include <math.h>
+
 #include "Squares.h"
 
 // #include "valgrind/memcheck.h"

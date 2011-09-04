@@ -24,6 +24,8 @@
 
 #include "CMakeConfig.h"
 
+#include "../Exceptions/Exception.h"
+
 #include "Config.h"
 
 const int Config::traitCategorySpace = 10;
@@ -39,7 +41,7 @@ const int Config::superTraitMax = 10;
 const int Config::superTraitDefaultValue = 1;
 
 const qreal Config::textSizeFactorPrintNormal = 0.45;
-const qreal Config::textSizeFactorPrintSmall = 0.35;
+const qreal Config::textSizeFactorPrintSmall = 0.33;
 
 
 QString Config::name() {
@@ -77,3 +79,5 @@ QString Config::saveDir() {
 
 Config::Config() {
 }
+
+

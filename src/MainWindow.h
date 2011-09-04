@@ -53,6 +53,14 @@ class MainWindow;
  * \todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
  *
  * \bug Language mit Zusatztext wird nicht geladen. Bzw. wird schon geladen, aber nicht richtig dargestellt.
+ *
+ * \bug Wechselt man die Spezies, werden die alten Powers nicht restlos gelöscht. Zumindest jene nicht, welche Zusatztext besitzen.
+ *
+ * \todo Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.
+ *
+ * \todo Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausfgegraut werden.
+ *
+ * \todo Bei Werwölfen nimmt "Rites" eine Sonderstellung ein. Auch die Gaben/Riten müssen berücksichtigt werden.
  */
 
 class MainWindow : public QMainWindow {
@@ -131,10 +139,10 @@ class MainWindow : public QMainWindow {
 		 **/
 		void setCharacterValues( int value /** Der Wert, den alle Eigenschaften annehmen sollen */);
 
-		/**
-		 * Hier definiere ich Handgriffe, die der Benutzer eigentlich von Hand ausführen soll. Aber da ich das Programm teste, geht die beständig selbe Handlung auf den Geist.
-		 **/
-		void shortcut();
+// 		/**
+// 		 * Hier definiere ich Handgriffe, die der Benutzer eigentlich von Hand ausführen soll. Aber da ich das Programm teste, geht die beständig selbe Handlung auf den Geist.
+// 		 **/
+// 		void shortcut();
 
 	public slots:
 

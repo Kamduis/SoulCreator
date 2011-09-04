@@ -51,15 +51,15 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	layout->addLayout( advantagesLayout );
 
 	QLabel* labelSize = new QLabel( tr( "Size:" ) );
-	QLabel* labelSizeValue = new QLabel( this );
+	labelSizeValue = new QLabel( this );
 	labelSizeValue->setNum( 0 );
 
 	QLabel* labelInitiative = new QLabel( tr( "Initiative:" ) );
-	QLabel* labelInitiativeValue = new QLabel( this );
+	labelInitiativeValue = new QLabel( this );
 	labelInitiativeValue->setNum( 0 );
 
 	QLabel* labelSpeed = new QLabel( tr( "Speed:" ) );
-	QLabel* labelSpeedValue = new QLabel( this );
+	labelSpeedValue = new QLabel( this );
 	labelSpeedValue->setNum( 0 );
 
 	QLabel* labelDefense = new QLabel( tr( "Defense:" ) );
@@ -125,9 +125,9 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 
 	dotsSuper = new TraitDots( );
 	dotsSuper->setMaximum( Config::superTraitMax );
-	dotsSuper->setMinimum(Config::superTraitMin);
+	dotsSuper->setMinimum( Config::superTraitMin );
 	// Damit später der Wert stimmt muß ich irgendeinen Wert != 1 geben, sonst wird kein Signal gesandt.
-	dotsSuper->setValue(9);
+	dotsSuper->setValue( 9 );
 
 	layoutSuperDots->addStretch();
 	layoutSuperDots->addWidget( dotsSuper );
@@ -167,9 +167,12 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 
 	layout->addStretch();
 
-	connect( calcAdvantages, SIGNAL( sizeChanged( int ) ), labelSizeValue, SLOT( setNum( int ) ) );
-	connect( calcAdvantages, SIGNAL( initiativeChanged( int ) ), labelInitiativeValue, SLOT( setNum( int ) ) );
-	connect( calcAdvantages, SIGNAL( speedChanged( int ) ), labelSpeedValue, SLOT( setNum( int ) ) );
+	connect( calcAdvantages, SIGNAL( sizeChanged( int ) ), this, SLOT( writeSize( int ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( writeSize( cv_Species::SpeciesFlag ) ) );
+	connect( calcAdvantages, SIGNAL( initiativeChanged( int ) ), this, SLOT( writeInitiative( int ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( writeInitiative(cv_Species::SpeciesFlag)) );
+	connect( calcAdvantages, SIGNAL( speedChanged( int ) ), this, SLOT( writeSpeed( int ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( writeSpeed(cv_Species::SpeciesFlag)) );
 	connect( calcAdvantages, SIGNAL( defenseChanged( int ) ), labelDefenseValue, SLOT( setNum( int ) ) );
 	connect( calcAdvantages, SIGNAL( healthChanged( int ) ), this, SLOT( printHealth( int ) ) );
 	connect( calcAdvantages, SIGNAL( willpowerChanged( int ) ), dotsWill, SLOT( setValue( int ) ) );
@@ -179,8 +182,8 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), character, SLOT( setSuperTrait( int ) ) );
 	connect( character, SIGNAL( superTraitChanged( int ) ), dotsSuper, SLOT( setValue( int ) ) );
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideSuper( cv_Species::SpeciesFlag ) ) );
-	connect( character, SIGNAL( superTraitChanged( int ) ), this, SLOT( setFuelMaximum(int)) );
-	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( setFuelMaximum(cv_Species::SpeciesFlag)) );
+	connect( character, SIGNAL( superTraitChanged( int ) ), this, SLOT( setFuelMaximum( int ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( setFuelMaximum( cv_Species::SpeciesFlag ) ) );
 
 	dotsSuper->setValue( Config::superTraitDefaultValue );
 }
@@ -191,12 +194,93 @@ AdvantagesWidget::~AdvantagesWidget() {
 	delete dotsSuper;
 	delete labelSuper;
 	delete dotsHealth;
+	delete labelSizeValue;
+	delete labelInitiativeValue;
+	delete labelSpeedValue;
 	delete storage;
 	delete moralityWidget;
 	delete calcAdvantages;
 	delete layout;
 }
 
+
+void AdvantagesWidget::writeSize( int size ) {
+	if ( character->species() == cv_Species::Werewolf ) {
+		QString text = QString::number( calcAdvantages->size( cv_Shape::Hishu ) ) + "/" +
+					   QString::number( calcAdvantages->size( cv_Shape::Dalu ) ) + "/" +
+					   QString::number( calcAdvantages->size( cv_Shape::Gauru ) ) + "/" +
+					   QString::number( calcAdvantages->size( cv_Shape::Urshul ) ) + "/" +
+					   QString::number( calcAdvantages->size( cv_Shape::Urhan ) );
+		labelSizeValue->setText( text );
+	} else {
+		labelSizeValue->setNum( size );
+	}
+}
+
+void AdvantagesWidget::writeSize( cv_Species::SpeciesFlag species ) {
+	if ( species == cv_Species::Werewolf ) {
+		QString text = QString::number( calcAdvantages->size( cv_Shape::Hishu ) ) + "/" +
+					   QString::number( calcAdvantages->size( cv_Shape::Dalu ) ) + "/" +
+					   QString::number( calcAdvantages->size( cv_Shape::Gauru ) ) + "/" +
+					   QString::number( calcAdvantages->size( cv_Shape::Urshul ) ) + "/" +
+					   QString::number( calcAdvantages->size( cv_Shape::Urhan ) );
+		labelSizeValue->setText( text );
+	} else {
+		labelSizeValue->setNum( calcAdvantages->size() );
+	}
+}
+
+void AdvantagesWidget::writeInitiative( int initiative ) {
+	if ( character->species() == cv_Species::Werewolf ) {
+		QString text = QString::number( calcAdvantages->initiative( cv_Shape::Hishu ) ) + "/" +
+					   QString::number( calcAdvantages->initiative( cv_Shape::Dalu ) ) + "/" +
+					   QString::number( calcAdvantages->initiative( cv_Shape::Gauru ) ) + "/" +
+					   QString::number( calcAdvantages->initiative( cv_Shape::Urshul ) ) + "/" +
+					   QString::number( calcAdvantages->initiative( cv_Shape::Urhan ) );
+		labelInitiativeValue->setText( text );
+	} else {
+		labelInitiativeValue->setNum( initiative );
+	}
+}
+
+void AdvantagesWidget::writeInitiative( cv_Species::SpeciesFlag species ) {
+	if ( species == cv_Species::Werewolf ) {
+		QString text = QString::number( calcAdvantages->initiative( cv_Shape::Hishu ) ) + "/" +
+					   QString::number( calcAdvantages->initiative( cv_Shape::Dalu ) ) + "/" +
+					   QString::number( calcAdvantages->initiative( cv_Shape::Gauru ) ) + "/" +
+					   QString::number( calcAdvantages->initiative( cv_Shape::Urshul ) ) + "/" +
+					   QString::number( calcAdvantages->initiative( cv_Shape::Urhan ) );
+		labelInitiativeValue->setText( text );
+	} else {
+		labelInitiativeValue->setNum( calcAdvantages->initiative() );
+	}
+}
+
+void AdvantagesWidget::writeSpeed( int speed ) {
+	if ( character->species() == cv_Species::Werewolf ) {
+		QString text = QString::number( calcAdvantages->speed( cv_Shape::Hishu ) ) + "/" +
+					   QString::number( calcAdvantages->speed( cv_Shape::Dalu ) ) + "/" +
+					   QString::number( calcAdvantages->speed( cv_Shape::Gauru ) ) + "/" +
+					   QString::number( calcAdvantages->speed( cv_Shape::Urshul ) ) + "/" +
+					   QString::number( calcAdvantages->speed( cv_Shape::Urhan ) );
+		labelSpeedValue->setText( text );
+	} else {
+		labelSpeedValue->setNum( speed );
+	}
+}
+
+void AdvantagesWidget::writeSpeed( cv_Species::SpeciesFlag species ) {
+	if ( species == cv_Species::Werewolf ) {
+		QString text = QString::number( calcAdvantages->speed( cv_Shape::Hishu ) ) + "/" +
+					   QString::number( calcAdvantages->speed( cv_Shape::Dalu ) ) + "/" +
+					   QString::number( calcAdvantages->speed( cv_Shape::Gauru ) ) + "/" +
+					   QString::number( calcAdvantages->speed( cv_Shape::Urshul ) ) + "/" +
+					   QString::number( calcAdvantages->speed( cv_Shape::Urhan ) );
+		labelSpeedValue->setText( text );
+	} else {
+		labelSpeedValue->setNum( calcAdvantages->speed() );
+	}
+}
 
 void AdvantagesWidget::printHealth( int value ) {
 	dotsHealth->setMaximum( value );
@@ -210,14 +294,14 @@ void AdvantagesWidget::hideSuper( cv_Species::SpeciesFlag species ) {
 
 		labelFuel->setHidden( true );
 		squaresFuel->setHidden( true );
-		fuelPerTurn->setHidden(true);
+		fuelPerTurn->setHidden( true );
 	} else {
 		labelSuper->setHidden( false );
 		dotsSuper->setHidden( false );
 
 		labelFuel->setHidden( false );
 		squaresFuel->setHidden( false );
-		fuelPerTurn->setHidden(false);
+		fuelPerTurn->setHidden( false );
 
 		for ( int i = 0; i < storage->species().count(); i++ ) {
 			if ( cv_Species::toSpecies( storage->species().at( i ).name ) == species ) {
@@ -231,18 +315,18 @@ void AdvantagesWidget::hideSuper( cv_Species::SpeciesFlag species ) {
 
 void AdvantagesWidget::setFuelMaximum( cv_Species::SpeciesFlag species ) {
 	int maximum = storage->fuelMax( species, character->superTrait() );
-	squaresFuel->setMaximum(maximum);
+	squaresFuel->setMaximum( maximum );
 
 	int perTurn = storage->fuelPerTurn( species, character->superTrait() );
-	fuelPerTurn->setText(tr("%1/Turn").arg(perTurn));
+	fuelPerTurn->setText( tr( "%1/Turn" ).arg( perTurn ) );
 }
 
 void AdvantagesWidget::setFuelMaximum( int value ) {
 	int maximum = storage->fuelMax( character->species(), value );
-	squaresFuel->setMaximum(maximum);
+	squaresFuel->setMaximum( maximum );
 
 	int perTurn = storage->fuelPerTurn( character->species(), value );
-	fuelPerTurn->setText(tr("%1/Turn").arg(perTurn));
+	fuelPerTurn->setText( tr( "%1/Turn" ).arg( perTurn ) );
 }
 
 

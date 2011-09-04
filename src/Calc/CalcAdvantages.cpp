@@ -24,6 +24,8 @@
 
 #include <QDebug>
 
+#include "../Exceptions/Exception.h"
+
 #include "CalcAdvantages.h"
 
 int CalcAdvantages::v_size = 0;
@@ -47,21 +49,71 @@ CalcAdvantages::CalcAdvantages( QObject* parent ): QObject( parent ) {
 }
 
 
-int CalcAdvantages::size() const {
-	return v_size;
+int CalcAdvantages::size( cv_Shape::WerewolfShape shape ) const {
+	switch ( shape ) {
+		case cv_Shape::ShapeNo:
+			return v_size;
+		case cv_Shape::Hishu:
+			return v_size;
+		case cv_Shape::Dalu:
+			return v_size + 1;
+		case cv_Shape::Gauru:
+			return v_size + 2;
+		case cv_Shape::Urshul:
+			return v_size + 1;
+		case cv_Shape::Urhan:
+			return v_size - 1;
+		default:
+			throw eWerewolfShapeNotExisting( shape );
+	}
 }
-int CalcAdvantages::initiative() const {
-	return v_initiative;
+
+int CalcAdvantages::initiative( cv_Shape::WerewolfShape shape ) const {
+	switch ( shape ) {
+		case cv_Shape::ShapeNo:
+			return v_initiative;
+		case cv_Shape::Hishu:
+			return v_initiative;
+		case cv_Shape::Dalu:
+			return v_initiative;
+		case cv_Shape::Gauru:
+			return v_initiative + 1;
+		case cv_Shape::Urshul:
+			return v_initiative + 2;
+		case cv_Shape::Urhan:
+			return v_initiative + 2;
+		default:
+			throw eWerewolfShapeNotExisting( shape );
+	}
 }
-int CalcAdvantages::speed() const {
-	return v_speed;
+
+int CalcAdvantages::speed( cv_Shape::WerewolfShape shape ) const {
+	switch ( shape ) {
+		case cv_Shape::ShapeNo:
+			return v_speed;
+		case cv_Shape::Hishu:
+			return v_speed;
+		case cv_Shape::Dalu:
+			return v_speed + 1;
+		case cv_Shape::Gauru:
+			return v_speed + 4;
+		case cv_Shape::Urshul:
+			return v_speed + 7;
+		case cv_Shape::Urhan:
+			return v_speed + 5;
+		default:
+			throw eWerewolfShapeNotExisting( shape );
+	}
 }
+
 int CalcAdvantages::defense() const {
 	return v_defense;
 }
+
 int CalcAdvantages::health() const {
 	return v_health;
 }
+
 int CalcAdvantages::willpower() const {
 	return v_willpower;
 }

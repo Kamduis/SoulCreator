@@ -30,6 +30,8 @@
 
 #include "../Storage/StorageCharacter.h"
 #include "../Calc/CalcAdvantages.h"
+#include "../Datatypes/cv_Species.h"
+#include "../Datatypes/cv_Shape.h"
 
 #include <QObject>
 
@@ -140,12 +142,16 @@ class DrawSheet : public QObject {
 					   );
 		/**
 		 * Zeichne die berechneten Eigenschaften.
+		 *
+		 * Werwölfe haben berechnete Eigenschaften für jede ihrer Gestalten, weswegen sie gesondert behanelt werden.
 		 **/
 		void drawAdvantages( QPainter* painter,
 							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und der Beschriftungslinie. */,
 							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem rechten Rand der Beschriftungslinie. */,
 							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Eigenschaften. */,
-							 qreal textWidth = 0 /** Textbreite, der zur Verfügung steht. */
+							 qreal textWidth = 0 /** Textbreite, der zur Verfügung steht. */,
+							 cv_Species::SpeciesFlag species = cv_Species::SpeciesNo /** Welcher Spezies der Charakter angehört. */,
+							 qreal distanceH = 0 /** Abstand zwischen den unterschiedlichen Gestalten. */
 						   );
 		/**
 		 * Zeichne die Willenskraft
@@ -178,13 +184,17 @@ class DrawSheet : public QObject {
 						 );
 		/**
 		 * Zeichne die übernatürlichen Kräfte.
+		 *
+		 * Zeichne die übernatürlichen Kräfte für Magier und Werwölfe müssen gesondert behandelt werden. Die Arcana und Renown werden in zwei Spalten angeordnet und die zweite Spalte hat eine andere Richtung.
 		 **/
 		void drawPowers( QPainter* painter,
 						 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
 						 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
 						 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Kräften. */,
 						 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
-						 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
+						 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */,
+						 cv_Species::SpeciesFlag species = cv_Species::SpeciesNo /** Welcher Spezies der Charakter angehört. */,
+						 qreal distanceH = 0 /** Horizontaler Abstand zwischen den Kräften. */
 					   );
 		/**
 		 * Zeichne die übernatürliche Eigenschaft (Wyrd, Gnosis etc.)

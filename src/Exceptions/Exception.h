@@ -24,6 +24,7 @@
 #include <QString>
 
 #include "../Datatypes/cv_Trait.h"
+#include "../Datatypes/cv_Shape.h"
 
 
 /**
@@ -321,6 +322,24 @@ class eMissingUserEntry : public eUserEntry {
 		 * Ausnahme: Benutzereingabe fehlt.
 		 */
 		eMissingUserEntry();
+};
+
+
+/**
+ * @brief Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.
+ */
+class eWerewolfShape : public Exception {
+	public:
+		eWerewolfShape();
+};
+
+/**
+ * @brief Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.
+ */
+class eWerewolfShapeNotExisting : public eWerewolfShape {
+	public:
+		eWerewolfShapeNotExisting( cv_Shape::WerewolfShape shape );
+		eWerewolfShapeNotExisting( QString shape );
 };
 
 #endif

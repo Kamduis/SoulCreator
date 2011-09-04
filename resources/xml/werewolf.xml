@@ -73,6 +73,28 @@
 			</FightingStyle>
 		</Merit>
 		<Power>
+			<trait name="Purity">
+				<cheap>Rahu</cheap>
+				<cheap>Hunters in Darkness</cheap>
+			</trait>
+			<trait name="Glory">
+				<cheap>Cahalith</cheap>
+				<cheap>Blood Talons</cheap>
+			</trait>
+			<trait name="Honor">
+				<cheap>Elodoth</cheap>
+				<cheap>Storm Lords</cheap>
+			</trait>
+			<trait name="Wisdom">
+				<cheap>Ithaeur</cheap>
+				<cheap>Bone Shadows</cheap>
+			</trait>
+			<trait name="Cunning">
+				<cheap>Irraka</cheap>
+				<cheap>Iron Masters</cheap>
+			</trait>
+		</Power>
+<!--		<Power>
 			<trait name="Full Moon">
 				<cheap>Rahu</cheap>
 				<only>Rahu</only>
@@ -244,6 +266,6 @@
 			</trait>
 			<trait name="Weakness">
 			</trait>
-		</Power>
+		</Power>-->
 	</traits>
 </SoulCreator>

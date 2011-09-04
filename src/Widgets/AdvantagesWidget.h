@@ -48,6 +48,7 @@
  *
  * \todo Eine fuelWidget-Klasse muß erstellt und hier eingefügt werden, damit auch Mana, Glamour etc. angezeigt wird. Und zwar soviel, wie in den Template-DAteien festgelegt wird.
  **/
+
 class AdvantagesWidget : public QWidget {
 		Q_OBJECT
 
@@ -72,6 +73,9 @@ class AdvantagesWidget : public QWidget {
 		CalcAdvantages* calcAdvantages;
 		MoralityWidget* moralityWidget;
 
+		QLabel* labelSizeValue;
+		QLabel* labelInitiativeValue;
+		QLabel* labelSpeedValue;
 		QLabel* labelSuper;
 		QLabel* labelFuel;
 		TraitDots* dotsHealth;
@@ -82,10 +86,25 @@ class AdvantagesWidget : public QWidget {
 	public slots:
 
 	private slots:
-		void printHealth(int value);
-		void hideSuper(cv_Species::SpeciesFlag species);
-		void setFuelMaximum(cv_Species::SpeciesFlag species);
-		void setFuelMaximum(int value);
+		/**
+		 * Schreibe die Größe in das Widget.
+		 **/
+		void writeSize( int size );
+		void writeSize( cv_Species::SpeciesFlag );
+		/**
+		 * Schreibe die Initiative in das Widget.
+		 **/
+		void writeInitiative( int initiative );
+		void writeInitiative( cv_Species::SpeciesFlag );
+		/**
+		 * Schreibe den Speed in das Widget.
+		 **/
+		void writeSpeed( int speed );
+		void writeSpeed( cv_Species::SpeciesFlag );
+		void printHealth( int value );
+		void hideSuper( cv_Species::SpeciesFlag species );
+		void setFuelMaximum( cv_Species::SpeciesFlag species );
+		void setFuelMaximum( int value );
 // 		void changeSuper(cv_Trait trait);
 // 		void emitSuperChanged(int value);
 

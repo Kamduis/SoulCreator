@@ -26,6 +26,8 @@
 #include <QPainter>
 #include <QDebug>
 
+#include <math.h>
+
 #include "../Storage/StorageTemplate.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
@@ -49,7 +51,7 @@ void DrawSheet::construct() {
 	v_dotDiameterV = 1;
 	v_textHeight = 0;
 	v_textDotsHeightDifference = 0;
-	v_colorFill = QColor( 255, 0, 0 );
+	v_colorFill = QColor( 0, 0, 0 );
 
 	character = StorageCharacter::getInstance();
 	calcAdvantages = new CalcAdvantages( this );
@@ -80,7 +82,7 @@ void DrawSheet::print() {
 	} else if ( character->species() == cv_Species::Mage ) {
 		image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" );
 	} else if ( character->species() == cv_Species::Vampire ) {
-		image = QImage( ":/characterSheet/images/Charactersheet-Vampire-1.jpg" );
+		image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" );
 	} else if ( character->species() == cv_Species::Werewolf ) {
 		image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" );
 	} else {
@@ -106,7 +108,7 @@ void DrawSheet::print() {
 
 	qreal offsetHSkills = target.width() * 0.338;
 	qreal offsetVSkills = target.height() * 0.235;
-	qreal distanceVSkills = target.height() * 0.0179;
+	qreal distanceVSkills = target.height() * 0.01795;
 	qreal distanceVCat = target.height() * 0.1735;
 	qreal textWidthSkills = target.width() * 0.23;
 
@@ -119,11 +121,13 @@ void DrawSheet::print() {
 	int maxPowers = 0;
 	qreal offsetHPowers = 0;
 	qreal offsetVPowers = 0;
+	qreal distanceHPowers = 0;
 	qreal distanceVPowers = 0;
 	qreal textWidthPowers = 0;
 
 	qreal offsetHAdvantages = target.width() * 0.9823;
 	qreal offsetVAdvantages = target.height() * 0.2119;
+	qreal distanceHAdvantages = 0;	// Nur für Werwölfe mit mehreren Gestalten interessant.
 	qreal distanceVAdvantages = target.height() * 0.022;
 	qreal textWidthAdvantages = target.width() * 0.174;
 
@@ -183,10 +187,6 @@ void DrawSheet::print() {
 		offsetVSuper = target.height() * 0.4887;
 		distanceHSuper = target.width() * 0.016;
 
-		offsetHMorality = target.width() * 0.909;
-		offsetVMorality = target.height() * 0.716;
-		distanceVMorality = target.height() * 0.0143;
-
 		offsetHFuel = target.width() * 0.861;
 		offsetVFuel = target.height() * 0.544;
 		distanceHFuel = target.width() * 0.0032;
@@ -196,14 +196,158 @@ void DrawSheet::print() {
 		offsetVFuelPerTurn = target.height() * 0.527;
 		distanceHFuelPerTurn = target.height() * 0.045;
 
+		offsetHMorality = target.width() * 0.909;
+		offsetVMorality = target.height() * 0.716;
+		distanceVMorality = target.height() * 0.0143;
+
 		maxPowers = 8;
 		offsetHPowers = offsetHMerits;
 		offsetVPowers = offsetVSkills;
 		distanceVPowers = distanceVMerits;
 		textWidthPowers = textWidthMerits;
 	} else if ( character->species() == cv_Species::Mage ) {
+		offsetHAttributes = target.width() * 0.341;
+		offsetVAttributes = target.height() * 0.158;
+		distanceHAttributes = target.width() * 0.2865;
+		distanceVAttributes = target.height() * 0.016;
+
+		offsetHSkills = target.width() * 0.2995;
+		offsetVSkills = target.height() * 0.2405;
+		distanceVCat = target.height() * 0.1787;
+		textWidthSkills = target.width() * 0.186;
+
+		maxMerits = 17;
+		offsetHMerits = target.width() * 0.642;
+		offsetVMerits = target.height() * 0.344;
+		textWidthMerits = target.width() * 0.268;
+
+		offsetHAdvantages = target.width() * 0.83;
+		offsetVAdvantages = target.height() * 0.215;
+
+		offsetHHealth = target.width() * 0.749;
+		offsetVHealth = target.height() * 0.351;
+
+		offsetHWillpower = target.width() * 0.766;
+		offsetVWillpower = target.height() * 0.4067;
+
+		offsetHSuper = target.width() * 0.771;
+		offsetVSuper = target.height() * 0.4695;
+		distanceHSuper = target.width() * 0.016;
+
+		offsetHFuel = target.width() * 0.8945;
+		offsetVFuel = target.height() * 0.5215;
+		distanceHFuel = target.width() * 0.0032;
+		squareSizeFuel = target.width() * 0.014;
+
+		offsetHFuelPerTurn = target.width() * 0.915;
+		offsetVFuelPerTurn = target.height() * 0.5045;
+		distanceHFuelPerTurn = target.height() * 0.045;
+
+		offsetHMorality = target.width() * 0.9575;
+		offsetVMorality = target.height() * 0.695;
+		distanceVMorality = target.height() * 0.0143;
+
+		maxPowers = 10;
+		offsetHPowers = target.width() * 0.469;
+		offsetVPowers = offsetVSkills;
+		distanceHPowers = target.width() * 0.1245;
+		distanceVPowers = target.height() * 0.0143;
 	} else if ( character->species() == cv_Species::Vampire ) {
+		offsetHAttributes = target.width() * 0.3555;
+		offsetVAttributes = target.height() * 0.194;
+		distanceHAttributes = target.width() * 0.2565;
+		distanceVAttributes = target.height() * 0.0157;
+
+		offsetHSkills = target.width() * 0.2895;
+		offsetVSkills = target.height() * 0.28;
+		distanceVCat = target.height() * 0.1703;
+		textWidthSkills = target.width() * 0.14;
+
+		maxMerits = 14;
+		offsetHMerits = target.width() * 0.591;
+		offsetVMerits = target.height() * 0.4444;
+		textWidthMerits = target.width() * 0.2275;
+
+		offsetHAdvantages = target.width() * 0.79;
+		offsetVAdvantages = target.height() * 0.255;
+
+		offsetHHealth = target.width() * 0.668;
+		offsetVHealth = target.height() * 0.392;
+
+		offsetHWillpower = target.width() * 0.7178;
+		offsetVWillpower = target.height() * 0.448;
+
+		offsetHSuper = target.width() * 0.723;
+		offsetVSuper = target.height() * 0.506;
+		distanceHSuper = target.width() * 0.016;
+
+		offsetHFuel = target.width() * 0.8441;
+		offsetVFuel = target.height() * 0.5605;
+		distanceHFuel = target.width() * 0.00315;
+		squareSizeFuel = target.width() * 0.014;
+
+		offsetHFuelPerTurn = target.width() * 0.867;
+		offsetVFuelPerTurn = target.height() * 0.541;
+		distanceHFuelPerTurn = target.height() * 0.045;
+
+		offsetHMorality = target.width() * 0.9103;
+		offsetVMorality = target.height() * 0.735;
+		distanceVMorality = target.height() * 0.0143;
+
+		maxPowers = 8;
+		offsetHPowers = offsetHMerits;
+		offsetVPowers = offsetVSkills;
+		distanceVPowers = distanceVMerits;
+		textWidthPowers = textWidthMerits;
 	} else if ( character->species() == cv_Species::Werewolf ) {
+		offsetHAttributes = target.width() * 0.285;
+		offsetVAttributes = target.height() * 0.146;
+		distanceHAttributes = target.width() * 0.235;
+		distanceVAttributes = target.height() * 0.016;
+
+		offsetHSkills = target.width() * 0.299;
+		offsetVSkills = target.height() * 0.24;
+		distanceVCat = target.height() * 0.1734;
+		textWidthSkills = target.width() * 0.186;
+
+		maxMerits = 13;
+		offsetHMerits = target.width() * 0.642;
+		offsetVMerits = target.height() * 0.342;
+		textWidthMerits = target.width() * 0.268;
+
+		offsetHAdvantages = target.width() * 0.2;
+		offsetVAdvantages = target.height() * 0.83;
+		distanceHAdvantages = target.width() * 0.196;
+		distanceVAdvantages = target.height() * 0.017;
+
+		offsetHHealth = target.width() * 0.749;
+		offsetVHealth = target.height() * 0.244;
+
+		offsetHWillpower = target.width() * 0.766;
+		offsetVWillpower = target.height() * 0.3073;
+
+		offsetHSuper = target.width() * 0.771;
+		offsetVSuper = target.height() * 0.3715;
+		distanceHSuper = target.width() * 0.016;
+
+		offsetHFuel = target.width() * 0.8945;
+		offsetVFuel = target.height() * 0.433;
+		distanceHFuel = target.width() * 0.0032;
+		squareSizeFuel = target.width() * 0.014;
+
+		offsetHFuelPerTurn = target.width() * 0.915;
+		offsetVFuelPerTurn = target.height() * 0.415;
+		distanceHFuelPerTurn = target.height() * 0.045;
+
+		offsetHMorality = target.width() * 0.9555;
+		offsetVMorality = target.height() * 0.6144;
+		distanceVMorality = target.height() * 0.0143;
+
+		maxPowers = 5;
+		offsetHPowers = target.width() * 0.469;
+		offsetVPowers = offsetVSkills;
+		distanceHPowers = target.width() * 0.1245;
+		distanceVPowers = target.height() * 0.0143;
 	} else {
 		throw eSpeciesNotExisting( character->species() );
 	}
@@ -223,14 +367,16 @@ void DrawSheet::print() {
 	drawAttributes( &painter, offsetHAttributes, offsetVAttributes, distanceHAttributes, distanceVAttributes );
 	drawSkills( &painter, offsetHSkills, offsetVSkills, distanceVSkills, distanceVCat, textWidthSkills );
 	drawMerits( &painter, offsetHMerits, offsetVMerits, distanceVMerits, textWidthMerits, maxMerits );
-	drawAdvantages( &painter, offsetHAdvantages, offsetVAdvantages, distanceVAdvantages, textWidthAdvantages );
+	drawAdvantages( &painter, offsetHAdvantages, offsetVAdvantages, distanceVAdvantages, textWidthAdvantages, character->species(), distanceHAdvantages );
 	drawHealth( &painter, offsetHHealth, offsetVHealth, distanceHHealth, dotSizeFactor );
 	drawWillpower( &painter, offsetHWillpower, offsetVWillpower, distanceHWillpower, dotSizeFactor );
 	drawMorality( &painter, offsetHMorality, offsetVMorality, distanceVMorality );
 
 	if ( character->species() != cv_Species::Human ) {
-		drawPowers( &painter, offsetHPowers, offsetVPowers, distanceVPowers, textWidthPowers, maxPowers );
+		drawPowers( &painter, offsetHPowers, offsetVPowers, distanceVPowers, textWidthPowers, maxPowers, character->species(), distanceHPowers );
+
 		drawSuper( &painter, offsetHSuper, offsetVSuper, distanceHSuper, dotSizeFactor );
+
 		drawFuelMax( &painter, offsetHFuel, offsetVFuel, distanceHFuel, squareSizeFuel );
 		drawFuelPerTurn( &painter, offsetHFuelPerTurn, offsetVFuelPerTurn, distanceHFuelPerTurn );
 	}
@@ -251,6 +397,11 @@ void DrawSheet::drawAttributes( QPainter* painter, qreal offsetH, qreal offsetV,
 	QList< cv_Trait > list;
 
 	for ( int i = 0; i < categories.count(); i++ ) {
+		// Bei Werwölfen ist der Abstand zwischen den Kategorien nicht identisch.
+		if ( character->species() == cv_Species::Werewolf && i > 1 ) {
+			distanceH *= 1.164;
+		}
+
 		list = character->attributes( categories.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
@@ -353,22 +504,77 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 	}
 }
 
-void DrawSheet::drawAdvantages( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth ) {
-	// Size
-	QRect textRect = QRect( offsetH - textWidth, offsetV + distanceV * 0, textWidth, v_textHeight );
-	painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->size() ) );
+void DrawSheet::drawAdvantages( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth, cv_Species::SpeciesFlag species,
+								qreal distanceH ) {
+	QRect textRect;
 
-	// Initiative
-	textRect = QRect( offsetH - textWidth, offsetV + distanceV * 1, textWidth, v_textHeight );
-	painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->initiative() ) );
+	// Werwölfe haben mehrere Gestalten und für jede davon auch berechnete Werte
 
-	// Speed
-	textRect = QRect( offsetH - textWidth, offsetV + distanceV * 2, textWidth, v_textHeight );
-	painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->speed() ) );
+	if ( species == cv_Species::Werewolf ) {
+		// Size
+		textRect = QRect( offsetH - textWidth, offsetV, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->size( cv_Shape::Hishu ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 1, offsetV, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->size( cv_Shape::Dalu ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 2, offsetV, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->size( cv_Shape::Gauru ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 3, offsetV, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->size( cv_Shape::Urshul ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 4, offsetV, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->size( cv_Shape::Urhan ) ) );
 
-	// Defense
-	textRect = QRect( offsetH - textWidth, offsetV + distanceV * 3, textWidth, v_textHeight );
-	painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+		// Initiative
+		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 1, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->initiative( cv_Shape::Hishu ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 1, offsetV + distanceV * 1, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->initiative( cv_Shape::Dalu ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 2, offsetV + distanceV * 1, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->initiative( cv_Shape::Gauru ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 3, offsetV + distanceV * 1, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->initiative( cv_Shape::Urshul ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 4, offsetV + distanceV * 1, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->initiative( cv_Shape::Urhan ) ) );
+
+		// Speed
+		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 2, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->speed( cv_Shape::Hishu ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 1, offsetV + distanceV * 2, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->speed( cv_Shape::Dalu ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 2, offsetV + distanceV * 2, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->speed( cv_Shape::Gauru ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 3, offsetV + distanceV * 2, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->speed( cv_Shape::Urshul ) ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 4, offsetV + distanceV * 2, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->speed( cv_Shape::Urhan ) ) );
+
+		// Defense
+		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 3, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 1, offsetV + distanceV * 3, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 2, offsetV + distanceV * 3, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 3, offsetV + distanceV * 3, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 4, offsetV + distanceV * 3, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+	} else {
+		// Size
+		QRect textRect = QRect( offsetH - textWidth, offsetV, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->size() ) );
+
+		// Initiative
+		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 1, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->initiative() ) );
+
+		// Speed
+		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 2, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->speed() ) );
+
+		// Defense
+		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 3, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+	}
 
 	// Armor
 }
@@ -400,7 +606,7 @@ void DrawSheet::drawMorality( QPainter* painter, qreal offsetH, qreal offsetV, q
 	}
 }
 
-void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth, int maxNumber ) {
+void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth, int maxNumber, cv_Species::SpeciesFlag species, qreal distanceH ) {
 	QList< cv_Trait > listToUse;
 
 	try {
@@ -410,33 +616,54 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 		emit enforcedTraitLimits( cv_Trait::Power );
 	}
 
-	for ( int j = 0; j < listToUse.count(); j++ ) {
-		for ( int k = 0; k < listToUse.at( j ).value; k++ ) {
-			// Punkte malen.
-			QRectF dotsRect( offsetH + v_dotDiameterH*k, offsetV + distanceV*j, v_dotDiameterH, v_dotDiameterV );
-			painter->drawEllipse( dotsRect );
+	if ( species == cv_Species::Mage || species == cv_Species::Werewolf ) {
+		qreal half = ceil( static_cast<qreal>( listToUse.count() ) / 2 );
+
+		for ( int i = 0; i < half; i++ ) {
+			for ( int j = 0; j < listToUse.at( i ).value; j++ ) {
+				// Punkte malen.
+				QRectF dotsRect( offsetH + v_dotDiameterH*j, offsetV + distanceV*i, v_dotDiameterH, v_dotDiameterV );
+				painter->drawEllipse( dotsRect );
+			}
 		}
 
-		QString name = listToUse.at( j ).name;
+		for ( int i = half; i < listToUse.count(); i++ ) {
+			for ( int j = 0; j < listToUse.at( i ).value; j++ ) {
+				// Punkte malen.
+				QRectF dotsRect( offsetH + distanceH - v_dotDiameterH*j, offsetV + distanceV*( i - half ), v_dotDiameterH, v_dotDiameterV );
+				painter->drawEllipse( dotsRect );
+			}
+		}
+	} else {
+		for ( int j = 0; j < listToUse.count(); j++ ) {
+			for ( int k = 0; k < listToUse.at( j ).value; k++ ) {
+				// Punkte malen.
+				QRectF dotsRect( offsetH + v_dotDiameterH*k, offsetV + distanceV*j, v_dotDiameterH, v_dotDiameterV );
+				painter->drawEllipse( dotsRect );
+			}
 
-		QString customText = listToUse.at( j ).customText;
+			QString name = listToUse.at( j ).name;
 
-		// Namen
-		QRect textRect( offsetH - textWidth, offsetV - v_textDotsHeightDifference + distanceV*j, textWidth, v_textHeight );
-		painter->drawText( textRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, name );
+			QString customText = listToUse.at( j ).customText;
 
-		// Zusatztext
+			// Namen
+			QRect textRect( offsetH - textWidth, offsetV - v_textDotsHeightDifference + distanceV*j, textWidth, v_textHeight );
+			painter->drawText( textRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, name );
 
-		if ( !customText.isEmpty() ) {
-			painter->save();
-			QFont lclFont;
-			lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
-			painter->setFont( lclFont );
-			painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText + " " );
-			painter->restore();
+			// Zusatztext
+
+			if ( !customText.isEmpty() ) {
+				painter->save();
+				QFont lclFont;
+				lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
+				painter->setFont( lclFont );
+				painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText + " " );
+				painter->restore();
+			}
 		}
 	}
 }
+
 
 void DrawSheet::drawSuper( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal dotSizeFactor ) {
 	int value = character->superTrait();
@@ -466,25 +693,24 @@ void DrawSheet::drawFuelMax( QPainter* painter, qreal offsetH, qreal offsetV, qr
 
 	painter->save();
 
-	painter->setOpacity(0.5);
+	painter->setOpacity( 0.5 );
 
 	for ( int i = 0; i < 20 - value; i++ ) {
-		QRect fuelRect = QRect( offsetH - (widthPerSquare + distanceH) * i, offsetV, -widthPerSquare, widthPerSquare );
+		QRect fuelRect = QRect( offsetH - ( widthPerSquare + distanceH ) * i, offsetV, -widthPerSquare, widthPerSquare );
 // 		painter->drawLine( fuelRect.bottomLeft(), fuelRect.topRight() );
 // 		painter->drawLine( fuelRect.topLeft(), fuelRect.bottomRight() );
-		painter->drawRect(fuelRect);
+		painter->drawRect( fuelRect );
 	}
 
 	painter->restore();
 }
 
-void DrawSheet::drawFuelPerTurn( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH )
-{
+void DrawSheet::drawFuelPerTurn( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH ) {
 	StorageTemplate storage;
 	int value = storage.fuelPerTurn( character->species(), character->superTrait() );
 
-	QRect textRect = QRect(offsetH, offsetV, distanceH, v_textHeight );
-	painter->drawText(textRect, Qt::AlignHCenter | Qt::AlignBottom, QString::number(value) );
+	QRect textRect = QRect( offsetH, offsetV, distanceH, v_textHeight );
+	painter->drawText( textRect, Qt::AlignHCenter | Qt::AlignBottom, QString::number( value ) );
 // 	painter->drawRect(textRect);
 }
 
@@ -524,7 +750,7 @@ QList< cv_Trait > DrawSheet::getTraits( cv_Trait::Type type, int maxNumber, bool
 			}
 
 			// Sobald keine Eigenschaften mehr auf den Charakterbogen passen, hören wir auf, weitere hinzuzuschreiben. Das gilt natürlich nur, wenn maxNumber größer als 0 ist.
-			if ( maxNumber > 0 && iter >= maxNumber ) {
+			if ( maxNumber > 0 && iter > maxNumber ) {
 				if ( enforceTraitLimits ) {
 					break;
 				} else {
