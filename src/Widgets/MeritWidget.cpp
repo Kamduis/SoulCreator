@@ -26,7 +26,7 @@
 #include <QToolBox>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "CharaTrait2.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
 #include "../CMakeConfig.h"
@@ -68,7 +68,6 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 	QList< cv_Trait > list;
 
 	// Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
-
 	for ( int i = 0; i < v_categories.count(); i++ ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 		QWidget* widgetMeritCategory = new QWidget();
@@ -80,9 +79,13 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
-				CharaTrait *charaTrait = new CharaTrait( this, list.at( j ) );
-				// Wert definitiv ändern, damit alle Werte in den Charakter-Speicher übernommen werden.
-				charaTrait->setValue( 5 );
+				// Anlegen der Eigenschaft im Speicher
+				cv_Trait* traitPtr = character->addTrait(list[j]);
+
+				qDebug() << Q_FUNC_INFO << traitPtr;
+
+				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
+				CharaTrait2 *charaTrait = new CharaTrait2( this, traitPtr );
 				charaTrait->setValue( 0 );
 				layoutMeritCategory->addWidget( charaTrait );
 

@@ -89,7 +89,7 @@ class StorageCharacter : public QObject {
 		 * Diese Funktion gibt eine Möglichkeit, die einzig existierende Instanz dieser Klasse zu zerstören.
 		 **/
 		static void destroy();
-		
+
 		/**
 		 * Gibt die Spezies des Charakters aus.
 		 **/
@@ -108,6 +108,10 @@ class StorageCharacter : public QObject {
 		 * \bug Sehr zeitaufwendige Funktion, da bei jedem aufruf eine Liste mühsam gefüllt wird. Und diese Funktion wird \emph{oft} aufgerufen.
 		 **/
 		QList< cv_Trait > traits( cv_Trait::Type type, cv_Trait::Category category ) const;
+		/**
+		 * Gibt die Eigenschaft auf, auf welche mit dem Zeiger im Argument verwiesen wird.
+		 **/
+		cv_Trait trait( const cv_Trait* traitPtr ) const;
 		/**
 		 * Gibt eine Liste aller Attribute des Charkaters aus.
 		 **/
@@ -146,6 +150,8 @@ class StorageCharacter : public QObject {
 		 * \todo Sollte ich nicht so machen. So werden ja alle Daten aus dem Template in den Charkater geschrieben. ich woll dort aber nur stehen haben, was auch der Charkater hat. Insbesondere bei Spezialisierungen ist das wichtig. Vielleicht einfach die Spazialisierungen wieder rauslöschen.
 		 *
 		 * \todo Anstatt alles in einer Liste zu haben, die ich dann auswerte, sollte ich vielleicht für jeden Typ und jede Kategorie eine eigene Liste haben und wenn ich dann etwas ausgebe, hänge ich die Listen zur not einfach aneinander an. Geht schneller als bei der Speziellen ausgabe inhalt für inhalt an eine neue Liste zu kleben.
+		 *
+		 * \deprecated Soll ersetzt werden durch eine Liste von zeigern auf Trait.
 		 **/
 		static QList< cv_Trait > v_traits;
 		static int v_superTrait;
@@ -177,23 +183,37 @@ class StorageCharacter : public QObject {
 		/**
 		 * Fügt dem Speicher eine neue Eigenschaft hinzu.
 		 *
+		 * \return Es wird ein Zeiger auf diese Eigenschaft zurückgegeben.
+		 *
 		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
 		 *
 		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 		 **/
-		void addTrait(cv_Trait trait);
+		cv_Trait* addTrait( cv_Trait trait );
+		/**
+		 * Ändert eine Eigenschaft im Speicher.
+		 *
+		 * \warning Obwohl ich das Argument als const definiert habe, werde ich die Eigenschaft ändern. Das liegt daran, daß die zeiger alle als const definiert sind und ich kein typecasting machen möchte.
+		 **/
+		void modifyTrait( const cv_Trait* traitPtr, cv_Trait trait );
 		/**
 		 * Verändert den Wert des Super-Attributs.
 		 *
 		 * Bei einer Veränderung wird das Signal superTraitChanged() ausgesandt.
 		 **/
-		void setSuperTrait(int value);
+		void setSuperTrait( int value );
 		/**
 		 * Verändert den Wert der Moral.
 		 *
 		 * Bei einer Veränderung wird das Signal moralityChanged() ausgesandt.
 		 **/
-		void setMorality(int value);
+		void setMorality( int value );
+		/**
+		 * Löscht alle Charakterwerte.
+		 *
+		 * \note Tatsächlich werden die Werte nicht gelöscht, sondern auf 0 gesetzt.
+		 **/
+		void resetTraits();
 
 	private slots:
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
@@ -207,6 +227,7 @@ class StorageCharacter : public QObject {
 		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
 		**/
 		void traitChanged( cv_Trait trait );
+		void traitChanged( cv_Trait* trait );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich der Wert des Super-Attributs verändert.
 		**/

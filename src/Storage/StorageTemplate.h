@@ -154,6 +154,8 @@ class StorageTemplate : public QObject {
 		static QList< cv_Species > v_species;
 		/**
 		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
+		 *
+		 * \deprecated Es sollte lieber QList< Trait* > v_traits verwendet werden.
 		 **/
 		static QList< cv_Trait > v_traits;
 		/**
@@ -174,6 +176,8 @@ class StorageTemplate : public QObject {
 		 * Fügt eine Eigenschaft hinzu.
 		 *
 		 * \warning Es werden nur eigenschaften hinzugefügt, die nicht schon existieren.
+		 *
+		 * \deprecated Nichtmehr verwenden.
 		 **/
 		void appendTrait( cv_Trait trait );
 		/**

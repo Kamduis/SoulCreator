@@ -140,6 +140,10 @@ class CharaTrait : public TraitLine {
 
 		/**
 		 * Ändert alle Parameter dieses Widgets, damit es der übergebenen Eigenschaft entspricht.
+		 *
+		 * \bug Das Problem ist aber jetzt, daß ich ja nicht weiß, ob nach dieser Eigenschaft nicht noch eine kommt, die den passenden Zusatztext hat. Und jetzt werden sie alle mit dem ersten vorkommenden Zusatztext überschrieben. Vielleicht indem man eine Schalter in character einbaut, ob diese Eigenschaft schon eine Repräsentation besitzt.
+		 *
+		 * \todo Einen Zeiger in character setzen, der in der passenden Eigenscahft direkt auf dieses Widget verweist. Damit spare ich mir viele Schleifendurchläufe und vermeide Mehrdeutigkeiten.
 		 **/
 		virtual void setTrait( cv_Trait trait );
 

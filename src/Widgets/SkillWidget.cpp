@@ -25,7 +25,7 @@
 #include <QGridLayout>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "CharaTrait2.h"
 #include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
@@ -34,6 +34,8 @@
 
 
 SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
+	character = StorageCharacter::getInstance();
+	
 	layout = new QVBoxLayout( this );
 	setLayout( layout );
 
@@ -51,9 +53,13 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 		list = storage->skills( categories.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
-			CharaTrait *charaTrait = new CharaTrait( this, list.at( j ) );
-			// Wert definitiv ändern, damit alle Werte in den Charakter-Speicher übernommen werden.
-			charaTrait->setValue( 5 );
+			// Anlegen der Eigenschaft im Speicher
+			cv_Trait* traitPtr = character->addTrait( list[j] );
+
+			qDebug() << Q_FUNC_INFO << traitPtr;
+
+			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
+			CharaTrait2 *charaTrait = new CharaTrait2( this, traitPtr );
 			charaTrait->setValue( 0 );
 			// Nur Fertigkeiten haben Spezialisierungen.
 			if ( type = cv_Trait::Skill ) {
@@ -93,7 +99,7 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 		if ( i == list.count() || i == list.count() + storage->skills( categories.at( 1 ) ).count() + 1 ) {
 			i++;
 		}
-		CharaTrait *trait = qobject_cast<CharaTrait*>( layout->itemAt( i )->widget() );
+		CharaTrait2 *trait = qobject_cast<CharaTrait2*>( layout->itemAt( i )->widget() );
 
 		if ( trait->name() != skillName ) {
 			trait->setSpecialtyButtonChecked( false );

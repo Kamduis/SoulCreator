@@ -148,7 +148,12 @@ void CharaTrait::hideDescriptionWidget() {
 
 void CharaTrait::setTrait( cv_Trait trait ) {
 	if ( type() == trait.type && category() == trait.category && name() == trait.name ) {
-		if ( !custom() || text() == trait.customText ) {
+		if ( !custom() ) {
+			setValue( trait.value );
+		} else if ( text() == trait.customText ){
+			setValue( trait.value );
+		} else if ( text() == "" ){
+			setText(trait.customText);
 			setValue( trait.value );
 		}
 	}

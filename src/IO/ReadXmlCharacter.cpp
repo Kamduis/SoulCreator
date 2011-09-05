@@ -132,6 +132,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 					trait.custom = false;
 					trait.customText = "";
 				} else {
+// 					qDebug() << Q_FUNC_INFO << customText;
 					trait.custom = true;
 					trait.customText = customText;
 				}

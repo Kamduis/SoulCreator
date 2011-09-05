@@ -132,13 +132,6 @@ class MainWindow : public QMainWindow {
 		 **/
 		WriteXmlCharacter* writeCharacter;
 
-		/**
-		 * Eine Simple Funktion, um alle Werte im gerade geöffneten Charater auf den selben Wert zu setzen.
-		 *
-		 * \warning Es wird nicht garantiert, daß dieser Wert angenommen wird. Manche Eigenschaften (MErits) können nicht beliebige Werte annehmen. Dann wird der nächstkleinere Wert angenommen.
-		 **/
-		void setCharacterValues( int value /** Der Wert, den alle Eigenschaften annehmen sollen */);
-
 // 		/**
 // 		 * Hier definiere ich Handgriffe, die der Benutzer eigentlich von Hand ausführen soll. Aber da ich das Programm teste, geht die beständig selbe Handlung auf den Geist.
 // 		 **/

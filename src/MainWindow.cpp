@@ -123,7 +123,6 @@ void MainWindow::populateUi() {
 	// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
-// 	merits = new ComboTraitWidget( this, cv_Trait::Merit );
 	merits = new MeritWidget( this );
 	powers = new PowerWidget( this );
 	advantages = new AdvantagesWidget( this );
@@ -159,25 +158,25 @@ void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_Tra
 
 
 void MainWindow::activate() {
-	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
-	for ( int k = 0; k < character->traitsAll().count(); k++ ) {
-		cv_Trait trait = character->traitsAll().at( k );
-// 		qDebug() << Q_FUNC_INFO << "Verändere" << trait.name << trait.value;
-		// Alten Wert speichern
-		int valueOld = trait.value;
-		// Verändern, damit er auch wirklich \emph{verändert} wurde
-		trait.value = 10;
-		// In den Speicher schicken.
-		character->addTrait( trait );
-		// Wieder auf alten Wert zurücksetzen.
-		trait.value = valueOld;
-		character->addTrait( trait );
-	}
-
-	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
-	character->setSpecies( cv_Species::Changeling );
-
-	character->setSpecies( cv_Species::Human );
+// 	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
+// 	for ( int k = 0; k < character->traitsAll().count(); k++ ) {
+// 		cv_Trait trait = character->traitsAll().at( k );
+// // 		qDebug() << Q_FUNC_INFO << "Verändere" << trait.name << trait.value;
+// 		// Alten Wert speichern
+// 		int valueOld = trait.value;
+// 		// Verändern, damit er auch wirklich \emph{verändert} wurde
+// 		trait.value = 10;
+// 		// In den Speicher schicken.
+// 		character->addTrait( trait );
+// 		// Wieder auf alten Wert zurücksetzen.
+// 		trait.value = valueOld;
+// 		character->addTrait( trait );
+// 	}
+// 
+// 	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
+// 	character->setSpecies( cv_Species::Changeling );
+// 
+// 	character->setSpecies( cv_Species::Human );
 }
 
 
@@ -213,7 +212,7 @@ void MainWindow::openCharacter() {
 		QFile* file = new QFile( filePath );
 
 		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
-		setCharacterValues( 0 );
+		character->resetTraits();
 
 		try {
 			readCharacter->read( file );
@@ -267,17 +266,6 @@ void MainWindow::saveCharacter() {
 	}
 }
 
-
-
-void MainWindow::setCharacterValues( int value ) {
-	for ( int k = 0; k < character->traitsAll().count(); k++ ) {
-		cv_Trait trait = character->traitsAll().at( k );
-		trait.value = value;
-		trait.details.clear();
-		// In den Speicher schicken.
-		character->addTrait( trait );
-	}
-}
 
 
 void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {

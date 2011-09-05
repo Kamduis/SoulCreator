@@ -253,6 +253,7 @@ void StorageTemplate::appendTrait( cv_Trait trait ) {
 }
 
 
+
 void StorageTemplate::appendSuperEffect( cv_SuperEffect effect ) {
 	v_superEffects.append( effect );
 }

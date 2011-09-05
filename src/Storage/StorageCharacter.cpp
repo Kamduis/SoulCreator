@@ -101,6 +101,14 @@ QList< cv_Trait > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Categ
 	return list;
 }
 
+cv_Trait StorageCharacter::trait( const cv_Trait* traitPtr ) const {
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( traitPtr == &v_traits.at( i ) ) {
+			return v_traits.at( i );
+		}
+	}
+}
+
 QList< cv_Trait > StorageCharacter::attributes( cv_Trait::Category category ) const {
 	return traits( cv_Trait::Attribute, category );
 }
@@ -113,40 +121,31 @@ QList< cv_Trait > StorageCharacter::merits( cv_Trait::Category category ) const 
 	return traits( cv_Trait::Merit, category );
 }
 
-void StorageCharacter::addTrait( cv_Trait trait ) {
-	bool exists = false;
 
-	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == trait.type && v_traits.at( i ).category == trait.category && v_traits.at( i ).name == trait.name ) {
-			if ( trait.custom ) {
-				// Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
-				if ( trait.customText.isEmpty() ) {
-// 					qDebug() << Q_FUNC_INFO << "Ersetze" << trait.name << "NICHT!";
-					return;
-				} else if ( v_traits.at( i ).customText == trait.customText ) {
-// 					qDebug() << Q_FUNC_INFO << "Klicke" << trait.name << "mit" << trait.customText;
-					exists = true;
-				}
-			} else {
-				exists = true;
-			}
-		}
+cv_Trait* StorageCharacter::addTrait( cv_Trait trait ) {
+	cv_Trait* traitPtr;
 
-		// Wenn ich die Eigenschaft schon finde, muß ich natürlich nicht bis zum Ende der Schleife laufen, sondern ersetze sie sofort und fertig.
-		if ( exists ) {
-// 			qDebug() << Q_FUNC_INFO << "Ersetze:" << trait.name << trait.customText << "mit" << trait.value;
-			v_traits.replace( i, trait );
-			break;
-		}
-	}
+// 	qDebug() << Q_FUNC_INFO << "Füge hinzu:" << trait.name << "mit" << trait.custom << "und" << trait.customText;
+	v_traits.append( trait );
+	traitPtr = &v_traits[ v_traits.count() - 1 ];
 
-	if ( !exists ) {
-// 		qDebug() << Q_FUNC_INFO << "Füge hinzu:" << trait.name << "mit" << trait.custom << "und" << trait.customText;
-		v_traits.append( trait );
-	}
+// 	Q_CHECK_PTR(traitPtr);
 
-	emit traitChanged( trait );
+// 	emit traitChanged( trait );
+// 	emit traitChanged( traitPtr );
+
+	return traitPtr;
 }
+
+void StorageCharacter::modifyTrait( const cv_Trait* traitPtr, cv_Trait trait ) {
+// 	for ( int i = 0; i < v_traits.count(); i++ ) {
+// 		if ( traitPtr == &v_traits.at( i ) ) {
+// 			v_traits.replace( i, trait );
+// 			qDebug() << Q_FUNC_INFO << traitPtr << "<->" << &v_traits.at( i );
+// 		}
+// 	}
+}
+
 
 
 
@@ -177,7 +176,8 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 
 			v_traits.replace( i, trait );
 
-			emit traitChanged( trait );
+// 			emit traitChanged( trait );
+// 			emit traitChanged( &v_traits[ i ] );
 
 			break;
 		}
@@ -199,15 +199,22 @@ void StorageCharacter::setSuperTrait( int value ) {
 	}
 }
 
-int StorageCharacter::morality() const
-{
+int StorageCharacter::morality() const {
 	return v_morality;
 }
-void StorageCharacter::setMorality( int value )
-{
-	if (v_morality != value){
+void StorageCharacter::setMorality( int value ) {
+	if ( v_morality != value ) {
 		v_morality = value;
-		emit moralityChanged(value);
+		emit moralityChanged( value );
 	}
 }
 
+void StorageCharacter::resetTraits() {
+	for ( int i = 0; i < v_traits.count();i++ ) {
+		cv_Trait trait = v_traits.at( i );
+		trait.value = 0;
+		trait.details.clear();
+
+		v_traits.replace( i, trait );
+	}
+}
