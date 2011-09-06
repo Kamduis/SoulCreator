@@ -66,7 +66,7 @@ void StorageCharacter::setSpecies( cv_Species::SpeciesFlag species ) {
 	if ( v_species != species ) {
 		v_species = species;
 
-// 		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
+		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
 
 		emit speciesChanged( species );
 	}
@@ -137,13 +137,27 @@ cv_Trait* StorageCharacter::addTrait( cv_Trait trait ) {
 	return traitPtr;
 }
 
-void StorageCharacter::modifyTrait( const cv_Trait* traitPtr, cv_Trait trait ) {
-// 	for ( int i = 0; i < v_traits.count(); i++ ) {
-// 		if ( traitPtr == &v_traits.at( i ) ) {
-// 			v_traits.replace( i, trait );
-// 			qDebug() << Q_FUNC_INFO << traitPtr << "<->" << &v_traits.at( i );
-// 		}
-// 	}
+void StorageCharacter::modifyTrait( cv_Trait trait ) {
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( trait.type == v_traits.at( i ).type && trait.category == v_traits.at( i ).category && trait.name == v_traits.at( i ).name ) {
+			// Custom bleibt immer gleich.
+			cv_Trait lcl_trait = trait;
+			lcl_trait.custom = v_traits.at( i ).custom;
+
+			if ( !lcl_trait.custom || lcl_trait.customText == v_traits.at( i ).customText || v_traits.at(i).customText.isEmpty() ) {
+// 				qDebug() << Q_FUNC_INFO << trait.customText << "vs." << v_traits.at( i ).customText << "bei" << trait.custom;
+
+				v_traits.replace( i, lcl_trait );
+// 				qDebug() << Q_FUNC_INFO << v_traits.at( i ).name << "Adresse:" << &v_traits[i] << "verändert zu" << v_traits.at( i ).value << "Und zusatztext:" << v_traits.at( i ).customText << v_traits.at( i ).custom;
+
+				emit traitChanged( &v_traits[i] );
+
+				// Wenn der Eintrage geschrieben ist, wird die Schleife abgebrochen.
+// 				qDebug() << Q_FUNC_INFO << "breche ab";
+				break;
+			}
+		}
+	}
 }
 
 

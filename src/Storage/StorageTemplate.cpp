@@ -191,11 +191,28 @@ QList< cv_Trait > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Catego
 	}
 
 	if ( traits.isEmpty() ) {
-// 		qDebug() << Q_FUNC_INFO << "Trait Typ" << type << "mit Kategorie" << category << "existiert nicht!";
+		qDebug() << Q_FUNC_INFO << "Trait Typ" << type << "mit Kategorie" << category << "existiert nicht!";
 // 		throw eTraitNotExisting();
 	}
 
 	return traits;
+}
+
+QList< cv_Trait* > StorageTemplate::traitsPtr( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
+	QList< cv_Trait* > traitsPtr;
+
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category && v_traits.at( i ).era.testFlag( era ) && v_traits.at( i ).age.testFlag( age ) ) {
+			traitsPtr.append( &v_traits[i] );
+		}
+	}
+
+	if ( traitsPtr.isEmpty() ) {
+		qDebug() << Q_FUNC_INFO << "Trait Typ" << type << "mit Kategorie" << category << "existiert nicht!";
+// 		throw eTraitNotExisting();
+	}
+
+	return traitsPtr;
 }
 
 

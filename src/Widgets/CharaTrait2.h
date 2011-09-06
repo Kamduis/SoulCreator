@@ -48,12 +48,16 @@ class CharaTrait2 : public TraitLine {
 		/**
 		 * An diesen Konstruktor kann direkt die Eigenschaft übergeben werden, welche dieses Widget anzeigt.
 		 **/
-		CharaTrait2( QWidget *parent, cv_Trait* trait );
+		CharaTrait2( QWidget *parent, cv_Trait* trait, cv_Trait* traitStorage = 0 );
 
 		/**
 		 * Gibt den Wert zurück, der hier angezeigt wird bzw. werden soll.
 		 **/
 		int value() const;
+		/**
+		 * Gibt den Text zurück, der als zusätzliche Beschreibung angezeigt werden soll.
+		 **/
+		QString customText() const;
 		/**
 		 * Gibt den Typ zurück, dem die hier dargestellte Eigenschaft angehört.
 		 **/
@@ -80,6 +84,7 @@ class CharaTrait2 : public TraitLine {
 		StorageCharacter *character;
 
 		cv_Trait* ptr_trait;
+		cv_Trait* ptr_traitStorage;
 
 		/**
 		 * Hilfsfunktion für checkTraitPrerequisites().
@@ -89,8 +94,16 @@ class CharaTrait2 : public TraitLine {
 	public slots:
 		/**
 		 * Legt den Wert der Eigenschaft fest.
+		 *
+		 * Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
 		 **/
-		void setValue( int value );
+		void setValue( int val );
+		/**
+		 * Legt den Zusatztext fest.
+		 *
+		 * Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
+		 **/
+		void setCustomText( QString txt );
 		/**
 		 * Legt den Typ der hier dargestellten Eigenschaft fest.
 		 **/
@@ -107,7 +120,33 @@ class CharaTrait2 : public TraitLine {
 		 * Legt fest, ob es sich um eine Eigenschaft mit einem erklärenden Text handelt.
 		 **/
 		void setCustom( bool sw );
-		void addSpecialty( cv_TraitDetail specialty );
+		
+		/**
+		 * Verbirgt die Schaltfläche für Spezialisierungen für alle Eigenschaften außer den Fertigkeiten.
+		 **/
+		void hideSpecialtyWidget( cv_Trait::Type type );
+		/**
+		 * Verbirgt die Textzeile für den Beschreibungstext bei allen, außer Merits mit custom=true.
+		 *
+		 * \todo Muß natürlich auch bei manchen Powers vorhanden sein.
+		 **/
+		void hideDescriptionWidget();
+
+		/**
+		 * Signal soll ausgesandt werden.
+		 **/
+		void emitSpecialtiesClicked(bool sw);
+		
+		/**
+		 * Sorgt dafür, daß das Widget disabled wird, wenn die Voraussetzungen nicht erfüllt sind. Diese Funktion überprüft nur, ob sich die Voraussetzungen verändert haben, weil sich diese eine Eigenschaft verändert hat.
+		 **/
+		void checkTraitPrerequisites( cv_Trait* trait /** Veränderte Eigenschaft, die \emph{möglicherweise} Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */);
+		/**
+		 * Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.
+		 *
+		 * Wenn nicht, werde sie versteckt und auf 0 gesetzt.
+		 **/
+		void hideTraitIfNotAvailable( cv_Species::SpeciesFlag species );
 
 		/**
 		 * Richtet den Zeiger auf die Eigenschaft im Speicher, welche von diesem Widget repräsentiert wird.
@@ -116,7 +155,21 @@ class CharaTrait2 : public TraitLine {
 		/**
 		 * Sorgt dafür daß das Widget aktualisiert wird und die Werte anzeigt, auf welche es zeigt.
 		 **/
-		void updateWidget();
+		void updateWidget(cv_Trait* trait);
+
+	signals:
+		void typeChanged( cv_Trait::Type type );
+		/**
+		 * Der Knopf zum Anzeigen der Spazialisierungen wurde gedrückt.
+		 **/
+		void traitChanged(cv_Trait* trait);
+		/**
+		 * Der Knopf zum Anzeigen der Spazialisierungen wurde gedrückt.
+		 **/
+		void specialtiesClicked( bool state /** Gibt an, welchen Zusatand (checked | unchecked) der Knopf nun hat. */,
+								 QString name /** der Name der Eigenschaft. */,
+								 QList< cv_TraitDetail > specialtyList /** Eine Liste der Spezialisierungen für diese Fertigkeit. Diese Liste beinhaltet zwar \emph{alle} Spezialisierungen für die spez */
+							   );
 };
 
 #endif

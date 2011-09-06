@@ -192,10 +192,8 @@ class StorageCharacter : public QObject {
 		cv_Trait* addTrait( cv_Trait trait );
 		/**
 		 * Ändert eine Eigenschaft im Speicher.
-		 *
-		 * \warning Obwohl ich das Argument als const definiert habe, werde ich die Eigenschaft ändern. Das liegt daran, daß die zeiger alle als const definiert sind und ich kein typecasting machen möchte.
 		 **/
-		void modifyTrait( const cv_Trait* traitPtr, cv_Trait trait );
+		void modifyTrait( cv_Trait trait );
 		/**
 		 * Verändert den Wert des Super-Attributs.
 		 *
@@ -226,7 +224,7 @@ class StorageCharacter : public QObject {
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
 		**/
-		void traitChanged( cv_Trait trait );
+// 		void traitChanged( cv_Trait trait );
 		void traitChanged( cv_Trait* trait );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich der Wert des Super-Attributs verändert.

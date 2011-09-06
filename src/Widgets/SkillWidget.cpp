@@ -45,30 +45,25 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
 
-	QList< cv_Trait > list;
-	QList< cv_TraitDetail > listDetails;
+	QList< cv_Trait* > list;
 
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < categories.count(); i++ ) {
-		list = storage->skills( categories.at( i ) );
+		list = storage->traitsPtr( type, categories.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			// Anlegen der Eigenschaft im Speicher
-			cv_Trait* traitPtr = character->addTrait( list[j] );
-
-			qDebug() << Q_FUNC_INFO << traitPtr;
+			cv_Trait lcl_trait = *list[j];
+			// Die Spezialisierungen werden nicht übernommen, da im Charakter nur jene gespeichert werden, die der Charakter auch tatsächlich hat.
+			lcl_trait.details.clear();
+			cv_Trait* traitPtr = character->addTrait( lcl_trait );
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-			CharaTrait2 *charaTrait = new CharaTrait2( this, traitPtr );
+			CharaTrait2 *charaTrait = new CharaTrait2( this, traitPtr, list[j] );
 			charaTrait->setValue( 0 );
+			
 			// Nur Fertigkeiten haben Spezialisierungen.
 			if ( type = cv_Trait::Skill ) {
-				// Es sollen die Spazialisierungen angezeigt werden können.
-				listDetails = storage->skillSpecialties( list.at( j ).name );
-
-				for ( int k = 0; k < listDetails.count(); k++ ) {
-					charaTrait->addSpecialty( listDetails.at( k ) );
-				}
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 			}

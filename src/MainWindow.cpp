@@ -146,11 +146,12 @@ void MainWindow::showCharacterTraits() {
 }
 
 void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
+	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
 
 	specialties->clear();
 
 	if ( sw ) {
+		qDebug() << Q_FUNC_INFO << "Test Specialties";
 		specialties->setSkill( skillName );
 		specialties->setSpecialties( specialtyList );
 	}
@@ -158,25 +159,25 @@ void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_Tra
 
 
 void MainWindow::activate() {
-// 	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
-// 	for ( int k = 0; k < character->traitsAll().count(); k++ ) {
-// 		cv_Trait trait = character->traitsAll().at( k );
-// // 		qDebug() << Q_FUNC_INFO << "Verändere" << trait.name << trait.value;
-// 		// Alten Wert speichern
-// 		int valueOld = trait.value;
-// 		// Verändern, damit er auch wirklich \emph{verändert} wurde
-// 		trait.value = 10;
-// 		// In den Speicher schicken.
-// 		character->addTrait( trait );
-// 		// Wieder auf alten Wert zurücksetzen.
-// 		trait.value = valueOld;
-// 		character->addTrait( trait );
-// 	}
-// 
-// 	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
-// 	character->setSpecies( cv_Species::Changeling );
-// 
-// 	character->setSpecies( cv_Species::Human );
+	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
+	for ( int k = 0; k < character->traitsAll().count(); k++ ) {
+		cv_Trait trait = character->traitsAll().at( k );
+// 		qDebug() << Q_FUNC_INFO << "Verändere" << trait.name << trait.value;
+		// Alten Wert speichern
+		int valueOld = trait.value;
+		// Verändern, damit er auch wirklich \emph{verändert} wurde
+		trait.value = 10;
+		// In den Speicher schicken.
+		character->modifyTrait( trait );
+		// Wieder auf alten Wert zurücksetzen.
+		trait.value = valueOld;
+		character->modifyTrait( trait );
+	}
+
+	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
+	character->setSpecies( cv_Species::Changeling );
+
+	character->setSpecies( cv_Species::Human );
 }
 
 

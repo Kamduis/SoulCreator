@@ -96,7 +96,6 @@ target_link_libraries(SoulCreator ${QT_LIBRARIES})
 # set(QT_USE_PHONON TRUE)
 # set(QT_DONT_USE_QTGUI TRUE)
 
-
 # # Doxygen
 # # Unter Windows funktioniert das automatische Ausführen von Doxygen nicht richtig.
 # IF (WIN32)

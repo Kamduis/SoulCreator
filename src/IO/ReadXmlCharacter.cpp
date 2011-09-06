@@ -129,11 +129,11 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 				trait.value = attributes().value( "value" ).toString().toInt();
 				QString customText = attributes().value( "custom" ).toString();
 				if ( customText.isEmpty() ) {
-					trait.custom = false;
+// 					trait.custom = false;
 					trait.customText = "";
 				} else {
 // 					qDebug() << Q_FUNC_INFO << customText;
-					trait.custom = true;
+// 					trait.custom = true;
 					trait.customText = customText;
 				}
 
@@ -160,7 +160,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 
 				trait.details = list;
 
-				character->addTrait( trait );
+				character->modifyTrait(trait);
 			} else
 				readUnknownElement();
 		}

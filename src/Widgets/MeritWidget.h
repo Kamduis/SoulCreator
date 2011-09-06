@@ -86,8 +86,10 @@ class MeritWidget : public QWidget {
 		 * Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
 		 *
 		 * \bug Merits mit Zusatztext werden nicht gezählt. Kann sein, daß das nur auftritt wenn nichts in der Textbox steht. Ist dann kein Problem, da es ohnehin nicht möglich sein dürfte, Werte einzugeben, wenn Zusatext nicht angegeben ist.
+		 *
+		 * \todo Momentan wird eine Liste mit allen Merits des Charakters erstellt und dann alle gezählt, deren Wert größer 0 ist. Das muß doch besser gehen.
 		 **/
-		void countMerits(cv_Trait trait);
+		void countMerits();
 
 	signals:
 // 		/**

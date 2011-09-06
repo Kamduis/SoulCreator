@@ -69,10 +69,10 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
 
-	QList< cv_Trait > list;
+	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < categories.count(); i++ ) {
-		list = storage.attributes( categories.at( i ) );
+		list = storage.traitsPtr( type, categories.at( i ) );
 		QGroupBox* categoriesBox = new QGroupBox();
 		QVBoxLayout* layoutCategories = new QVBoxLayout();
 		categoriesBox->setLayout( layoutCategories );
@@ -81,13 +81,10 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			// Anlegen der Eigenschaft im Speicher
-			cv_Trait* traitPtr = character->addTrait( list[j] );
-
-			qDebug() << Q_FUNC_INFO << traitPtr;
+			cv_Trait* traitPtr = character->addTrait( *list[j] );
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-			CharaTrait2 *trait = new CharaTrait2( this, traitPtr );
-// 			trait->setValue( 0 );
+			CharaTrait2 *trait = new CharaTrait2( this, traitPtr, list[j] );
 			trait->setValue( 1 );
 			layoutCategories->addWidget( trait );
 		}
