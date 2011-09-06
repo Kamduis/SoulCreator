@@ -29,6 +29,7 @@
 
 #include "../Datatypes/cv_TraitDetail.h"
 #include "../Storage/StorageTemplate.h"
+#include "../Storage/StorageCharacter.h"
 
 #include <QWidget>
 
@@ -53,6 +54,7 @@ class SkillWidget : public QWidget {
 	private:
 		QVBoxLayout* layout;
 		StorageTemplate* storage;
+		StorageCharacter* character;
 
 		QList< cv_Trait::Category > categories;
 

@@ -26,7 +26,7 @@
 #include <QGroupBox>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "CharaTrait2.h"
 #include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
@@ -36,6 +36,8 @@
 
 
 AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
+	character = StorageCharacter::getInstance();
+
 	layout = new QHBoxLayout( this );
 	setLayout( layout );
 
@@ -67,10 +69,10 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	categories.append( cv_Trait::Physical );
 	categories.append( cv_Trait::Social );
 
-	QList< cv_Trait > list;
+	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < categories.count(); i++ ) {
-		list = storage.attributes( categories.at( i ) );
+		list = storage.traitsPtr( type, categories.at( i ) );
 		QGroupBox* categoriesBox = new QGroupBox();
 		QVBoxLayout* layoutCategories = new QVBoxLayout();
 		categoriesBox->setLayout( layoutCategories );
@@ -78,8 +80,11 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 		layout->addWidget( categoriesBox );
 
 		for ( int j = 0; j < list.count(); j++ ) {
-			CharaTrait *trait = new CharaTrait( this, list.at( j ) );
-			trait->setValue( 0 );
+			// Anlegen der Eigenschaft im Speicher
+			cv_Trait* traitPtr = character->addTrait( *list[j] );
+
+			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
+			CharaTrait2 *trait = new CharaTrait2( this, traitPtr, list[j] );
 			trait->setValue( 1 );
 			layoutCategories->addWidget( trait );
 		}

@@ -124,6 +124,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 						writeAttribute( "name", list.at( k ).name );
 						writeAttribute( "value", QString::number( list.at( k ).value ) );
 
+						qDebug() << Q_FUNC_INFO << list.at(k).name << list.at(k).custom;
 						if ( list.at( k ).custom ) {
 							writeAttribute( "custom", list.at( k ).customText );
 						}

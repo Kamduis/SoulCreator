@@ -32,7 +32,6 @@
 
 #include "cv_Species.h"
 #include "cv_TraitDetail.h"
-// #include "cv_TraitPrerequisiteAnd.h"
 
 /**
  * @brief Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.

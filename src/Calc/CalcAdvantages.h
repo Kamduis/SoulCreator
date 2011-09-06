@@ -66,35 +66,35 @@ class CalcAdvantages : public QObject {
 		 *
 		 * \todo Bislang nur vom Merit Size abhängig. Nicht von anderen Merits oder dem Alter (Kinder haben Size = 4).
 		 **/
-		int calcSize( cv_Trait trait );
+		int calcSize( cv_Trait* trait );
 		/**
 		 * Berechnung der Initiative des Charakters.
 		 *
 		 * \todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig.
 		 **/
-		int calcInitiative( cv_Trait trait );
+		int calcInitiative( cv_Trait* trait );
 		/**
 		 * Berechnung der Geschwindigkeit des Charakters.
 		 *
 		 * \todo Bislang nur von Strength und Dexterity abhängig.
 		 **/
-		int calcSpeed( cv_Trait trait );
+		int calcSpeed( cv_Trait* trait );
 		/**
 		 * Berechnung der Defense
 		 *
 		 * \todo Bislang nicht von der Spezies abhängig. Tiere haben stets das größere von Dex und Wits als Defense.
 		 **/
-		int calcDefense( cv_Trait trait );
+		int calcDefense( cv_Trait* trait );
 		/**
 		 * Berechnung der Gesundheit.
 		 *
 		 * Dieser Slot wird nur bei einer Veränderung von Stamina angesprochen. Für eine Veränderung der Größe gibt es einen extra slot (siehe calcHealth( int size )).
 		 **/
-		int calcHealth( cv_Trait trait );
+		int calcHealth( cv_Trait* trait );
 		/**
 		 * Berechnung der Willenskraft.
 		 **/
-		int calcWillpower( cv_Trait trait );
+		int calcWillpower( cv_Trait* trait );
 		/**
 		 * Berechnung der Gesundheit.
 		 *

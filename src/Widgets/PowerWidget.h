@@ -31,6 +31,7 @@
 
 #include "../Datatypes/cv_TraitDetail.h"
 #include "Dialogs/SelectMeritsDialog.h"
+#include "../Storage/StorageCharacter.h"
 
 #include <QWidget>
 
@@ -50,6 +51,7 @@ class PowerWidget : public QWidget {
 
 	private:
 		QScrollArea* scrollArea;
+		StorageCharacter* character;
 
 	public slots:
 

@@ -27,6 +27,8 @@
 
 #include <QHBoxLayout>
 
+#include "../Storage/StorageCharacter.h"
+
 #include <QWidget>
 
 
@@ -53,6 +55,7 @@ class AttributeWidget : public QWidget {
 		 * In diesem Layout werden die Attribute angeordnet.
 		 **/
 		QHBoxLayout *layout;
+		StorageCharacter* character;
 
 	public slots:
 

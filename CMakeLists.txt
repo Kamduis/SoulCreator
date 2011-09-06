@@ -63,6 +63,8 @@ QT4_ADD_RESOURCES(SoulCreator_RCC_SRCS ${SoulCreator_RCCS})
 
 # In order to build a Qt application, the Qt include directories needs to be added as well as a range of defines need to be set.
 include(${QT_USE_FILE})
+## Ich glaube das benötigt man nicht, wenn man QT_USE_FILE hat.
+# add_definitions(${QT_DEFINITIONS})
 
 add_executable(SoulCreator
 	${SoulCreator_SRCS}
@@ -72,14 +74,27 @@ add_executable(SoulCreator
 # 	${QM}
 )
 
-target_link_libraries(SoulCreator
-	${QT_QTCORE_LIBRARY}
-	${QT_QTGUI_LIBRARY}
-# 	${QT_QTSQL_LIBRARY}
-# 	${KDE4_KDEUI_LIBS}# KDE-Bibliotheken
-)
-
-
+## War früher.
+# target_link_libraries(SoulCreator
+# 	${QT_QTCORE_LIBRARY}
+# 	${QT_QTGUI_LIBRARY}
+# # 	${QT_QTSQL_LIBRARY}
+# # 	${KDE4_KDEUI_LIBS}# KDE-Bibliotheken
+# )
+## Jetzt nutze ich diese Methode.
+target_link_libraries(SoulCreator ${QT_LIBRARIES})
+# set(QT_USE_QTNETWORK TRUE)
+# set(QT_USE_QTOPENGL TRUE)
+# set(QT_USE_QTSQL TRUE)
+# set(QT_USE_QTXML TRUE)
+# set(QT_USE_QTSVG TRUE)
+# set(QT_USE_QTTEST TRUE)
+# set(QT_USE_QTDBUS TRUE)
+# set(QT_USE_QTSCRIPT TRUE)
+# set(QT_USE_QTWEBKIT TRUE)
+# set(QT_USE_QTXMLPATTERNS TRUE)
+# set(QT_USE_PHONON TRUE)
+# set(QT_DONT_USE_QTGUI TRUE)
 
 # # Doxygen
 # # Unter Windows funktioniert das automatische Ausführen von Doxygen nicht richtig.

@@ -25,7 +25,7 @@
 #include <QGridLayout>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "CharaTrait2.h"
 #include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
@@ -36,6 +36,8 @@
 
 
 PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
+	character = StorageCharacter::getInstance();
+	
 	QVBoxLayout* layoutTop = new QVBoxLayout( this );
 	setLayout( layoutTop );
 
@@ -64,23 +66,25 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 	QList< cv_Trait::Category > categories;
 	categories.append( cv_Trait::CategoryNo );
 
-	QList< cv_Trait > list;
+	QList< cv_Trait* > list;
 
 	// Powers werden in einer Spalte heruntergeschrieben.
 	for ( int i = 0; i < categories.count(); i++ ) {
-		list = storage.powers( categories.at( i ) );
+		list = storage.traitsPtr( type, categories.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 // 			qDebug() << Q_FUNC_INFO << "Zähle Kräfte" << j;
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
-				CharaTrait *charaTrait = new CharaTrait( this, list.at( j ) );
-				// Wert definitiv ändern, damit alle Werte in den Charakter-Speicher übernommen werden.
-				charaTrait->setValue( 5 );
+				// Anlegen der Eigenschaft im Speicher
+				cv_Trait* traitPtr = character->addTrait( *list[j] );
+
+				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
+				CharaTrait2 *charaTrait = new CharaTrait2( this, traitPtr, list[j] );
 				charaTrait->setValue( 0 );
 				layoutPower->addWidget( charaTrait );
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
-				if ( !list.at( j ).custom ) {
+				if ( !list.at( j )->custom ) {
 					break;
 				}
 			}

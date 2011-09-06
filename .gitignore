@@ -2,3 +2,4 @@ build
 doc
 *.kdev4
 *~
+*.kate-swp

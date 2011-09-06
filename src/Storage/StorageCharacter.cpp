@@ -66,7 +66,7 @@ void StorageCharacter::setSpecies( cv_Species::SpeciesFlag species ) {
 	if ( v_species != species ) {
 		v_species = species;
 
-// 		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
+		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
 
 		emit speciesChanged( species );
 	}
@@ -101,6 +101,14 @@ QList< cv_Trait > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Categ
 	return list;
 }
 
+cv_Trait StorageCharacter::trait( const cv_Trait* traitPtr ) const {
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( traitPtr == &v_traits.at( i ) ) {
+			return v_traits.at( i );
+		}
+	}
+}
+
 QList< cv_Trait > StorageCharacter::attributes( cv_Trait::Category category ) const {
 	return traits( cv_Trait::Attribute, category );
 }
@@ -113,40 +121,45 @@ QList< cv_Trait > StorageCharacter::merits( cv_Trait::Category category ) const 
 	return traits( cv_Trait::Merit, category );
 }
 
-void StorageCharacter::addTrait( cv_Trait trait ) {
-	bool exists = false;
 
+cv_Trait* StorageCharacter::addTrait( cv_Trait trait ) {
+	cv_Trait* traitPtr;
+
+// 	qDebug() << Q_FUNC_INFO << "Füge hinzu:" << trait.name << "mit" << trait.custom << "und" << trait.customText;
+	v_traits.append( trait );
+	traitPtr = &v_traits[ v_traits.count() - 1 ];
+
+// 	Q_CHECK_PTR(traitPtr);
+
+// 	emit traitChanged( trait );
+// 	emit traitChanged( traitPtr );
+
+	return traitPtr;
+}
+
+void StorageCharacter::modifyTrait( cv_Trait trait ) {
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == trait.type && v_traits.at( i ).category == trait.category && v_traits.at( i ).name == trait.name ) {
-			if ( trait.custom ) {
-				// Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
-				if ( trait.customText.isEmpty() ) {
-// 					qDebug() << Q_FUNC_INFO << "Ersetze" << trait.name << "NICHT!";
-					return;
-				} else if ( v_traits.at( i ).customText == trait.customText ) {
-// 					qDebug() << Q_FUNC_INFO << "Klicke" << trait.name << "mit" << trait.customText;
-					exists = true;
-				}
-			} else {
-				exists = true;
+		if ( trait.type == v_traits.at( i ).type && trait.category == v_traits.at( i ).category && trait.name == v_traits.at( i ).name ) {
+			// Custom bleibt immer gleich.
+			cv_Trait lcl_trait = trait;
+			lcl_trait.custom = v_traits.at( i ).custom;
+
+			if ( !lcl_trait.custom || lcl_trait.customText == v_traits.at( i ).customText || v_traits.at(i).customText.isEmpty() ) {
+// 				qDebug() << Q_FUNC_INFO << trait.customText << "vs." << v_traits.at( i ).customText << "bei" << trait.custom;
+
+				v_traits.replace( i, lcl_trait );
+// 				qDebug() << Q_FUNC_INFO << v_traits.at( i ).name << "Adresse:" << &v_traits[i] << "verändert zu" << v_traits.at( i ).value << "Und zusatztext:" << v_traits.at( i ).customText << v_traits.at( i ).custom;
+
+				emit traitChanged( &v_traits[i] );
+
+				// Wenn der Eintrage geschrieben ist, wird die Schleife abgebrochen.
+// 				qDebug() << Q_FUNC_INFO << "breche ab";
+				break;
 			}
 		}
-
-		// Wenn ich die Eigenschaft schon finde, muß ich natürlich nicht bis zum Ende der Schleife laufen, sondern ersetze sie sofort und fertig.
-		if ( exists ) {
-// 			qDebug() << Q_FUNC_INFO << "Ersetze:" << trait.name << trait.customText << "mit" << trait.value;
-			v_traits.replace( i, trait );
-			break;
-		}
 	}
-
-	if ( !exists ) {
-// 		qDebug() << Q_FUNC_INFO << "Füge hinzu:" << trait.name << "mit" << trait.custom << "und" << trait.customText;
-		v_traits.append( trait );
-	}
-
-	emit traitChanged( trait );
 }
+
 
 
 
@@ -177,7 +190,8 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 
 			v_traits.replace( i, trait );
 
-			emit traitChanged( trait );
+// 			emit traitChanged( trait );
+// 			emit traitChanged( &v_traits[ i ] );
 
 			break;
 		}
@@ -199,15 +213,22 @@ void StorageCharacter::setSuperTrait( int value ) {
 	}
 }
 
-int StorageCharacter::morality() const
-{
+int StorageCharacter::morality() const {
 	return v_morality;
 }
-void StorageCharacter::setMorality( int value )
-{
-	if (v_morality != value){
+void StorageCharacter::setMorality( int value ) {
+	if ( v_morality != value ) {
 		v_morality = value;
-		emit moralityChanged(value);
+		emit moralityChanged( value );
 	}
 }
 
+void StorageCharacter::resetTraits() {
+	for ( int i = 0; i < v_traits.count();i++ ) {
+		cv_Trait trait = v_traits.at( i );
+		trait.value = 0;
+		trait.details.clear();
+
+		v_traits.replace( i, trait );
+	}
+}

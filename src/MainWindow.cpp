@@ -123,7 +123,6 @@ void MainWindow::populateUi() {
 	// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
-// 	merits = new ComboTraitWidget( this, cv_Trait::Merit );
 	merits = new MeritWidget( this );
 	powers = new PowerWidget( this );
 	advantages = new AdvantagesWidget( this );
@@ -147,11 +146,12 @@ void MainWindow::showCharacterTraits() {
 }
 
 void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
+	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
 
 	specialties->clear();
 
 	if ( sw ) {
+		qDebug() << Q_FUNC_INFO << "Test Specialties";
 		specialties->setSkill( skillName );
 		specialties->setSpecialties( specialtyList );
 	}
@@ -168,10 +168,10 @@ void MainWindow::activate() {
 		// Verändern, damit er auch wirklich \emph{verändert} wurde
 		trait.value = 10;
 		// In den Speicher schicken.
-		character->addTrait( trait );
+		character->modifyTrait( trait );
 		// Wieder auf alten Wert zurücksetzen.
 		trait.value = valueOld;
-		character->addTrait( trait );
+		character->modifyTrait( trait );
 	}
 
 	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
@@ -213,7 +213,7 @@ void MainWindow::openCharacter() {
 		QFile* file = new QFile( filePath );
 
 		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
-		setCharacterValues( 0 );
+		character->resetTraits();
 
 		try {
 			readCharacter->read( file );
@@ -267,17 +267,6 @@ void MainWindow::saveCharacter() {
 	}
 }
 
-
-
-void MainWindow::setCharacterValues( int value ) {
-	for ( int k = 0; k < character->traitsAll().count(); k++ ) {
-		cv_Trait trait = character->traitsAll().at( k );
-		trait.value = value;
-		trait.details.clear();
-		// In den Speicher schicken.
-		character->addTrait( trait );
-	}
-}
 
 
 void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
