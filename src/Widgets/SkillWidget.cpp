@@ -22,7 +22,7 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGridLayout>
+#include <QGroupBox>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -47,8 +47,18 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	QList< cv_TraitDetail > listDetails;
 
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
+
 	for ( int i = 0; i < categories.count(); i++ ) {
 		list = storage->skills( categories.at( i ) );
+
+		QVBoxLayout* categoryLayout = new QVBoxLayout();
+
+		QGroupBox* categoryBox = new QGroupBox( this );
+		categoryBox->setTitle( cv_Trait::toString( categories.at( i ), true ) );
+
+		categoryBox->setLayout( categoryLayout );
+
+		layout->addWidget( categoryBox );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			CharaTrait *charaTrait = new CharaTrait( this, list.at( j ) );
@@ -56,6 +66,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			charaTrait->setValue( 5 );
 			charaTrait->setValue( 0 );
 			// Nur Fertigkeiten haben Spezialisierungen.
+
 			if ( type = cv_Trait::Skill ) {
 				// Es sollen die Spazialisierungen angezeigt werden können.
 				listDetails = storage->skillSpecialties( list.at( j ).name );
@@ -63,15 +74,19 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 				for ( int k = 0; k < listDetails.count(); k++ ) {
 					charaTrait->addSpecialty( listDetails.at( k ) );
 				}
+
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
+
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 			}
-			layout->addWidget( charaTrait );
+
+			categoryLayout->addWidget( charaTrait );
 		}
-		// Abstand zwischen den Kategorien, aber nicht am Ende.
-		if ( i < categories.count() - 1 ) {
-			layout->addSpacing( Config::traitCategorySpace );
-		}
+
+// 		// Abstand zwischen den Kategorien, aber nicht am Ende.
+// 		if ( i < categories.count() - 1 ) {
+// 			layout->addSpacing( Config::traitCategorySpace );
+// 		}
 	}
 
 // 	layout->setRowMinimumHeight( storage->skillNames( cv_Trait::Mental ).count(), Config::traitCategorySpace );
@@ -83,21 +98,28 @@ SkillWidget::~SkillWidget() {
 }
 
 void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-// 	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
+	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
 	QList< cv_Trait > list;
 
 	for ( int i = 0; i < layout->count(); i++ ) {
-		list = storage->skills( categories.at( 0 ) );
+		QGroupBox* box = qobject_cast<QGroupBox*>( layout->itemAt( i )->widget() );
+		QVBoxLayout* lcl_layout = qobject_cast<QVBoxLayout*>( box->layout() );
 
-		// Wir wollen nur die Eigenschaftswidgekts, nicht die Abstandshalter!
-		if ( i == list.count() || i == list.count() + storage->skills( categories.at( 1 ) ).count() + 1 ) {
-			i++;
-		}
-		CharaTrait *trait = qobject_cast<CharaTrait*>( layout->itemAt( i )->widget() );
+		for ( int j = 0; j < lcl_layout->count(); j++ ) {
+			list = storage->skills( categories.at( 0 ) );
 
-		if ( trait->name() != skillName ) {
-			trait->setSpecialtyButtonChecked( false );
-// 			qDebug() << Q_FUNC_INFO << "Deaktivieren von" << trait->name();
+			// Wir wollen nur die Eigenschaftswidgekts, nicht die Abstandshalter!
+
+			if ( j == list.count() || j == list.count() + storage->skills( categories.at( 1 ) ).count() + 1 ) {
+				j++;
+			}
+
+			CharaTrait *trait = qobject_cast<CharaTrait*>( lcl_layout->itemAt( j )->widget() );
+
+			if ( trait->name() != skillName ) {
+				trait->setSpecialtyButtonChecked( false );
+			qDebug() << Q_FUNC_INFO << "Deaktivieren von" << trait->name();
+			}
 		}
 	}
 }
