@@ -40,6 +40,8 @@
  * @brief Liest die gespeicherten Charakterwerte in das Programm.
  *
  * Diese Klasse dient dazu, einen auf Datenträger gespeicherten Charakter wieder in das Programm zu laden.
+ *
+ * \bug Beim Laden tritt ein schwerwiegender Fehler auf! Manchmal verschwinden alle Attribute und fast alle Fertigkeiten!
  */
 
 class ReadXmlCharacter : public QObject, public ReadXml {
@@ -61,7 +63,7 @@ class ReadXmlCharacter : public QObject, public ReadXml {
 		/**
 		 * Zeiger auf den Programmspeicher, der die Template-Daten enthält.
 		 *
-		 * \todo Ich weiß nicht, wie gefährlich es ist, diese Zeiger bei Schließen der Kalsse wieder zu löschen. Ist dann auch die statische Variable weg, in der ich alles speichere?
+		 * \todo Ich weiß nicht, wie gefährlich es ist, diese Zeiger bei Schließen der Klasse wieder zu löschen. Ist dann auch die statische Variable weg, in der ich alles speichere?
 		 **/
 		StorageTemplate* storage;
 		/**

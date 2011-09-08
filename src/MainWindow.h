@@ -181,6 +181,12 @@ class MainWindow : public QMainWindow {
 		 */
 		void activate();
 		/**
+		 * Über diese Funktion wird der Dialog aufgerufen, um einen ganz neuen Charakter zu erstellen.
+		 *
+		 * \todo Eine Warnung ausgeben, wenn der zuvor erstellte Charakter noch nicht gespeichert wurde.
+		 **/
+		void newCharacter();
+		/**
 		 * Über diese Funktion wird der Dialog aufgerufen, um einen gespeicherten Charakter in das Programm laden zu können.
 		 **/
 		void openCharacter();

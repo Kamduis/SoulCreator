@@ -74,6 +74,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 	types.append( cv_Trait::Skill );
 	types.append( cv_Trait::Merit );
 	types.append( cv_Trait::Power );
+	types.append( cv_Trait::Flaw );
 
 	QList< cv_Trait::Category > categories;
 

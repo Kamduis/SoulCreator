@@ -51,10 +51,17 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
 	// Hübsche Symbole
-	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
-	ui->actionSave->setIcon( style()->standardIcon( QStyle::SP_DriveFDIcon ) );
-	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
-	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
+	ui->actionNew->setIcon( QIcon(":/icons/images/actions/filenew.png") );
+	ui->actionOpen->setIcon( QIcon(":/icons/images/actions/fileopen.png") );
+	ui->actionSave->setIcon( QIcon(":/icons/images/actions/filesave.png") );
+	ui->actionExport->setIcon( QIcon(":/icons/images/actions/fileexport.png") );
+	ui->actionPrint->setIcon( QIcon(":/icons/images/actions/agt_print.png") );
+	// Hier habe ich die Standardicons genommen, aber davon gibt es nur wenige und sie sehen nicht gut aus.
+// 	ui->actionNew->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
+// 	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
+// 	ui->actionSave->setIcon( style()->standardIcon( QStyle::SP_DriveFDIcon ) );
+// 	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
+// 	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
@@ -66,6 +73,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), this, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
+	connect( ui->actionNew, SIGNAL( triggered() ), this, SLOT( newCharacter() ) );
 	connect( ui->actionOpen, SIGNAL( triggered() ), this, SLOT( openCharacter() ) );
 	connect( ui->actionSave, SIGNAL( triggered() ), this, SLOT( saveCharacter() ) );
 	connect( ui->actionExport, SIGNAL( triggered() ), this, SLOT( exportCharacter() ) );
@@ -201,6 +209,12 @@ void MainWindow::aboutApp() {
 	QMessageBox::about( this, tr( "About %1" ).arg( Config::name() ), aboutText );
 }
 
+
+void MainWindow::newCharacter() {
+	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
+	
+	character->resetTraits();
+}
 
 void MainWindow::openCharacter() {
 	QString appPath = QApplication::applicationDirPath();

@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="icons">
+    <file>images/actions/filesave.png</file>
+    <file>images/actions/fileopen.png</file>
+    <file>images/actions/agt_print.png</file>
+    <file>images/actions/fileexport.png</file>
+    <file>images/actions/filenew.png</file>
     <file>images/WoD.png</file>
   </qresource>
   <qresource prefix="template">

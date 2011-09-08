@@ -89,6 +89,7 @@ void StorageCharacter::addIdentity( cv_Identity id ) {
 	int index = identities().count();
 	insertIdentity( index, id );
 }
+
 void StorageCharacter::setRealIdentity( cv_Identity id ) {
 	if ( v_identities.count() > 0 ) {
 		v_identities.replace( 0, id );
@@ -157,14 +158,11 @@ cv_Trait* StorageCharacter::addTrait( cv_Trait trait ) {
 void StorageCharacter::modifyTrait( cv_Trait trait ) {
 	for ( int i = 0; i < v_traits.count(); i++ ) {
 		if ( trait.type == v_traits.at( i ).type && trait.category == v_traits.at( i ).category && trait.name == v_traits.at( i ).name ) {
-			// Custom bleibt immer gleich.
-			cv_Trait lcl_trait = trait;
-			lcl_trait.custom = v_traits.at( i ).custom;
-
-			if ( !lcl_trait.custom || lcl_trait.customText == v_traits.at( i ).customText || v_traits.at( i ).customText.isEmpty() ) {
-// 				qDebug() << Q_FUNC_INFO << trait.customText << "vs." << v_traits.at( i ).customText << "bei" << trait.custom;
-
-				v_traits.replace( i, lcl_trait );
+			if ( !v_traits.at( i ).custom || trait.customText == v_traits.at( i ).customText || v_traits.at( i ).customText.isEmpty() ) {
+				// Custom bleibt immer gleich.
+				v_traits[i].value = trait.value;
+				v_traits[i].customText = trait.customText;
+				v_traits[i].details = trait.details;
 // 				qDebug() << Q_FUNC_INFO << v_traits.at( i ).name << "Adresse:" << &v_traits[i] << "verändert zu" << v_traits.at( i ).value << "Und zusatztext:" << v_traits.at( i ).customText << v_traits.at( i ).custom;
 
 				emit traitChanged( &v_traits[i] );
@@ -223,6 +221,7 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 QString StorageCharacter::virtue() const {
 	return v_virtue;
 }
+
 void StorageCharacter::setVirtue( QString txt ) {
 	if ( v_virtue != txt ) {
 		v_virtue = txt;
@@ -233,6 +232,7 @@ void StorageCharacter::setVirtue( QString txt ) {
 QString StorageCharacter::vice() const {
 	return v_vice;
 }
+
 void StorageCharacter::setVice( QString txt ) {
 	if ( v_vice != txt ) {
 		v_vice = txt;
@@ -243,6 +243,7 @@ void StorageCharacter::setVice( QString txt ) {
 QString StorageCharacter::breed() const {
 	return v_breed;
 }
+
 void StorageCharacter::setBreed( QString txt ) {
 	if ( v_breed != txt ) {
 		v_breed = txt;
@@ -253,6 +254,7 @@ void StorageCharacter::setBreed( QString txt ) {
 QString StorageCharacter::faction() const {
 	return v_faction;
 }
+
 void StorageCharacter::setFaction( QString txt ) {
 	if ( v_faction != txt ) {
 		v_faction = txt;
@@ -264,6 +266,7 @@ void StorageCharacter::setFaction( QString txt ) {
 int StorageCharacter::superTrait() const {
 	return v_superTrait;
 }
+
 void StorageCharacter::setSuperTrait( int value ) {
 	if ( v_superTrait != value ) {
 		v_superTrait = value;
@@ -274,19 +277,21 @@ void StorageCharacter::setSuperTrait( int value ) {
 int StorageCharacter::morality() const {
 	return v_morality;
 }
+
 void StorageCharacter::setMorality( int value ) {
 	if ( v_morality != value ) {
 		v_morality = value;
+
 		emit moralityChanged( value );
 	}
 }
 
 void StorageCharacter::resetTraits() {
 	for ( int i = 0; i < v_traits.count();i++ ) {
-		cv_Trait trait = v_traits.at( i );
-		trait.value = 0;
-		trait.details.clear();
+		v_traits[ i ].value = 0;
+		v_traits[ i ].details.clear();
+		v_traits[i].customText = "";
 
-		v_traits.replace( i, trait );
+		emit traitChanged( &v_traits[i] );
 	}
 }

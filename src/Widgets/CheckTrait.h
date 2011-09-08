@@ -145,6 +145,8 @@ class CheckTrait : public QWidget {
 		void setTraitPtr( cv_Trait* trait );
 		/**
 		 * Sorgt dafür daß das Widget aktualisiert wird und die Werte anzeigt, auf welche es zeigt.
+		 *
+		 * \warning Wenn der Wert des Widget != 0 ist, wird es als gewählt markiert, andernfalls als ungewählt.
 		 **/
 		void updateWidget(cv_Trait* trait);
 

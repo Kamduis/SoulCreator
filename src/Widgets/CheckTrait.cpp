@@ -36,26 +36,22 @@ CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 
 	character = StorageCharacter::getInstance();
 
-	layout = new QHBoxLayout(this);
-	setLayout(layout);
-	
-	checkBox = new QCheckBox(this);
-	checkBox->setText(trait->name);
+	layout = new QHBoxLayout( this );
+	setLayout( layout );
 
-	lineEdit = new QLineEdit(this);
-	
-	layout->addWidget(checkBox);
+	checkBox = new QCheckBox( this );
+	checkBox->setText( trait->name );
+
+	lineEdit = new QLineEdit( this );
+
+	layout->addWidget( checkBox );
 	layout->addStretch();
-	layout->addWidget(lineEdit);
+	layout->addWidget( lineEdit );
 
-	
-
-// 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( setValue( int ) ) );
-// 	connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
-// 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
-// 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
-// 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
-// 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( updateWidget( cv_Trait* ) ) );
+	connect( checkBox, SIGNAL( stateChanged( int ) ), this, SLOT( setValue( int ) ) );
+	connect( lineEdit, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
+	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
+	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( updateWidget( cv_Trait* ) ) );
 // 	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
 // 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( checkTraitPrerequisites( cv_Trait* ) ) );
 // 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
@@ -64,8 +60,8 @@ CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 
 	hideDescriptionWidget();
 }
-CheckTrait::~CheckTrait()
-{
+
+CheckTrait::~CheckTrait() {
 	delete checkBox;
 }
 
@@ -87,10 +83,12 @@ void CheckTrait::setTraitPtr( cv_Trait* trait ) {
 int CheckTrait::value() const {
 	return traitPtr()->value;
 }
+
 void CheckTrait::setValue( int val ) {
 	if ( traitPtr()->value != val ) {
 		traitPtr()->value = val;
-// 		TraitLine::setValue( val );
+
+		qDebug() << Q_FUNC_INFO << "Test" << val;
 
 		emit traitChanged( traitPtr() );
 	}
@@ -100,6 +98,7 @@ void CheckTrait::setValue( int val ) {
 QString CheckTrait::customText() const {
 	return traitPtr()->customText;
 }
+
 void CheckTrait::setCustomText( QString txt ) {
 	if ( traitPtr()->customText != txt ) {
 		traitPtr()->customText = txt;
@@ -163,9 +162,9 @@ void CheckTrait::setCustom( bool sw ) {
 
 void CheckTrait::hideDescriptionWidget() {
 	if ( custom() ) {
-		lineEdit->setHidden(false);
+		lineEdit->setHidden( false );
 	} else {
-		lineEdit->setHidden(true);
+		lineEdit->setHidden( true );
 	}
 }
 
@@ -184,7 +183,14 @@ void CheckTrait::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {
 
 void CheckTrait::updateWidget( cv_Trait* trait ) {
 	if ( traitPtr() == trait ) {
-// 		TraitLine::setValue( value() );
-// 		TraitLine::setText( customText() );
+
+		// Tristate ist nicht möglich!
+		if (value() > 0){
+			checkBox->setCheckState( Qt::Checked );
+		} else {
+			checkBox->setCheckState( Qt::Unchecked );
+		}
+		
+		lineEdit->setText( customText() );
 	}
 }

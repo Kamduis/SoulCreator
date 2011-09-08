@@ -261,6 +261,8 @@ class StorageCharacter : public QObject {
 		 * Löscht alle Charakterwerte.
 		 *
 		 * \note Tatsächlich werden die Werte nicht gelöscht, sondern auf 0 gesetzt.
+		 *
+		 * \todo Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze.
 		 **/
 		void resetTraits();
 

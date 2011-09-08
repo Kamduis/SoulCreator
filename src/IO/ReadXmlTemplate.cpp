@@ -230,14 +230,8 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 		if ( isStartElement() ) {
 			if ( name() == "trait" ) {
 				cv_Trait trait = storeTraitData( sp, a, b );
-// 				qDebug() << Q_FUNC_INFO << trait.name;
-
 				// Alle Eigenschaften können 0 als Wert haben, auch wenn dies nicht in den XML-Dateien steht.
-
 				if ( !trait.possibleValues.isEmpty() ) {
-					// Wenn ich diese Debug-Ausgabe weglasse, dauert der Programmstart \emph{viel} länger.
-// 					qDebug() << Q_FUNC_INFO << trait.name << trait.possibleValues;
-
 					trait.possibleValues.append( 0 );
 				}
 

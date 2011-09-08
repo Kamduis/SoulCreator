@@ -38,9 +38,10 @@ const QList< cv_Trait::Category > cv_Trait::v_categoryListExtended = QList< cv_T
 		<< cv_Trait::Extraordinary;
 
 const QList< cv_Trait::Category > cv_Trait::v_categoryListAll = QList< cv_Trait::Category >()
-		<< cv_Trait::v_categoryListGeneral
 		<< cv_Trait::v_categoryListExtended
-		<< cv_Trait::Extraordinary;
+		<< cv_Trait::Item
+		<< cv_Trait::FightingStyle
+		<< cv_Trait::DebateStyle;
 
 
 cv_Trait::cv_Trait() {
@@ -230,6 +231,7 @@ cv_Trait::Type cv_Trait::toType( QString str ) {
 		return cv_Trait::Derangement;
 	else if ( str == "Flaw" )
 		return cv_Trait::Flaw;
+
 // 	else if ( str == "Morale" )
 // 		return cv_Trait::Morale;
 	else if ( str == "Super" )
