@@ -62,9 +62,9 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
 
-	// Ich muß diesen Timer verwenden, das Programm in seinen EventLoop eintritt. Nun wird das Hauptfenster im Hintergrund dargestellt und über qApp->quit() kann das Programm nun auch sauber beendet werden. DIe Zeit, welche der Timer zählt ist nicht wichtig, muß aber natürlich sehr kurz sein.
-// 	QTimer::singleShot( 200, this, SLOT( initialize() ) );
 	initialize();
+
+	connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), this, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
 	connect( ui->actionOpen, SIGNAL( triggered() ), this, SLOT( openCharacter() ) );
 	connect( ui->actionSave, SIGNAL( triggered() ), this, SLOT( saveCharacter() ) );
@@ -76,6 +76,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 MainWindow::~MainWindow() {
 	delete specialties;
 	delete advantages;
+	delete flaws;
 	delete powers;
 	delete merits;
 	delete skills;
@@ -99,6 +100,8 @@ void MainWindow::initialize() {
 
 void MainWindow::storeTemplateData() {
 	ReadXmlTemplate reader;
+
+	connect( &reader, SIGNAL( oldVersion( QString, QString ) ), this, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
 	try {
 		reader.read();
@@ -125,6 +128,7 @@ void MainWindow::populateUi() {
 	skills = new SkillWidget( this );
 	merits = new MeritWidget( this );
 	powers = new PowerWidget( this );
+	flaws = new FlawWidget( this );
 	advantages = new AdvantagesWidget( this );
 
 	ui->layout_info->addWidget( info );
@@ -132,6 +136,7 @@ void MainWindow::populateUi() {
 	ui->layout_skills->addWidget( skills );
 	ui->layout_merits->addWidget( merits );
 	ui->layout_powers->addWidget( powers );
+	ui->layout_flaws->addWidget( flaws );
 	ui->layout_specialties->addWidget( specialties );
 	ui->layout_advantages->addWidget( advantages );
 
@@ -348,6 +353,10 @@ void MainWindow::printCharacter() {
 }
 
 
+void MainWindow::raiseExceptionMessage( QString message, QString description ) {
+	MessageBox::warning( this, tr( "Warning" ), tr( "While opening the file the following problem arised:\n%1\n%2\nIt appears, that the character will be importable, so the process will be continued." ).arg( message ).arg( description ) );
+}
+
 void MainWindow::messageEnforcedTraitLimits( cv_Trait::Type type ) {
 	MessageBox::warning( this, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_Trait::toString( type, true ) ) );
 }
@@ -357,13 +366,13 @@ void MainWindow::messageEnforcedTraitLimits( cv_Trait::Type type ) {
 
 // void MainWindow::shortcut() {
 // 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled1.chr";
-// 
+//
 // 	if ( !filePath.isEmpty() ) {
 // 		QFile* file = new QFile( filePath );
-// 
+//
 // 		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
 // 		setCharacterValues( 0 );
-// 
+//
 // 		try {
 // 			readCharacter->read( file );
 // 		} catch ( eXmlVersion &e ) {
@@ -373,7 +382,7 @@ void MainWindow::messageEnforcedTraitLimits( cv_Trait::Type type ) {
 // 		} catch ( eFileNotOpened &e ) {
 // 			MessageBox::exception( this, e.message(), e.description() );
 // 		}
-// 
+//
 // 		delete file;
 // 	}
 // }

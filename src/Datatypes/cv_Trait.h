@@ -97,6 +97,8 @@ class cv_Trait {
 			Attribute,
 			Skill,
 			Merit,
+			Derangement,
+			Flaw,
 // 			Morale,
 			Super,
 			Power
@@ -141,10 +143,6 @@ class cv_Trait {
 		 *     <td>Category::Extraordinary</td>
 		 *     <td>Psychische Phänomene wie Psi oder Hellsicht. Auch mit Geistern in Verbindung stehende Merits.</td>
 		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::Species</td>
-		 *     <td>Eigenschaften, welche ein Ausdruck der besonderen Spezies des Charakters sind.</td>
-		 *  </tr>
 		 *  </table>
 		 */
 		enum Category {
@@ -155,8 +153,7 @@ class cv_Trait {
 			Item,
 			FightingStyle,
 			DebateStyle,
-			Extraordinary,
-			Species
+			Extraordinary
 		};
 		/**
 		 * In welche Era findet diese Eigenschaft ihre Anwendung? In der Moderne oder in der Antike?
@@ -352,6 +349,12 @@ class cv_Trait {
 		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien in Flags umzuwandeln.
 		 **/
 		static cv_Trait::Age toAge( QString str );
+		/**
+		 * Übergibt eine Liste aller Kategorien, welche für diesen Typ angemessen sind.
+		 *
+		 * Diese Methode vereinfacht das bilden von Schleifen über alle Kategorien eines besonderen Typs.
+		 **/
+		static QList< cv_Trait::Category > getCategoryList( cv_Trait::Type type );
 
 		/**
 		* Vergleich zwischen zwei Instanzen dieser Klasse.
@@ -363,6 +366,20 @@ class cv_Trait {
 		* Vergleich zwischen zwei Instanzen dieser Klasse nach Reihenfolge. Wird für den qSort-Algorythmus benötigt.
 		**/
 		bool operator<( const cv_Trait &trait ) const;
+
+	private:
+		/**
+		 * Eine Liste aller Kategorien für Attribute und Fertigkeiten.
+		 **/
+		static const QList< cv_Trait::Category > v_categoryListGeneral;
+		/**
+		 * Eine Liste aller Kategorien für Nachteile.
+		 **/
+		static const QList< cv_Trait::Category > v_categoryListExtended;
+		/**
+		 * Eine Liste aller Kategorien für Merits.
+		 **/
+		static const QList< cv_Trait::Category > v_categoryListAll;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( cv_Trait::Age )

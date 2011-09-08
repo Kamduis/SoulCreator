@@ -31,6 +31,7 @@
 #include "../Datatypes/cv_Species.h"
 #include "../Datatypes/cv_Trait.h"
 
+#include <QObject>
 #include "ReadXml.h"
 
 
@@ -40,7 +41,9 @@
  * Diese Klasse dient dazu einen möglichst simplen Zugriff auf die Eigenschaften der WoD-Charaktere zu bieten. Dazu werden die Eigenschaften und all ihre Zusatzinformationen aus den xml-Dateien gelesen und in Listen gespeichert.
  */
 
-class ReadXmlTemplate : public ReadXml {
+class ReadXmlTemplate : public QObject, public ReadXml {
+	Q_OBJECT
+	
 	public:
 		ReadXmlTemplate();
 		/**
@@ -132,6 +135,9 @@ class ReadXmlTemplate : public ReadXml {
 		 * Mit dieser Funktion werden die daten über die besondere Eigenschaft der spezies ausgelsen: Eigenschaftsmaxima, Energiespeicher etc.
 		 **/
 		void readSuperTrait( cv_Species::Species sp );
+
+	signals:
+		void oldVersion( QString, QString );
 };
 
 #endif

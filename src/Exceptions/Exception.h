@@ -25,6 +25,7 @@
 
 #include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_Shape.h"
+#include "../Config/Config.h"
 
 
 /**
@@ -104,7 +105,7 @@ class eNotANumber : public eNumber {
  */
 class eDir : public Exception {
 	public:
-		eDir(QString dirName="unknown");
+		eDir( QString dirName = "unknown" );
 };
 
 /**
@@ -114,7 +115,7 @@ class eDir : public Exception {
  */
 class eDirNotCreated : public eDir {
 	public:
-		eDirNotCreated(QString dirName="unknown");
+		eDirNotCreated( QString dirName = "unknown" );
 };
 
 
@@ -128,7 +129,7 @@ class eFile : public Exception {
 		/**
 		 * Ausnahme: Probleme mit einer Datei.
 		 */
-		eFile(QString filename="unknown");
+		eFile( QString filename = "unknown" );
 };
 
 /**
@@ -138,7 +139,7 @@ class eFile : public Exception {
  */
 class eFileNotOpened : public eFile {
 	public:
-		eFileNotOpened(QString fileName="unknown", QString lastError="unknown");
+		eFileNotOpened( QString fileName = "unknown", QString lastError = "unknown" );
 };
 
 /**
@@ -152,7 +153,7 @@ class eFileNotDeleted : public eFile {
 		/**
 		 * Ausnahme: Kann Datei nicht löschen.
 		 */
-		eFileNotDeleted(QString filename="unknown");
+		eFileNotDeleted( QString filename = "unknown" );
 };
 
 
@@ -164,7 +165,7 @@ class eFileNotDeleted : public eFile {
 
 class eXml : public Exception {
 	public:
-		eXml(QString error="unknown");
+		eXml( QString error = "unknown" );
 };
 
 /**
@@ -174,17 +175,33 @@ class eXml : public Exception {
  */
 class eXmlError : public eXml {
 	public:
-		eXmlError(QString fileName="unknown", QString error="unknown");
+		eXmlError( QString fileName = "unknown", QString error = "unknown" );
 };
 
 /**
- * @brief Die Verbindung zur Datenbank ist nicht geöffnet.
- *
- * Kann die Verbindung zur SQL-Datenbank nicht geöffnet werden, wird diese Ausnahme geworfen.
+ * @brief Die XML-Datei weist die falsche Version auf.
  */
 class eXmlVersion : public eXml {
 	public:
-		eXmlVersion(QString expected="unknown", QString got="unknown");
+		eXmlVersion( QString expected = "unknown", QString got = "unknown" );
+};
+
+/**
+ * @brief Die Version der XML-Datei paßt zwar zu diesem programm, ist aber zu alt.
+ */
+class eXmlOldVersion : public eXmlVersion {
+	public:
+		eXmlOldVersion( QString expected = Config::version(), QString got = "unknown" );
+};
+
+/**
+ * @brief Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber viel zu alt.
+ *
+ * Die Version ist so alt, daß eine Verwendung dieser Ressource nicht empfehlenswert ist.
+ */
+class eXmlTooOldVersion : public eXmlOldVersion {
+	public:
+		eXmlTooOldVersion( QString expected = Config::version(), QString got = "unknown" );
 };
 
 

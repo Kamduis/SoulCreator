@@ -51,7 +51,7 @@ const QString ReadXmlTemplate::templateFile_werewolf = ":/template/xml/werewolf.
 // QList<cv_Species> ReadXmlTemplate::speciesList;
 
 
-ReadXmlTemplate::ReadXmlTemplate() : ReadXml() {
+ReadXmlTemplate::ReadXmlTemplate() : QObject(), ReadXml() {
 	storage = new StorageTemplate();
 
 	file_base = new QFile( ReadXmlTemplate::templateFile_base );
@@ -98,7 +98,13 @@ void ReadXmlTemplate::readXml( QFile *device ) {
 			QString elementName = name().toString();
 			QString elementVersion = attributes().value( "version" ).toString();
 
-			if ( checkXmlVersion( elementName, elementVersion ) ) {
+			try {
+				if ( checkXmlVersion( elementName, elementVersion ) ) {
+					readSoulCreator();
+				}
+			} catch ( eXmlOldVersion &e ) {
+				emit oldVersion( e.message(), e.description() );
+
 				readSoulCreator();
 			}
 		}
@@ -188,7 +194,7 @@ void ReadXmlTemplate::readSuperTrait( cv_Species::Species sp ) {
 				superEffect.traitMax = attributes().value( "traitMax" ).toString().toInt();
 				superEffect.value = readElementText().toInt();
 
-				storage->appendSuperEffect( superEffect);
+				storage->appendSuperEffect( superEffect );
 			} else
 				readUnknownElement();
 		}

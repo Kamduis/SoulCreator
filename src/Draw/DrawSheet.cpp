@@ -389,10 +389,7 @@ void DrawSheet::print() {
 
 
 void DrawSheet::drawAttributes( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal distanceV ) {
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::Mental );
-	categories.append( cv_Trait::Physical );
-	categories.append( cv_Trait::Social );
+	QList< cv_Trait::Category > categories = cv_Trait::getCategoryList(cv_Trait::Attribute);
 
 	QList< cv_Trait > list;
 
@@ -724,14 +721,7 @@ QList< cv_Trait > DrawSheet::getTraits( cv_Trait::Type type, int maxNumber, bool
 	categories.append( cv_Trait::CategoryNo );
 
 	if ( type == cv_Trait::Merit ) {
-		categories.append( cv_Trait::Mental );
-		categories.append( cv_Trait::Physical );
-		categories.append( cv_Trait::Social );
-		categories.append( cv_Trait::Item );
-		categories.append( cv_Trait::FightingStyle );
-		categories.append( cv_Trait::DebateStyle );
-		categories.append( cv_Trait::Extraordinary );
-		categories.append( cv_Trait::Species );
+		categories.append( cv_Trait::getCategoryList(cv_Trait::Merit) );
 	}
 
 	QList< cv_Trait > list;

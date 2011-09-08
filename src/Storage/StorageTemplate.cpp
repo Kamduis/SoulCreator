@@ -208,7 +208,7 @@ QList< cv_Trait* > StorageTemplate::traitsPtr( cv_Trait::Type type, cv_Trait::Ca
 	}
 
 	if ( traitsPtr.isEmpty() ) {
-		qDebug() << Q_FUNC_INFO << "Trait Typ" << type << "mit Kategorie" << category << "existiert nicht!";
+		qDebug() << Q_FUNC_INFO << "Trait Typ" << cv_Trait::toString(type) << "mit Kategorie" << cv_Trait::toString(category) << "existiert nicht!";
 // 		throw eTraitNotExisting();
 	}
 

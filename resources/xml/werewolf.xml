@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.3">
+<SoulCreator version="0.4">
 	<traits species="Werewolf" morale="Harmony" supertrait="Primal Urge" fuel="Essence">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
@@ -14,29 +14,13 @@
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
 		<Merit>
-			<Species>
-				<trait name="Auspice Blessing" custom="true" source="Werewolf The Rage">
-					<value>1</value>
-					<!--<prerequisite>auspice affinity > 1</prerequisite>-->
-				</trait>
-				<trait name="Ephemeral Reckoning" source="Werewolf The Rage">
-					<value>2</value>
-					<value>4</value>
-				</trait>
-				<trait name="Fetish" custom="true" source="Werewolf Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
+			<Physical>
 				<trait name="Metabolic Control" source="Werewolf The Rage">
 					<value>2</value>
 					<prerequisite>Stamina > 2</prerequisite>
 				</trait>
-				<trait name="Moon-Centered" source="Werewolf The Rage">
-					<value>2</value>
-				</trait>
+			</Physical>
+			<Social>
 				<trait name="Predator's Gaze" source="Werewolf The Rage">
 					<value>3</value>
 					<prerequisite>Presence > 1 AND Intimidation > 1</prerequisite>
@@ -46,14 +30,35 @@
 					<value>2</value>
 					<value>3</value>
 				</trait>
-				<trait name="Pack Tactics" source="Werewolf The Rage">
+				<trait name="Pack Tactics" source="Werewolf The Rage"/>
+			</Social>
+			<Item>
+				<trait name="Fetish" custom="true" source="Werewolf Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+			</Item>
+			<Extraordinary>
+				<trait name="Auspice Blessing" custom="true" source="Werewolf The Rage">
+					<value>1</value>
+					<!--<prerequisite>auspice affinity > 1</prerequisite>-->
+				</trait>
+				<trait name="Ephemeral Reckoning" source="Werewolf The Rage">
+					<value>2</value>
+					<value>4</value>
+				</trait>
+				<trait name="Moon-Centered" source="Werewolf The Rage">
+					<value>2</value>
 				</trait>
 				<!--<trait name="Totem" source="Werewolf Core">
 				</trait>-->
 				<trait name="Synergy" source="Werewolf The Rage">
 					<value>2</value>
 				</trait>
-			</Species>
+			</Extraordinary>
 			<FightingStyle>
 				<trait name="Tooth and Claw" source="Werewolf The Rage">
 					<value>1</value>
@@ -267,5 +272,19 @@
 			<trait name="Weakness">
 			</trait>
 		</Power>-->
+		<Flaw>
+			<Physical>
+				<trait name="Bad Regeneration"/>
+				<trait name="Poor Sense of Smell"/>
+				<trait name="Silver Allergy"/>
+			</Physical>
+			<Social>
+				<trait name="Lone Wolf"/>
+			</Social>
+			<Extraordinary>
+				<trait name="Anthropocentric"/>
+				<trait name="Disharmony"/>
+			</Extraordinary>
+		</Flaw>
 	</traits>
 </SoulCreator>

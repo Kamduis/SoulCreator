@@ -31,104 +31,119 @@
 #include "CharaTrait.h"
 
 
-CharaTrait::CharaTrait( QWidget* parent, cv_Trait::Type type, cv_Trait::Category category, cv_Species::Species species, QString name, bool custom, int value ) : TraitLine( parent, name, value ) {
-	construction( type, category, species, name, custom, value );
-}
-
-CharaTrait::CharaTrait( QWidget* parent, cv_Trait trait ) : TraitLine( parent, trait.name, trait.value ) {
-	construction( trait.type, trait.category, trait.species, trait.name, trait.custom, trait.value );
-
-	if ( !trait.possibleValues.isEmpty() ) {
-		setPossibleValues( trait.possibleValues );
-// 		qDebug() << Q_FUNC_INFO << trait.name << trait.possibleValues;
-	}
-
-	v_prerequisites = trait.prerequisites;
-}
-
-
-void CharaTrait::construction( cv_Trait::Type type, cv_Trait::Category category, cv_Species::Species species, QString name, bool custom, int value ) {
-	v_type = cv_Trait::TypeNo;
-	v_category = cv_Trait::CategoryNo;
-	v_species = cv_Species::SpeciesNo;
-	v_custom = false;
+CharaTrait::CharaTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage ) : TraitLine( parent, trait->name, trait->value ) {
+	// Vorsicht: Nullzeiger ist immer gefährlich!
+	ptr_trait = 0;
+	ptr_traitStorage = traitStorage;
 
 	character = StorageCharacter::getInstance();
 
-	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitTraitChanged( int ) ) );
-	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( checkTraitPrerequisites( cv_Trait ) ) );
-	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
-	connect( this, SIGNAL( traitChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
+	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( setValue( int ) ) );
+	connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
-	connect( this, SIGNAL( customChanged( bool ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
-	// Änderungen am Charakter im Speicher müssen dieses Widget aber auch aktualisieren.
-	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( setTrait( cv_Trait ) ) );
+	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( updateWidget( cv_Trait* ) ) );
+	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
+	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( checkTraitPrerequisites( cv_Trait* ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 
-	// Damit die Schaltfläche für die Spezialisierungen verborgen wird, wenn sie nicht nötig ist.
-// 	hideSpecialtyWidget(cv_Trait::Skill);
-	setType( type );
-	setCategory( category );
-	setSpecies( species );
-	setCustom( custom );
+	setTraitPtr( trait );
+
+	hideSpecialtyWidget( trait->type );
+	hideDescriptionWidget();
 }
 
 
+cv_Trait* CharaTrait::traitPtr() const {
+	return ptr_trait;
+}
+
+void CharaTrait::setTraitPtr( cv_Trait* trait ) {
+	if ( ptr_trait != trait ) {
+		ptr_trait = trait;
+	}
+}
+
+
+
+
+int CharaTrait::value() const {
+	return traitPtr()->value;
+}
+void CharaTrait::setValue( int val ) {
+	if ( traitPtr()->value != val ) {
+		traitPtr()->value = val;
+		TraitLine::setValue( val );
+
+		emit traitChanged( traitPtr() );
+	}
+}
+
+
+QString CharaTrait::customText() const {
+	return traitPtr()->customText;
+}
+void CharaTrait::setCustomText( QString txt ) {
+	if ( traitPtr()->customText != txt ) {
+		traitPtr()->customText = txt;
+		TraitLine::setText( txt );
+
+		emit traitChanged( traitPtr() );
+	}
+}
 
 
 cv_Trait::Type CharaTrait::type() const {
-	return v_type;
+	return ptr_trait->type;
 }
 
 void CharaTrait::setType( cv_Trait::Type type ) {
-	if ( v_type != type ) {
-		v_type = type;
+	if ( ptr_trait->type != type ) {
+		ptr_trait->type = type;
 
 		emit typeChanged( type );
+		emit traitChanged( traitPtr() );
 	}
 }
 
 cv_Trait::Category CharaTrait::category() const {
-	return v_category;
+	return ptr_trait->category;
 }
 
 void CharaTrait::setCategory( cv_Trait::Category category ) {
-	if ( v_category != category ) {
-		v_category = category;
+	if ( ptr_trait->category != category ) {
+		ptr_trait->category = category;
+
+		emit traitChanged( traitPtr() );
 	}
 }
 
 cv_Species::Species CharaTrait::species() const {
-	return v_species;
+	return ptr_trait->species;
 }
 
 void CharaTrait::setSpecies( cv_Species::Species species ) {
-	if ( v_species != species ) {
-		v_species = species;
+	if ( ptr_trait->species != species ) {
+		ptr_trait->species = species;
 // 		emit speciesChanged(species);
+
+		emit traitChanged( traitPtr() );
 	}
 }
 
 
 bool CharaTrait::custom() const {
-	return v_custom;
+	return ptr_trait->custom;
 }
 
 void CharaTrait::setCustom( bool sw ) {
-	if ( v_custom != sw ) {
-		v_custom = sw;
+	if ( ptr_trait->custom != sw ) {
+		ptr_trait->custom = sw;
 
-		emit customChanged( sw );
+		emit traitChanged( traitPtr() );
 	}
 }
-
-
-void CharaTrait::addSpecialty( cv_TraitDetail specialty ) {
-	v_specialties.append( specialty );
-}
-
-
 
 void CharaTrait::hideSpecialtyWidget( cv_Trait::Type type ) {
 	if ( type == cv_Trait::Skill ) {
@@ -146,84 +161,35 @@ void CharaTrait::hideDescriptionWidget() {
 	}
 }
 
-void CharaTrait::setTrait( cv_Trait trait ) {
-	if ( type() == trait.type && category() == trait.category && name() == trait.name ) {
-		if ( !custom() ) {
-			setValue( trait.value );
-		} else if ( text() == trait.customText ){
-			setValue( trait.value );
-		} else if ( text() == "" ){
-			setText(trait.customText);
-			setValue( trait.value );
-		}
-	}
-}
-
-
-
-
-
-
-void CharaTrait::emitTraitChanged( int value ) {
-	// Eigenschaften mit Beschreibungstext werden nur dann in den Speicher aktualisiert, wenn sie auch einen solchen Text besitzen.
-	if ( !custom() || !text().isEmpty() ) {
-		cv_Trait trait;
-
-		// Wenn es die Eigenschaft schon im Speicher gibt, hole ich mir die Parameter natürlich von dort und ändere nur den Wert
-
-		QList< cv_Trait > list = character->traits( type(), category() );
-
-		for ( int i = 0; i < list.count();i++ ) {
-			if ( name() == list.at( i ).name ) {
-				trait = list.at( i );
-				trait.value = value;
-				trait.customText = text();
-				emit traitChanged( trait );
-				return;
-			}
-		}
-
-		trait.type = type();
-		trait.category = category();
-		trait.name = name();
-		trait.value = value;
-		trait.custom = custom();
-		trait.customText = text();
-
-// 		qDebug() << Q_FUNC_INFO << "Dies ist ein Test, den ich nicht verstehe!" << name() << text();
-		// Lieber nicht. Das sind nicht die ausgewählten, sondern die \emph{möglichen} Spezialisierungen.
-// 		trait.details = v_specialties;
-
-		emit traitChanged( trait );
-	}
-}
-
 void CharaTrait::emitSpecialtiesClicked( bool sw ) {
-	QList< cv_TraitDetail > list = v_specialties;
-	QList< cv_Trait > traitList = character->traits( type(), category() );
+	if ( ptr_traitStorage != 0 ) {
+		QList< cv_TraitDetail > listStora = ptr_traitStorage->details;
+		QList< cv_TraitDetail > listChara = traitPtr()->details;
 
-	for ( int i = 0; i < list.count(); i++ ) {
-		for ( int j = 0; j < traitList.count(); j++ ) {
-			for ( int k = 0; k < traitList.at( j ).details.count(); k++ ) {
-				if ( list.at( i ).name == traitList.at( j ).details.at( k ).name ) {
-					cv_TraitDetail detail = list.at( i );
-					detail.value = true;
-					list.replace( i, detail );
+		qDebug() << Q_FUNC_INFO << "TEst";
+
+		for ( int i = 0; i < listStora.count(); i++ ) {
+			for ( int j = 0; j < listChara.count(); j++ ) {
+				if ( listStora.at( i ).name == listChara.at( j ).name ) {
+					qDebug() << Q_FUNC_INFO << sw << listStora.at( i ).name << listChara.at( j ).name << listChara.at( j ).value;
+					cv_TraitDetail traitDetail = listChara.at( j );
+					listStora.replace( i, traitDetail );
 				}
 			}
 		}
 
-// 		qDebug() << Q_FUNC_INFO << list.at( i ).name << list.at( i ).value;
+		emit specialtiesClicked( sw, name(), listStora );
 	}
-
-	emit specialtiesClicked( sw, name(), list );
 }
 
 
-void CharaTrait::checkTraitPrerequisites( cv_Trait trait ) {
-// 	qDebug() << Q_FUNC_INFO << name() << v_prerequisites;
-	if ( !v_prerequisites.isEmpty() && v_prerequisites.contains( trait.name ) ) {
-		QString prerequisites = parsePrerequisites( v_prerequisites );
+void CharaTrait::checkTraitPrerequisites( cv_Trait* trait ) {
+// 	qDebug() << Q_FUNC_INFO << name() << ptr_traitStorage->details;
+
+// 	qDebug() << Q_FUNC_INFO << name() << ptr_traitStorage;
+
+	if ( !ptr_traitStorage->prerequisites.isEmpty() && ptr_traitStorage->prerequisites.contains( trait->name ) ) {
+		QString prerequisites = parsePrerequisites( ptr_traitStorage->prerequisites );
 
 		// Alles was an Wörtern übriggeblieben ist durch 0 ersetzen.
 		// Wäre schön, wenn das der Parser könnte, da kriege ich das aber nicht hin.
@@ -318,8 +284,17 @@ void CharaTrait::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {
 	if ( species().testFlag( sp ) ) {
 		setHidden( false );
 	} else {
-		setValue(0);
+		setValue( 0 );
 		setHidden( true );
 	}
 }
 
+
+
+
+void CharaTrait::updateWidget( cv_Trait* trait ) {
+	if ( traitPtr() == trait ) {
+		TraitLine::setValue( value() );
+		TraitLine::setText( customText() );
+	}
+}

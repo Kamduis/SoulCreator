@@ -26,7 +26,7 @@
 #include <QGroupBox>
 #include <QDebug>
 
-#include "CharaTrait2.h"
+#include "CharaTrait.h"
 #include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
@@ -41,33 +41,30 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	layout = new QHBoxLayout( this );
 	setLayout( layout );
 
-	QFrame* frame = new QFrame( this );
-	layout->addWidget( frame );
-
-	QVBoxLayout* layoutHeader = new QVBoxLayout();
-	frame->setLayout( layoutHeader );
-
-	QLabel* labelPower = new QLabel( tr( "Power" ) );
-	labelPower->setAlignment( Qt::AlignRight );
-
-	QLabel* labelFinesse = new QLabel( tr( "Finesse" ) );
-	labelFinesse->setAlignment( Qt::AlignRight );
-
-	QLabel* labelResistance = new QLabel( tr( "Resistance" ) );
-	labelResistance->setAlignment( Qt::AlignRight );
-
-	layoutHeader->addWidget( labelPower, 0, 0 );
-	layoutHeader->addWidget( labelFinesse, 1, 0 );
-	layoutHeader->addWidget( labelResistance, 2, 0 );
+// 	QFrame* frame = new QFrame( this );
+// 	layout->addWidget( frame );
+// 
+// 	QVBoxLayout* layoutHeader = new QVBoxLayout();
+// 	frame->setLayout( layoutHeader );
+// 
+// 	QLabel* labelPower = new QLabel( tr( "Power" ) );
+// 	labelPower->setAlignment( Qt::AlignRight );
+// 
+// 	QLabel* labelFinesse = new QLabel( tr( "Finesse" ) );
+// 	labelFinesse->setAlignment( Qt::AlignRight );
+// 
+// 	QLabel* labelResistance = new QLabel( tr( "Resistance" ) );
+// 	labelResistance->setAlignment( Qt::AlignRight );
+// 
+// 	layoutHeader->addWidget( labelPower, 0, 0 );
+// 	layoutHeader->addWidget( labelFinesse, 1, 0 );
+// 	layoutHeader->addWidget( labelResistance, 2, 0 );
 
 	StorageTemplate storage;
 
 	cv_Trait::Type type = cv_Trait::Attribute;
 
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::Mental );
-	categories.append( cv_Trait::Physical );
-	categories.append( cv_Trait::Social );
+	QList< cv_Trait::Category > categories = cv_Trait::getCategoryList(type);
 
 	QList< cv_Trait* > list;
 
@@ -84,7 +81,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 			cv_Trait* traitPtr = character->addTrait( *list[j] );
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-			CharaTrait2 *trait = new CharaTrait2( this, traitPtr, list[j] );
+			CharaTrait *trait = new CharaTrait( this, traitPtr, list[j] );
 			trait->setValue( 1 );
 			layoutCategories->addWidget( trait );
 		}

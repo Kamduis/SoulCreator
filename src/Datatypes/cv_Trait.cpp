@@ -28,6 +28,21 @@
 #include "cv_Trait.h"
 
 
+const QList< cv_Trait::Category > cv_Trait::v_categoryListGeneral = QList< cv_Trait::Category >()
+		<< cv_Trait::Mental
+		<< cv_Trait::Physical
+		<< cv_Trait::Social;
+
+const QList< cv_Trait::Category > cv_Trait::v_categoryListExtended = QList< cv_Trait::Category >()
+		<< cv_Trait::v_categoryListGeneral
+		<< cv_Trait::Extraordinary;
+
+const QList< cv_Trait::Category > cv_Trait::v_categoryListAll = QList< cv_Trait::Category >()
+		<< cv_Trait::v_categoryListGeneral
+		<< cv_Trait::v_categoryListExtended
+		<< cv_Trait::Extraordinary;
+
+
 cv_Trait::cv_Trait() {
 	name = "";
 	value = 0;
@@ -59,6 +74,10 @@ QString cv_Trait::toXmlString( cv_Trait::Type type ) {
 			return "Skill";
 		case cv_Trait::Merit:
 			return "Merit";
+		case cv_Trait::Derangement:
+			return "Derangement";
+		case cv_Trait::Flaw:
+			return "Flaw";
 		case cv_Trait::Super:
 			return "Super";
 		case cv_Trait::Power:
@@ -87,8 +106,6 @@ QString cv_Trait::toXmlString( cv_Trait::Category category ) {
 			return "DebateStyle";
 		case cv_Trait::Extraordinary:
 			return "Extraordinary";
-		case cv_Trait::Species:
-			return "Species";
 		default:
 			throw eTraitCategory( category );
 // 			return "ERROR";
@@ -110,6 +127,10 @@ QString cv_Trait::toString( cv_Trait::Type type, bool plural ) {
 				return QObject::tr( "Skills" );
 			case cv_Trait::Merit:
 				return QObject::tr( "Merits" );
+			case cv_Trait::Derangement:
+				return QObject::tr( "Derangements" );
+			case cv_Trait::Flaw:
+				return QObject::tr( "Flaws" );
 			case cv_Trait::Super:
 				return QObject::tr( "Supertraits" );
 			case cv_Trait::Power:
@@ -132,6 +153,10 @@ QString cv_Trait::toString( cv_Trait::Type type, bool plural ) {
 				return QObject::tr( "Skill" );
 			case cv_Trait::Merit:
 				return QObject::tr( "Merit" );
+			case cv_Trait::Derangement:
+				return QObject::tr( "Derangement" );
+			case cv_Trait::Flaw:
+				return QObject::tr( "Flaw" );
 			case cv_Trait::Super:
 				return QObject::tr( "Supertrait" );
 			case cv_Trait::Power:
@@ -162,8 +187,6 @@ QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
 				return QObject::tr( "Debate Styles" );
 			case cv_Trait::Extraordinary:
 				return QObject::tr( "Extraordinary" );
-			case cv_Trait::Species:
-				return QObject::tr( "Species" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -185,8 +208,6 @@ QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
 				return QObject::tr( "Debate Style" );
 			case cv_Trait::Extraordinary:
 				return QObject::tr( "Extraordinary" );
-			case cv_Trait::Species:
-				return QObject::tr( "Species" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -205,6 +226,10 @@ cv_Trait::Type cv_Trait::toType( QString str ) {
 		return cv_Trait::Skill;
 	else if ( str == "Merit" )
 		return cv_Trait::Merit;
+	else if ( str == "Derangement" )
+		return cv_Trait::Derangement;
+	else if ( str == "Flaw" )
+		return cv_Trait::Flaw;
 // 	else if ( str == "Morale" )
 // 		return cv_Trait::Morale;
 	else if ( str == "Super" )
@@ -230,8 +255,6 @@ cv_Trait::Category cv_Trait::toCategory( QString str ) {
 		return cv_Trait::DebateStyle;
 	else if ( str == "Extraordinary" )
 		return cv_Trait::Extraordinary;
-	else if ( str == "Species" )
-		return cv_Trait::Species;
 	else
 		return cv_Trait::CategoryNo;
 }
@@ -254,6 +277,21 @@ cv_Trait::Age cv_Trait::toAge( QString str ) {
 		return cv_Trait::Kid;
 	else
 		return cv_Trait::AgeAll;
+}
+
+
+QList< cv_Trait::Category > cv_Trait::getCategoryList( cv_Trait::Type type ) {
+	if ( type == cv_Trait::Attribute || type == cv_Trait::Skill ) {
+		return v_categoryListGeneral;
+	} else if ( type == cv_Trait::Merit ) {
+		return v_categoryListAll;
+	} else if ( type == cv_Trait::Power || type == cv_Trait::Derangement ) {
+		return QList< cv_Trait::Category >() << cv_Trait::CategoryNo;
+	} else if ( type == cv_Trait::Flaw ) {
+		return v_categoryListExtended;
+	} else {
+		throw eTraitType( type );
+	}
 }
 
 

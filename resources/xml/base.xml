@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.3">
+<SoulCreator version="0.4">
 	<traits species="SpeciesAll">
 		<Virtue>
 			<trait name="Charity" age="Adult"/>
@@ -949,14 +949,6 @@
 					<value>2</value>
 					<prerequisite>Easy Ride > 0</prerequisite>
 				</trait>
-				<!--<trait name="Pleasing Aura" source="WoD Book of Spirits">
-					<value>3</value>
-					<prerequisite>Non-Werewolf</prerequisite>
-				</trait>-->
-				<!--<trait name="Saintly" source="WoD Book of Spirits">
-					<value>3</value>
-					<prerequisite>Non-Werewolf</prerequisite>
-				</trait>-->
 				<trait name="Shadow Contacts" source="WoD Book of Spirits">
 					<value>3</value>
 					<value>4</value>
@@ -969,11 +961,132 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
+				<!--<trait name="Pleasing Aura" source="WoD Book of Spirits">
+					<value>3</value>
+					<prerequisite>Non-werewolf</prerequisite>
+				</trait>
+				<trait name="Saintly" source="WoD Book of Spirits">
+					<value>3</value>
+					<prerequisite>Non-werewolf</prerequisite>
+				</trait>
 				<trait name="Spirit Tongue" source="WoD Book of Spirits">
 					<value>3</value>
-					<!--<prerequisite>Non-Werewolf</prerequisite>-->
-				</trait>
+					<prerequisite>Non-werewolf</prerequisite>
+				</trait>-->
 			</Extraordinary>
 		</Merit>
+		<Derangement>
+			<Mild>
+				<trait name="Avoidance"/>
+				<trait name="Dehumanization"/>
+				<trait name="Depression"/>
+				<trait name="Fetishism"/>
+				<trait name="Fixation"/>
+				<trait name="Inferiority Complex"/>
+				<trait name="Insomnia"/>
+				<trait name="Irrationality"/>
+				<trait name="Narcissism"/>
+				<trait name="Phobia"/>
+				<trait name="Pyromania"/>
+				<trait name="Repression"/>
+				<trait name="Supernatural Fascination"/>
+				<trait name="Suspicion"/>
+				<trait name="Vocalization"/>
+				<!--<trait name="Blood Fascination" species="ghoul-istfalsch"/>
+				<trait name="Degenerative Fixation" species="ghoul-istfalsch"/>-->
+			</Mild>
+			<Severe>
+				<trait name="Fugue">
+					<prerequisite>Avoidance > 0</prerequisite>
+				</trait>
+				<trait name="Loss of Compassion">
+					<prerequisite>Dehumanization > 0</prerequisite>
+				</trait>
+				<trait name="Manic-Depression">
+					<prerequisite>Depression > 0</prerequisite>
+				</trait>
+				<trait name="Melancholia">
+					<prerequisite>Depression > 0</prerequisite>
+				</trait>
+				<trait name="Masochism">
+					<prerequisite>Fetishism > 0</prerequisite>
+				</trait>
+				<trait name="Bulimia">
+					<prerequisite>Fixation > 0</prerequisite>
+				</trait>
+				<trait name="Anxiety">
+					<prerequisite>Inferiority Complex > 0</prerequisite>
+				</trait>
+				<trait name="Cataplexy">
+					<prerequisite>Insomnia > 0</prerequisite>
+				</trait>
+				<trait name="Delusional Obsession">
+					<prerequisite>Irrationality > 0</prerequisite>
+				</trait>
+				<trait name="Multiple Personality" extreme="true">
+					<prerequisite>Irrationality > 0</prerequisite>
+				</trait>
+				<trait name="Narcissism">
+					<prerequisite>Megalomania > 0</prerequisite>
+				</trait>
+				<trait name="Hysteria">
+					<prerequisite>Phobia > 0</prerequisite>
+				</trait>
+				<trait name="Pyrophilia">
+					<prerequisite>Pyromania > 0</prerequisite>
+				</trait>
+				<trait name="Denial">
+					<prerequisite>Repression > 0</prerequisite>
+				</trait>
+				<trait name="Zealotry">
+					<prerequisite>Supernatural Fascination > 0</prerequisite>
+				</trait>
+				<trait name="Paranoia">
+					<prerequisite>Suspicion > 0</prerequisite>
+				</trait>
+				<trait name="Schizophrenia" extreme="true">
+					<prerequisite>Vocalization > 0</prerequisite>
+				</trait>
+				<!--<trait name="Hemophilic Compulsion" species="ghoul-istfalsch">
+				<prerequisite>Blood Fascination > 0</prerequisite>
+				</trait>
+				<trait name="Identity Erasure" species="ghoul-istfalsch">
+					<prerequisite>Degenerative Fixation > 0</prerequisite>
+				</trait>-->
+			</Severe>
+		</Derangement>
+		<Flaw>
+			<Mental>
+				<trait name="Addiction" custom="true"/>
+				<trait name="Amnesia"/>
+				<trait name="Coward"/>
+				<trait name="Forgetful"/>
+				<trait name="Headstrong"/>
+				<trait name="Illiterate"/>
+				<trait name="Nightmares"/>
+			</Mental>
+			<Physical>
+				<trait name="Crippled"/>
+				<trait name="Cumbersome"/>
+				<trait name="Dwarf"/>
+				<trait name="Hard of Hearing"/>
+				<trait name="Lame"/>
+				<trait name="Mute"/>
+				<trait name="One Arm"/>
+				<trait name="One Eye"/>
+				<trait name="Poor Sight"/>
+			</Physical>
+			<Social>
+				<trait name="Aloof"/>
+				<trait name="Behavior Blind"/>
+				<trait name="Deformity" custom="true"/>
+				<trait name="Embarrassing Secret" custom ="true"/>
+				<trait name="Notoriety"/>
+				<trait name="Racist/Sexist"/>
+				<trait name="Speech Impediment"/>
+				<trait name="True Tongue"/>
+				<trait name="Untrustworthy"/>
+			</Social>
+		</Flaw>
 	</traits>
 </SoulCreator>

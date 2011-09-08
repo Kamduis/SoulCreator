@@ -32,6 +32,7 @@
 #include "../Datatypes/cv_Species.h"
 #include "../Datatypes/cv_Trait.h"
 
+#include <QObject>
 #include "ReadXml.h"
 
 
@@ -41,7 +42,9 @@
  * Diese Klasse dient dazu, einen auf Datenträger gespeicherten Charakter wieder in das Programm zu laden.
  */
 
-class ReadXmlCharacter : public ReadXml {
+class ReadXmlCharacter : public QObject, public ReadXml {
+	Q_OBJECT
+	
 	public:
 		ReadXmlCharacter();
 		/**
@@ -84,6 +87,9 @@ class ReadXmlCharacter : public ReadXml {
 		 * Lese die Eigenschaften aus dem gespeicherten Charakter.
 		 **/
 		void readTraits( cv_Trait::Type type, cv_Trait::Category category );
+
+	signals:
+		void oldVersion( QString, QString );
 };
 
 #endif

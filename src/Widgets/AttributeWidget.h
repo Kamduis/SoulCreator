@@ -36,6 +36,8 @@
  * @brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
  *
  * Die Attribute werden in diesem Widget angeordnet.
+ *
+ * \todo Bei Werwölfen sollten die Attributswerte aller Gestalten angezeigt werden.
  **/
 class AttributeWidget : public QWidget {
 		Q_OBJECT

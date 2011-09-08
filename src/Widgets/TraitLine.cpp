@@ -24,7 +24,7 @@
 
 #include <QDebug>
 
-// #include "Storage.h"
+#include "../Config/Config.h"
 
 #include "TraitLine.h"
 
@@ -62,9 +62,14 @@ TraitLine::TraitLine( QWidget *parent, QString name, int value ) : QWidget( pare
 
 	v_label_name = new QLabel( this );
 	button = new QPushButton( this );
-	button->setText( tr( "Specialties" ) );
+// 	button->setText( tr( "Specialties" ) );
+	button->setText( "..." );
+	button->setMaximumHeight(Config::inlineWidgetHeightMax);
 	button->setCheckable( true );
+	
 	lineEdit = new QLineEdit( this );
+	lineEdit->setMaximumHeight(Config::inlineWidgetHeightMax);
+	
 	traitDots = new TraitDots( this );
 
 	connect( traitDots, SIGNAL( valueChanged( int ) ), SIGNAL( valueChanged( int ) ) );

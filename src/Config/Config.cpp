@@ -28,9 +28,13 @@
 
 #include "Config.h"
 
+const int Config::versionMajor = PROGRAM_VERSION_MAJOR;
+const int Config::versionMinor = PROGRAM_VERSION_MINOR;
+const int Config::versionChange = PROGRAM_VERSION_CHANGE;
 const int Config::traitCategorySpace = 10;
 const int Config::traitMultipleMax = 3;
 const int Config::displayTimeout = 10000;
+const int Config::inlineWidgetHeightMax = 17;
 const int Config::traitMax = 5;
 const int Config::moralityTraitMax = 10;
 const int Config::derangementMoralityTraitMax = 7;
@@ -49,17 +53,17 @@ QString Config::name() {
 }
 
 QString Config::version() {
-	return QString::number( PROGRAM_VERSION_MAJOR ) +
+	return QString::number( versionMajor ) +
 		   "." +
-		   QString::number( PROGRAM_VERSION_MINOR );
+		   QString::number( versionMinor );
 }
 
 QString Config::versionDetail() {
-	return QString::number( PROGRAM_VERSION_MAJOR ) +
+	return QString::number( versionMajor ) +
 		   "." +
-		   QString::number( PROGRAM_VERSION_MINOR ) +
+		   QString::number( versionMinor ) +
 		   "." +
-		   QString::number( PROGRAM_VERSION_CHANGE );
+		   QString::number( versionChange );
 }
 
 QString Config::importantTextColorName() {

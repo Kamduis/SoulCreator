@@ -105,6 +105,16 @@ eXmlVersion::eXmlVersion( QString expected, QString got ) : eXml() {
 	setDescription( QObject::tr( "Got %1 but expected was %2" ).arg( got ).arg( expected ) );
 }
 
+eXmlOldVersion::eXmlOldVersion( QString expected, QString got ) : eXmlVersion() {
+	setMessage( QObject::tr( "Old Version." ) );
+	setDescription( QObject::tr( "Got Version No. %1 but expected was %2" ).arg( got ).arg( expected ) );
+}
+
+eXmlTooOldVersion::eXmlTooOldVersion( QString expected, QString got ) : eXmlOldVersion() {
+	setMessage( QObject::tr( "Too Old Version." ) );
+	setDescription( QObject::tr( "Got Version No. %1 but expected was %2" ).arg( got ).arg( expected ) );
+}
+
 
 eSpecies::eSpecies() : Exception() {
 	setMessage( QObject::tr( "Character Species Problem" ) );

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
-    <height>900</height>
+    <width>1024</width>
+    <height>880</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,8 +37,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>736</width>
-         <height>814</height>
+         <width>950</width>
+         <height>800</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -113,6 +113,12 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="title">
                     <string>Skills</string>
                    </property>
@@ -120,6 +126,21 @@
                     <set>Qt::AlignCenter</set>
                    </property>
                    <layout class="QVBoxLayout" name="layout_skills">
+                    <property name="margin">
+                     <number>0</number>
+                    </property>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="groupBox_merits">
+                   <property name="title">
+                    <string>Merits</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                   <layout class="QVBoxLayout" name="layout_merits">
                     <property name="margin">
                      <number>0</number>
                     </property>
@@ -150,14 +171,20 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QGroupBox" name="groupBox_merits">
+                    <widget class="QGroupBox" name="groupBox_flaws">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="title">
-                      <string>Merits</string>
+                      <string>Flaws</string>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignCenter</set>
                      </property>
-                     <layout class="QVBoxLayout" name="layout_merits">
+                     <layout class="QVBoxLayout" name="layout_flaws">
                       <property name="margin">
                        <number>0</number>
                       </property>
@@ -202,8 +229,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>811</width>
-     <height>23</height>
+     <width>1024</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -237,12 +264,6 @@
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidget_advantagesContents">
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
     <layout class="QVBoxLayout" name="layout_advantages"/>
    </widget>
   </widget>

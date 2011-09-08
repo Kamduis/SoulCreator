@@ -25,7 +25,7 @@
 #include <QGroupBox>
 #include <QDebug>
 
-#include "CharaTrait2.h"
+#include "CharaTrait.h"
 #include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
@@ -41,21 +41,20 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 
 	cv_Trait::Type type = cv_Trait::Skill;
 
-	categories.append( cv_Trait::Mental );
-	categories.append( cv_Trait::Physical );
-	categories.append( cv_Trait::Social );
+	v_categories = cv_Trait::getCategoryList(type);
 
 	QList< cv_Trait* > list;
 
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 
-	for ( int i = 0; i < categories.count(); i++ ) {
-		list = storage->traitsPtr( type, categories.at( i ) );
+	for ( int i = 0; i < v_categories.count(); i++ ) {
+		list = storage->traitsPtr( type, v_categories.at( i ) );
 
 		QVBoxLayout* categoryLayout = new QVBoxLayout();
 
 		QGroupBox* categoryBox = new QGroupBox( this );
-		categoryBox->setTitle( cv_Trait::toString( categories.at( i ), true ) );
+		categoryBox->setFlat(true);
+		categoryBox->setTitle( cv_Trait::toString( v_categories.at( i ), true ) );
 
 		categoryBox->setLayout( categoryLayout );
 
@@ -69,7 +68,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			cv_Trait* traitPtr = character->addTrait( lcl_trait );
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-			CharaTrait2 *charaTrait = new CharaTrait2( this, traitPtr, list[j] );
+			CharaTrait *charaTrait = new CharaTrait( this, traitPtr, list[j] );
 			charaTrait->setValue( 0 );
 			
 			// Nur Fertigkeiten haben Spezialisierungen.
@@ -99,7 +98,7 @@ SkillWidget::~SkillWidget() {
 }
 
 void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
+// 	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
 	QList< cv_Trait > list;
 
 	for ( int i = 0; i < layout->count(); i++ ) {
@@ -107,19 +106,19 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 		QVBoxLayout* lcl_layout = qobject_cast<QVBoxLayout*>( box->layout() );
 
 		for ( int j = 0; j < lcl_layout->count(); j++ ) {
-			list = storage->skills( categories.at( 0 ) );
+			list = storage->skills( v_categories.at( 0 ) );
 
 			// Wir wollen nur die Eigenschaftswidgekts, nicht die Abstandshalter!
 
-			if ( j == list.count() || j == list.count() + storage->skills( categories.at( 1 ) ).count() + 1 ) {
+			if ( j == list.count() || j == list.count() + storage->skills( v_categories.at( 1 ) ).count() + 1 ) {
 				j++;
 			}
 
-			CharaTrait2 *trait = qobject_cast<CharaTrait2*>( lcl_layout->itemAt( j )->widget() );
+			CharaTrait *trait = qobject_cast<CharaTrait*>( lcl_layout->itemAt( j )->widget() );
 
 			if ( trait->name() != skillName ) {
 				trait->setSpecialtyButtonChecked( false );
-			qDebug() << Q_FUNC_INFO << "Deaktivieren von" << trait->name();
+// 				qDebug() << Q_FUNC_INFO << "Deaktivieren von" << trait->name();
 			}
 		}
 	}

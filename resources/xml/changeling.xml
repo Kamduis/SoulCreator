@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.3">
+<SoulCreator version="0.4">
 	<traits species="Changeling" morale="Clarity" supertrait="Wyrd" fuel="Glamour">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
@@ -30,7 +30,31 @@
 			</Physical>
 		</Skill>
 		<Merit>
-			<Species>
+			<Social>
+				<trait name="Court Goodwill" custom="true" source="Changeling Core">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+				<trait name="Devotee" source="Changeling The Equinox Road">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+					<prerequisite>Wyrd > 6</prerequisite>
+				</trait>
+				<trait name="Prophet Circle" source="Changeling Rites of Spring">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<value>5</value>
+				</trait>
+			</Social>
+			<Extraordinary>
 				<trait name="Arcadian Body" creationOnly="true" source="Changeling Rites of Spring">
 					<value>4</value>
 					<prerequisite>Intelligence > 2 OR Wits > 2 OR Resolve > 2 OR Strength > 2 OR Dexterity > 2 OR Stamina > 2 OR Presence > 2 OR Manipulation > 2 OR Composure > 2</prerequisite>
@@ -47,13 +71,6 @@
 				</trait>
 				<trait name="Charmed Life" source="Changeling Rites of Spring">
 					<value>2</value>
-				</trait>
-				<trait name="Court Goodwill" custom="true" source="Changeling Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
 				</trait>
 				<trait name="Dual Kith" creationOnly="true" source="Changeling Rites of Spring">
 					<value>2</value>
@@ -198,13 +215,6 @@
 					<value>2</value>
 					<value>3</value>
 				</trait>
-				<trait name="Prophet Circle" source="Changeling Rites of Spring">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
 				<trait name="Rigid Mask" source="Changeling Rites of Spring">
 					<value>2</value>
 					<prerequisite>Subterfuge > 1</prerequisite>
@@ -230,14 +240,6 @@
 					<!--<effect>You bind another Skill to your Mien and seeming, and at every \Trait{Wyrd} dot gained starting at \Trait[6]{Wyrd}, you receives another free Specialty for the Skill chosen to be bound to one's \Trait{Wyrd}.</effect>
 					<effect>The experience cost to buy Skill dots in other Skills in the same area as your Wyrdskill increase to new dots $\times$4, and Specialties cost 4~XP.</effect>-->
 				</trait>
-				<trait name="Devotee" source="Changeling The Equinox Road">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Wyrd > 6</prerequisite>
-				</trait>
 				<trait name="Manymask" source="Changeling The Equinox Road">
 					<value>1</value>
 					<value>2</value>
@@ -254,7 +256,7 @@
 					<value>5</value>
 					<prerequisite>Wyrd > 8</prerequisite>
 				</trait>
-			</Species>
+			</Extraordinary>
 			<FightingStyle>
 				<trait name="Dream Combat" source="Changeling Rites of Spring">
 					<value>1</value>
@@ -590,5 +592,25 @@
 				<cheap>West</cheap>
 			</trait>
 		</Power>
+		<Derangement>
+			<Mild>
+				<trait name="Wanderlust"/>
+			</Mild>
+			<Severe>
+				<trait name="Hedge-Calling">
+					<prerequisite>Wanderlust > 0</prerequisite>
+				</trait>
+			</Severe>
+		</Derangement>
+		<Flaw>
+			<Social>
+				<trait name="Anachronism"/>
+			</Social>
+			<Extraordinary>
+				<trait name="Glamour Addict"/>
+				<trait name="Cannibal"/>
+				<trait name="Manifest Mien"/>
+			</Extraordinary>
+		</Flaw>
 	</traits>
 </SoulCreator>

@@ -56,10 +56,24 @@ void ReadXml::readUnknownElement() {
 }
 
 bool ReadXml::checkXmlVersion( QString name, QString version ) {
-	if ( name == Config::name() && version == Config::version() ) {
-		return true;
+	if ( name == Config::name() ) {
+		if ( version == Config::version() ) {
+			return true;
+		} else {
+			// Unterschiede in der Minor-Version sind ignorierbar, unterschiede in der Major-Version allerdings nicht.
+			int major = version.left( version.indexOf( "." ) ).toInt();
+			int minor = version.right( version.indexOf( "." ) ).toInt();
+
+			if ( major == Config::versionMajor ){
+				throw eXmlOldVersion( Config::version(), version );
+			} else {
+				throw eXmlTooOldVersion( Config::version(), version );
+			}
+		}
 	} else {
 		throw eXmlVersion( Config::name() + Config::version(), name + version );
 	}
+
 	return false;
 }
+

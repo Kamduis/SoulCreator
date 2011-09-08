@@ -31,6 +31,10 @@
 
 StorageCharacter* StorageCharacter::p_instance = 0;
 
+QString StorageCharacter::v_virtue = "";
+QString StorageCharacter::v_vice = "";
+QString StorageCharacter::v_breed = "";
+QString StorageCharacter::v_faction = "";
 int StorageCharacter::v_superTrait = 0;
 int StorageCharacter::v_morality = 0;
 
@@ -47,12 +51,13 @@ void StorageCharacter::destroy() {
 }
 
 
-cv_NameList StorageCharacter::v_identities;
+cv_IdentityList StorageCharacter::v_identities;
 QList< cv_Trait > StorageCharacter::v_traits;
 cv_Species::SpeciesFlag StorageCharacter::v_species;
 
 
 StorageCharacter::StorageCharacter( QObject* parent ) : QObject( parent ) {
+	realIdentity = &v_identities[0];
 }
 
 StorageCharacter::~StorageCharacter() {
@@ -72,18 +77,30 @@ void StorageCharacter::setSpecies( cv_Species::SpeciesFlag species ) {
 	}
 }
 
-cv_NameList StorageCharacter::identities() const {
+cv_IdentityList StorageCharacter::identities() const {
 	return v_identities;
 }
 
-void StorageCharacter::insertIdentity( int index, cv_Name name ) {
-	v_identities.insert( index, name );
+void StorageCharacter::insertIdentity( int index, cv_Identity id ) {
+	v_identities.insert( index, id );
 }
 
-void StorageCharacter::addIdentity( cv_Name name ) {
+void StorageCharacter::addIdentity( cv_Identity id ) {
 	int index = identities().count();
-	insertIdentity( index, name );
+	insertIdentity( index, id );
 }
+void StorageCharacter::setRealIdentity( cv_Identity id ) {
+	if ( v_identities.count() > 0 ) {
+		v_identities.replace( 0, id );
+	} else {
+		insertIdentity( 0, id );
+	}
+
+	emit identityChanged( id );
+}
+
+
+
 
 QList< cv_Trait > StorageCharacter::traitsAll() const {
 	return v_traits;
@@ -144,7 +161,7 @@ void StorageCharacter::modifyTrait( cv_Trait trait ) {
 			cv_Trait lcl_trait = trait;
 			lcl_trait.custom = v_traits.at( i ).custom;
 
-			if ( !lcl_trait.custom || lcl_trait.customText == v_traits.at( i ).customText || v_traits.at(i).customText.isEmpty() ) {
+			if ( !lcl_trait.custom || lcl_trait.customText == v_traits.at( i ).customText || v_traits.at( i ).customText.isEmpty() ) {
 // 				qDebug() << Q_FUNC_INFO << trait.customText << "vs." << v_traits.at( i ).customText << "bei" << trait.custom;
 
 				v_traits.replace( i, lcl_trait );
@@ -202,6 +219,47 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 		qDebug() << Q_FUNC_INFO << "Spezialisierungen nicht angelegt, da Fertigkeit" << name << "nicht existiert.";
 	}
 }
+
+QString StorageCharacter::virtue() const {
+	return v_virtue;
+}
+void StorageCharacter::setVirtue( QString txt ) {
+	if ( v_virtue != txt ) {
+		v_virtue = txt;
+		emit virtueChanged( txt );
+	}
+}
+
+QString StorageCharacter::vice() const {
+	return v_vice;
+}
+void StorageCharacter::setVice( QString txt ) {
+	if ( v_vice != txt ) {
+		v_vice = txt;
+		emit viceChanged( txt );
+	}
+}
+
+QString StorageCharacter::breed() const {
+	return v_breed;
+}
+void StorageCharacter::setBreed( QString txt ) {
+	if ( v_breed != txt ) {
+		v_breed = txt;
+		emit breedChanged( txt );
+	}
+}
+
+QString StorageCharacter::faction() const {
+	return v_faction;
+}
+void StorageCharacter::setFaction( QString txt ) {
+	if ( v_faction != txt ) {
+		v_faction = txt;
+		emit factionChanged( txt );
+	}
+}
+
 
 int StorageCharacter::superTrait() const {
 	return v_superTrait;

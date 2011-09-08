@@ -26,7 +26,8 @@
 #define STORAGECHARACTER_H
 
 #include "../Datatypes/cv_Trait.h"
-#include "../Datatypes/cv_NameList.h"
+#include "../Datatypes/cv_Identity.h"
+#include "../Datatypes/cv_IdentityList.h"
 
 #include <QObject>
 
@@ -52,7 +53,7 @@ class StorageCharacter : public QObject {
 // 		 *
 // 		 * \notifier identitiesChanged()
 // 		 **/
-// 		Q_PROPERTY( cv_NameList identities READ identities WRITE setIdentities NOTIFY identitiesChanged )
+// 		Q_PROPERTY( cv_IdentityList identities READ identities WRITE setIdentities NOTIFY identitiesChanged )
 
 	private:
 		/*
@@ -97,7 +98,27 @@ class StorageCharacter : public QObject {
 		/**
 		 * Gibt eine Liste aller Identitäten des Charkaters aus.
 		 **/
-		cv_NameList identities() const;
+		cv_IdentityList identities() const;
+		/**
+		 * Erlaubt den Zugriff auf die \emph{echte} Identität.
+		 **/
+		cv_Identity* realIdentity;
+		/**
+		 * Tugend des Charakters
+		 **/
+		QString virtue() const;
+		/**
+		 * Laster des Charakters
+		 **/
+		QString vice() const;
+		/**
+		 * Brut (Seeming, Path, Clan, Auspice) des Charakters
+		 **/
+		QString breed() const;
+		/**
+		 * Fraktion (Court, order, Covenant, Tribe) des Charakters
+		 **/
+		QString faction() const;
 		/**
 		 * Gibt eine Liste \emph{aller} Eigenschaften des Charkaters aus.
 		 **/
@@ -109,7 +130,7 @@ class StorageCharacter : public QObject {
 		 **/
 		QList< cv_Trait > traits( cv_Trait::Type type, cv_Trait::Category category ) const;
 		/**
-		 * Gibt die Eigenschaft auf, auf welche mit dem Zeiger im Argument verwiesen wird.
+		 * Gibt die Eigenschaft aus, auf welche mit dem Zeiger im Argument verwiesen wird.
 		 **/
 		cv_Trait trait( const cv_Trait* traitPtr ) const;
 		/**
@@ -143,16 +164,18 @@ class StorageCharacter : public QObject {
 		/**
 		 * Eine Liste aller Identitäten des Charakters. Hierin werden alle seine zahlreichen Namen gespeichert.
 		 **/
-		static cv_NameList v_identities;
+		static cv_IdentityList v_identities;
 		/**
 		 * Eine Liste sämtlicher Eigenschaften des Charakters.
 		 *
 		 * \todo Sollte ich nicht so machen. So werden ja alle Daten aus dem Template in den Charkater geschrieben. ich woll dort aber nur stehen haben, was auch der Charkater hat. Insbesondere bei Spezialisierungen ist das wichtig. Vielleicht einfach die Spazialisierungen wieder rauslöschen.
 		 *
 		 * \todo Anstatt alles in einer Liste zu haben, die ich dann auswerte, sollte ich vielleicht für jeden Typ und jede Kategorie eine eigene Liste haben und wenn ich dann etwas ausgebe, hänge ich die Listen zur not einfach aneinander an. Geht schneller als bei der Speziellen ausgabe inhalt für inhalt an eine neue Liste zu kleben.
-		 *
-		 * \deprecated Soll ersetzt werden durch eine Liste von zeigern auf Trait.
 		 **/
+		static QString v_virtue;
+		static QString v_vice;
+		static QString v_breed;
+		static QString v_faction;
 		static QList< cv_Trait > v_traits;
 		static int v_superTrait;
 		static int v_morality;
@@ -160,18 +183,22 @@ class StorageCharacter : public QObject {
 	public slots:
 		/**
 		 * Legt die Spezies des Charakters fest.
-		 *
-		 * \bug Es wird zwar das Signal speciesChanged ausgesandt, wenn diese Funktion aufgerufen wird, aber natürlich nur an das Objekt, welches diese Klasse als Objekt erzeugt hat. Also nicht an jede Klasse mit einem Zeiger auf eine Instanz dieser Klasse. Deswegen werden die Widgets nicht verändert, wenn der Inhalt des statischen Objekts dieser Klasse über ein anderes Objekt dieser Klasse modifiziert wird. Möglicherweise ist es eine Lösung, diese Klasse als Singleton zu erzeugen.
 		 **/
 		void setSpecies( cv_Species::SpeciesFlag species );
 		/**
 		 * Fügt eine neue Identität an der angegebenen Stelle ein.
 		 **/
-		void insertIdentity( int index, cv_Name name );
+		void insertIdentity( int index, cv_Identity id );
 		/**
 		 * Hängt eine neue Identität an die Liste aller Identitäten des Charkaters an.
 		 **/
-		void addIdentity( cv_Name name );
+		void addIdentity( cv_Identity id );
+		/**
+		 * Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer INdex 0 in der \ref v_identities -Liste
+		 *
+		 * \todo Momentan ist dies die einzige identität, die von diesem programm genutzt wird.
+		 **/
+		void setRealIdentity( cv_Identity id );
 		/**
 		 * Legt die Spezialisierungen des Charakters fest.
 		 *
@@ -194,6 +221,30 @@ class StorageCharacter : public QObject {
 		 * Ändert eine Eigenschaft im Speicher.
 		 **/
 		void modifyTrait( cv_Trait trait );
+		/**
+		 * Verändert die Tugend.
+		 *
+		 * \sa virtue()
+		 **/
+		void setVirtue( QString txt );
+		/**
+		 * Verändert das Laster.
+		 *
+		 * \sa vice()
+		 **/
+		void setVice( QString txt );
+		/**
+		 * Verändert die Brut.
+		 *
+		 * \sa breed()
+		 **/
+		void setBreed( QString txt );
+		/**
+		 * Verändert die Fraktion.
+		 *
+		 * \sa faction()
+		 **/
+		void setFaction( QString txt );
 		/**
 		 * Verändert den Wert des Super-Attributs.
 		 *
@@ -218,6 +269,10 @@ class StorageCharacter : public QObject {
 
 	signals:
 		/**
+		* Dieses Signal wird ausgesandt, wann immer sich der name des Charakters ändert.
+		**/
+		void identityChanged( cv_Identity id );
+		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Spezies des Charakters ändert.
 		**/
 		void speciesChanged( cv_Species::SpeciesFlag species );
@@ -226,6 +281,23 @@ class StorageCharacter : public QObject {
 		**/
 // 		void traitChanged( cv_Trait trait );
 		void traitChanged( cv_Trait* trait );
+		
+		/**
+		* Die Tugend hat sich verändert.
+		**/
+		void virtueChanged( QString virtue );
+		/**
+		* Das Laster hat sich verändert.
+		**/
+		void viceChanged( QString vice );
+		/**
+		* Die Brut hat sich verändert.
+		**/
+		void breedChanged( QString breed );
+		/**
+		* Die Fraktion hat sich verändert.
+		**/
+		void factionChanged( QString faction );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich der Wert des Super-Attributs verändert.
 		**/

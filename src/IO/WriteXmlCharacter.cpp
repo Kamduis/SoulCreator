@@ -52,6 +52,11 @@ void WriteXmlCharacter::write( QFile *file ) {
 	writeStartElement( Config::name() );
 	writeAttribute( "version", Config::version() );
 	writeTextElement( "species", cv_Species::toString( character->species() ) );
+	writeTextElement( "name", character->realIdentity->birthName() );
+	writeTextElement( "virtue", character->virtue() );
+	writeTextElement( "vice", character->vice() );
+	writeTextElement( "breed", character->breed() );
+	writeTextElement( "faction", character->faction() );
 	writeTextElement( "superTrait", QString::number( character->superTrait() ) );
 	writeTextElement( "morality", QString::number( character->morality() ) );
 
@@ -70,21 +75,6 @@ void WriteXmlCharacter::writeCharacterTraits() {
 	types.append( cv_Trait::Merit );
 	types.append( cv_Trait::Power );
 
-	QList< cv_Trait::Category > categoriesNone;
-	categoriesNone.append( cv_Trait::CategoryNo );
-
-	QList< cv_Trait::Category > categoriesGeneral;
-	categoriesGeneral.append( cv_Trait::Mental );
-	categoriesGeneral.append( cv_Trait::Physical );
-	categoriesGeneral.append( cv_Trait::Social );
-
-	QList< cv_Trait::Category > categoriesMerits = categoriesGeneral;
-	categoriesMerits.append( cv_Trait::Item );
-	categoriesMerits.append( cv_Trait::FightingStyle );
-	categoriesMerits.append( cv_Trait::DebateStyle );
-	categoriesMerits.append( cv_Trait::Extraordinary );
-	categoriesMerits.append( cv_Trait::Species );
-
 	QList< cv_Trait::Category > categories;
 
 	QList< cv_Trait > list;
@@ -96,50 +86,44 @@ void WriteXmlCharacter::writeCharacterTraits() {
 			qDebug() << Q_FUNC_INFO << e.message();
 		}
 
-		// Merits haben zusätzliche Kategorien.
-		if ( types.at( i ) == cv_Trait::Merit ) {
-			categories = categoriesMerits;
-		} else if ( types.at( i ) == cv_Trait::Power ) {
-			categories = categoriesNone;
-		} else {
-			categories = categoriesGeneral;
-		}
+		// Liste der Kategorien ist je nach Typ unterschiedlich
+		categories = cv_Trait::getCategoryList( types.at(i) );
 
 		for ( int j = 0; j < categories.count(); j++ ) {
 			list = character->traits( types.at( i ), categories.at( j ) );
 
 // 			qDebug() << Q_FUNC_INFO << "Type" << types.at(i) << "Category" << categories.at(j) << list.count();
 // 			if ( !list.isEmpty() ) {
-				try {
-					writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
-				} catch ( eTraitCategory &e ) {
-					qDebug() << Q_FUNC_INFO << e.message();
-				}
+			try {
+				writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
+			} catch ( eTraitCategory &e ) {
+				qDebug() << Q_FUNC_INFO << e.message();
+			}
 
-				for ( int k = 0; k < list.count(); k++ ) {
-					// Eigenscahften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-					if ( list.at( k ).value != 0 ) {
+			for ( int k = 0; k < list.count(); k++ ) {
+				// Eigenscahften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
+				if ( list.at( k ).value != 0 ) {
 // 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
-						writeStartElement( "trait" );
-						writeAttribute( "name", list.at( k ).name );
-						writeAttribute( "value", QString::number( list.at( k ).value ) );
+					writeStartElement( "trait" );
+					writeAttribute( "name", list.at( k ).name );
+					writeAttribute( "value", QString::number( list.at( k ).value ) );
 
-						qDebug() << Q_FUNC_INFO << list.at(k).name << list.at(k).custom;
-						if ( list.at( k ).custom ) {
-							writeAttribute( "custom", list.at( k ).customText );
-						}
+					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
+					if ( list.at( k ).custom ) {
+						writeAttribute( "custom", list.at( k ).customText );
+					}
 
 // 					qDebug() << Q_FUNC_INFO << list.at( k ).details.count();
 // 					if ( types.at( i ) == cv_Trait::Skill ) {
-						for ( int l = 0; l < list.at( k ).details.count(); l++ ) {
+					for ( int l = 0; l < list.at( k ).details.count(); l++ ) {
 // 						qDebug() << Q_FUNC_INFO << list.at( k ).details.at( l ).name;
-							writeTextElement( "specialty",  list.at( k ).details.at( l ).name );
-						}
+						writeTextElement( "specialty",  list.at( k ).details.at( l ).name );
+					}
 // 					}t
 
-						writeEndElement();
-					}
+					writeEndElement();
 				}
+			}
 // 			}
 
 			writeEndElement();

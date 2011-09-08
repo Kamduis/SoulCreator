@@ -32,7 +32,7 @@
 
 QList< cv_Trait > ReadXmlCharacter::traitList;
 
-ReadXmlCharacter::ReadXmlCharacter() : ReadXml() {
+ReadXmlCharacter::ReadXmlCharacter() : QObject(), ReadXml() {
 	storage = new StorageTemplate();
 	character = StorageCharacter::getInstance();
 }
@@ -56,7 +56,13 @@ bool ReadXmlCharacter::read( QFile *file ) {
 			QString elementName = name().toString();
 			QString elementVersion = attributes().value( "version" ).toString();
 
-			if ( checkXmlVersion( elementName, elementVersion ) ) {
+			try {
+				if ( checkXmlVersion( elementName, elementVersion ) ) {
+					readSoulCreator();
+				}
+			} catch ( eXmlOldVersion &e ) {
+				emit oldVersion(e.message(), e.description());
+				
 				readSoulCreator();
 			}
 		}
@@ -82,6 +88,19 @@ void ReadXmlCharacter::readSoulCreator() {
 			if ( elementName == "species" ) {
 				QString speciesName = readElementText();
 				character->setSpecies( cv_Species::toSpecies( speciesName ) );
+			} else if ( elementName == "name" ) {
+				QString characterName = readElementText();
+				cv_Identity id;
+				id.foreName.append( characterName );
+				character->setRealIdentity( id );
+			} else if ( elementName == "virtue" ) {
+				character->setVirtue(readElementText());
+			} else if ( elementName == "vice" ) {
+				character->setVice(readElementText());
+			} else if ( elementName == "breed" ) {
+				character->setBreed(readElementText());
+			} else if ( elementName == "faction" ) {
+				character->setFaction(readElementText());
 			} else if ( elementName == "superTrait" ) {
 				int superTraitValue = readElementText().toInt();
 				character->setSuperTrait( superTraitValue );
@@ -160,7 +179,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 
 				trait.details = list;
 
-				character->modifyTrait(trait);
+				character->modifyTrait( trait );
 			} else
 				readUnknownElement();
 		}

@@ -27,27 +27,23 @@
 
 #include <QString>
 
-#include "cv_Name.h"
+#include "cv_Identity.h"
 
 #include <QList>
 
 /**
- * @brief In dieser Klasse werden sämtliche Namen eines Charakters gespeichert.
+ * @brief In dieser Klasse werden sämtliche Identitäten eines Charakters gespeichert.
  *
- * Ein Charkater mit mehreren (möglicherweise flaschen) Identitäten und Künstlernamen benötigt für jede Identität einen eigenen Namenseintrag, der wieder aus einer komplexen Zusammensetzung anderer namen Besteht.
+ * Ein Charkater mit mehreren (möglicherweise flaschen) Identitäten und Künstlernamen benötigt für jede Identität einen eigenen Namenseintrag, der wieder aus einer komplexen Zusammensetzung anderer Namen Besteht.
  *
  * Diese Klasse stellt eine Liste aller Namen für jede einzelne Identität eines Charakters zusammen. Dabei steht der echte Name immer an erster Stelle dieser Liste. Dies ist wirchtig für den "echten Namen", der von Magier benötigt wird, um ihnen die sympathische Magie zu erleichtern.
- */
-class cv_NameList : public QList< cv_Name > {
+ **/
+class cv_IdentityList : public QList< cv_Identity > {
 	public:
 		/**
-		 * Konstruktor
+		 * Konstruktor, bei dem die Namenseinträge direkt angegeben werden können.
 		 **/
-		cv_NameList();
-		/**
-		 * Überladung des Konstruktors, bei dem die Namenseinträge direkt angegeben werden können.
-		 **/
-		cv_NameList( QString sureName, QString firstName, QString affixName );
+		cv_IdentityList( QString sureName = "", QString firstName = "", QString affixName = "" );
 		
 		/**
 		 * Dies ist der echte Name einer Person. Der Name, der für Magier so wertvoll ist, um eine sympathische Verbindung leichter herstellen zu können.

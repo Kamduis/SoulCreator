@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.3">
+<SoulCreator version="0.4">
 	<traits species="Mage" morale="Wisdom" supertrait="Gnosis" fuel="Mana">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
@@ -14,6 +14,22 @@
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
 		<Merit>
+			<Mental>
+				<trait name="High Speech" source="Mage Core">
+					<value>1</value>
+				</trait>
+				<trait name="Atlantean Hesychia" source="Mage Secrets of the ruined Temple">
+					<value>1</value>
+					<prerequisite>High Speech > 0</prerequisite>
+				</trait>
+				<trait name="Glyph Lore" source="Mage Tome of the Mysteries">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
+					<value>4</value>
+					<prerequisite>High Speech > 0 AND Intelligence > 2 AND Occult > 2</prerequisite>
+				</trait>
+			</Mental>
 			<Social>
 				<trait name="Sleepwalker Retainer" custom="true" source="Mage Core">
 					<value>1</value>
@@ -22,8 +38,11 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
+				<trait name="Thrall" custom="true" source="Mage Core">
+					<value>3</value>
+				</trait>
 			</Social>
-			<Species>
+			<Extraordinary>
 				<trait name="Destiny" source="Mage Core">
 					<value>1</value>
 					<value>2</value>
@@ -49,20 +68,6 @@
 				<trait name="Goetic Familiar" source="Mage Grimoire of Grimoires">
 					<value>3</value>
 					<value>4</value>
-				</trait>
-				<trait name="High Speech" source="Mage Core">
-					<value>1</value>
-				</trait>
-				<trait name="Atlantean Hesychia" source="Mage Secrets of the ruined Temple">
-					<value>1</value>
-					<prerequisite>High Speech > 0</prerequisite>
-				</trait>
-				<trait name="Glyph Lore" source="Mage Tome of the Mysteries">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>High Speech > 0 AND Intelligence > 2 AND Occult > 2</prerequisite>
 				</trait>
 				<trait name="Occultation" source="Mage Core">
 					<value>1</value>
@@ -141,10 +146,7 @@
 					<value>3</value>
 					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
 				</trait>
-				<trait name="Thrall" custom="true" source="Mage Core">
-					<value>3</value>
-				</trait>
-			</Species>
+			</Extraordinary>
 		</Merit>
 		<Power>
 			<trait name="Death">
@@ -178,5 +180,10 @@
 				<cheap>Acanthus</cheap>
 			</trait>
 		</Power>
+		<Flaw>
+			<Extraordinary>
+				<trait name="Abyss-Marked"/>
+			</Extraordinary>
+		</Flaw>
 	</traits>
 </SoulCreator>

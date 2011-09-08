@@ -20,8 +20,8 @@ find_package(Qt4 REQUIRED)
 
 # The version number.
 set (PROGRAM_VERSION_MAJOR 0)
-set (PROGRAM_VERSION_MINOR 3)
-set (PROGRAM_VERSION_CHANGE 2)
+set (PROGRAM_VERSION_MINOR 4)
+set (PROGRAM_VERSION_CHANGE 0)
 
 # configure a header file to pass some of the CMake settings to the source code
 configure_file (

@@ -34,6 +34,8 @@
 #include "Widgets/SkillWidget.h"
 #include "Widgets/MeritWidget.h"
 #include "Widgets/PowerWidget.h"
+#include "Widgets/FlawWidget.h"
+
 #include "Widgets/AdvantagesWidget.h"
 #include "Widgets/CharaSpecialties.h"
 #include "Draw/DrawSheet.h"
@@ -52,15 +54,19 @@ class MainWindow;
  *
  * \todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
  *
- * \bug Language mit Zusatztext wird nicht geladen. Bzw. wird schon geladen, aber nicht richtig dargestellt.
- *
- * \bug Wechselt man die Spezies, werden die alten Powers nicht restlos gelöscht. Zumindest jene nicht, welche Zusatztext besitzen.
- *
  * \todo Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.
  *
  * \todo Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausfgegraut werden.
  *
  * \todo Bei Werwölfen nimmt "Rites" eine Sonderstellung ein. Auch die Gaben/Riten müssen berücksichtigt werden.
+ *
+ * \todo Eine neue GroupBox entwickeln, wo die Überschrift vertikal auf der linken Seite steht. Damit spare ich vertikalen Abstand, der wertvoller ist als der horizontale.
+ *
+ * \bug Manchmal wird (zeitlich deutlich versetzt) eine fast komplett schwarze Seite ausgedruckt. Ich weiß nicht, ob die Export- oder die Druckfunktion von SoulCreator die Ursache ist.
+ *
+ * \todo Nutze eine qchecksum, um die Integrität der XML-DAteien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben.
+ *
+ * \todo So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
  */
 
 class MainWindow : public QMainWindow {
@@ -115,6 +121,10 @@ class MainWindow : public QMainWindow {
 		 * \todo Irgendwann soll die Anzahl der angezeigten Kräfte (mit Beschreibungstext) vom user durch klicken irgendwie erhöht werden können.
 		 **/
 		PowerWidget* powers;
+		/**
+		 * In diesem Widget werden die Nachteile angezeigt.
+		 **/
+		FlawWidget* flaws;
 		/**
 		 * Das Widget für die Anzeige von Spezialisierungen einer Fertigkeit.
 		 **/
@@ -204,6 +214,11 @@ class MainWindow : public QMainWindow {
 		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
 		 **/
 		void hidePowers(cv_Species::SpeciesFlag species);
+
+		/**
+		 * Ausgabe einer Fehlernachricht.
+		 **/
+		void raiseExceptionMessage(QString message, QString description);
 
 	signals:
 };

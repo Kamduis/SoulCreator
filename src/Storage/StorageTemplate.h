@@ -29,7 +29,7 @@
 #include <QStringList>
 
 #include "../Datatypes/cv_Trait.h"
-#include "../Datatypes/cv_NameList.h"
+#include "../Datatypes/cv_IdentityList.h"
 #include "../Datatypes/cv_SuperEffect.h"
 
 #include <QObject>
@@ -50,7 +50,7 @@ class StorageTemplate : public QObject {
 // 		 *
 // 		 * \notifier identitiesChanged()
 // 		 **/
-// 		Q_PROPERTY( cv_NameList identities READ identities WRITE setIdentities NOTIFY identitiesChanged )
+// 		Q_PROPERTY( cv_IdentityList identities READ identities WRITE setIdentities NOTIFY identitiesChanged )
 
 	public:
 		StorageTemplate( QObject *parent = 0 );

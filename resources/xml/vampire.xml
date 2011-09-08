@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.3">
+<SoulCreator version="0.4">
 	<traits species="Vampire" morale="Humanity" supertrait="Blood Potency" fuel="Vitae">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
@@ -14,15 +14,13 @@
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
 		<Merit>
-			<Species>
+			<Mental>
 				<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
 					<value>1</value>
 					<prerequisite>Politics > 0 OR Occult > 0 OR Streetwise > 0</prerequisite>
 				</trait>
-				<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
-					<value>2</value>
-					<prerequisite>superTrait > 5</prerequisite>
-				</trait>
+			</Mental>
+			<Social>
 				<trait name="Domain: Location" source="Vampire Damnation City">
 					<value>1</value>
 					<value>2</value>
@@ -98,11 +96,6 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
-				<trait name="Lordly Palette" source="Vampire Ventrue">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-				</trait>
 				<trait name="Patron" source="Vampire Requiem for Rome">
 					<value>1</value>
 					<value>2</value>
@@ -110,6 +103,17 @@
 					<value>4</value>
 					<value>5</value>
 					<prerequisite>Status.Camarilla > 2 OR Status.Wing > 2</prerequisite>
+				</trait>
+			</Social>
+			<Extraordinary>
+				<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
+					<value>2</value>
+					<prerequisite>superTrait > 5</prerequisite>
+				</trait>
+				<trait name="Lordly Palette" source="Vampire Ventrue">
+					<value>1</value>
+					<value>2</value>
+					<value>3</value>
 				</trait>
 				<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
 					<value>2</value>
@@ -119,7 +123,7 @@
 					<value>2</value>
 					<prerequisite>Protean > 3</prerequisite>
 				</trait>
-			</Species>
+			</Extraordinary>
 		</Merit>
 		<Power>
 			<trait name="Animalism">
@@ -163,5 +167,46 @@
 				<cheap>Julii</cheap>
 			</trait>
 		</Power>
+		<Derangement>
+			<Mild>
+				<trait name="Fixation"/>
+				<trait name="Inferiority Complex"/>
+				<trait name="Irrationality"/>
+				<trait name="Animal Dependency"/>
+				<trait name="Power Fetish Obsession"/>
+				<trait name="Preferential Obsession"/>
+				<trait name="Sanguinary Animism"/>
+				<trait name="Erythema"/>
+			</Mild>
+			<Severe>
+				<trait name="Bulimia">
+					<prerequisite>Fixation > 0</prerequisite>
+				</trait>
+				<trait name="Diogenes Syndrome">
+					<prerequisite>Inferiority Complex > 0</prerequisite>
+				</trait>
+				<trait name="Dependent-Personality Disorder">
+					<prerequisite>Irrationality > 0</prerequisite>
+				</trait>
+				<trait name="Animal Dependency">
+					<prerequisite>Animal Dependency > 0</prerequisite>
+				</trait>
+				<trait name="Preferential Obsession">
+					<prerequisite>Preferential Obsession > 0</prerequisite>
+				</trait>
+			</Severe>
+		</Derangement>
+		<Flaw>
+			<Physical>
+				<trait name="No Fangs"/>
+			</Physical>
+			<Social>
+				<trait name="Fealty"/>
+				<trait name="Lost Love"/>
+			</Social>
+			<Extraordinary>
+				<trait name="Sluggish Vitae"/>
+			</Extraordinary>
+		</Flaw>
 	</traits>
 </SoulCreator>

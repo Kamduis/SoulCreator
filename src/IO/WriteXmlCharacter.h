@@ -61,6 +61,11 @@ class WriteXmlCharacter : public QObject, public QXmlStreamWriter {
 		void writeCharacterTraits();
 
 	public slots:
+		/**
+		 * Schreibt die veränderten Eigenschaften in die Datei.
+		 *
+		 * \todo Momentan nutze ich nur den Vornamen als Speicher für den gesamten Charakternamen. Ist nicht gerade vernünftig und produziert Leerzeichen am Ende. (Zumindest vermute ich, daß diese Leerzeigen daher stammen).
+		 **/
 		void write(QFile *file);
 };
 

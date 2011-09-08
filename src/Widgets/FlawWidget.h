@@ -22,12 +22,13 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SKILLWIDGET_H
-#define SKILLWIDGET_H
+#ifndef FLAWWIDGET_H
+#define FLAWWIDGET_H
 
-#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QScrollArea>
+#include <QToolBox>
 
-#include "../Datatypes/cv_TraitDetail.h"
 #include "../Storage/StorageTemplate.h"
 #include "../Storage/StorageCharacter.h"
 
@@ -37,37 +38,48 @@
 /**
  * @brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
  *
- * Die Attribute werden in diesem Widget angeordnet.
- *
- * Wird bei irgendeiner Fertigkeit der Spazialisierungen-Knopf gedrückt, werden alle anderen Spezialisierungs-Knöpfe ausgeschalten.
+ * Die Nachteile werden in diesem Widget angeordnet.
  **/
-class SkillWidget : public QWidget {
+class FlawWidget : public QWidget {
 		Q_OBJECT
 
 	public:
-		SkillWidget( QWidget *parent = 0 );
+		/**
+		 * Konstruktor
+		 **/
+		FlawWidget( QWidget *parent = 0 );
 		/**
 		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
 		 **/
-		~SkillWidget();
+		~FlawWidget();
 
 	private:
-		QVBoxLayout* layout;
 		StorageTemplate* storage;
 		StorageCharacter* character;
 
+		QScrollArea* scrollArea;
+		QToolBox* toolBox;
+		
+		/**
+		 * Damit ich nicht auch in anderen Funktionen stets alle Kategorien zusammensuchen muß, wird das hier global definiert und im Konstruktor gefüllt.
+		 **/
 		QList< cv_Trait::Category > v_categories;
 
 	public slots:
 
 	private slots:
 		/**
-		 * Über diese Funktion werden alle anderen Spezialisierungs-Knöpfe deaktiviert, sobald einer aktiviert wird.
+		 * Zält die Merits in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
+		 *
+		 * Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
+		 *
+		 * \bug Merits mit Zusatztext werden nicht gezählt. Kann sein, daß das nur auftritt wenn nichts in der Textbox steht. Ist dann kein Problem, da es ohnehin nicht möglich sein dürfte, Werte einzugeben, wenn Zusatext nicht angegeben ist.
+		 *
+		 * \todo Momentan wird eine Liste mit allen Merits des Charakters erstellt und dann alle gezählt, deren Wert größer 0 ist. Das muß doch besser gehen.
 		 **/
-		void toggleOffSpecialties(bool sw, QString skillName, QList< cv_TraitDetail > specialtyList);
+		void countItems();
 
 	signals:
-		void specialtiesClicked(bool sw, QString skillName, QList< cv_TraitDetail > specialtyList);
 };
 
 #endif

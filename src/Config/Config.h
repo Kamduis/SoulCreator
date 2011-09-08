@@ -41,6 +41,24 @@ class Config {
 		 */
 		static QString name();
 		/**
+		 * Major-Versionsnummer.
+		 *
+		 * Die gesamte Versionsnummer besteht aus Major.Minor.Change.
+		 */
+		static const int versionMajor;
+		/**
+		 * Minor-Versionsnummer.
+		 *
+		 * Die gesamte Versionsnummer besteht aus Major.Minor.Change.
+		 */
+		static const int versionMinor;
+		/**
+		 * Change-Versionsnummer.
+		 *
+		 * Die gesamte Versionsnummer besteht aus Major.Minor.Change.
+		 */
+		static const int versionChange;
+		/**
 		 * Die aktuelle Version des Programms ausschließlich der Change-Nummer.
 		 *
 		 * Programme mit unterschieldicher Versionsnummer sind zueinander nicht notwendigerweise kompatibel.
@@ -60,6 +78,12 @@ class Config {
 		 * Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
 		 */
 		static const int traitMultipleMax;
+		/**
+		 * Die Maximale höhe von Widgets, welche sich in einer Textzeile befinden.
+		 *
+		 * Diese Höhe wurde gewählt, um vertikalen Raum zu sparen.
+		 */
+		static const int inlineWidgetHeightMax;
 		/**
 		 * Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 		 */

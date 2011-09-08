@@ -26,7 +26,10 @@
 #define INFOWIDGET_H
 
 #include <QGridLayout>
+#include <QLineEdit>
+#include <QComboBox>
 
+#include "../Storage/StorageCharacter.h"
 #include "CharaSpecies.h"
 
 #include <QWidget>
@@ -54,18 +57,57 @@ class InfoWidget : public QWidget {
 
 	private:
 		/**
+		 * Datenspeicher der Charkaterwerte.
+		 **/
+		StorageCharacter *character;
+		/**
 		 * In diesem Layout werden die Attribute angeordnet.
 		 **/
 		QGridLayout *layout;
 		/**
+		 * Feld für den Namen.
+		 **/
+		QLineEdit* nameLineEdit;
+		/**
+		 * Auswahl des Geschlechts.
+		 **/
+		QComboBox* genderCombobox;
+		/**
 		 * Eine Auswahlbox für die zur Verfügung stehenden Spezies.
 		 **/
 		CharaSpecies* speciesComboBox;
-
+		/**
+		 * Auswahl der Virtues
+		 **/
+		QComboBox* virtueCombobox;
+		/**
+		 * Auswahl der Brut (Seeming, Path, Clan, Auspice)
+		 **/
+		QComboBox* breedCombobox;
+		/**
+		 * Auswahl der Fraktion (Court, Order, Covenant, Tribe)
+		 **/
+		QComboBox* factionCombobox;
+		/**
+		 * Auswahl der Vices
+		 **/
+		QComboBox* viceCombobox;
 
 	public slots:
 
 	private slots:
+		/**
+		 * Verändert die im Charakter gespeicherte echte Identität.
+		 *
+		 * \todo Momentan ist die echte Identität auch die einzige, welche verwendet wird. Und ich nutze nur den allerersten Vornamen als Speicher.
+		 **/
+		void modifyRealIdentity();
+		/**
+		 * Aktualisiert die Anzeige des Namens.
+		 *
+		 * \bug Mit jedem Speichern und Laden wächst die Anzahl der unnötigen Leerzeichen am Ende an. Symptome sind zwar behoben, die ursache aber noch nicht.
+		 **/
+		void updateIdentity(cv_Identity);
 
 	signals:
 };

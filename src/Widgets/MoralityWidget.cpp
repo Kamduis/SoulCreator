@@ -60,6 +60,7 @@ MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
 
 		if ( i <= Config::derangementMoralityTraitMax ) {
 			QLineEdit* lineEdit = new QLineEdit();
+			lineEdit->setMaximumHeight(Config::inlineWidgetHeightMax);
 
 			layout->addWidget( lineEdit, layoutLine, 1 );
 		}

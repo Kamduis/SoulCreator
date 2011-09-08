@@ -22,19 +22,20 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGridLayout>
-#include <QToolBox>
+#include <QVBoxLayout>
+#include <QGroupBox>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "CheckTrait.h"
+#include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
-#include "../CMakeConfig.h"
+#include "../Storage/StorageTemplate.h"
 
-#include "MeritWidget.h"
+#include "FlawWidget.h"
 
 
-MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
+FlawWidget::FlawWidget( QWidget *parent ) : QWidget( parent )  {
 	QVBoxLayout* layoutTop = new QVBoxLayout( this );
 	setLayout( layoutTop );
 
@@ -53,19 +54,19 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 	storage = new StorageTemplate( this );
 
-	cv_Trait::Type type = cv_Trait::Merit;
+	cv_Trait::Type type = cv_Trait::Flaw;
 
-	v_categories = cv_Trait::getCategoryList(type);
+	v_categories = cv_Trait::getCategoryList( type );
 
 	QList< cv_Trait* > list;
 
 	// Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < v_categories.count(); i++ ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
-		QWidget* widgetMeritCategory = new QWidget();
-		QVBoxLayout* layoutMeritCategory = new QVBoxLayout();
-		widgetMeritCategory->setLayout( layoutMeritCategory );
-		toolBox->addItem( widgetMeritCategory, cv_Trait::toString( v_categories.at( i ), true ) );
+		QWidget* widgetFlawCategory = new QWidget();
+		QVBoxLayout* layoutFlawCategory = new QVBoxLayout();
+		widgetFlawCategory->setLayout( layoutFlawCategory );
+		toolBox->addItem( widgetFlawCategory, cv_Trait::toString( v_categories.at( i ), true ) );
 
 		list = storage->traitsPtr( type, v_categories.at( i ) );
 
@@ -75,11 +76,11 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 				cv_Trait* traitPtr = character->addTrait( *list[j] );
 
 				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				CharaTrait *charaTrait = new CharaTrait( this, traitPtr, list[j] );
-				charaTrait->setValue( 0 );
-				layoutMeritCategory->addWidget( charaTrait );
+				CheckTrait *checkTrait = new CheckTrait( this, traitPtr, list[j] );
+				checkTrait->setValue( 0 );
+				layoutFlawCategory->addWidget( checkTrait );
 
-				connect( charaTrait, SIGNAL( valueChanged( int ) ), this, SLOT( countMerits() ) );
+				connect( checkTrait, SIGNAL( valueChanged( int ) ), this, SLOT( countItems() ) );
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
 
@@ -90,24 +91,11 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 		}
 
 		// Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
-		layoutMeritCategory->addStretch();
+		layoutFlawCategory->addStretch();
 	}
-
-// 	dialog = new SelectMeritsDialog( this );
-//
-// 	QHBoxLayout* layout_button = new QHBoxLayout();
-// 	layoutTop->addLayout( layout_button );
-//
-// 	button = new QPushButton();
-// 	button->setIcon( style()->standardIcon( QStyle::SP_FileDialogStart ) );
-//
-// 	layout_button->addStretch();
-// 	layout_button->addWidget( button );
-//
-// 	connect( button, SIGNAL( clicked( bool ) ), dialog, SLOT( exec() ) );
 }
 
-MeritWidget::~MeritWidget() {
+FlawWidget::~FlawWidget() {
 	delete storage;
 	delete toolBox;
 // 	delete dialog;
@@ -116,7 +104,7 @@ MeritWidget::~MeritWidget() {
 }
 
 
-void MeritWidget::countMerits() {
+void FlawWidget::countItems() {
 	for (int i = 0; i < v_categories.count(); i++){
 		QList< cv_Trait > list = character->merits( v_categories.at(i) );
 
@@ -138,4 +126,3 @@ void MeritWidget::countMerits() {
 		}
 	}
 }
-

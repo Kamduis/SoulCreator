@@ -22,26 +22,30 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "cv_NameList.h"
+#ifndef CV_IDENTITY_H
+#define CV_IDENTITY_H
 
-cv_NameList::cv_NameList() : QList < cv_Name >() {
-	cv_NameList( "Mustermann", "Max", "" );
-}
+#include <QStringList>
+#include <QString>
 
-cv_NameList::cv_NameList( QString sureName, QString firstName, QString affixName ): QList< cv_Name >() {
-	cv_Name nameSet;
-	nameSet.foreName.append( "firstName" );
-	nameSet.sureName = sureName;
-	nameSet.affixName = affixName;
-	this->append( nameSet );
-}
+#include "cv_Name.h"
 
+/**
+ * @brief Speichert die vollständige Identität des Charakters.
+ *
+ * Zusätzlich zu den Namen speichert diese Klasse auch Geschlecht ...
+ */
+class cv_Identity : public cv_Name {
+	public:
+		/**
+		* Speichert das Geschlecht des Charakters.
+		*
+		* false = weiblich
+		*
+		* true = männlich
+		**/
+		bool gender;
+};
 
-QString cv_NameList::realName() const {
-	QString name = this->at( 0 ).birthName();
-	return name;
-}
-
-
-
+#endif
 

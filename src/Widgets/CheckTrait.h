@@ -22,33 +22,33 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHARATRAIT2_H
-#define CHARATRAIT2_H
+#ifndef CHECKTRAIT_H
+#define CHECKTRAIT_H
+
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QCheckBox>
 
 #include "../Storage/StorageCharacter.h"
 #include "../Datatypes/cv_Trait.h"
-#include "../Datatypes/cv_TraitDetail.h"
 
-#include "TraitLine.h"
+#include <QWidget>
 
 /**
- * \brief Mit den gespeicherten Werten vernetzte Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.
+ * \brief An- bzw. Abwählbare Eigenschaft.
  *
- * Anders als \ref TraitLine, ist dieses Widget direkt mit der korrespondierenden Eigenschaft in der Klasse \ref StorageCharacter verknüpft. Ändert sich der Wert dort, wird automatisch dieses Widget entsprechend verändert. Gleichermaßen wird \ref StorageCharacter verändert, sollte der Benutzer dieses Widget ändern.
- *
- * \todo Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.
- *
- * \todo Den Parser \ref StringBoolParser erweitern, damit übriggebliebener Text nach den Ersetzungen der Eigesncahften durch ihre Werte mit 0 gleichgesetzt wird. Aktuell mache ich das durch Stringmanipulation, aber das ist natürlich langsamer.
+ * Diese Eigensachft ist ähnlich wie CharaTrait mit den Eigenschaften im Speicher verknpüft, allerdings besitzen sie keine Werte, sondern sind nur an- oder Abwählbar. Beispiel für eine solche Eigenscahft sind die Nachteile.
  **/
 
-class CharaTrait2 : public TraitLine {
+class CheckTrait : public QWidget {
 		Q_OBJECT
 
 	public:
 		/**
 		 * An diesen Konstruktor kann direkt die Eigenschaft übergeben werden, welche dieses Widget anzeigt.
 		 **/
-		CharaTrait2( QWidget *parent, cv_Trait* trait, cv_Trait* traitStorage = 0 );
+		CheckTrait( QWidget *parent, cv_Trait* trait, cv_Trait* traitStorage = 0 );
+		virtual ~CheckTrait();
 
 		/**
 		 * Gibt den Wert zurück, der hier angezeigt wird bzw. werden soll.
@@ -86,6 +86,10 @@ class CharaTrait2 : public TraitLine {
 		cv_Trait* ptr_trait;
 		cv_Trait* ptr_traitStorage;
 
+		QHBoxLayout* layout;
+		QLineEdit* lineEdit;
+		QCheckBox* checkBox;
+
 		/**
 		 * Hilfsfunktion für checkTraitPrerequisites().
 		 **/
@@ -122,25 +126,12 @@ class CharaTrait2 : public TraitLine {
 		void setCustom( bool sw );
 		
 		/**
-		 * Verbirgt die Schaltfläche für Spezialisierungen für alle Eigenschaften außer den Fertigkeiten.
-		 **/
-		void hideSpecialtyWidget( cv_Trait::Type type );
-		/**
 		 * Verbirgt die Textzeile für den Beschreibungstext bei allen, außer Merits mit custom=true.
 		 *
 		 * \todo Muß natürlich auch bei manchen Powers vorhanden sein.
 		 **/
 		void hideDescriptionWidget();
 
-		/**
-		 * Signal soll ausgesandt werden.
-		 **/
-		void emitSpecialtiesClicked(bool sw);
-		
-		/**
-		 * Sorgt dafür, daß das Widget disabled wird, wenn die Voraussetzungen nicht erfüllt sind. Diese Funktion überprüft nur, ob sich die Voraussetzungen verändert haben, weil sich diese eine Eigenschaft verändert hat.
-		 **/
-		void checkTraitPrerequisites( cv_Trait* trait /** Veränderte Eigenschaft, die \emph{möglicherweise} Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */);
 		/**
 		 * Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.
 		 *

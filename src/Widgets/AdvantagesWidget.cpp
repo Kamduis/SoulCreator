@@ -26,7 +26,6 @@
 #include <QDialog>
 #include <QDebug>
 
-#include "CharaTrait.h"
 #include "../Datatypes/cv_Trait.h"
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
