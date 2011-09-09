@@ -38,41 +38,24 @@
 class cv_Name {
 	public:
 		/**
+		 *Konstruktor
+		 **/
+		cv_Name( QString surename = "", QString firstname = "");
+		
+		/**
 		 * Vorname.
 		 *
 		 * Dieser Name wurde dem Charakter von seinen Eltern gegeben. Es besteht die Möglichkeit, mehr als einen Vornamen zu besitzen, wesewegen diese Variable vom Typ StringList ist. Der erste Vorname in dieser Liste ist immer auch der Rufname.
 		 *
 		 * \sa firstName
 		 **/
-		QStringList foreName;
-		/**
-		 * Rufname
-		 *
-		 * Bei Personen mit nur einem Vornamen entspricht \ref firstName dem \ref foreName. Bei Personen mit mehreren Vornamen ist \ref firstName immer der allererste \ref foreName.
-		 *
-		 * \sa foreName
-		 **/
-		QString firstName() const;
+		QStringList foreNames;
 		/**
 		 * Nachname
 		 *
 		 * Der Familienname der Eltern.
 		 **/
 		QString sureName;
-		/**
-		 * Namenszusatz
-		 *
-		 * Hierunter fallen beispielsweise Adelsprädikate (von, von und zu, etc.)
-		 **/
-		QString affixName;
-		/**
-		 * Geburtsname.
-		 *
-		 * Dieser Name wurde dem Charakter von seinen Eltern gegeben und besteht aus Rufname (\ref firstName) und Nachname (\ref sureName) plus Namenszusatz (\ref affixName).
-		 *
-		 * \note Die Kenntnis dieses Namens erleichtert Magiern sympathische Magie.
-		 **/
-		QString birthName() const;
 		/**
 		 * Beiname.
 		 *
@@ -83,7 +66,7 @@ class cv_Name {
 		 * - die Kleine
 		 * - der Treue
 		 **/
-		QString additionalName;
+		QString honorificName;
 		/**
 		 * Spitzname.
 		 *
@@ -96,6 +79,44 @@ class cv_Name {
 		 * Dies ist der Name, der von den übrigen Kreaturen seiner Spezies verwendet wird.
 		 **/
 		QString supernaturalName;
+		/**
+		 * Rufname
+		 *
+		 * Bei Personen mit nur einem Vornamen entspricht \ref firstName dem \ref foreName. Bei Personen mit mehreren Vornamen ist \ref firstName immer der allererste \ref foreName.
+		 *
+		 * \sa foreName
+		 **/
+		QString firstName() const;
+		/**
+		 * Geburtsname.
+		 *
+		 * Dieser Name wurde dem Charakter von seinen Eltern gegeben und besteht aus Rufname (\ref firstName) und Nachname (\ref sureName) plus Namenszusatz (\ref affixName).
+		 *
+		 * \note Die Kenntnis dieses Namens erleichtert Magiern sympathische Magie.
+		 **/
+		QString birthName() const;
+		/**
+		 * Voller Name.
+		 *
+		 * Die Summe aller Namens wird formatiert und als ein einziger String ausgegeben. Die Vornamen werden in einer QStringList übergeben. Gibt es nur einen Vornamen, bietet sich displayNameFull( QString last, QString fore) an.
+		 **/
+		static QString displayNameFull( QString last, QStringList fores);
+		/**
+		 * \overload displayNameFull().
+		 *
+		 * Hier wird nur eine inziger Vorname in Betracht gezogen.
+		 **/
+		static QString displayNameFull( QString last, QString fore);
+		/**
+		 * Angezeigter Name.
+		 *
+		 * Dieser Name kann auf dem Charakterbogen angezeigt werden.
+		 **/
+		static QString displayNameDisplay( QString last, QString first, QString nick = "");
+		/**
+		 * Ehrenname
+		 **/
+		static QString displayNameHonor( QString first, QString honor = "");
 };
 
 #endif

@@ -83,11 +83,15 @@ cv_IdentityList StorageCharacter::identities() const {
 
 void StorageCharacter::insertIdentity( int index, cv_Identity id ) {
 	v_identities.insert( index, id );
+
+	emit identityChanged( id );
 }
 
 void StorageCharacter::addIdentity( cv_Identity id ) {
 	int index = identities().count();
 	insertIdentity( index, id );
+
+	emit identityChanged( id );
 }
 
 void StorageCharacter::setRealIdentity( cv_Identity id ) {
@@ -98,6 +102,7 @@ void StorageCharacter::setRealIdentity( cv_Identity id ) {
 	}
 
 	emit identityChanged( id );
+	emit realIdentityChanged( id );
 }
 
 
@@ -286,9 +291,17 @@ void StorageCharacter::setMorality( int value ) {
 	}
 }
 
-void StorageCharacter::resetTraits() {
+void StorageCharacter::resetCharacter() {
+	v_identities.reset();
+
+	emit realIdentityChanged( v_identities.at(0) );
+	
 	for ( int i = 0; i < v_traits.count();i++ ) {
-		v_traits[ i ].value = 0;
+		if (v_traits[i].type == cv_Trait::Attribute){
+			v_traits[ i ].value = 1;
+		} else {
+			v_traits[ i ].value = 0;
+		}
 		v_traits[ i ].details.clear();
 		v_traits[i].customText = "";
 

@@ -38,13 +38,40 @@
 class cv_Identity : public cv_Name {
 	public:
 		/**
-		* Speichert das Geschlecht des Charakters.
-		*
-		* false = weiblich
-		*
-		* true = männlich
+		* Die möglichen Geschlechter.
 		**/
-		bool gender;
+		enum Gender {
+			GenderNo,
+			Male,
+			Female
+		};
+
+		/**
+		* Konstruktor
+		**/
+		cv_Identity( QString surename = "", QString firstname = "", cv_Identity::Gender gen = cv_Identity::Male );
+		
+		/**
+		* Speichert das Geschlecht des Charakters.
+		**/
+		cv_Identity::Gender gender;
+
+		/**
+		 * Wandelt das Geschlecht in den in den Xml-Dateien gebräuchlichen Namen um.
+		 *
+		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien zu erzeugen.
+		 **/
+		static QString toXmlString(cv_Identity::Gender gen);
+		/**
+		 * Wandelt ein Geschlecht in seinen realen Namen um.
+		 *
+		 * \note Diese Funktion unterscheidet sich insofern von toXmlString(), daß eine Übersetzung erfolgen kann.
+		 **/
+		static QString toString(cv_Identity::Gender gen);
+		/**
+		 * Wandelt den Namen eines Geschlechts in den entsprechenden Enumerator um.
+		 **/
+		static cv_Identity::Gender toGender(QString text);
 };
 
 #endif

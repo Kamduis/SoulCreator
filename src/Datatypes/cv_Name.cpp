@@ -24,12 +24,72 @@
 
 #include "cv_Name.h"
 
+cv_Name::cv_Name( QString surename, QString firstname ) {
+	foreNames.append( firstname );
+	sureName = surename;
+	honorificName = "";
+	nickName = "";
+	supernaturalName = "";
+}
+
+
 QString cv_Name::firstName() const {
-	QString name = foreName.at( 0 );
-	return name;
+	return foreNames.at( 0 );
 }
 
 QString cv_Name::birthName() const {
-	return firstName() + " " + affixName + " " + sureName;
+	return firstName() + " " + sureName;
+}
+
+QString cv_Name::displayNameFull( QString last, QStringList fores ) {
+	QString displayFull;
+	if ( !fores.isEmpty() ) {
+		for (int i = 0; i < fores.count(); i++){
+			displayFull += " " + fores.at(i);
+		}
+	}
+	// Vor dem Nachnamen nur dann ein Leerzeichen, wenn schon etwas davor steht.
+	if ( !displayFull.isEmpty() ) {
+		displayFull += " ";
+	}
+	displayFull += last;
+
+	return displayFull;
+}
+QString cv_Name::displayNameFull( QString last, QString fore ) {
+	QString displayFull = last;
+	if ( !fore.isEmpty() ) {
+		displayFull += " " + fore;
+	}
+	// Vor dem Nachnamen nur dann ein Leerzeichen, wenn schon etwas davor steht.
+	if ( !displayFull.isEmpty() ) {
+		displayFull += " ";
+	}
+	displayFull += last;
+
+	return displayFull;
+}
+
+QString cv_Name::displayNameDisplay( QString last, QString first, QString nick ) {
+	QString displayDisplay = first;
+	if ( !nick.isEmpty() ) {
+		displayDisplay += " \"" + nick + "\"";
+	}
+	// Vor dem Nachnamen nur dann ein Leerzeichen, wenn schon etwas davor steht.
+	if ( !displayDisplay.isEmpty() ) {
+		displayDisplay += " ";
+	}
+	displayDisplay += last;
+
+	return displayDisplay;
+}
+
+QString cv_Name::displayNameHonor( QString first, QString honor ) {
+	QString displayHonor = first;
+	if ( !honor.isEmpty() ) {
+		displayHonor += " " + honor;
+	}
+
+	return displayHonor;
 }
 

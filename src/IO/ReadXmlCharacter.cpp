@@ -56,15 +56,19 @@ bool ReadXmlCharacter::read( QFile *file ) {
 			QString elementName = name().toString();
 			QString elementVersion = attributes().value( "version" ).toString();
 
+			cv_Identity id;
+
 			try {
 				if ( checkXmlVersion( elementName, elementVersion ) ) {
-					readSoulCreator();
+					readSoulCreator( &id );
 				}
 			} catch ( eXmlOldVersion &e ) {
-				emit oldVersion(e.message(), e.description());
-				
-				readSoulCreator();
+				emit oldVersion( e.message(), e.description() );
+
+				readSoulCreator( &id );
 			}
+
+			character->setRealIdentity( id );
 		}
 	}
 
@@ -76,7 +80,7 @@ bool ReadXmlCharacter::read( QFile *file ) {
 	closeFile( file );
 }
 
-void ReadXmlCharacter::readSoulCreator() {
+void ReadXmlCharacter::readSoulCreator( cv_Identity* id ) {
 	while ( !atEnd() ) {
 		readNext();
 
@@ -88,19 +92,32 @@ void ReadXmlCharacter::readSoulCreator() {
 			if ( elementName == "species" ) {
 				QString speciesName = readElementText();
 				character->setSpecies( cv_Species::toSpecies( speciesName ) );
-			} else if ( elementName == "name" ) {
+			} else if ( elementName == "forenames" ) {
+				QString characterNames = readElementText();
+				id->foreNames = characterNames.split( " " );
+			} else if ( elementName == "surename" ) {
 				QString characterName = readElementText();
-				cv_Identity id;
-				id.foreName.append( characterName );
-				character->setRealIdentity( id );
+				id->sureName = characterName;
+			} else if ( elementName == "honorname" ) {
+				QString characterName = readElementText();
+				id->honorificName = characterName;
+			} else if ( elementName == "nickname" ) {
+				QString characterName = readElementText();
+				id->nickName = characterName;
+			} else if ( elementName == "supername" ) {
+				QString characterName = readElementText();
+				id->supernaturalName = characterName;
+			} else if ( elementName == "gender" ) {
+				QString characterGender = readElementText();
+				id->gender = cv_Identity::toGender(characterGender);
 			} else if ( elementName == "virtue" ) {
-				character->setVirtue(readElementText());
+				character->setVirtue( readElementText() );
 			} else if ( elementName == "vice" ) {
-				character->setVice(readElementText());
+				character->setVice( readElementText() );
 			} else if ( elementName == "breed" ) {
-				character->setBreed(readElementText());
+				character->setBreed( readElementText() );
 			} else if ( elementName == "faction" ) {
-				character->setFaction(readElementText());
+				character->setFaction( readElementText() );
 			} else if ( elementName == "superTrait" ) {
 				int superTraitValue = readElementText().toInt();
 				character->setSuperTrait( superTraitValue );

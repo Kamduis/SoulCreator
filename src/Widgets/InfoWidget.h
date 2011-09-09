@@ -27,6 +27,7 @@
 
 #include <QGridLayout>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QComboBox>
 
 #include "../Storage/StorageCharacter.h"
@@ -65,9 +66,9 @@ class InfoWidget : public QWidget {
 		 **/
 		QGridLayout *layout;
 		/**
-		 * Feld für den Namen.
+		 * Knopf für den Namen. Über diese Schlatfläche wird ein Fenster aufgerufen, welches das Eintragen des Namens ermöglicht.
 		 **/
-		QLineEdit* nameLineEdit;
+		QPushButton* namePushButton;
 		/**
 		 * Auswahl des Geschlechts.
 		 **/
@@ -97,17 +98,19 @@ class InfoWidget : public QWidget {
 
 	private slots:
 		/**
-		 * Verändert die im Charakter gespeicherte echte Identität.
-		 *
-		 * \todo Momentan ist die echte Identität auch die einzige, welche verwendet wird. Und ich nutze nur den allerersten Vornamen als Speicher.
+		 * Ruft einen Dialog auf, in welchem die zahlreichen Namen des Charakters eingetragen werden können.
 		 **/
-		void modifyRealIdentity();
+		void openNameDialog();
+		/**
+		 * Verändert das Geschlecht des Charakters.
+		 **/
+		void changeGender(int gen);
 		/**
 		 * Aktualisiert die Anzeige des Namens.
 		 *
 		 * \bug Mit jedem Speichern und Laden wächst die Anzahl der unnötigen Leerzeichen am Ende an. Symptome sind zwar behoben, die ursache aber noch nicht.
 		 **/
-		void updateIdentity(cv_Identity);
+		void updateIdentity(cv_Identity id );
 
 	signals:
 };

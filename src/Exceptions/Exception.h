@@ -25,6 +25,7 @@
 
 #include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_Shape.h"
+#include "../Datatypes/cv_Identity.h"
 #include "../Config/Config.h"
 
 
@@ -224,6 +225,23 @@ class eSpeciesNotExisting : public eSpecies {
 	public:
 		eSpeciesNotExisting( cv_Species::SpeciesFlag species );
 		eSpeciesNotExisting();
+};
+
+
+/**
+ * @brief Ausnahme, falls Fehler bei den Geschlechtern auftritt.
+ */
+class eGender : public Exception {
+	public:
+		eGender();
+};
+
+/**
+ * @brief Ausnahme, falls das spezifizierte Geschlecht nicht existiert.
+ */
+class eGenderNotExisting : public eGender {
+	public:
+		eGenderNotExisting( cv_Identity::Gender gen );
 };
 
 

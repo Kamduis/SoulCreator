@@ -231,7 +231,6 @@ cv_Trait::Type cv_Trait::toType( QString str ) {
 		return cv_Trait::Derangement;
 	else if ( str == "Flaw" )
 		return cv_Trait::Flaw;
-
 // 	else if ( str == "Morale" )
 // 		return cv_Trait::Morale;
 	else if ( str == "Super" )

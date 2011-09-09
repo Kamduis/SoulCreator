@@ -52,7 +52,13 @@ void WriteXmlCharacter::write( QFile *file ) {
 	writeStartElement( Config::name() );
 	writeAttribute( "version", Config::version() );
 	writeTextElement( "species", cv_Species::toString( character->species() ) );
-	writeTextElement( "name", character->realIdentity->birthName() );
+	// Es wird nur die echte Identität (Index 0) berücksichtigt.
+	writeTextElement( "forenames", character->identities().at(0).foreNames.join( " " ) );
+	writeTextElement( "surename", character->identities().at(0).sureName );
+	writeTextElement( "honorname", character->identities().at(0).honorificName );
+	writeTextElement( "nickname", character->identities().at(0).nickName );
+	writeTextElement( "supername", character->identities().at(0).supernaturalName );
+	writeTextElement( "gender", cv_Identity::toXmlString(character->identities().at(0).gender) );
 	writeTextElement( "virtue", character->virtue() );
 	writeTextElement( "vice", character->vice() );
 	writeTextElement( "breed", character->breed() );

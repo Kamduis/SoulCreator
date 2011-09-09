@@ -43,12 +43,14 @@ class cv_IdentityList : public QList< cv_Identity > {
 		/**
 		 * Konstruktor, bei dem die Namenseinträge direkt angegeben werden können.
 		 **/
-		cv_IdentityList( QString sureName = "", QString firstName = "", QString affixName = "" );
+		cv_IdentityList( QString sureName = "", QString firstName = "" );
 		
 		/**
 		 * Dies ist der echte Name einer Person. Der Name, der für Magier so wertvoll ist, um eine sympathische Verbindung leichter herstellen zu können.
 		 **/
 		QString realName() const;
+
+		void reset();
 };
 
 #endif

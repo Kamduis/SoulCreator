@@ -28,24 +28,27 @@
 
 #include "../Exceptions/Exception.h"
 #include "../Config/Config.h"
+#include "Dialogs/NameDialog.h"
 
 #include "InfoWidget.h"
 
 
 InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 	character = StorageCharacter::getInstance();
-	
+
 	layout = new QGridLayout( this );
 	setLayout( layout );
 
 	QLabel* labelName = new QLabel( tr( "Name:" ) );
-	nameLineEdit = new QLineEdit( this );
+	namePushButton = new QPushButton( this );
 
 	QLabel* labelGender = new QLabel( tr( "Gender:" ) );
 	speciesComboBox = new CharaSpecies( this );
 
 	QLabel* labelSpecies = new QLabel( tr( "Species:" ) );
 	genderCombobox = new QComboBox( this );
+	genderCombobox->addItem(tr("Male"));
+	genderCombobox->addItem(tr("Female"));
 
 	QLabel* labelVirtue = new QLabel( tr( "Virtue:" ) );
 	virtueCombobox = new QComboBox( this );
@@ -60,7 +63,7 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 	factionCombobox = new QComboBox( this );
 
 	layout->addWidget( labelName, 0, 0 );
-	layout->addWidget( nameLineEdit, 0, 1 );
+	layout->addWidget( namePushButton, 0, 1 );
 	layout->addWidget( labelGender, 0, 2 );
 	layout->addWidget( genderCombobox, 0, 3 );
 	layout->addWidget( labelSpecies, 0, 4 );
@@ -74,29 +77,46 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 	layout->addWidget( labelFaction, 2, 2 );
 	layout->addWidget( factionCombobox, 2, 3 );
 
-	connect(nameLineEdit, SIGNAL(textChanged(QString)), this, SLOT(modifyRealIdentity()));
-	connect(character, SIGNAL(identityChanged(cv_Identity)), this, SLOT(updateIdentity(cv_Identity)));
+// 	connect(nameLineEdit, SIGNAL(textChanged(QString)), this, SLOT(modifyRealIdentity()));
+	connect( namePushButton, SIGNAL( clicked( bool ) ), this, SLOT( openNameDialog() ));
+	connect( genderCombobox, SIGNAL( currentIndexChanged(int)), this, SLOT( changeGender(int) ));
+	connect( character, SIGNAL( realIdentityChanged( cv_Identity ) ), this, SLOT( updateIdentity( cv_Identity ) ) );
 }
 
 InfoWidget::~InfoWidget() {
 	delete genderCombobox;
-	delete nameLineEdit;
+	delete namePushButton;
 	delete speciesComboBox;
 	delete layout;
 }
 
-void InfoWidget::modifyRealIdentity() {
-	character->realIdentity->foreName[0] = nameLineEdit->text();
-
-	qDebug() << Q_FUNC_INFO << character->identities().realName();
+void InfoWidget::openNameDialog() {
+	NameDialog* dialog = new NameDialog(this);
+	dialog->exec();
+	delete dialog;
 }
 
-void InfoWidget::updateIdentity( cv_Identity )
+void InfoWidget::changeGender( int gen )
 {
-	QString txt = character->identities().realName();
-	int doubleSpaceIndex = txt.indexOf("  ");
-	txt.truncate(doubleSpaceIndex);
+	cv_Identity id = character->identities().at(0);
+	if (gen == 0){
+		id.gender = cv_Identity::Male;
+	} else {
+		id.gender = cv_Identity::Female;
+	}
 	
-	nameLineEdit->setText(txt);
+	character->setRealIdentity(id);
+}
+
+
+
+void InfoWidget::updateIdentity( cv_Identity id ) {
+	namePushButton->setText(cv_Name::displayNameDisplay(id.sureName, id.firstName(), id.nickName));
+
+	if (id.gender == cv_Identity::Male){
+		genderCombobox->setCurrentIndex(0);
+	} else {
+		genderCombobox->setCurrentIndex(1);
+	}
 }
 

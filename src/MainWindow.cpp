@@ -213,7 +213,7 @@ void MainWindow::aboutApp() {
 void MainWindow::newCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 	
-	character->resetTraits();
+	character->resetCharacter();
 }
 
 void MainWindow::openCharacter() {
@@ -232,7 +232,7 @@ void MainWindow::openCharacter() {
 		QFile* file = new QFile( filePath );
 
 		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
-		character->resetTraits();
+		character->resetCharacter();
 
 		try {
 			readCharacter->read( file );

@@ -22,7 +22,49 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "../Exceptions/Exception.h"
+
 #include "cv_Identity.h"
 
 
+cv_Identity::cv_Identity( QString surename, QString firstname, cv_Identity::Gender gen ): cv_Name( surename, firstname ) {
+	gender = gen;
+}
 
+
+QString cv_Identity::toXmlString( cv_Identity::Gender gen ) {
+	switch ( gen ) {
+		case cv_Identity::GenderNo:
+			return "GenderNo";
+		case cv_Identity::Male:
+			return "Male";
+		case cv_Identity::Female:
+			return "Female";
+		default:
+			throw eGenderNotExisting( gen );
+// 			return "ERROR";
+	}
+}
+
+QString cv_Identity::toString( cv_Identity::Gender gen ) {
+	switch ( gen ) {
+		case cv_Identity::GenderNo:
+			return QObject::tr( "GenderNo" );
+		case cv_Identity::Male:
+			return QObject::tr( "Male" );
+		case cv_Identity::Female:
+			return QObject::tr( "Female" );
+		default:
+			throw eGenderNotExisting( gen );
+// 			return "ERROR";
+	}
+}
+
+cv_Identity::Gender cv_Identity::toGender( QString text ) {
+	if ( text == "Male" )
+		return cv_Identity::Male;
+	else if ( text == "Female" )
+		return cv_Identity::Female;
+	else
+		return cv_Identity::GenderNo;
+}

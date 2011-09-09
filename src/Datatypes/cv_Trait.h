@@ -316,13 +316,13 @@ class cv_Trait {
 		/**
 		 * Wandelt einen Typ in seinen realen Namen um.
 		 *
-		 * \note Diese Funktion unterscheidet sich insofern von toXmlString(), daß auch die Ausgabe des Plural möglich ist.
+		 * \note Diese Funktion unterscheidet sich insofern von toXmlString(), daß eine Übersetzung erfolgen kann und die Ausgabe des Plural möglich ist.
 		 **/
 		static QString toString( cv_Trait::Type type, bool plural = false /** Ist dieses Argument true, wird die Pluralform des Typs ausgegeben. */ );
 		/**
 		 * Wandelt eine Kategorie in ihren realen Namen um.
 		 *
-		 * \note Diese Funktion unterscheidet sich insofern von toXmlString(), daß beispielsweise FightingStyle mit einem zusätzlichen Leerzeichen (Fighting Style) ausgegeben wird. Außerdem kann die Pluralform ausgegeben werden. Außerdem werden in dieser Funktion übersetzungen berücksichtigt.
+		 * \note Diese Funktion unterscheidet sich insofern von toXmlString(), daß beispielsweise FightingStyle mit einem zusätzlichen Leerzeichen (Fighting Style) ausgegeben wird. Außerdem kann die Pluralform ausgegeben werden. Außerdem werden in dieser Funktion Übersetzungen berücksichtigt.
 		 **/
 		static QString toString( cv_Trait::Category category, bool plural = false /** Ist dieses Argument true, wird die Pluralform der Kategorie ausgegeben. */ );
 		/**

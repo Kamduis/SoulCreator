@@ -264,16 +264,20 @@ class StorageCharacter : public QObject {
 		 *
 		 * \todo Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze.
 		 **/
-		void resetTraits();
+		void resetCharacter();
 
 	private slots:
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
 
 	signals:
 		/**
-		* Dieses Signal wird ausgesandt, wann immer sich der name des Charakters ändert.
+		* Dieses Signal wird ausgesandt, wann immer eine Identität des Charakters verändert wird.
 		**/
 		void identityChanged( cv_Identity id );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich der echte Name des Charakters ändert.
+		**/
+		void realIdentityChanged( cv_Identity id );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Spezies des Charakters ändert.
 		**/
@@ -308,45 +312,6 @@ class StorageCharacter : public QObject {
 		* Dieses Signal wird ausgesandt, wann immer sich der Wert der Moral verändert.
 		**/
 		void moralityChanged( int value );
-
-
-// 		/**
-// 		 * Jeder Charakter kann mehrere Namen haben. Allerdings kann jeder Charkater nur einen Namen pro Kategorie haben. Diese Variable enthält die verschiedenen Namen des Charakters.
-// 		 **/
-// 		cv_Name charaName;
-//
-// 		static QList<cv_Trait> storedTraits;
-//
-// 		QStringList speciesNames();
-// 		QStringList virtueNames( cv_Character::Age age );
-// 		QStringList viceNames( cv_Character::Age age );
-// 		QStringList attributeNames( cv_Trait::Categories categories = cv_Trait::CategoryNo );
-// 		QList<cv_Trait> attributes( cv_Trait::Categories categories = cv_Trait::CategoryNo );
-// 		QStringList skillNames( cv_Trait::Categories categories = cv_Trait::CategoryNo );
-// 		QStringList skillNames( cv_Trait::Categories categories, cv_Character::Era era, cv_Character::Age age );
-// 		QStringList skillSpecialties( QString skillName, cv_Species::Species species = cv_Species::SpeciesNo );
-// //		QStringList meritNames(cv_Character::Species species = cv_Character::SpeciesAll);
-//
-// //		static QString showName(Name::Category category);
-// //		static void storeName(QString name, Name::Category category);	///< Speichert den QString name in storedNames. Existiert bereits ein Name der selben Kategorie, wird er überschrieben.
-// 		/**
-// 		* @brief Speichert einen Trait in StorageCharacter::storedTraits.
-// 		*
-// 		* Ist der Schalter replace wahr, wird kein neuer Trait angehängt, sondern automatisch der bereits vorhandene gleichen Namens ersetzt. Bei Attributen, Fertigkeiten, Merits sollte das nicht geschehen, bei Virtue und Vice dagegen schon. Jeder Charakter hat schließlich nur eines davon, auch wenn sie unterschiedliche Namen haben.
-// 		*
-// 		* @param trait
-// 		* @param replace
-// 		*/
-// 		static void storeTrait( cv_Trait trait, bool replace = false );
-
-// 	private:
-// 		QList<cv_Trait> *traits;
-//
-// 		ReadXmlTemplate* readTemplate;
-//
-// //		static QList<Name> storedNames;
-//
-// //	public slots:
 };
 
 #endif

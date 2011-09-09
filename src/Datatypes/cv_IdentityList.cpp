@@ -24,11 +24,8 @@
 
 #include "cv_IdentityList.h"
 
-cv_IdentityList::cv_IdentityList( QString sureName, QString firstName, QString affixName ): QList< cv_Identity >() {
-	cv_Identity nameSet;
-	nameSet.foreName.append( "firstName" );
-	nameSet.sureName = sureName;
-	nameSet.affixName = affixName;
+cv_IdentityList::cv_IdentityList( QString sureName, QString firstName ): QList< cv_Identity >() {
+	cv_Identity nameSet( sureName, firstName );
 	this->append( nameSet );
 }
 
@@ -38,6 +35,12 @@ QString cv_IdentityList::realName() const {
 	return name;
 }
 
+
+void cv_IdentityList::reset() {
+	this->clear();
+	cv_Identity nameSet;
+	this->append( nameSet );
+}
 
 
 

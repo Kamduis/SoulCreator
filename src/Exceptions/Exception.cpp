@@ -132,6 +132,17 @@ eSpeciesNotExisting::eSpeciesNotExisting() : eSpecies() {
 }
 
 
+eGender::eGender() : Exception() {
+	setMessage( QObject::tr( "Gender Problem" ) );
+	setDescription( QObject::tr( "There is a problem with the gender of the character." ) );
+}
+
+eGenderNotExisting::eGenderNotExisting( cv_Identity::Gender gen ) : eGender() {
+	setMessage( QObject::tr( "Character Gender Problem" ) );
+	setDescription( QObject::tr( "Gender %1 does not exist." ).arg( gen ) );
+}
+
+
 eTrait::eTrait() : Exception() {
 	setMessage( QObject::tr( "Character Trait Problem" ) );
 	setDescription( QObject::tr( "There is a problem with a character trait." ) );

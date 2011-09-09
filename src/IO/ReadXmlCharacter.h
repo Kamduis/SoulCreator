@@ -80,7 +80,7 @@ class ReadXmlCharacter : public QObject, public ReadXml {
 		/**
 		 * Lese die Spezies aus dem gespeicherten Charakter.
 		 **/
-		void readSoulCreator();
+		void readSoulCreator( cv_Identity* id );
 		/**
 		 * Lese die Eigenschaften aus dem gespeicherten Charakter.
 		 **/
