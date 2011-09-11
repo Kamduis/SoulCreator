@@ -80,6 +80,41 @@ QStringList StorageTemplate::viceNames( cv_Trait::AgeFlag age ) const {
 	return traitNames( cv_Trait::Vice, cv_Trait::CategoryNo, cv_Trait::EraAll, age );
 }
 
+QStringList StorageTemplate::breedNames( cv_Species::SpeciesFlag spe ) const {
+	QList< cv_Trait > traits = v_traits;
+	QStringList list;
+
+	for ( int i = 0; i < traits.count(); i++ ) {
+		if ( traits.at( i ).type == cv_Trait::Breed && traits.at( i ).category == cv_Trait::CategoryNo ) {
+			if ( traits.at( i ).species == spe ) {
+				// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
+				if ( !list.contains( traits.at( i ).name ) ) {
+					list.append( traits.at( i ).name );
+				}
+			}
+		}
+	}
+
+	return list;
+}
+QStringList StorageTemplate::factionNames( cv_Species::SpeciesFlag spe ) const {
+	QList< cv_Trait > traits = v_traits;
+	QStringList list;
+
+	for ( int i = 0; i < traits.count(); i++ ) {
+		if ( traits.at( i ).type == cv_Trait::Faction && traits.at( i ).category == cv_Trait::CategoryNo ) {
+			if ( traits.at( i ).species == spe ) {
+				// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
+				if ( !list.contains( traits.at( i ).name ) ) {
+					list.append( traits.at( i ).name );
+				}
+			}
+		}
+	}
+
+	return list;
+}
+
 QList< cv_Trait > StorageTemplate::attributes( cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
 	return traits( cv_Trait::Attribute, category, era, age );
 }
@@ -208,7 +243,7 @@ QList< cv_Trait* > StorageTemplate::traitsPtr( cv_Trait::Type type, cv_Trait::Ca
 	}
 
 	if ( traitsPtr.isEmpty() ) {
-		qDebug() << Q_FUNC_INFO << "Trait Typ" << cv_Trait::toString(type) << "mit Kategorie" << cv_Trait::toString(category) << "existiert nicht!";
+		qDebug() << Q_FUNC_INFO << "Trait Typ" << cv_Trait::toString( type ) << "mit Kategorie" << cv_Trait::toString( category ) << "existiert nicht!";
 // 		throw eTraitNotExisting();
 	}
 

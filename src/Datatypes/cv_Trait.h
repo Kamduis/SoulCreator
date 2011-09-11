@@ -94,6 +94,8 @@ class cv_Trait {
 			TypeNo,
 			Virtue,
 			Vice,
+			Breed,
+			Faction,
 			Attribute,
 			Skill,
 			Merit,

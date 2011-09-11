@@ -13,6 +13,21 @@
 			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
+		<Breed>
+			<trait name="Acanthus"/>
+			<trait name="Mastigos"/>
+			<trait name="Moros"/>
+			<trait name="Obrimos"/>
+			<trait name="Thyrsus"/>
+		</Breed>
+		<Faction>
+			<trait name="Apostate"/>
+			<trait name="Adamantine Arrow" alt="Ungula Draconis"/>
+			<trait name="Free Council"/>
+			<trait name="Guardians of the Veil" alt="Visus Draconis"/>
+			<trait name="Mysterium" alt="Alae Draconis"/>
+			<trait name="Silver Ladder" alt="Vox Draconis"/>
+		</Faction>
 		<Merit>
 			<Mental>
 				<trait name="High Speech" source="Mage Core">

@@ -29,6 +29,8 @@
 #include <QStringList>
 
 #include "../Datatypes/cv_Trait.h"
+// #include "../Datatypes/cv_Breed.h"
+// #include "../Datatypes/cv_Faction.h"
 #include "../Datatypes/cv_IdentityList.h"
 #include "../Datatypes/cv_SuperEffect.h"
 
@@ -71,6 +73,14 @@ class StorageTemplate : public QObject {
 		 * Gibt eine Liste aller verfügbaren Vices aus.
 		 **/
 		QStringList viceNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		/**
+		 * Gibt eine Liste aller verfügbaren Bruten aus.
+		 **/
+		QStringList breedNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
+		 * Gibt eine Liste aller verfügbaren Fraktionen aus.
+		 **/
+		QStringList factionNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
 		/**
 		 * Gibt eine Liste aller verfügbaren Attribute aus.
 		 **/
@@ -158,6 +168,14 @@ class StorageTemplate : public QObject {
 		 * Eine Liste sämtlicher verfügbaren Spezies.
 		 **/
 		static QList< cv_Species > v_species;
+// 		/**
+// 		 * Eine Liste sämtlicher Bruten.
+// 		 **/
+// 		static QList< cv_Breed > v_breeds;
+// 		/**
+// 		 * Eine Liste sämtlicher Fraktionen
+// 		 **/
+// 		static QList< cv_Faction > v_factions;
 		/**
 		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
 		 *

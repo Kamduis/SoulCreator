@@ -34,6 +34,7 @@
 
 
 InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
+	storage = new StorageTemplate( this );
 	character = StorageCharacter::getInstance();
 
 	layout = new QGridLayout( this );
@@ -47,20 +48,24 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 
 	QLabel* labelSpecies = new QLabel( tr( "Species:" ) );
 	genderCombobox = new QComboBox( this );
-	genderCombobox->addItem(tr("Male"));
-	genderCombobox->addItem(tr("Female"));
+	genderCombobox->addItem( tr( "Male" ) );
+	genderCombobox->addItem( tr( "Female" ) );
 
 	QLabel* labelVirtue = new QLabel( tr( "Virtue:" ) );
 	virtueCombobox = new QComboBox( this );
+	virtueCombobox->addItems( storage->virtueNames() );
 
 	QLabel* labelVice = new QLabel( tr( "Vice:" ) );
 	viceCombobox = new QComboBox( this );
+	viceCombobox->addItems( storage->viceNames() );
 
 	QLabel* labelBreed = new QLabel( tr( "Breed:" ) );
 	breedCombobox = new QComboBox( this );
+	breedCombobox->addItems( storage->breedNames() );
 
 	QLabel* labelFaction = new QLabel( tr( "Faction:" ) );
 	factionCombobox = new QComboBox( this );
+	factionCombobox->addItems( storage->factionNames() );
 
 	layout->addWidget( labelName, 0, 0 );
 	layout->addWidget( namePushButton, 0, 1 );
@@ -78,9 +83,19 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 	layout->addWidget( factionCombobox, 2, 3 );
 
 // 	connect(nameLineEdit, SIGNAL(textChanged(QString)), this, SLOT(modifyRealIdentity()));
-	connect( namePushButton, SIGNAL( clicked( bool ) ), this, SLOT( openNameDialog() ));
-	connect( genderCombobox, SIGNAL( currentIndexChanged(int)), this, SLOT( changeGender(int) ));
+	connect( namePushButton, SIGNAL( clicked( bool ) ), this, SLOT( openNameDialog() ) );
+	connect( genderCombobox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( changeGender( int ) ) );
+	connect( virtueCombobox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( changeVirtue( int ) ) );
+	connect( viceCombobox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( changeVice( int ) ) );
+	connect( breedCombobox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( changeBreed( int ) ) );
+	connect( factionCombobox, SIGNAL( currentIndexChanged( int ) ), this, SLOT( changeFaction( int ) ) );
 	connect( character, SIGNAL( realIdentityChanged( cv_Identity ) ), this, SLOT( updateIdentity( cv_Identity ) ) );
+	connect( character, SIGNAL( virtueChanged( QString ) ), this, SLOT( updateVirtue( QString ) ) );
+	connect( character, SIGNAL( viceChanged( QString ) ), this, SLOT( updateVice( QString ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateBreedBox( cv_Species::SpeciesFlag ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateFactionBox( cv_Species::SpeciesFlag ) ) );
+	connect( character, SIGNAL( breedChanged( QString ) ), this, SLOT( updateBreed( QString ) ) );
+	connect( character, SIGNAL( factionChanged( QString ) ), this, SLOT( updateFaction( QString ) ) );
 }
 
 InfoWidget::~InfoWidget() {
@@ -88,35 +103,76 @@ InfoWidget::~InfoWidget() {
 	delete namePushButton;
 	delete speciesComboBox;
 	delete layout;
+	delete storage;
 }
 
 void InfoWidget::openNameDialog() {
-	NameDialog* dialog = new NameDialog(this);
+	NameDialog* dialog = new NameDialog( this );
 	dialog->exec();
 	delete dialog;
 }
 
-void InfoWidget::changeGender( int gen )
-{
-	cv_Identity id = character->identities().at(0);
-	if (gen == 0){
+void InfoWidget::changeGender( int gen ) {
+	cv_Identity id = character->identities().at( 0 );
+
+	if ( gen == 0 ) {
 		id.gender = cv_Identity::Male;
 	} else {
 		id.gender = cv_Identity::Female;
 	}
-	
-	character->setRealIdentity(id);
+
+	character->setRealIdentity( id );
 }
 
+void InfoWidget::changeVirtue( int idx ) {
+	character->setVirtue( virtueCombobox->currentText() );
+}
+
+void InfoWidget::changeVice( int idx ) {
+	character->setVice( viceCombobox->currentText() );
+}
+
+void InfoWidget::changeBreed( int idx ) {
+	character->setBreed( breedCombobox->currentText() );
+}
+
+void InfoWidget::changeFaction( int idx ) {
+	character->setFaction( factionCombobox->currentText() );
+}
 
 
 void InfoWidget::updateIdentity( cv_Identity id ) {
-	namePushButton->setText(cv_Name::displayNameDisplay(id.sureName, id.firstName(), id.nickName));
+	namePushButton->setText( cv_Name::displayNameDisplay( id.sureName, id.firstName(), id.nickName ) );
 
-	if (id.gender == cv_Identity::Male){
-		genderCombobox->setCurrentIndex(0);
+	if ( id.gender == cv_Identity::Male ) {
+		genderCombobox->setCurrentIndex( 0 );
 	} else {
-		genderCombobox->setCurrentIndex(1);
+		genderCombobox->setCurrentIndex( 1 );
 	}
 }
 
+void InfoWidget::updateVirtue( QString txt ) {
+	virtueCombobox->setCurrentIndex( virtueCombobox->findText( txt ) );
+}
+
+void InfoWidget::updateVice( QString txt ) {
+	viceCombobox->setCurrentIndex( viceCombobox->findText( txt ) );
+}
+
+void InfoWidget::updateBreed( QString txt ) {
+	breedCombobox->setCurrentIndex( breedCombobox->findText( txt ) );
+}
+
+void InfoWidget::updateFaction( QString txt ) {
+	factionCombobox->setCurrentIndex( factionCombobox->findText( txt ) );
+}
+
+void InfoWidget::updateBreedBox( cv_Species::SpeciesFlag spe ) {
+	breedCombobox->clear();
+	breedCombobox->addItems(storage->breedNames(spe));
+}
+
+void InfoWidget::updateFactionBox( cv_Species::SpeciesFlag spe ) {
+	factionCombobox->clear();
+	factionCombobox->addItems(storage->factionNames(spe));
+}

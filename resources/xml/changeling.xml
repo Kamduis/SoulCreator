@@ -13,6 +13,21 @@
 			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
+		<Breed>
+			<trait name="Beast"/>
+			<trait name="Darkling"/>
+			<trait name="Elemental"/>
+			<trait name="Fairest"/>
+			<trait name="Oger"/>
+			<trait name="Wizened"/>
+		</Breed>
+		<Faction>
+			<trait name="Courtless"/>
+			<trait name="Spring"/>
+			<trait name="Summer"/>
+			<trait name="Autumn"/>
+			<trait name="Winter"/>
+		</Faction>
 		<Skill>
 			<Mental>
 				<trait name="Medicine">

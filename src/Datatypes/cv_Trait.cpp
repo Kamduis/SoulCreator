@@ -69,6 +69,10 @@ QString cv_Trait::toXmlString( cv_Trait::Type type ) {
 			return "Virtue";
 		case cv_Trait::Vice:
 			return "Vice";
+		case cv_Trait::Breed:
+			return "Breed";
+		case cv_Trait::Faction:
+			return "Faction";
 		case cv_Trait::Attribute:
 			return "Attribute";
 		case cv_Trait::Skill:
@@ -122,6 +126,10 @@ QString cv_Trait::toString( cv_Trait::Type type, bool plural ) {
 				return QObject::tr( "Virtues" );
 			case cv_Trait::Vice:
 				return QObject::tr( "Vices" );
+			case cv_Trait::Breed:
+				return QObject::tr( "Breeds" );
+			case cv_Trait::Faction:
+				return QObject::tr( "Factions" );
 			case cv_Trait::Attribute:
 				return QObject::tr( "Attributes" );
 			case cv_Trait::Skill:
@@ -148,6 +156,10 @@ QString cv_Trait::toString( cv_Trait::Type type, bool plural ) {
 				return QObject::tr( "Virtue" );
 			case cv_Trait::Vice:
 				return QObject::tr( "Vice" );
+			case cv_Trait::Breed:
+				return QObject::tr( "Breed" );
+			case cv_Trait::Faction:
+				return QObject::tr( "Faction" );
 			case cv_Trait::Attribute:
 				return QObject::tr( "Attribute" );
 			case cv_Trait::Skill:
@@ -221,6 +233,10 @@ cv_Trait::Type cv_Trait::toType( QString str ) {
 		return cv_Trait::Virtue;
 	else if ( str == "Vice" )
 		return cv_Trait::Vice;
+	else if ( str == "Breed" )
+		return cv_Trait::Breed;
+	else if ( str == "Faction" )
+		return cv_Trait::Faction;
 	else if ( str == "Attribute" )
 		return cv_Trait::Attribute;
 	else if ( str == "Skill" )

@@ -28,6 +28,7 @@
 #include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_Identity.h"
 #include "../Datatypes/cv_IdentityList.h"
+#include "StorageTemplate.h"
 
 #include <QObject>
 
@@ -155,6 +156,7 @@ class StorageCharacter : public QObject {
 		int morality() const;
 
 	private:
+		StorageTemplate* storage;
 		/**
 		 * Die Spezies des Charakters.
 		 *

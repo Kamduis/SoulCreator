@@ -58,9 +58,12 @@ cv_Species::SpeciesFlag StorageCharacter::v_species;
 
 StorageCharacter::StorageCharacter( QObject* parent ) : QObject( parent ) {
 	realIdentity = &v_identities[0];
+
+	storage = new StorageTemplate( this );
 }
 
 StorageCharacter::~StorageCharacter() {
+	delete storage;
 }
 
 cv_Species::SpeciesFlag StorageCharacter::species() const {
@@ -71,7 +74,7 @@ void StorageCharacter::setSpecies( cv_Species::SpeciesFlag species ) {
 	if ( v_species != species ) {
 		v_species = species;
 
-		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
+// 		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
 
 		emit speciesChanged( species );
 	}
@@ -102,6 +105,7 @@ void StorageCharacter::setRealIdentity( cv_Identity id ) {
 	}
 
 	emit identityChanged( id );
+
 	emit realIdentityChanged( id );
 }
 
@@ -294,15 +298,26 @@ void StorageCharacter::setMorality( int value ) {
 void StorageCharacter::resetCharacter() {
 	v_identities.reset();
 
-	emit realIdentityChanged( v_identities.at(0) );
-	
+	emit realIdentityChanged( v_identities.at( 0 ) );
+
+	setSpecies(cv_Species::Human);
+
+	setVirtue( storage->virtueNames().at( 0 ) );
+	setVice( storage->viceNames().at( 0 ) );
+
+	// Menschen haben eine Leere liste, also kann ich auch die Indizes nicht ändern.
+// 	setBreed(storage->breedNames(species()).at(0));
+// 	setFaction(storage->breedNames(species()).at(0));
+
 	for ( int i = 0; i < v_traits.count();i++ ) {
-		if (v_traits[i].type == cv_Trait::Attribute){
+		if ( v_traits[i].type == cv_Trait::Attribute ) {
 			v_traits[ i ].value = 1;
 		} else {
 			v_traits[ i ].value = 0;
 		}
+
 		v_traits[ i ].details.clear();
+
 		v_traits[i].customText = "";
 
 		emit traitChanged( &v_traits[i] );

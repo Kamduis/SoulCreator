@@ -151,6 +151,10 @@ class CheckTrait : public QWidget {
 		void updateWidget(cv_Trait* trait);
 
 	signals:
+		/**
+		 * Der Status der Eigenscahft wurde verändert.
+		 **/
+		void stateChanged(int);
 		void typeChanged( cv_Trait::Type type );
 		/**
 		 * Der Knopf zum Anzeigen der Spazialisierungen wurde gedrückt.

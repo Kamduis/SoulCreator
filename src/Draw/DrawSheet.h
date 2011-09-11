@@ -108,6 +108,16 @@ class DrawSheet : public QObject {
 
 	private slots:
 		/**
+		 * Diese Funktion Schreibt Namen, Virtue/Vice etc. in den Kopf des Charakterbogens.
+		 **/
+		void drawInfo( QPainter* painter,
+							 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und der rechten Kante des Platzes für den Namen. */,
+							 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem Platz für den Namen. */,
+							 qreal distanceH = 0 /** Horizontaler Abstand zwischen den Zeilen. */,
+							 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Spalten. */,
+				 			 qreal textWidth = 0 /** Textbreite. */
+						   );
+		/**
 		 * Diese Funktion malt die Attributspunkte aus.
 		 **/
 		void drawAttributes( QPainter* painter,
@@ -139,6 +149,16 @@ class DrawSheet : public QObject {
 						 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Fertigkeiten derselben Kategorie. */,
 						 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
 						 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */
+					   );
+		/**
+		 * Diese Funktion malt die Schwächen des Charakters
+		 *
+		 * \bug Die Merits halten sich nicht an die Linien im vorgefertigten Charakterbogen.
+		 **/
+		void drawFlaws( QPainter* painter,
+						 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem Textfeld. */,
+						 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem Textfeld. */,
+						 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */
 					   );
 		/**
 		 * Zeichne die berechneten Eigenschaften.

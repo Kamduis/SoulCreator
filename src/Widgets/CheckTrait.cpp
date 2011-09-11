@@ -25,6 +25,7 @@
 #include <QDebug>
 
 #include "../Exceptions/Exception.h"
+#include "../Config/Config.h"
 
 #include "CheckTrait.h"
 
@@ -41,8 +42,10 @@ CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 
 	checkBox = new QCheckBox( this );
 	checkBox->setText( trait->name );
+	checkBox->setMaximumHeight(Config::inlineWidgetHeightMax);
 
 	lineEdit = new QLineEdit( this );
+	lineEdit->setMaximumHeight(Config::inlineWidgetHeightMax);
 
 	layout->addWidget( checkBox );
 	layout->addStretch();
@@ -52,6 +55,7 @@ CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 	connect( lineEdit, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( updateWidget( cv_Trait* ) ) );
+	connect( checkBox, SIGNAL( stateChanged( int ) ), this, SIGNAL( stateChanged( int ) ) );
 // 	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
 // 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( checkTraitPrerequisites( cv_Trait* ) ) );
 // 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
@@ -88,7 +92,7 @@ void CheckTrait::setValue( int val ) {
 	if ( traitPtr()->value != val ) {
 		traitPtr()->value = val;
 
-		qDebug() << Q_FUNC_INFO << "Test" << val;
+// 		qDebug() << Q_FUNC_INFO << "Test" << val;
 
 		emit traitChanged( traitPtr() );
 	}
@@ -185,12 +189,12 @@ void CheckTrait::updateWidget( cv_Trait* trait ) {
 	if ( traitPtr() == trait ) {
 
 		// Tristate ist nicht möglich!
-		if (value() > 0){
+		if ( value() > 0 ) {
 			checkBox->setCheckState( Qt::Checked );
 		} else {
 			checkBox->setCheckState( Qt::Unchecked );
 		}
-		
+
 		lineEdit->setText( customText() );
 	}
 }

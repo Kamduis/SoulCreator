@@ -13,6 +13,21 @@
 			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
+		<Breed>
+			<trait name="Rahu"/>
+			<trait name="Cahalith"/>
+			<trait name="Elodoth"/>
+			<trait name="Ithaeur"/>
+			<trait name="Irraka"/>
+		</Breed>
+		<Faction>
+			<trait name="Ghost Wolf"/>
+			<trait name="Blood Talons"/>
+			<trait name="Bone Shadows"/>
+			<trait name="Hunters in Darkness"/>
+			<trait name="Iron Masters"/>
+			<trait name="Storm Lords"/>
+		</Faction>
 		<Merit>
 			<Physical>
 				<trait name="Metabolic Control" source="Werewolf The Rage">
