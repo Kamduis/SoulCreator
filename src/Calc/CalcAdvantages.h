@@ -43,13 +43,41 @@ class CalcAdvantages : public QObject {
 	public:
 		CalcAdvantages( QObject* parent = 0 );
 
+		/**
+		 * Berechnet die Größe des Charakters abhängig von den unterschiedlichen Gestalten.
+		 *
+		 * \note Es wird auf das Ergebnis der Funktion calcSize() zurückgegriffen, welche bei jeder Veränderung einer Eigenschaft, die Auswirkung auf die Size haben kann, aufgerufen wird.
+		 **/
 		int size( cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo ) const;
+		/**
+		 * Berechnet die Initiative des Charakters abhängig von den unterschiedlichen Gestalten.
+		 *
+		 * \note Es wird auf das Ergebnis der Funktion calcInitiativa() zurückgegriffen, welche bei jeder Veränderung einer Eigenschaft, die Auswirkung auf die Initiative haben kann, aufgerufen wird.
+		 **/
 		int initiative(cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo) const;
+		/**
+		 * Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
+		 *
+		 * \note Es wird auf das Ergebnis der Funktion calcSpeed() zurückgegriffen, welche bei jeder Veränderung einer Eigenschaft, die Auswirkung auf diee Eigenschaft haben kann, aufgerufen wird.
+		 **/
 		int speed(cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo) const;
+		/**
+		 * Berechnet die Defensive des Charakters.
+		 **/
 		int defense() const;
+		/**
+		 * Berechnet die Gesundheit des Charakters.
+		 **/
 		int health() const;
+		/**
+		 * Berechnet die Willenskraft des Charakters.
+		 **/
 		int willpower() const;
 
+		static int strength( int str, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
+		static int dexterity( int dex, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
+		static int stamina( int sta, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
+		
 	private:
 		StorageCharacter* character;
 

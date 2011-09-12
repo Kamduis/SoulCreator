@@ -26,6 +26,7 @@
 #define ATTRIBUTEWIDGET_H
 
 #include <QHBoxLayout>
+#include <QLabel>
 
 #include "../Storage/StorageCharacter.h"
 
@@ -58,12 +59,38 @@ class AttributeWidget : public QWidget {
 		 **/
 		QHBoxLayout *layout;
 		StorageCharacter* character;
+		/**
+		 * Anzeige der Attributswerte für alle Formen eines Werwolfs.
+		 **/
+		QLabel *labelStr;
+		QLabel *labelDex;
+		QLabel *labelSta;
 
 	public slots:
 
 	private slots:
+		/**
+		 * Sorgt dafür, daß das Signal speciesChanged() mit dem richtigen Argument ausgesandt wird.
+		 **/
+		void emitSpeciesChanged(cv_Species::SpeciesFlag spe);
+		/**
+		 * Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Stärke.
+		 **/
+		void updateshapeValuesStr(int val);
+		/**
+		 * Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Geschicklichkeit.
+		 **/
+		void updateshapeValuesDex(int val);
+		/**
+		 * Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Widerstandsfähigkeit.
+		 **/
+		void updateshapeValuesSta(int val);
 
 	signals:
+		/**
+		 * Sobald die Spezies verändert wird, wird dieses Signal ausgesandt.
+		 **/
+		void speciesChanged(bool sw /** Das Argument wird nur dann false, wenn die Spezies in cv_Species::Werewolf verändert wurde. */);
 };
 
 #endif

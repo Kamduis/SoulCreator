@@ -49,6 +49,64 @@ CalcAdvantages::CalcAdvantages( QObject* parent ): QObject( parent ) {
 }
 
 
+int CalcAdvantages::strength( int str, cv_Shape::WerewolfShape shape ) {
+	switch ( shape ) {
+		case cv_Shape::ShapeNo:
+			return str;
+		case cv_Shape::Hishu:
+			return str;
+		case cv_Shape::Dalu:
+			return str + 1;
+		case cv_Shape::Gauru:
+			return str + 3;
+		case cv_Shape::Urshul:
+			return str + 2;
+		case cv_Shape::Urhan:
+			return str;
+		default:
+			throw eWerewolfShapeNotExisting( shape );
+	}
+}
+
+int CalcAdvantages::dexterity( int dex, cv_Shape::WerewolfShape shape ) {
+	switch ( shape ) {
+		case cv_Shape::ShapeNo:
+			return dex;
+		case cv_Shape::Hishu:
+			return dex;
+		case cv_Shape::Dalu:
+			return dex;
+		case cv_Shape::Gauru:
+			return dex + 1;
+		case cv_Shape::Urshul:
+			return dex + 2;
+		case cv_Shape::Urhan:
+			return dex + 2;
+		default:
+			throw eWerewolfShapeNotExisting( shape );
+	}
+}
+
+int CalcAdvantages::stamina( int sta, cv_Shape::WerewolfShape shape ) {
+	switch ( shape ) {
+		case cv_Shape::ShapeNo:
+			return sta;
+		case cv_Shape::Hishu:
+			return sta;
+		case cv_Shape::Dalu:
+			return sta + 1;
+		case cv_Shape::Gauru:
+			return sta + 2;
+		case cv_Shape::Urshul:
+			return sta + 2;
+		case cv_Shape::Urhan:
+			return sta + 1;
+		default:
+			throw eWerewolfShapeNotExisting( shape );
+	}
+}
+
+
 int CalcAdvantages::size( cv_Shape::WerewolfShape shape ) const {
 	switch ( shape ) {
 		case cv_Shape::ShapeNo:
@@ -144,6 +202,7 @@ int CalcAdvantages::calcInitiative( cv_Trait* trait ) {
 		QList< cv_Trait > list;
 
 		// Nur berechnen, wenn der veränderte Wert Einfluß auf die Initiative hat.
+
 		if ( trait->type == cv_Trait::Attribute ) {
 			val1 = trait->value;
 

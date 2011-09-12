@@ -611,18 +611,23 @@ void DrawSheet::drawFlaws( QPainter* painter, qreal offsetH, qreal offsetV, qrea
 	QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( cv_Trait::Flaw );
 
 	QList< cv_Trait > list;
-
-	for ( int i = 0; i < categories.count(); i++ ) {
-		list.append( character->traits( cv_Trait::Flaw, categories.at( i ) ) );
-	}
-
 	QStringList stringList;
 
-	for ( int i = 0; i < list.count();i++ ) {
-		stringList.append( list.at( i ).name );
+	for ( int i = 0; i < categories.count(); i++ ) {
+		list = character->traits( cv_Trait::Flaw, categories.at( i ) );
+
+		for ( int j = 0; j < list.count(); j++ ) {
+			if ( list.at( j ).value > 0 ) {
+				QString lcl_text = list.at( j ).name;
+				if (list.at( j ).custom) {
+					lcl_text += " (" + list.at(j).customText + ")";
+				}
+				stringList.append( lcl_text );
+			}
+		}
 	}
 
-	QString text = stringList.join( " " );
+	QString text = stringList.join( ", " );
 
 	qreal lcl_textHeight = 3 * v_textHeight;
 

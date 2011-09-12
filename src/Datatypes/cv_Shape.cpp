@@ -26,6 +26,14 @@
 
 #include "cv_Shape.h"
 
+const QList< cv_Shape::WerewolfShape > cv_Shape::v_shapeListWerewolf = QList< cv_Shape::WerewolfShape >()
+		<< cv_Shape::Hishu
+		<< cv_Shape::Dalu
+		<< cv_Shape::Gauru
+		<< cv_Shape::Urshul
+		<< cv_Shape::Urhan;
+
+
 QString cv_Shape::toString( cv_Shape::WerewolfShape shape ) {
 	switch ( shape ) {
 		case cv_Shape::ShapeNo:
@@ -60,4 +68,8 @@ cv_Shape::WerewolfShape cv_Shape::toShape( QString str ) {
 		return cv_Shape::Urhan;
 	else
 		throw eWerewolfShapeNotExisting( str );
+}
+
+QList< cv_Shape::WerewolfShape > cv_Shape::getShapeList() {
+	return v_shapeListWerewolf;
 }

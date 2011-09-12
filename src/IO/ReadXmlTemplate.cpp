@@ -241,7 +241,7 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 				}
 
 				storage->appendTrait( trait );
-				qDebug() << Q_FUNC_INFO << trait.name;
+// 				qDebug() << Q_FUNC_INFO << trait.name;
 
 // 				// Diese Funktion benötige ich, damit er zum nächsten trait-Eintrag springt.
 // 				readNext();

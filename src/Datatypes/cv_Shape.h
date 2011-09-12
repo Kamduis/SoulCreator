@@ -40,8 +40,25 @@ class cv_Shape {
 			Urshul,
 			Urhan
 		};
+		/**
+		 * Wandelt einen Text in die passende Gestalt um.
+		 **/
 		static QString toString(cv_Shape::WerewolfShape shape);
+		/**
+		 * Gibt den Namen der Gestalt aus.
+		 **/
 		static cv_Shape::WerewolfShape toShape( QString str );
+		/**
+		 * Gibt eine Liste aller möglichen Gestalten aus.
+		 **/
+		static QList< cv_Shape::WerewolfShape > getShapeList();
+
+	private:
+		/**
+		 * Eine Liste aller Werwolfgestalten
+		 **/
+		static const QList< cv_Shape::WerewolfShape > v_shapeListWerewolf;
+
 };
 
 #endif
