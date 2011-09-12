@@ -49,6 +49,9 @@ CharaTrait::CharaTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 
 	setTraitPtr( trait );
+	if (!traitPtr()->possibleValues.isEmpty()){
+		setPossibleValues(traitPtr()->possibleValues);
+	}
 
 	hideSpecialtyWidget( trait->type );
 	hideDescriptionWidget();

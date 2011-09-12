@@ -58,7 +58,7 @@ CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 	connect( checkBox, SIGNAL( stateChanged( int ) ), this, SIGNAL( stateChanged( int ) ) );
 // 	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
 // 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( checkTraitPrerequisites( cv_Trait* ) ) );
-// 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 
 	setTraitPtr( trait );
 

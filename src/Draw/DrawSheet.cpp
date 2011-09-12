@@ -135,7 +135,7 @@ void DrawSheet::print() {
 	qreal distanceVPowers = 0;
 	qreal textWidthPowers = 0;
 
-	qreal offsetHAdvantages = target.width() * 0.9823;
+	qreal offsetHAdvantages = target.width() * 0.84;
 	qreal offsetVAdvantages = target.height() * 0.2119;
 	qreal distanceHAdvantages = 0;	// Nur für Werwölfe mit mehreren Gestalten interessant.
 	qreal distanceVAdvantages = target.height() * 0.022;
