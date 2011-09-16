@@ -23,11 +23,12 @@
  */
 
 #include <QLineEdit>
-#include <QComboBox>
 #include <QDebug>
 
+#include "DerangementComboBox.h"
 #include "TraitDots.h"
 #include "../Storage/StorageTemplate.h"
+#include "../Datatypes/cv_Derangement.h"
 #include "../Config/Config.h"
 
 #include "MoralityWidget.h"
@@ -63,12 +64,12 @@ MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
 		layout->addWidget( traitDots, layoutLine, 2 );
 
 		if ( i <= Config::derangementMoralityTraitMax ) {
-			QComboBox* comboBox = new QComboBox();
+			DerangementComboBox* comboBox = new DerangementComboBox();
 			comboBox->setMaximumHeight( Config::inlineWidgetHeightMax );
 
 			layout->addWidget( comboBox, layoutLine, 1 );
 
-			connect( comboBox, SIGNAL( currentIndexChanged(QString)), this, SLOT( saveDerangements( QString ) ) );
+			connect( comboBox, SIGNAL( currentIndexChanged( cv_Derangement ) ), this, SLOT( saveDerangements( cv_Derangement ) ) );
 		}
 
 		connect( traitDots, SIGNAL( valueClicked( int ) ), this, SLOT( resetValue( int ) ) );
@@ -180,23 +181,30 @@ void MoralityWidget::renameHeader( cv_Species::SpeciesFlag species ) {
 
 void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 	QList< cv_Trait > list;
-	QStringList strList;
+	QList< cv_Derangement > listToUse;
 
 	for ( int j = 0; j < v_categories.count(); j++ ) {
 		list = storage->traits( cv_Trait::Derangement, v_categories.at( j ) );
 
 		for ( int k = 0; k < list.count(); k++ ) {
-			if ( list.at(k).species.testFlag(species) ) {
-				strList.append( list.at( k ).name + " (" + cv_Trait::toString( list.at( k ).category ) + ")" );
+			if ( list.at( k ).species.testFlag( species ) ) {
+				cv_Derangement lcl_derangement(list.at(k).name, 0, list.at(k).species, list.at(k).category);
+				
+// 				qDebug() << Q_FUNC_INFO << lcl_derangement.name << lcl_derangement.morality;
+				
+				listToUse.append(lcl_derangement);
 			}
 		}
 	}
 
 	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
-		QComboBox* comboBox = qobject_cast<QComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+		DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
 		comboBox->clear();
-		comboBox->addItem("");
-		comboBox->addItems( strList );
+
+		cv_Derangement emptyDerangement;
+		
+		comboBox->addItem( emptyDerangement );
+		comboBox->addItems( listToUse );
 	}
 }
 
@@ -211,28 +219,33 @@ void MoralityWidget::disableDerangements( int value ) {
 	int i = 0;
 
 	while ( i < lcl_value ) {
-		QComboBox* comboBox = qobject_cast<QComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+		DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
 		comboBox->setCurrentIndex( 0 );
 		comboBox->setEnabled( false );
 		i++;
 	}
 
 	while ( i < Config::derangementMoralityTraitMax ) {
-		QComboBox* comboBox = qobject_cast<QComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+		DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
 		comboBox->setEnabled( true );
 		i++;
 	}
 }
 
-void MoralityWidget::saveDerangements( QString txt )
-{
-	
-	
-	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
-		QComboBox* comboBox = qobject_cast<QComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+void MoralityWidget::saveDerangements( cv_Derangement dera ) {
+	cv_Derangement derang;
 
+	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
+		DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+
+		if ( comboBox->currentItem() == dera) {
+			derang = dera;
+			derang.morality = i + 1;
+			break;
+		}
 	}
 
+	character->addDerangement( derang );
 }
 
 

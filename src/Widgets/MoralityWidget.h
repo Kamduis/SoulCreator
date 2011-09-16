@@ -41,6 +41,8 @@
  * Diese Tabelle zeigt die aktuelle Moralstufe an und bietet Platz für das Eintragen von Geistesstörungen.
  *
  * \todo Die eingetragenen Geistesstörungen werden noch nicht gespeichert oder geladen.
+ *
+ * \todo Die Geistesstörungen in storage als cv_Trait behandeln, in character allerdings als cv_Derangement.
  **/
 class MoralityWidget : public QWidget {
 		Q_OBJECT
@@ -95,7 +97,7 @@ class MoralityWidget : public QWidget {
 		 *
 		 * \todo Wenn ich weiß bei welcher Moral die Geistesstörungen platziert werden, kann ich auch beim ändern des INdex einer Geistesstörungsbox diese direkt im Charakter ändern, ohne alle löschen und neu abarbeiten zu müssen.
 		 **/
-		void saveDerangements(QString txt);
+		void saveDerangements(cv_Derangement dera);
 		/**
 		 * Ändert sich der Wert des Widgets, wird hierüber die passende Anzahl an Punkten schwarz ausgemalt.
 		 **/

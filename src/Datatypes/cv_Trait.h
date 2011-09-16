@@ -33,6 +33,8 @@
 #include "cv_Species.h"
 #include "cv_TraitDetail.h"
 
+#include "cv_AbstractTrait.h"
+
 /**
  * @brief Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.
  *
@@ -40,125 +42,8 @@
  *
  * \todo Eine Möglichkeit, wie ich die volle Liste der Typen und Kategorien für anderen Klassen abrufbar machen kann, damit sie nicht immer von Hand erstellt werden muß. Es müßte bei den Listen für die Kategorien unterschieden werden zwischen Attributen/Fertigkeiten (nur mental, physisch und sozial) Merits (nahezu alle Kategorien), Kräften (nur CategoryNo) etc.
  */
-class cv_Trait {
+class cv_Trait : public cv_AbstractTrait {
 	public:
-		cv_Trait();
-		
-		/**
-		 * Zu welchem Typus gehört die Eigenschaft? Attribut, Fertigkeit, Vorzug etc.
-		 *
-		 *  <table border=0px>
-		 *  <tr>
-		 *     <td><b>Flag</b></td>
-		 *     <td><b>Description</b></td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::TypeNo</td>
-		 *     <td>Gehört keinem der genannten Typen an.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::Virtue</td>
-		 *     <td>Ist eine Tugend.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::Vice</td>
-		 *     <td>Ist eie Fertigkeit.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::Attribute</td>
-		 *     <td>Ist ein Attribut.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::Skill</td>
-		 *     <td>Ist eine Fertigkeit.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::Merit</td>
-		 *     <td>Ist ein Vorzug.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::Morale</td>
-		 *     <td>Ist die Moraleigenschaft.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::Super</td>
-		 *     <td>Ist das Superattribut (Gnosis, Primal Urge, Blood Potency).</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Type::Power</td>
-		 *     <td>Ist eine übernatürliche Kraft (Discipline, Arcanum, Renown...).</td>
-		 *  </tr>
-		 *  </table>
-		 */
-		enum Type {
-			TypeNo,
-			Virtue,
-			Vice,
-			Breed,
-			Faction,
-			Attribute,
-			Skill,
-			Merit,
-			Derangement,
-			Flaw,
-// 			Morale,
-			Super,
-			Power
-		};
-		/**
-		 * Welcher Kategorie (mental, physisch, sozial) gehört die Eigenschaft an?
-		 *
-		 *  <table border=0px>
-		 *  <tr>
-		 *     <td><b>Flag</b></td>
-		 *     <td><b>Description</b></td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::CategoryNo</td>
-		 *     <td>Gehört keiner Kategorie an.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::Mental</td>
-		 *     <td>Gehört der mentalen Kategorie an.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::Physical</td>
-		 *     <td>Gehört der physischen Kategorie an.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::Social</td>
-		 *     <td>Gehört der sozialen Kategorie an.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::Item</td>
-		 *     <td>Gegenstände.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::FightingStyle</td>
-		 *     <td>Kampfstile.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::DebateStyle</td>
-		 *     <td>Debattierstile.</td>
-		 *  </tr>
-		 *  <tr>
-		 *     <td>Category::Extraordinary</td>
-		 *     <td>Psychische Phänomene wie Psi oder Hellsicht. Auch mit Geistern in Verbindung stehende Merits.</td>
-		 *  </tr>
-		 *  </table>
-		 */
-		enum Category {
-			CategoryNo,
-			Mental,
-			Physical,
-			Social,
-			Item,
-			FightingStyle,
-			DebateStyle,
-			Extraordinary,
-			Mild,
-			Severe
-		};
 		/**
 		 * In welche Era findet diese Eigenschaft ihre Anwendung? In der Moderne oder in der Antike?
 		 *
@@ -244,9 +129,10 @@ class cv_Trait {
 		Q_DECLARE_FLAGS( Age, AgeFlag )	// Hiermit ermögliche ich die Verwendung von xx1|xx2|xx3
 
 		/**
-		 * Der Name der Eigenschaft.
+		 * Konstruktor.
 		 **/
-		QString name;
+		cv_Trait(QString txt = "", int val = 0, cv_Species::Species spe = cv_Species::SpeciesNo, cv_AbstractTrait::Type ty = cv_AbstractTrait::TypeNo, cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo);
+
 		/**
 		 * Der Wert der Eigenschaft.
 		 **/
@@ -257,22 +143,6 @@ class cv_Trait {
 		 * Fast alle Eigenschaften können Werte zwischen 0 und 10 annehmen. Allerdings gibt es beispielsweise Merits, die nur Werte zwischen 0 bis 3 oder gar nur die Werte 0, 1, 3 und 5 annehmen können.
 		 **/
 		QList< int > possibleValues;
-		/**
-		 * Der Typ, dem diese Eigenschaft angehört.
-		 *
-		 * \sa Type
-		 **/
-		Type type;
-		/**
-		 * Die Kategorie, der diese Eigenschaft angehört.
-		 *
-		 * \sa Category
-		 **/
-		Category category;
-		/**
-		 * Welche Spezies über diese Eigenschaft verfügen.
-		 **/
-		cv_Species::Species species;
 		/**
 		 * Welcher Era diese Eigenschaft angehört.
 		 *
@@ -303,44 +173,7 @@ class cv_Trait {
 		 * Jene Eigenschaften, die einen zusätzlichen erklärenden Text haben können (siehe \ref custom), können eben diese Text hier speichern.
 		 **/
 		QString customText;
-// 	QList<cv_TraitPrerequisiteAnd> prerequisites;	///< Eine Liste der Voraussetzungen. Die einzelnen Einträge dieser Liste sind ODER-verknüpft.
 
-		/**
-		 * Wandelt einen Typ in seinen in den Xml-Dateien gebräuchlichen Namen um.
-		 *
-		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien zu erzeugen.
-		 **/
-		static QString toXmlString( cv_Trait::Type type );
-		/**
-		 * Wandelt eine Kategorie in ihren in den Xml-Dateien gebräuchlichen Namen um.
-		 *
-		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien zu erzeugen.
-		 **/
-		static QString toXmlString( cv_Trait::Category category );
-		/**
-		 * Wandelt einen Typ in seinen realen Namen um.
-		 *
-		 * \note Diese Funktion unterscheidet sich insofern von toXmlString(), daß eine Übersetzung erfolgen kann und die Ausgabe des Plural möglich ist.
-		 **/
-		static QString toString( cv_Trait::Type type, bool plural = false /** Ist dieses Argument true, wird die Pluralform des Typs ausgegeben. */ );
-		/**
-		 * Wandelt eine Kategorie in ihren realen Namen um.
-		 *
-		 * \note Diese Funktion unterscheidet sich insofern von toXmlString(), daß beispielsweise FightingStyle mit einem zusätzlichen Leerzeichen (Fighting Style) ausgegeben wird. Außerdem kann die Pluralform ausgegeben werden. Außerdem werden in dieser Funktion Übersetzungen berücksichtigt.
-		 **/
-		static QString toString( cv_Trait::Category category, bool plural = false /** Ist dieses Argument true, wird die Pluralform der Kategorie ausgegeben. */ );
-		/**
-		 * Wandelt den Namen einer Kategorie in den dazu passenden enum um.
-		 *
-		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien in Flags umzuwandeln.
-		 **/
-		static cv_Trait::Category toCategory( QString str );
-		/**
-		 * Wandelt den Namen eines Typs in den dazu passenden enum um.
-		 *
-		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien in Flags umzuwandeln.
-		 **/
-		static cv_Trait::Type toType( QString str );
 		/**
 		 * Wandelt den Namen einer Era in den dazu passenden enum um.
 		 *
@@ -353,12 +186,6 @@ class cv_Trait {
 		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien in Flags umzuwandeln.
 		 **/
 		static cv_Trait::Age toAge( QString str );
-		/**
-		 * Übergibt eine Liste aller Kategorien, welche für diesen Typ angemessen sind.
-		 *
-		 * Diese Methode vereinfacht das bilden von Schleifen über alle Kategorien eines besonderen Typs.
-		 **/
-		static QList< cv_Trait::Category > getCategoryList( cv_Trait::Type type );
 
 		/**
 		* Vergleich zwischen zwei Instanzen dieser Klasse.
@@ -367,27 +194,9 @@ class cv_Trait {
 		**/
 		bool operator==( const cv_Trait &trait ) const;
 		/**
-		* Vergleich zwischen zwei Instanzen dieser Klasse nach Reihenfolge. Wird für den qSort-Algorythmus benötigt.
+		* Vergleich zwischen zwei Instanzen dieser Klasse nach ihrem Wert.
 		**/
 		bool operator<( const cv_Trait &trait ) const;
-
-	private:
-		/**
-		 * Eine Liste aller Kategorien für Attribute und Fertigkeiten.
-		 **/
-		static const QList< cv_Trait::Category > v_categoryListGeneral;
-		/**
-		 * Eine Liste aller Kategorien für Nachteile.
-		 **/
-		static const QList< cv_Trait::Category > v_categoryListExtended;
-		/**
-		 * Eine Liste der Kategorien für Geistesstörungen.
-		 **/
-		static const QList< cv_Trait::Category > v_categoryListDerangements;
-		/**
-		 * Eine Liste aller Kategorien für Merits.
-		 **/
-		static const QList< cv_Trait::Category > v_categoryListAll;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( cv_Trait::Age )

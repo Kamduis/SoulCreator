@@ -59,6 +59,10 @@ class WriteXmlCharacter : public QObject, public QXmlStreamWriter {
 		 * Schreibt die veränderten Eigenschaften in die Datei.
 		 **/
 		void writeCharacterTraits();
+		/**
+		 * Schreibt die Geistesstörungen in die Datei.
+		 **/
+		void writeCharacterDerangements();
 
 	public slots:
 		/**
