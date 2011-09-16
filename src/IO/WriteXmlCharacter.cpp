@@ -68,6 +68,8 @@ void WriteXmlCharacter::write( QFile *file ) {
 
 	writeCharacterTraits();
 
+	writeCharacterDerangements();
+
 	writeEndElement();
 	writeEndDocument();
 
@@ -115,7 +117,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 					writeAttribute( "name", list.at( k ).name );
 					writeAttribute( "value", QString::number( list.at( k ).value ) );
 
-					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
+// 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
 					if ( list.at( k ).custom ) {
 						writeAttribute( "custom", list.at( k ).customText );
 					}
@@ -138,5 +140,44 @@ void WriteXmlCharacter::writeCharacterTraits() {
 
 		writeEndElement();
 	}
+}
+
+void WriteXmlCharacter::writeCharacterDerangements() {
+	QList< cv_Derangement > list;
+
+		try {
+			writeStartElement( cv_Trait::toXmlString( cv_Trait::Derangement ) );
+		} catch ( eTraitType &e ) {
+			qDebug() << Q_FUNC_INFO << e.message();
+		}
+
+		// Liste der Kategorien ist je nach Typ unterschiedlich
+		QList< cv_Trait::Category > categories;
+		categories = cv_Trait::getCategoryList( cv_Trait::Derangement );
+
+		for ( int j = 0; j < categories.count(); j++ ) {
+			list = character->derangements(categories.at( j ));
+			
+			qDebug() << Q_FUNC_INFO << list.count();
+
+			try {
+				writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
+			} catch ( eTraitCategory &e ) {
+				qDebug() << Q_FUNC_INFO << e.message();
+			}
+
+			for ( int k = 0; k < list.count(); k++ ) {
+// 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
+					writeStartElement( "derangement" );
+					writeAttribute( "name", list.at( k ).name );
+					writeAttribute( "morality", QString::number( list.at( k ).morality ) );
+
+					writeEndElement();
+			}
+
+			writeEndElement();
+		}
+
+		writeEndElement();
 }
 

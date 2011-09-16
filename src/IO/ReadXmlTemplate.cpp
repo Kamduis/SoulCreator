@@ -216,9 +216,6 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a ) {
 
 		if ( isStartElement() ) {
 			cv_Trait::Category category = cv_Trait::toCategory( name().toString() );
-// 			QString categoryString = name().toString();
-// 			cv_Trait::Category category = cv_Trait::toCategory( categoryString );
-// 			qDebug() << "Kategorie " << categoryString << " gefunden.";
 			readTraits( sp, a, category );
 		}
 	}

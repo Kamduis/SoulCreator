@@ -25,9 +25,10 @@
 #ifndef STORAGECHARACTER_H
 #define STORAGECHARACTER_H
 
-#include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_Identity.h"
 #include "../Datatypes/cv_IdentityList.h"
+#include "../Datatypes/cv_Trait.h"
+#include "../Datatypes/cv_Derangement.h"
 #include "StorageTemplate.h"
 
 #include <QObject>
@@ -147,6 +148,10 @@ class StorageCharacter : public QObject {
 		 **/
 		QList< cv_Trait > merits( cv_Trait::Category category ) const;
 		/**
+		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus.
+		 **/
+		QList< cv_Derangement > derangements( cv_Trait::Category category ) const;
+		/**
 		 * Gibt den Wert des Super-Attributs aus.
 		 **/
 		int superTrait() const;
@@ -178,7 +183,14 @@ class StorageCharacter : public QObject {
 		static QString v_vice;
 		static QString v_breed;
 		static QString v_faction;
+		/**
+		 * Eine Liste aller Eigenschaften.
+		 **/
 		static QList< cv_Trait > v_traits;
+		/**
+		 * Eine Liste aller Geistesstörungen.
+		 **/
+		static QList< cv_Derangement > v_derangements;
 		static int v_superTrait;
 		static int v_morality;
 
@@ -223,6 +235,14 @@ class StorageCharacter : public QObject {
 		 * Ändert eine Eigenschaft im Speicher.
 		 **/
 		void modifyTrait( cv_Trait trait );
+		/**
+		 * Fügt eine neue Geistesstörung hinzu.
+		 **/
+		void addDerangement( cv_Derangement derang );
+		/**
+		 * Entfernt die Geistesstörung.
+		 **/
+		void removeDerangement( cv_Derangement derang );
 		/**
 		 * Verändert die Tugend.
 		 *
@@ -287,8 +307,11 @@ class StorageCharacter : public QObject {
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
 		**/
-// 		void traitChanged( cv_Trait trait );
 		void traitChanged( cv_Trait* trait );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich eine Geistesstörung ändert.
+		**/
+		void derangementsChanged();
 		
 		/**
 		* Die Tugend hat sich verändert.

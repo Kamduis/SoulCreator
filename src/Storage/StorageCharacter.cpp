@@ -27,6 +27,7 @@
 #include "StorageTemplate.h"
 
 #include "StorageCharacter.h"
+#include "../Config/Config.h"
 
 
 StorageCharacter* StorageCharacter::p_instance = 0;
@@ -54,6 +55,7 @@ void StorageCharacter::destroy() {
 cv_IdentityList StorageCharacter::v_identities;
 QList< cv_Trait > StorageCharacter::v_traits;
 cv_Species::SpeciesFlag StorageCharacter::v_species;
+QList< cv_Derangement > StorageCharacter::v_derangements;
 
 
 StorageCharacter::StorageCharacter( QObject* parent ) : QObject( parent ) {
@@ -185,6 +187,37 @@ void StorageCharacter::modifyTrait( cv_Trait trait ) {
 }
 
 
+QList< cv_Derangement > StorageCharacter::derangements( cv_Trait::Category category ) const {
+	QList< cv_Derangement > list;
+
+	for ( int i = 0; i < v_derangements.count(); i++ ) {
+		if ( v_derangements.at( i ).category == category ) {
+			list.append( v_derangements.at( i ) );
+		}
+	}
+
+	return list;
+}
+
+void StorageCharacter::addDerangement( cv_Derangement derang ) {
+	if ( derang.name != "" && !v_derangements.contains( derang ) ) {
+// 		qDebug() << Q_FUNC_INFO << derang.name << derang.morality;
+		v_derangements.append( derang );
+
+		emit derangementsChanged();
+	}
+}
+
+void StorageCharacter::removeDerangement( cv_Derangement derang ) {
+	if ( v_derangements.contains( derang ) ) {
+		v_derangements.removeAll( derang );
+		emit derangementsChanged();
+	}
+}
+
+
+
+
 
 
 void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail > details ) {
@@ -300,7 +333,7 @@ void StorageCharacter::resetCharacter() {
 
 	emit realIdentityChanged( v_identities.at( 0 ) );
 
-	setSpecies(cv_Species::Human);
+	setSpecies( cv_Species::Human );
 
 	setVirtue( storage->virtueNames().at( 0 ) );
 	setVice( storage->viceNames().at( 0 ) );
@@ -311,15 +344,19 @@ void StorageCharacter::resetCharacter() {
 
 	for ( int i = 0; i < v_traits.count();i++ ) {
 		if ( v_traits[i].type == cv_Trait::Attribute ) {
-			v_traits[ i ].value = 1;
+			v_traits[i].value = 1;
 		} else {
-			v_traits[ i ].value = 0;
+			v_traits[i].value = 0;
 		}
 
-		v_traits[ i ].details.clear();
+		v_traits[i].details.clear();
 
 		v_traits[i].customText = "";
 
 		emit traitChanged( &v_traits[i] );
 	}
+
+	v_derangements.clear();
+
+	setMorality(Config::derangementMoralityTraitMax);
 }

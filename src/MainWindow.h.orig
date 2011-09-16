@@ -69,7 +69,9 @@ class MainWindow;
  *
  * \todo So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
  *
+<<<<<<< HEAD
  * \todo Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).
+=======
  * \todo Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.
  *
  * \todo Waffen einbauen.
@@ -79,6 +81,7 @@ class MainWindow;
  * \todo Beim nächsten Versionssprung sollte bei den gespeicherten Charakteren die Namen anders gespeichert werden. Anstelle alles in <xxx>bla</xxx> zu schreiben, sollte es eine Identitätsgruppe geben mit den einzelnen Namensbestandteilen als Attribute einer einzelnen Identität dieser Gruppe.
  *
  * \todo Es muß ein eigener Datentyp für Derangements geschaffen werden, in dem Name, Grad, Spezies und Stelle der Moral gespeichert sind, welche die Geistesstärung definieren.
+>>>>>>> derangements
  */
 
 class MainWindow : public QMainWindow {
