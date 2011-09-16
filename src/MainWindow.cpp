@@ -290,9 +290,11 @@ void MainWindow::saveCharacter() {
 
 void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
 	if ( species == cv_Species::Human ) {
-		ui->groupBox_powers->setHidden( true );
+// 		ui->groupBox_powers->setHidden( true );
+		ui->tabWidgetItem_Powers->setEnabled(false);
 	} else {
-		ui->groupBox_powers->setHidden( false );
+// 		ui->groupBox_powers->setHidden( false );
+		ui->tabWidgetItem_Powers->setEnabled(true);
 	}
 }
 
