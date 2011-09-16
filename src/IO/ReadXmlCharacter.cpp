@@ -89,6 +89,7 @@ void ReadXmlCharacter::readSoulCreator( cv_Identity* id ) {
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
+
 			if ( elementName == "species" ) {
 				QString speciesName = readElementText();
 				character->setSpecies( cv_Species::toSpecies( speciesName ) );
@@ -109,7 +110,7 @@ void ReadXmlCharacter::readSoulCreator( cv_Identity* id ) {
 				id->supernaturalName = characterName;
 			} else if ( elementName == "gender" ) {
 				QString characterGender = readElementText();
-				id->gender = cv_Identity::toGender(characterGender);
+				id->gender = cv_Identity::toGender( characterGender );
 			} else if ( elementName == "virtue" ) {
 				character->setVirtue( readElementText() );
 			} else if ( elementName == "vice" ) {
@@ -157,13 +158,34 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
-			if ( elementName == "trait" ) {
+
+			if ( type == cv_Trait::Derangement && elementName == "derangement" ) {
+				cv_Derangement derangement;
+				derangement.name = attributes().value( "name" ).toString();
+				derangement.type = type;
+				derangement.category = category;
+				derangement.morality = attributes().value( "morality" ).toString().toInt();
+
+				character->addDerangement( derangement );
+				
+				while ( !atEnd() ) {
+					readNext();
+
+					if ( isEndElement() )
+						break;
+
+					if ( isStartElement() ) {
+						readUnknownElement();
+					}
+				}
+			} else if ( elementName == "trait" ) {
 				cv_Trait trait;
 				trait.name = attributes().value( "name" ).toString();
 				trait.type = type;
 				trait.category = category;
 				trait.value = attributes().value( "value" ).toString().toInt();
 				QString customText = attributes().value( "custom" ).toString();
+
 				if ( customText.isEmpty() ) {
 // 					trait.custom = false;
 					trait.customText = "";
@@ -174,6 +196,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 				}
 
 				QList< cv_TraitDetail > list;
+
 				while ( !atEnd() ) {
 					readNext();
 
@@ -182,6 +205,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 
 					if ( isStartElement() ) {
 						QString elementName = name().toString();
+
 						if ( elementName == "specialty" ) {
 							QString specialty = readElementText();
 							cv_TraitDetail detail;

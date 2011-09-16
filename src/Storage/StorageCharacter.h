@@ -238,11 +238,11 @@ class StorageCharacter : public QObject {
 		/**
 		 * Fügt eine neue Geistesstörung hinzu.
 		 **/
-		cv_Derangement* addDerangement( cv_Derangement derang );
+		void addDerangement( cv_Derangement derang );
 		/**
 		 * Entfernt die Geistesstörung.
 		 **/
-		cv_Derangement* removeDerangement( cv_Derangement derang );
+		void removeDerangement( cv_Derangement derang );
 		/**
 		 * Verändert die Tugend.
 		 *
@@ -307,8 +307,11 @@ class StorageCharacter : public QObject {
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
 		**/
-// 		void traitChanged( cv_Trait trait );
 		void traitChanged( cv_Trait* trait );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich eine Geistesstörung ändert.
+		**/
+		void derangementsChanged();
 		
 		/**
 		* Die Tugend hat sich verändert.

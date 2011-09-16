@@ -27,6 +27,7 @@
 #include "StorageTemplate.h"
 
 #include "StorageCharacter.h"
+#include "../Config/Config.h"
 
 
 StorageCharacter* StorageCharacter::p_instance = 0;
@@ -198,16 +199,19 @@ QList< cv_Derangement > StorageCharacter::derangements( cv_Trait::Category categ
 	return list;
 }
 
-cv_Derangement* StorageCharacter::addDerangement( cv_Derangement derang ) {
-	if ( !v_derangements.contains( derang ) ) {
-		qDebug() << Q_FUNC_INFO << "Test";
+void StorageCharacter::addDerangement( cv_Derangement derang ) {
+	if ( derang.name != "" && !v_derangements.contains( derang ) ) {
+// 		qDebug() << Q_FUNC_INFO << derang.name << derang.morality;
 		v_derangements.append( derang );
+
+		emit derangementsChanged();
 	}
 }
 
-cv_Derangement* StorageCharacter::removeDerangement( cv_Derangement derang ) {
-	if ( !v_derangements.contains( derang ) ) {
+void StorageCharacter::removeDerangement( cv_Derangement derang ) {
+	if ( v_derangements.contains( derang ) ) {
 		v_derangements.removeAll( derang );
+		emit derangementsChanged();
 	}
 }
 
@@ -340,15 +344,19 @@ void StorageCharacter::resetCharacter() {
 
 	for ( int i = 0; i < v_traits.count();i++ ) {
 		if ( v_traits[i].type == cv_Trait::Attribute ) {
-			v_traits[ i ].value = 1;
+			v_traits[i].value = 1;
 		} else {
-			v_traits[ i ].value = 0;
+			v_traits[i].value = 0;
 		}
 
-		v_traits[ i ].details.clear();
+		v_traits[i].details.clear();
 
 		v_traits[i].customText = "";
 
 		emit traitChanged( &v_traits[i] );
 	}
+
+	v_derangements.clear();
+
+	setMorality(Config::derangementMoralityTraitMax);
 }
