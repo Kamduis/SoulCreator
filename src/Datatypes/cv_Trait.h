@@ -155,7 +155,9 @@ class cv_Trait {
 			Item,
 			FightingStyle,
 			DebateStyle,
-			Extraordinary
+			Extraordinary,
+			Mild,
+			Severe
 		};
 		/**
 		 * In welche Era findet diese Eigenschaft ihre Anwendung? In der Moderne oder in der Antike?
@@ -378,6 +380,10 @@ class cv_Trait {
 		 * Eine Liste aller Kategorien für Nachteile.
 		 **/
 		static const QList< cv_Trait::Category > v_categoryListExtended;
+		/**
+		 * Eine Liste der Kategorien für Geistesstörungen.
+		 **/
+		static const QList< cv_Trait::Category > v_categoryListDerangements;
 		/**
 		 * Eine Liste aller Kategorien für Merits.
 		 **/

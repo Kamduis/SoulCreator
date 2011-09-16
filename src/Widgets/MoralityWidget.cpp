@@ -23,6 +23,7 @@
  */
 
 #include <QLineEdit>
+#include <QComboBox>
 #include <QDebug>
 
 #include "TraitDots.h"
@@ -34,7 +35,7 @@
 
 MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
 	v_value = 0;
-	
+
 	storage = new StorageTemplate( this );
 	character = StorageCharacter::getInstance();
 
@@ -42,11 +43,14 @@ MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
 	setLayout( layout );
 
 	labelHeader = new QLabel();
-	labelHeader->setAlignment(Qt::AlignHCenter);
+	labelHeader->setAlignment( Qt::AlignHCenter );
 
 	layout->addWidget( labelHeader, 0, 0, 1, 3 );
 
 	int layoutLine;
+
+	QList< cv_Trait > list;
+	v_categories = cv_Trait::getCategoryList( cv_Trait::Derangement );
 
 	for ( int i = Config::moralityTraitMax; i > 0; i-- ) {
 		layoutLine =  Config::moralityTraitMax - i + 1;
@@ -59,19 +63,24 @@ MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
 		layout->addWidget( traitDots, layoutLine, 2 );
 
 		if ( i <= Config::derangementMoralityTraitMax ) {
-			QLineEdit* lineEdit = new QLineEdit();
-			lineEdit->setMaximumHeight(Config::inlineWidgetHeightMax);
+			QComboBox* comboBox = new QComboBox();
+			comboBox->setMaximumHeight( Config::inlineWidgetHeightMax );
 
-			layout->addWidget( lineEdit, layoutLine, 1 );
+			layout->addWidget( comboBox, layoutLine, 1 );
+
+			connect( comboBox, SIGNAL( currentIndexChanged(QString)), this, SLOT( saveDerangements( QString ) ) );
 		}
 
 		connect( traitDots, SIGNAL( valueClicked( int ) ), this, SLOT( resetValue( int ) ) );
 	}
 
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( renameHeader( cv_Species::SpeciesFlag ) ) );
-	connect( character, SIGNAL( moralityChanged(int)), this, SLOT( setValue( int ) ) );
-	connect( this, SIGNAL( valueChanged(int)), character, SLOT( setMorality( int ) ) );
+
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateDerangements( cv_Species::SpeciesFlag ) ) );
+	connect( character, SIGNAL( moralityChanged( int ) ), this, SLOT( setValue( int ) ) );
+	connect( this, SIGNAL( valueChanged( int ) ), character, SLOT( setMorality( int ) ) );
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( drawValue( int ) ) );
+	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( disableDerangements( int ) ) );
 
 	setValue( Config::moralityTraitDefaultValue );
 }
@@ -96,14 +105,16 @@ void MoralityWidget::setValue( int value ) {
 
 void MoralityWidget::drawValue( int value ) {
 	int i = 0;
+
 	while ( i < value ) {
 		TraitDots* traitDots = qobject_cast<TraitDots*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 2 )->widget() );
-		traitDots->setValue(1);
+		traitDots->setValue( 1 );
 		i++;
 	}
+
 	while ( i < layout->rowCount() - 1 ) {
 		TraitDots* traitDots = qobject_cast<TraitDots*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 2 )->widget() );
-		traitDots->setValue(0);
+		traitDots->setValue( 0 );
 		i++;
 	}
 }
@@ -112,6 +123,7 @@ void MoralityWidget::drawValue( int value ) {
 void MoralityWidget::resetValue( int value ) {
 	// Verändere ich einen Punkt zu 1, wird der Gesamtwert erhöht, verändere ich einen Wert zu 0 wird der Gesamtwert reduziert.
 	bool reduceValue = true;
+
 	if ( value > 0 ) {
 		reduceValue = false;
 	}
@@ -127,7 +139,8 @@ void MoralityWidget::resetValue( int value ) {
 			if ( traitDots->value() < 1 ) {
 				newValue = layout->rowCount() - i;
 
-				// Der Knopf auf den ich Drücke, soll schwarz bleiben. Esseidenn natürlich, es ist der unterste, und zuvor war der Wert schon 1, dann soll er abgewählt werden.
+				// Der Knopf auf den ich drücke, soll schwarz bleiben. Esseidenn natürlich, es ist der unterste, und zuvor war der Wert schon 1, dann soll er abgewählt werden.
+
 				if ( v_value == 1 && i == layout->rowCount() - 1 ) {
 					newValue = 0;
 				}
@@ -145,6 +158,10 @@ void MoralityWidget::resetValue( int value ) {
 			}
 		}
 	}
+
+	// Hiermit wird ein zuvor weißgeklickter Punkt (Es ist ja jeweils ein 1-Punkte Trait angenommen) wieder schwarz gesetzt.
+	drawValue( newValue );
+
 	if ( v_value != newValue ) {
 		v_value = newValue;
 // 		qDebug() << Q_FUNC_INFO << "Neuer Wert bei Herunterzählen:" << newValue;
@@ -161,8 +178,61 @@ void MoralityWidget::renameHeader( cv_Species::SpeciesFlag species ) {
 	}
 }
 
+void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
+	QList< cv_Trait > list;
+	QStringList strList;
+
+	for ( int j = 0; j < v_categories.count(); j++ ) {
+		list = storage->traits( cv_Trait::Derangement, v_categories.at( j ) );
+
+		for ( int k = 0; k < list.count(); k++ ) {
+			if ( list.at(k).species.testFlag(species) ) {
+				strList.append( list.at( k ).name + " (" + cv_Trait::toString( list.at( k ).category ) + ")" );
+			}
+		}
+	}
+
+	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
+		QComboBox* comboBox = qobject_cast<QComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+		comboBox->clear();
+		comboBox->addItem("");
+		comboBox->addItems( strList );
+	}
+}
 
 
+void MoralityWidget::disableDerangements( int value ) {
+	int lcl_value = value;
 
+	if ( lcl_value > Config::derangementMoralityTraitMax ) {
+		lcl_value = Config::derangementMoralityTraitMax;
+	}
+
+	int i = 0;
+
+	while ( i < lcl_value ) {
+		QComboBox* comboBox = qobject_cast<QComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+		comboBox->setCurrentIndex( 0 );
+		comboBox->setEnabled( false );
+		i++;
+	}
+
+	while ( i < Config::derangementMoralityTraitMax ) {
+		QComboBox* comboBox = qobject_cast<QComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+		comboBox->setEnabled( true );
+		i++;
+	}
+}
+
+void MoralityWidget::saveDerangements( QString txt )
+{
+	
+	
+	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
+		QComboBox* comboBox = qobject_cast<QComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+
+	}
+
+}
 
 

@@ -37,6 +37,10 @@ const QList< cv_Trait::Category > cv_Trait::v_categoryListExtended = QList< cv_T
 		<< cv_Trait::v_categoryListGeneral
 		<< cv_Trait::Extraordinary;
 
+const QList< cv_Trait::Category > cv_Trait::v_categoryListDerangements = QList< cv_Trait::Category >()
+		<< cv_Trait::Mild
+		<< cv_Trait::Severe;
+
 const QList< cv_Trait::Category > cv_Trait::v_categoryListAll = QList< cv_Trait::Category >()
 		<< cv_Trait::v_categoryListExtended
 		<< cv_Trait::Item
@@ -111,6 +115,10 @@ QString cv_Trait::toXmlString( cv_Trait::Category category ) {
 			return "DebateStyle";
 		case cv_Trait::Extraordinary:
 			return "Extraordinary";
+		case cv_Trait::Mild:
+			return "Mild";
+		case cv_Trait::Severe:
+			return "Severe";
 		default:
 			throw eTraitCategory( category );
 // 			return "ERROR";
@@ -200,6 +208,10 @@ QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
 				return QObject::tr( "Debate Styles" );
 			case cv_Trait::Extraordinary:
 				return QObject::tr( "Extraordinary" );
+			case cv_Trait::Mild:
+				return QObject::tr( "Mild" );
+			case cv_Trait::Severe:
+				return QObject::tr( "Severe" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -221,6 +233,10 @@ QString cv_Trait::toString( cv_Trait::Category category, bool plural ) {
 				return QObject::tr( "Debate Style" );
 			case cv_Trait::Extraordinary:
 				return QObject::tr( "Extraordinary" );
+			case cv_Trait::Mild:
+				return QObject::tr( "Mild" );
+			case cv_Trait::Severe:
+				return QObject::tr( "Severe" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -272,6 +288,10 @@ cv_Trait::Category cv_Trait::toCategory( QString str ) {
 		return cv_Trait::DebateStyle;
 	else if ( str == "Extraordinary" )
 		return cv_Trait::Extraordinary;
+	else if ( str == "Mild" )
+		return cv_Trait::Mild;
+	else if ( str == "Severe" )
+		return cv_Trait::Severe;
 	else
 		return cv_Trait::CategoryNo;
 }
@@ -302,10 +322,12 @@ QList< cv_Trait::Category > cv_Trait::getCategoryList( cv_Trait::Type type ) {
 		return v_categoryListGeneral;
 	} else if ( type == cv_Trait::Merit ) {
 		return v_categoryListAll;
-	} else if ( type == cv_Trait::Power || type == cv_Trait::Derangement ) {
+	} else if ( type == cv_Trait::Power ) {
 		return QList< cv_Trait::Category >() << cv_Trait::CategoryNo;
 	} else if ( type == cv_Trait::Flaw ) {
 		return v_categoryListExtended;
+	} else if ( type == cv_Trait::Derangement ) {
+		return v_categoryListDerangements;
 	} else {
 		throw eTraitType( type );
 	}

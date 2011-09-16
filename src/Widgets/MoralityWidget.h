@@ -72,6 +72,7 @@ class MoralityWidget : public QWidget {
 		QGridLayout* layout;
 		StorageTemplate* storage;
 		StorageCharacter* character;
+		QList< cv_Trait::Category > v_categories;
 
 		int v_value;
 
@@ -84,6 +85,18 @@ class MoralityWidget : public QWidget {
 		 **/
 		void renameHeader(cv_Species::SpeciesFlag species /** Jede Spezies hat einen eigenen Namen für ihre Moral. Legt man die Spezies fest, wird automatisch die Überschrift angepaßt. */);
 		/**
+		 * Belegt die Auswahlfelder für die Geistesstörungen neu, so daß immer nur jene angeboten werden, welche ein Charakter dieser Spezies haben kann
+		 **/
+		void updateDerangements(cv_Species::SpeciesFlag species);
+		/**
+		 * Speichert die gewählte Geistesstörung im Charakter.
+		 *
+		 * \todo Es muß ein neuer DAtentyp für die GEiostesstörungen entwickelt werden, damit ich weiß, bei welcher Moral sie platziert werden müssen.
+		 *
+		 * \todo Wenn ich weiß bei welcher Moral die Geistesstörungen platziert werden, kann ich auch beim ändern des INdex einer Geistesstörungsbox diese direkt im Charakter ändern, ohne alle löschen und neu abarbeiten zu müssen.
+		 **/
+		void saveDerangements(QString txt);
+		/**
 		 * Ändert sich der Wert des Widgets, wird hierüber die passende Anzahl an Punkten schwarz ausgemalt.
 		 **/
 		void drawValue(int value);
@@ -91,6 +104,12 @@ class MoralityWidget : public QWidget {
 		 * Wird mit der Maus auf den Punkten herumgeklickt, sorgt diese Funktion dafür, daß der richtige Wert des Widgets ermittelt wird.
 		 **/
 		void resetValue(int value);
+		/**
+		 * Die ComboBox für die Geistesstörungen wird bis zu dem Wert disabled, der im Argument angegeben wird. Mit dem Disablen werden sie auch gleichzeitig auf den (leeren) Index 0 gesetzt.
+		 *
+		 * disableDerangements(7) resultiert darin, daß alle FElder für GEistesstörungen disabled werden.
+		 **/
+		void disableDerangements(int value);
 
 	signals:
 		void valueChanged(int value);
