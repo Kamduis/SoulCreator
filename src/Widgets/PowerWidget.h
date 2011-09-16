@@ -26,7 +26,6 @@
 #define POWERWIDGET_H
 
 #include <QVBoxLayout>
-#include <QScrollArea>
 #include <QPushButton>
 
 #include "../Datatypes/cv_TraitDetail.h"
@@ -50,7 +49,6 @@ class PowerWidget : public QWidget {
 		~PowerWidget();
 
 	private:
-		QScrollArea* scrollArea;
 		StorageCharacter* character;
 
 	public slots:

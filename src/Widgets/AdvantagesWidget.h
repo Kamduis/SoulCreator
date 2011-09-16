@@ -31,7 +31,6 @@
 
 #include "TraitDots.h"
 #include "Squares.h"
-#include "MoralityWidget.h"
 #include "../Storage/StorageTemplate.h"
 #include "../Storage/StorageCharacter.h"
 #include "../Calc/CalcAdvantages.h"
@@ -71,7 +70,6 @@ class AdvantagesWidget : public QWidget {
 		StorageTemplate* storage;
 		StorageCharacter* character;
 		CalcAdvantages* calcAdvantages;
-		MoralityWidget* moralityWidget;
 
 		QLabel* labelSizeValue;
 		QLabel* labelInitiativeValue;

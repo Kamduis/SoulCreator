@@ -21,7 +21,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="tabWidgetItem_Info">
        <attribute name="title">
@@ -249,12 +249,6 @@
            <layout class="QVBoxLayout" name="verticalLayout_13">
             <item>
              <widget class="QFrame" name="frame_powers">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
               <layout class="QVBoxLayout" name="layout_powers">
                <property name="margin">
                 <number>0</number>

@@ -25,7 +25,7 @@
 #ifndef ATTRIBUTEWIDGET_H
 #define ATTRIBUTEWIDGET_H
 
-#include <QHBoxLayout>
+#include <QGridLayout>
 #include <QLabel>
 
 #include "../Storage/StorageCharacter.h"
@@ -37,8 +37,6 @@
  * @brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
  *
  * Die Attribute werden in diesem Widget angeordnet.
- *
- * \todo Bei Werwölfen sollten die Attributswerte aller Gestalten angezeigt werden.
  **/
 class AttributeWidget : public QWidget {
 		Q_OBJECT
@@ -57,7 +55,7 @@ class AttributeWidget : public QWidget {
 		/**
 		 * In diesem Layout werden die Attribute angeordnet.
 		 **/
-		QHBoxLayout *layout;
+		QGridLayout *layout;
 		StorageCharacter* character;
 		/**
 		 * Anzeige der Attributswerte für alle Formen eines Werwolfs.

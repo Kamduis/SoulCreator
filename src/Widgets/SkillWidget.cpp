@@ -36,8 +36,10 @@
 SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	character = StorageCharacter::getInstance();
 	
-	layout = new QVBoxLayout( this );
+	layout = new QGridLayout( this );
 	setLayout( layout );
+
+	int actualColumn = 0;
 
 	cv_Trait::Type type = cv_Trait::Skill;
 
@@ -45,21 +47,31 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 
 	QList< cv_Trait* > list;
 
-	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
-
 	for ( int i = 0; i < v_categories.count(); i++ ) {
 		list = storage->traitsPtr( type, v_categories.at( i ) );
 
-		QVBoxLayout* categoryLayout = new QVBoxLayout();
+		// Zeichnen des Separators zwischen den einzeolnen Kategorien
+		actualColumn++;
 
-		QGroupBox* categoryBox = new QGroupBox( this );
-		categoryBox->setFlat(true);
-		categoryBox->setTitle( cv_Trait::toString( v_categories.at( i ), true ) );
+		// Aber nicht an allererster Stelle
+		if (i > 0){
+			layout->setColumnMinimumWidth(actualColumn, Config::traitCategorySpace);
 
-		categoryBox->setLayout( categoryLayout );
+			QFrame* vLine = new QFrame(this);
+			vLine->setFrameStyle(QFrame::VLine);
+			layout->addWidget(vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter);
+		}
 
-		layout->addWidget( categoryBox );
+		// Jetzt sind wir in der Spalte für die tatsächlchen Attribute
+		actualColumn++;
 
+		// Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
+		QLabel* header = new QLabel();
+		header->setAlignment(Qt::AlignHCenter);
+		header->setText(cv_Trait::toString(v_categories.at(i)));
+		layout->addWidget(header, 0, actualColumn);
+
+		// Einfügen der tatsächlichen Fertigkeiten
 		for ( int j = 0; j < list.count(); j++ ) {
 			// Anlegen der Eigenschaft im Speicher
 			cv_Trait lcl_trait = *list[j];
@@ -80,7 +92,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 			}
 
-			categoryLayout->addWidget( charaTrait );
+			layout->addWidget( charaTrait, j+1, actualColumn );
 		}
 
 // 		// Abstand zwischen den Kategorien, aber nicht am Ende.

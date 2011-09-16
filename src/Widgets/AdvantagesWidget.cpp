@@ -35,7 +35,6 @@
 
 AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	calcAdvantages = new CalcAdvantages( this );
-	moralityWidget = new MoralityWidget( this );
 	storage = new StorageTemplate( this );
 	character = StorageCharacter::getInstance();
 
@@ -159,11 +158,6 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	layout->addWidget( labelFuel );
 	layout->addLayout( layoutFuelSquares );
 
-
-	layout->addSpacing( Config::traitCategorySpace );
-
-	layout->addWidget( moralityWidget );
-
 	layout->addStretch();
 
 	connect( calcAdvantages, SIGNAL( sizeChanged( int ) ), this, SLOT( writeSize( int ) ) );
@@ -197,7 +191,6 @@ AdvantagesWidget::~AdvantagesWidget() {
 	delete labelInitiativeValue;
 	delete labelSpeedValue;
 	delete storage;
-	delete moralityWidget;
 	delete calcAdvantages;
 	delete layout;
 }

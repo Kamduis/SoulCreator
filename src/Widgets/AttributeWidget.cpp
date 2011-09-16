@@ -42,7 +42,7 @@
 AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	character = StorageCharacter::getInstance();
 
-	layout = new QHBoxLayout( this );
+	layout = new QGridLayout( this );
 	setLayout( layout );
 
 // 	QFrame* frame = new QFrame( this );
@@ -51,18 +51,23 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 // 	QVBoxLayout* layoutHeader = new QVBoxLayout();
 // 	frame->setLayout( layoutHeader );
 //
-// 	QLabel* labelPower = new QLabel( tr( "Power" ) );
-// 	labelPower->setAlignment( Qt::AlignRight );
-//
-// 	QLabel* labelFinesse = new QLabel( tr( "Finesse" ) );
-// 	labelFinesse->setAlignment( Qt::AlignRight );
-//
-// 	QLabel* labelResistance = new QLabel( tr( "Resistance" ) );
-// 	labelResistance->setAlignment( Qt::AlignRight );
-//
-// 	layoutHeader->addWidget( labelPower, 0, 0 );
-// 	layoutHeader->addWidget( labelFinesse, 1, 0 );
-// 	layoutHeader->addWidget( labelResistance, 2, 0 );
+	QLabel* labelPower = new QLabel( tr( "Power" ) );
+	labelPower->setAlignment( Qt::AlignRight );
+
+	QLabel* labelFinesse = new QLabel( tr( "Finesse" ) );
+	labelFinesse->setAlignment( Qt::AlignRight );
+
+	QLabel* labelResistance = new QLabel( tr( "Resistance" ) );
+	labelResistance->setAlignment( Qt::AlignRight );
+
+	int actualRow = 1;
+	int actualColumn = 0;
+
+	layout->addWidget( labelPower, actualRow, actualColumn );
+	actualRow++;
+	layout->addWidget( labelFinesse, actualRow, actualColumn );
+	actualRow++;
+	layout->addWidget( labelResistance, actualRow, actualColumn );
 
 	StorageTemplate storage;
 
@@ -82,16 +87,30 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 	for ( int i = 0; i < categories.count(); i++ ) {
 		list = storage.traitsPtr( type, categories.at( i ) );
-		QGroupBox* categoriesBox = new QGroupBox();
-		QVBoxLayout* layoutCategories = new QVBoxLayout();
-		categoriesBox->setLayout( layoutCategories );
 
-		layout->addWidget( categoriesBox );
+		// Zeichnen des Separators zwischen den einzeolnen Kategorien
+		actualColumn++;
+		
+		layout->setColumnMinimumWidth(actualColumn, Config::traitCategorySpace);
 
+		QFrame* vLine = new QFrame(this);
+		vLine->setFrameStyle(QFrame::VLine);
+		layout->addWidget(vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter);
+
+		// Jetzt sind wir in der Spalte für die tatsächlchen Attribute
+		actualColumn++;
+
+		// Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
+		QLabel* header = new QLabel();
+		header->setAlignment(Qt::AlignHCenter);
+		header->setText(cv_Trait::toString(categories.at(i)));
+		layout->addWidget(header, 0, actualColumn);
+
+		// Einfügen der tatsächlichen Attribute
 		for ( int j = 0; j < list.count(); j++ ) {
 			// Jedes einzelne Attribut wird nochmal in ein hor. Layout gesteckt, damit ich bei den Werwölfen die Attributswerte aller Formen angeben kann.
 			QHBoxLayout* layoutAttribute = new QHBoxLayout();
-			layoutCategories->addLayout( layoutAttribute );
+			layout->addLayout( layoutAttribute, j+1, actualColumn );
 
 			// Anlegen der Eigenschaft im Speicher
 			cv_Trait* traitPtr = character->addTrait( *list[j] );

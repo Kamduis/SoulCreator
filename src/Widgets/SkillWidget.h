@@ -25,7 +25,7 @@
 #ifndef SKILLWIDGET_H
 #define SKILLWIDGET_H
 
-#include <QVBoxLayout>
+#include <QGridLayout>
 
 #include "../Datatypes/cv_TraitDetail.h"
 #include "../Storage/StorageTemplate.h"
@@ -52,7 +52,7 @@ class SkillWidget : public QWidget {
 		~SkillWidget();
 
 	private:
-		QVBoxLayout* layout;
+		QGridLayout* layout;
 		StorageTemplate* storage;
 		StorageCharacter* character;
 

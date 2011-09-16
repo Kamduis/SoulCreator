@@ -41,24 +41,6 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 	QVBoxLayout* layoutTop = new QVBoxLayout( this );
 	setLayout( layoutTop );
 
-	this->setMaximumHeight(150);
-
-	scrollArea = new QScrollArea( this );
-	scrollArea->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Minimum );
-	scrollArea->setWidgetResizable( true );
-	scrollArea->setFrameStyle( 0 );
-
-	layoutTop->addWidget( scrollArea );
-
-	QWidget* widget = new QWidget();
-	widget->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Minimum );
-
-	QVBoxLayout* layoutPower = new QVBoxLayout();
-	widget->setLayout( layoutPower );
-
-	scrollArea->setWidget( widget );
-	widget->show();
-
 	StorageTemplate storage;
 
 	cv_Trait::Type type = cv_Trait::Power;
@@ -81,7 +63,7 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				CharaTrait *charaTrait = new CharaTrait( this, traitPtr, list[j] );
 				charaTrait->setValue( 0 );
-				layoutPower->addWidget( charaTrait );
+				layoutTop->addWidget( charaTrait );
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
 				if ( !list.at( j )->custom ) {
@@ -93,7 +75,6 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 }
 
 PowerWidget::~PowerWidget() {
-	delete scrollArea;
 }
 
 

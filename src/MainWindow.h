@@ -33,6 +33,7 @@
 #include "Widgets/AttributeWidget.h"
 #include "Widgets/SkillWidget.h"
 #include "Widgets/MeritWidget.h"
+#include "Widgets/MoralityWidget.h"
 #include "Widgets/PowerWidget.h"
 #include "Widgets/FlawWidget.h"
 
@@ -67,6 +68,8 @@ class MainWindow;
  * \todo Nutze eine qchecksum, um die Integrität der XML-DAteien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben.
  *
  * \todo So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
+ *
+ * \todo Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).
  */
 
 class MainWindow : public QMainWindow {
@@ -115,6 +118,10 @@ class MainWindow : public QMainWindow {
 		 * \todo Irgendwann soll die Anzahl der angezeigten Merits (mit Beschreibungstext) vom user durch klicken irgendwie erhöht werden können.
 		 **/
 		MeritWidget* merits;
+		/**
+		 * In diesem Widget wird die Moral angezeigt.
+		 **/
+		MoralityWidget* morality;
 		/**
 		 * In diesem Widget werden die übernatürlichen Kräfte angezeigt.
 		 *

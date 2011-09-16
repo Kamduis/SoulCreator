@@ -86,6 +86,7 @@ MainWindow::~MainWindow() {
 	delete advantages;
 	delete flaws;
 	delete powers;
+	delete morality;
 	delete merits;
 	delete skills;
 	delete attributes;
@@ -135,6 +136,7 @@ void MainWindow::populateUi() {
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
 	merits = new MeritWidget( this );
+	morality = new MoralityWidget( this );
 	powers = new PowerWidget( this );
 	flaws = new FlawWidget( this );
 	advantages = new AdvantagesWidget( this );
@@ -143,10 +145,14 @@ void MainWindow::populateUi() {
 	ui->layout_attributes->addWidget( attributes );
 	ui->layout_skills->addWidget( skills );
 	ui->layout_merits->addWidget( merits );
+	ui->layout_morality->addWidget( morality );
 	ui->layout_powers->addWidget( powers );
 	ui->layout_flaws->addWidget( flaws );
 	ui->layout_specialties->addWidget( specialties );
 	ui->layout_advantages->addWidget( advantages );
+
+	// Zu Beginn soll immer das erste Tab angezeigt werden.
+	ui->tabWidget->setCurrentIndex(0);
 
 	// Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
 	connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
@@ -291,10 +297,10 @@ void MainWindow::saveCharacter() {
 void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
 	if ( species == cv_Species::Human ) {
 // 		ui->groupBox_powers->setHidden( true );
-		ui->tabWidgetItem_Powers->setEnabled(false);
+		ui->tabWidget->setTabEnabled(ui->tabWidget->indexOf(ui->tabWidgetItem_Powers), false);
 	} else {
 // 		ui->groupBox_powers->setHidden( false );
-		ui->tabWidgetItem_Powers->setEnabled(true);
+		ui->tabWidget->setTabEnabled(ui->tabWidget->indexOf(ui->tabWidgetItem_Powers), true);
 	}
 }
 
