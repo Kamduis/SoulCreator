@@ -35,7 +35,7 @@
 
 SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	character = StorageCharacter::getInstance();
-	
+
 	layout = new QGridLayout( this );
 	setLayout( layout );
 
@@ -43,33 +43,34 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 
 	cv_Trait::Type type = cv_Trait::Skill;
 
-	v_categories = cv_Trait::getCategoryList(type);
+	v_categories = cv_Trait::getCategoryList( type );
 
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_categories.count(); i++ ) {
 		list = storage->traitsPtr( type, v_categories.at( i ) );
 
-		// Zeichnen des Separators zwischen den einzeolnen Kategorien
-		actualColumn++;
-
+		// Zeichnen des Separators zwischen den einzelnen Kategorien
 		// Aber nicht an allererster Stelle
-		if (i > 0){
-			layout->setColumnMinimumWidth(actualColumn, Config::traitCategorySpace);
+		if ( i > 0 ) {
+			layout->setColumnMinimumWidth( actualColumn, Config::traitCategorySpace );
 
-			QFrame* vLine = new QFrame(this);
-			vLine->setFrameStyle(QFrame::VLine);
-			layout->addWidget(vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter);
+			QFrame* vLine = new QFrame( this );
+			vLine->setFrameStyle( QFrame::VLine );
+			layout->addWidget( vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter );
+
+			// Jetzt sind wir in der Spalte für die tatsächlchen Eigenschaften
+			actualColumn++;
 		}
-
-		// Jetzt sind wir in der Spalte für die tatsächlchen Attribute
-		actualColumn++;
 
 		// Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
 		QLabel* header = new QLabel();
-		header->setAlignment(Qt::AlignHCenter);
-		header->setText(cv_Trait::toString(v_categories.at(i)));
-		layout->addWidget(header, 0, actualColumn);
+
+		header->setAlignment( Qt::AlignHCenter );
+
+		header->setText( cv_Trait::toString( v_categories.at( i ) ) );
+
+		layout->addWidget( header, 0, actualColumn );
 
 		// Einfügen der tatsächlichen Fertigkeiten
 		for ( int j = 0; j < list.count(); j++ ) {
@@ -82,7 +83,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 			CharaTrait *charaTrait = new CharaTrait( this, traitPtr, list[j] );
 			charaTrait->setValue( 0 );
-			
+
 			// Nur Fertigkeiten haben Spezialisierungen.
 
 			if ( type = cv_Trait::Skill ) {
@@ -92,7 +93,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 			}
 
-			layout->addWidget( charaTrait, j+1, actualColumn );
+			layout->addWidget( charaTrait, j + 1, actualColumn );
 		}
 
 // 		// Abstand zwischen den Kategorien, aber nicht am Ende.
@@ -113,20 +114,17 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 // 	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
 	QList< cv_Trait > list;
 
-	for ( int i = 0; i < layout->count(); i++ ) {
-		QGroupBox* box = qobject_cast<QGroupBox*>( layout->itemAt( i )->widget() );
-		QVBoxLayout* lcl_layout = qobject_cast<QVBoxLayout*>( box->layout() );
-
-		for ( int j = 0; j < lcl_layout->count(); j++ ) {
-			list = storage->skills( v_categories.at( 0 ) );
-
-			// Wir wollen nur die Eigenschaftswidgekts, nicht die Abstandshalter!
-
-			if ( j == list.count() || j == list.count() + storage->skills( v_categories.at( 1 ) ).count() + 1 ) {
-				j++;
-			}
-
-			CharaTrait *trait = qobject_cast<CharaTrait*>( lcl_layout->itemAt( j )->widget() );
+	// Nur Spalten 0, 2 und 4 werden verwendet. 1 und 3 sind für optische Trennung.
+	for ( int i = 0; i < layout->columnCount(); i=i+2 ) {
+		// durch das +2 kann die Schleife für einen Ausgang über ihre Grenze hinausspringen. Also diese zusätzliche Abbruchbedingung.
+// 		if (i >= layout->columnCount()){
+// 			break;
+// 		}
+		
+		for ( int j = 1; j < layout->rowCount(); j++ ) {
+// 			qDebug() << Q_FUNC_INFO << "Reihe" << j << "Spalte" << i;
+			
+			CharaTrait *trait = qobject_cast<CharaTrait*>( layout->itemAtPosition( j, i )->widget() );
 
 			if ( trait->name() != skillName ) {
 				trait->setSpecialtyButtonChecked( false );
