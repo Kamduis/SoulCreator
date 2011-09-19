@@ -200,6 +200,18 @@ class MainWindow : public QMainWindow {
 		 */
 		void activate();
 		/**
+		 * Diese Funktion schaltet die Eigenschaften einen Tab zurück.
+		 **/
+		void tabPrevious();
+		/**
+		 * Diese Funktion schaltet die Eigenschaften einen Tab weiter.
+		 **/
+		void tabNext();
+		/**
+		 * Enabled oder Disabled die Knöpfe, mit denen die Eigenschaften durchgeblättert werden können, je nachdem, ob es noch eine weitere Seite zu Blättern gibt.
+		 **/
+		void setTabButtonState( int index );
+		/**
 		 * Über diese Funktion wird der Dialog aufgerufen, um einen ganz neuen Charakter zu erstellen.
 		 *
 		 * \todo Eine Warnung ausgeben, wenn der zuvor erstellte Charakter noch nicht gespeichert wurde.

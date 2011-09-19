@@ -51,11 +51,11 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
 	// Hübsche Symbole
-	ui->actionNew->setIcon( QIcon(":/icons/images/actions/filenew.png") );
-	ui->actionOpen->setIcon( QIcon(":/icons/images/actions/fileopen.png") );
-	ui->actionSave->setIcon( QIcon(":/icons/images/actions/filesave.png") );
-	ui->actionExport->setIcon( QIcon(":/icons/images/actions/fileexport.png") );
-	ui->actionPrint->setIcon( QIcon(":/icons/images/actions/agt_print.png") );
+	ui->actionNew->setIcon( QIcon( ":/icons/images/actions/filenew.png" ) );
+	ui->actionOpen->setIcon( QIcon( ":/icons/images/actions/fileopen.png" ) );
+	ui->actionSave->setIcon( QIcon( ":/icons/images/actions/filesave.png" ) );
+	ui->actionExport->setIcon( QIcon( ":/icons/images/actions/fileexport.png" ) );
+	ui->actionPrint->setIcon( QIcon( ":/icons/images/actions/agt_print.png" ) );
 	// Hier habe ich die Standardicons genommen, aber davon gibt es nur wenige und sie sehen nicht gut aus.
 // 	ui->actionNew->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 // 	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
@@ -68,6 +68,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	readCharacter = new ReadXmlCharacter();
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
+
+	connect( ui->pushButton_next, SIGNAL( clicked() ), this, SLOT( tabNext() ) );
+	connect( ui->pushButton_previous, SIGNAL( clicked() ), this, SLOT( tabPrevious() ) );
+	connect( ui->tabWidget, SIGNAL( currentChanged(int)), this, SLOT( setTabButtonState(int)) );
 
 	initialize();
 
@@ -152,7 +156,8 @@ void MainWindow::populateUi() {
 	ui->layout_advantages->addWidget( advantages );
 
 	// Zu Beginn soll immer das erste Tab angezeigt werden.
-	ui->tabWidget->setCurrentIndex(0);
+	ui->tabWidget->setCurrentIndex( 1 );
+	ui->tabWidget->setCurrentIndex( 0 );
 
 	// Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
 	connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
@@ -165,12 +170,12 @@ void MainWindow::showCharacterTraits() {
 }
 
 void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
+// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
 
 	specialties->clear();
 
 	if ( sw ) {
-		qDebug() << Q_FUNC_INFO << "Test Specialties";
+// 		qDebug() << Q_FUNC_INFO << "Test Specialties";
 		specialties->setSkill( skillName );
 		specialties->setSpecialties( specialtyList );
 	}
@@ -200,6 +205,50 @@ void MainWindow::activate() {
 }
 
 
+void MainWindow::tabPrevious() {
+	if ( ui->tabWidget->currentIndex() > 0 ) {
+		ui->tabWidget->setCurrentIndex( ui->tabWidget->currentIndex() - 1 );
+
+		if (!ui->tabWidget->widget(ui->tabWidget->currentIndex())->isEnabled()){
+			if (ui->tabWidget->currentIndex() > 0){
+				tabPrevious();
+			} else {
+				tabNext();
+			}
+		}
+	}
+}
+
+void MainWindow::tabNext() {
+	if ( ui->tabWidget->currentIndex() < ui->tabWidget->count()-1 ) {
+		ui->tabWidget->setCurrentIndex( ui->tabWidget->currentIndex() + 1 );
+
+		if (!ui->tabWidget->widget(ui->tabWidget->currentIndex())->isEnabled()){
+			if (ui->tabWidget->currentIndex() < ui->tabWidget->count()-1){
+				tabNext();
+			} else {
+				tabPrevious();
+			}
+		}
+	}
+}
+
+void MainWindow::setTabButtonState( int index )
+{
+	if (index < ui->tabWidget->count()-1){
+		ui->pushButton_next->setEnabled(true);
+	} else {
+		ui->pushButton_next->setEnabled(false);
+	}
+	
+	if (index > 0){
+		ui->pushButton_previous->setEnabled(true);
+	} else {
+		ui->pushButton_previous->setEnabled(false);
+	}
+}
+
+
 void MainWindow::aboutApp() {
 	QString aboutText = tr( "<h1>%1</h1>" ).arg( Config::name() ) +
 						tr( "<h2>Version: %1</h2>" ).arg( Config::version() ) +
@@ -218,7 +267,7 @@ void MainWindow::aboutApp() {
 
 void MainWindow::newCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
-	
+
 	character->resetCharacter();
 }
 
@@ -297,10 +346,10 @@ void MainWindow::saveCharacter() {
 void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
 	if ( species == cv_Species::Human ) {
 // 		ui->groupBox_powers->setHidden( true );
-		ui->tabWidget->setTabEnabled(ui->tabWidget->indexOf(ui->tabWidgetItem_Powers), false);
+		ui->tabWidget->setTabEnabled( ui->tabWidget->indexOf( ui->tabWidgetItem_Powers ), false );
 	} else {
 // 		ui->groupBox_powers->setHidden( false );
-		ui->tabWidget->setTabEnabled(ui->tabWidget->indexOf(ui->tabWidgetItem_Powers), true);
+		ui->tabWidget->setTabEnabled( ui->tabWidget->indexOf( ui->tabWidgetItem_Powers ), true );
 	}
 }
 
