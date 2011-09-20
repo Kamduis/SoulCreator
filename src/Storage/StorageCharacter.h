@@ -150,6 +150,12 @@ class StorageCharacter : public QObject {
 		/**
 		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus.
 		 **/
+		QList< cv_Derangement > derangements() const;
+		/**
+		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus, welche der im Argument angegebenen Kategorie angehören.
+		 *
+		 * \overload QList< cv_Derangement > derangements()
+		 **/
 		QList< cv_Derangement > derangements( cv_Trait::Category category ) const;
 		/**
 		 * Gibt den Wert des Super-Attributs aus.

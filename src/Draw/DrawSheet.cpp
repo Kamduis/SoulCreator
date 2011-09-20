@@ -23,6 +23,7 @@
  */
 
 #include <QFont>
+#include <QFontDatabase>
 #include <QPainter>
 #include <QDebug>
 
@@ -165,6 +166,7 @@ void DrawSheet::print() {
 	qreal offsetHMorality = target.width() * 0.9565;
 	qreal offsetVMorality = target.height() * 0.608;
 	qreal distanceVMorality = target.height() * 0.0144;
+	qreal textWidthMorality = target.width() * 0.187;
 
 	if ( character->species() == cv_Species::Human ) {
 		// Werte bleiben, wie sie zuvor definiert wurden.
@@ -276,6 +278,7 @@ void DrawSheet::print() {
 		offsetHMorality = target.width() * 0.9575;
 		offsetVMorality = target.height() * 0.695;
 		distanceVMorality = target.height() * 0.0143;
+		textWidthMorality = target.width() * 0.205;
 
 		maxPowers = 10;
 		offsetHPowers = target.width() * 0.469;
@@ -333,6 +336,7 @@ void DrawSheet::print() {
 		offsetHMorality = target.width() * 0.9103;
 		offsetVMorality = target.height() * 0.735;
 		distanceVMorality = target.height() * 0.0143;
+		textWidthMorality = target.width() * 0.21;
 
 		maxPowers = 8;
 		offsetHPowers = offsetHMerits;
@@ -392,6 +396,7 @@ void DrawSheet::print() {
 		offsetHMorality = target.width() * 0.9555;
 		offsetVMorality = target.height() * 0.6144;
 		distanceVMorality = target.height() * 0.0143;
+		textWidthMorality = target.width() * 0.205;
 
 		maxPowers = 5;
 		offsetHPowers = target.width() * 0.469;
@@ -402,8 +407,10 @@ void DrawSheet::print() {
 		throw eSpeciesNotExisting( character->species() );
 	}
 
+	// Die Schriftart einstellen.
+	QFontDatabase::addApplicationFont ( ":/fonts/fonts/DejaVuSerif.ttf" );
 	QFont characterFont;
-
+	characterFont.setFamily( "DejaVu Serif" );
 	characterFont.setPointSize( v_textHeight*Config::textSizeFactorPrintNormal );
 
 	painter.setFont( characterFont );
@@ -422,7 +429,7 @@ void DrawSheet::print() {
 	drawAdvantages( &painter, offsetHAdvantages, offsetVAdvantages, distanceVAdvantages, textWidthAdvantages, character->species(), distanceHAdvantages );
 	drawHealth( &painter, offsetHHealth, offsetVHealth, distanceHHealth, dotSizeFactor );
 	drawWillpower( &painter, offsetHWillpower, offsetVWillpower, distanceHWillpower, dotSizeFactor );
-	drawMorality( &painter, offsetHMorality, offsetVMorality, distanceVMorality );
+	drawMorality( &painter, offsetHMorality, offsetVMorality, distanceVMorality, textWidthMorality );
 
 	if ( character->species() != cv_Species::Human ) {
 		drawPowers( &painter, offsetHPowers, offsetVPowers, distanceVPowers, textWidthPowers, maxPowers, character->species(), distanceHPowers );
@@ -550,8 +557,7 @@ void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qre
 				// Spezialisierungen schreiben.
 				painter->save();
 
-				QFont lclFont;
-
+				QFont lclFont = painter->font();
 				lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
 
 				painter->setFont( lclFont );
@@ -598,8 +604,10 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 
 		if ( !customText.isEmpty() ) {
 			painter->save();
-			QFont lclFont;
+			
+			QFont lclFont = painter->font();
 			lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
+			
 			painter->setFont( lclFont );
 			painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText + " " );
 			painter->restore();
@@ -619,9 +627,11 @@ void DrawSheet::drawFlaws( QPainter* painter, qreal offsetH, qreal offsetV, qrea
 		for ( int j = 0; j < list.count(); j++ ) {
 			if ( list.at( j ).value > 0 ) {
 				QString lcl_text = list.at( j ).name;
-				if (list.at( j ).custom) {
-					lcl_text += " (" + list.at(j).customText + ")";
+
+				if ( list.at( j ).custom ) {
+					lcl_text += " (" + list.at( j ).customText + ")";
 				}
+
 				stringList.append( lcl_text );
 			}
 		}
@@ -733,12 +743,26 @@ void DrawSheet::drawWillpower( QPainter* painter, qreal offsetH, qreal offsetV, 
 	}
 }
 
-void DrawSheet::drawMorality( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal dotSizeFactor ) {
+void DrawSheet::drawMorality( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth, qreal dotSizeFactor ) {
 	int value = character->morality();
 
 	for ( int i = 0; i < value; i++ ) {
 		QRect dotsRect = QRect( offsetH, offsetV - distanceV * i, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
 		painter->drawEllipse( dotsRect );
+	}
+
+	QList< cv_Derangement > list = character->derangements();
+
+	for (int i = value; i < Config::derangementMoralityTraitMax; i++){
+		for (int j = 0; j < list.count(); j++){
+			if (list.at(j).morality == i+1){
+				QRect textRect = QRect( offsetH - textWidth, offsetV + v_dotDiameterV * dotSizeFactor + v_textDotsHeightDifference - distanceV * i - v_textHeight, textWidth, v_textHeight );
+// 				painter->drawRect( textRect );
+				painter->drawText( textRect, Qt::AlignLeft | Qt::AlignBottom, list.at(j).name );
+				
+				break;
+			}
+		}
 	}
 }
 
@@ -790,8 +814,10 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 
 			if ( !customText.isEmpty() ) {
 				painter->save();
-				QFont lclFont;
+				
+				QFont lclFont = painter->font();
 				lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
+				
 				painter->setFont( lclFont );
 				painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText + " " );
 				painter->restore();

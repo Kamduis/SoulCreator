@@ -53,6 +53,8 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 		// Zeichnen des Separators zwischen den einzelnen Kategorien
 		// Aber nicht an allererster Stelle
 		if ( i > 0 ) {
+			actualColumn++;
+
 			layout->setColumnMinimumWidth( actualColumn, Config::traitCategorySpace );
 
 			QFrame* vLine = new QFrame( this );

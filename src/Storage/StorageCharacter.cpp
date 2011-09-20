@@ -187,6 +187,10 @@ void StorageCharacter::modifyTrait( cv_Trait trait ) {
 }
 
 
+QList< cv_Derangement > StorageCharacter::derangements() const {
+	return v_derangements;
+}
+
 QList< cv_Derangement > StorageCharacter::derangements( cv_Trait::Category category ) const {
 	QList< cv_Derangement > list;
 

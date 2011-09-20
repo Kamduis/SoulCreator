@@ -9,6 +9,9 @@
     <file>images/actions/filenew.png</file>
     <file>images/WoD.png</file>
   </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/DejaVuSerif.ttf</file>
+  </qresource>
   <qresource prefix="template">
     <file>xml/base.xml</file>
     <file>xml/changeling.xml</file>

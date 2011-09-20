@@ -200,6 +200,7 @@ class DrawSheet : public QObject {
 						   qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt. */,
 						   qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt. */,
 						   qreal distanceV = 0 /** Vertikaler Abstand zwischen den Punkten. */,
+						   qreal textWidth = 0 /** Textbreite, der für die Geistesstörungen zur Verfügung steht. */,
 						   qreal dotSizeFactor = 1 /** Der Faktor zwischen der normalen Punktgröße und der Punktgröße für die Moral. */
 						 );
 		/**
