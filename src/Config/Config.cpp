@@ -31,6 +31,8 @@
 const int Config::versionMajor = PROGRAM_VERSION_MAJOR;
 const int Config::versionMinor = PROGRAM_VERSION_MINOR;
 const int Config::versionChange = PROGRAM_VERSION_CHANGE;
+const QString Config::organization = "Caern";
+const QString Config::configFile = "config.ini";
 const int Config::traitCategorySpace = 10;
 const int Config::traitMultipleMax = 3;
 const int Config::displayTimeout = 10000;
@@ -46,6 +48,8 @@ const int Config::superTraitDefaultValue = 1;
 
 const qreal Config::textSizeFactorPrintNormal = 0.45;
 const qreal Config::textSizeFactorPrintSmall = 0.33;
+
+QFont Config::exportFont = QFont();
 
 
 QString Config::name() {

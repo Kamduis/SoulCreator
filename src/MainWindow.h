@@ -36,15 +36,16 @@
 #include "Widgets/MoralityWidget.h"
 #include "Widgets/PowerWidget.h"
 #include "Widgets/FlawWidget.h"
-
 #include "Widgets/AdvantagesWidget.h"
 #include "Widgets/CharaSpecialties.h"
+#include "Widgets/Dialogs/SettingsDialog.h"
 #include "Draw/DrawSheet.h"
 
 #include <QMainWindow>
 
 
 namespace Ui {
+
 class MainWindow;
 }
 
@@ -70,7 +71,7 @@ class MainWindow;
  * \todo So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
  *
  * \todo Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).
- * 
+ *
  * \todo Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.
  *
  * \todo Waffen einbauen.
@@ -103,6 +104,10 @@ class MainWindow : public QMainWindow {
 		 */
 		Ui::MainWindow* ui;
 
+		/**
+		 * Configurationsdialog.
+		 */
+		SettingsDialog* settingsDialog;
 		/**
 		 * Zeiger auf die Klasse, welche sämtliche Eigenschaftsbezeichnungen enthält.
 		 */
@@ -200,6 +205,10 @@ class MainWindow : public QMainWindow {
 		 */
 		void activate();
 		/**
+		 * Diese Funktion ruft den Konfigurationsdialog auf und sorgt dafür, daß die änderungen gespeichert oder verworfen werden.
+		 **/
+		void showConfigDialog();
+		/**
 		 * Diese Funktion schaltet die Eigenschaften einen Tab zurück.
 		 **/
 		void tabPrevious();
@@ -250,12 +259,30 @@ class MainWindow : public QMainWindow {
 		/**
 		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
 		 **/
-		void hidePowers(cv_Species::SpeciesFlag species);
+		void hidePowers( cv_Species::SpeciesFlag species );
+
+		/**
+		 * Speichert die Konfiguration dieses Programms für den nächsten Aufruf.
+		 **/
+		void writeSettings();
+		/**
+		 * Lädt die Konfiguration für dieses Programm.
+		 **/
+		void readSettings();
+		/**
+		 * Fragt nach, ob die Änderungen am Charakter gespeichert werden sollen, ehe sie möglicherweise verloren gehen.
+		 *
+		 * Diese Frage tritt auf, wenn der dargestellte Charakter nicht gespeichert ist und ehe das Programm geschlossen werden oder einen neuen Charakter anlegen soll.
+		 **/
+		bool maybeSave();
 
 		/**
 		 * Ausgabe einer Fehlernachricht.
 		 **/
-		void raiseExceptionMessage(QString message, QString description);
+		void raiseExceptionMessage( QString message, QString description );
+
+	protected:
+		void closeEvent( QCloseEvent *event );
 
 	signals:
 };

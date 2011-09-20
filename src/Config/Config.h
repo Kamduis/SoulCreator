@@ -27,6 +27,7 @@
 
 #include <QString>
 #include <QColor>
+#include <QFont>
 
 /**
  * @brief Konfigurationsklasse des Programms.
@@ -70,6 +71,14 @@ class Config {
 		 * Unterscheiden sich Programme in ihrer Change-Nummer, aber der Rest ihrer Versionsnummer ist gleich, sollten eigentlich keine Kompatibilitätsprobleme mit den Template-Dateien und den gespeicherten Charakteren auftreten.
 		 */
 		static QString versionDetail();
+		/**
+		 * Der Name der organisation, welche hinter diesem Programm steht.
+		 */
+		static const QString organization;
+		/**
+		 * Name der Konfigurationsdatei für dieses Programm.
+		 */
+		static const QString configFile;
 		/**
 		 * Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 		 */
@@ -145,6 +154,11 @@ class Config {
 		 * Schriftgröße für den kleinen Text auf dem ausdruckbaren Charakterbogen.
 		 **/
 		static const qreal textSizeFactorPrintSmall;
+
+		/**
+		 * Die Schriftart, welche für den exportierten Charakter verwendet wird.
+		 **/
+		static QFont exportFont;
 
 	private:
 		Config();

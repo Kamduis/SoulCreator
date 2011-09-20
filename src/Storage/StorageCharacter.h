@@ -165,6 +165,10 @@ class StorageCharacter : public QObject {
 		 * Gibt den Wert der Moral aus.
 		 **/
 		int morality() const;
+		/**
+		 * Gibt aus, ob die Charkaterwerte seit dem letzten Speichern verändert wurden.
+		 **/
+		bool isModifed() const;
 
 	private:
 		StorageTemplate* storage;
@@ -199,6 +203,7 @@ class StorageCharacter : public QObject {
 		static QList< cv_Derangement > v_derangements;
 		static int v_superTrait;
 		static int v_morality;
+		static bool v_modified;
 
 	public slots:
 		/**
@@ -293,6 +298,10 @@ class StorageCharacter : public QObject {
 		 * \todo Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze.
 		 **/
 		void resetCharacter();
+		/**
+		 * Legt fest, ob der Charkater verändert wurde.
+		 **/
+		void setModified( bool sw = true /** 'true' -> der Charakter wurde verändert, 'false' -> der Charakter wurde \emph{nicht} verändert */ );
 
 	private slots:
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );

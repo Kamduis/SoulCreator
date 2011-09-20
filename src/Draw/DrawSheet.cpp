@@ -23,7 +23,6 @@
  */
 
 #include <QFont>
-#include <QFontDatabase>
 #include <QPainter>
 #include <QDebug>
 
@@ -408,9 +407,7 @@ void DrawSheet::print() {
 	}
 
 	// Die Schriftart einstellen.
-	QFontDatabase::addApplicationFont ( ":/fonts/fonts/DejaVuSerif.ttf" );
-	QFont characterFont;
-	characterFont.setFamily( "DejaVu Serif" );
+	QFont characterFont = Config::exportFont;
 	characterFont.setPointSize( v_textHeight*Config::textSizeFactorPrintNormal );
 
 	painter.setFont( characterFont );

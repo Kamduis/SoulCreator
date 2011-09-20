@@ -22,6 +22,7 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCloseEvent>
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
@@ -31,6 +32,7 @@
 #include <QTimer>
 #include <QDebug>
 
+#include "IO/Settings.h"
 #include "Widgets/TraitLine.h"
 #include "Widgets/Dialogs/MessageBox.h"
 #include "IO/ReadXmlTemplate.h"
@@ -47,6 +49,10 @@
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow ) {
 	ui->setupUi( this );
 
+	QCoreApplication::setOrganizationName( Config::organization );
+	QCoreApplication::setApplicationName( Config::name() );
+	QCoreApplication::setApplicationVersion( Config::version() );
+
 	this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
 	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
@@ -56,6 +62,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	ui->actionSave->setIcon( QIcon( ":/icons/images/actions/filesave.png" ) );
 	ui->actionExport->setIcon( QIcon( ":/icons/images/actions/fileexport.png" ) );
 	ui->actionPrint->setIcon( QIcon( ":/icons/images/actions/agt_print.png" ) );
+
 	// Hier habe ich die Standardicons genommen, aber davon gibt es nur wenige und sie sehen nicht gut aus.
 // 	ui->actionNew->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 // 	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
@@ -63,26 +70,32 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 // 	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 // 	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 
+	settingsDialog = new SettingsDialog( this );
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
 	readCharacter = new ReadXmlCharacter();
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
 
+
 	connect( ui->pushButton_next, SIGNAL( clicked() ), this, SLOT( tabNext() ) );
 	connect( ui->pushButton_previous, SIGNAL( clicked() ), this, SLOT( tabPrevious() ) );
-	connect( ui->tabWidget, SIGNAL( currentChanged(int)), this, SLOT( setTabButtonState(int)) );
+	connect( ui->tabWidget, SIGNAL( currentChanged( int ) ), this, SLOT( setTabButtonState( int ) ) );
 
 	initialize();
 
 	connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), this, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
+	connect( ui->actionSettings, SIGNAL( triggered() ), this, SLOT( showConfigDialog() ) );
 	connect( ui->actionNew, SIGNAL( triggered() ), this, SLOT( newCharacter() ) );
 	connect( ui->actionOpen, SIGNAL( triggered() ), this, SLOT( openCharacter() ) );
 	connect( ui->actionSave, SIGNAL( triggered() ), this, SLOT( saveCharacter() ) );
 	connect( ui->actionExport, SIGNAL( triggered() ), this, SLOT( exportCharacter() ) );
 	connect( ui->actionPrint, SIGNAL( triggered() ), this, SLOT( printCharacter() ) );
 	connect( ui->actionAbout, SIGNAL( triggered() ), this, SLOT( aboutApp() ) );
+
+	// Laden der Konfiguration
+	readSettings();
 }
 
 MainWindow::~MainWindow() {
@@ -104,6 +117,17 @@ MainWindow::~MainWindow() {
 
 	delete ui;
 }
+
+
+void MainWindow::closeEvent( QCloseEvent *event ) {
+	if ( maybeSave() ) {
+		writeSettings();
+		event->accept();
+	} else {
+		event->ignore();
+	}
+}
+
 
 void MainWindow::initialize() {
 	storeTemplateData();
@@ -200,17 +224,27 @@ void MainWindow::activate() {
 
 	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
 	character->setSpecies( cv_Species::Changeling );
-
 	character->setSpecies( cv_Species::Human );
+
+	// Virtue und Vice müssen auch initial einmal festgelegt werden.
+	character->setVirtue( storage->virtueNames( cv_Trait::Adult ).at( 0 ) );
+	character->setVice( storage->viceNames( cv_Trait::Adult ).at( 0 ) );
+
+	// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
+	character->setModified( false );
 }
 
+
+void MainWindow::showConfigDialog() {
+	settingsDialog->exec();
+}
 
 void MainWindow::tabPrevious() {
 	if ( ui->tabWidget->currentIndex() > 0 ) {
 		ui->tabWidget->setCurrentIndex( ui->tabWidget->currentIndex() - 1 );
 
-		if (!ui->tabWidget->widget(ui->tabWidget->currentIndex())->isEnabled()){
-			if (ui->tabWidget->currentIndex() > 0){
+		if ( !ui->tabWidget->widget( ui->tabWidget->currentIndex() )->isEnabled() ) {
+			if ( ui->tabWidget->currentIndex() > 0 ) {
 				tabPrevious();
 			} else {
 				tabNext();
@@ -220,11 +254,11 @@ void MainWindow::tabPrevious() {
 }
 
 void MainWindow::tabNext() {
-	if ( ui->tabWidget->currentIndex() < ui->tabWidget->count()-1 ) {
+	if ( ui->tabWidget->currentIndex() < ui->tabWidget->count() - 1 ) {
 		ui->tabWidget->setCurrentIndex( ui->tabWidget->currentIndex() + 1 );
 
-		if (!ui->tabWidget->widget(ui->tabWidget->currentIndex())->isEnabled()){
-			if (ui->tabWidget->currentIndex() < ui->tabWidget->count()-1){
+		if ( !ui->tabWidget->widget( ui->tabWidget->currentIndex() )->isEnabled() ) {
+			if ( ui->tabWidget->currentIndex() < ui->tabWidget->count() - 1 ) {
 				tabNext();
 			} else {
 				tabPrevious();
@@ -233,18 +267,17 @@ void MainWindow::tabNext() {
 	}
 }
 
-void MainWindow::setTabButtonState( int index )
-{
-	if (index < ui->tabWidget->count()-1){
-		ui->pushButton_next->setEnabled(true);
+void MainWindow::setTabButtonState( int index ) {
+	if ( index < ui->tabWidget->count() - 1 ) {
+		ui->pushButton_next->setEnabled( true );
 	} else {
-		ui->pushButton_next->setEnabled(false);
+		ui->pushButton_next->setEnabled( false );
 	}
-	
-	if (index > 0){
-		ui->pushButton_previous->setEnabled(true);
+
+	if ( index > 0 ) {
+		ui->pushButton_previous->setEnabled( true );
 	} else {
-		ui->pushButton_previous->setEnabled(false);
+		ui->pushButton_previous->setEnabled( false );
 	}
 }
 
@@ -300,6 +333,9 @@ void MainWindow::openCharacter() {
 		}
 
 		delete file;
+
+		// Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
+		character->setModified( false );
 	}
 }
 
@@ -338,6 +374,9 @@ void MainWindow::saveCharacter() {
 		}
 
 		delete file;
+
+		// Unmittelbar nach dem Speichern ist der Charkter natürlich nicht mehr 'geändert'.
+		character->setModified( false );
 	}
 }
 
@@ -421,6 +460,52 @@ void MainWindow::printCharacter() {
 	}
 
 	delete printer;
+}
+
+
+void MainWindow::writeSettings() {
+	Settings settings( QApplication::applicationDirPath() + "/" + Config::configFile );
+
+	settings.beginGroup( "MainWindow" );
+	settings.setValue( "size", size() );
+	settings.setValue( "pos", pos() );
+	settings.endGroup();
+	
+	settings.beginGroup( "Config" );
+	settings.setValue( "exportFont", Config::exportFont.family() );
+	settings.endGroup();
+}
+
+void MainWindow::readSettings() {
+	Settings settings( QApplication::applicationDirPath() + "/" + Config::configFile );
+
+	settings.beginGroup( "MainWindow" );
+	resize( settings.value( "size", QSize( 400, 400 ) ).toSize() );
+	move( settings.value( "pos", QPoint( 200, 200 ) ).toPoint() );
+	settings.endGroup();
+	
+	settings.beginGroup( "Config" );
+	Config::exportFont = QFont( settings.value("exportFont").toString());
+	settings.endGroup();
+}
+
+
+bool MainWindow::maybeSave() {
+	if ( character->isModifed() ) {
+		QMessageBox::StandardButton ret;
+		ret = QMessageBox::warning( this, tr( "Application" ),
+									tr( "The character has been modified.\n"
+										"Do you want to save your changes?" ),
+									QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel );
+
+		if ( ret == QMessageBox::Save ) {
+			saveCharacter();
+		} else if ( ret == QMessageBox::Cancel ) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 

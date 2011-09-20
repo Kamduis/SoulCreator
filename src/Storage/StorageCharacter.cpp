@@ -38,6 +38,12 @@ QString StorageCharacter::v_breed = "";
 QString StorageCharacter::v_faction = "";
 int StorageCharacter::v_superTrait = 0;
 int StorageCharacter::v_morality = 0;
+bool StorageCharacter::v_modified = false;
+cv_IdentityList StorageCharacter::v_identities;
+QList< cv_Trait > StorageCharacter::v_traits;
+cv_Species::SpeciesFlag StorageCharacter::v_species;
+QList< cv_Derangement > StorageCharacter::v_derangements;
+
 
 StorageCharacter* StorageCharacter::getInstance( ) {
 	if ( !p_instance )
@@ -52,16 +58,23 @@ void StorageCharacter::destroy() {
 }
 
 
-cv_IdentityList StorageCharacter::v_identities;
-QList< cv_Trait > StorageCharacter::v_traits;
-cv_Species::SpeciesFlag StorageCharacter::v_species;
-QList< cv_Derangement > StorageCharacter::v_derangements;
-
-
 StorageCharacter::StorageCharacter( QObject* parent ) : QObject( parent ) {
 	realIdentity = &v_identities[0];
 
 	storage = new StorageTemplate( this );
+
+	// Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
+	// Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
+	connect( this, SIGNAL( identityChanged(cv_Identity)), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( speciesChanged(cv_Species::SpeciesFlag)), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( derangementsChanged()), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( virtueChanged(QString)), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( viceChanged(QString)), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( breedChanged(QString)), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( factionChanged(QString)), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( superTraitChanged(int)), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( moralityChanged(int)), this, SLOT( setModified() ) );
 }
 
 StorageCharacter::~StorageCharacter() {
@@ -362,5 +375,16 @@ void StorageCharacter::resetCharacter() {
 
 	v_derangements.clear();
 
-	setMorality(Config::derangementMoralityTraitMax);
+	setMorality( Config::derangementMoralityTraitMax );
+}
+
+
+bool StorageCharacter::isModifed() const {
+	return v_modified;
+}
+
+void StorageCharacter::setModified( bool sw ) {
+	if (v_modified != sw) {
+		v_modified = sw;
+	}
 }
