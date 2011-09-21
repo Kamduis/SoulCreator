@@ -701,6 +701,18 @@ void DrawSheet::drawAdvantages( QPainter* painter, qreal offsetH, qreal offsetV,
 		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
 		textRect = QRect( offsetH - textWidth + distanceH * 4, offsetV + distanceV * 3, textWidth, v_textHeight );
 		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+
+		// Armor
+		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 4, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( character->armorGeneral() ) + "/" + QString::number( character->armorFirearms() ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 1, offsetV + distanceV * 4, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( character->armorGeneral() ) + "/" + QString::number( character->armorFirearms() ) );
+		textRect = QRect( offsetH - textWidth + distanceH * 2, offsetV + distanceV * 4, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, "1/1" );
+// 		textRect = QRect( offsetH - textWidth + distanceH * 3, offsetV + distanceV * 3, textWidth, v_textHeight );
+// 		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+// 		textRect = QRect( offsetH - textWidth + distanceH * 4, offsetV + distanceV * 3, textWidth, v_textHeight );
+// 		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
 	} else {
 		// Size
 		QRect textRect = QRect( offsetH - textWidth, offsetV, textWidth, v_textHeight );
@@ -717,6 +729,10 @@ void DrawSheet::drawAdvantages( QPainter* painter, qreal offsetH, qreal offsetV,
 		// Defense
 		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 3, textWidth, v_textHeight );
 		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( calcAdvantages->defense() ) );
+
+		// Armor
+		textRect = QRect( offsetH - textWidth, offsetV + distanceV * 4, textWidth, v_textHeight );
+		painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, QString::number( character->armorGeneral() ) + "/" + QString::number( character->armorFirearms() ) );
 	}
 
 	// Armor

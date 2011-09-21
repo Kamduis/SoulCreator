@@ -65,6 +65,10 @@ void WriteXmlCharacter::write( QFile *file ) {
 	writeTextElement( "faction", character->faction() );
 	writeTextElement( "superTrait", QString::number( character->superTrait() ) );
 	writeTextElement( "morality", QString::number( character->morality() ) );
+	writeStartElement( "armor" );
+	writeAttribute( "general", QString::number( character->armorGeneral()));
+	writeAttribute( "firearms", QString::number( character->armorFirearms()));
+	writeEndElement();
 
 	writeCharacterTraits();
 

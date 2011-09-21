@@ -22,7 +22,6 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QSpinBox>
 #include <QDialog>
 #include <QDebug>
 
@@ -64,9 +63,20 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	QLabel* labelDefenseValue = new QLabel( this );
 	labelDefenseValue->setNum( 0 );
 
+	QFontMetrics fontMetrics = QFontMetrics(this->font());
+	QRect textRect = fontMetrics.boundingRect("0");
+
 	QLabel* labelArmor = new QLabel( tr( "Armor:" ) );
-	QSpinBox* spinBoxArmor = new QSpinBox( this );
-	spinBoxArmor->setMinimum( 0 );
+	QLabel* labelArmorGeneral = new QLabel( tr( "General" ) );
+	QLabel* labelArmorFirearms = new QLabel( tr( "Firearms" ) );
+	spinBoxArmorGeneral = new QSpinBox( this );
+	spinBoxArmorGeneral->setMinimum( 0 );
+	spinBoxArmorGeneral->setMaximum( 9 );
+	spinBoxArmorGeneral->setMaximumWidth(textRect.width() + Config::spinBoxNoTextWidth);
+	spinBoxArmorFirearms = new QSpinBox( this );
+	spinBoxArmorFirearms->setMinimum( 0 );
+	spinBoxArmorFirearms->setMaximum( 9 );
+	spinBoxArmorFirearms->setMaximumWidth(textRect.width() + Config::spinBoxNoTextWidth);
 
 	advantagesLayout->addWidget( labelSize, 0, 0 );
 	advantagesLayout->addWidget( labelSizeValue, 0, 1 );
@@ -77,7 +87,10 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	advantagesLayout->addWidget( labelDefense, 3, 0 );
 	advantagesLayout->addWidget( labelDefenseValue, 3, 1 );
 	advantagesLayout->addWidget( labelArmor, 4, 0 );
-	advantagesLayout->addWidget( spinBoxArmor, 4, 1 );
+	advantagesLayout->addWidget( spinBoxArmorGeneral, 4, 1 );
+	advantagesLayout->addWidget( labelArmorGeneral, 4, 2 );
+	advantagesLayout->addWidget( spinBoxArmorFirearms, 5, 1 );
+	advantagesLayout->addWidget( labelArmorFirearms, 5, 2 );
 
 	QLabel* labelHealth = new QLabel( tr( "Health" ) );
 	labelHealth->setAlignment( Qt::AlignHCenter );
@@ -169,6 +182,9 @@ AdvantagesWidget::AdvantagesWidget( QWidget *parent ) : QWidget( parent )  {
 	connect( calcAdvantages, SIGNAL( defenseChanged( int ) ), labelDefenseValue, SLOT( setNum( int ) ) );
 	connect( calcAdvantages, SIGNAL( healthChanged( int ) ), this, SLOT( printHealth( int ) ) );
 	connect( calcAdvantages, SIGNAL( willpowerChanged( int ) ), dotsWill, SLOT( setValue( int ) ) );
+	connect( spinBoxArmorGeneral, SIGNAL(valueChanged(int)), this, SLOT(setArmor()));
+	connect( spinBoxArmorFirearms, SIGNAL(valueChanged(int)), this, SLOT(setArmor()));
+	connect( character, SIGNAL( armorChanged(int,int)), this, SLOT( updateArmor( int, int ) ) );
 // 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), this, SLOT( changeSuper( cv_Trait ) ) );
 // 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), this, SLOT( emitSuperChanged( int ) ) );
 // 	connect( this, SIGNAL( superChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
@@ -320,6 +336,18 @@ void AdvantagesWidget::setFuelMaximum( int value ) {
 	int perTurn = storage->fuelPerTurn( character->species(), value );
 	fuelPerTurn->setText( tr( "%1/Turn" ).arg( perTurn ) );
 }
+
+
+void AdvantagesWidget::setArmor()
+{
+	character->setArmor(spinBoxArmorGeneral->value(), spinBoxArmorFirearms->value());
+}
+void AdvantagesWidget::updateArmor( int general, int firearms )
+{
+	spinBoxArmorGeneral->setValue(general);
+	spinBoxArmorFirearms->setValue(firearms);
+}
+
 
 
 

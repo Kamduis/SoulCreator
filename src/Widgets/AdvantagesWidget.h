@@ -28,6 +28,7 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QLabel>
+#include <QSpinBox>
 
 #include "TraitDots.h"
 #include "Squares.h"
@@ -44,8 +45,6 @@
  * Die Werte, welche aus den Eigenschaften des Charakters berechnet werden, kommen allesamt in dieses Widget.
  *
  * \todo Armor und Superattribut müssen noch gespeichert werden, wenn der Charakter gespeichert wird.
- *
- * \todo Eine fuelWidget-Klasse muß erstellt und hier eingefügt werden, damit auch Mana, Glamour etc. angezeigt wird. Und zwar soviel, wie in den Template-DAteien festgelegt wird.
  **/
 
 class AdvantagesWidget : public QWidget {
@@ -80,6 +79,8 @@ class AdvantagesWidget : public QWidget {
 		TraitDots* dotsSuper;
 		Squares* squaresFuel;
 		QLabel* fuelPerTurn;
+		QSpinBox* spinBoxArmorGeneral;
+		QSpinBox* spinBoxArmorFirearms;
 
 	public slots:
 
@@ -105,6 +106,14 @@ class AdvantagesWidget : public QWidget {
 		void setFuelMaximum( int value );
 // 		void changeSuper(cv_Trait trait);
 // 		void emitSuperChanged(int value);
+		/**
+		 * Schreibe die veränderte Rüstung in den Charkater.
+		 **/
+		void setArmor();
+		/**
+		 * Schreibe die veränderte Rüstung in das Widget.
+		 **/
+		void updateArmor(int general, int firearms);
 
 	signals:
 // 		void superChanged(cv_Trait trait);

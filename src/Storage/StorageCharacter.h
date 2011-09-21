@@ -166,6 +166,19 @@ class StorageCharacter : public QObject {
 		 **/
 		int morality() const;
 		/**
+		 * Gibt den Wert der getragenen Rüstung aus.
+		 *
+		 * Diese Funktion gibt den Rüstungswert gegen alle Angriffe mit Ausnahme von Schußwaffen und Bögen aus.
+		 **/
+		int armorGeneral() const;
+		/**
+		 * Gibt den Wert der getragenen Rüstung aus.
+		 *
+		 * Diese Funktion gibt den Rüstungswert gegen Schußwaffen und Bögen aus.
+		 **/
+		int armorFirearms() const;
+		
+		/**
 		 * Gibt aus, ob die Charkaterwerte seit dem letzten Speichern verändert wurden.
 		 **/
 		bool isModifed() const;
@@ -203,6 +216,8 @@ class StorageCharacter : public QObject {
 		static QList< cv_Derangement > v_derangements;
 		static int v_superTrait;
 		static int v_morality;
+		static int v_armorGeneral;
+		static int v_armorFirearms;
 		static bool v_modified;
 
 	public slots:
@@ -291,6 +306,12 @@ class StorageCharacter : public QObject {
 		 **/
 		void setMorality( int value );
 		/**
+		 * Verändert den Wert der Rüstung.
+		 *
+		 * Bei einer Veränderung wird das Signal armorChanged() ausgesandt.
+		 **/
+		void setArmor( int general, int firearms );
+		/**
 		 * Löscht alle Charakterwerte.
 		 *
 		 * \note Tatsächlich werden die Werte nicht gelöscht, sondern auf 0 gesetzt.
@@ -352,6 +373,10 @@ class StorageCharacter : public QObject {
 		* Dieses Signal wird ausgesandt, wann immer sich der Wert der Moral verändert.
 		**/
 		void moralityChanged( int value );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich der Wert der Rüstung verändert.
+		**/
+		void armorChanged( int general, int firearms );
 };
 
 #endif

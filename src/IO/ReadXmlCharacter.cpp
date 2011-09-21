@@ -125,6 +125,11 @@ void ReadXmlCharacter::readSoulCreator( cv_Identity* id ) {
 			} else if ( elementName == "morality" ) {
 				int moralityValue = readElementText().toInt();
 				character->setMorality( moralityValue );
+			} else if ( elementName == "armor" ) {
+				int armorGeneral = attributes().value("general").toString().toInt();
+				int armorFirearms = attributes().value("firearms").toString().toInt();
+				character->setArmor( armorGeneral, armorFirearms );
+				readUnknownElement();
 			} else if ( elementName != cv_Trait::toXmlString( cv_Trait::TypeNo ) ) {
 // 				qDebug() << Q_FUNC_INFO << elementName << "!";
 				readTraits( cv_Trait::toType( elementName ) );

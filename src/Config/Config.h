@@ -92,11 +92,15 @@ class Config {
 		 */
 		static const int traitCustomTextWidthMin;
 		/**
-		 * Die Maximale höhe von Widgets, welche sich in einer Textzeile befinden.
+		 * Die größtmögliche Höhe von Widgets, welche sich in einer Textzeile befinden.
 		 *
 		 * Diese Höhe wurde gewählt, um vertikalen Raum zu sparen.
 		 */
 		static const int inlineWidgetHeightMax;
+		/**
+		 * Die Breite der Armor-Spinboxes.
+		 */
+		static const int spinBoxNoTextWidth;
 		/**
 		 * Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 		 */
