@@ -25,7 +25,7 @@
 #ifndef MERITWIDGET_H
 #define MERITWIDGET_H
 
-#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QScrollArea>
 #include <QToolBox>
 #include <QPushButton>
@@ -64,6 +64,7 @@ class MeritWidget : public QWidget {
 		~MeritWidget();
 
 	private:
+		QHBoxLayout* layout;
 		QScrollArea* scrollArea;
 		QToolBox* toolBox;
 // 		QPushButton* button;

@@ -36,6 +36,7 @@ const QString Config::configFile = "config.ini";
 const int Config::traitCategorySpace = 10;
 const int Config::traitMultipleMax = 3;
 const int Config::displayTimeout = 10000;
+const int Config::traitCustomTextWidthMin = 160;
 const int Config::inlineWidgetHeightMax = 18;
 const int Config::traitMax = 5;
 const int Config::moralityTraitMax = 10;

@@ -68,6 +68,7 @@ TraitLine::TraitLine( QWidget *parent, QString name, int value ) : QWidget( pare
 	button->setCheckable( true );
 	
 	lineEdit = new QLineEdit( this );
+	lineEdit->setMinimumWidth(Config::traitCustomTextWidthMin);
 	lineEdit->setMaximumHeight(Config::inlineWidgetHeightMax);
 	
 	traitDots = new TraitDots( this );

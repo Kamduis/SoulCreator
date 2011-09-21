@@ -88,6 +88,10 @@ class Config {
 		 */
 		static const int traitMultipleMax;
 		/**
+		 * DieMinimale Breite für Textfelder für zusätzlichen Text von Eigenschaften.
+		 */
+		static const int traitCustomTextWidthMin;
+		/**
 		 * Die Maximale höhe von Widgets, welche sich in einer Textzeile befinden.
 		 *
 		 * Diese Höhe wurde gewählt, um vertikalen Raum zu sparen.

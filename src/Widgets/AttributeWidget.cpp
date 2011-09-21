@@ -91,11 +91,12 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 		// Zeichnen des Separators zwischen den einzeolnen Kategorien
 		actualColumn++;
 		
-		layout->setColumnMinimumWidth(actualColumn, Config::traitCategorySpace);
-
 		QFrame* vLine = new QFrame(this);
 		vLine->setFrameStyle(QFrame::VLine);
 		layout->addWidget(vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter);
+
+// 		layout->setColumnMinimumWidth(actualColumn, Config::traitCategorySpace);
+		layout->setColumnStretch(actualColumn, 1);
 
 		// Jetzt sind wir in der Spalte für die tatsächlchen Attribute
 		actualColumn++;

@@ -22,7 +22,6 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGridLayout>
 #include <QLabel>
 #include <QDebug>
 
@@ -42,14 +41,18 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 
 	QLabel* labelName = new QLabel( tr( "Name:" ) );
 	namePushButton = new QPushButton( this );
+// 	QLabel* labelNameFull = new QLabel();
+// 	QLabel* labelNameDisplay = new QLabel();
+// 	QLabel* labelNameHonorific = new QLabel();
+// 	QLabel* labelNameSuper = new QLabel();
 
 	QLabel* labelGender = new QLabel( tr( "Gender:" ) );
 	speciesComboBox = new CharaSpecies( this );
 
 	QLabel* labelSpecies = new QLabel( tr( "Species:" ) );
 	genderCombobox = new QComboBox( this );
-	genderCombobox->addItem( tr( "Male" ) );
-	genderCombobox->addItem( tr( "Female" ) );
+	genderCombobox->addItem( QString::fromUtf8( "♂" ) );
+	genderCombobox->addItem( QString::fromUtf8( "♀" ) );
 
 	QLabel* labelVirtue = new QLabel( tr( "Virtue:" ) );
 	virtueCombobox = new QComboBox( this );
@@ -69,18 +72,18 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 
 	layout->addWidget( labelName, 0, 0 );
 	layout->addWidget( namePushButton, 0, 1 );
-	layout->addWidget( labelGender, 0, 2 );
-	layout->addWidget( genderCombobox, 0, 3 );
-	layout->addWidget( labelSpecies, 0, 4 );
-	layout->addWidget( speciesComboBox, 0, 5 );
-	layout->addWidget( labelVirtue, 1, 0 );
-	layout->addWidget( virtueCombobox, 1, 1 );
-	layout->addWidget( labelBreed, 1, 2 );
-	layout->addWidget( breedCombobox, 1, 3 );
-	layout->addWidget( labelVice, 2, 0 );
-	layout->addWidget( viceCombobox, 2, 1 );
-	layout->addWidget( labelFaction, 2, 2 );
-	layout->addWidget( factionCombobox, 2, 3 );
+	layout->addWidget( labelGender, 1, 0 );
+	layout->addWidget( genderCombobox, 1, 1 );
+	layout->addWidget( labelSpecies, 2, 0 );
+	layout->addWidget( speciesComboBox, 2, 1 );
+	layout->addWidget( labelVirtue, 3, 0 );
+	layout->addWidget( virtueCombobox, 3, 1 );
+	layout->addWidget( labelVice, 4, 0 );
+	layout->addWidget( viceCombobox, 4, 1 );
+	layout->addWidget( labelBreed, 5, 0 );
+	layout->addWidget( breedCombobox, 5, 1 );
+	layout->addWidget( labelFaction, 6, 0 );
+	layout->addWidget( factionCombobox, 6, 1 );
 
 // 	connect(nameLineEdit, SIGNAL(textChanged(QString)), this, SLOT(modifyRealIdentity()));
 	connect( namePushButton, SIGNAL( clicked( bool ) ), this, SLOT( openNameDialog() ) );
@@ -169,10 +172,10 @@ void InfoWidget::updateFaction( QString txt ) {
 
 void InfoWidget::updateBreedBox( cv_Species::SpeciesFlag spe ) {
 	breedCombobox->clear();
-	breedCombobox->addItems(storage->breedNames(spe));
+	breedCombobox->addItems( storage->breedNames( spe ) );
 }
 
 void InfoWidget::updateFactionBox( cv_Species::SpeciesFlag spe ) {
 	factionCombobox->clear();
-	factionCombobox->addItems(storage->factionNames(spe));
+	factionCombobox->addItems( storage->factionNames( spe ) );
 }

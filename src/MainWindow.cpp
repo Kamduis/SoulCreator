@@ -33,6 +33,7 @@
 #include <QDebug>
 
 #include "IO/Settings.h"
+#include "Widgets/Dialogs/SettingsDialog.h"
 #include "Widgets/TraitLine.h"
 #include "Widgets/Dialogs/MessageBox.h"
 #include "IO/ReadXmlTemplate.h"
@@ -70,7 +71,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 // 	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 // 	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 
-	settingsDialog = new SettingsDialog( this );
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
 	readCharacter = new ReadXmlCharacter();
@@ -86,7 +86,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), this, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
-	connect( ui->actionSettings, SIGNAL( triggered() ), this, SLOT( showConfigDialog() ) );
+	connect( ui->actionSettings, SIGNAL( triggered() ), this, SLOT( showSettingsDialog() ) );
 	connect( ui->actionNew, SIGNAL( triggered() ), this, SLOT( newCharacter() ) );
 	connect( ui->actionOpen, SIGNAL( triggered() ), this, SLOT( openCharacter() ) );
 	connect( ui->actionSave, SIGNAL( triggered() ), this, SLOT( saveCharacter() ) );
@@ -235,8 +235,9 @@ void MainWindow::activate() {
 }
 
 
-void MainWindow::showConfigDialog() {
-	settingsDialog->exec();
+void MainWindow::showSettingsDialog() {
+	SettingsDialog dialog;
+	dialog.exec();
 }
 
 void MainWindow::tabPrevious() {
@@ -469,8 +470,9 @@ void MainWindow::writeSettings() {
 	settings.beginGroup( "MainWindow" );
 	settings.setValue( "size", size() );
 	settings.setValue( "pos", pos() );
+	settings.setValue( "state", saveState() );
 	settings.endGroup();
-	
+
 	settings.beginGroup( "Config" );
 	settings.setValue( "exportFont", Config::exportFont.family() );
 	settings.endGroup();
@@ -480,10 +482,11 @@ void MainWindow::readSettings() {
 	Settings settings( QApplication::applicationDirPath() + "/" + Config::configFile );
 
 	settings.beginGroup( "MainWindow" );
-	resize( settings.value( "size", QSize( 400, 400 ) ).toSize() );
-	move( settings.value( "pos", QPoint( 200, 200 ) ).toPoint() );
+	resize( settings.value( "size", QSize( 800, 400 ) ).toSize() );
+// 	move( settings.value( "pos", QPoint( 200, 200 ) ).toPoint() );
+	restoreState( settings.value( "state" ).toByteArray() );
 	settings.endGroup();
-	
+
 	settings.beginGroup( "Config" );
 	Config::exportFont = QFont( settings.value("exportFont").toString());
 	settings.endGroup();

@@ -35,21 +35,12 @@
 
 
 MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
-	QVBoxLayout* layoutTop = new QVBoxLayout( this );
-	setLayout( layoutTop );
-
-	scrollArea = new QScrollArea( this );
-	scrollArea->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Expanding );
-	scrollArea->setWidgetResizable( true );
-	scrollArea->setFrameStyle( 0 );
-
-	layoutTop->addWidget( scrollArea );
+	layout = new QHBoxLayout( this );
+	setLayout( layout );
 
 	toolBox = new QToolBox();
-	toolBox->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Expanding );
 
-	scrollArea->setWidget( toolBox );
-	toolBox->show();
+	layout->addWidget(toolBox);
 
 	storage = new StorageTemplate( this );
 
@@ -64,7 +55,9 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 		QWidget* widgetMeritCategory = new QWidget();
 		QVBoxLayout* layoutMeritCategory = new QVBoxLayout();
+		
 		widgetMeritCategory->setLayout( layoutMeritCategory );
+		
 		toolBox->addItem( widgetMeritCategory, cv_Trait::toString( v_categories.at( i ), true ) );
 
 		list = storage->traitsPtr( type, v_categories.at( i ) );
@@ -112,7 +105,7 @@ MeritWidget::~MeritWidget() {
 	delete toolBox;
 // 	delete dialog;
 // 	delete button;
-	delete scrollArea;
+	delete layout;
 }
 
 

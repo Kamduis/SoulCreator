@@ -38,7 +38,6 @@
 #include "Widgets/FlawWidget.h"
 #include "Widgets/AdvantagesWidget.h"
 #include "Widgets/CharaSpecialties.h"
-#include "Widgets/Dialogs/SettingsDialog.h"
 #include "Draw/DrawSheet.h"
 
 #include <QMainWindow>
@@ -104,10 +103,6 @@ class MainWindow : public QMainWindow {
 		 */
 		Ui::MainWindow* ui;
 
-		/**
-		 * Configurationsdialog.
-		 */
-		SettingsDialog* settingsDialog;
 		/**
 		 * Zeiger auf die Klasse, welche sämtliche Eigenschaftsbezeichnungen enthält.
 		 */
@@ -207,7 +202,7 @@ class MainWindow : public QMainWindow {
 		/**
 		 * Diese Funktion ruft den Konfigurationsdialog auf und sorgt dafür, daß die änderungen gespeichert oder verworfen werden.
 		 **/
-		void showConfigDialog();
+		void showSettingsDialog();
 		/**
 		 * Diese Funktion schaltet die Eigenschaften einen Tab zurück.
 		 **/

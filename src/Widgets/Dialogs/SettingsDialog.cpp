@@ -47,9 +47,7 @@ SettingsDialog::~SettingsDialog() {
 
 
 void SettingsDialog::saveChanges() {
-	if (Config::exportFont != ui->fontComboBox_export->currentFont()){
-		Config::exportFont = ui->fontComboBox_export->currentFont();
-	}
+	Config::exportFont = ui->fontComboBox_export->currentFont();
 
-	this->accept();
+	accept();
 }

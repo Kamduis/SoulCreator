@@ -45,6 +45,7 @@ CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 	checkBox->setMaximumHeight(Config::inlineWidgetHeightMax);
 
 	lineEdit = new QLineEdit( this );
+	lineEdit->setMinimumWidth(Config::traitCustomTextWidthMin);
 	lineEdit->setMaximumHeight(Config::inlineWidgetHeightMax);
 
 	layout->addWidget( checkBox );

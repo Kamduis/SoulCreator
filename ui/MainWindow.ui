@@ -21,7 +21,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>6</number>
       </property>
       <widget class="QWidget" name="tabWidgetItem_Info">
        <attribute name="title">
@@ -44,13 +44,30 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QFrame" name="frame_info">
-              <layout class="QVBoxLayout" name="layout_info">
-               <property name="margin">
-                <number>0</number>
-               </property>
-              </layout>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QFrame" name="frame_info">
+                <layout class="QVBoxLayout" name="layout_info">
+                 <property name="margin">
+                  <number>0</number>
+                 </property>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
             </item>
             <item>
              <spacer name="verticalSpacer_2">
@@ -86,8 +103,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>94</width>
-             <height>24</height>
+             <width>868</width>
+             <height>345</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -134,8 +151,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>94</width>
-             <height>24</height>
+             <width>868</width>
+             <height>345</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -182,19 +199,23 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>94</width>
-             <height>24</height>
+             <width>868</width>
+             <height>345</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_11">
             <item>
-             <widget class="QFrame" name="frame_merits">
-              <layout class="QVBoxLayout" name="layout_merits">
-               <property name="margin">
-                <number>0</number>
-               </property>
-              </layout>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QFrame" name="frame_merits">
+                <layout class="QVBoxLayout" name="layout_merits">
+                 <property name="margin">
+                  <number>0</number>
+                 </property>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
@@ -208,9 +229,27 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_14">
         <item>
-         <widget class="QFrame" name="frame_morality">
-          <layout class="QVBoxLayout" name="layout_morality"/>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QFrame" name="frame_morality">
+            <layout class="QVBoxLayout" name="layout_morality"/>
+            <zorder>verticalSpacer_5</zorder>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item>
          <spacer name="verticalSpacer_5">
@@ -242,19 +281,36 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>94</width>
-             <height>24</height>
+             <width>868</width>
+             <height>345</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_13">
             <item>
-             <widget class="QFrame" name="frame_powers">
-              <layout class="QVBoxLayout" name="layout_powers">
-               <property name="margin">
-                <number>0</number>
-               </property>
-              </layout>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QFrame" name="frame_powers">
+                <layout class="QVBoxLayout" name="layout_powers">
+                 <property name="margin">
+                  <number>0</number>
+                 </property>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
             </item>
             <item>
              <spacer name="verticalSpacer">
@@ -290,25 +346,29 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>94</width>
-             <height>24</height>
+             <width>868</width>
+             <height>345</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_12">
             <item>
-             <widget class="QFrame" name="frame_flaws">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <layout class="QVBoxLayout" name="layout_flaws">
-               <property name="margin">
-                <number>0</number>
-               </property>
-              </layout>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QFrame" name="frame_flaws">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <layout class="QVBoxLayout" name="layout_flaws">
+                 <property name="margin">
+                  <number>0</number>
+                 </property>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
@@ -409,8 +469,8 @@
     <addaction name="actionSettings"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuAbout"/>
    <addaction name="menuConfiguration"/>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget_advantages">
@@ -443,7 +503,7 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents">
+   <widget class="QWidget" name="dockWidget_specialtiesContents">
     <property name="sizePolicy">
      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
       <horstretch>0</horstretch>
