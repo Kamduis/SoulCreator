@@ -408,6 +408,7 @@ void DrawSheet::print() {
 
 	// Die Schriftart einstellen.
 	QFont characterFont = Config::exportFont;
+
 	characterFont.setPointSize( v_textHeight*Config::textSizeFactorPrintNormal );
 
 	painter.setFont( characterFont );
@@ -419,13 +420,21 @@ void DrawSheet::print() {
 	painter.drawImage( target, image, source );
 
 	drawInfo( &painter, offsetHInfo, offsetVInfo, distanceHInfo, distanceVInfo, textWidthInfo );
+
 	drawAttributes( &painter, offsetHAttributes, offsetVAttributes, distanceHAttributes, distanceVAttributes );
+
 	drawSkills( &painter, offsetHSkills, offsetVSkills, distanceVSkills, distanceVCat, textWidthSkills );
+
 	drawMerits( &painter, offsetHMerits, offsetVMerits, distanceVMerits, textWidthMerits, maxMerits );
+
 	drawFlaws( &painter, offsetHFlaws, offsetVFlaws, textWidthFlaws );
+
 	drawAdvantages( &painter, offsetHAdvantages, offsetVAdvantages, distanceVAdvantages, textWidthAdvantages, character->species(), distanceHAdvantages );
+
 	drawHealth( &painter, offsetHHealth, offsetVHealth, distanceHHealth, dotSizeFactor );
+
 	drawWillpower( &painter, offsetHWillpower, offsetVWillpower, distanceHWillpower, dotSizeFactor );
+
 	drawMorality( &painter, offsetHMorality, offsetVMorality, distanceVMorality, textWidthMorality );
 
 	if ( character->species() != cv_Species::Human ) {
@@ -555,6 +564,7 @@ void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qre
 				painter->save();
 
 				QFont lclFont = painter->font();
+
 				lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
 
 				painter->setFont( lclFont );
@@ -601,10 +611,10 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 
 		if ( !customText.isEmpty() ) {
 			painter->save();
-			
+
 			QFont lclFont = painter->font();
 			lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
-			
+
 			painter->setFont( lclFont );
 			painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText + " " );
 			painter->restore();
@@ -766,13 +776,13 @@ void DrawSheet::drawMorality( QPainter* painter, qreal offsetH, qreal offsetV, q
 
 	QList< cv_Derangement > list = character->derangements();
 
-	for (int i = value; i < Config::derangementMoralityTraitMax; i++){
-		for (int j = 0; j < list.count(); j++){
-			if (list.at(j).morality == i+1){
+	for ( int i = value; i < Config::derangementMoralityTraitMax; i++ ) {
+		for ( int j = 0; j < list.count(); j++ ) {
+			if ( list.at( j ).morality == i + 1 ) {
 				QRect textRect = QRect( offsetH - textWidth, offsetV + v_dotDiameterV * dotSizeFactor + v_textDotsHeightDifference - distanceV * i - v_textHeight, textWidth, v_textHeight );
 // 				painter->drawRect( textRect );
-				painter->drawText( textRect, Qt::AlignLeft | Qt::AlignBottom, list.at(j).name );
-				
+				painter->drawText( textRect, Qt::AlignLeft | Qt::AlignBottom, list.at( j ).name );
+
 				break;
 			}
 		}
@@ -790,21 +800,37 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 	}
 
 	if ( species == cv_Species::Mage || species == cv_Species::Werewolf ) {
-		qreal half = ceil( static_cast<qreal>( listToUse.count() ) / 2 );
+		// Bei Magiern und Werwölfen sind alle Kräfte schon auf dem Charakterbogen, also muß ich aufpassen, daß sie in der richtigen Reihenfolge an der richtigen Stelle auftauchen, auch wenn einige im Charkater fehlen.
+		StorageTemplate storage;
+		QList< cv_Trait > list = storage.traits( cv_Trait::Power, species );
+		qreal half = ceil( static_cast<qreal>( list.count() ) / 2 );
+
+		qDebug() << Q_FUNC_INFO << half;
 
 		for ( int i = 0; i < half; i++ ) {
-			for ( int j = 0; j < listToUse.at( i ).value; j++ ) {
-				// Punkte malen.
-				QRectF dotsRect( offsetH + v_dotDiameterH*j, offsetV + distanceV*i, v_dotDiameterH, v_dotDiameterV );
-				painter->drawEllipse( dotsRect );
+			for ( int k = 0; k < listToUse.count(); k++ ) {
+				if ( listToUse.at( k ).name == list.at( i ).name ) {
+					for ( int j = 0; j < listToUse.at( k ).value; j++ ) {
+						// Punkte malen.
+						QRectF dotsRect( offsetH + v_dotDiameterH*j, offsetV + distanceV*i, v_dotDiameterH, v_dotDiameterV );
+						painter->drawEllipse( dotsRect );
+					}
+
+					break;
+				}
 			}
 		}
 
-		for ( int i = half; i < listToUse.count(); i++ ) {
-			for ( int j = 0; j < listToUse.at( i ).value; j++ ) {
-				// Punkte malen.
-				QRectF dotsRect( offsetH + distanceH - v_dotDiameterH*j, offsetV + distanceV*( i - half ), v_dotDiameterH, v_dotDiameterV );
-				painter->drawEllipse( dotsRect );
+		for ( int i = half; i < list.count(); i++ ) {
+			for ( int k = 0; k < listToUse.count(); k++ ) {
+				if ( listToUse.at( k ).name == list.at( i ).name ) {
+					for ( int j = 0; j < listToUse.at( k ).value; j++ ) {
+						// Punkte malen.
+						QRectF dotsRect( offsetH + distanceH - v_dotDiameterH*j, offsetV + distanceV*( i - half ), v_dotDiameterH, v_dotDiameterV );
+						painter->drawEllipse( dotsRect );
+					}
+					break;
+				}
 			}
 		}
 	} else {
@@ -827,10 +853,10 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 
 			if ( !customText.isEmpty() ) {
 				painter->save();
-				
+
 				QFont lclFont = painter->font();
 				lclFont.setPointSize( v_textHeight*Config::textSizeFactorPrintSmall );
-				
+
 				painter->setFont( lclFont );
 				painter->drawText( textRect, Qt::AlignRight | Qt::AlignTop | Qt::TextWordWrap, customText + " " );
 				painter->restore();

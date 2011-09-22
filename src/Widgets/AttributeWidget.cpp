@@ -80,39 +80,38 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	labelStr = new QLabel( this );
 	labelDex = new QLabel( this );
 	labelSta = new QLabel( this );
+	labelMan = new QLabel( this );
 
 	connect( this, SIGNAL( speciesChanged( bool ) ), labelStr, SLOT( setHidden( bool ) ) );
 	connect( this, SIGNAL( speciesChanged( bool ) ), labelDex, SLOT( setHidden( bool ) ) );
 	connect( this, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) );
+	connect( this, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) );
 
 	for ( int i = 0; i < categories.count(); i++ ) {
 		list = storage.traitsPtr( type, categories.at( i ) );
 
-		// Zeichnen des Separators zwischen den einzeolnen Kategorien
+		// Zeichnen des Separators zwischen den einzelnen Kategorien
 		actualColumn++;
-		
-		QFrame* vLine = new QFrame(this);
-		vLine->setFrameStyle(QFrame::VLine);
-		layout->addWidget(vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter);
+
+		QFrame* vLine = new QFrame( this );
+		vLine->setFrameStyle( QFrame::VLine );
+		layout->addWidget( vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter );
 
 // 		layout->setColumnMinimumWidth(actualColumn, Config::traitCategorySpace);
-		layout->setColumnStretch(actualColumn, 1);
+		layout->setColumnStretch( actualColumn, 1 );
 
 		// Jetzt sind wir in der Spalte für die tatsächlchen Attribute
 		actualColumn++;
 
 		// Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
 		QLabel* header = new QLabel();
-		header->setAlignment(Qt::AlignHCenter);
-		header->setText(cv_Trait::toString(categories.at(i)));
-		layout->addWidget(header, 0, actualColumn);
+		header->setAlignment( Qt::AlignHCenter );
+		header->setText( cv_Trait::toString( categories.at( i ) ) );
+		layout->addWidget( header, 0, actualColumn );
 
 		// Einfügen der tatsächlichen Attribute
-		for ( int j = 0; j < list.count(); j++ ) {
-			// Jedes einzelne Attribut wird nochmal in ein hor. Layout gesteckt, damit ich bei den Werwölfen die Attributswerte aller Formen angeben kann.
-			QHBoxLayout* layoutAttribute = new QHBoxLayout();
-			layout->addLayout( layoutAttribute, j+1, actualColumn );
 
+		for ( int j = 0; j < list.count(); j++ ) {
 			// Anlegen der Eigenschaft im Speicher
 			cv_Trait* traitPtr = character->addTrait( *list[j] );
 
@@ -120,28 +119,36 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 			CharaTrait *trait = new CharaTrait( this, traitPtr, list[j] );
 			trait->setValue( 1 );
 
-			layoutAttribute->addWidget( trait );
+			layout->addWidget( trait, j + 1, actualColumn );
 
 			if ( trait->category() == cv_Trait::Physical ) {
 				if ( trait->name() == "Strength" ) {
-					layoutAttribute->addWidget( labelStr );
+					layout->addWidget( labelStr, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesStr( int ) ) );
 				} else if ( trait->name() == "Dexterity" ) {
-					layoutAttribute->addWidget( labelDex );
+					layout->addWidget( labelDex, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesDex( int ) ) );
 				} else if ( trait->name() == "Stamina" ) {
-					layoutAttribute->addWidget( labelSta );
+					layout->addWidget( labelSta, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesSta( int ) ) );
 				}
+			} else if ( trait->category() == cv_Trait::Social ) {
+				if ( trait->name() == "Manipulation" ) {
+					layout->addWidget( labelMan, j + 1, actualColumn + 1 );
+					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesMan( int ) ) );
+				}
 			}
-
 		}
+
+		// Bei Werwölfen erscheint hier zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
+		actualColumn++;
 	}
 
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( emitSpeciesChanged( cv_Species::SpeciesFlag ) ) );
 }
 
 AttributeWidget::~AttributeWidget() {
+	delete labelMan;
 	delete labelStr;
 	delete labelDex;
 	delete labelSta;
@@ -183,6 +190,18 @@ void AttributeWidget::updateshapeValuesSta( int val ) {
 	}
 
 	labelSta->setText( txt.join( "/" ) );
+}
+
+void AttributeWidget::updateshapeValuesMan( int val ) {
+	QStringList txt;
+
+	// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
+
+	for ( int i = 1; i < cv_Shape::getShapeList().count(); i++ ) {
+		txt.append( QString::number( CalcAdvantages::manipulation( val, cv_Shape::getShapeList().at( i ) ) ) );
+	}
+
+	labelMan->setText( txt.join( "/" ) );
 }
 
 void AttributeWidget::emitSpeciesChanged( cv_Species::SpeciesFlag spe ) {

@@ -79,7 +79,7 @@ class MainWindow;
  *
  * \todo Charakterbeschreibung einbauen.
  *
- * \todo Beim nächsten Versionssprung sollte bei den gespeicherten Charakteren die Namen anders gespeichert werden. Anstelle alles in <xxx>bla</xxx> zu schreiben, sollte es eine Identitätsgruppe geben mit den einzelnen Namensbestandteilen als Attribute einer einzelnen Identität dieser Gruppe.
+ * \todo Alle Reiter, bei denen nicht alle Punkte vergeben wurden grün färben und jene, bei denen zu viele vergeben wurde, rot färben.
  */
 
 class MainWindow : public QMainWindow {

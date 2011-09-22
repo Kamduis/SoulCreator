@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="tabPosition">
-       <enum>QTabWidget::West</enum>
+       <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
        <number>0</number>
@@ -38,8 +38,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>909</width>
-             <height>345</height>
+             <width>953</width>
+             <height>321</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
@@ -103,7 +103,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>909</width>
+             <width>929</width>
              <height>345</height>
             </rect>
            </property>
@@ -151,7 +151,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>909</width>
+             <width>929</width>
              <height>345</height>
             </rect>
            </property>
@@ -216,7 +216,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>909</width>
+             <width>929</width>
              <height>345</height>
             </rect>
            </property>
@@ -297,7 +297,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>909</width>
+             <width>929</width>
              <height>345</height>
             </rect>
            </property>
@@ -362,7 +362,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>909</width>
+             <width>929</width>
              <height>345</height>
             </rect>
            </property>

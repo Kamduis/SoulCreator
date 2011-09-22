@@ -125,7 +125,7 @@ void Creation::calcPoints( cv_Trait* trait ) {
 			}
 		}
 
-		qDebug() << Q_FUNC_INFO << pointList;
+// 		qDebug() << Q_FUNC_INFO << pointList;
 
 		emit pointsChanged( points() );
 	}

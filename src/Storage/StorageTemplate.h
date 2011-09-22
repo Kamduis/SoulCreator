@@ -123,6 +123,10 @@ class StorageTemplate : public QObject {
 		QList< cv_Trait > powers( cv_Trait::Category category ) const;
 		/**
 		 * Gibt Alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
+		 **/
+		QList< cv_Trait > traits(cv_Trait::Type type, cv_Species::SpeciesFlag species) const;
+		/**
+		 * Gibt Alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		 *
 		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
 		 **/

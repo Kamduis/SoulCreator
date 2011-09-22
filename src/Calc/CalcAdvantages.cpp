@@ -106,6 +106,25 @@ int CalcAdvantages::stamina( int sta, cv_Shape::WerewolfShape shape ) {
 	}
 }
 
+int CalcAdvantages::manipulation( int man, cv_Shape::WerewolfShape shape ) {
+	switch ( shape ) {
+		case cv_Shape::ShapeNo:
+			return man;
+		case cv_Shape::Hishu:
+			return man;
+		case cv_Shape::Dalu:
+			return man - 1;
+		case cv_Shape::Gauru:
+			return man;
+		case cv_Shape::Urshul:
+			return man - 3;
+		case cv_Shape::Urhan:
+			return man;
+		default:
+			throw eWerewolfShapeNotExisting( shape );
+	}
+}
+
 
 int CalcAdvantages::size( cv_Shape::WerewolfShape shape ) const {
 	switch ( shape ) {

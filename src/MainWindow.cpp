@@ -561,8 +561,8 @@ void MainWindow::readSettings() {
 	Settings settings( QApplication::applicationDirPath() + "/" + Config::configFile );
 
 	settings.beginGroup( "MainWindow" );
-	resize( settings.value( "size", QSize( 800, 400 ) ).toSize() );
-// 	move( settings.value( "pos", QPoint( 200, 200 ) ).toPoint() );
+	resize( settings.value( "size", QSize( 900, 600 ) ).toSize() );
+	move( settings.value( "pos", QPoint( 200, 200 ) ).toPoint() );
 	restoreState( settings.value( "state" ).toByteArray() );
 	settings.endGroup();
 

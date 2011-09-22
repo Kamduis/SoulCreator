@@ -214,6 +214,27 @@ QList< cv_Trait > StorageTemplate::powers( cv_Trait::Category category ) const {
 	return list;
 }
 
+QList< cv_Trait > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const
+{
+	QList< cv_Trait > traits;
+	cv_Trait trait;
+
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).type == type && v_traits.at(i).species.testFlag(species) ) {
+			trait = v_traits.at( i );
+			traits.append( trait );
+		}
+	}
+
+	if ( traits.isEmpty() ) {
+		qDebug() << Q_FUNC_INFO << "Trait Typ" << type << "existiert nicht!";
+// 		throw eTraitNotExisting();
+	}
+
+	return traits;
+}
+
+
 QList< cv_Trait > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
 	QList< cv_Trait > traits;
 	cv_Trait trait;

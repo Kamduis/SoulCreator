@@ -37,6 +37,8 @@
  * @brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
  *
  * Die Attribute werden in diesem Widget angeordnet.
+ *
+ * \todo Die Attribute in ein Gridlayout packen, damit bei den Werwölfen die Manipulation nicht so heraussticht.
  **/
 class AttributeWidget : public QWidget {
 		Q_OBJECT
@@ -63,6 +65,7 @@ class AttributeWidget : public QWidget {
 		QLabel *labelStr;
 		QLabel *labelDex;
 		QLabel *labelSta;
+		QLabel *labelMan;
 
 	public slots:
 
@@ -83,6 +86,10 @@ class AttributeWidget : public QWidget {
 		 * Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Widerstandsfähigkeit.
 		 **/
 		void updateshapeValuesSta(int val);
+		/**
+		 * Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Manipulation.
+		 **/
+		void updateshapeValuesMan(int val);
 
 	signals:
 		/**

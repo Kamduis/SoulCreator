@@ -77,6 +77,7 @@ class CalcAdvantages : public QObject {
 		static int strength( int str, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
 		static int dexterity( int dex, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
 		static int stamina( int sta, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
+		static int manipulation( int man, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
 		
 	private:
 		StorageCharacter* character;
