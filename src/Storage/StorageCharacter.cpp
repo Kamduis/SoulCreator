@@ -77,7 +77,7 @@ StorageCharacter::StorageCharacter( QObject* parent ) : QObject( parent ) {
 	connect( this, SIGNAL( factionChanged( QString ) ), this, SLOT( setModified() ) );
 	connect( this, SIGNAL( superTraitChanged( int ) ), this, SLOT( setModified() ) );
 	connect( this, SIGNAL( moralityChanged( int ) ), this, SLOT( setModified() ) );
-	connect( this, SIGNAL( armorChanged( int ) ), this, SLOT( setModified() ) );
+	connect( this, SIGNAL( armorChanged( int, int ) ), this, SLOT( setModified() ) );
 }
 
 StorageCharacter::~StorageCharacter() {
@@ -132,6 +132,18 @@ void StorageCharacter::setRealIdentity( cv_Identity id ) {
 
 QList< cv_Trait > StorageCharacter::traitsAll() const {
 	return v_traits;
+}
+
+QList< cv_Trait > StorageCharacter::traits( cv_Trait::Type type ) const {
+	QList< cv_Trait > list;
+
+	for ( int i = 0; i < v_traits.count(); i++ ) {
+		if ( v_traits.at( i ).type == type ) {
+			list.append( v_traits.at( i ) );
+		}
+	}
+
+	return list;
 }
 
 QList< cv_Trait > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Category category ) const {
@@ -400,6 +412,7 @@ void StorageCharacter::resetCharacter() {
 }
 
 
+
 bool StorageCharacter::isModifed() const {
 	return v_modified;
 }
@@ -409,3 +422,6 @@ void StorageCharacter::setModified( bool sw ) {
 		v_modified = sw;
 	}
 }
+
+
+

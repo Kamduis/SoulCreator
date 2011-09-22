@@ -42,6 +42,7 @@
 #include "Config/Config.h"
 #include "Storage/StorageCharacter.h"
 #include "Storage/StorageTemplate.h"
+#include "Calc/Creation.h"
 #include "CMakeConfig.h"
 
 #include "MainWindow.h"
@@ -73,6 +74,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
+	creation = new Creation( this );
 	readCharacter = new ReadXmlCharacter();
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
@@ -81,6 +83,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( ui->pushButton_next, SIGNAL( clicked() ), this, SLOT( tabNext() ) );
 	connect( ui->pushButton_previous, SIGNAL( clicked() ), this, SLOT( tabPrevious() ) );
 	connect( ui->tabWidget, SIGNAL( currentChanged( int ) ), this, SLOT( setTabButtonState( int ) ) );
+	connect( ui->tabWidget, SIGNAL( currentChanged( int ) ), this, SLOT( showCreationPoints( int ) ) );
 
 	initialize();
 
@@ -110,6 +113,7 @@ MainWindow::~MainWindow() {
 	delete info;
 	delete writeCharacter;
 	delete readCharacter;
+	delete creation;
 	delete storage;
 
 	// Ganz am Schluß lösche ich natürlich auch den Charakterspeicher, welcher ja als Singleton-Klasse realisiert wurde.
@@ -188,7 +192,41 @@ void MainWindow::populateUi() {
 
 	// Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hidePowers( cv_Species::SpeciesFlag ) ) );
+
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( showBackround( cv_Species::SpeciesFlag ) ) );
+
+	// Schreibe die übrigen Erschaffungspunkte
+	connect( creation, SIGNAL( pointsChanged( cv_CreationPoints ) ), this, SLOT( showCreationPoints( cv_CreationPoints ) ) );
 }
+
+void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
+	for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
+		ui->tabWidget->widget( i )->setObjectName( "tabWidget_item" + QString::number( i ) );
+	}
+
+	if ( spec == cv_Species::Changeling ) {
+		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
+			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center }" );
+		}
+	} else if ( spec == cv_Species::Mage ) {
+		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
+			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center }" );
+		}
+	} else if ( spec == cv_Species::Vampire ) {
+		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
+			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center }" );
+		}
+	} else if ( spec == cv_Species::Werewolf ) {
+		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
+			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center }" );
+		}
+	} else {
+		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
+			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mortal-gray.png); background-repeat: no-repeat; background-position: center }" );
+		}
+	}
+}
+
 
 void MainWindow::showCharacterTraits() {
 }
@@ -224,10 +262,12 @@ void MainWindow::activate() {
 
 	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
 	character->setSpecies( cv_Species::Changeling );
+
 	character->setSpecies( cv_Species::Human );
 
 	// Virtue und Vice müssen auch initial einmal festgelegt werden.
 	character->setVirtue( storage->virtueNames( cv_Trait::Adult ).at( 0 ) );
+
 	character->setVice( storage->viceNames( cv_Trait::Adult ).at( 0 ) );
 
 	// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
@@ -282,6 +322,38 @@ void MainWindow::setTabButtonState( int index ) {
 	}
 }
 
+void MainWindow::showCreationPoints( int idx ) {
+	ui->frame_creationPoints->setHidden( true );
+	ui->frame_creationPointsSpecialties->setHidden( true );
+
+	if ( idx == 1 || idx == 2 || idx == 3 || idx == 5 ) {
+		ui->frame_creationPoints->setHidden( false );
+
+		if ( idx == 1 ) {
+			ui->label_pointsLeft->setText( creation->points().attributesOut() );
+		} else if ( idx == 2 ) {
+			ui->frame_creationPointsSpecialties->setHidden( false );
+			ui->label_pointsLeft->setText( creation->points().skillsOut() );
+		} else if ( idx == 3 ) {
+			ui->label_pointsLeft->setText( creation->points().meritsOut() );
+		} else if ( idx == 5 ) {
+			ui->label_pointsLeft->setText( creation->points().powersOut() );
+		}
+	}
+}
+
+void MainWindow::showCreationPoints( cv_CreationPoints pt ) {
+	if ( ui->tabWidget->currentIndex() == 1 ) {
+		ui->label_pointsLeft->setText( creation->points().attributesOut() );
+	} else if ( ui->tabWidget->currentIndex() == 2 ) {
+		ui->label_pointsLeft->setText( creation->points().skillsOut() );
+	} else if ( ui->tabWidget->currentIndex() == 3 ) {
+		ui->label_pointsLeft->setText( creation->points().meritsOut() );
+	} else if ( ui->tabWidget->currentIndex() == 5 ) {
+		ui->label_pointsLeft->setText( creation->points().powersOut() );
+	}
+}
+
 
 void MainWindow::aboutApp() {
 	QString aboutText = tr( "<h1>%1</h1>" ).arg( Config::name() ) +
@@ -301,42 +373,49 @@ void MainWindow::aboutApp() {
 
 void MainWindow::newCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
-
-	character->resetCharacter();
-}
-
-void MainWindow::openCharacter() {
-	QString appPath = QApplication::applicationDirPath();
-
-	// Pfad zum Speicherverzeichnis
-	QString savePath = appPath + "/" + Config::saveDir();
-
-	if ( !QDir( savePath ).exists() ) {
-		savePath = appPath;
-	}
-
-	QString filePath = QFileDialog::getOpenFileName( this, tr( "Select Character File" ), savePath, tr( "WoD Characters (*.chr)" ) );
-
-	if ( !filePath.isEmpty() ) {
-		QFile* file = new QFile( filePath );
-
-		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
+	if ( maybeSave() ) {
 		character->resetCharacter();
-
-		try {
-			readCharacter->read( file );
-		} catch ( eXmlVersion &e ) {
-			MessageBox::exception( this, e.message(), e.description() );
-		} catch ( eXmlError &e ) {
-			MessageBox::exception( this, e.message(), e.description() );
-		} catch ( eFileNotOpened &e ) {
-			MessageBox::exception( this, e.message(), e.description() );
-		}
-
-		delete file;
 
 		// Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 		character->setModified( false );
+	}
+}
+
+void MainWindow::openCharacter() {
+	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
+	if ( maybeSave() ) {
+		QString appPath = QApplication::applicationDirPath();
+
+		// Pfad zum Speicherverzeichnis
+		QString savePath = appPath + "/" + Config::saveDir();
+
+		if ( !QDir( savePath ).exists() ) {
+			savePath = appPath;
+		}
+
+		QString filePath = QFileDialog::getOpenFileName( this, tr( "Select Character File" ), savePath, tr( "WoD Characters (*.chr)" ) );
+
+		if ( !filePath.isEmpty() ) {
+			QFile* file = new QFile( filePath );
+
+			// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
+			character->resetCharacter();
+
+			try {
+				readCharacter->read( file );
+			} catch ( eXmlVersion &e ) {
+				MessageBox::exception( this, e.message(), e.description() );
+			} catch ( eXmlError &e ) {
+				MessageBox::exception( this, e.message(), e.description() );
+			} catch ( eFileNotOpened &e ) {
+				MessageBox::exception( this, e.message(), e.description() );
+			}
+
+			delete file;
+
+			// Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
+			character->setModified( false );
+		}
 	}
 }
 
@@ -488,7 +567,7 @@ void MainWindow::readSettings() {
 	settings.endGroup();
 
 	settings.beginGroup( "Config" );
-	Config::exportFont = QFont( settings.value("exportFont").toString());
+	Config::exportFont = QFont( settings.value( "exportFont" ).toString() );
 	settings.endGroup();
 }
 

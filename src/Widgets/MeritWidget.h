@@ -42,13 +42,9 @@
 /**
  * @brief Das Widget, in welchem sämtliche Merits angeordnet sind.
  *
- * \todo In jedem Reiter der Toolbox sollte in Klammern die Anzahl der Merits mit Wert stehen, damit der benutzer gleich weiß, wieviele Merits sein Charakter hat und wo er sie hat.
- *
  * \todo Einen Knopf erstellen, über den der Benutzer angeben kann, welche Merits er denn wirklich alle angezeigt haben will.
  *
  * \todo Bei Merits mit Zusatztext (Language) in diesem men+ ein Zahlenfle dangeben, bei welchem der benutzer einstellen kann, wieviele verschiedene dieser scheinbar identischen merits er angezeigt haben will.
- *
- * \todo Eigenschaften mit Zusatztext benötigen mehr vertikalen Raum als die anderen. Sieht nicht gut aus.
  **/
 class MeritWidget : public QWidget {
 		Q_OBJECT

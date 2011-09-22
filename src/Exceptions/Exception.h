@@ -75,7 +75,6 @@ class Exception {
  *
  * Allgemeine Fehler im Umgang mit Zahlen.
  */
-
 class eNumber : public Exception {
 	public:
 		/**
@@ -89,13 +88,31 @@ class eNumber : public Exception {
  *
  * Es wird eine Zahl erwartet, abe rkeine Zahl übergeben.
  */
-
 class eNotANumber : public eNumber {
 	public:
 		/**
 		 * Ausnahme: keine Zahl verfügbar.
 		 */
 		eNotANumber();
+};
+
+
+/**
+ * @brief Ausnahme bei Listen oder Vektoren.
+ */
+class eList : public Exception {
+	public:
+		eList();
+};
+
+/**
+ * @brief Index überschreitet Listengröße
+ *
+ * Es wird eine Zahl erwartet, abe rkeine Zahl übergeben.
+ */
+class eIndexExceedsRange : public eList {
+	public:
+		eIndexExceedsRange( int idx, int range );
 };
 
 

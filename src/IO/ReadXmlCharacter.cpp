@@ -56,19 +56,15 @@ bool ReadXmlCharacter::read( QFile *file ) {
 			QString elementName = name().toString();
 			QString elementVersion = attributes().value( "version" ).toString();
 
-			cv_Identity id;
-
 			try {
 				if ( checkXmlVersion( elementName, elementVersion ) ) {
-					readSoulCreator( &id );
+					readSoulCreator();
 				}
 			} catch ( eXmlOldVersion &e ) {
 				emit oldVersion( e.message(), e.description() );
 
-				readSoulCreator( &id );
+				readSoulCreator();
 			}
-
-			character->setRealIdentity( id );
 		}
 	}
 
@@ -80,7 +76,7 @@ bool ReadXmlCharacter::read( QFile *file ) {
 	closeFile( file );
 }
 
-void ReadXmlCharacter::readSoulCreator( cv_Identity* id ) {
+void ReadXmlCharacter::readSoulCreator() {
 	while ( !atEnd() ) {
 		readNext();
 
@@ -93,24 +89,8 @@ void ReadXmlCharacter::readSoulCreator( cv_Identity* id ) {
 			if ( elementName == "species" ) {
 				QString speciesName = readElementText();
 				character->setSpecies( cv_Species::toSpecies( speciesName ) );
-			} else if ( elementName == "forenames" ) {
-				QString characterNames = readElementText();
-				id->foreNames = characterNames.split( " " );
-			} else if ( elementName == "surename" ) {
-				QString characterName = readElementText();
-				id->sureName = characterName;
-			} else if ( elementName == "honorname" ) {
-				QString characterName = readElementText();
-				id->honorificName = characterName;
-			} else if ( elementName == "nickname" ) {
-				QString characterName = readElementText();
-				id->nickName = characterName;
-			} else if ( elementName == "supername" ) {
-				QString characterName = readElementText();
-				id->supernaturalName = characterName;
-			} else if ( elementName == "gender" ) {
-				QString characterGender = readElementText();
-				id->gender = cv_Identity::toGender( characterGender );
+			} else if ( elementName == "identities" ) {
+				readIdentities();
 			} else if ( elementName == "virtue" ) {
 				character->setVirtue( readElementText() );
 			} else if ( elementName == "vice" ) {
@@ -139,6 +119,38 @@ void ReadXmlCharacter::readSoulCreator( cv_Identity* id ) {
 		}
 	}
 }
+
+void ReadXmlCharacter::readIdentities()
+{
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			QString elementName = name().toString();
+			
+			if (elementName == "identity" ){
+				cv_Identity id;
+
+				id.foreNames = attributes().value("forenames").toString().split( " " );
+				id.sureName = attributes().value("surename").toString();
+				id.honorificName = attributes().value("honorname").toString();
+				id.nickName =attributes().value("nickname").toString();
+				id.supernaturalName =attributes().value("supername").toString();
+				id.gender = cv_Identity::toGender(attributes().value("gender").toString());
+
+				readUnknownElement();
+
+				character->setRealIdentity( id );
+			} else {
+				readUnknownElement();
+			}
+		}
+	}
+}
+
 
 void ReadXmlCharacter::readTraits( cv_Trait::Type type ) {
 	while ( !atEnd() ) {

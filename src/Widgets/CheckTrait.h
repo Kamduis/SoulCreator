@@ -127,8 +127,6 @@ class CheckTrait : public QWidget {
 		
 		/**
 		 * Verbirgt die Textzeile für den Beschreibungstext bei allen, außer Merits mit custom=true.
-		 *
-		 * \todo Muß natürlich auch bei manchen Powers vorhanden sein.
 		 **/
 		void hideDescriptionWidget();
 

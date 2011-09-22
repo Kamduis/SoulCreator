@@ -14,14 +14,14 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_15">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabWidgetItem_Info">
        <attribute name="title">
@@ -38,7 +38,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>868</width>
+             <width>909</width>
              <height>345</height>
             </rect>
            </property>
@@ -103,7 +103,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>868</width>
+             <width>909</width>
              <height>345</height>
             </rect>
            </property>
@@ -151,32 +151,49 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>868</width>
+             <width>909</width>
              <height>345</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <widget class="QFrame" name="frame_skills">
-              <layout class="QVBoxLayout" name="layout_skills">
-               <property name="margin">
-                <number>0</number>
-               </property>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <widget class="QFrame" name="frame_skills">
+                  <layout class="QVBoxLayout" name="layout_skills">
+                   <property name="margin">
+                    <number>0</number>
+                   </property>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_skillSpecialties">
+                <layout class="QVBoxLayout" name="layout_specialties">
+                 <property name="margin">
+                  <number>0</number>
+                 </property>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
@@ -199,7 +216,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>868</width>
+             <width>909</width>
              <height>345</height>
             </rect>
            </property>
@@ -233,7 +250,6 @@
           <item>
            <widget class="QFrame" name="frame_morality">
             <layout class="QVBoxLayout" name="layout_morality"/>
-            <zorder>verticalSpacer_5</zorder>
            </widget>
           </item>
           <item>
@@ -281,7 +297,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>868</width>
+             <width>909</width>
              <height>345</height>
             </rect>
            </property>
@@ -346,7 +362,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>868</width>
+             <width>909</width>
              <height>345</height>
             </rect>
            </property>
@@ -380,6 +396,68 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QFrame" name="frame_creationPoints">
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_points">
+           <property name="text">
+            <string>Points Left:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_pointsLeft">
+           <property name="text">
+            <string>0/0/0</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_10">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame_creationPointsSpecialties">
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_specialties">
+              <property name="text">
+               <string>Specialties Left:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_specialtiesLeft">
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
@@ -485,36 +563,6 @@
    </attribute>
    <widget class="QWidget" name="dockWidget_advantagesContents">
     <layout class="QVBoxLayout" name="layout_advantages"/>
-   </widget>
-  </widget>
-  <widget class="QDockWidget" name="dockWidget_specialties">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="features">
-    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
-   </property>
-   <property name="windowTitle">
-    <string>Specialties</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidget_specialtiesContents">
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <layout class="QVBoxLayout" name="layout_specialties">
-     <property name="margin">
-      <number>0</number>
-     </property>
-    </layout>
    </widget>
   </widget>
   <action name="actionSave">

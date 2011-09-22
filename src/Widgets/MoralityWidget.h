@@ -40,10 +40,6 @@
  *
  * Diese Tabelle zeigt die aktuelle Moralstufe an und bietet Platz für das Eintragen von Geistesstörungen.
  *
- * \todo Die eingetragenen Geistesstörungen werden noch nicht gespeichert oder geladen.
- *
- * \todo Die Geistesstörungen in storage als cv_Trait behandeln, in character allerdings als cv_Derangement.
- *
  * \todo Ich bin mit den Geistesstörungen noch nicht gänzlich zufrieden. Es besteht die Gefahr, daß einzelne GEistesstörungen immer und immer wieder zu dem Charkater hinzugefügt werden und dementsprechend das Programm und den gespeicherten Charakter aufblähen können.
  **/
 class MoralityWidget : public QWidget {

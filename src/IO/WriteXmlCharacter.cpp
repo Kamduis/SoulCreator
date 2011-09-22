@@ -53,12 +53,16 @@ void WriteXmlCharacter::write( QFile *file ) {
 	writeAttribute( "version", Config::version() );
 	writeTextElement( "species", cv_Species::toString( character->species() ) );
 	// Es wird nur die echte Identität (Index 0) berücksichtigt.
-	writeTextElement( "forenames", character->identities().at(0).foreNames.join( " " ) );
-	writeTextElement( "surename", character->identities().at(0).sureName );
-	writeTextElement( "honorname", character->identities().at(0).honorificName );
-	writeTextElement( "nickname", character->identities().at(0).nickName );
-	writeTextElement( "supername", character->identities().at(0).supernaturalName );
-	writeTextElement( "gender", cv_Identity::toXmlString(character->identities().at(0).gender) );
+	writeStartElement( "identities" );
+	writeStartElement( "identity" );
+	writeAttribute( "forenames", character->identities().at( 0 ).foreNames.join( " " ) );
+	writeAttribute( "surename", character->identities().at( 0 ).sureName );
+	writeAttribute( "honorname", character->identities().at( 0 ).honorificName );
+	writeAttribute( "nickname", character->identities().at( 0 ).nickName );
+	writeAttribute( "supername", character->identities().at( 0 ).supernaturalName );
+	writeAttribute( "gender", cv_Identity::toXmlString( character->identities().at( 0 ).gender ) );
+	writeEndElement();
+	writeEndElement();
 	writeTextElement( "virtue", character->virtue() );
 	writeTextElement( "vice", character->vice() );
 	writeTextElement( "breed", character->breed() );
@@ -66,8 +70,8 @@ void WriteXmlCharacter::write( QFile *file ) {
 	writeTextElement( "superTrait", QString::number( character->superTrait() ) );
 	writeTextElement( "morality", QString::number( character->morality() ) );
 	writeStartElement( "armor" );
-	writeAttribute( "general", QString::number( character->armorGeneral()));
-	writeAttribute( "firearms", QString::number( character->armorFirearms()));
+	writeAttribute( "general", QString::number( character->armorGeneral() ) );
+	writeAttribute( "firearms", QString::number( character->armorFirearms() ) );
 	writeEndElement();
 
 	writeCharacterTraits();
@@ -100,13 +104,14 @@ void WriteXmlCharacter::writeCharacterTraits() {
 		}
 
 		// Liste der Kategorien ist je nach Typ unterschiedlich
-		categories = cv_Trait::getCategoryList( types.at(i) );
+		categories = cv_Trait::getCategoryList( types.at( i ) );
 
 		for ( int j = 0; j < categories.count(); j++ ) {
 			list = character->traits( types.at( i ), categories.at( j ) );
 
 // 			qDebug() << Q_FUNC_INFO << "Type" << types.at(i) << "Category" << categories.at(j) << list.count();
 // 			if ( !list.isEmpty() ) {
+
 			try {
 				writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
 			} catch ( eTraitCategory &e ) {
@@ -122,6 +127,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 					writeAttribute( "value", QString::number( list.at( k ).value ) );
 
 // 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
+
 					if ( list.at( k ).custom ) {
 						writeAttribute( "custom", list.at( k ).customText );
 					}
@@ -132,11 +138,13 @@ void WriteXmlCharacter::writeCharacterTraits() {
 // 						qDebug() << Q_FUNC_INFO << list.at( k ).details.at( l ).name;
 						writeTextElement( "specialty",  list.at( k ).details.at( l ).name );
 					}
+
 // 					}t
 
 					writeEndElement();
 				}
 			}
+
 // 			}
 
 			writeEndElement();
@@ -149,39 +157,40 @@ void WriteXmlCharacter::writeCharacterTraits() {
 void WriteXmlCharacter::writeCharacterDerangements() {
 	QList< cv_Derangement > list;
 
+	try {
+		writeStartElement( cv_Trait::toXmlString( cv_Trait::Derangement ) );
+	} catch ( eTraitType &e ) {
+		qDebug() << Q_FUNC_INFO << e.message();
+	}
+
+	// Liste der Kategorien ist je nach Typ unterschiedlich
+	QList< cv_Trait::Category > categories;
+
+	categories = cv_Trait::getCategoryList( cv_Trait::Derangement );
+
+	for ( int j = 0; j < categories.count(); j++ ) {
+		list = character->derangements( categories.at( j ) );
+
+		qDebug() << Q_FUNC_INFO << list.count();
+
 		try {
-			writeStartElement( cv_Trait::toXmlString( cv_Trait::Derangement ) );
-		} catch ( eTraitType &e ) {
+			writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
+		} catch ( eTraitCategory &e ) {
 			qDebug() << Q_FUNC_INFO << e.message();
 		}
 
-		// Liste der Kategorien ist je nach Typ unterschiedlich
-		QList< cv_Trait::Category > categories;
-		categories = cv_Trait::getCategoryList( cv_Trait::Derangement );
-
-		for ( int j = 0; j < categories.count(); j++ ) {
-			list = character->derangements(categories.at( j ));
-			
-			qDebug() << Q_FUNC_INFO << list.count();
-
-			try {
-				writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
-			} catch ( eTraitCategory &e ) {
-				qDebug() << Q_FUNC_INFO << e.message();
-			}
-
-			for ( int k = 0; k < list.count(); k++ ) {
+		for ( int k = 0; k < list.count(); k++ ) {
 // 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
-					writeStartElement( "derangement" );
-					writeAttribute( "name", list.at( k ).name );
-					writeAttribute( "morality", QString::number( list.at( k ).morality ) );
-
-					writeEndElement();
-			}
+			writeStartElement( "derangement" );
+			writeAttribute( "name", list.at( k ).name );
+			writeAttribute( "morality", QString::number( list.at( k ).morality ) );
 
 			writeEndElement();
 		}
 
 		writeEndElement();
+	}
+
+	writeEndElement();
 }
 

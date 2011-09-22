@@ -43,8 +43,6 @@
  * @brief Das Widget, in welchem sämtliche berechneten Werte angeordnet sind.
  *
  * Die Werte, welche aus den Eigenschaften des Charakters berechnet werden, kommen allesamt in dieses Widget.
- *
- * \todo Armor und Superattribut müssen noch gespeichert werden, wenn der Charakter gespeichert wird.
  **/
 
 class AdvantagesWidget : public QWidget {

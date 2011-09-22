@@ -63,6 +63,17 @@ eNotANumber::eNotANumber() : eNumber() {
 }
 
 
+eList::eList() : Exception() {
+	setMessage( QObject::tr( "Unspecified Problem with a List or Vector." ) );
+	setDescription( QObject::tr( "An unspecified error occured while handling a List or Vector." ) );
+}
+
+eIndexExceedsRange::eIndexExceedsRange( int idx, int range ) : eList() {
+	setMessage( QObject::tr( "Index exceeds Range of List or Vector." ) );
+	setDescription( QObject::tr( "Index %1 exceeds List Range of %2." ).arg(idx).arg(range) );
+}
+
+
 eDir::eDir( QString dirName ) : Exception() {
 	setMessage( QObject::tr( "Unspecified Problem with a directory." ) );
 	setDescription( QObject::tr( "An unspecified error occured while handling directory %1" ).arg( dirName ) );

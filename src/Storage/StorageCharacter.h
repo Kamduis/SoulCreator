@@ -29,6 +29,7 @@
 #include "../Datatypes/cv_IdentityList.h"
 #include "../Datatypes/cv_Trait.h"
 #include "../Datatypes/cv_Derangement.h"
+#include "../Datatypes/cv_CreationPoints.h"
 #include "StorageTemplate.h"
 
 #include <QObject>
@@ -126,7 +127,13 @@ class StorageCharacter : public QObject {
 		 **/
 		QList< cv_Trait > traitsAll() const;
 		/**
-		 * Gibt eine Liste aller Eigenscahften des Charkaters aus, welche über die Argumente spezifiziert sind.
+		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
+		 **/
+		QList< cv_Trait > traits( cv_Trait::Type type ) const;
+		/**
+		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
+		 *
+		 * \overload QList< cv_Trait > traits( cv_Trait::Type type )
 		 *
 		 * \bug Sehr zeitaufwendige Funktion, da bei jedem aufruf eine Liste mühsam gefüllt wird. Und diese Funktion wird \emph{oft} aufgerufen.
 		 **/
@@ -183,7 +190,7 @@ class StorageCharacter : public QObject {
 		 **/
 		bool isModifed() const;
 
-	private:
+private:
 		StorageTemplate* storage;
 		/**
 		 * Die Spezies des Charakters.
@@ -218,6 +225,7 @@ class StorageCharacter : public QObject {
 		static int v_morality;
 		static int v_armorGeneral;
 		static int v_armorFirearms;
+		
 		static bool v_modified;
 
 	public slots:
@@ -319,6 +327,7 @@ class StorageCharacter : public QObject {
 		 * \todo Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze.
 		 **/
 		void resetCharacter();
+		
 		/**
 		 * Legt fest, ob der Charkater verändert wurde.
 		 **/

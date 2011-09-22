@@ -9,8 +9,12 @@
     <file>images/actions/filenew.png</file>
     <file>images/WoD.png</file>
   </qresource>
-  <qresource prefix="fonts">
-    <file>fonts/DejaVuSerif.ttf</file>
+  <qresource prefix="skulls">
+    <file>images/Skull-Werewolf-gray.png</file>
+    <file>images/Skull-Changeling-gray.png</file>
+    <file>images/Skull-Mage-gray.png</file>
+    <file>images/Skull-Mortal-gray.png</file>
+    <file>images/Skull-Vampire-gray.png</file>
   </qresource>
   <qresource prefix="template">
     <file>xml/base.xml</file>

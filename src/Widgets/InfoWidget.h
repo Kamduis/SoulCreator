@@ -42,8 +42,6 @@
  *
  * Spezies, Namen etc. des Charakters werden hier dargestellt.
  *
- * \todo Bislanbg wird nur die Spezies dargestellt. Name, Organisation etc. fehlen alle noch.
- *
  * \todo Bei den Virtues und Vices wird bislang nur der erwachsene behrücksichtigt.
  **/
 class InfoWidget : public QWidget {

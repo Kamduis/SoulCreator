@@ -47,9 +47,19 @@ const int Config::willpowerMax = 10;
 const int Config::superTraitMin = 1;
 const int Config::superTraitMax = 10;
 const int Config::superTraitDefaultValue = 1;
+const int Config::creationTraitDouble = 4;
 
 const qreal Config::textSizeFactorPrintNormal = 0.45;
 const qreal Config::textSizeFactorPrintSmall = 0.33;
+
+const int Config::creationPointsAttA = 5;
+const int Config::creationPointsAttB = 4;
+const int Config::creationPointsAttC = 3;
+const int Config::creationPointsSkillA = 11;
+const int Config::creationPointsSkillB = 7;
+const int Config::creationPointsSkillC = 5;
+const int Config::creationPointsSkillSpecialties = 3;
+const int Config::creationPointsMerits = 7;
 
 QFont Config::exportFont = QFont();
 

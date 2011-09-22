@@ -27,6 +27,8 @@
 
 #include "Storage/StorageTemplate.h"
 #include "Storage/StorageCharacter.h"
+#include "Calc/Creation.h"
+#include "Datatypes/cv_CreationPoints.h"
 #include "IO/ReadXmlCharacter.h"
 #include "IO/WriteXmlCharacter.h"
 #include "Widgets/InfoWidget.h"
@@ -53,6 +55,8 @@ class MainWindow;
  *
  * Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
  *
+ * \todo Der TExt im Reiter Powers sollte je nach Spezies angepaßt werden (Disciplines, Renown, etc.)
+ *
  * \todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
  *
  * \todo Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.
@@ -61,9 +65,7 @@ class MainWindow;
  *
  * \todo Bei Werwölfen nimmt "Rites" eine Sonderstellung ein. Auch die Gaben/Riten müssen berücksichtigt werden.
  *
- * \todo Eine neue GroupBox entwickeln, wo die Überschrift vertikal auf der linken Seite steht. Damit spare ich vertikalen Abstand, der wertvoller ist als der horizontale.
- *
- * \bug Manchmal wird (zeitlich deutlich versetzt) eine fast komplett schwarze Seite ausgedruckt. Ich weiß nicht, ob die Export- oder die Druckfunktion von SoulCreator die Ursache ist.
+ * \bug Manchmal wird (zeitlich deutlich versetzt) eine fast komplett schwarze Seite ausgedruckt. Ich weiß nicht, ob die Export- oder die Druckfunktion von SoulCreator die Ursache ist. Scheint aber die Exportfunktion zu sein.
  *
  * \todo Nutze eine qchecksum, um die Integrität der XML-DAteien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben.
  *
@@ -78,10 +80,6 @@ class MainWindow;
  * \todo Charakterbeschreibung einbauen.
  *
  * \todo Beim nächsten Versionssprung sollte bei den gespeicherten Charakteren die Namen anders gespeichert werden. Anstelle alles in <xxx>bla</xxx> zu schreiben, sollte es eine Identitätsgruppe geben mit den einzelnen Namensbestandteilen als Attribute einer einzelnen Identität dieser Gruppe.
- *
- * \todo Es muß ein eigener Datentyp für Derangements geschaffen werden, in dem Name, Grad, Spezies und Stelle der Moral gespeichert sind, welche die Geistesstärung definieren.
- *
- * \todo Es sollte ein Frage kommen, ob Änderungen gespeichert werden sollen, ehe man einen neuen Charkater anlegt oder einen alten lädt.
  */
 
 class MainWindow : public QMainWindow {
@@ -111,6 +109,10 @@ class MainWindow : public QMainWindow {
 		 * Zeiger auf die Klasse, welche sämtliche Charaterwerte enthält. Eine Änderung der Werte in dieser Klasse sorgen dafür, daß sich auch die Anzeige anpaßt. Und ändert man einen Wert in der Anzeige, wird automatisch die dadurch repräsentierte Eigenschaft in dieser Klasse verändert.
 		 */
 		StorageCharacter* character;
+		/**
+		 * Zeiger auf die Klasse, welche sämtliche Charaterwerte enthält. Eine Änderung der Werte in dieser Klasse sorgen dafür, daß sich auch die Anzeige anpaßt. Und ändert man einen Wert in der Anzeige, wird automatisch die dadurch repräsentierte Eigenschaft in dieser Klasse verändert.
+		 */
+		Creation* creation;
 
 		/**
 		 * In diesem Widget werden die Attribute in Spalten sortiert angezeigt.
@@ -184,6 +186,14 @@ class MainWindow : public QMainWindow {
 		 **/
 		void populateUi();
 		/**
+		 * Für jede Spezies wird das passende Hintergrundbild angezeigt.
+		 **/
+		void showBackround( cv_Species::SpeciesFlag spec );
+		/**
+		 * Zeigt die Anzahl der übrigen Punkte bei der Charaktererschaffung an.
+		 **/
+		void showCreationPoints(cv_CreationPoints pt);
+		/**
 		 * Werte des Charakters auf der Oberfläche anzeigen.
 		 **/
 		void showCharacterTraits();
@@ -215,6 +225,10 @@ class MainWindow : public QMainWindow {
 		 * Enabled oder Disabled die Knöpfe, mit denen die Eigenschaften durchgeblättert werden können, je nachdem, ob es noch eine weitere Seite zu Blättern gibt.
 		 **/
 		void setTabButtonState( int index );
+		/**
+		 * Je nachdem, welches Tab gerade gezeigt wird, müssen die Erschaffungspunkte dargestellt oder versteckt werden.
+		 **/
+		void showCreationPoints( int idx );
 		/**
 		 * Über diese Funktion wird der Dialog aufgerufen, um einen ganz neuen Charakter zu erstellen.
 		 *

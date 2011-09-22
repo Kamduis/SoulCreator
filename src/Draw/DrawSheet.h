@@ -39,8 +39,6 @@
  * \brief Führt das Drucken des Charakters aus.
  *
  * Mit Hilfe dieser Klasse können die Charakterwerte auf Papier gebannt werden.
- *
- * \todo Es fehlen noch alle außer Menschen und Changelings. Und bei den Changelings fehlt auch noch Glamour.
  **/
 
 class DrawSheet : public QObject {
@@ -207,6 +205,10 @@ class DrawSheet : public QObject {
 		 * Zeichne die übernatürlichen Kräfte.
 		 *
 		 * Zeichne die übernatürlichen Kräfte für Magier und Werwölfe müssen gesondert behandelt werden. Die Arcana und Renown werden in zwei Spalten angeordnet und die zweite Spalte hat eine andere Richtung.
+		 *
+		 * \bug Svenja hat einen Fehler beim Übertrag angemerkt, den ich abe rnicht reproduzieren kann.
+		 *
+		 * \todo Es fehlen noch die Rites. Jetzt ist genug Platz da, also können sie auch bei den Powers eingetragen werden.
 		 **/
 		void drawPowers( QPainter* painter,
 						 qreal offsetH = 0 /** Horizontaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,

@@ -40,8 +40,6 @@
  * @brief Liest die gespeicherten Charakterwerte in das Programm.
  *
  * Diese Klasse dient dazu, einen auf Datenträger gespeicherten Charakter wieder in das Programm zu laden.
- *
- * \bug Beim Laden tritt ein schwerwiegender Fehler auf! Manchmal verschwinden alle Attribute und fast alle Fertigkeiten!
  */
 
 class ReadXmlCharacter : public QObject, public ReadXml {
@@ -80,7 +78,13 @@ class ReadXmlCharacter : public QObject, public ReadXml {
 		/**
 		 * Lese die Spezies aus dem gespeicherten Charakter.
 		 **/
-		void readSoulCreator( cv_Identity* id );
+		void readSoulCreator();
+		/**
+		 * Lese die Identitäten des Charakters.
+		 *
+		 * \todo Derzeit kann nur eine identität eingelesen werden, da das Programm nur eine Identitöät unterstüzt.
+		 **/
+		void readIdentities();
 		/**
 		 * Lese die Eigenschaften aus dem gespeicherten Charakter.
 		 **/

@@ -73,10 +73,6 @@ class TraitLine : public QWidget {
 // 		TraitLine(QWidget *parent = 0, cv_Trait::Type type = cv_Trait::TypeNo, cv_Trait::Category category = cv_Trait::CategoryNo, QString name = "", int value = 0);
 		/**
 		 * Simpler Konstruktor, der einige Werte übergeben kann.
-		 *
-		 * \bug Verbraucht viel zu viele Prozessorzyklen. Einige connections wurden auskommentiert aus debug-Zwecken. Programm zur zeit nicht funktionabel.
-		 *
-		 * \bug value ist wohl manchmal nicht initialisiert.
 		 **/
 		TraitLine(QWidget *parent = 0, QString name = "", int value = 0);
 		/**
