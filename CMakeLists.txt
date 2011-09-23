@@ -21,9 +21,10 @@ find_package(Qt4 REQUIRED)
 # The version number.
 set (PROGRAM_VERSION_MAJOR 0)
 set (PROGRAM_VERSION_MINOR 5)
-set (PROGRAM_VERSION_CHANGE -8)
+set (PROGRAM_VERSION_CHANGE -7)
 
 # configure a header file to pass some of the CMake settings to the source code
+# Konfiguriere eine Header-Datei, um einige der CMake-Einstellungen an den Quellcode übergeben zu können.
 configure_file (
 	"${PROJECT_SOURCE_DIR}/CMakeConfig.h.in"
 	"${PROJECT_BINARY_DIR}/CMakeConfig.h"
@@ -31,9 +32,12 @@ configure_file (
 
 include_directories(
 	${QT_INCLUDES}
-# 	${KDE4_INCLUDES}# KDE-Bibliotheken
+# 	# KDE-Bibliotheken
+# 	${KDE4_INCLUDES}
 	${CMAKE_CURRENT_BINARY_DIR}
-	# add the binary tree to the search path for include files so that we will find Config.h
+	# Hiermit finden auch benutzerdefinierte Klassen im Qt-Designer ihre Header-Datei.
+	"${PROJECT_SOURCE_DIR}/src"
+	# Füge das Verzeichnis der Binary zum Suchpfad hinzu, damit wir Config.h finden können.
 	${PROJECT_BINARY_DIR}
 )
 

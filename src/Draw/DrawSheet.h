@@ -28,10 +28,10 @@
 #include <QPrinter>
 #include <QColor>
 
-#include "../Storage/StorageCharacter.h"
-#include "../Calc/CalcAdvantages.h"
-#include "../Datatypes/cv_Species.h"
-#include "../Datatypes/cv_Shape.h"
+#include "Storage/StorageCharacter.h"
+#include "Calc/CalcAdvantages.h"
+#include "Datatypes/cv_Species.h"
+#include "Datatypes/cv_Shape.h"
 
 #include <QObject>
 

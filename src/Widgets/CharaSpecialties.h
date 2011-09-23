@@ -27,7 +27,7 @@
 
 #include <QString>
 
-#include "../Storage/StorageCharacter.h"
+#include "Storage/StorageCharacter.h"
 
 #include "TraitSpecialties.h"
 

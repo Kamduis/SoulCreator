@@ -27,7 +27,7 @@
 
 #include <QGridLayout>
 
-#include "../../Storage/StorageCharacter.h"
+#include "Storage/StorageCharacter.h"
 
 #include <QDialog>
 

@@ -25,8 +25,8 @@
 #include <QLabel>
 #include <QDebug>
 
-#include "../Exceptions/Exception.h"
-#include "../Config/Config.h"
+#include "Exceptions/Exception.h"
+#include "Config/Config.h"
 #include "Dialogs/NameDialog.h"
 
 #include "InfoWidget.h"

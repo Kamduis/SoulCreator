@@ -28,11 +28,11 @@
 #include <QList>
 #include <QStringList>
 
-#include "../Datatypes/cv_Trait.h"
-// #include "../Datatypes/cv_Breed.h"
-// #include "../Datatypes/cv_Faction.h"
-#include "../Datatypes/cv_IdentityList.h"
-#include "../Datatypes/cv_SuperEffect.h"
+#include "Datatypes/cv_Trait.h"
+// #include "Datatypes/cv_Breed.h"
+// #include "Datatypes/cv_Faction.h"
+#include "Datatypes/cv_IdentityList.h"
+#include "Datatypes/cv_SuperEffect.h"
 
 #include <QObject>
 

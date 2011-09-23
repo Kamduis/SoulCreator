@@ -23,10 +23,10 @@
 
 #include <QString>
 
-#include "../Datatypes/cv_Trait.h"
-#include "../Datatypes/cv_Shape.h"
-#include "../Datatypes/cv_Identity.h"
-#include "../Config/Config.h"
+#include "Datatypes/cv_Trait.h"
+#include "Datatypes/cv_Shape.h"
+#include "Datatypes/cv_Identity.h"
+#include "Config/Config.h"
 
 
 /**

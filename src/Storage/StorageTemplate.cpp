@@ -24,8 +24,8 @@
 
 #include <QDebug>
 
-#include "../Config/Config.h"
-#include "../Exceptions/Exception.h"
+#include "Config/Config.h"
+#include "Exceptions/Exception.h"
 
 #include "StorageTemplate.h"
 

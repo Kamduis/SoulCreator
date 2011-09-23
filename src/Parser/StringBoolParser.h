@@ -25,8 +25,8 @@
 #ifndef STRINGBOOLPARSER_H
 #define STRINGBOOLPARSER_H
 
-#include "../Datatypes/cv_Species.h"
-#include "../Datatypes/cv_Trait.h"
+#include "Datatypes/cv_Species.h"
+#include "Datatypes/cv_Trait.h"
 
 #include <QObject>
 

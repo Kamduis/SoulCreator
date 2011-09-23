@@ -28,9 +28,9 @@
 #include <QFile>
 #include <QObject>
 
-#include "../Storage/StorageCharacter.h"
-#include "../Datatypes/cv_Species.h"
-#include "../Datatypes/cv_Trait.h"
+#include "Storage/StorageCharacter.h"
+#include "Datatypes/cv_Species.h"
+#include "Datatypes/cv_Trait.h"
 
 #include <QXmlStreamWriter>
 

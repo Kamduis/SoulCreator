@@ -27,9 +27,8 @@
 #include <QDebug>
 
 #include "CharaTrait.h"
-#include "../Exceptions/Exception.h"
-#include "../Config/Config.h"
-#include "../CMakeConfig.h"
+#include "Exceptions/Exception.h"
+#include "Config/Config.h"
 
 #include "MeritWidget.h"
 

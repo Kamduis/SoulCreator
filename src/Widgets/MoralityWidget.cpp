@@ -27,9 +27,9 @@
 
 #include "DerangementComboBox.h"
 #include "TraitDots.h"
-#include "../Storage/StorageTemplate.h"
-#include "../Datatypes/cv_Derangement.h"
-#include "../Config/Config.h"
+#include "Storage/StorageTemplate.h"
+#include "Datatypes/cv_Derangement.h"
+#include "Config/Config.h"
 
 #include "MoralityWidget.h"
 

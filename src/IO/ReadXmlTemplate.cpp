@@ -24,9 +24,9 @@
 
 #include <QDebug>
 
-#include "../Datatypes/cv_SuperEffect.h"
-#include "../Exceptions/Exception.h"
-#include "../Config/Config.h"
+#include "Datatypes/cv_SuperEffect.h"
+#include "Exceptions/Exception.h"
+#include "Config/Config.h"
 
 #include "ReadXmlTemplate.h"
 
@@ -37,14 +37,14 @@ const QString ReadXmlTemplate::templateFile_changeling = ":/template/xml/changel
 const QString ReadXmlTemplate::templateFile_mage = ":/template/xml/mage.xml";
 const QString ReadXmlTemplate::templateFile_vampire = ":/template/xml/vampire.xml";
 const QString ReadXmlTemplate::templateFile_werewolf = ":/template/xml/werewolf.xml";
-// const QString ReadXmlTemplate::templateFile_base = "../resources/xml/base.xml";
-// const QString ReadXmlTemplate::templateFile_human = "../resources/xml/human.xml";
-// const QString ReadXmlTemplate::templateFile_changeling = "../resources/xml/changeling.xml";
-// const QString ReadXmlTemplate::templateFile_mage = "../resources/xml/mage.xml";
-// const QString ReadXmlTemplate::templateFile_vampire = "../resources/xml/vampire.xml";
-// const QString ReadXmlTemplate::templateFile_werewolf = "../resources/xml/werewolf.xml";
+// const QString ReadXmlTemplate::templateFile_base = resources/xml/base.xml";
+// const QString ReadXmlTemplate::templateFile_human = resources/xml/human.xml";
+// const QString ReadXmlTemplate::templateFile_changeling = resources/xml/changeling.xml";
+// const QString ReadXmlTemplate::templateFile_mage = resources/xml/mage.xml";
+// const QString ReadXmlTemplate::templateFile_vampire = resources/xml/vampire.xml";
+// const QString ReadXmlTemplate::templateFile_werewolf = resources/xml/werewolf.xml";
 
-//const QString ReadXmlTemplate::templateFile = "../test.dat";
+//const QString ReadXmlTemplate::templateFile = test.dat";
 
 // QList< cv_Trait > ReadXmlTemplate::traitList;
 

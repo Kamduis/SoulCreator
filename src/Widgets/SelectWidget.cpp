@@ -22,27 +22,16 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGridLayout>
 #include <QDebug>
 
-#include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
-#include "Storage/StorageTemplate.h"
 
-#include "SelectMeritsDialog.h"
-#include "ui_SelectMeritsDialog.h"
+#include "SelectWidget.h"
 
 
-SelectMeritsDialog::SelectMeritsDialog( QWidget *parent ) : QDialog( parent ), ui( new Ui::SelectMeritsDialog )  {
-	ui->setupUi( this );
-
-	ui->pushButton_select->setIcon(style()->standardIcon(QStyle::SP_ArrowRight));
-	ui->pushButton_deselect->setIcon(style()->standardIcon(QStyle::SP_ArrowLeft));
-
-	connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+SelectWidget::SelectWidget( QWidget *parent ) : QListWidget( parent )  {
 }
 
-SelectMeritsDialog::~SelectMeritsDialog() {
+SelectWidget::~SelectWidget() {
 }
+

@@ -25,9 +25,9 @@
 #ifndef CHARATRAIT_H
 #define CHARATRAIT_H
 
-#include "../Storage/StorageCharacter.h"
-#include "../Datatypes/cv_Trait.h"
-#include "../Datatypes/cv_TraitDetail.h"
+#include "Storage/StorageCharacter.h"
+#include "Datatypes/cv_Trait.h"
+#include "Datatypes/cv_TraitDetail.h"
 
 #include "TraitLine.h"
 

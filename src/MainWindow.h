@@ -25,12 +25,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "Storage/StorageTemplate.h"
-#include "Storage/StorageCharacter.h"
 #include "Calc/Creation.h"
 #include "Datatypes/cv_CreationPoints.h"
+#include "Draw/DrawSheet.h"
 #include "IO/ReadXmlCharacter.h"
 #include "IO/WriteXmlCharacter.h"
+#include "Storage/StorageTemplate.h"
+#include "Storage/StorageCharacter.h"
 #include "Widgets/InfoWidget.h"
 #include "Widgets/AttributeWidget.h"
 #include "Widgets/SkillWidget.h"
@@ -40,7 +41,7 @@
 #include "Widgets/FlawWidget.h"
 #include "Widgets/AdvantagesWidget.h"
 #include "Widgets/CharaSpecialties.h"
-#include "Draw/DrawSheet.h"
+#include "Widgets/SelectWidget.h"
 
 #include <QMainWindow>
 
@@ -80,6 +81,8 @@ class MainWindow;
  * \todo Charakterbeschreibung einbauen.
  *
  * \todo Alle Reiter, bei denen nicht alle Punkte vergeben wurden grün färben und jene, bei denen zu viele vergeben wurde, rot färben.
+ *
+ * \todo eine Seitenleiste mit Bildern einführen, wo man die Reister auswählen kann. Dort kann man auch die verbleibenden Punkte hinschreiben und markieren, wenn ein Typ zuviele/wenige Punkte vergeben hat.
  */
 
 class MainWindow : public QMainWindow {
@@ -114,6 +117,10 @@ class MainWindow : public QMainWindow {
 		 */
 		Creation* creation;
 
+// 		/**
+// 		 * Dieses Widget zeigt die Auswahl der möglichen Typen an und schlatet die Anzage entsprechend um.
+// 		 **/
+// 		SelectWidget* selector;
 		/**
 		 * In diesem Widget werden die Attribute in Spalten sortiert angezeigt.
 		 **/

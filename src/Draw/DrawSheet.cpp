@@ -28,9 +28,9 @@
 
 #include <math.h>
 
-#include "../Storage/StorageTemplate.h"
-#include "../Exceptions/Exception.h"
-#include "../Config/Config.h"
+#include "Storage/StorageTemplate.h"
+#include "Exceptions/Exception.h"
+#include "Config/Config.h"
 
 #include "DrawSheet.h"
 

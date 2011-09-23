@@ -28,9 +28,9 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
-#include "../Datatypes/cv_TraitDetail.h"
+#include "Datatypes/cv_TraitDetail.h"
 #include "Dialogs/SelectMeritsDialog.h"
-#include "../Storage/StorageCharacter.h"
+#include "Storage/StorageCharacter.h"
 
 #include <QWidget>
 

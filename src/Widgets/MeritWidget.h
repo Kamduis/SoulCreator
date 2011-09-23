@@ -30,10 +30,10 @@
 #include <QToolBox>
 #include <QPushButton>
 
-#include "../Storage/StorageTemplate.h"
-#include "../Storage/StorageCharacter.h"
-#include "../Datatypes/cv_Trait.h"
-#include "../Datatypes/cv_TraitDetail.h"
+#include "Storage/StorageTemplate.h"
+#include "Storage/StorageCharacter.h"
+#include "Datatypes/cv_Trait.h"
+#include "Datatypes/cv_TraitDetail.h"
 #include "Dialogs/SelectMeritsDialog.h"
 
 #include <QWidget>

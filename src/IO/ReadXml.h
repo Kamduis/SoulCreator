@@ -27,8 +27,8 @@
 
 #include <QFile>
 
-#include "../Datatypes/cv_Species.h"
-#include "../Datatypes/cv_Trait.h"
+#include "Datatypes/cv_Species.h"
+#include "Datatypes/cv_Trait.h"
 
 #include <QXmlStreamReader>
 

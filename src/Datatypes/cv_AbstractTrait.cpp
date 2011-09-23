@@ -23,7 +23,7 @@
  */
 
 
-#include "../Exceptions/Exception.h"
+#include "Exceptions/Exception.h"
 
 #include "cv_AbstractTrait.h"
 

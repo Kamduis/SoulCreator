@@ -27,9 +27,9 @@
 
 #include <QFile>
 
-#include "../Storage/StorageTemplate.h"
-#include "../Datatypes/cv_Species.h"
-#include "../Datatypes/cv_Trait.h"
+#include "Storage/StorageTemplate.h"
+#include "Datatypes/cv_Species.h"
+#include "Datatypes/cv_Trait.h"
 
 #include <QObject>
 #include "ReadXml.h"

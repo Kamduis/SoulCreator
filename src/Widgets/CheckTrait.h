@@ -29,8 +29,8 @@
 #include <QLineEdit>
 #include <QCheckBox>
 
-#include "../Storage/StorageCharacter.h"
-#include "../Datatypes/cv_Trait.h"
+#include "Storage/StorageCharacter.h"
+#include "Datatypes/cv_Trait.h"
 
 #include <QWidget>
 

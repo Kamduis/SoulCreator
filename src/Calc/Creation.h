@@ -25,9 +25,9 @@
 #ifndef CREATION_H
 #define CREATION_H
 
-#include "../Datatypes/cv_Trait.h"
-#include "../Datatypes/cv_CreationPoints.h"
-#include "../Storage/StorageCharacter.h"
+#include "Datatypes/cv_Trait.h"
+#include "Datatypes/cv_CreationPoints.h"
+#include "Storage/StorageCharacter.h"
 
 #include <QObject>
 

@@ -27,7 +27,7 @@
 
 #include <QList>
 
-#include "../Datatypes/cv_Derangement.h"
+#include "Datatypes/cv_Derangement.h"
 
 #include <QComboBox>
 

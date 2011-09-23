@@ -29,8 +29,8 @@
 #include <QScrollArea>
 #include <QToolBox>
 
-#include "../Storage/StorageTemplate.h"
-#include "../Storage/StorageCharacter.h"
+#include "Storage/StorageTemplate.h"
+#include "Storage/StorageCharacter.h"
 
 #include <QWidget>
 

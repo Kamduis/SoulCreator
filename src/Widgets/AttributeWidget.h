@@ -28,7 +28,7 @@
 #include <QGridLayout>
 #include <QLabel>
 
-#include "../Storage/StorageCharacter.h"
+#include "Storage/StorageCharacter.h"
 
 #include <QWidget>
 

@@ -26,23 +26,23 @@
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
-#include <QPrintDialog>
 #include <QMessageBox>
+#include <QPrintDialog>
 #include <QPrinter>
 #include <QTimer>
 #include <QDebug>
 
-#include "IO/Settings.h"
-#include "Widgets/Dialogs/SettingsDialog.h"
-#include "Widgets/TraitLine.h"
-#include "Widgets/Dialogs/MessageBox.h"
-#include "IO/ReadXmlTemplate.h"
+#include "Calc/Creation.h"
+#include "Config/Config.h"
 #include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
+#include "IO/ReadXmlTemplate.h"
+#include "IO/Settings.h"
 #include "Storage/StorageCharacter.h"
 #include "Storage/StorageTemplate.h"
-#include "Calc/Creation.h"
+#include "Widgets/TraitLine.h"
+#include "Widgets/Dialogs/MessageBox.h"
+#include "Widgets/Dialogs/SettingsDialog.h"
 #include "CMakeConfig.h"
 
 #include "MainWindow.h"
@@ -72,13 +72,16 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 // 	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 // 	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 
+// 	selector = new SelectWidget(this);
+
+	ui->selectWidget_select;
+	
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
 	creation = new Creation( this );
 	readCharacter = new ReadXmlCharacter();
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
-
 
 	connect( ui->pushButton_next, SIGNAL( clicked() ), this, SLOT( tabNext() ) );
 	connect( ui->pushButton_previous, SIGNAL( clicked() ), this, SLOT( tabPrevious() ) );
@@ -115,6 +118,7 @@ MainWindow::~MainWindow() {
 	delete readCharacter;
 	delete creation;
 	delete storage;
+// 	delete selector;
 
 	// Ganz am Schluß lösche ich natürlich auch den Charakterspeicher, welcher ja als Singleton-Klasse realisiert wurde.
 	character->destroy();
@@ -158,6 +162,7 @@ void MainWindow::storeTemplateData() {
 }
 
 void MainWindow::populateUi() {
+	
 	// Funktioniert nicht richtig.
 // 	// Bevor wir alles in der GUI anzeigen, wollen wir ersteinmal eine alphabetische Reihefolge garantieren.
 // 	// Ich weiß nicht, ob das bei den Attributen so gut ist.

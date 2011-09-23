@@ -28,7 +28,7 @@
 #include <QString>
 #include <QSqlError>
 
-#include "../../Exceptions/Exception.h"
+#include "Exceptions/Exception.h"
 
 #include <QMessageBox>
 

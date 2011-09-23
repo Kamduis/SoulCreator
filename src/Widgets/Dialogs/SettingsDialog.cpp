@@ -26,8 +26,8 @@
 #include <QStringList>
 #include <QDebug>
 
-#include "../../Config/Config.h"
-#include "../../Exceptions/Exception.h"
+#include "Config/Config.h"
+#include "Exceptions/Exception.h"
 
 #include "SettingsDialog.h"
 #include "ui_SettingsDialog.h"

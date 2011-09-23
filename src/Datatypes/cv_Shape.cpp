@@ -22,7 +22,7 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../Exceptions/Exception.h"
+#include "Exceptions/Exception.h"
 
 #include "cv_Shape.h"
 

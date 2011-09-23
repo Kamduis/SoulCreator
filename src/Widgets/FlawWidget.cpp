@@ -27,10 +27,10 @@
 #include <QDebug>
 
 #include "CheckTrait.h"
-#include "../Datatypes/cv_Trait.h"
-#include "../Exceptions/Exception.h"
-#include "../Config/Config.h"
-#include "../Storage/StorageTemplate.h"
+#include "Datatypes/cv_Trait.h"
+#include "Exceptions/Exception.h"
+#include "Config/Config.h"
+#include "Storage/StorageTemplate.h"
 
 #include "FlawWidget.h"
 

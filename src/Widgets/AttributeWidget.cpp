@@ -29,12 +29,12 @@
 #include <QDebug>
 
 #include "CharaTrait.h"
-#include "../Calc/CalcAdvantages.h"
-#include "../Datatypes/cv_Trait.h"
-#include "../Datatypes/cv_Shape.h"
-#include "../Exceptions/Exception.h"
-#include "../Config/Config.h"
-#include "../Storage/StorageTemplate.h"
+#include "Calc/CalcAdvantages.h"
+#include "Datatypes/cv_Trait.h"
+#include "Datatypes/cv_Shape.h"
+#include "Exceptions/Exception.h"
+#include "Config/Config.h"
+#include "Storage/StorageTemplate.h"
 
 #include "AttributeWidget.h"
 

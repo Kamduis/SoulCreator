@@ -28,9 +28,9 @@
 #include <QGridLayout>
 #include <QLabel>
 
-#include "../Datatypes/cv_Species.h"
-#include "../Storage/StorageTemplate.h"
-#include "../Storage/StorageCharacter.h"
+#include "Datatypes/cv_Species.h"
+#include "Storage/StorageTemplate.h"
+#include "Storage/StorageCharacter.h"
 
 #include <QWidget>
 

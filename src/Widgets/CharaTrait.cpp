@@ -24,8 +24,8 @@
 
 #include <QDebug>
 
-#include "../Parser/StringBoolParser.h"
-#include "../Exceptions/Exception.h"
+#include "Parser/StringBoolParser.h"
+#include "Exceptions/Exception.h"
 #include "Dialogs/MessageBox.h"
 
 #include "CharaTrait.h"
