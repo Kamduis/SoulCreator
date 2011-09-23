@@ -41,7 +41,6 @@
 #include "Widgets/FlawWidget.h"
 #include "Widgets/AdvantagesWidget.h"
 #include "Widgets/CharaSpecialties.h"
-#include "Widgets/SelectWidget.h"
 
 #include <QMainWindow>
 
@@ -117,10 +116,6 @@ class MainWindow : public QMainWindow {
 		 */
 		Creation* creation;
 
-// 		/**
-// 		 * Dieses Widget zeigt die Auswahl der möglichen Typen an und schlatet die Anzage entsprechend um.
-// 		 **/
-// 		SelectWidget* selector;
 		/**
 		 * In diesem Widget werden die Attribute in Spalten sortiert angezeigt.
 		 **/
@@ -229,6 +224,10 @@ class MainWindow : public QMainWindow {
 		 **/
 		void tabNext();
 		/**
+		 * Selektiert das zur aktuellen Seite der Eigenschaften zugehörige Symbol in der Auswahlleiste.
+		 **/
+		void selectSelectorItem( int idx );
+		/**
 		 * Enabled oder Disabled die Knöpfe, mit denen die Eigenschaften durchgeblättert werden können, je nachdem, ob es noch eine weitere Seite zu Blättern gibt.
 		 **/
 		void setTabButtonState( int index );
@@ -238,8 +237,6 @@ class MainWindow : public QMainWindow {
 		void showCreationPoints( int idx );
 		/**
 		 * Über diese Funktion wird der Dialog aufgerufen, um einen ganz neuen Charakter zu erstellen.
-		 *
-		 * \todo Eine Warnung ausgeben, wenn der zuvor erstellte Charakter noch nicht gespeichert wurde.
 		 **/
 		void newCharacter();
 		/**
@@ -256,16 +253,10 @@ class MainWindow : public QMainWindow {
 		void aboutApp();
 		/**
 		 * Diese Funktion druckt den Charakter in ein PDF-Dokument.
-		 *
-		 * \note Diese Funktion benötigt einen installierten pdf-Drucker, der automatisch in eine pdf-Datei drucken kann.
-		 *
-		 * \todo Überprüfen, ob das auch auf windows funktioniert, da ich ja den pdf-Drucker dafür verwende.
 		 **/
 		void exportCharacter();
 		/**
 		 * Druckt den angezeigten Charakter aus.
-		 *
-		 * \todo Die Abkürzung wieder entfernen, wenn ich mit dem Einrichten der Exportwerte fertig bin.
 		 **/
 		void printCharacter();
 		/**
@@ -275,7 +266,7 @@ class MainWindow : public QMainWindow {
 		/**
 		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
 		 **/
-		void hidePowers( cv_Species::SpeciesFlag species );
+		void disablePowerItem( cv_Species::SpeciesFlag species );
 
 		/**
 		 * Speichert die Konfiguration dieses Programms für den nächsten Aufruf.

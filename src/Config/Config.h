@@ -171,39 +171,6 @@ class Config {
 		static const qreal textSizeFactorPrintSmall;
 
 		/**
-		 * Die freien Attributspunkte für die primäre Kategorie.
-		 **/
-		static const int creationPointsAttA;
-		/**
-		 * Die freien Attributspunkte für die sekundäre Kategorie.
-		 **/
-		static const int creationPointsAttB;
-		/**
-		 * Die freien Attributspunkte für die tertiäre Kategorie.
-		 **/
-		static const int creationPointsAttC;
-		/**
-		 * Die freien Fertigkeitspunkte für die primäre Kategorie.
-		 **/
-		static const int creationPointsSkillA;
-		/**
-		 * Die freien Fertigkeitspunkte für die sekundäre Kategorie.
-		 **/
-		static const int creationPointsSkillB;
-		/**
-		 * Die freien Fertigkeitspunkte für die tertiäre Kategorie.
-		 **/
-		static const int creationPointsSkillC;
-		/**
-		 * Die freien Fertigkeitsspezialisierungen
-		 **/
-		static const int creationPointsSkillSpecialties;
-		/**
-		 * Die freien Meritpunkte.
-		 **/
-		static const int creationPointsMerits;
-
-		/**
 		 * Die Schriftart, welche für den exportierten Charakter verwendet wird.
 		 **/
 		static QFont exportFont;

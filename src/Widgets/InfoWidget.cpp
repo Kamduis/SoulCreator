@@ -39,8 +39,8 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 	layout = new QGridLayout( this );
 	setLayout( layout );
 
-	QLabel* labelName = new QLabel( tr( "Name:" ) );
-	namePushButton = new QPushButton( this );
+	labelName = new QLabel( "" );
+	namePushButton = new QPushButton( tr( "Name:" ) );
 // 	QLabel* labelNameFull = new QLabel();
 // 	QLabel* labelNameDisplay = new QLabel();
 // 	QLabel* labelNameHonorific = new QLabel();
@@ -70,8 +70,8 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 	factionCombobox = new QComboBox( this );
 	factionCombobox->addItems( storage->factionNames() );
 
-	layout->addWidget( labelName, 0, 0 );
-	layout->addWidget( namePushButton, 0, 1 );
+	layout->addWidget( namePushButton, 0, 0, Qt::AlignTop );
+	layout->addWidget( labelName, 0, 1, 1, 2 );
 	layout->addWidget( labelGender, 1, 0 );
 	layout->addWidget( genderCombobox, 1, 1 );
 	layout->addWidget( labelSpecies, 2, 0 );
@@ -104,6 +104,7 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 InfoWidget::~InfoWidget() {
 	delete genderCombobox;
 	delete namePushButton;
+	delete labelName;
 	delete speciesComboBox;
 	delete layout;
 	delete storage;
@@ -145,7 +146,39 @@ void InfoWidget::changeFaction( int idx ) {
 
 
 void InfoWidget::updateIdentity( cv_Identity id ) {
-	namePushButton->setText( cv_Name::displayNameDisplay( id.sureName, id.firstName(), id.nickName ) );
+// 	namePushButton->setText( cv_Name::displayNameDisplay( id.sureName, id.firstName(), id.nickName ) );
+
+	QString nameText = "";
+
+	if ( !id.sureName.isEmpty() || !id.foreNames.isEmpty() ) {
+		nameText += cv_Name::displayNameFull( id.sureName, id.foreNames );
+	}
+
+	if ( !id.nickName.isEmpty() ) {
+		if ( !nameText.isEmpty() ) {
+			nameText += "\n";
+		}
+
+		nameText += cv_Name::displayNameDisplay( id.sureName, id.firstName(), id.nickName );
+	}
+
+	if ( !id.honorificName.isEmpty() ) {
+		if ( !nameText.isEmpty() ) {
+			nameText += "\n";
+		}
+
+		nameText += cv_Name::displayNameHonor( id.firstName(), id.honorificName );
+	}
+
+	if ( !id.supernaturalName.isEmpty() ) {
+		if ( !nameText.isEmpty() ) {
+			nameText += "\n";
+		}
+
+		nameText += id.supernaturalName;
+	}
+
+	labelName->setText( nameText );
 
 	if ( id.gender == cv_Identity::Male ) {
 		genderCombobox->setCurrentIndex( 0 );

@@ -1,5 +1,6 @@
 build
 doc
+src-unused
 *.kdev4
 *~
 *.kate-swp

@@ -38,6 +38,43 @@ class cv_CreationPoints {
 		 * Konstruktor.
 		 **/
 		cv_CreationPoints();
+
+		/**
+		 * Die freien Attributspunkte für die primäre Kategorie.
+		 **/
+		static const int creationPointsAttA;
+		/**
+		 * Die freien Attributspunkte für die sekundäre Kategorie.
+		 **/
+		static const int creationPointsAttB;
+		/**
+		 * Die freien Attributspunkte für die tertiäre Kategorie.
+		 **/
+		static const int creationPointsAttC;
+		/**
+		 * Die freien Fertigkeitspunkte für die primäre Kategorie.
+		 **/
+		static const int creationPointsSkillA;
+		/**
+		 * Die freien Fertigkeitspunkte für die sekundäre Kategorie.
+		 **/
+		static const int creationPointsSkillB;
+		/**
+		 * Die freien Fertigkeitspunkte für die tertiäre Kategorie.
+		 **/
+		static const int creationPointsSkillC;
+		/**
+		 * Die freien Fertigkeitsspezialisierungen
+		 **/
+		static const int creationPointsSkillSpecialties;
+		/**
+		 * Die freien Meritpunkte.
+		 **/
+		static const int creationPointsMerits;
+		/**
+		 * Die freien Meritpunkte.
+		 **/
+		static const int creationPointsPowersVampire;
 		
 		/**
 		 * Primäre Kategorie der Attribute.

@@ -72,10 +72,6 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 // 	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 // 	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 
-// 	selector = new SelectWidget(this);
-
-	ui->selectWidget_select;
-	
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
 	creation = new Creation( this );
@@ -85,8 +81,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 	connect( ui->pushButton_next, SIGNAL( clicked() ), this, SLOT( tabNext() ) );
 	connect( ui->pushButton_previous, SIGNAL( clicked() ), this, SLOT( tabPrevious() ) );
-	connect( ui->tabWidget, SIGNAL( currentChanged( int ) ), this, SLOT( setTabButtonState( int ) ) );
-	connect( ui->tabWidget, SIGNAL( currentChanged( int ) ), this, SLOT( showCreationPoints( int ) ) );
+	connect( ui->selectWidget_select, SIGNAL( currentRowChanged(int)), ui->stackedWidget_traits, SLOT( setCurrentIndex(int)) );
+	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( setTabButtonState( int ) ) );
+	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( selectSelectorItem( int ) ) );
+	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( showCreationPoints( int ) ) );
 
 	initialize();
 
@@ -118,7 +116,6 @@ MainWindow::~MainWindow() {
 	delete readCharacter;
 	delete creation;
 	delete storage;
-// 	delete selector;
 
 	// Ganz am Schluß lösche ich natürlich auch den Charakterspeicher, welcher ja als Singleton-Klasse realisiert wurde.
 	character->destroy();
@@ -162,7 +159,7 @@ void MainWindow::storeTemplateData() {
 }
 
 void MainWindow::populateUi() {
-	
+
 	// Funktioniert nicht richtig.
 // 	// Bevor wir alles in der GUI anzeigen, wollen wir ersteinmal eine alphabetische Reihefolge garantieren.
 // 	// Ich weiß nicht, ob das bei den Attributen so gut ist.
@@ -189,14 +186,14 @@ void MainWindow::populateUi() {
 	ui->layout_advantages->addWidget( advantages );
 
 	// Zu Beginn soll immer das erste Tab angezeigt werden.
-	ui->tabWidget->setCurrentIndex( 1 );
-	ui->tabWidget->setCurrentIndex( 0 );
+	ui->stackedWidget_traits->setCurrentIndex( 1 );
+	ui->stackedWidget_traits->setCurrentIndex( 0 );
 
 	// Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
 	connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 
 	// Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
-	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hidePowers( cv_Species::SpeciesFlag ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( disablePowerItem( cv_Species::SpeciesFlag ) ) );
 
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( showBackround( cv_Species::SpeciesFlag ) ) );
 
@@ -205,29 +202,29 @@ void MainWindow::populateUi() {
 }
 
 void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
-	for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
-		ui->tabWidget->widget( i )->setObjectName( "tabWidget_item" + QString::number( i ) );
+	for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+		ui->stackedWidget_traits->widget( i )->setObjectName( "stackedWidget_item" + QString::number( i ) );
 	}
 
 	if ( spec == cv_Species::Changeling ) {
-		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
-			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center }" );
+		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center }" );
 		}
 	} else if ( spec == cv_Species::Mage ) {
-		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
-			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center }" );
+		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center }" );
 		}
 	} else if ( spec == cv_Species::Vampire ) {
-		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
-			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center }" );
+		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center }" );
 		}
 	} else if ( spec == cv_Species::Werewolf ) {
-		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
-			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center }" );
+		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center }" );
 		}
 	} else {
-		for ( int i = 0; i < ui->tabWidget->count(); i++ ) {
-			ui->tabWidget->widget( i )->setStyleSheet( "QWidget#tabWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mortal-gray.png); background-repeat: no-repeat; background-position: center }" );
+		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mortal-gray.png); background-repeat: no-repeat; background-position: center }" );
 		}
 	}
 }
@@ -286,11 +283,11 @@ void MainWindow::showSettingsDialog() {
 }
 
 void MainWindow::tabPrevious() {
-	if ( ui->tabWidget->currentIndex() > 0 ) {
-		ui->tabWidget->setCurrentIndex( ui->tabWidget->currentIndex() - 1 );
+	if ( ui->stackedWidget_traits->currentIndex() > 0 ) {
+		ui->stackedWidget_traits->setCurrentIndex( ui->stackedWidget_traits->currentIndex() - 1 );
 
-		if ( !ui->tabWidget->widget( ui->tabWidget->currentIndex() )->isEnabled() ) {
-			if ( ui->tabWidget->currentIndex() > 0 ) {
+		if ( !ui->selectWidget_select->item(ui->stackedWidget_traits->currentIndex())->flags().testFlag(Qt::ItemIsEnabled) ) {
+			if ( ui->stackedWidget_traits->currentIndex() > 0 ) {
 				tabPrevious();
 			} else {
 				tabNext();
@@ -300,11 +297,12 @@ void MainWindow::tabPrevious() {
 }
 
 void MainWindow::tabNext() {
-	if ( ui->tabWidget->currentIndex() < ui->tabWidget->count() - 1 ) {
-		ui->tabWidget->setCurrentIndex( ui->tabWidget->currentIndex() + 1 );
+	if ( ui->stackedWidget_traits->currentIndex() < ui->stackedWidget_traits->count() - 1 ) {
+		ui->stackedWidget_traits->setCurrentIndex( ui->stackedWidget_traits->currentIndex() + 1 );
 
-		if ( !ui->tabWidget->widget( ui->tabWidget->currentIndex() )->isEnabled() ) {
-			if ( ui->tabWidget->currentIndex() < ui->tabWidget->count() - 1 ) {
+		// Ist die neue Seite disabled, müssen wir noch eine Seite weiter springen.
+		if ( !ui->selectWidget_select->item(ui->stackedWidget_traits->currentIndex())->flags().testFlag(Qt::ItemIsEnabled) ) {
+			if ( ui->stackedWidget_traits->currentIndex() < ui->stackedWidget_traits->count() - 1 ) {
 				tabNext();
 			} else {
 				tabPrevious();
@@ -313,8 +311,12 @@ void MainWindow::tabNext() {
 	}
 }
 
+void MainWindow::selectSelectorItem( int idx ) {
+	ui->selectWidget_select->setCurrentItem(ui->selectWidget_select->item( idx ));
+}
+
 void MainWindow::setTabButtonState( int index ) {
-	if ( index < ui->tabWidget->count() - 1 ) {
+	if ( index < ui->stackedWidget_traits->count() - 1 ) {
 		ui->pushButton_next->setEnabled( true );
 	} else {
 		ui->pushButton_next->setEnabled( false );
@@ -348,13 +350,13 @@ void MainWindow::showCreationPoints( int idx ) {
 }
 
 void MainWindow::showCreationPoints( cv_CreationPoints pt ) {
-	if ( ui->tabWidget->currentIndex() == 1 ) {
+	if ( ui->stackedWidget_traits->currentIndex() == 1 ) {
 		ui->label_pointsLeft->setText( creation->points().attributesOut() );
-	} else if ( ui->tabWidget->currentIndex() == 2 ) {
+	} else if ( ui->stackedWidget_traits->currentIndex() == 2 ) {
 		ui->label_pointsLeft->setText( creation->points().skillsOut() );
-	} else if ( ui->tabWidget->currentIndex() == 3 ) {
+	} else if ( ui->stackedWidget_traits->currentIndex() == 3 ) {
 		ui->label_pointsLeft->setText( creation->points().meritsOut() );
-	} else if ( ui->tabWidget->currentIndex() == 5 ) {
+	} else if ( ui->stackedWidget_traits->currentIndex() == 5 ) {
 		ui->label_pointsLeft->setText( creation->points().powersOut() );
 	}
 }
@@ -467,13 +469,11 @@ void MainWindow::saveCharacter() {
 
 
 
-void MainWindow::hidePowers( cv_Species::SpeciesFlag species ) {
+void MainWindow::disablePowerItem( cv_Species::SpeciesFlag species ) {
 	if ( species == cv_Species::Human ) {
-// 		ui->groupBox_powers->setHidden( true );
-		ui->tabWidget->setTabEnabled( ui->tabWidget->indexOf( ui->tabWidgetItem_Powers ), false );
+		ui->selectWidget_select->item( 5 )->setFlags(Qt::NoItemFlags);;
 	} else {
-// 		ui->groupBox_powers->setHidden( false );
-		ui->tabWidget->setTabEnabled( ui->tabWidget->indexOf( ui->tabWidgetItem_Powers ), true );
+		ui->selectWidget_select->item( 5 )->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 	}
 }
 

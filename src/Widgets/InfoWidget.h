@@ -25,6 +25,7 @@
 #ifndef INFOWIDGET_H
 #define INFOWIDGET_H
 
+#include <QLabel>
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QPushButton>
@@ -70,6 +71,10 @@ class InfoWidget : public QWidget {
 		 * In diesem Layout werden die Attribute angeordnet.
 		 **/
 		QGridLayout *layout;
+		/**
+		 * Anzeige des vollen Namens.
+		 **/
+		QLabel* labelName;
 		/**
 		 * Knopf für den Namen. Über diese Schlatfläche wird ein Fenster aufgerufen, welches das Eintragen des Namens ermöglicht.
 		 **/

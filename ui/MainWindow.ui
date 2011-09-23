@@ -16,22 +16,20 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_7">
     <item>
-     <widget class="SelectWidget" name="selectWidget_select"/>
+     <widget class="SelectWidget" name="selectWidget_select">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_15">
       <item>
-       <widget class="QTabWidget" name="tabWidget">
-        <property name="tabPosition">
-         <enum>QTabWidget::North</enum>
-        </property>
-        <property name="currentIndex">
-         <number>6</number>
-        </property>
-        <widget class="QWidget" name="tabWidgetItem_Info">
-         <attribute name="title">
-          <string>Information</string>
-         </attribute>
+       <widget class="QStackedWidget" name="stackedWidget_traits">
+        <widget class="QWidget" name="stackedWidgetPage_info" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QScrollArea" name="scrollArea_info">
@@ -49,8 +47,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>467</width>
-               <height>325</height>
+               <width>475</width>
+               <height>357</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout">
@@ -99,10 +97,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tabWidgetItem_Attributes">
-         <attribute name="title">
-          <string>Attributes</string>
-         </attribute>
+        <widget class="QWidget" name="stackedWidgetPage_attributes" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <widget class="QScrollArea" name="scrollArea_attributes">
@@ -120,8 +115,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>467</width>
-               <height>325</height>
+               <width>475</width>
+               <height>357</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -153,10 +148,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tabWidgetItem_Skills">
-         <attribute name="title">
-          <string>Skills</string>
-         </attribute>
+        <widget class="QWidget" name="stackedWidgetPage_skills" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <widget class="QScrollArea" name="scrollArea_skills">
@@ -174,8 +166,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>467</width>
-               <height>325</height>
+               <width>475</width>
+               <height>357</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -224,10 +216,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tabWidgetItem_Merits">
-         <attribute name="title">
-          <string>Merits</string>
-         </attribute>
+        <widget class="QWidget" name="stackedWidgetPage_merits" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
            <widget class="QScrollArea" name="scrollArea_merits">
@@ -245,8 +234,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>467</width>
-               <height>325</height>
+               <width>475</width>
+               <height>357</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -269,10 +258,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tabWidgetItem_Morality">
-         <attribute name="title">
-          <string>Morality</string>
-         </attribute>
+        <widget class="QWidget" name="stackedWidgetPage_morality" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_14">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
@@ -311,10 +297,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tabWidgetItem_Powers">
-         <attribute name="title">
-          <string>Powers</string>
-         </attribute>
+        <widget class="QWidget" name="stackedWidgetPage_powers" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_10">
           <item>
            <widget class="QScrollArea" name="scrollArea_powers">
@@ -332,8 +315,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>467</width>
-               <height>325</height>
+               <width>475</width>
+               <height>357</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -382,10 +365,7 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tabWidgetItem_Flaws">
-         <attribute name="title">
-          <string>Flaws</string>
-         </attribute>
+        <widget class="QWidget" name="stackedWidgetPage_flaws" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
            <widget class="QScrollArea" name="scrollArea_flaws">
@@ -403,8 +383,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>467</width>
-               <height>325</height>
+               <width>475</width>
+               <height>357</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_12">

@@ -94,13 +94,13 @@ void Creation::calcPoints( cv_Trait* trait ) {
 
 			// Bei Attributen ist der jeweils erste Punkt umsonst.
 			if ( trait->type == cv_Trait::Attribute ) {
-				v_points.attributesA = Config::creationPointsAttA + 3 - pointList.at( 2 );
-				v_points.attributesB = Config::creationPointsAttB + 3 - pointList.at( 1 );
-				v_points.attributesC = Config::creationPointsAttC + 3 - pointList.at( 0 );
+				v_points.attributesA = cv_CreationPoints::creationPointsAttA + 3 - pointList.at( 2 );
+				v_points.attributesB = cv_CreationPoints::creationPointsAttB + 3 - pointList.at( 1 );
+				v_points.attributesC = cv_CreationPoints::creationPointsAttC + 3 - pointList.at( 0 );
 			} else if ( trait->type == cv_Trait::Skill ) {
-				v_points.skillsA = Config::creationPointsSkillA - pointList.at( 2 );
-				v_points.skillsB = Config::creationPointsSkillB - pointList.at( 1 );
-				v_points.skillsC = Config::creationPointsSkillC - pointList.at( 0 );
+				v_points.skillsA = cv_CreationPoints::creationPointsSkillA - pointList.at( 2 );
+				v_points.skillsB = cv_CreationPoints::creationPointsSkillB - pointList.at( 1 );
+				v_points.skillsC = cv_CreationPoints::creationPointsSkillC - pointList.at( 0 );
 			}
 		} else {
 			int pts = 0;
@@ -121,7 +121,7 @@ void Creation::calcPoints( cv_Trait* trait ) {
 			}
 
 			if ( trait->type == cv_Trait::Merit ) {
-				v_points.merits = Config::creationPointsMerits - pts;
+				v_points.merits = cv_CreationPoints::creationPointsMerits - pts;
 			}
 		}
 

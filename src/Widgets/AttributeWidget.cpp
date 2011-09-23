@@ -51,13 +51,13 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 // 	QVBoxLayout* layoutHeader = new QVBoxLayout();
 // 	frame->setLayout( layoutHeader );
 //
-	QLabel* labelPower = new QLabel( tr( "Power" ) );
+	QLabel* labelPower = new QLabel( "<b>" + tr( "Power" ) + "</b>" );
 	labelPower->setAlignment( Qt::AlignRight );
 
-	QLabel* labelFinesse = new QLabel( tr( "Finesse" ) );
+	QLabel* labelFinesse = new QLabel( "<b>" + tr( "Finesse" ) + "</b>" );
 	labelFinesse->setAlignment( Qt::AlignRight );
 
-	QLabel* labelResistance = new QLabel( tr( "Resistance" ) );
+	QLabel* labelResistance = new QLabel( "<b>" + tr( "Resistance" ) + "</b>" );
 	labelResistance->setAlignment( Qt::AlignRight );
 
 	int actualRow = 1;
@@ -106,7 +106,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 		// Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
 		QLabel* header = new QLabel();
 		header->setAlignment( Qt::AlignHCenter );
-		header->setText( cv_Trait::toString( categories.at( i ) ) );
+		header->setText( "<b>" + cv_Trait::toString( categories.at( i ) ) + "</b>" );
 		layout->addWidget( header, 0, actualColumn );
 
 		// Einfügen der tatsächlichen Attribute

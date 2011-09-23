@@ -71,7 +71,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 
 		header->setAlignment( Qt::AlignHCenter );
 
-		header->setText( cv_Trait::toString( v_categories.at( i ) ) );
+		header->setText( "<b>" + cv_Trait::toString( v_categories.at( i ) ) + "</b>" );
 
 		layout->addWidget( header, 0, actualColumn );
 

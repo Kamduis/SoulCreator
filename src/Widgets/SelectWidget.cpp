@@ -30,6 +30,25 @@
 
 
 SelectWidget::SelectWidget( QWidget *parent ) : QListWidget( parent )  {
+	new QListWidgetItem(QIcon(":types/images/kdmconfig.png"), tr("Information"), this);
+	new QListWidgetItem(QIcon(":types/images/personal.png"), tr("Attributes"), this);
+	new QListWidgetItem(QIcon(":types/images/runit.png"), tr("Skills"), this);
+	new QListWidgetItem(QIcon(":types/images/kuser.png"), tr("Merits"), this);
+	new QListWidgetItem(QIcon(":types/images/package_games_strategy.png"), tr("Morality"), this);
+	new QListWidgetItem(QIcon(":types/images/cache.png"), tr("Powers"), this);
+	new QListWidgetItem(QIcon(":types/images/os-support.png"), tr("Flaws"), this);
+
+	for (int i = 0; i < count(); i++){
+		item(i)->setTextAlignment(Qt::AlignVCenter);
+		item(i)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+	}
+
+	setIconSize(QSize(50,50));
+
+// 	setViewMode(QListView::IconMode);
+// 	setFlow(QListView::TopToBottom);
+	
+	setMaximumWidth(150);
 }
 
 SelectWidget::~SelectWidget() {

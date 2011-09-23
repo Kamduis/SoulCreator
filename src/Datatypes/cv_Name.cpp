@@ -44,7 +44,8 @@ QString cv_Name::birthName() const {
 QString cv_Name::displayNameFull( QString last, QStringList fores ) {
 	QString displayFull;
 	if ( !fores.isEmpty() ) {
-		for (int i = 0; i < fores.count(); i++){
+		displayFull = fores.at(0);
+		for (int i = 1; i < fores.count(); i++){
 			displayFull += " " + fores.at(i);
 		}
 	}

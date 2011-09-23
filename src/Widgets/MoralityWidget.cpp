@@ -175,7 +175,7 @@ void MoralityWidget::resetValue( int value ) {
 void MoralityWidget::renameHeader( cv_Species::SpeciesFlag species ) {
 	for ( int i = 0; i < storage->species().count(); i++ ) {
 		if ( cv_Species::toSpecies( storage->species().at( i ).name ) == species ) {
-			labelHeader->setText( storage->species().at( i ).morale );
+			labelHeader->setText( "<b>" + storage->species().at( i ).morale + "</b>" );
 		}
 	}
 }
