@@ -26,13 +26,13 @@
     <file>images/Skull-Werewolf-gray.png</file>
   </qresource>
   <qresource prefix="types">
-    <file>images/core.png</file>
-    <file>images/package_games_strategy.png</file>
-    <file>images/cache.png</file>
-    <file>images/kdmconfig.png</file>
-    <file>images/kuser.png</file>
-    <file>images/personal.png</file>
-    <file>images/runit.png</file>
+    <file>images/svg/karate.svg</file>
+    <file>images/svg/knife.svg</file>
+    <file>images/svg/tail.svg</file>
+    <file>images/svg/bolt.svg</file>
+    <file>images/svg/high_jump.svg</file>
+    <file>images/svg/maleprofile.svg</file>
+    <file>images/svg/humans.svg</file>
   </qresource>
   <qresource prefix="template">
     <file>xml/base.xml</file>

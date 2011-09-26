@@ -30,13 +30,13 @@
 
 
 SelectWidget::SelectWidget( QWidget *parent ) : QListWidget( parent )  {
-	new QListWidgetItem(QIcon(":types/images/kdmconfig.png"), tr("Information"), this);
-	new QListWidgetItem(QIcon(":types/images/personal.png"), tr("Attributes"), this);
-	new QListWidgetItem(QIcon(":types/images/runit.png"), tr("Skills"), this);
-	new QListWidgetItem(QIcon(":types/images/kuser.png"), tr("Merits"), this);
-	new QListWidgetItem(QIcon(":types/images/package_games_strategy.png"), tr("Morality"), this);
-	new QListWidgetItem(QIcon(":types/images/cache.png"), tr("Powers"), this);
-	new QListWidgetItem(QIcon(":types/images/core.png"), tr("Flaws"), this);
+	new QListWidgetItem(QIcon(":types/images/svg/humans.svg"), tr("Information"), this);
+	new QListWidgetItem(QIcon(":types/images/svg/maleprofile.svg"), tr("Attributes"), this);
+	new QListWidgetItem(QIcon(":types/images/svg/high_jump.svg"), tr("Skills"), this);
+	new QListWidgetItem(QIcon(":types/images/svg/karate.svg"), tr("Merits"), this);
+	new QListWidgetItem(QIcon(":types/images/svg/knife.svg"), tr("Morality"), this);
+	new QListWidgetItem(QIcon(":types/images/svg/bolt.svg"), tr("Powers"), this);
+	new QListWidgetItem(QIcon(":types/images/svg/tail.svg"), tr("Flaws"), this);
 
 	for (int i = 0; i < count(); i++){
 		item(i)->setTextAlignment(Qt::AlignVCenter);
