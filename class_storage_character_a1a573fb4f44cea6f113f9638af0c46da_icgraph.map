@@ -1,5 +1,4 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$class_storage_character.html#a6534667b942bd21253c432fee79a8850" title="StorageCharacter::resetCharacter" alt="" coords="325,5,565,35"/>
 <area shape="rect" id="node5" href="$class_storage_character.html#ae4fc2c6b281bfe6411812dc6f3ff41ff" title="StorageCharacter::setRealIdentity" alt="" coords="327,59,564,88"/>
-<area shape="rect" id="node7" href="$class_read_xml_character.html#a5857936ddba1793fd089d9f169ed73de" title="ReadXmlCharacter::read" alt="" coords="615,59,791,88"/>
 </map>

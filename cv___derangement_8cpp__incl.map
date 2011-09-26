@@ -1,12 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$_exception_8h_source.html" title="../Exceptions/Exception.h" alt="" coords="769,83,950,112"/>
-<area shape="rect" id="node47" href="$cv___derangement_8h.html" title="cv_Derangement.h" alt="" coords="74,160,218,189"/>
-<area shape="rect" id="node7" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="349,160,511,189"/>
-<area shape="rect" id="node29" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="1158,315,1337,344"/>
-<area shape="rect" id="node32" href="$cv___identity_8h.html" title="../Datatypes/cv_Identity.h" alt="" coords="679,160,861,189"/>
-<area shape="rect" id="node40" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="897,160,1027,189"/>
-<area shape="rect" id="node16" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="158,315,262,344"/>
-<area shape="rect" id="node19" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="425,237,542,267"/>
-<area shape="rect" id="node25" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="27,237,161,267"/>
-<area shape="rect" id="node36" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="718,237,811,267"/>
+<area shape="rect" id="node5" href="$cv___derangement_8h.html" title="cv_Derangement.h" alt="" coords="197,83,341,112"/>
+<area shape="rect" id="node9" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="244,237,348,267"/>
+<area shape="rect" id="node12" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="307,160,440,189"/>
 </map>

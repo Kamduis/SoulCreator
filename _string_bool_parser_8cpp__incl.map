@@ -1,12 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node5" href="$_exception_8h_source.html" title="../Exceptions/Exception.h" alt="" coords="558,83,739,112"/>
-<area shape="rect" id="node42" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="979,160,1110,189"/>
-<area shape="rect" id="node50" href="$_string_bool_parser_8h.html" title="StringBoolParser.h" alt="" coords="766,83,904,112"/>
-<area shape="rect" id="node9" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="567,160,730,189"/>
-<area shape="rect" id="node31" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="23,315,202,344"/>
-<area shape="rect" id="node34" href="$cv___identity_8h.html" title="../Datatypes/cv_Identity.h" alt="" coords="222,160,403,189"/>
-<area shape="rect" id="node18" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="734,315,838,344"/>
-<area shape="rect" id="node21" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="492,237,610,267"/>
-<area shape="rect" id="node27" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="874,237,1007,267"/>
-<area shape="rect" id="node38" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="223,237,316,267"/>
+<area shape="rect" id="node9" href="$_string_bool_parser_8h.html" title="StringBoolParser.h" alt="" coords="437,83,576,112"/>
 </map>

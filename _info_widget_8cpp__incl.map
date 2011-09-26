@@ -1,19 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node7" href="$_exception_8h_source.html" title="../Exceptions/Exception.h" alt="" coords="455,315,636,344"/>
-<area shape="rect" id="node44" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="72,392,203,421"/>
-<area shape="rect" id="node52" href="$_name_dialog_8h.html" title="Dialogs/NameDialog.h" alt="" coords="464,83,627,112"/>
-<area shape="rect" id="node84" href="$_info_widget_8h.html" title="InfoWidget.h" alt="" coords="849,83,948,112"/>
-<area shape="rect" id="node11" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="915,392,1077,421"/>
-<area shape="rect" id="node33" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="597,547,776,576"/>
-<area shape="rect" id="node36" href="$cv___identity_8h.html" title="../Datatypes/cv_Identity.h" alt="" coords="277,469,459,499"/>
-<area shape="rect" id="node20" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="1232,547,1336,576"/>
-<area shape="rect" id="node23" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="1067,469,1184,499"/>
-<area shape="rect" id="node29" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="1493,469,1627,499"/>
-<area shape="rect" id="node40" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="379,547,472,576"/>
-<area shape="rect" id="node56" href="$_storage_character_8h.html" title="../../Storage/StorageCharacter.h" alt="" coords="771,237,997,267"/>
-<area shape="rect" id="node59" href="$cv___identity_list_8h.html" title="../Datatypes/cv_IdentityList.h" alt="" coords="635,392,840,421"/>
-<area shape="rect" id="node65" href="$cv___derangement_8h.html" title="../Datatypes/cv_Derangement.h" alt="" coords="1499,392,1725,421"/>
-<area shape="rect" id="node70" href="$_storage_template_8h.html" title="StorageTemplate.h" alt="" coords="809,315,951,344"/>
-<area shape="rect" id="node76" href="$cv___super_effect_8h.html" title="../Datatypes/cv_SuperEffect.h" alt="" coords="1259,469,1469,499"/>
-<area shape="rect" id="node95" href="$_chara_species_8h.html" title="CharaSpecies.h" alt="" coords="1011,160,1133,189"/>
+<area shape="rect" id="node11" href="$_name_dialog_8h.html" title="Dialogs/NameDialog.h" alt="" coords="5,83,168,112"/>
+<area shape="rect" id="node19" href="$_info_widget_8h.html" title="InfoWidget.h" alt="" coords="675,83,773,112"/>
+<area shape="rect" id="node32" href="$_chara_species_8h.html" title="CharaSpecies.h" alt="" coords="784,160,907,189"/>
 </map>

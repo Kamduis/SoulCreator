@@ -146,10 +146,10 @@ function toggleVisibility(linkObj) {
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QString&gt;</span>
 <a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="preprocessor">#include &quot;<a class="code" href="cv___trait_8h.html">../Datatypes/cv_Trait.h</a>&quot;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &quot;<a class="code" href="cv___shape_8h.html">../Datatypes/cv_Shape.h</a>&quot;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;<a class="code" href="cv___identity_8h.html">../Datatypes/cv_Identity.h</a>&quot;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;<a class="code" href="_config_8h.html">../Config/Config.h</a>&quot;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &quot;Datatypes/cv_Trait.h&quot;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &quot;Datatypes/cv_Shape.h&quot;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;Datatypes/cv_Identity.h&quot;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;Config/Config.h&quot;</span>
 <a name="l00030"></a>00030 
 <a name="l00031"></a>00031 
 <a name="l00038"></a><a class="code" href="class_exception.html">00038</a> <span class="keyword">class </span><a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
@@ -166,164 +166,175 @@ function toggleVisibility(linkObj) {
 <a name="l00070"></a>00070 };
 <a name="l00071"></a>00071 
 <a name="l00072"></a>00072 
-<a name="l00079"></a><a class="code" href="classe_number.html">00079</a> <span class="keyword">class </span><a class="code" href="classe_number.html" title="Ausnahme bei Zahlen.">eNumber</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00080"></a>00080     <span class="keyword">public</span>:
-<a name="l00084"></a>00084         <a class="code" href="classe_number.html#a27c099a9af640d009a4e25f7454252bf">eNumber</a>();
-<a name="l00085"></a>00085 };
-<a name="l00086"></a>00086 
-<a name="l00093"></a><a class="code" href="classe_not_a_number.html">00093</a> <span class="keyword">class </span><a class="code" href="classe_not_a_number.html" title="Ausnahme beim Fehlen einer Zahl.">eNotANumber</a> : <span class="keyword">public</span> <a class="code" href="classe_number.html" title="Ausnahme bei Zahlen.">eNumber</a> {
-<a name="l00094"></a>00094     <span class="keyword">public</span>:
-<a name="l00098"></a>00098         <a class="code" href="classe_not_a_number.html#a6dabec017857726ad6400354871a8aca">eNotANumber</a>();
-<a name="l00099"></a>00099 };
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101 
-<a name="l00107"></a><a class="code" href="classe_dir.html">00107</a> <span class="keyword">class </span><a class="code" href="classe_dir.html" title="Ausnahme im Verzeichnis-Management.">eDir</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00108"></a>00108     <span class="keyword">public</span>:
-<a name="l00109"></a>00109         <a class="code" href="classe_dir.html" title="Ausnahme im Verzeichnis-Management.">eDir</a>( QString dirName = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00110"></a>00110 };
-<a name="l00111"></a>00111 
-<a name="l00117"></a><a class="code" href="classe_dir_not_created.html">00117</a> <span class="keyword">class </span><a class="code" href="classe_dir_not_created.html" title="Verzeichnis kann nicht angelegt werden.">eDirNotCreated</a> : <span class="keyword">public</span> <a class="code" href="classe_dir.html" title="Ausnahme im Verzeichnis-Management.">eDir</a> {
-<a name="l00118"></a>00118     <span class="keyword">public</span>:
-<a name="l00119"></a>00119         <a class="code" href="classe_dir_not_created.html" title="Verzeichnis kann nicht angelegt werden.">eDirNotCreated</a>( QString dirName = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00120"></a>00120 };
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122 
-<a name="l00128"></a><a class="code" href="classe_file.html">00128</a> <span class="keyword">class </span><a class="code" href="classe_file.html" title="Ausnahme im Datei-Management.">eFile</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00129"></a>00129     <span class="keyword">public</span>:
-<a name="l00133"></a>00133         <a class="code" href="classe_file.html#a85a19ce77ddf85fb9f0225be74c6aaa8">eFile</a>( QString filename = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00134"></a>00134 };
-<a name="l00135"></a>00135 
-<a name="l00141"></a><a class="code" href="classe_file_not_opened.html">00141</a> <span class="keyword">class </span><a class="code" href="classe_file_not_opened.html" title="Datei kann nicht geöffnet werden.">eFileNotOpened</a> : <span class="keyword">public</span> <a class="code" href="classe_file.html" title="Ausnahme im Datei-Management.">eFile</a> {
-<a name="l00142"></a>00142     <span class="keyword">public</span>:
-<a name="l00143"></a>00143         <a class="code" href="classe_file_not_opened.html" title="Datei kann nicht geöffnet werden.">eFileNotOpened</a>( QString fileName = <span class="stringliteral">&quot;unknown&quot;</span>, QString lastError = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00144"></a>00144 };
-<a name="l00145"></a>00145 
-<a name="l00152"></a><a class="code" href="classe_file_not_deleted.html">00152</a> <span class="keyword">class </span><a class="code" href="classe_file_not_deleted.html" title="Datei kann nicht gelöscht werden.">eFileNotDeleted</a> : <span class="keyword">public</span> <a class="code" href="classe_file.html" title="Ausnahme im Datei-Management.">eFile</a> {
-<a name="l00153"></a>00153     <span class="keyword">public</span>:
-<a name="l00157"></a>00157         <a class="code" href="classe_file_not_deleted.html#a9e586fbfbf59382683a5a7be2f5632d8">eFileNotDeleted</a>( QString filename = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00158"></a>00158 };
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160 
-<a name="l00167"></a><a class="code" href="classe_xml.html">00167</a> <span class="keyword">class </span><a class="code" href="classe_xml.html" title="Ausnahme beim Lesen der XML-Datei.">eXml</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00168"></a>00168     <span class="keyword">public</span>:
-<a name="l00169"></a>00169         <a class="code" href="classe_xml.html" title="Ausnahme beim Lesen der XML-Datei.">eXml</a>( QString error = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00170"></a>00170 };
-<a name="l00171"></a>00171 
-<a name="l00177"></a><a class="code" href="classe_xml_error.html">00177</a> <span class="keyword">class </span><a class="code" href="classe_xml_error.html" title="Beim Parsen der XML-Datei trat ein Fehler auf.">eXmlError</a> : <span class="keyword">public</span> <a class="code" href="classe_xml.html" title="Ausnahme beim Lesen der XML-Datei.">eXml</a> {
-<a name="l00178"></a>00178     <span class="keyword">public</span>:
-<a name="l00179"></a>00179         <a class="code" href="classe_xml_error.html" title="Beim Parsen der XML-Datei trat ein Fehler auf.">eXmlError</a>( QString fileName = <span class="stringliteral">&quot;unknown&quot;</span>, QString error = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00180"></a>00180 };
-<a name="l00181"></a>00181 
-<a name="l00185"></a><a class="code" href="classe_xml_version.html">00185</a> <span class="keyword">class </span><a class="code" href="classe_xml_version.html" title="Die XML-Datei weist die falsche Version auf.">eXmlVersion</a> : <span class="keyword">public</span> <a class="code" href="classe_xml.html" title="Ausnahme beim Lesen der XML-Datei.">eXml</a> {
-<a name="l00186"></a>00186     <span class="keyword">public</span>:
-<a name="l00187"></a>00187         <a class="code" href="classe_xml_version.html" title="Die XML-Datei weist die falsche Version auf.">eXmlVersion</a>( QString expected = <span class="stringliteral">&quot;unknown&quot;</span>, QString got = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00188"></a>00188 };
-<a name="l00189"></a>00189 
-<a name="l00193"></a><a class="code" href="classe_xml_old_version.html">00193</a> <span class="keyword">class </span><a class="code" href="classe_xml_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem programm, ist aber zu alt.">eXmlOldVersion</a> : <span class="keyword">public</span> <a class="code" href="classe_xml_version.html" title="Die XML-Datei weist die falsche Version auf.">eXmlVersion</a> {
-<a name="l00194"></a>00194     <span class="keyword">public</span>:
-<a name="l00195"></a>00195         <a class="code" href="classe_xml_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem programm, ist aber zu alt.">eXmlOldVersion</a>( QString expected = <a class="code" href="class_config.html#a77bc8861add4e417c0c5987eed2359cb">Config::version</a>(), QString got = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00196"></a>00196 };
-<a name="l00197"></a>00197 
-<a name="l00203"></a><a class="code" href="classe_xml_too_old_version.html">00203</a> <span class="keyword">class </span><a class="code" href="classe_xml_too_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber viel zu alt.">eXmlTooOldVersion</a> : <span class="keyword">public</span> <a class="code" href="classe_xml_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem programm, ist aber zu alt.">eXmlOldVersion</a> {
-<a name="l00204"></a>00204     <span class="keyword">public</span>:
-<a name="l00205"></a>00205         <a class="code" href="classe_xml_too_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber viel zu alt.">eXmlTooOldVersion</a>( QString expected = <a class="code" href="class_config.html#a77bc8861add4e417c0c5987eed2359cb">Config::version</a>(), QString got = <span class="stringliteral">&quot;unknown&quot;</span> );
-<a name="l00206"></a>00206 };
-<a name="l00207"></a>00207 
-<a name="l00208"></a>00208 
-<a name="l00214"></a><a class="code" href="classe_species.html">00214</a> <span class="keyword">class </span><a class="code" href="classe_species.html" title="Ausnahme, falls Fehler bei den Spezies auftritt.">eSpecies</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00215"></a>00215     <span class="keyword">public</span>:
-<a name="l00216"></a>00216         <a class="code" href="classe_species.html" title="Ausnahme, falls Fehler bei den Spezies auftritt.">eSpecies</a>();
-<a name="l00217"></a>00217 };
-<a name="l00218"></a>00218 
-<a name="l00224"></a><a class="code" href="classe_species_not_existing.html">00224</a> <span class="keyword">class </span><a class="code" href="classe_species_not_existing.html" title="Ausnahme, falls eine spezifizierte Spezies nicht existiert.">eSpeciesNotExisting</a> : <span class="keyword">public</span> <a class="code" href="classe_species.html" title="Ausnahme, falls Fehler bei den Spezies auftritt.">eSpecies</a> {
-<a name="l00225"></a>00225     <span class="keyword">public</span>:
-<a name="l00226"></a>00226         <a class="code" href="classe_species_not_existing.html" title="Ausnahme, falls eine spezifizierte Spezies nicht existiert.">eSpeciesNotExisting</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species );
-<a name="l00227"></a>00227         <a class="code" href="classe_species_not_existing.html" title="Ausnahme, falls eine spezifizierte Spezies nicht existiert.">eSpeciesNotExisting</a>();
-<a name="l00228"></a>00228 };
-<a name="l00229"></a>00229 
-<a name="l00230"></a>00230 
-<a name="l00234"></a><a class="code" href="classe_gender.html">00234</a> <span class="keyword">class </span><a class="code" href="classe_gender.html" title="Ausnahme, falls Fehler bei den Geschlechtern auftritt.">eGender</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00235"></a>00235     <span class="keyword">public</span>:
-<a name="l00236"></a>00236         <a class="code" href="classe_gender.html" title="Ausnahme, falls Fehler bei den Geschlechtern auftritt.">eGender</a>();
-<a name="l00237"></a>00237 };
-<a name="l00238"></a>00238 
-<a name="l00242"></a><a class="code" href="classe_gender_not_existing.html">00242</a> <span class="keyword">class </span><a class="code" href="classe_gender_not_existing.html" title="Ausnahme, falls das spezifizierte Geschlecht nicht existiert.">eGenderNotExisting</a> : <span class="keyword">public</span> <a class="code" href="classe_gender.html" title="Ausnahme, falls Fehler bei den Geschlechtern auftritt.">eGender</a> {
-<a name="l00243"></a>00243     <span class="keyword">public</span>:
-<a name="l00244"></a>00244         <a class="code" href="classe_gender_not_existing.html" title="Ausnahme, falls das spezifizierte Geschlecht nicht existiert.">eGenderNotExisting</a>( <a class="code" href="classcv___identity.html#ad4bf8419e6adb4085099e504f37a9d29">cv_Identity::Gender</a> gen );
+<a name="l00078"></a><a class="code" href="classe_number.html">00078</a> <span class="keyword">class </span><a class="code" href="classe_number.html" title="Ausnahme bei Zahlen.">eNumber</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00079"></a>00079     <span class="keyword">public</span>:
+<a name="l00083"></a>00083         <a class="code" href="classe_number.html#a27c099a9af640d009a4e25f7454252bf">eNumber</a>();
+<a name="l00084"></a>00084 };
+<a name="l00085"></a>00085 
+<a name="l00091"></a><a class="code" href="classe_not_a_number.html">00091</a> <span class="keyword">class </span><a class="code" href="classe_not_a_number.html" title="Ausnahme beim Fehlen einer Zahl.">eNotANumber</a> : <span class="keyword">public</span> <a class="code" href="classe_number.html" title="Ausnahme bei Zahlen.">eNumber</a> {
+<a name="l00092"></a>00092     <span class="keyword">public</span>:
+<a name="l00096"></a>00096         <a class="code" href="classe_not_a_number.html#a6dabec017857726ad6400354871a8aca">eNotANumber</a>();
+<a name="l00097"></a>00097 };
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099 
+<a name="l00103"></a><a class="code" href="classe_list.html">00103</a> <span class="keyword">class </span><a class="code" href="classe_list.html" title="Ausnahme bei Listen oder Vektoren.">eList</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00104"></a>00104     <span class="keyword">public</span>:
+<a name="l00105"></a>00105         <a class="code" href="classe_list.html" title="Ausnahme bei Listen oder Vektoren.">eList</a>();
+<a name="l00106"></a>00106 };
+<a name="l00107"></a>00107 
+<a name="l00113"></a><a class="code" href="classe_index_exceeds_range.html">00113</a> <span class="keyword">class </span><a class="code" href="classe_index_exceeds_range.html" title="Index überschreitet Listengröße.">eIndexExceedsRange</a> : <span class="keyword">public</span> <a class="code" href="classe_list.html" title="Ausnahme bei Listen oder Vektoren.">eList</a> {
+<a name="l00114"></a>00114     <span class="keyword">public</span>:
+<a name="l00115"></a>00115         <a class="code" href="classe_index_exceeds_range.html" title="Index überschreitet Listengröße.">eIndexExceedsRange</a>( <span class="keywordtype">int</span> idx, <span class="keywordtype">int</span> range );
+<a name="l00116"></a>00116 };
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118 
+<a name="l00124"></a><a class="code" href="classe_dir.html">00124</a> <span class="keyword">class </span><a class="code" href="classe_dir.html" title="Ausnahme im Verzeichnis-Management.">eDir</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00125"></a>00125     <span class="keyword">public</span>:
+<a name="l00126"></a>00126         <a class="code" href="classe_dir.html" title="Ausnahme im Verzeichnis-Management.">eDir</a>( QString dirName = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00127"></a>00127 };
+<a name="l00128"></a>00128 
+<a name="l00134"></a><a class="code" href="classe_dir_not_created.html">00134</a> <span class="keyword">class </span><a class="code" href="classe_dir_not_created.html" title="Verzeichnis kann nicht angelegt werden.">eDirNotCreated</a> : <span class="keyword">public</span> <a class="code" href="classe_dir.html" title="Ausnahme im Verzeichnis-Management.">eDir</a> {
+<a name="l00135"></a>00135     <span class="keyword">public</span>:
+<a name="l00136"></a>00136         <a class="code" href="classe_dir_not_created.html" title="Verzeichnis kann nicht angelegt werden.">eDirNotCreated</a>( QString dirName = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00137"></a>00137 };
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139 
+<a name="l00145"></a><a class="code" href="classe_file.html">00145</a> <span class="keyword">class </span><a class="code" href="classe_file.html" title="Ausnahme im Datei-Management.">eFile</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00146"></a>00146     <span class="keyword">public</span>:
+<a name="l00150"></a>00150         <a class="code" href="classe_file.html#a85a19ce77ddf85fb9f0225be74c6aaa8">eFile</a>( QString filename = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00151"></a>00151 };
+<a name="l00152"></a>00152 
+<a name="l00158"></a><a class="code" href="classe_file_not_opened.html">00158</a> <span class="keyword">class </span><a class="code" href="classe_file_not_opened.html" title="Datei kann nicht geöffnet werden.">eFileNotOpened</a> : <span class="keyword">public</span> <a class="code" href="classe_file.html" title="Ausnahme im Datei-Management.">eFile</a> {
+<a name="l00159"></a>00159     <span class="keyword">public</span>:
+<a name="l00160"></a>00160         <a class="code" href="classe_file_not_opened.html" title="Datei kann nicht geöffnet werden.">eFileNotOpened</a>( QString fileName = <span class="stringliteral">&quot;unknown&quot;</span>, QString lastError = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00161"></a>00161 };
+<a name="l00162"></a>00162 
+<a name="l00169"></a><a class="code" href="classe_file_not_deleted.html">00169</a> <span class="keyword">class </span><a class="code" href="classe_file_not_deleted.html" title="Datei kann nicht gelöscht werden.">eFileNotDeleted</a> : <span class="keyword">public</span> <a class="code" href="classe_file.html" title="Ausnahme im Datei-Management.">eFile</a> {
+<a name="l00170"></a>00170     <span class="keyword">public</span>:
+<a name="l00174"></a>00174         <a class="code" href="classe_file_not_deleted.html#a9e586fbfbf59382683a5a7be2f5632d8">eFileNotDeleted</a>( QString filename = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00175"></a>00175 };
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177 
+<a name="l00184"></a><a class="code" href="classe_xml.html">00184</a> <span class="keyword">class </span><a class="code" href="classe_xml.html" title="Ausnahme beim Lesen der XML-Datei.">eXml</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00185"></a>00185     <span class="keyword">public</span>:
+<a name="l00186"></a>00186         <a class="code" href="classe_xml.html" title="Ausnahme beim Lesen der XML-Datei.">eXml</a>( QString error = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00187"></a>00187 };
+<a name="l00188"></a>00188 
+<a name="l00194"></a><a class="code" href="classe_xml_error.html">00194</a> <span class="keyword">class </span><a class="code" href="classe_xml_error.html" title="Beim Parsen der XML-Datei trat ein Fehler auf.">eXmlError</a> : <span class="keyword">public</span> <a class="code" href="classe_xml.html" title="Ausnahme beim Lesen der XML-Datei.">eXml</a> {
+<a name="l00195"></a>00195     <span class="keyword">public</span>:
+<a name="l00196"></a>00196         <a class="code" href="classe_xml_error.html" title="Beim Parsen der XML-Datei trat ein Fehler auf.">eXmlError</a>( QString fileName = <span class="stringliteral">&quot;unknown&quot;</span>, QString error = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00197"></a>00197 };
+<a name="l00198"></a>00198 
+<a name="l00202"></a><a class="code" href="classe_xml_version.html">00202</a> <span class="keyword">class </span><a class="code" href="classe_xml_version.html" title="Die XML-Datei weist die falsche Version auf.">eXmlVersion</a> : <span class="keyword">public</span> <a class="code" href="classe_xml.html" title="Ausnahme beim Lesen der XML-Datei.">eXml</a> {
+<a name="l00203"></a>00203     <span class="keyword">public</span>:
+<a name="l00204"></a>00204         <a class="code" href="classe_xml_version.html" title="Die XML-Datei weist die falsche Version auf.">eXmlVersion</a>( QString expected = <span class="stringliteral">&quot;unknown&quot;</span>, QString got = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00205"></a>00205 };
+<a name="l00206"></a>00206 
+<a name="l00210"></a><a class="code" href="classe_xml_old_version.html">00210</a> <span class="keyword">class </span><a class="code" href="classe_xml_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem programm, ist aber zu alt.">eXmlOldVersion</a> : <span class="keyword">public</span> <a class="code" href="classe_xml_version.html" title="Die XML-Datei weist die falsche Version auf.">eXmlVersion</a> {
+<a name="l00211"></a>00211     <span class="keyword">public</span>:
+<a name="l00212"></a>00212         <a class="code" href="classe_xml_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem programm, ist aber zu alt.">eXmlOldVersion</a>( QString expected = <a class="code" href="class_config.html#a77bc8861add4e417c0c5987eed2359cb">Config::version</a>(), QString got = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00213"></a>00213 };
+<a name="l00214"></a>00214 
+<a name="l00220"></a><a class="code" href="classe_xml_too_old_version.html">00220</a> <span class="keyword">class </span><a class="code" href="classe_xml_too_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber viel zu alt.">eXmlTooOldVersion</a> : <span class="keyword">public</span> <a class="code" href="classe_xml_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem programm, ist aber zu alt.">eXmlOldVersion</a> {
+<a name="l00221"></a>00221     <span class="keyword">public</span>:
+<a name="l00222"></a>00222         <a class="code" href="classe_xml_too_old_version.html" title="Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber viel zu alt.">eXmlTooOldVersion</a>( QString expected = <a class="code" href="class_config.html#a77bc8861add4e417c0c5987eed2359cb">Config::version</a>(), QString got = <span class="stringliteral">&quot;unknown&quot;</span> );
+<a name="l00223"></a>00223 };
+<a name="l00224"></a>00224 
+<a name="l00225"></a>00225 
+<a name="l00231"></a><a class="code" href="classe_species.html">00231</a> <span class="keyword">class </span><a class="code" href="classe_species.html" title="Ausnahme, falls Fehler bei den Spezies auftritt.">eSpecies</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00232"></a>00232     <span class="keyword">public</span>:
+<a name="l00233"></a>00233         <a class="code" href="classe_species.html" title="Ausnahme, falls Fehler bei den Spezies auftritt.">eSpecies</a>();
+<a name="l00234"></a>00234 };
+<a name="l00235"></a>00235 
+<a name="l00241"></a><a class="code" href="classe_species_not_existing.html">00241</a> <span class="keyword">class </span><a class="code" href="classe_species_not_existing.html" title="Ausnahme, falls eine spezifizierte Spezies nicht existiert.">eSpeciesNotExisting</a> : <span class="keyword">public</span> <a class="code" href="classe_species.html" title="Ausnahme, falls Fehler bei den Spezies auftritt.">eSpecies</a> {
+<a name="l00242"></a>00242     <span class="keyword">public</span>:
+<a name="l00243"></a>00243         <a class="code" href="classe_species_not_existing.html" title="Ausnahme, falls eine spezifizierte Spezies nicht existiert.">eSpeciesNotExisting</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species );
+<a name="l00244"></a>00244         <a class="code" href="classe_species_not_existing.html" title="Ausnahme, falls eine spezifizierte Spezies nicht existiert.">eSpeciesNotExisting</a>();
 <a name="l00245"></a>00245 };
 <a name="l00246"></a>00246 
 <a name="l00247"></a>00247 
-<a name="l00253"></a><a class="code" href="classe_trait.html">00253</a> <span class="keyword">class </span><a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00254"></a>00254     <span class="keyword">public</span>:
-<a name="l00255"></a>00255         <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a>();
-<a name="l00256"></a>00256 };
-<a name="l00257"></a>00257 
-<a name="l00263"></a><a class="code" href="classe_trait_not_existing.html">00263</a> <span class="keyword">class </span><a class="code" href="classe_trait_not_existing.html" title="Ausnahme, falls eine spezifizierte Eigenscahft nicht existiert.">eTraitNotExisting</a> : <span class="keyword">public</span> <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> {
-<a name="l00264"></a>00264     <span class="keyword">public</span>:
-<a name="l00265"></a>00265         <a class="code" href="classe_trait_not_existing.html" title="Ausnahme, falls eine spezifizierte Eigenscahft nicht existiert.">eTraitNotExisting</a>();
-<a name="l00266"></a>00266 };
-<a name="l00267"></a>00267 
-<a name="l00273"></a><a class="code" href="classe_trait_category.html">00273</a> <span class="keyword">class </span><a class="code" href="classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird.">eTraitCategory</a> : <span class="keyword">public</span> <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> {
-<a name="l00274"></a>00274     <span class="keyword">public</span>:
-<a name="l00275"></a>00275         <a class="code" href="classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird.">eTraitCategory</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category );
-<a name="l00276"></a>00276 };
-<a name="l00277"></a>00277 
-<a name="l00283"></a><a class="code" href="classe_trait_type.html">00283</a> <span class="keyword">class </span><a class="code" href="classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird.">eTraitType</a> : <span class="keyword">public</span> <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> {
-<a name="l00284"></a>00284     <span class="keyword">public</span>:
-<a name="l00285"></a>00285         <a class="code" href="classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird.">eTraitType</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
-<a name="l00286"></a>00286 };
-<a name="l00287"></a>00287 
-<a name="l00288"></a>00288 
-<a name="l00294"></a><a class="code" href="classe_print.html">00294</a> <span class="keyword">class </span><a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00295"></a>00295     <span class="keyword">public</span>:
-<a name="l00296"></a>00296         <a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a>();
-<a name="l00297"></a>00297 };
-<a name="l00298"></a>00298 
-<a name="l00304"></a><a class="code" href="classe_traits_exceed_sheet_capacity.html">00304</a> <span class="keyword">class </span><a class="code" href="classe_traits_exceed_sheet_capacity.html" title="Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.">eTraitsExceedSheetCapacity</a> : <span class="keyword">public</span> <a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a> {
-<a name="l00305"></a>00305     <span class="keyword">public</span>:
-<a name="l00306"></a>00306         <a class="code" href="classe_traits_exceed_sheet_capacity.html" title="Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.">eTraitsExceedSheetCapacity</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <span class="keywordtype">int</span> maxNumber );
-<a name="l00307"></a>00307 };
-<a name="l00308"></a>00308 
-<a name="l00314"></a><a class="code" href="classe_value_exceeds_sheet_capacity.html">00314</a> <span class="keyword">class </span><a class="code" href="classe_value_exceeds_sheet_capacity.html" title="Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll.">eValueExceedsSheetCapacity</a> : <span class="keyword">public</span> <a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a> {
-<a name="l00315"></a>00315     <span class="keyword">public</span>:
-<a name="l00316"></a>00316         <a class="code" href="classe_value_exceeds_sheet_capacity.html" title="Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll.">eValueExceedsSheetCapacity</a>( <span class="keywordtype">int</span> value, QString name );
-<a name="l00317"></a>00317 };
-<a name="l00318"></a>00318 
-<a name="l00319"></a>00319 
-<a name="l00326"></a><a class="code" href="classe_entry.html">00326</a> <span class="keyword">class </span><a class="code" href="classe_entry.html" title="Ausnahme, falls Fehler bei einer Eingabe auftreten.">eEntry</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00327"></a>00327     <span class="keyword">public</span>:
-<a name="l00331"></a>00331         <a class="code" href="classe_entry.html#af2bff1ad646f97d52c00bf8569548a3b">eEntry</a>();
-<a name="l00332"></a>00332 };
-<a name="l00333"></a>00333 
-<a name="l00340"></a><a class="code" href="classe_user_entry.html">00340</a> <span class="keyword">class </span><a class="code" href="classe_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.">eUserEntry</a> : <span class="keyword">public</span> <a class="code" href="classe_entry.html" title="Ausnahme, falls Fehler bei einer Eingabe auftreten.">eEntry</a> {
-<a name="l00341"></a>00341     <span class="keyword">public</span>:
-<a name="l00345"></a>00345         <a class="code" href="classe_user_entry.html#a8865bccf1cf63218bd651713b777507d">eUserEntry</a>();
-<a name="l00346"></a>00346 };
-<a name="l00347"></a>00347 
-<a name="l00354"></a><a class="code" href="classe_missing_user_entry.html">00354</a> <span class="keyword">class </span><a class="code" href="classe_missing_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.">eMissingUserEntry</a> : <span class="keyword">public</span> <a class="code" href="classe_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.">eUserEntry</a> {
-<a name="l00355"></a>00355     <span class="keyword">public</span>:
-<a name="l00359"></a>00359         <a class="code" href="classe_missing_user_entry.html#aceba43c80e53b7b00c6c1362df490226">eMissingUserEntry</a>();
-<a name="l00360"></a>00360 };
-<a name="l00361"></a>00361 
-<a name="l00362"></a>00362 
-<a name="l00366"></a><a class="code" href="classe_werewolf_shape.html">00366</a> <span class="keyword">class </span><a class="code" href="classe_werewolf_shape.html" title="Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.">eWerewolfShape</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
-<a name="l00367"></a>00367     <span class="keyword">public</span>:
-<a name="l00368"></a>00368         <a class="code" href="classe_werewolf_shape.html" title="Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.">eWerewolfShape</a>();
-<a name="l00369"></a>00369 };
-<a name="l00370"></a>00370 
-<a name="l00374"></a><a class="code" href="classe_werewolf_shape_not_existing.html">00374</a> <span class="keyword">class </span><a class="code" href="classe_werewolf_shape_not_existing.html" title="Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.">eWerewolfShapeNotExisting</a> : <span class="keyword">public</span> <a class="code" href="classe_werewolf_shape.html" title="Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.">eWerewolfShape</a> {
-<a name="l00375"></a>00375     <span class="keyword">public</span>:
-<a name="l00376"></a>00376         <a class="code" href="classe_werewolf_shape_not_existing.html" title="Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.">eWerewolfShapeNotExisting</a>( cv_Shape::WerewolfShape shape );
-<a name="l00377"></a>00377         <a class="code" href="classe_werewolf_shape_not_existing.html" title="Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.">eWerewolfShapeNotExisting</a>( QString shape );
-<a name="l00378"></a>00378 };
+<a name="l00251"></a><a class="code" href="classe_gender.html">00251</a> <span class="keyword">class </span><a class="code" href="classe_gender.html" title="Ausnahme, falls Fehler bei den Geschlechtern auftritt.">eGender</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00252"></a>00252     <span class="keyword">public</span>:
+<a name="l00253"></a>00253         <a class="code" href="classe_gender.html" title="Ausnahme, falls Fehler bei den Geschlechtern auftritt.">eGender</a>();
+<a name="l00254"></a>00254 };
+<a name="l00255"></a>00255 
+<a name="l00259"></a><a class="code" href="classe_gender_not_existing.html">00259</a> <span class="keyword">class </span><a class="code" href="classe_gender_not_existing.html" title="Ausnahme, falls das spezifizierte Geschlecht nicht existiert.">eGenderNotExisting</a> : <span class="keyword">public</span> <a class="code" href="classe_gender.html" title="Ausnahme, falls Fehler bei den Geschlechtern auftritt.">eGender</a> {
+<a name="l00260"></a>00260     <span class="keyword">public</span>:
+<a name="l00261"></a>00261         <a class="code" href="classe_gender_not_existing.html" title="Ausnahme, falls das spezifizierte Geschlecht nicht existiert.">eGenderNotExisting</a>( <a class="code" href="classcv___identity.html#ad4bf8419e6adb4085099e504f37a9d29">cv_Identity::Gender</a> gen );
+<a name="l00262"></a>00262 };
+<a name="l00263"></a>00263 
+<a name="l00264"></a>00264 
+<a name="l00270"></a><a class="code" href="classe_trait.html">00270</a> <span class="keyword">class </span><a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00271"></a>00271     <span class="keyword">public</span>:
+<a name="l00272"></a>00272         <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a>();
+<a name="l00273"></a>00273 };
+<a name="l00274"></a>00274 
+<a name="l00280"></a><a class="code" href="classe_trait_not_existing.html">00280</a> <span class="keyword">class </span><a class="code" href="classe_trait_not_existing.html" title="Ausnahme, falls eine spezifizierte Eigenscahft nicht existiert.">eTraitNotExisting</a> : <span class="keyword">public</span> <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> {
+<a name="l00281"></a>00281     <span class="keyword">public</span>:
+<a name="l00282"></a>00282         <a class="code" href="classe_trait_not_existing.html" title="Ausnahme, falls eine spezifizierte Eigenscahft nicht existiert.">eTraitNotExisting</a>();
+<a name="l00283"></a>00283 };
+<a name="l00284"></a>00284 
+<a name="l00290"></a><a class="code" href="classe_trait_category.html">00290</a> <span class="keyword">class </span><a class="code" href="classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird.">eTraitCategory</a> : <span class="keyword">public</span> <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> {
+<a name="l00291"></a>00291     <span class="keyword">public</span>:
+<a name="l00292"></a>00292         <a class="code" href="classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird.">eTraitCategory</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category );
+<a name="l00293"></a>00293 };
+<a name="l00294"></a>00294 
+<a name="l00300"></a><a class="code" href="classe_trait_type.html">00300</a> <span class="keyword">class </span><a class="code" href="classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird.">eTraitType</a> : <span class="keyword">public</span> <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> {
+<a name="l00301"></a>00301     <span class="keyword">public</span>:
+<a name="l00302"></a>00302         <a class="code" href="classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird.">eTraitType</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
+<a name="l00303"></a>00303 };
+<a name="l00304"></a>00304 
+<a name="l00305"></a>00305 
+<a name="l00311"></a><a class="code" href="classe_print.html">00311</a> <span class="keyword">class </span><a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00312"></a>00312     <span class="keyword">public</span>:
+<a name="l00313"></a>00313         <a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a>();
+<a name="l00314"></a>00314 };
+<a name="l00315"></a>00315 
+<a name="l00321"></a><a class="code" href="classe_traits_exceed_sheet_capacity.html">00321</a> <span class="keyword">class </span><a class="code" href="classe_traits_exceed_sheet_capacity.html" title="Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.">eTraitsExceedSheetCapacity</a> : <span class="keyword">public</span> <a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a> {
+<a name="l00322"></a>00322     <span class="keyword">public</span>:
+<a name="l00323"></a>00323         <a class="code" href="classe_traits_exceed_sheet_capacity.html" title="Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.">eTraitsExceedSheetCapacity</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <span class="keywordtype">int</span> maxNumber );
+<a name="l00324"></a>00324 };
+<a name="l00325"></a>00325 
+<a name="l00331"></a><a class="code" href="classe_value_exceeds_sheet_capacity.html">00331</a> <span class="keyword">class </span><a class="code" href="classe_value_exceeds_sheet_capacity.html" title="Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll.">eValueExceedsSheetCapacity</a> : <span class="keyword">public</span> <a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a> {
+<a name="l00332"></a>00332     <span class="keyword">public</span>:
+<a name="l00333"></a>00333         <a class="code" href="classe_value_exceeds_sheet_capacity.html" title="Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll.">eValueExceedsSheetCapacity</a>( <span class="keywordtype">int</span> value, QString name );
+<a name="l00334"></a>00334 };
+<a name="l00335"></a>00335 
+<a name="l00336"></a>00336 
+<a name="l00343"></a><a class="code" href="classe_entry.html">00343</a> <span class="keyword">class </span><a class="code" href="classe_entry.html" title="Ausnahme, falls Fehler bei einer Eingabe auftreten.">eEntry</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00344"></a>00344     <span class="keyword">public</span>:
+<a name="l00348"></a>00348         <a class="code" href="classe_entry.html#af2bff1ad646f97d52c00bf8569548a3b">eEntry</a>();
+<a name="l00349"></a>00349 };
+<a name="l00350"></a>00350 
+<a name="l00357"></a><a class="code" href="classe_user_entry.html">00357</a> <span class="keyword">class </span><a class="code" href="classe_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.">eUserEntry</a> : <span class="keyword">public</span> <a class="code" href="classe_entry.html" title="Ausnahme, falls Fehler bei einer Eingabe auftreten.">eEntry</a> {
+<a name="l00358"></a>00358     <span class="keyword">public</span>:
+<a name="l00362"></a>00362         <a class="code" href="classe_user_entry.html#a8865bccf1cf63218bd651713b777507d">eUserEntry</a>();
+<a name="l00363"></a>00363 };
+<a name="l00364"></a>00364 
+<a name="l00371"></a><a class="code" href="classe_missing_user_entry.html">00371</a> <span class="keyword">class </span><a class="code" href="classe_missing_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.">eMissingUserEntry</a> : <span class="keyword">public</span> <a class="code" href="classe_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.">eUserEntry</a> {
+<a name="l00372"></a>00372     <span class="keyword">public</span>:
+<a name="l00376"></a>00376         <a class="code" href="classe_missing_user_entry.html#aceba43c80e53b7b00c6c1362df490226">eMissingUserEntry</a>();
+<a name="l00377"></a>00377 };
+<a name="l00378"></a>00378 
 <a name="l00379"></a>00379 
-<a name="l00380"></a>00380 <span class="preprocessor">#endif</span>
+<a name="l00383"></a><a class="code" href="classe_werewolf_shape.html">00383</a> <span class="keyword">class </span><a class="code" href="classe_werewolf_shape.html" title="Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.">eWerewolfShape</a> : <span class="keyword">public</span> <a class="code" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> {
+<a name="l00384"></a>00384     <span class="keyword">public</span>:
+<a name="l00385"></a>00385         <a class="code" href="classe_werewolf_shape.html" title="Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.">eWerewolfShape</a>();
+<a name="l00386"></a>00386 };
+<a name="l00387"></a>00387 
+<a name="l00391"></a><a class="code" href="classe_werewolf_shape_not_existing.html">00391</a> <span class="keyword">class </span><a class="code" href="classe_werewolf_shape_not_existing.html" title="Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.">eWerewolfShapeNotExisting</a> : <span class="keyword">public</span> <a class="code" href="classe_werewolf_shape.html" title="Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.">eWerewolfShape</a> {
+<a name="l00392"></a>00392     <span class="keyword">public</span>:
+<a name="l00393"></a>00393         <a class="code" href="classe_werewolf_shape_not_existing.html" title="Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.">eWerewolfShapeNotExisting</a>( cv_Shape::WerewolfShape shape );
+<a name="l00394"></a>00394         <a class="code" href="classe_werewolf_shape_not_existing.html" title="Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.">eWerewolfShapeNotExisting</a>( QString shape );
+<a name="l00395"></a>00395 };
+<a name="l00396"></a>00396 
+<a name="l00397"></a>00397 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><b>Exception.h</b>      </li>
-      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Mon Sep 26 2011 10:17:18 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

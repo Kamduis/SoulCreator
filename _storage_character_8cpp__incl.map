@@ -1,14 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node5" href="$_storage_template_8h.html" title="StorageTemplate.h" alt="" coords="299,160,441,189"/>
-<area shape="rect" id="node49" href="$_storage_character_8h.html" title="StorageCharacter.h" alt="" coords="406,83,553,112"/>
-<area shape="rect" id="node61" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="1221,83,1351,112"/>
-<area shape="rect" id="node11" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="363,237,526,267"/>
-<area shape="rect" id="node32" href="$cv___identity_list_8h.html" title="../Datatypes/cv_IdentityList.h" alt="" coords="83,237,289,267"/>
-<area shape="rect" id="node44" href="$cv___super_effect_8h.html" title="../Datatypes/cv_SuperEffect.h" alt="" coords="745,315,955,344"/>
-<area shape="rect" id="node19" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="726,392,830,421"/>
-<area shape="rect" id="node22" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="553,315,670,344"/>
-<area shape="rect" id="node28" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="1030,315,1163,344"/>
-<area shape="rect" id="node35" href="$cv___identity_8h.html" title="cv_Identity.h" alt="" coords="38,315,137,344"/>
-<area shape="rect" id="node39" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="43,392,137,421"/>
-<area shape="rect" id="node54" href="$cv___derangement_8h.html" title="../Datatypes/cv_Derangement.h" alt="" coords="931,237,1158,267"/>
+<area shape="rect" id="node5" href="$_storage_template_8h.html" title="StorageTemplate.h" alt="" coords="260,160,401,189"/>
+<area shape="rect" id="node21" href="$_storage_character_8h.html" title="StorageCharacter.h" alt="" coords="773,83,920,112"/>
 </map>

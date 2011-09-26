@@ -1,17 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node5" href="$_exception_8h_source.html" title="../Exceptions/Exception.h" alt="" coords="255,237,436,267"/>
-<area shape="rect" id="node49" href="$_calc_advantages_8h.html" title="CalcAdvantages.h" alt="" coords="405,83,541,112"/>
-<area shape="rect" id="node9" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="843,315,1005,344"/>
-<area shape="rect" id="node31" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="5,315,184,344"/>
-<area shape="rect" id="node34" href="$cv___identity_8h.html" title="../Datatypes/cv_Identity.h" alt="" coords="1515,392,1696,421"/>
-<area shape="rect" id="node42" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="280,315,411,344"/>
-<area shape="rect" id="node18" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="619,469,723,499"/>
-<area shape="rect" id="node21" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="797,392,915,421"/>
-<area shape="rect" id="node27" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="488,392,621,421"/>
-<area shape="rect" id="node38" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="1552,469,1645,499"/>
-<area shape="rect" id="node51" href="$_storage_character_8h.html" title="../Storage/StorageCharacter.h" alt="" coords="1232,160,1445,189"/>
-<area shape="rect" id="node54" href="$cv___identity_list_8h.html" title="../Datatypes/cv_IdentityList.h" alt="" coords="1368,315,1573,344"/>
-<area shape="rect" id="node60" href="$cv___derangement_8h.html" title="../Datatypes/cv_Derangement.h" alt="" coords="507,315,733,344"/>
-<area shape="rect" id="node65" href="$_storage_template_8h.html" title="StorageTemplate.h" alt="" coords="1268,237,1409,267"/>
-<area shape="rect" id="node71" href="$cv___super_effect_8h.html" title="../Datatypes/cv_SuperEffect.h" alt="" coords="1077,392,1288,421"/>
+<area shape="rect" id="node7" href="$_calc_advantages_8h.html" title="CalcAdvantages.h" alt="" coords="305,83,441,112"/>
 </map>

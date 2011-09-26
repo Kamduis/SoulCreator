@@ -115,47 +115,58 @@ function toggleVisibility(linkObj) {
 <h1>Ausstehende Aufgaben </h1>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="_todo000036"></a> </p>
+<div class="textblock"><p><a class="anchor" id="_todo000046"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="class_attribute_widget.html">AttributeWidget</a>  </dt>
+<dd>Die Attribute in ein Gridlayout packen, damit bei den Werwölfen die Manipulation nicht so heraussticht. </dd>
+</dl>
+<p><a class="anchor" id="_todo000047"></a> </p>
 <dl>
 <dt>Klasse <a class="el" href="class_chara_specialties.html">CharaSpecialties</a>  </dt>
 <dd>Es wäre toll, wenn der Benutzer eigene Spezialisierungen eintragen könnte, zusätzlich zu denen, die schon angeboten werden. </dd>
 </dl>
-<p><a class="anchor" id="_todo000037"></a> </p>
+<p><a class="anchor" id="_todo000048"></a> </p>
 <dl>
 <dt>Klasse <a class="el" href="class_chara_trait.html">CharaTrait</a>  </dt>
 <dd><p class="startdd">Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.</p>
 <p class="enddd">Den Parser <a class="el" href="class_string_bool_parser.html">StringBoolParser</a> erweitern, damit übriggebliebener Text nach den Ersetzungen der Eigesncahften durch ihre Werte mit 0 gleichgesetzt wird. Aktuell mache ich das durch Stringmanipulation, aber das ist natürlich langsamer. </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000039"></a> </p>
+<p><a class="anchor" id="_todo000050"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_chara_trait.html#a794ddd73f3604b16fe4b468b4a02f7df">CharaTrait::hideDescriptionWidget</a> () </dt>
 <dd>Muß natürlich auch bei manchen Powers vorhanden sein. </dd>
 </dl>
 <p><a class="anchor" id="_todo000005"></a> </p>
 <dl>
+<dt>Klasse <a class="el" href="class_creation.html">Creation</a>  </dt>
+<dd>Powers werden noch nicht berücksichtigt. </dd>
+</dl>
+<p><a class="anchor" id="_todo000006"></a> </p>
+<dl>
 <dt>Element <a class="el" href="classcv___abstract_trait.html#a8348d3df93415c4dd31838ad79f3d176">cv_AbstractTrait::operator==</a> (const <a class="el" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a> &amp;trait) const  </dt>
 <dd>Die Vergleiche sind noch nicht umfassend genug. Typ und Kategorie muß nich verglichen werden. etc. </dd>
 </dl>
-<p><a class="anchor" id="_todo000006"></a> </p>
+<p><a class="anchor" id="_todo000007"></a> </p>
 <dl>
 <dt>Element <a class="el" href="classcv___trait.html#a8c0d39d14efbcce546fbc6212f6e984b">cv_Trait::operator==</a> (const <a class="el" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> &amp;trait) const  </dt>
 <dd>Die Vergleiche sind noch nicht umfassend genug. Typ und Kategorie muß nich verglichen werden. etc. </dd>
 </dl>
-<p><a class="anchor" id="_todo000040"></a> </p>
+<p><a class="anchor" id="_todo000051"></a> </p>
 <dl>
 <dt>Klasse <a class="el" href="class_derangement_combo_box.html">DerangementComboBox</a>  </dt>
 <dd>Die Anzeige unterscheidet noch nicht zwischen milden und ernsten Störungen. </dd>
 </dl>
-<p><a class="anchor" id="_todo000043"></a> </p>
+<p><a class="anchor" id="_todo000054"></a> </p>
 <dl>
 <dt>Klasse <a class="el" href="class_info_widget.html">InfoWidget</a>  </dt>
 <dd>Bei den Virtues und Vices wird bislang nur der erwachsene behrücksichtigt. </dd>
 </dl>
-<p><a class="anchor" id="_todo000011"></a> </p>
+<p><a class="anchor" id="_todo000014"></a> </p>
 <dl>
 <dt>Klasse <a class="el" href="class_main_window.html">MainWindow</a>  </dt>
-<dd><p class="startdd">Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.</p>
+<dd><p class="startdd">Der TExt im Reiter Powers sollte je nach Spezies angepaßt werden (Disciplines, Renown, etc.)</p>
+<p>Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.</p>
 <p>Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.</p>
 <p>Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.</p>
 <p>Bei Werwölfen nimmt "Rites" eine Sonderstellung ein. Auch die Gaben/Riten müssen berücksichtigt werden.</p>
@@ -165,73 +176,90 @@ function toggleVisibility(linkObj) {
 <p>Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.</p>
 <p>Waffen einbauen.</p>
 <p>Charakterbeschreibung einbauen.</p>
-<p class="enddd">Beim nächsten Versionssprung sollte bei den gespeicherten Charakteren die Namen anders gespeichert werden. Anstelle alles in &lt;xxx&gt;bla&lt;/xxx&gt; zu schreiben, sollte es eine Identitätsgruppe geben mit den einzelnen Namensbestandteilen als Attribute einer einzelnen Identität dieser Gruppe. </p>
+<p>Alle Reiter, bei denen nicht alle Punkte vergeben wurden grün färben und jene, bei denen zu viele vergeben wurde, rot färben.</p>
+<p>eine Seitenleiste mit Bildern einführen, wo man die Reister auswählen kann. Dort kann man auch die verbleibenden Punkte hinschreiben und markieren, wenn ein Typ zuviele/wenige Punkte vergeben hat.</p>
+<p>Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-DAtei bereitstellen, i welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.</p>
+<p>Anzeige des Dateinames (oder des Charkaternamens?) in der Titelzeile.</p>
+<p>Schönere Symbole für die Seitenauswahl.</p>
+<p>Zu verteilende Punkte für Spezialisierungen</p>
+<p>Zu verteilende Punkte für Kräfte.</p>
+<p class="enddd">Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten. </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000044"></a> </p>
+<p><a class="anchor" id="_todo000055"></a> </p>
 <dl>
 <dt>Klasse <a class="el" href="class_merit_widget.html">MeritWidget</a>  </dt>
 <dd><p class="startdd">Einen Knopf erstellen, über den der Benutzer angeben kann, welche Merits er denn wirklich alle angezeigt haben will.</p>
 <p class="enddd">Bei Merits mit Zusatztext (Language) in diesem men+ ein Zahlenfle dangeben, bei welchem der benutzer einstellen kann, wieviele verschiedene dieser scheinbar identischen merits er angezeigt haben will. </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000041"></a> </p>
+<p><a class="anchor" id="_todo000052"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_message_box.html#a8fb85b7476c12b1f70b5bfd5b30c9bc1">MessageBox::description</a>  </dt>
 <dd>Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann und nicht nur als Debug-Hilfe dienen kann. Dies wird auch Änderungen in der <a class="el" href="class_exception.html">Exception</a> -Klasse erfordern. </dd>
 </dl>
-<p><a class="anchor" id="_todo000047"></a> </p>
+<p><a class="anchor" id="_todo000058"></a> </p>
 <dl>
 <dt>Klasse <a class="el" href="class_morality_widget.html">MoralityWidget</a>  </dt>
 <dd>Ich bin mit den Geistesstörungen noch nicht gänzlich zufrieden. Es besteht die Gefahr, daß einzelne GEistesstörungen immer und immer wieder zu dem Charkater hinzugefügt werden und dementsprechend das Programm und den gespeicherten Charakter aufblähen können. </dd>
 </dl>
-<p><a class="anchor" id="_todo000031"></a> </p>
+<p><a class="anchor" id="_todo000039"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_storage_character.html#a6534667b942bd21253c432fee79a8850">StorageCharacter::resetCharacter</a> () </dt>
 <dd>Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze. </dd>
 </dl>
-<p><a class="anchor" id="_todo000029"></a> </p>
+<p><a class="anchor" id="_todo000037"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_storage_character.html#ae4fc2c6b281bfe6411812dc6f3ff41ff">StorageCharacter::setRealIdentity</a> (<a class="el" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> id) </dt>
 <dd>Momentan ist dies die einzige identität, die von diesem programm genutzt wird. </dd>
 </dl>
-<p><a class="anchor" id="_todo000030"></a> </p>
+<p><a class="anchor" id="_todo000038"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_storage_character.html#a6273e4a5881f52b074bb1e4885ce70a6">StorageCharacter::setSkillSpecialties</a> (QString name, QList&lt; cv_TraitDetail &gt; details) </dt>
 <dd>Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen. </dd>
 </dl>
-<p><a class="anchor" id="_todo000034"></a> </p>
+<p><a class="anchor" id="_todo000040"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_storage_template.html#afd7774df0806805b5edf6055cdac41d5">StorageTemplate::breedTitle</a> (<a class="el" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe=cv_Species::SpeciesNo) const  </dt>
+<dd>Eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, falls der entsprechende Titel nicht gefunden wird. </dd>
+</dl>
+<p><a class="anchor" id="_todo000041"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_storage_template.html#a75e002ef5fe704b9073bcc9ff1b58b98">StorageTemplate::factionTitle</a> (<a class="el" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe=cv_Species::SpeciesNo) const  </dt>
+<dd>Eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, falls der entsprechende Titel nicht gefunden wird. </dd>
+</dl>
+<p><a class="anchor" id="_todo000044"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_storage_template.html#aceb757eb50e7326356f589179d78ee89">StorageTemplate::trait</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, QString name) </dt>
 <dd><p class="startdd">Sollte vielleicht eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, wenn keine passende Eigenschaft gefunden wurde.</p>
 <p class="enddd">Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren. </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000032"></a> </p>
+<p><a class="anchor" id="_todo000042"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_storage_template.html#a27993db72787b37c8d45102019abf850">StorageTemplate::traits</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, <a class="el" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era=cv_Trait::Modern, <a class="el" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age=cv_Trait::Adult) const  </dt>
 <dd>Sollte vielleicht eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, wenn keine passende Eigenschaft gefunden wurde. </dd>
 </dl>
-<p><a class="anchor" id="_todo000033"></a> </p>
+<p><a class="anchor" id="_todo000043"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_storage_template.html#a2c38d76215e4a8651f4bb6eaae03ece2">StorageTemplate::traitsPtr</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, <a class="el" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era=cv_Trait::Modern, <a class="el" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age=cv_Trait::Adult) const  </dt>
 <dd>Sollte vielleicht eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, wenn keine passende Eigenschaft gefunden wurde. </dd>
 </dl>
-<p><a class="anchor" id="_todo000051"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_trait_specialties.html#a00f3539756417240d957be84471a86aa">TraitSpecialties::removeSpecialty</a> (int i) </dt>
-<dd><a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> auswerfen, wenn das Entfernen fehlschlägt. </dd>
-</dl>
-<p><a class="anchor" id="_todo000050"></a> </p>
+<p><a class="anchor" id="_todo000061"></a> </p>
 <dl>
 <dt>Element <a class="el" href="class_trait_specialties.html#a71e53c67062245ffc2bc8a84e9962fba">TraitSpecialties::removeSpecialty</a> (QString spec) </dt>
+<dd><a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> auswerfen, wenn das Entfernen fehlschlägt. </dd>
+</dl>
+<p><a class="anchor" id="_todo000062"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_trait_specialties.html#a00f3539756417240d957be84471a86aa">TraitSpecialties::removeSpecialty</a> (int i) </dt>
 <dd><a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> auswerfen, wenn das Entfernen fehlschlägt. </dd>
 </dl>
 </div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Mon Sep 26 2011 10:17:18 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

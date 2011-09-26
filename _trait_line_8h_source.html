@@ -144,51 +144,51 @@ function toggleVisibility(linkObj) {
 <a name="l00068"></a>00068 
 <a name="l00069"></a>00069     public:
 <a name="l00073"></a>00073 <span class="comment">//      TraitLine(QWidget *parent = 0, cv_Trait::Type type = cv_Trait::TypeNo, cv_Trait::Category category = cv_Trait::CategoryNo, QString name = &quot;&quot;, int value = 0);</span>
-<a name="l00081"></a>00081 <span class="comment"></span>        <a class="code" href="class_trait_line.html" title="Die grafische Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.">TraitLine</a>(QWidget *parent = 0, QString name = &quot;&quot;, <span class="keywordtype">int</span> value = 0);
-<a name="l00085"></a>00085         ~<a class="code" href="class_trait_line.html" title="Die grafische Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.">TraitLine</a>();
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087         QString name() const;
-<a name="l00088"></a>00088         <span class="keywordtype">int</span> value() const;
-<a name="l00089"></a>00089         QString text() const;
-<a name="l00090"></a>00090         <span class="keywordtype">int</span> minimum() const;
-<a name="l00094"></a>00094         QHBoxLayout* <a class="code" href="class_trait_line.html#a1b05c776caa9b9310999571c442bf1e2">layout</a>() const;
-<a name="l00098"></a>00098         QLabel* <a class="code" href="class_trait_line.html#a888938ff3cda0292ba1600cd267902d6">labelName</a>() const;
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100     private:
-<a name="l00101"></a>00101         QHBoxLayout *v_layout;
-<a name="l00102"></a>00102         QLabel *v_label_name;
-<a name="l00103"></a>00103         QPushButton *button;
-<a name="l00104"></a>00104         QLineEdit* lineEdit;
-<a name="l00105"></a>00105         <a class="code" href="class_trait_dots.html" title="Eine Darstellung von Werten in Form ausgefüllter Punkte.">TraitDots</a> *traitDots;
-<a name="l00106"></a>00106         <a class="code" href="class_trait_specialties.html" title="Die darstellung von Spezialisierungen in der GUI.">TraitSpecialties</a> *specialties;
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108     public slots:
-<a name="l00109"></a>00109         <span class="keywordtype">void</span> setName(QString text);
-<a name="l00110"></a>00110         <span class="keywordtype">void</span> setValue(<span class="keywordtype">int</span> value);
-<a name="l00114"></a>00114         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a928e4906892bb23afce954034542373d">setPossibleValues</a>(QList&lt;<span class="keywordtype">int</span>&gt; valueList);
-<a name="l00115"></a>00115         <span class="keywordtype">void</span> setText(QString text);
-<a name="l00116"></a>00116         <span class="keywordtype">void</span> setMinimum(<span class="keywordtype">int</span> value);
-<a name="l00120"></a>00120         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a95f9132e89bcfae9a062573649e98c19">hideSpecialties</a>(<span class="keywordtype">bool</span> sw = true);
-<a name="l00124"></a>00124         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a5ec1164f0dddff7b9df35545a47bce60">setSpecialtyButtonChecked</a>(<span class="keywordtype">bool</span> sw = true);
-<a name="l00128"></a>00128         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#aba4c8e4ee4f0aab02bb26d4bb63e7dec">hideDescription</a>(<span class="keywordtype">bool</span> sw = true);
+<a name="l00077"></a>00077 <span class="comment"></span>        <a class="code" href="class_trait_line.html" title="Die grafische Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.">TraitLine</a>(QWidget *parent = 0, QString name = &quot;&quot;, <span class="keywordtype">int</span> value = 0);
+<a name="l00081"></a>00081         ~<a class="code" href="class_trait_line.html" title="Die grafische Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.">TraitLine</a>();
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083         QString name() const;
+<a name="l00084"></a>00084         <span class="keywordtype">int</span> value() const;
+<a name="l00085"></a>00085         QString text() const;
+<a name="l00086"></a>00086         <span class="keywordtype">int</span> minimum() const;
+<a name="l00090"></a>00090         QHBoxLayout* <a class="code" href="class_trait_line.html#a1b05c776caa9b9310999571c442bf1e2">layout</a>() const;
+<a name="l00094"></a>00094         QLabel* <a class="code" href="class_trait_line.html#a888938ff3cda0292ba1600cd267902d6">labelName</a>() const;
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096     private:
+<a name="l00097"></a>00097         QHBoxLayout *v_layout;
+<a name="l00098"></a>00098         QLabel *v_label_name;
+<a name="l00099"></a>00099         QPushButton *button;
+<a name="l00100"></a>00100         QLineEdit* lineEdit;
+<a name="l00101"></a>00101         <a class="code" href="class_trait_dots.html" title="Eine Darstellung von Werten in Form ausgefüllter Punkte.">TraitDots</a> *traitDots;
+<a name="l00102"></a>00102         <a class="code" href="class_trait_specialties.html" title="Die darstellung von Spezialisierungen in der GUI.">TraitSpecialties</a> *specialties;
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104     public slots:
+<a name="l00105"></a>00105         <span class="keywordtype">void</span> setName(QString text);
+<a name="l00106"></a>00106         <span class="keywordtype">void</span> setValue(<span class="keywordtype">int</span> value);
+<a name="l00110"></a>00110         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a928e4906892bb23afce954034542373d">setPossibleValues</a>(QList&lt;<span class="keywordtype">int</span>&gt; valueList);
+<a name="l00111"></a>00111         <span class="keywordtype">void</span> setText(QString text);
+<a name="l00112"></a>00112         <span class="keywordtype">void</span> setMinimum(<span class="keywordtype">int</span> value);
+<a name="l00116"></a>00116         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a95f9132e89bcfae9a062573649e98c19">hideSpecialties</a>(<span class="keywordtype">bool</span> sw = true);
+<a name="l00120"></a>00120         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a5ec1164f0dddff7b9df35545a47bce60">setSpecialtyButtonChecked</a>(<span class="keywordtype">bool</span> sw = true);
+<a name="l00124"></a>00124         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#aba4c8e4ee4f0aab02bb26d4bb63e7dec">hideDescription</a>(<span class="keywordtype">bool</span> sw = true);
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126     private slots:
+<a name="l00127"></a>00127         <span class="keywordtype">void</span> enableSpecialties(<span class="keywordtype">int</span> number);
+<a name="l00128"></a>00128 <span class="comment">//      void storeTrait();</span>
 <a name="l00129"></a>00129 
-<a name="l00130"></a>00130     private slots:
-<a name="l00131"></a>00131         <span class="keywordtype">void</span> enableSpecialties(<span class="keywordtype">int</span> number);
-<a name="l00132"></a>00132 <span class="comment">//      void storeTrait();</span>
-<a name="l00133"></a>00133 
-<a name="l00134"></a>00134     signals:
-<a name="l00135"></a>00135         <span class="keywordtype">void</span> textChanged(QString text);
-<a name="l00136"></a>00136         <span class="keywordtype">void</span> valueChanged ( <span class="keywordtype">int</span> value );
-<a name="l00140"></a>00140         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a8d5765b9cdee2e70312cd057ce70caf4">specialtiesClicked</a>(<span class="keywordtype">bool</span> state );
-<a name="l00141"></a>00141 };
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143 <span class="preprocessor">#endif</span>
+<a name="l00130"></a>00130     signals:
+<a name="l00131"></a>00131         <span class="keywordtype">void</span> textChanged(QString text);
+<a name="l00132"></a>00132         <span class="keywordtype">void</span> valueChanged ( <span class="keywordtype">int</span> value );
+<a name="l00136"></a>00136         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a8d5765b9cdee2e70312cd057ce70caf4">specialtiesClicked</a>(<span class="keywordtype">bool</span> state );
+<a name="l00137"></a>00137 };
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_trait_line_8h.html">TraitLine.h</a>      </li>
-      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Mon Sep 26 2011 10:17:18 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

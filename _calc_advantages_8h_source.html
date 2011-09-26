@@ -125,9 +125,9 @@ function toggleVisibility(linkObj) {
 <a name="l00025"></a>00025 <span class="preprocessor">#ifndef CALCADVANTAGES_H</span>
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define CALCADVANTAGES_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;<a class="code" href="_storage_character_8h.html">../Storage/StorageCharacter.h</a>&quot;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;<a class="code" href="_config_8h.html">../Config/Config.h</a>&quot;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="cv___shape_8h.html">../Datatypes/cv_Shape.h</a>&quot;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;Config/Config.h&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;Datatypes/cv_Shape.h&quot;</span>
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QObject&gt;</span>
 <a name="l00033"></a>00033 
@@ -147,43 +147,44 @@ function toggleVisibility(linkObj) {
 <a name="l00077"></a>00077         <span class="keyword">static</span> <span class="keywordtype">int</span> strength( <span class="keywordtype">int</span> str, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
 <a name="l00078"></a>00078         <span class="keyword">static</span> <span class="keywordtype">int</span> dexterity( <span class="keywordtype">int</span> dex, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
 <a name="l00079"></a>00079         <span class="keyword">static</span> <span class="keywordtype">int</span> stamina( <span class="keywordtype">int</span> sta, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
-<a name="l00080"></a>00080         
-<a name="l00081"></a>00081     <span class="keyword">private</span>:
-<a name="l00082"></a>00082         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084         <span class="keyword">static</span> <span class="keywordtype">int</span> v_size;
-<a name="l00085"></a>00085         <span class="keyword">static</span> <span class="keywordtype">int</span> v_initiative;
-<a name="l00086"></a>00086         <span class="keyword">static</span> <span class="keywordtype">int</span> v_speed;
-<a name="l00087"></a>00087         <span class="keyword">static</span> <span class="keywordtype">int</span> v_defense;
-<a name="l00088"></a>00088         <span class="keyword">static</span> <span class="keywordtype">int</span> v_health;
-<a name="l00089"></a>00089         <span class="keyword">static</span> <span class="keywordtype">int</span> v_willpower;
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091     <span class="keyword">private</span> slots:
-<a name="l00097"></a>00097         <span class="keywordtype">int</span> calcSize( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
-<a name="l00103"></a>00103         <span class="keywordtype">int</span> calcInitiative( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
-<a name="l00109"></a>00109         <span class="keywordtype">int</span> calcSpeed( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
-<a name="l00115"></a>00115         <span class="keywordtype">int</span> calcDefense( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
-<a name="l00121"></a>00121         <span class="keywordtype">int</span> calcHealth( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
-<a name="l00125"></a>00125         <span class="keywordtype">int</span> calcWillpower( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
-<a name="l00131"></a>00131         <span class="keywordtype">int</span> calcHealth( <span class="keywordtype">int</span> size );
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133     signals:
-<a name="l00137"></a>00137         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#ac91d31d1779333427049169b66ed8ff6">sizeChanged</a>( <span class="keywordtype">int</span> );
-<a name="l00141"></a>00141         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#a3ddbd8c418e41c7a3deef21e55f26cfd">initiativeChanged</a>( <span class="keywordtype">int</span> );
-<a name="l00145"></a>00145         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#ac2cb9f4c6535202b6a397e1fece3a4fc">speedChanged</a>( <span class="keywordtype">int</span> );
-<a name="l00149"></a>00149         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#a4c90a78eb84d61b9ae05d361e094a2f7">defenseChanged</a>( <span class="keywordtype">int</span> );
-<a name="l00153"></a>00153         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#af35a05e19e3422a679e13c150a9a2374">healthChanged</a>( <span class="keywordtype">int</span> );
-<a name="l00157"></a>00157         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#a7aad65ee883a0a68ae99608061023f6a">willpowerChanged</a>( <span class="keywordtype">int</span> );
-<a name="l00158"></a>00158 };
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160 <span class="preprocessor">#endif</span>
-<a name="l00161"></a>00161 <span class="preprocessor"></span>
+<a name="l00080"></a>00080         <span class="keyword">static</span> <span class="keywordtype">int</span> manipulation( <span class="keywordtype">int</span> man, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
+<a name="l00081"></a>00081         
+<a name="l00082"></a>00082     <span class="keyword">private</span>:
+<a name="l00083"></a>00083         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085         <span class="keyword">static</span> <span class="keywordtype">int</span> v_size;
+<a name="l00086"></a>00086         <span class="keyword">static</span> <span class="keywordtype">int</span> v_initiative;
+<a name="l00087"></a>00087         <span class="keyword">static</span> <span class="keywordtype">int</span> v_speed;
+<a name="l00088"></a>00088         <span class="keyword">static</span> <span class="keywordtype">int</span> v_defense;
+<a name="l00089"></a>00089         <span class="keyword">static</span> <span class="keywordtype">int</span> v_health;
+<a name="l00090"></a>00090         <span class="keyword">static</span> <span class="keywordtype">int</span> v_willpower;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092     <span class="keyword">private</span> slots:
+<a name="l00098"></a>00098         <span class="keywordtype">int</span> calcSize( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
+<a name="l00104"></a>00104         <span class="keywordtype">int</span> calcInitiative( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
+<a name="l00110"></a>00110         <span class="keywordtype">int</span> calcSpeed( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
+<a name="l00116"></a>00116         <span class="keywordtype">int</span> calcDefense( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
+<a name="l00122"></a>00122         <span class="keywordtype">int</span> calcHealth( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
+<a name="l00126"></a>00126         <span class="keywordtype">int</span> calcWillpower( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait );
+<a name="l00132"></a>00132         <span class="keywordtype">int</span> calcHealth( <span class="keywordtype">int</span> size );
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134     signals:
+<a name="l00138"></a>00138         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#ac91d31d1779333427049169b66ed8ff6">sizeChanged</a>( <span class="keywordtype">int</span> );
+<a name="l00142"></a>00142         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#a3ddbd8c418e41c7a3deef21e55f26cfd">initiativeChanged</a>( <span class="keywordtype">int</span> );
+<a name="l00146"></a>00146         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#ac2cb9f4c6535202b6a397e1fece3a4fc">speedChanged</a>( <span class="keywordtype">int</span> );
+<a name="l00150"></a>00150         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#a4c90a78eb84d61b9ae05d361e094a2f7">defenseChanged</a>( <span class="keywordtype">int</span> );
+<a name="l00154"></a>00154         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#af35a05e19e3422a679e13c150a9a2374">healthChanged</a>( <span class="keywordtype">int</span> );
+<a name="l00158"></a>00158         <span class="keywordtype">void</span> <a class="code" href="class_calc_advantages.html#a7aad65ee883a0a68ae99608061023f6a">willpowerChanged</a>( <span class="keywordtype">int</span> );
+<a name="l00159"></a>00159 };
+<a name="l00160"></a>00160 
+<a name="l00161"></a>00161 <span class="preprocessor">#endif</span>
+<a name="l00162"></a>00162 <span class="preprocessor"></span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_calc_advantages_8h.html">CalcAdvantages.h</a>      </li>
-      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Mon Sep 26 2011 10:17:18 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

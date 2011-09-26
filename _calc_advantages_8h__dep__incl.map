@@ -1,11 +1,3 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$_calc_advantages_8cpp.html" title="src/Calc/CalcAdvantages.cpp" alt="" coords="5,83,211,112"/>
-<area shape="rect" id="node5" href="$_draw_sheet_8h.html" title="src/Draw/DrawSheet.h" alt="" coords="235,83,397,112"/>
-<area shape="rect" id="node15" href="$_advantages_widget_8h.html" title="src/Widgets/AdvantagesWidget.h" alt="" coords="421,83,651,112"/>
-<area shape="rect" id="node20" href="$_attribute_widget_8cpp.html" title="src/Widgets/AttributeWidget.cpp" alt="" coords="675,83,899,112"/>
-<area shape="rect" id="node7" href="$_draw_sheet_8cpp.html" title="src/Draw/DrawSheet.cpp" alt="" coords="140,160,319,189"/>
-<area shape="rect" id="node9" href="$_main_window_8h.html" title="src/MainWindow.h" alt="" coords="343,160,476,189"/>
-<area shape="rect" id="node11" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="283,237,387,267"/>
-<area shape="rect" id="node13" href="$_main_window_8cpp.html" title="src/MainWindow.cpp" alt="" coords="411,237,557,267"/>
-<area shape="rect" id="node18" href="$_advantages_widget_8cpp.html" title="src/Widgets/AdvantagesWidget.cpp" alt="" coords="500,160,745,189"/>
 </map>

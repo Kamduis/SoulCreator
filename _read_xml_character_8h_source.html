@@ -127,44 +127,45 @@ function toggleVisibility(linkObj) {
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QFile&gt;</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="_storage_template_8h.html">../Storage/StorageTemplate.h</a>&quot;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="_storage_character_8h.html">../Storage/StorageCharacter.h</a>&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="cv___species_8h.html">../Datatypes/cv_Species.h</a>&quot;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="cv___trait_8h.html">../Datatypes/cv_Trait.h</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;Storage/StorageTemplate.h&quot;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;Datatypes/cv_Species.h&quot;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;Datatypes/cv_Trait.h&quot;</span>
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035 <span class="preprocessor">#include &lt;QObject&gt;</span>
 <a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="_read_xml_8h.html">ReadXml.h</a>&quot;</span>
 <a name="l00037"></a>00037 
 <a name="l00038"></a>00038 
-<a name="l00047"></a><a class="code" href="class_read_xml_character.html">00047</a> <span class="keyword">class </span><a class="code" href="class_read_xml_character.html" title="Liest die gespeicherten Charakterwerte in das Programm.">ReadXmlCharacter</a> : <span class="keyword">public</span> QObject, <span class="keyword">public</span> <a class="code" href="class_read_xml.html" title="List aus Xml-Dateien.">ReadXml</a> {
-<a name="l00048"></a>00048     Q_OBJECT
-<a name="l00049"></a>00049     
-<a name="l00050"></a>00050     <span class="keyword">public</span>:
-<a name="l00051"></a>00051         <a class="code" href="class_read_xml_character.html" title="Liest die gespeicherten Charakterwerte in das Programm.">ReadXmlCharacter</a>();
-<a name="l00055"></a>00055         <a class="code" href="class_read_xml_character.html#a3b59d126c7a95e45d4b7e08dca83eb90">~ReadXmlCharacter</a>();
-<a name="l00056"></a>00056 
-<a name="l00060"></a>00060         <span class="keywordtype">bool</span> <a class="code" href="class_read_xml_character.html#a5857936ddba1793fd089d9f169ed73de">read</a>( QFile *file );
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062     <span class="keyword">private</span>:
-<a name="l00068"></a>00068         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a>* storage;
-<a name="l00074"></a>00074         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
-<a name="l00075"></a>00075         
-<a name="l00079"></a>00079         <span class="keyword">static</span> QList&lt; cv_Trait &gt; traitList;
-<a name="l00083"></a>00083         <span class="keywordtype">void</span> readSoulCreator( <a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a>* <span class="keywordtype">id</span> );
-<a name="l00087"></a>00087         <span class="keywordtype">void</span> readTraits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
-<a name="l00091"></a>00091         <span class="keywordtype">void</span> readTraits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category );
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093     signals:
-<a name="l00094"></a>00094         <span class="keywordtype">void</span> oldVersion( QString, QString );
-<a name="l00095"></a>00095 };
+<a name="l00045"></a><a class="code" href="class_read_xml_character.html">00045</a> <span class="keyword">class </span><a class="code" href="class_read_xml_character.html" title="Liest die gespeicherten Charakterwerte in das Programm.">ReadXmlCharacter</a> : <span class="keyword">public</span> QObject, <span class="keyword">public</span> <a class="code" href="class_read_xml.html" title="List aus Xml-Dateien.">ReadXml</a> {
+<a name="l00046"></a>00046     Q_OBJECT
+<a name="l00047"></a>00047     
+<a name="l00048"></a>00048     <span class="keyword">public</span>:
+<a name="l00049"></a>00049         <a class="code" href="class_read_xml_character.html" title="Liest die gespeicherten Charakterwerte in das Programm.">ReadXmlCharacter</a>();
+<a name="l00053"></a>00053         <a class="code" href="class_read_xml_character.html#a3b59d126c7a95e45d4b7e08dca83eb90">~ReadXmlCharacter</a>();
+<a name="l00054"></a>00054 
+<a name="l00058"></a>00058         <span class="keywordtype">bool</span> <a class="code" href="class_read_xml_character.html#a5857936ddba1793fd089d9f169ed73de">read</a>( QFile *file );
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060     <span class="keyword">private</span>:
+<a name="l00066"></a>00066         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a>* storage;
+<a name="l00072"></a>00072         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
+<a name="l00073"></a>00073         
+<a name="l00077"></a>00077         <span class="keyword">static</span> QList&lt; cv_Trait &gt; traitList;
+<a name="l00081"></a>00081         <span class="keywordtype">void</span> readSoulCreator();
+<a name="l00087"></a>00087         <span class="keywordtype">void</span> readIdentities();
+<a name="l00091"></a>00091         <span class="keywordtype">void</span> readTraits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
+<a name="l00095"></a>00095         <span class="keywordtype">void</span> readTraits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category );
 <a name="l00096"></a>00096 
-<a name="l00097"></a>00097 <span class="preprocessor">#endif</span>
+<a name="l00097"></a>00097     signals:
+<a name="l00098"></a>00098         <span class="keywordtype">void</span> oldVersion( QString, QString );
+<a name="l00099"></a>00099 };
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_read_xml_character_8h.html">ReadXmlCharacter.h</a>      </li>
-      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Mon Sep 26 2011 10:17:18 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

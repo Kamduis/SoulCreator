@@ -125,64 +125,70 @@ function toggleVisibility(linkObj) {
 <a name="l00025"></a>00025 <span class="preprocessor">#ifndef INFOWIDGET_H</span>
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define INFOWIDGET_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QGridLayout&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QLineEdit&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QComboBox&gt;</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="_storage_character_8h.html">../Storage/StorageCharacter.h</a>&quot;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_storage_template_8h.html">../Storage/StorageTemplate.h</a>&quot;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="_chara_species_8h.html">CharaSpecies.h</a>&quot;</span>
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="preprocessor">#include &lt;QWidget&gt;</span>
-<a name="l00038"></a>00038 
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QLabel&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QGridLayout&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QLineEdit&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QComboBox&gt;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;Storage/StorageTemplate.h&quot;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="_chara_species_8h.html">CharaSpecies.h</a>&quot;</span>
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <span class="preprocessor">#include &lt;QWidget&gt;</span>
 <a name="l00039"></a>00039 
-<a name="l00047"></a><a class="code" href="class_info_widget.html">00047</a> <span class="keyword">class </span><a class="code" href="class_info_widget.html" title="Das Widget, in welchem wichtige Informationen dargestellt werden.">InfoWidget</a> : <span class="keyword">public</span> QWidget {
-<a name="l00048"></a>00048         Q_OBJECT
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050     <span class="keyword">public</span>:
-<a name="l00054"></a>00054         <a class="code" href="class_info_widget.html#a19f07d861d22be4881361a5a32e86451">InfoWidget</a>( QWidget *parent = 0 );
-<a name="l00058"></a>00058         <a class="code" href="class_info_widget.html#aefa39a20c91f6dbc8cbc0b6d9bf7623e">~InfoWidget</a>();
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060     <span class="keyword">private</span>:
-<a name="l00064"></a>00064         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a> *storage;
-<a name="l00068"></a>00068         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a> *character;
-<a name="l00072"></a>00072         QGridLayout *layout;
-<a name="l00076"></a>00076         QPushButton* namePushButton;
-<a name="l00080"></a>00080         QComboBox* genderCombobox;
-<a name="l00084"></a>00084         <a class="code" href="class_chara_species.html" title="Mit den gespeicherten Werten vernetzte Darstellung der Spezies auf dem Charakterbogen.">CharaSpecies</a>* speciesComboBox;
-<a name="l00088"></a>00088         QComboBox* virtueCombobox;
-<a name="l00092"></a>00092         QComboBox* breedCombobox;
-<a name="l00096"></a>00096         QComboBox* factionCombobox;
-<a name="l00100"></a>00100         QComboBox* viceCombobox;
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102     <span class="keyword">public</span> slots:
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104     <span class="keyword">private</span> slots:
-<a name="l00108"></a>00108         <span class="keywordtype">void</span> openNameDialog();
-<a name="l00112"></a>00112         <span class="keywordtype">void</span> changeGender(<span class="keywordtype">int</span> gen);
-<a name="l00116"></a>00116         <span class="keywordtype">void</span> changeVirtue(<span class="keywordtype">int</span> idx);
-<a name="l00120"></a>00120         <span class="keywordtype">void</span> changeVice(<span class="keywordtype">int</span> idx);
-<a name="l00124"></a>00124         <span class="keywordtype">void</span> changeBreed(<span class="keywordtype">int</span> idx);
-<a name="l00128"></a>00128         <span class="keywordtype">void</span> changeFaction(<span class="keywordtype">int</span> idx);
-<a name="l00134"></a>00134         <span class="keywordtype">void</span> updateIdentity(<a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> <span class="keywordtype">id</span> );
-<a name="l00138"></a>00138         <span class="keywordtype">void</span> updateVirtue(QString txt);
-<a name="l00142"></a>00142         <span class="keywordtype">void</span> updateVice(QString txt);
-<a name="l00146"></a>00146         <span class="keywordtype">void</span> updateBreed(QString txt);
-<a name="l00150"></a>00150         <span class="keywordtype">void</span> updateFaction(QString txt);
-<a name="l00154"></a>00154         <span class="keywordtype">void</span> updateBreedBox(<a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe);
-<a name="l00158"></a>00158         <span class="keywordtype">void</span> updateFactionBox(<a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe);
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160     signals:
-<a name="l00161"></a>00161 };
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163 <span class="preprocessor">#endif</span>
+<a name="l00040"></a>00040 
+<a name="l00048"></a><a class="code" href="class_info_widget.html">00048</a> <span class="keyword">class </span><a class="code" href="class_info_widget.html" title="Das Widget, in welchem wichtige Informationen dargestellt werden.">InfoWidget</a> : <span class="keyword">public</span> QWidget {
+<a name="l00049"></a>00049         Q_OBJECT
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051     <span class="keyword">public</span>:
+<a name="l00055"></a>00055         <a class="code" href="class_info_widget.html#a19f07d861d22be4881361a5a32e86451">InfoWidget</a>( QWidget *parent = 0 );
+<a name="l00059"></a>00059         <a class="code" href="class_info_widget.html#aefa39a20c91f6dbc8cbc0b6d9bf7623e">~InfoWidget</a>();
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061     <span class="keyword">private</span>:
+<a name="l00065"></a>00065         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a> *storage;
+<a name="l00069"></a>00069         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a> *character;
+<a name="l00073"></a>00073         QGridLayout *layout;
+<a name="l00077"></a>00077         QLabel* labelName;
+<a name="l00081"></a>00081         QPushButton* namePushButton;
+<a name="l00085"></a>00085         QComboBox* genderCombobox;
+<a name="l00089"></a>00089         <a class="code" href="class_chara_species.html" title="Mit den gespeicherten Werten vernetzte Darstellung der Spezies auf dem Charakterbogen.">CharaSpecies</a>* speciesComboBox;
+<a name="l00093"></a>00093         QComboBox* virtueCombobox;
+<a name="l00094"></a>00094         QLabel* labelBreed;
+<a name="l00095"></a>00095         QLabel* labelFaction;
+<a name="l00099"></a>00099         QComboBox* breedCombobox;
+<a name="l00103"></a>00103         QComboBox* factionCombobox;
+<a name="l00107"></a>00107         QComboBox* viceCombobox;
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109     <span class="keyword">public</span> slots:
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111     <span class="keyword">private</span> slots:
+<a name="l00115"></a>00115         <span class="keywordtype">void</span> openNameDialog();
+<a name="l00119"></a>00119         <span class="keywordtype">void</span> changeGender(<span class="keywordtype">int</span> gen);
+<a name="l00123"></a>00123         <span class="keywordtype">void</span> changeVirtue(<span class="keywordtype">int</span> idx);
+<a name="l00127"></a>00127         <span class="keywordtype">void</span> changeVice(<span class="keywordtype">int</span> idx);
+<a name="l00131"></a>00131         <span class="keywordtype">void</span> changeBreed(<span class="keywordtype">int</span> idx);
+<a name="l00135"></a>00135         <span class="keywordtype">void</span> changeFaction(<span class="keywordtype">int</span> idx);
+<a name="l00141"></a>00141         <span class="keywordtype">void</span> updateIdentity(<a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> <span class="keywordtype">id</span> );
+<a name="l00145"></a>00145         <span class="keywordtype">void</span> updateVirtue(QString txt);
+<a name="l00149"></a>00149         <span class="keywordtype">void</span> updateVice(QString txt);
+<a name="l00153"></a>00153         <span class="keywordtype">void</span> updateBreed(QString txt);
+<a name="l00157"></a>00157         <span class="keywordtype">void</span> updateFaction(QString txt);
+<a name="l00161"></a>00161         <span class="keywordtype">void</span> updateBreedTitle( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe );
+<a name="l00165"></a>00165         <span class="keywordtype">void</span> updateFactionTitle(<a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe);
+<a name="l00169"></a>00169         <span class="keywordtype">void</span> updateBreedBox(<a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe);
+<a name="l00173"></a>00173         <span class="keywordtype">void</span> updateFactionBox(<a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe);
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175     signals:
+<a name="l00176"></a>00176 };
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_info_widget_8h.html">InfoWidget.h</a>      </li>
-      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Mon Sep 26 2011 10:17:18 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>
