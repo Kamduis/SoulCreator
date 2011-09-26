@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_read_template.html#afadaf1be1c19f9a70a4894a246386ee9" title="ReadTemplate::readSoulCreator" alt="" coords="229,5,453,35"/>
+<area shape="rect" id="node5" href="$class_read_template.html#ad7023d8c02891c892ea33808363bbcd2" title="ReadTemplate::readXml" alt="" coords="503,5,673,35"/>
+<area shape="rect" id="node7" href="$class_read_template.html#a229f7cd3bfc1d0c47caa2cec3a5a0621" title="ReadTemplate::process" alt="" coords="724,5,892,35"/>
+<area shape="rect" id="node9" href="$class_read_template.html#a3eb0cc39155f082c8c1d71521431e9f4" title="ReadTemplate::read" alt="" coords="943,5,1089,35"/>
+<area shape="rect" id="node11" href="$class_main_window.html#a1ebe4d2e06ddd16007a29bd1b8c09c49" title="MainWindow::storeTemplateData" alt="" coords="1140,5,1367,35"/>
+<area shape="rect" id="node13" href="$class_main_window.html#a43f05c4d3f5d840d070829d3291c9ec7" title="MainWindow::initialize" alt="" coords="1416,5,1573,35"/>
+</map>

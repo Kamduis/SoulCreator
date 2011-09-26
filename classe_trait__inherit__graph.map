@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird." alt="" coords="5,160,120,189"/>
+<area shape="rect" id="node7" href="$classe_trait_not_existing.html" title="Ausnahme, falls eine spezifizierte Eigenscahft nicht existiert." alt="" coords="144,160,272,189"/>
+<area shape="rect" id="node9" href="$classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird." alt="" coords="296,160,379,189"/>
+<area shape="rect" id="node2" href="$class_exception.html" title="Basisklasse für die Ausnahmebehandlung." alt="" coords="167,5,249,35"/>
+</map>

@@ -1,0 +1,28 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_storage_template.html#a0f2b3e86a5e9e503e0edd0aed1d7a8f8" title="StorageTemplate::attributes" alt="" coords="311,432,511,461"/>
+<area shape="rect" id="node7" href="$class_exception.html#a7cb124af6ec64ad88a8721b60c7932fb" title="Exception::description" alt="" coords="329,165,492,195"/>
+<area shape="rect" id="node9" href="$class_storage_template.html#a926d61ca52d1584d57b3731e69432f2f" title="StorageTemplate::meritPrerequisites" alt="" coords="283,219,539,248"/>
+<area shape="rect" id="node11" href="$class_storage_template.html#a57e5d21f50128e94ca5c11d1fc5cc256" title="StorageTemplate::merits" alt="" coords="321,539,500,568"/>
+<area shape="rect" id="node14" href="$class_storage_template.html#a8f6996e6b89e4fabb8eeeb31933dc8df" title="StorageTemplate::meritValues" alt="" coords="304,325,517,355"/>
+<area shape="rect" id="node16" href="$class_exception.html#aeaf3a81717287d50938bc72ed67bacd8" title="Exception::message" alt="" coords="336,379,485,408"/>
+<area shape="rect" id="node18" href="$class_read_template.html#a3eb0cc39155f082c8c1d71521431e9f4" title="ReadTemplate::read" alt="" coords="337,112,484,141"/>
+<area shape="rect" id="node47" href="$class_storage_template.html#a6bc46cab8cbafede7b8699d056247991" title="StorageTemplate::setTraits" alt="" coords="315,485,507,515"/>
+<area shape="rect" id="node49" href="$class_storage_template.html#adc3718aca51de53cf9a0542ab4eb99f9" title="StorageTemplate::skills" alt="" coords="327,699,495,728"/>
+<area shape="rect" id="node52" href="$class_storage_template.html#aa3ec23f9e68fa63afb8bc2782bf2a7e7" title="StorageTemplate::skillSpecialties" alt="" coords="296,592,525,621"/>
+<area shape="rect" id="node54" href="$class_storage_template.html#adb9734d2adcf232c0c70f5024cc81148" title="StorageTemplate::vices" alt="" coords="325,272,496,301"/>
+<area shape="rect" id="node57" href="$class_storage_template.html#a52acf3476bbd83b9b94a4f90d39411b2" title="StorageTemplate::virtues" alt="" coords="320,645,501,675"/>
+<area shape="rect" id="node5" href="$class_storage_template.html#a0dc4d689b066021a4752c99f3ee1c22a" title="StorageTemplate::traitNames" alt="" coords="587,539,797,568"/>
+<area shape="rect" id="node20" href="$class_read_template.html#a229f7cd3bfc1d0c47caa2cec3a5a0621" title="ReadTemplate::process" alt="" coords="608,112,776,141"/>
+<area shape="rect" id="node22" href="$class_read_template.html#ad7023d8c02891c892ea33808363bbcd2" title="ReadTemplate::readXml" alt="" coords="847,112,1017,141"/>
+<area shape="rect" id="node24" href="$class_read_template.html#a5402ab76df3fd4144e7a5986e6f858bd" title="ReadTemplate::closeFile" alt="" coords="1093,5,1264,35"/>
+<area shape="rect" id="node26" href="$class_config.html#a207b413a92300d09acb205a2d21a8734" title="Config::name" alt="" coords="1125,59,1232,88"/>
+<area shape="rect" id="node28" href="$class_read_template.html#aa726d436306f6d3f138dec06b20f631a" title="ReadTemplate::openFile" alt="" coords="1093,112,1264,141"/>
+<area shape="rect" id="node30" href="$class_read_template.html#afadaf1be1c19f9a70a4894a246386ee9" title="ReadTemplate::readSoulCreator" alt="" coords="1067,165,1291,195"/>
+<area shape="rect" id="node45" href="$class_config.html#a77bc8861add4e417c0c5987eed2359cb" title="Config::version" alt="" coords="1121,219,1236,248"/>
+<area shape="rect" id="node32" href="$class_read_template.html#a5984eef9690e258cc42d09206ad0477f" title="ReadTemplate::readTree" alt="" coords="1340,113,1513,143"/>
+<area shape="rect" id="node38" href="$class_read_template.html#a7421603688e1dedca296c0ed3888a4bc" title="ReadTemplate::readUnknownElement" alt="" coords="1563,167,1821,196"/>
+<area shape="rect" id="node43" href="$classcv___species.html#a152c6fe9f8df1fa2bdba478f481955e2" title="cv_Species::toSpecies" alt="" coords="1345,217,1508,247"/>
+<area shape="rect" id="node34" href="$class_read_template.html#a85e90e2466fbabcae68cca7e1aec234c" title="ReadTemplate::readTraits" alt="" coords="1601,113,1783,143"/>
+<area shape="rect" id="node40" href="$classcv___trait.html#ac06e3b8607fa52324072b4a6493fac60" title="cv_Trait::toType" alt="" coords="1633,60,1751,89"/>
+<area shape="rect" id="node36" href="$classcv___trait.html#a8dbbb4674c121a54bd0830cf90c568bc" title="cv_Trait::toCategory" alt="" coords="1871,113,2017,143"/>
+</map>

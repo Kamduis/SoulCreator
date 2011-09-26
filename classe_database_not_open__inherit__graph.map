@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$classe_database.html" title="Ausnahme bei der Verbindung zur SQL&#45;Datenbank." alt="" coords="35,83,125,112"/>
+<area shape="rect" id="node4" href="$class_exception.html" title="Basisklasse für die Ausnahmebehandlung." alt="" coords="39,5,121,35"/>
+</map>

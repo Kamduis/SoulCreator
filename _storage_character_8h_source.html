@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: src/Storage/StorageCharacter.h Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li><a href="annotated.html"><span>Klassen</span></a></li>
+      <li class="current"><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Auflistung&#160;der&#160;Dateien</span></a></li>
+      <li><a href="globals.html"><span>Datei-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('_storage_character_8h.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<h1>StorageCharacter.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="_storage_character_8h.html">gehe zur Dokumentation dieser Datei</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00025"></a>00025 <span class="preprocessor">#ifndef STORAGECHARACTER_H</span>
+<a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define STORAGECHARACTER_H</span>
+<a name="l00027"></a>00027 <span class="preprocessor"></span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;<a class="code" href="cv___identity_8h.html">../Datatypes/cv_Identity.h</a>&quot;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;<a class="code" href="cv___identity_list_8h.html">../Datatypes/cv_IdentityList.h</a>&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;<a class="code" href="cv___trait_8h.html">../Datatypes/cv_Trait.h</a>&quot;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;<a class="code" href="cv___derangement_8h.html">../Datatypes/cv_Derangement.h</a>&quot;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_storage_template_8h.html">StorageTemplate.h</a>&quot;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;QObject&gt;</span>
+<a name="l00035"></a>00035 
+<a name="l00049"></a><a class="code" href="class_storage_character.html">00049</a> <span class="keyword">class </span><a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a> : <span class="keyword">public</span> QObject {
+<a name="l00050"></a>00050         Q_OBJECT
+<a name="l00051"></a>00051 <span class="comment">//      /**</span>
+<a name="l00052"></a>00052 <span class="comment">//       * Eine Liste aller Identitäten des Charakters. Hierin werden alle seine zahlreichen Namen gespeichert.</span>
+<a name="l00053"></a>00053 <span class="comment">//       *</span>
+<a name="l00054"></a>00054 <span class="comment">//       * \access identities(), setIdentities()</span>
+<a name="l00055"></a>00055 <span class="comment">//       *</span>
+<a name="l00056"></a>00056 <span class="comment">//       * \notifier identitiesChanged()</span>
+<a name="l00057"></a>00057 <span class="comment">//       **/</span>
+<a name="l00058"></a>00058 <span class="comment">//      Q_PROPERTY( cv_IdentityList identities READ identities WRITE setIdentities NOTIFY identitiesChanged )</span>
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060     <span class="keyword">private</span>:
+<a name="l00061"></a>00061         <span class="comment">/*</span>
+<a name="l00062"></a>00062 <span class="comment">         * Konstruktor</span>
+<a name="l00063"></a>00063 <span class="comment">         *</span>
+<a name="l00064"></a>00064 <span class="comment">         * Von außen Keine Instanz erzeugbar.</span>
+<a name="l00065"></a>00065 <span class="comment">         **/</span>
+<a name="l00066"></a>00066         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>( QObject* parent = 0 );
+<a name="l00070"></a>00070         ~<a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>();
+<a name="l00071"></a>00071 
+<a name="l00075"></a>00075         <span class="keyword">static</span> <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* p_instance;
+<a name="l00076"></a>00076 
+<a name="l00080"></a>00080         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>( <span class="keyword">const</span> <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* ) {}
+<a name="l00084"></a>00084         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* operator=( <span class="keyword">const</span> <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* ) {}
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086     <span class="keyword">public</span>:
+<a name="l00090"></a>00090         <span class="keyword">static</span> <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* <a class="code" href="class_storage_character.html#a50022b948be1e566d902d64095c4470b">getInstance</a>();
+<a name="l00094"></a>00094         <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#aee1c45904edb4613b79cb7fc5b8ffe08">destroy</a>();
+<a name="l00095"></a>00095 
+<a name="l00099"></a>00099         <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> <a class="code" href="class_storage_character.html#a003ec6624532c534b04c93f18f9c381c">species</a>() <span class="keyword">const</span>;
+<a name="l00103"></a>00103         <a class="code" href="classcv___identity_list.html" title="In dieser Klasse werden sämtliche Identitäten eines Charakters gespeichert.">cv_IdentityList</a> <a class="code" href="class_storage_character.html#abb7991be121ab6479a23a293841ef01e">identities</a>() <span class="keyword">const</span>;
+<a name="l00107"></a><a class="code" href="class_storage_character.html#ace68024457b96a74218ffbdd3e83796e">00107</a>         <a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a>* <a class="code" href="class_storage_character.html#ace68024457b96a74218ffbdd3e83796e">realIdentity</a>;
+<a name="l00111"></a>00111         QString <a class="code" href="class_storage_character.html#a0012a37875e6dc6e093cf50f25c16de3">virtue</a>() <span class="keyword">const</span>;
+<a name="l00115"></a>00115         QString <a class="code" href="class_storage_character.html#a20ff5ed1b72c4438fcf739b357b44ef8">vice</a>() <span class="keyword">const</span>;
+<a name="l00119"></a>00119         QString <a class="code" href="class_storage_character.html#a7289161f542dffad44323ac280284cae">breed</a>() <span class="keyword">const</span>;
+<a name="l00123"></a>00123         QString <a class="code" href="class_storage_character.html#a79c0c6ceb638d44bb65cedeebbeee2bb">faction</a>() <span class="keyword">const</span>;
+<a name="l00127"></a>00127         QList&lt; cv_Trait &gt; <a class="code" href="class_storage_character.html#abb68adf545d724bd7d19a5e4c78bc385">traitsAll</a>() <span class="keyword">const</span>;
+<a name="l00133"></a>00133         QList&lt; cv_Trait &gt; <a class="code" href="class_storage_character.html#a96cb116fee13bcdc51c810b03799aaca">traits</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category ) <span class="keyword">const</span>;
+<a name="l00137"></a>00137         <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> <a class="code" href="class_storage_character.html#a5c1771a1134b0ba29b36b92ed38f3d8b">trait</a>( <span class="keyword">const</span> <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* traitPtr ) <span class="keyword">const</span>;
+<a name="l00141"></a>00141         QList&lt; cv_Trait &gt; <a class="code" href="class_storage_character.html#a2b85891476399516cf8e103600c97260">attributes</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category ) <span class="keyword">const</span>;
+<a name="l00145"></a>00145         QList&lt; cv_Trait &gt; <a class="code" href="class_storage_character.html#aa21dea7be11a2ee064409b6065527a3d">skills</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category ) <span class="keyword">const</span>;
+<a name="l00149"></a>00149         QList&lt; cv_Trait &gt; <a class="code" href="class_storage_character.html#a5352cadb67cf54a480ade0bc03001421">merits</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category ) <span class="keyword">const</span>;
+<a name="l00153"></a>00153         QList&lt; cv_Derangement &gt; <a class="code" href="class_storage_character.html#a358f3c63adb1f0276b5fd6b97b175bb2">derangements</a>() <span class="keyword">const</span>;
+<a name="l00159"></a>00159         QList&lt; cv_Derangement &gt; <a class="code" href="class_storage_character.html#a358f3c63adb1f0276b5fd6b97b175bb2">derangements</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category ) <span class="keyword">const</span>;
+<a name="l00163"></a>00163         <span class="keywordtype">int</span> <a class="code" href="class_storage_character.html#a976fa01b0a773d46a67ddf00670ea5e3">superTrait</a>() <span class="keyword">const</span>;
+<a name="l00167"></a>00167         <span class="keywordtype">int</span> <a class="code" href="class_storage_character.html#aff97992ee48b10183016f991408b3ec8">morality</a>() <span class="keyword">const</span>;
+<a name="l00173"></a>00173         <span class="keywordtype">int</span> <a class="code" href="class_storage_character.html#a640f61c0b394d9cbe74082574f015dcb">armorGeneral</a>() <span class="keyword">const</span>;
+<a name="l00179"></a>00179         <span class="keywordtype">int</span> <a class="code" href="class_storage_character.html#aebd9f331aba3edea9185648a9b0bf4e3">armorFirearms</a>() <span class="keyword">const</span>;
+<a name="l00180"></a>00180         
+<a name="l00184"></a>00184         <span class="keywordtype">bool</span> <a class="code" href="class_storage_character.html#acc85f3b30febab5c5742e169b514ef6f">isModifed</a>() <span class="keyword">const</span>;
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186     <span class="keyword">private</span>:
+<a name="l00187"></a>00187         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a>* storage;
+<a name="l00193"></a>00193         <span class="keyword">static</span> <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> v_species;
+<a name="l00197"></a>00197         <span class="keyword">static</span> <a class="code" href="classcv___identity_list.html" title="In dieser Klasse werden sämtliche Identitäten eines Charakters gespeichert.">cv_IdentityList</a> v_identities;
+<a name="l00205"></a>00205         <span class="keyword">static</span> QString v_virtue;
+<a name="l00206"></a>00206         <span class="keyword">static</span> QString v_vice;
+<a name="l00207"></a>00207         <span class="keyword">static</span> QString v_breed;
+<a name="l00208"></a>00208         <span class="keyword">static</span> QString v_faction;
+<a name="l00212"></a>00212         <span class="keyword">static</span> QList&lt; cv_Trait &gt; v_traits;
+<a name="l00216"></a>00216         <span class="keyword">static</span> QList&lt; cv_Derangement &gt; v_derangements;
+<a name="l00217"></a>00217         <span class="keyword">static</span> <span class="keywordtype">int</span> v_superTrait;
+<a name="l00218"></a>00218         <span class="keyword">static</span> <span class="keywordtype">int</span> v_morality;
+<a name="l00219"></a>00219         <span class="keyword">static</span> <span class="keywordtype">int</span> v_armorGeneral;
+<a name="l00220"></a>00220         <span class="keyword">static</span> <span class="keywordtype">int</span> v_armorFirearms;
+<a name="l00221"></a>00221         <span class="keyword">static</span> <span class="keywordtype">bool</span> v_modified;
+<a name="l00222"></a>00222 
+<a name="l00223"></a>00223     <span class="keyword">public</span> slots:
+<a name="l00227"></a>00227         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#ac708bf6fd9e70736fe84e9529d2dfe18">setSpecies</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species );
+<a name="l00231"></a>00231         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a802f3481674acdc5cb0a8623de21e919">insertIdentity</a>( <span class="keywordtype">int</span> index, <a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> <span class="keywordtype">id</span> );
+<a name="l00235"></a>00235         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a6a8921fe9bedaadee6d4f680438a8872">addIdentity</a>( <a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> <span class="keywordtype">id</span> );
+<a name="l00241"></a>00241         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#ae4fc2c6b281bfe6411812dc6f3ff41ff">setRealIdentity</a>( <a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> <span class="keywordtype">id</span> );
+<a name="l00247"></a>00247         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a6273e4a5881f52b074bb1e4885ce70a6">setSkillSpecialties</a>( QString name ,
+<a name="l00248"></a>00248                                   QList&lt; cv_TraitDetail &gt; details 
+<a name="l00249"></a>00249                                 );
+<a name="l00259"></a>00259         <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* <a class="code" href="class_storage_character.html#a96062a11fe91e1d9826470412fc64449">addTrait</a>( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> <a class="code" href="class_storage_character.html#a5c1771a1134b0ba29b36b92ed38f3d8b">trait</a> );
+<a name="l00263"></a>00263         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#aabaae6015f75abfc6411f5a388418a3b">modifyTrait</a>( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> <a class="code" href="class_storage_character.html#a5c1771a1134b0ba29b36b92ed38f3d8b">trait</a> );
+<a name="l00267"></a>00267         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a647f9a298613000dac06739b6e0f25c4">addDerangement</a>( <a class="code" href="classcv___derangement.html" title="Datentyp für Geistesstörungen.">cv_Derangement</a> derang );
+<a name="l00271"></a>00271         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a8919ce3fb015eb47a4ae8ccf04160482">removeDerangement</a>( <a class="code" href="classcv___derangement.html" title="Datentyp für Geistesstörungen.">cv_Derangement</a> derang );
+<a name="l00277"></a>00277         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#add675d3174e7b9331ad95401f80da7ee">setVirtue</a>( QString txt );
+<a name="l00283"></a>00283         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a87224c378e7576e028c9f9a697bd23e8">setVice</a>( QString txt );
+<a name="l00289"></a>00289         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a99bac6f9786fef089695d13d45df8ec4">setBreed</a>( QString txt );
+<a name="l00295"></a>00295         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#aadbc874c7a025b7fc062905daa9470d7">setFaction</a>( QString txt );
+<a name="l00301"></a>00301         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a6163481bd8983f2fb010dfbd24d486c6">setSuperTrait</a>( <span class="keywordtype">int</span> value );
+<a name="l00307"></a>00307         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#aaaaa83765f09e957f5592def8849765f">setMorality</a>( <span class="keywordtype">int</span> value );
+<a name="l00313"></a>00313         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a137e7d8913acde0f0b129bf64bedf254">setArmor</a>( <span class="keywordtype">int</span> general, <span class="keywordtype">int</span> firearms );
+<a name="l00321"></a>00321         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a6534667b942bd21253c432fee79a8850">resetCharacter</a>();
+<a name="l00325"></a>00325         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a993d017b787620c887fe0338a0098155">setModified</a>( <span class="keywordtype">bool</span> sw = <span class="keyword">true</span>  );
+<a name="l00326"></a>00326 
+<a name="l00327"></a>00327     <span class="keyword">private</span> slots:
+<a name="l00328"></a>00328 <span class="comment">//      void emitSpeciesChanged( cv_Species::SpeciesFlag species );</span>
+<a name="l00329"></a>00329 
+<a name="l00330"></a>00330     signals:
+<a name="l00334"></a>00334         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a282378ee75212c889f7b9d2923472834">identityChanged</a>( <a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> <span class="keywordtype">id</span> );
+<a name="l00338"></a>00338         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a1a573fb4f44cea6f113f9638af0c46da">realIdentityChanged</a>( <a class="code" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> <span class="keywordtype">id</span> );
+<a name="l00342"></a>00342         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a42fa91622893ca1b2005df84b3fdd1f3">speciesChanged</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species );
+<a name="l00346"></a>00346         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#ace2a365b231b39b1857f115c7361166f">traitChanged</a>( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* <a class="code" href="class_storage_character.html#a5c1771a1134b0ba29b36b92ed38f3d8b">trait</a> );
+<a name="l00350"></a>00350         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#ad57fa3bab4be7871a87f38104f1bef5b">derangementsChanged</a>();
+<a name="l00351"></a>00351         
+<a name="l00355"></a>00355         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a9ed85dd892ba396b932bff9f167dffb0">virtueChanged</a>( QString <a class="code" href="class_storage_character.html#a0012a37875e6dc6e093cf50f25c16de3">virtue</a> );
+<a name="l00359"></a>00359         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a790e4c2bd2375f7da84afaf5c5ebfa07">viceChanged</a>( QString <a class="code" href="class_storage_character.html#a20ff5ed1b72c4438fcf739b357b44ef8">vice</a> );
+<a name="l00363"></a>00363         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a41cb16a069fb517d492a08cab0b02c6e">breedChanged</a>( QString <a class="code" href="class_storage_character.html#a7289161f542dffad44323ac280284cae">breed</a> );
+<a name="l00367"></a>00367         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#ad0e8b85f7a04e820b61a4efcd32dab8d">factionChanged</a>( QString <a class="code" href="class_storage_character.html#a79c0c6ceb638d44bb65cedeebbeee2bb">faction</a> );
+<a name="l00371"></a>00371         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#a6e058ebe6ae1db4b875353726f1af570">superTraitChanged</a>( <span class="keywordtype">int</span> value );
+<a name="l00375"></a>00375         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#aa42c8c70147f95fc49d497cde543d765">moralityChanged</a>( <span class="keywordtype">int</span> value );
+<a name="l00379"></a>00379         <span class="keywordtype">void</span> <a class="code" href="class_storage_character.html#af11d057873acf209512199f9a88b076d">armorChanged</a>( <span class="keywordtype">int</span> general, <span class="keywordtype">int</span> firearms );
+<a name="l00380"></a>00380 };
+<a name="l00381"></a>00381 
+<a name="l00382"></a>00382 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><a class="el" href="_storage_character_8h.html">StorageCharacter.h</a>      </li>
+      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
+    </ul>
+  </div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Aufzählungen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

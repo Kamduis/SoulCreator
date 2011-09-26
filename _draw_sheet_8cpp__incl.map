@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" id="node11" href="$_storage_template_8h.html" title="../Storage/StorageTemplate.h" alt="" coords="251,315,461,344"/>
+<area shape="rect" id="node55" href="$_exception_8h_source.html" title="../Exceptions/Exception.h" alt="" coords="1183,160,1364,189"/>
+<area shape="rect" id="node63" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="1451,237,1581,267"/>
+<area shape="rect" id="node70" href="$_draw_sheet_8h.html" title="DrawSheet.h" alt="" coords="1004,83,1108,112"/>
+<area shape="rect" id="node17" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="560,392,723,421"/>
+<area shape="rect" id="node38" href="$cv___identity_list_8h.html" title="../Datatypes/cv_IdentityList.h" alt="" coords="275,392,480,421"/>
+<area shape="rect" id="node50" href="$cv___super_effect_8h.html" title="../Datatypes/cv_SuperEffect.h" alt="" coords="808,469,1019,499"/>
+<area shape="rect" id="node25" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="913,547,1017,576"/>
+<area shape="rect" id="node28" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="477,469,595,499"/>
+<area shape="rect" id="node34" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="1144,469,1277,499"/>
+<area shape="rect" id="node41" href="$cv___identity_8h.html" title="cv_Identity.h" alt="" coords="101,469,200,499"/>
+<area shape="rect" id="node45" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="131,547,224,576"/>
+<area shape="rect" id="node59" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="1093,237,1272,267"/>
+<area shape="rect" id="node75" href="$_storage_character_8h.html" title="../Storage/StorageCharacter.h" alt="" coords="489,237,703,267"/>
+<area shape="rect" id="node87" href="$_calc_advantages_8h.html" title="../Calc/CalcAdvantages.h" alt="" coords="840,160,1019,189"/>
+<area shape="rect" id="node80" href="$cv___derangement_8h.html" title="../Datatypes/cv_Derangement.h" alt="" coords="1096,392,1323,421"/>
+</map>

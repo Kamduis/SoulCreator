@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$_exception_8h_source.html" title="../Exceptions/Exception.h" alt="" coords="1459,237,1640,267"/>
+<area shape="rect" id="node42" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="1607,315,1737,344"/>
+<area shape="rect" id="node50" href="$_read_xml_character_8h.html" title="ReadXmlCharacter.h" alt="" coords="1012,83,1161,112"/>
+<area shape="rect" id="node9" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="969,315,1132,344"/>
+<area shape="rect" id="node31" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="1339,469,1517,499"/>
+<area shape="rect" id="node34" href="$cv___identity_8h.html" title="../Datatypes/cv_Identity.h" alt="" coords="75,392,256,421"/>
+<area shape="rect" id="node18" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="936,469,1040,499"/>
+<area shape="rect" id="node21" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="584,392,701,421"/>
+<area shape="rect" id="node27" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="1011,392,1144,421"/>
+<area shape="rect" id="node38" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="125,469,219,499"/>
+<area shape="rect" id="node54" href="$_storage_template_8h.html" title="../Storage/StorageTemplate.h" alt="" coords="343,237,553,267"/>
+<area shape="rect" id="node69" href="$_storage_character_8h.html" title="../Storage/StorageCharacter.h" alt="" coords="341,160,555,189"/>
+<area shape="rect" id="node84" href="$_read_xml_8h.html" title="ReadXml.h" alt="" coords="1165,160,1253,189"/>
+<area shape="rect" id="node59" href="$cv___identity_list_8h.html" title="../Datatypes/cv_IdentityList.h" alt="" coords="203,315,408,344"/>
+<area shape="rect" id="node64" href="$cv___super_effect_8h.html" title="../Datatypes/cv_SuperEffect.h" alt="" coords="725,392,936,421"/>
+<area shape="rect" id="node74" href="$cv___derangement_8h.html" title="../Datatypes/cv_Derangement.h" alt="" coords="701,315,928,344"/>
+</map>

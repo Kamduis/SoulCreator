@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_advantages_widget.html#a99d7de9b9f89d58a8361e1fd27162f04" title="AdvantagesWidget::AdvantagesWidget" alt="" coords="247,5,513,35"/>
+<area shape="rect" id="node5" href="$class_draw_sheet.html#a4ecacd2a87e4bdcae52df69601a19fa4" title="DrawSheet::print" alt="" coords="316,59,444,88"/>
+<area shape="rect" id="node7" href="$class_storage_character.html#ac708bf6fd9e70736fe84e9529d2dfe18" title="StorageCharacter::setSpecies" alt="" coords="273,112,487,141"/>
+<area shape="rect" id="node11" href="$class_write_xml_character.html#af657074e346540e71b20ab2ccae3bc9c" title="WriteXmlCharacter::write" alt="" coords="291,165,469,195"/>
+<area shape="rect" id="node9" href="$class_storage_character.html#a6534667b942bd21253c432fee79a8850" title="StorageCharacter::resetCharacter" alt="" coords="563,112,803,141"/>
+</map>

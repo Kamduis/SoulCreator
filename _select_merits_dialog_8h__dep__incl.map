@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_merit_widget_8h.html" title="src/Widgets/MeritWidget.h" alt="" coords="97,83,284,112"/>
+<area shape="rect" id="node13" href="$_power_widget_8h.html" title="src/Widgets/PowerWidget.h" alt="" coords="308,83,500,112"/>
+<area shape="rect" id="node18" href="$_select_merits_dialog_8cpp.html" title="src/Widgets/Dialogs/SelectMeritsDialog.cpp" alt="" coords="524,83,820,112"/>
+<area shape="rect" id="node5" href="$_main_window_8h.html" title="src/MainWindow.h" alt="" coords="229,160,363,189"/>
+<area shape="rect" id="node11" href="$_merit_widget_8cpp.html" title="src/Widgets/MeritWidget.cpp" alt="" coords="5,160,205,189"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="169,237,273,267"/>
+<area shape="rect" id="node9" href="$_main_window_8cpp.html" title="src/MainWindow.cpp" alt="" coords="297,237,444,267"/>
+<area shape="rect" id="node16" href="$_power_widget_8cpp.html" title="src/Widgets/PowerWidget.cpp" alt="" coords="387,160,592,189"/>
+</map>

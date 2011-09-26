@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: Klassen-Elemente - Variablen</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Auflistung&#160;der&#160;Klassen</span></a></li>
+      <li><a href="classes.html"><span>Klassen-Verzeichnis</span></a></li>
+      <li><a href="inherits.html"><span>Klassenhierarchie</span></a></li>
+      <li class="current"><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow3" class="tabs2">
+    <ul class="tablist">
+      <li><a href="functions.html"><span>Alle</span></a></li>
+      <li><a href="functions_func.html"><span>Funktionen</span></a></li>
+      <li class="current"><a href="functions_vars.html"><span>Variablen</span></a></li>
+      <li><a href="functions_enum.html"><span>Aufzählungen</span></a></li>
+      <li><a href="functions_prop.html"><span>Propertys</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow4" class="tabs3">
+    <ul class="tablist">
+      <li><a href="#index_a"><span>a</span></a></li>
+      <li><a href="#index_c"><span>c</span></a></li>
+      <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_e"><span>e</span></a></li>
+      <li><a href="#index_f"><span>f</span></a></li>
+      <li><a href="#index_g"><span>g</span></a></li>
+      <li><a href="#index_h"><span>h</span></a></li>
+      <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_m"><span>m</span></a></li>
+      <li><a href="#index_n"><span>n</span></a></li>
+      <li><a href="#index_o"><span>o</span></a></li>
+      <li><a href="#index_p"><span>p</span></a></li>
+      <li><a href="#index_r"><span>r</span></a></li>
+      <li><a href="#index_s"><span>s</span></a></li>
+      <li><a href="#index_t"><span>t</span></a></li>
+      <li><a href="#index_v"><span>v</span></a></li>
+      <li><a href="#index_w"><span>w</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('functions.html','');
+</script>
+<div id="doc-content">
+<div class="contents">
+&#160;
+
+<h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
+<li>age
+: <a class="el" href="classcv___trait.html#a352bd8a2f1cf0b0b78e7a84f00003017">cv_Trait</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
+<li>category
+: <a class="el" href="classcv___abstract_trait.html#af840a97614a08c245998c51ca18fc2cd">cv_AbstractTrait</a>
+</li>
+<li>configFile
+: <a class="el" href="class_config.html#a38fa6594fb616ca0951d93ce0ebe359d">Config</a>
+</li>
+<li>custom
+: <a class="el" href="classcv___trait.html#af3182d88a23b44efbc88f299e8efd6c6">cv_Trait</a>
+</li>
+<li>customText
+: <a class="el" href="classcv___trait.html#a1d21098e97315a231425fbaf7fc5e510">cv_Trait</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
+<li>derangementMoralityTraitMax
+: <a class="el" href="class_config.html#a61e65e8e03af53181bb20cd9f9b032b6">Config</a>
+</li>
+<li>description
+: <a class="el" href="class_message_box.html#a8fb85b7476c12b1f70b5bfd5b30c9bc1">MessageBox</a>
+</li>
+<li>details
+: <a class="el" href="classcv___trait.html#ae67cbca76480c6cd9698bee0f94c9afa">cv_Trait</a>
+</li>
+<li>displayTimeout
+: <a class="el" href="class_config.html#a2642c851c3c3bdc4fc24a5aafbdc9def">Config</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
+<li>era
+: <a class="el" href="classcv___trait.html#ab877a1ccfed4f715e0481c0dd70be82e">cv_Trait</a>
+</li>
+<li>error
+: <a class="el" href="class_message_box.html#ae2701051c79a63332b6fb65ca7f311f3">MessageBox</a>
+</li>
+<li>exportFont
+: <a class="el" href="class_config.html#aedabdf97d4ff67896586146b34d13360">Config</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
+<li>foreNames
+: <a class="el" href="classcv___name.html#ad198bed7aa70ddcce2ad082aa755b528">cv_Name</a>
+</li>
+<li>fuel
+: <a class="el" href="classcv___species.html#ad9f57f43b70ee7c80e77cf87aad63f0c">cv_Species</a>
+</li>
+<li>fuelMax
+: <a class="el" href="classcv___super_effect.html#a71ada4fb5ef7556b499c1ba0cfdcf230">cv_SuperEffect</a>
+</li>
+<li>fuelPerTurn
+: <a class="el" href="classcv___super_effect.html#ab2ddb2d2df65d4ee2da33117c4e0923f">cv_SuperEffect</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
+<li>gender
+: <a class="el" href="classcv___identity.html#a2fe667acb151215818fae5c28369f447">cv_Identity</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
+<li>honorificName
+: <a class="el" href="classcv___name.html#ad8762b52bfe71d98e36dabbb0dee948d">cv_Name</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
+<li>inlineWidgetHeightMax
+: <a class="el" href="class_config.html#a52bd9c4f9265fe8d65e44f0e048ca28f">Config</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
+<li>message
+: <a class="el" href="class_message_box.html#a8d08a68de103827d9ca5c99d9b608b2f">MessageBox</a>
+</li>
+<li>morale
+: <a class="el" href="classcv___species.html#a5dab49888ace4ace7696e91f2f3863ec">cv_Species</a>
+</li>
+<li>morality
+: <a class="el" href="classcv___derangement.html#a0897d993dba7d2e3c8b421ed1bd3c8ad">cv_Derangement</a>
+</li>
+<li>moralityTraitDefaultValue
+: <a class="el" href="class_config.html#acffd1d836672a2a73106239c9112fb1e">Config</a>
+</li>
+<li>moralityTraitMax
+: <a class="el" href="class_config.html#a092b2360e4f94c00291583c044562652">Config</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
+<li>name
+: <a class="el" href="classcv___abstract_trait.html#a26438d0b9e279daea8b93fa8e8b64424">cv_AbstractTrait</a>
+, <a class="el" href="classcv___species.html#a6648d1b9dcf404583f5b6442e0487b57">cv_Species</a>
+, <a class="el" href="structcv___trait_detail.html#ad90344dd8fe29190191d06469e361c4b">cv_TraitDetail</a>
+</li>
+<li>nickName
+: <a class="el" href="classcv___name.html#aa112c292c3e476ae08d6c50f0b8c5be0">cv_Name</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
+<li>organization
+: <a class="el" href="class_config.html#a2f48982576723120e71cf375dd93e292">Config</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>parent
+: <a class="el" href="class_message_box.html#a6a5e85208b288a0d14cfbc22802bc3e8">MessageBox</a>
+</li>
+<li>possibleValues
+: <a class="el" href="classcv___trait.html#a5a3a8917022cceb4d0df3ee04703d53a">cv_Trait</a>
+</li>
+<li>prerequisites
+: <a class="el" href="classcv___trait.html#a848844b20b0a8b5b6068a6ce6ed9ebb7">cv_Trait</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
+<li>realIdentity
+: <a class="el" href="class_storage_character.html#ace68024457b96a74218ffbdd3e83796e">StorageCharacter</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>species
+: <a class="el" href="classcv___abstract_trait.html#a98184988820501bb1f75827f96a90275">cv_AbstractTrait</a>
+, <a class="el" href="classcv___super_effect.html#a4b83c15faed6b1295d8877d00e58ba5a">cv_SuperEffect</a>
+</li>
+<li>spinBoxNoTextWidth
+: <a class="el" href="class_config.html#ac4fae37805ca1885c84a3c81ab49235e">Config</a>
+</li>
+<li>supernaturalName
+: <a class="el" href="classcv___name.html#a9d72ebbb26bcb8e55d135cab81696229">cv_Name</a>
+</li>
+<li>supertrait
+: <a class="el" href="classcv___species.html#a120699ef09ba5d9a042a08bc9ed63906">cv_Species</a>
+</li>
+<li>superTraitDefaultValue
+: <a class="el" href="class_config.html#ade67f3489fe1ff0af96e0e04a0c1bd8d">Config</a>
+</li>
+<li>superTraitMax
+: <a class="el" href="class_config.html#a19a7969bf8bc4a994c5ad5dc66d80baa">Config</a>
+</li>
+<li>superTraitMin
+: <a class="el" href="class_config.html#ae55ab45398b6f5b68e96be73a47fc8c0">Config</a>
+</li>
+<li>sureName
+: <a class="el" href="classcv___name.html#a17dc5ea03d4a4abcee4d79ca6b398ff5">cv_Name</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>textSizeFactorPrintNormal
+: <a class="el" href="class_config.html#a1661af3d8ab2f9082944c3373d2ec1a9">Config</a>
+</li>
+<li>textSizeFactorPrintSmall
+: <a class="el" href="class_config.html#afc2351c7bbeedb1d7774be8b9bbaa135">Config</a>
+</li>
+<li>traitCategorySpace
+: <a class="el" href="class_config.html#aa2ef352cd1411e1251a3e120e25b8fdf">Config</a>
+</li>
+<li>traitCustomTextWidthMin
+: <a class="el" href="class_config.html#a480a5d0fdfc8e82c0c3b782f61db88a9">Config</a>
+</li>
+<li>traitMax
+: <a class="el" href="class_config.html#a816bb8736e223bd496c19aa443fcb00c">Config</a>
+, <a class="el" href="classcv___super_effect.html#a7c440eafd56bfb111b0083e9410fa751">cv_SuperEffect</a>
+</li>
+<li>traitMultipleMax
+: <a class="el" href="class_config.html#aff868e97399192aaea7b13eb54550677">Config</a>
+</li>
+<li>type
+: <a class="el" href="classcv___abstract_trait.html#abd70e5e7cbcfc344676525f027c05232">cv_AbstractTrait</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
+<li>v_description
+: <a class="el" href="class_exception.html#a7445f70177209673b9882d7d9629bc0f">Exception</a>
+</li>
+<li>v_message
+: <a class="el" href="class_exception.html#a2ab7e5a7314e380cac1223bd3e3a5a48">Exception</a>
+</li>
+<li>value
+: <a class="el" href="classcv___trait.html#a9c2c5fe501be1800b8559d3438b8fe12">cv_Trait</a>
+, <a class="el" href="structcv___trait_detail.html#aeebf5a2fea40003d91c1ae29ae62cdcb">cv_TraitDetail</a>
+, <a class="el" href="classcv___super_effect.html#a52613ec1ced903ff5fb47a9227fb0dec">cv_SuperEffect</a>
+</li>
+<li>versionChange
+: <a class="el" href="class_config.html#ac4b563aed6a78ae5ac977f52381f883b">Config</a>
+</li>
+<li>versionMajor
+: <a class="el" href="class_config.html#a0c51b4f7bf7591a3dc0360a50ea8bbe3">Config</a>
+</li>
+<li>versionMinor
+: <a class="el" href="class_config.html#a9d1e66d07afd10401cc6b5258154a30b">Config</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_w"></a>- w -</h3><ul>
+<li>willpowerMax
+: <a class="el" href="class_config.html#ae5b205ed3a240e179bb7885dc51fb737">Config</a>
+</li>
+</ul>
+</div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
+    </ul>
+  </div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Aufzählungen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

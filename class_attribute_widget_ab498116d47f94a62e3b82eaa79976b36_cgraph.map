@@ -1,0 +1,13 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_storage_character.html#a96062a11fe91e1d9826470412fc64449" title="StorageCharacter::addTrait" alt="" coords="303,5,497,35"/>
+<area shape="rect" id="node5" href="$class_chara_trait.html#a1fe9b2316d8daebdf80ddad832ef818a" title="CharaTrait::category" alt="" coords="325,59,475,88"/>
+<area shape="rect" id="node7" href="$classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f" title="cv_AbstractTrait::getCategoryList" alt="" coords="284,112,516,141"/>
+<area shape="rect" id="node9" href="$class_storage_character.html#a50022b948be1e566d902d64095c4470b" title="StorageCharacter::getInstance" alt="" coords="291,165,509,195"/>
+<area shape="rect" id="node11" href="$class_chara_trait.html#abcfeed4a455c49246385c9bc2024ba15" title="CharaTrait::setValue" alt="" coords="325,219,475,248"/>
+<area shape="rect" id="node20" href="$class_attribute_widget.html#aa54e0d5d9c9feeed7baa78cd5a2bd969" title="AttributeWidget::speciesChanged" alt="" coords="283,272,517,301"/>
+<area shape="rect" id="node22" href="$classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15" title="cv_AbstractTrait::toString" alt="" coords="567,349,748,379"/>
+<area shape="rect" id="node24" href="$class_storage_template.html#a2c38d76215e4a8651f4bb6eaae03ece2" title="StorageTemplate::traitsPtr" alt="" coords="305,376,495,405"/>
+<area shape="rect" id="node13" href="$class_chara_trait.html#ab3935a94198f510d3de473a9a72692ac" title="CharaTrait::traitChanged" alt="" coords="569,167,745,196"/>
+<area shape="rect" id="node15" href="$class_chara_trait.html#acd1abb86d271f401b9856f2c8e172255" title="CharaTrait::traitPtr" alt="" coords="797,245,936,275"/>
+<area shape="rect" id="node17" href="$class_chara_trait.html#adeed572acc2fa97468285bc3267e9cb8" title="CharaTrait::value" alt="" coords="593,271,721,300"/>
+</map>

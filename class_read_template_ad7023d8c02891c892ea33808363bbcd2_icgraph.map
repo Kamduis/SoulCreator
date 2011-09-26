@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_read_template.html#a229f7cd3bfc1d0c47caa2cec3a5a0621" title="ReadTemplate::process" alt="" coords="228,5,396,35"/>
+<area shape="rect" id="node5" href="$class_read_template.html#a3eb0cc39155f082c8c1d71521431e9f4" title="ReadTemplate::read" alt="" coords="447,5,593,35"/>
+<area shape="rect" id="node7" href="$class_main_window.html#a1ebe4d2e06ddd16007a29bd1b8c09c49" title="MainWindow::storeTemplateData" alt="" coords="644,5,871,35"/>
+<area shape="rect" id="node9" href="$class_main_window.html#a43f05c4d3f5d840d070829d3291c9ec7" title="MainWindow::initialize" alt="" coords="920,5,1077,35"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$_storage_template_8h.html" title="../Storage/StorageTemplate.h" alt="" coords="1157,237,1368,267"/>
+<area shape="rect" id="node49" href="$_storage_character_8h.html" title="../Storage/StorageCharacter.h" alt="" coords="1012,160,1225,189"/>
+<area shape="rect" id="node61" href="$_exception_8h_source.html" title="../Exceptions/Exception.h" alt="" coords="329,237,511,267"/>
+<area shape="rect" id="node76" href="$_chara_species_8h.html" title="CharaSpecies.h" alt="" coords="832,83,955,112"/>
+<area shape="rect" id="node11" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="649,315,812,344"/>
+<area shape="rect" id="node32" href="$cv___identity_list_8h.html" title="../Datatypes/cv_IdentityList.h" alt="" coords="1223,315,1428,344"/>
+<area shape="rect" id="node44" href="$cv___super_effect_8h.html" title="../Datatypes/cv_SuperEffect.h" alt="" coords="887,315,1097,344"/>
+<area shape="rect" id="node19" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="697,469,801,499"/>
+<area shape="rect" id="node22" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="888,392,1005,421"/>
+<area shape="rect" id="node28" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="541,392,675,421"/>
+<area shape="rect" id="node35" href="$cv___identity_8h.html" title="cv_Identity.h" alt="" coords="1283,392,1381,421"/>
+<area shape="rect" id="node39" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="1284,469,1377,499"/>
+<area shape="rect" id="node54" href="$cv___derangement_8h.html" title="../Datatypes/cv_Derangement.h" alt="" coords="395,315,621,344"/>
+<area shape="rect" id="node65" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="244,469,423,499"/>
+<area shape="rect" id="node69" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="12,315,143,344"/>
+</map>

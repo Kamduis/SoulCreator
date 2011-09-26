@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$class_checked_list.html" title="Erzeugt eine Liste, in welcher der Inhalt abgehakt werden kann." alt="" coords="5,5,104,35"/>
+<area shape="rect" id="node3" href="$class_trait_specialties.html" title="Die darstellung von Spezialisierungen in der GUI." alt="" coords="152,5,269,35"/>
+<area shape="rect" id="node5" href="$class_chara_specialties.html" title="Diese Spezialisierungen werden direkt mit dem Charakter verknüpft." alt="" coords="319,5,447,35"/>
+</map>

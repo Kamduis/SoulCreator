@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: src/Datatypes/cv_Trait.h Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li><a href="annotated.html"><span>Klassen</span></a></li>
+      <li class="current"><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Auflistung&#160;der&#160;Dateien</span></a></li>
+      <li><a href="globals.html"><span>Datei-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('cv___trait_8h.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<h1>cv_Trait.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="cv___trait_8h.html">gehe zur Dokumentation dieser Datei</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00025"></a>00025 <span class="preprocessor">#ifndef CV_TRAIT_H</span>
+<a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define CV_TRAIT_H</span>
+<a name="l00027"></a>00027 <span class="preprocessor"></span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QFlags&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QList&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QStringList&gt;</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="cv___species_8h.html">cv_Species.h</a>&quot;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="cv___trait_detail_8h.html">cv_TraitDetail.h</a>&quot;</span>
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="cv___abstract_trait_8h.html">cv_AbstractTrait.h</a>&quot;</span>
+<a name="l00037"></a>00037 
+<a name="l00043"></a><a class="code" href="classcv___trait.html">00043</a> <span class="keyword">class </span><a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> : <span class="keyword">public</span> <a class="code" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a> {
+<a name="l00044"></a>00044     <span class="keyword">public</span>:
+<a name="l00081"></a><a class="code" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">00081</a>         <span class="keyword">enum</span> <a class="code" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">EraFlag</a> {
+<a name="l00082"></a>00082             EraNo   = 0x0,
+<a name="l00083"></a>00083             Modern  = 0x1,
+<a name="l00084"></a>00084             Reason  = 0x2,
+<a name="l00085"></a>00085             Antique = 0x4,
+<a name="l00086"></a>00086             EraAll  = 0x7   <span class="comment">// Binäre Summe aller Flags</span>
+<a name="l00087"></a>00087         };
+<a name="l00088"></a>00088         Q_DECLARE_FLAGS( Era, <a class="code" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">EraFlag</a> ) <span class="comment">// Hiermit ermögliche ich die Verwendung von xx1|xx2|xx3</span>
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090         
+<a name="l00121"></a><a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">00121</a>         enum <a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">AgeFlag</a> {
+<a name="l00122"></a>00122             AgeNo   = 0x0,
+<a name="l00123"></a>00123             Adult   = 0x1,
+<a name="l00124"></a>00124             Kid     = 0x2,
+<a name="l00125"></a>00125             AgeAll  = 0x3   <span class="comment">// Binäre Summe aller Flags</span>
+<a name="l00126"></a>00126         };
+<a name="l00127"></a>00127         Q_DECLARE_FLAGS( Age, <a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">AgeFlag</a> ) <span class="comment">// Hiermit ermögliche ich die Verwendung von xx1|xx2|xx3</span>
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129         
+<a name="l00132"></a>00132         <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>(QString txt = &quot;&quot;, <span class="keywordtype">int</span> val = 0, <a class="code" href="classcv___species.html" title="Datentyp für unterschiedliche Spezies der WoD.">cv_Species</a>::Species spe = <a class="code" href="classcv___species.html" title="Datentyp für unterschiedliche Spezies der WoD.">cv_Species</a>::SpeciesNo, <a class="code" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a>::<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">Type</a> ty = <a class="code" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a>::TypeNo, <a class="code" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a>::<a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">Category</a> ca = <a class="code" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a>::CategoryNo);
+<a name="l00133"></a>00133 
+<a name="l00137"></a><a class="code" href="classcv___trait.html#a9c2c5fe501be1800b8559d3438b8fe12">00137</a>         <span class="keywordtype">int</span> <a class="code" href="classcv___trait.html#a9c2c5fe501be1800b8559d3438b8fe12">value</a>;
+<a name="l00143"></a><a class="code" href="classcv___trait.html#a5a3a8917022cceb4d0df3ee04703d53a">00143</a>         QList&lt; <span class="keywordtype">int</span> &gt; <a class="code" href="classcv___trait.html#a5a3a8917022cceb4d0df3ee04703d53a">possibleValues</a>;
+<a name="l00149"></a><a class="code" href="classcv___trait.html#ab877a1ccfed4f715e0481c0dd70be82e">00149</a>         <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>::Era <a class="code" href="classcv___trait.html#ab877a1ccfed4f715e0481c0dd70be82e">era</a>;
+<a name="l00155"></a><a class="code" href="classcv___trait.html#a352bd8a2f1cf0b0b78e7a84f00003017">00155</a>         <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>::Age <a class="code" href="classcv___trait.html#a352bd8a2f1cf0b0b78e7a84f00003017">age</a>;
+<a name="l00159"></a><a class="code" href="classcv___trait.html#ae67cbca76480c6cd9698bee0f94c9afa">00159</a>         QList&lt; <a class="code" href="structcv___trait_detail.html" title="Speichert die zusätzlichen Parameter einer Eigenschaft.">cv_TraitDetail</a> &gt; <a class="code" href="classcv___trait.html#ae67cbca76480c6cd9698bee0f94c9afa">details</a>;
+<a name="l00165"></a><a class="code" href="classcv___trait.html#a848844b20b0a8b5b6068a6ce6ed9ebb7">00165</a>         QString <a class="code" href="classcv___trait.html#a848844b20b0a8b5b6068a6ce6ed9ebb7">prerequisites</a>;
+<a name="l00169"></a><a class="code" href="classcv___trait.html#af3182d88a23b44efbc88f299e8efd6c6">00169</a>         <span class="keywordtype">bool</span> <a class="code" href="classcv___trait.html#af3182d88a23b44efbc88f299e8efd6c6">custom</a>;
+<a name="l00173"></a><a class="code" href="classcv___trait.html#a1d21098e97315a231425fbaf7fc5e510">00173</a>         QString <a class="code" href="classcv___trait.html#a1d21098e97315a231425fbaf7fc5e510">customText</a>;
+<a name="l00174"></a>00174 
+<a name="l00180"></a>00180         static <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>::Era <a class="code" href="classcv___trait.html#a5a4e945a0525b67b5a5154cfff9fb96f">toEra</a>( QString str );
+<a name="l00186"></a>00186         static <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>::Age <a class="code" href="classcv___trait.html#a776af93d2332bdaa4631e22e6bdb7ace">toAge</a>( QString str );
+<a name="l00187"></a>00187 
+<a name="l00193"></a>00193         <span class="keywordtype">bool</span> operator==( const <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> &amp;trait ) const;
+<a name="l00197"></a>00197         <span class="keywordtype">bool</span> operator&lt;( const <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> &amp;trait ) const;
+<a name="l00198"></a>00198 };
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200 Q_DECLARE_OPERATORS_FOR_FLAGS( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>::Age )
+<a name="l00201"></a>00201 Q_DECLARE_OPERATORS_FOR_FLAGS( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>::Era )
+<a name="l00202"></a>00202 
+<a name="l00203"></a>00203 <span class="preprocessor">#endif</span>
+<a name="l00204"></a>00204 <span class="preprocessor"></span>
+</pre></div></div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><a class="el" href="cv___trait_8h.html">cv_Trait.h</a>      </li>
+      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
+    </ul>
+  </div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Aufzählungen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

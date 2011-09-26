@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_storage_character.html#aebd9f331aba3edea9185648a9b0bf4e3" title="StorageCharacter::armorFirearms" alt="" coords="233,5,471,35"/>
+<area shape="rect" id="node5" href="$class_storage_character.html#a640f61c0b394d9cbe74082574f015dcb" title="StorageCharacter::armorGeneral" alt="" coords="236,59,468,88"/>
+<area shape="rect" id="node7" href="$class_storage_character.html#a7289161f542dffad44323ac280284cae" title="StorageCharacter::breed" alt="" coords="261,112,443,141"/>
+<area shape="rect" id="node9" href="$class_storage_character.html#a79c0c6ceb638d44bb65cedeebbeee2bb" title="StorageCharacter::faction" alt="" coords="259,165,445,195"/>
+<area shape="rect" id="node11" href="$class_storage_character.html#abb7991be121ab6479a23a293841ef01e" title="StorageCharacter::identities" alt="" coords="251,219,453,248"/>
+<area shape="rect" id="node13" href="$class_storage_character.html#aff97992ee48b10183016f991408b3ec8" title="StorageCharacter::morality" alt="" coords="255,272,449,301"/>
+<area shape="rect" id="node15" href="$class_config.html#a207b413a92300d09acb205a2d21a8734" title="Config::name" alt="" coords="299,325,405,355"/>
+<area shape="rect" id="node17" href="$class_storage_character.html#a003ec6624532c534b04c93f18f9c381c" title="StorageCharacter::species" alt="" coords="256,379,448,408"/>
+<area shape="rect" id="node19" href="$class_storage_character.html#a976fa01b0a773d46a67ddf00670ea5e3" title="StorageCharacter::superTrait" alt="" coords="249,432,455,461"/>
+<area shape="rect" id="node21" href="$classcv___species.html#a6e9c431d497e9df3ab4b9fe79029c368" title="cv_Species::toString" alt="" coords="276,485,428,515"/>
+<area shape="rect" id="node23" href="$classcv___identity.html#a904c4574f12e1c2eb8ec29a5b2974e0f" title="cv_Identity::toXmlString" alt="" coords="267,539,437,568"/>
+<area shape="rect" id="node25" href="$class_config.html#a77bc8861add4e417c0c5987eed2359cb" title="Config::version" alt="" coords="295,592,409,621"/>
+<area shape="rect" id="node27" href="$class_storage_character.html#a20ff5ed1b72c4438fcf739b357b44ef8" title="StorageCharacter::vice" alt="" coords="268,645,436,675"/>
+<area shape="rect" id="node29" href="$class_storage_character.html#a0012a37875e6dc6e093cf50f25c16de3" title="StorageCharacter::virtue" alt="" coords="263,699,441,728"/>
+</map>

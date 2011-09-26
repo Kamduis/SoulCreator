@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_storage_character.html#a50022b948be1e566d902d64095c4470b" title="StorageCharacter::getInstance" alt="" coords="261,5,480,35"/>
+<area shape="rect" id="node5" href="$class_chara_species.html#a2ef74664afd983d69d1d4ca50a38dc01" title="CharaSpecies::setSpecies" alt="" coords="277,59,464,88"/>
+<area shape="rect" id="node11" href="$class_storage_template.html#a1177a73731e317d87d5e79700d02a01a" title="StorageTemplate::species" alt="" coords="277,112,464,141"/>
+<area shape="rect" id="node13" href="$classcv___species.html#a152c6fe9f8df1fa2bdba478f481955e2" title="cv_Species::toSpecies" alt="" coords="289,165,452,195"/>
+<area shape="rect" id="node7" href="$class_chara_species.html#a7c72b4add56aad4e238ddeffac1f960c" title="CharaSpecies::species" alt="" coords="529,32,695,61"/>
+<area shape="rect" id="node9" href="$classcv___species.html#a6e9c431d497e9df3ab4b9fe79029c368" title="cv_Species::toString" alt="" coords="536,85,688,115"/>
+</map>

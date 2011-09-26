@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: src/Widgets/TraitLine.h Quellcode</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li><a href="annotated.html"><span>Klassen</span></a></li>
+      <li class="current"><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Auflistung&#160;der&#160;Dateien</span></a></li>
+      <li><a href="globals.html"><span>Datei-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('_trait_line_8h.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<h1>TraitLine.h</h1>  </div>
+</div>
+<div class="contents">
+<a href="_trait_line_8h.html">gehe zur Dokumentation dieser Datei</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
+<a name="l00025"></a>00025 <span class="preprocessor">#ifndef TRAITLINE_H</span>
+<a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define TRAITLINE_H</span>
+<a name="l00027"></a>00027 <span class="preprocessor"></span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QStringList&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QHBoxLayout&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QLabel&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QLineEdit&gt;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="_trait_dots_8h.html">TraitDots.h</a>&quot;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="_trait_specialties_8h.html">TraitSpecialties.h</a>&quot;</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="preprocessor">#include &lt;QWidget&gt;</span>
+<a name="l00038"></a>00038 
+<a name="l00044"></a><a class="code" href="class_trait_line.html">00044</a> <span class="keyword">class </span><a class="code" href="class_trait_line.html" title="Die grafische Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.">TraitLine</a> : <span class="keyword">public</span> QWidget {
+<a name="l00045"></a>00045         Q_OBJECT
+<a name="l00051"></a><a class="code" href="class_trait_line.html#aab91b42ed078ee480734f96d0e0342f4">00051</a>         Q_PROPERTY( QString name READ name WRITE setName )
+<a name="l00059"></a><a class="code" href="class_trait_line.html#a47b02db462cae13826d7ca14bb8de63e">00059</a>         Q_PROPERTY( QString text READ text WRITE setText NOTIFY textChanged )
+<a name="l00067"></a><a class="code" href="class_trait_line.html#af8947de51bc9f9e3c595d927bb27933c">00067</a>         Q_PROPERTY( <span class="keywordtype">int</span> value READ value WRITE setValue NOTIFY valueChanged )
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069     public:
+<a name="l00073"></a>00073 <span class="comment">//      TraitLine(QWidget *parent = 0, cv_Trait::Type type = cv_Trait::TypeNo, cv_Trait::Category category = cv_Trait::CategoryNo, QString name = &quot;&quot;, int value = 0);</span>
+<a name="l00081"></a>00081 <span class="comment"></span>        <a class="code" href="class_trait_line.html" title="Die grafische Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.">TraitLine</a>(QWidget *parent = 0, QString name = &quot;&quot;, <span class="keywordtype">int</span> value = 0);
+<a name="l00085"></a>00085         ~<a class="code" href="class_trait_line.html" title="Die grafische Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.">TraitLine</a>();
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087         QString name() const;
+<a name="l00088"></a>00088         <span class="keywordtype">int</span> value() const;
+<a name="l00089"></a>00089         QString text() const;
+<a name="l00090"></a>00090         <span class="keywordtype">int</span> minimum() const;
+<a name="l00094"></a>00094         QHBoxLayout* <a class="code" href="class_trait_line.html#a1b05c776caa9b9310999571c442bf1e2">layout</a>() const;
+<a name="l00098"></a>00098         QLabel* <a class="code" href="class_trait_line.html#a888938ff3cda0292ba1600cd267902d6">labelName</a>() const;
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100     private:
+<a name="l00101"></a>00101         QHBoxLayout *v_layout;
+<a name="l00102"></a>00102         QLabel *v_label_name;
+<a name="l00103"></a>00103         QPushButton *button;
+<a name="l00104"></a>00104         QLineEdit* lineEdit;
+<a name="l00105"></a>00105         <a class="code" href="class_trait_dots.html" title="Eine Darstellung von Werten in Form ausgefüllter Punkte.">TraitDots</a> *traitDots;
+<a name="l00106"></a>00106         <a class="code" href="class_trait_specialties.html" title="Die darstellung von Spezialisierungen in der GUI.">TraitSpecialties</a> *specialties;
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108     public slots:
+<a name="l00109"></a>00109         <span class="keywordtype">void</span> setName(QString text);
+<a name="l00110"></a>00110         <span class="keywordtype">void</span> setValue(<span class="keywordtype">int</span> value);
+<a name="l00114"></a>00114         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a928e4906892bb23afce954034542373d">setPossibleValues</a>(QList&lt;<span class="keywordtype">int</span>&gt; valueList);
+<a name="l00115"></a>00115         <span class="keywordtype">void</span> setText(QString text);
+<a name="l00116"></a>00116         <span class="keywordtype">void</span> setMinimum(<span class="keywordtype">int</span> value);
+<a name="l00120"></a>00120         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a95f9132e89bcfae9a062573649e98c19">hideSpecialties</a>(<span class="keywordtype">bool</span> sw = true);
+<a name="l00124"></a>00124         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a5ec1164f0dddff7b9df35545a47bce60">setSpecialtyButtonChecked</a>(<span class="keywordtype">bool</span> sw = true);
+<a name="l00128"></a>00128         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#aba4c8e4ee4f0aab02bb26d4bb63e7dec">hideDescription</a>(<span class="keywordtype">bool</span> sw = true);
+<a name="l00129"></a>00129 
+<a name="l00130"></a>00130     private slots:
+<a name="l00131"></a>00131         <span class="keywordtype">void</span> enableSpecialties(<span class="keywordtype">int</span> number);
+<a name="l00132"></a>00132 <span class="comment">//      void storeTrait();</span>
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134     signals:
+<a name="l00135"></a>00135         <span class="keywordtype">void</span> textChanged(QString text);
+<a name="l00136"></a>00136         <span class="keywordtype">void</span> valueChanged ( <span class="keywordtype">int</span> value );
+<a name="l00140"></a>00140         <span class="keywordtype">void</span> <a class="code" href="class_trait_line.html#a8d5765b9cdee2e70312cd057ce70caf4">specialtiesClicked</a>(<span class="keywordtype">bool</span> state );
+<a name="l00141"></a>00141 };
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143 <span class="preprocessor">#endif</span>
+</pre></div></div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><a class="el" href="_trait_line_8h.html">TraitLine.h</a>      </li>
+      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
+    </ul>
+  </div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Aufzählungen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

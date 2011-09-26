@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_read_xml.html#a0305be8e000422c577df73f8b4be3e81" title="ReadXml::closeFile" alt="" coords="281,5,420,35"/>
+<area shape="rect" id="node5" href="$class_exception.html#a7cb124af6ec64ad88a8721b60c7932fb" title="Exception::description" alt="" coords="269,59,432,88"/>
+<area shape="rect" id="node7" href="$class_exception.html#aeaf3a81717287d50938bc72ed67bacd8" title="Exception::message" alt="" coords="276,112,425,141"/>
+<area shape="rect" id="node9" href="$class_read_xml.html#a764cf8f1ae5230e93852c5743a54d81c" title="ReadXml::openFile" alt="" coords="283,165,419,195"/>
+<area shape="rect" id="node11" href="$class_storage_character.html#ae4fc2c6b281bfe6411812dc6f3ff41ff" title="StorageCharacter::setRealIdentity" alt="" coords="232,219,469,248"/>
+<area shape="rect" id="node13" href="$class_storage_character.html#a282378ee75212c889f7b9d2923472834" title="StorageCharacter::identityChanged" alt="" coords="837,193,1085,223"/>
+<area shape="rect" id="node15" href="$class_storage_character.html#a802f3481674acdc5cb0a8623de21e919" title="StorageCharacter::insertIdentity" alt="" coords="540,219,767,248"/>
+<area shape="rect" id="node18" href="$class_storage_character.html#a1a573fb4f44cea6f113f9638af0c46da" title="StorageCharacter::realIdentityChanged" alt="" coords="517,272,789,301"/>
+</map>

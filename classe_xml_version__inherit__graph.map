@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node7" href="$classe_xml_old_version.html" title="Die Version der XML&#45;Datei paßt zwar zu diesem programm, ist aber zu alt." alt="" coords="15,237,137,267"/>
+<area shape="rect" id="node2" href="$classe_xml.html" title="Ausnahme beim Lesen der XML&#45;Datei." alt="" coords="49,83,103,112"/>
+<area shape="rect" id="node4" href="$class_exception.html" title="Basisklasse für die Ausnahmebehandlung." alt="" coords="35,5,117,35"/>
+<area shape="rect" id="node9" href="$classe_xml_too_old_version.html" title="Die Version der XML&#45;Datei paßt zwar zu diesem Programm, ist aber viel zu alt." alt="" coords="5,315,147,344"/>
+</map>

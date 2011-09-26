@@ -1,0 +1,31 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_storage_template_8h.html" title="Storage/StorageTemplate.h" alt="" coords="1576,315,1773,344"/>
+<area shape="rect" id="node37" href="$_storage_character_8h.html" title="Storage/StorageCharacter.h" alt="" coords="1267,237,1469,267"/>
+<area shape="rect" id="node48" href="$_read_xml_character_8h.html" title="IO/ReadXmlCharacter.h" alt="" coords="1011,160,1179,189"/>
+<area shape="rect" id="node62" href="$_write_xml_character_8h.html" title="IO/WriteXmlCharacter.h" alt="" coords="248,160,416,189"/>
+<area shape="rect" id="node71" href="$_info_widget_8h.html" title="Widgets/InfoWidget.h" alt="" coords="2793,83,2948,112"/>
+<area shape="rect" id="node91" href="$_attribute_widget_8h.html" title="Widgets/AttributeWidget.h" alt="" coords="1763,160,1949,189"/>
+<area shape="rect" id="node98" href="$_skill_widget_8h.html" title="Widgets/SkillWidget.h" alt="" coords="2024,160,2179,189"/>
+<area shape="rect" id="node105" href="$_merit_widget_8h.html" title="Widgets/MeritWidget.h" alt="" coords="3384,160,3547,189"/>
+<area shape="rect" id="node122" href="$_morality_widget_8h.html" title="Widgets/MoralityWidget.h" alt="" coords="1507,160,1688,189"/>
+<area shape="rect" id="node130" href="$_power_widget_8h.html" title="Widgets/PowerWidget.h" alt="" coords="2787,160,2955,189"/>
+<area shape="rect" id="node139" href="$_flaw_widget_8h.html" title="Widgets/FlawWidget.h" alt="" coords="3571,160,3728,189"/>
+<area shape="rect" id="node147" href="$_advantages_widget_8h.html" title="Widgets/AdvantagesWidget.h" alt="" coords="2192,83,2397,112"/>
+<area shape="rect" id="node175" href="$_chara_specialties_8h.html" title="Widgets/CharaSpecialties.h" alt="" coords="792,160,987,189"/>
+<area shape="rect" id="node183" href="$_draw_sheet_8h.html" title="Draw/DrawSheet.h" alt="" coords="535,83,673,112"/>
+<area shape="rect" id="node9" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="1860,392,2023,421"/>
+<area shape="rect" id="node24" href="$cv___identity_list_8h.html" title="../Datatypes/cv_IdentityList.h" alt="" coords="1572,392,1777,421"/>
+<area shape="rect" id="node32" href="$cv___super_effect_8h.html" title="../Datatypes/cv_SuperEffect.h" alt="" coords="1049,469,1260,499"/>
+<area shape="rect" id="node15" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="1032,547,1136,576"/>
+<area shape="rect" id="node18" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="2036,469,2153,499"/>
+<area shape="rect" id="node27" href="$cv___identity_8h.html" title="cv_Identity.h" alt="" coords="1687,469,1785,499"/>
+<area shape="rect" id="node42" href="$cv___derangement_8h.html" title="../Datatypes/cv_Derangement.h" alt="" coords="1385,469,1612,499"/>
+<area shape="rect" id="node57" href="$_read_xml_8h.html" title="ReadXml.h" alt="" coords="952,237,1040,267"/>
+<area shape="rect" id="node83" href="$_chara_species_8h.html" title="CharaSpecies.h" alt="" coords="3136,160,3259,189"/>
+<area shape="rect" id="node118" href="$_select_merits_dialog_8h.html" title="Dialogs/SelectMeritsDialog.h" alt="" coords="2829,237,3032,267"/>
+<area shape="rect" id="node154" href="$_trait_dots_8h.html" title="TraitDots.h" alt="" coords="2360,160,2451,189"/>
+<area shape="rect" id="node160" href="$_squares_8h.html" title="Squares.h" alt="" coords="2525,160,2611,189"/>
+<area shape="rect" id="node167" href="$_calc_advantages_8h.html" title="../Calc/CalcAdvantages.h" alt="" coords="589,160,768,189"/>
+<area shape="rect" id="node170" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="5,237,184,267"/>
+<area shape="rect" id="node179" href="$_trait_specialties_8h.html" title="TraitSpecialties.h" alt="" coords="1139,392,1267,421"/>
+</map>

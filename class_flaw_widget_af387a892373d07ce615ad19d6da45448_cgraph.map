@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_storage_character.html#a96062a11fe91e1d9826470412fc64449" title="StorageCharacter::addTrait" alt="" coords="243,5,437,35"/>
+<area shape="rect" id="node5" href="$classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f" title="cv_AbstractTrait::getCategoryList" alt="" coords="224,59,456,88"/>
+<area shape="rect" id="node7" href="$class_check_trait.html#a9073e7f8bbac8c351bf829b23a9fc850" title="CheckTrait::setValue" alt="" coords="265,112,415,141"/>
+<area shape="rect" id="node16" href="$classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15" title="cv_AbstractTrait::toString" alt="" coords="505,216,687,245"/>
+<area shape="rect" id="node18" href="$class_storage_template.html#a2c38d76215e4a8651f4bb6eaae03ece2" title="StorageTemplate::traitsPtr" alt="" coords="245,216,435,245"/>
+<area shape="rect" id="node9" href="$class_check_trait.html#a6fc70482737108eb58606a8eed553e04" title="CheckTrait::traitChanged" alt="" coords="507,59,685,88"/>
+<area shape="rect" id="node11" href="$class_check_trait.html#a85928c20fd7d921c1d9b831168b9964e" title="CheckTrait::traitPtr" alt="" coords="736,137,875,167"/>
+<area shape="rect" id="node13" href="$class_check_trait.html#a4399a810312044b74f6227955a1879a9" title="CheckTrait::value" alt="" coords="532,163,660,192"/>
+</map>

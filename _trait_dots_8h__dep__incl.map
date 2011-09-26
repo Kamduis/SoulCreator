@@ -1,0 +1,17 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_advantages_widget_8h.html" title="src/Widgets/AdvantagesWidget.h" alt="" coords="276,83,505,112"/>
+<area shape="rect" id="node13" href="$_trait_line_8h.html" title="src/Widgets/TraitLine.h" alt="" coords="561,83,724,112"/>
+<area shape="rect" id="node30" href="$_morality_widget_8cpp.html" title="src/Widgets/MoralityWidget.cpp" alt="" coords="748,83,967,112"/>
+<area shape="rect" id="node32" href="$_trait_dots_8cpp.html" title="src/Widgets/TraitDots.cpp" alt="" coords="991,83,1172,112"/>
+<area shape="rect" id="node5" href="$_main_window_8h.html" title="src/MainWindow.h" alt="" coords="111,160,244,189"/>
+<area shape="rect" id="node11" href="$_advantages_widget_8cpp.html" title="src/Widgets/AdvantagesWidget.cpp" alt="" coords="268,160,513,189"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="src/main.cpp" alt="" coords="5,237,109,267"/>
+<area shape="rect" id="node9" href="$_main_window_8cpp.html" title="src/MainWindow.cpp" alt="" coords="133,237,280,267"/>
+<area shape="rect" id="node16" href="$_chara_trait_8h.html" title="src/Widgets/CharaTrait.h" alt="" coords="588,160,761,189"/>
+<area shape="rect" id="node28" href="$_trait_line_8cpp.html" title="src/Widgets/TraitLine.cpp" alt="" coords="785,160,964,189"/>
+<area shape="rect" id="node18" href="$_attribute_widget_8cpp.html" title="src/Widgets/AttributeWidget.cpp" alt="" coords="304,237,528,267"/>
+<area shape="rect" id="node20" href="$_chara_trait_8cpp.html" title="src/Widgets/CharaTrait.cpp" alt="" coords="552,237,741,267"/>
+<area shape="rect" id="node22" href="$_merit_widget_8cpp.html" title="src/Widgets/MeritWidget.cpp" alt="" coords="765,237,965,267"/>
+<area shape="rect" id="node24" href="$_power_widget_8cpp.html" title="src/Widgets/PowerWidget.cpp" alt="" coords="989,237,1195,267"/>
+<area shape="rect" id="node26" href="$_skill_widget_8cpp.html" title="src/Widgets/SkillWidget.cpp" alt="" coords="1219,237,1413,267"/>
+</map>

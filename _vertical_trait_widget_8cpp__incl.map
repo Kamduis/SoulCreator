@@ -1,0 +1,17 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$_chara_trait_8h.html" title="CharaTrait.h" alt="" coords="1047,83,1146,112"/>
+<area shape="rect" id="node69" href="$_exception_8h_source.html" title="../Exceptions/Exception.h" alt="" coords="1534,160,1715,189"/>
+<area shape="rect" id="node73" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="1787,237,1918,267"/>
+<area shape="rect" id="node77" href="$_storage_template_8h.html" title="../Storage/StorageTemplate.h" alt="" coords="1299,160,1510,189"/>
+<area shape="rect" id="node86" href="$_vertical_trait_widget_8h.html" title="VerticalTraitWidget.h" alt="" coords="298,160,447,189"/>
+<area shape="rect" id="node7" href="$_storage_character_8h.html" title="../Storage/StorageCharacter.h" alt="" coords="1062,160,1275,189"/>
+<area shape="rect" id="node9" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="1087,237,1250,267"/>
+<area shape="rect" id="node22" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="730,315,847,344"/>
+<area shape="rect" id="node40" href="$_trait_line_8h.html" title="TraitLine.h" alt="" coords="645,160,730,189"/>
+<area shape="rect" id="node28" href="$cv___name_list_8h.html" title="../Datatypes/cv_NameList.h" alt="" coords="1421,237,1618,267"/>
+<area shape="rect" id="node19" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="935,392,1039,421"/>
+<area shape="rect" id="node31" href="$cv___name_8h.html" title="cv_Name.h" alt="" coords="1543,315,1637,344"/>
+<area shape="rect" id="node51" href="$_trait_dots_8h.html" title="TraitDots.h" alt="" coords="973,237,1063,267"/>
+<area shape="rect" id="node60" href="$_trait_specialties_8h.html" title="TraitSpecialties.h" alt="" coords="207,237,335,267"/>
+<area shape="rect" id="node64" href="$_checked_list_8h.html" title="CheckedList.h" alt="" coords="223,315,333,344"/>
+</map>

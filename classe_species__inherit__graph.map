@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$classe_species_not_existing.html" title="Ausnahme, falls eine spezifizierte Spezies nicht existiert." alt="" coords="5,160,157,189"/>
+<area shape="rect" id="node2" href="$class_exception.html" title="Basisklasse für die Ausnahmebehandlung." alt="" coords="40,5,123,35"/>
+</map>

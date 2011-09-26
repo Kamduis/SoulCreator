@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_read_template.html#afadaf1be1c19f9a70a4894a246386ee9" title="ReadTemplate::readSoulCreator" alt="" coords="571,12,795,42"/>
+<area shape="rect" id="node15" href="$class_read_template.html#ad079297b59fa808daac606ad797ac980" title="ReadTemplate::readTraits" alt="" coords="592,91,773,120"/>
+<area shape="rect" id="node17" href="$class_read_template.html#a5984eef9690e258cc42d09206ad0477f" title="ReadTemplate::readTree" alt="" coords="331,26,504,55"/>
+<area shape="rect" id="node20" href="$class_read_template.html#ac35b7e479a713187f491bbc01b95c69f" title="ReadTemplate::storeTraitData" alt="" coords="313,130,521,159"/>
+<area shape="rect" id="node5" href="$class_read_template.html#ad7023d8c02891c892ea33808363bbcd2" title="ReadTemplate::readXml" alt="" coords="844,12,1015,42"/>
+<area shape="rect" id="node7" href="$class_read_template.html#a229f7cd3bfc1d0c47caa2cec3a5a0621" title="ReadTemplate::process" alt="" coords="1065,12,1233,42"/>
+<area shape="rect" id="node9" href="$class_read_template.html#a3eb0cc39155f082c8c1d71521431e9f4" title="ReadTemplate::read" alt="" coords="1284,12,1431,42"/>
+<area shape="rect" id="node11" href="$class_main_window.html#a1ebe4d2e06ddd16007a29bd1b8c09c49" title="MainWindow::storeTemplateData" alt="" coords="1481,12,1708,42"/>
+<area shape="rect" id="node13" href="$class_main_window.html#a43f05c4d3f5d840d070829d3291c9ec7" title="MainWindow::initialize" alt="" coords="1757,12,1915,42"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_storage_template.html#ada340e5acda2a32b7157c6c29cd64399" title="StorageTemplate::breedNames" alt="" coords="489,5,711,35"/>
+<area shape="rect" id="node9" href="$class_storage_template.html#a6db02d80cae1dc3bfc10e586e9aef016" title="StorageTemplate::factionNames" alt="" coords="487,59,713,88"/>
+<area shape="rect" id="node12" href="$class_storage_character.html#a50022b948be1e566d902d64095c4470b" title="StorageCharacter::getInstance" alt="" coords="217,108,436,137"/>
+<area shape="rect" id="node14" href="$class_storage_template.html#ad86a34d5b7fb0bd4f6bbb8a75f1cf5f5" title="StorageTemplate::viceNames" alt="" coords="221,161,432,191"/>
+<area shape="rect" id="node19" href="$class_storage_template.html#a6b5bc4437780ff4334b25241926512fe" title="StorageTemplate::virtueNames" alt="" coords="216,215,437,244"/>
+<area shape="rect" id="node5" href="$class_storage_template.html#a27993db72787b37c8d45102019abf850" title="StorageTemplate::traits" alt="" coords="764,59,935,88"/>
+<area shape="rect" id="node7" href="$class_storage_template.html#aceb757eb50e7326356f589179d78ee89" title="StorageTemplate::trait" alt="" coords="984,59,1149,88"/>
+<area shape="rect" id="node16" href="$class_storage_template.html#aa1c01bbdf076afcacd1e785d2a4d6573" title="StorageTemplate::traitNames" alt="" coords="495,161,705,191"/>
+</map>

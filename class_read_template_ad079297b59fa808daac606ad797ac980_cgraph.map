@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_read_template.html#a7421603688e1dedca296c0ed3888a4bc" title="ReadTemplate::readUnknownElement" alt="" coords="493,5,752,35"/>
+<area shape="rect" id="node5" href="$class_read_template.html#ac35b7e479a713187f491bbc01b95c69f" title="ReadTemplate::storeTraitData" alt="" coords="236,59,444,88"/>
+<area shape="rect" id="node8" href="$classcv___trait.html#a776af93d2332bdaa4631e22e6bdb7ace" title="cv_Trait::toAge" alt="" coords="565,59,680,88"/>
+<area shape="rect" id="node10" href="$classcv___trait.html#a5a4e945a0525b67b5a5154cfff9fb96f" title="cv_Trait::toEra" alt="" coords="568,112,677,141"/>
+</map>

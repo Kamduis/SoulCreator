@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: Ausstehende Aufgaben</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li class="current"><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('todo.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<h1>Ausstehende Aufgaben </h1>  </div>
+</div>
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="_todo000036"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="class_chara_specialties.html">CharaSpecialties</a>  </dt>
+<dd>Es wäre toll, wenn der Benutzer eigene Spezialisierungen eintragen könnte, zusätzlich zu denen, die schon angeboten werden. </dd>
+</dl>
+<p><a class="anchor" id="_todo000037"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="class_chara_trait.html">CharaTrait</a>  </dt>
+<dd><p class="startdd">Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.</p>
+<p class="enddd">Den Parser <a class="el" href="class_string_bool_parser.html">StringBoolParser</a> erweitern, damit übriggebliebener Text nach den Ersetzungen der Eigesncahften durch ihre Werte mit 0 gleichgesetzt wird. Aktuell mache ich das durch Stringmanipulation, aber das ist natürlich langsamer. </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000039"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_chara_trait.html#a794ddd73f3604b16fe4b468b4a02f7df">CharaTrait::hideDescriptionWidget</a> () </dt>
+<dd>Muß natürlich auch bei manchen Powers vorhanden sein. </dd>
+</dl>
+<p><a class="anchor" id="_todo000005"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classcv___abstract_trait.html#a8348d3df93415c4dd31838ad79f3d176">cv_AbstractTrait::operator==</a> (const <a class="el" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a> &amp;trait) const  </dt>
+<dd>Die Vergleiche sind noch nicht umfassend genug. Typ und Kategorie muß nich verglichen werden. etc. </dd>
+</dl>
+<p><a class="anchor" id="_todo000006"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classcv___trait.html#a8c0d39d14efbcce546fbc6212f6e984b">cv_Trait::operator==</a> (const <a class="el" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> &amp;trait) const  </dt>
+<dd>Die Vergleiche sind noch nicht umfassend genug. Typ und Kategorie muß nich verglichen werden. etc. </dd>
+</dl>
+<p><a class="anchor" id="_todo000040"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="class_derangement_combo_box.html">DerangementComboBox</a>  </dt>
+<dd>Die Anzeige unterscheidet noch nicht zwischen milden und ernsten Störungen. </dd>
+</dl>
+<p><a class="anchor" id="_todo000043"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="class_info_widget.html">InfoWidget</a>  </dt>
+<dd>Bei den Virtues und Vices wird bislang nur der erwachsene behrücksichtigt. </dd>
+</dl>
+<p><a class="anchor" id="_todo000011"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="class_main_window.html">MainWindow</a>  </dt>
+<dd><p class="startdd">Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.</p>
+<p>Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.</p>
+<p>Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.</p>
+<p>Bei Werwölfen nimmt "Rites" eine Sonderstellung ein. Auch die Gaben/Riten müssen berücksichtigt werden.</p>
+<p>Nutze eine qchecksum, um die Integrität der XML-DAteien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben.</p>
+<p>So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!</p>
+<p>Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).</p>
+<p>Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.</p>
+<p>Waffen einbauen.</p>
+<p>Charakterbeschreibung einbauen.</p>
+<p class="enddd">Beim nächsten Versionssprung sollte bei den gespeicherten Charakteren die Namen anders gespeichert werden. Anstelle alles in &lt;xxx&gt;bla&lt;/xxx&gt; zu schreiben, sollte es eine Identitätsgruppe geben mit den einzelnen Namensbestandteilen als Attribute einer einzelnen Identität dieser Gruppe. </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000044"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="class_merit_widget.html">MeritWidget</a>  </dt>
+<dd><p class="startdd">Einen Knopf erstellen, über den der Benutzer angeben kann, welche Merits er denn wirklich alle angezeigt haben will.</p>
+<p class="enddd">Bei Merits mit Zusatztext (Language) in diesem men+ ein Zahlenfle dangeben, bei welchem der benutzer einstellen kann, wieviele verschiedene dieser scheinbar identischen merits er angezeigt haben will. </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000041"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_message_box.html#a8fb85b7476c12b1f70b5bfd5b30c9bc1">MessageBox::description</a>  </dt>
+<dd>Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann und nicht nur als Debug-Hilfe dienen kann. Dies wird auch Änderungen in der <a class="el" href="class_exception.html">Exception</a> -Klasse erfordern. </dd>
+</dl>
+<p><a class="anchor" id="_todo000047"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="class_morality_widget.html">MoralityWidget</a>  </dt>
+<dd>Ich bin mit den Geistesstörungen noch nicht gänzlich zufrieden. Es besteht die Gefahr, daß einzelne GEistesstörungen immer und immer wieder zu dem Charkater hinzugefügt werden und dementsprechend das Programm und den gespeicherten Charakter aufblähen können. </dd>
+</dl>
+<p><a class="anchor" id="_todo000031"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_storage_character.html#a6534667b942bd21253c432fee79a8850">StorageCharacter::resetCharacter</a> () </dt>
+<dd>Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze. </dd>
+</dl>
+<p><a class="anchor" id="_todo000029"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_storage_character.html#ae4fc2c6b281bfe6411812dc6f3ff41ff">StorageCharacter::setRealIdentity</a> (<a class="el" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> id) </dt>
+<dd>Momentan ist dies die einzige identität, die von diesem programm genutzt wird. </dd>
+</dl>
+<p><a class="anchor" id="_todo000030"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_storage_character.html#a6273e4a5881f52b074bb1e4885ce70a6">StorageCharacter::setSkillSpecialties</a> (QString name, QList&lt; cv_TraitDetail &gt; details) </dt>
+<dd>Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen. </dd>
+</dl>
+<p><a class="anchor" id="_todo000034"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_storage_template.html#aceb757eb50e7326356f589179d78ee89">StorageTemplate::trait</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, QString name) </dt>
+<dd><p class="startdd">Sollte vielleicht eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, wenn keine passende Eigenschaft gefunden wurde.</p>
+<p class="enddd">Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren. </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000032"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_storage_template.html#a27993db72787b37c8d45102019abf850">StorageTemplate::traits</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, <a class="el" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era=cv_Trait::Modern, <a class="el" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age=cv_Trait::Adult) const  </dt>
+<dd>Sollte vielleicht eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, wenn keine passende Eigenschaft gefunden wurde. </dd>
+</dl>
+<p><a class="anchor" id="_todo000033"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_storage_template.html#a2c38d76215e4a8651f4bb6eaae03ece2">StorageTemplate::traitsPtr</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, <a class="el" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era=cv_Trait::Modern, <a class="el" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age=cv_Trait::Adult) const  </dt>
+<dd>Sollte vielleicht eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, wenn keine passende Eigenschaft gefunden wurde. </dd>
+</dl>
+<p><a class="anchor" id="_todo000051"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_trait_specialties.html#a00f3539756417240d957be84471a86aa">TraitSpecialties::removeSpecialty</a> (int i) </dt>
+<dd><a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> auswerfen, wenn das Entfernen fehlschlägt. </dd>
+</dl>
+<p><a class="anchor" id="_todo000050"></a> </p>
+<dl>
+<dt>Element <a class="el" href="class_trait_specialties.html#a71e53c67062245ffc2bc8a84e9962fba">TraitSpecialties::removeSpecialty</a> (QString spec) </dt>
+<dd><a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> auswerfen, wenn das Entfernen fehlschlägt. </dd>
+</dl>
+</div></div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="footer">Erzeugt am Wed Sep 21 2011 04:39:49 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
+    </ul>
+  </div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Aufzählungen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

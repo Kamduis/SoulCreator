@@ -1,0 +1,25 @@
+<map id="G" name="G">
+<area shape="rect" id="node21" href="$_settings_8h.html" title="IO/Settings.h" alt="" coords="835,83,939,112"/>
+<area shape="rect" id="node25" href="$_settings_dialog_8h.html" title="Widgets/Dialogs/SettingsDialog.h" alt="" coords="963,83,1195,112"/>
+<area shape="rect" id="node29" href="$_trait_line_8h.html" title="Widgets/TraitLine.h" alt="" coords="429,315,568,344"/>
+<area shape="rect" id="node62" href="$_message_box_8h.html" title="Widgets/Dialogs/MessageBox.h" alt="" coords="915,237,1133,267"/>
+<area shape="rect" id="node67" href="$_exception_8h_source.html" title="../../Exceptions/Exception.h" alt="" coords="1089,315,1281,344"/>
+<area shape="rect" id="node70" href="$cv___trait_8h.html" title="../Datatypes/cv_Trait.h" alt="" coords="1413,392,1576,421"/>
+<area shape="rect" id="node90" href="$_config_8h.html" title="../Config/Config.h" alt="" coords="1063,392,1193,421"/>
+<area shape="rect" id="node97" href="$_read_xml_template_8h.html" title="IO/ReadXmlTemplate.h" alt="" coords="1573,237,1736,267"/>
+<area shape="rect" id="node100" href="$_storage_template_8h.html" title="../Storage/StorageTemplate.h" alt="" coords="1939,315,2149,344"/>
+<area shape="rect" id="node126" href="$_storage_character_8h.html" title="Storage/StorageCharacter.h" alt="" coords="2171,237,2373,267"/>
+<area shape="rect" id="node141" href="$_main_window_8h.html" title="MainWindow.h" alt="" coords="1888,83,1997,112"/>
+<area shape="rect" id="node41" href="$_trait_dots_8h.html" title="TraitDots.h" alt="" coords="615,392,705,421"/>
+<area shape="rect" id="node49" href="$_trait_specialties_8h.html" title="TraitSpecialties.h" alt="" coords="780,392,908,421"/>
+<area shape="rect" id="node53" href="$cv___trait_detail_8h.html" title="../Datatypes/cv_TraitDetail.h" alt="" coords="1369,469,1569,499"/>
+<area shape="rect" id="node58" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="2101,547,2205,576"/>
+<area shape="rect" id="node83" href="$cv___shape_8h.html" title="../Datatypes/cv_Shape.h" alt="" coords="983,547,1161,576"/>
+<area shape="rect" id="node86" href="$cv___identity_8h.html" title="../Datatypes/cv_Identity.h" alt="" coords="1833,469,2015,499"/>
+<area shape="rect" id="node79" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="2527,469,2660,499"/>
+<area shape="rect" id="node118" href="$_read_xml_8h.html" title="ReadXml.h" alt="" coords="1523,315,1611,344"/>
+<area shape="rect" id="node105" href="$cv___identity_list_8h.html" title="../Datatypes/cv_IdentityList.h" alt="" coords="2247,392,2452,421"/>
+<area shape="rect" id="node110" href="$cv___super_effect_8h.html" title="../Datatypes/cv_SuperEffect.h" alt="" coords="2191,469,2401,499"/>
+<area shape="rect" id="node131" href="$cv___derangement_8h.html" title="../Datatypes/cv_Derangement.h" alt="" coords="2581,392,2808,421"/>
+<area shape="rect" id="node145" href="$_read_xml_character_8h.html" title="IO/ReadXmlCharacter.h" alt="" coords="1861,160,2029,189"/>
+</map>

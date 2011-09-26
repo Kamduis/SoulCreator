@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_storage_character.html#a50022b948be1e566d902d64095c4470b" title="StorageCharacter::getInstance" alt="" coords="223,5,441,35"/>
+<area shape="rect" id="node5" href="$class_check_trait.html#aa15b135c1ef0c0647e9bf49a0735f52a" title="CheckTrait::hideDescriptionWidget" alt="" coords="213,59,451,88"/>
+<area shape="rect" id="node9" href="$class_check_trait.html#a38b03dfbcc01dbb65a9b345423e232db" title="CheckTrait::hideTraitIfNotAvailable" alt="" coords="215,215,449,244"/>
+<area shape="rect" id="node11" href="$class_check_trait.html#a9073e7f8bbac8c351bf829b23a9fc850" title="CheckTrait::setValue" alt="" coords="520,269,669,299"/>
+<area shape="rect" id="node13" href="$class_check_trait.html#a6fc70482737108eb58606a8eed553e04" title="CheckTrait::traitChanged" alt="" coords="739,112,917,141"/>
+<area shape="rect" id="node22" href="$class_check_trait.html#a70a2f81f0fc8e246b3296583ec853b4a" title="CheckTrait::setCustomText" alt="" coords="500,163,689,192"/>
+<area shape="rect" id="node29" href="$class_check_trait.html#afaf1ac221b2b07813b11a940c26942d4" title="CheckTrait::setTraitPtr" alt="" coords="253,369,411,399"/>
+<area shape="rect" id="node32" href="$class_check_trait.html#ab3eeaf83829a18b9c621d3a073cde5ba" title="CheckTrait::stateChanged" alt="" coords="240,423,424,452"/>
+<area shape="rect" id="node35" href="$class_check_trait.html#a894ea83addabc03a7a6ca5a167fe3e49" title="CheckTrait::updateWidget" alt="" coords="504,323,685,352"/>
+<area shape="rect" id="node7" href="$class_check_trait.html#a2dccc399d6c44877ca880bdd17d47ac2" title="CheckTrait::custom" alt="" coords="524,59,665,88"/>
+<area shape="rect" id="node20" href="$class_check_trait.html#ae1f7c66daf473387e3c8ea8e4857bc14" title="CheckTrait::species" alt="" coords="524,216,665,245"/>
+<area shape="rect" id="node15" href="$class_check_trait.html#a85928c20fd7d921c1d9b831168b9964e" title="CheckTrait::traitPtr" alt="" coords="965,268,1104,297"/>
+<area shape="rect" id="node17" href="$class_check_trait.html#a4399a810312044b74f6227955a1879a9" title="CheckTrait::value" alt="" coords="764,320,892,349"/>
+<area shape="rect" id="node24" href="$class_check_trait.html#a4ec4f95d6f1ff25331964d85393f0f3f" title="CheckTrait::customText" alt="" coords="744,216,912,245"/>
+</map>

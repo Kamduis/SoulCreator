@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_exception.html#a032056e0558a40affd69325368840a72" title="Exception::setDescription" alt="" coords="224,5,408,35"/>
+<area shape="rect" id="node5" href="$class_exception.html#a16b5202a71fe00abb2c278adca10b415" title="Exception::setMessage" alt="" coords="232,59,400,88"/>
+<area shape="rect" id="node7" href="$class_exception.html#aeaf3a81717287d50938bc72ed67bacd8" title="Exception::message" alt="" coords="457,59,607,88"/>
+</map>
