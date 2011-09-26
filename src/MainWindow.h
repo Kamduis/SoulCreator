@@ -82,6 +82,18 @@ class MainWindow;
  * \todo Alle Reiter, bei denen nicht alle Punkte vergeben wurden grün färben und jene, bei denen zu viele vergeben wurde, rot färben.
  *
  * \todo eine Seitenleiste mit Bildern einführen, wo man die Reister auswählen kann. Dort kann man auch die verbleibenden Punkte hinschreiben und markieren, wenn ein Typ zuviele/wenige Punkte vergeben hat.
+ *
+ * \todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-DAtei bereitstellen, i welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
+ *
+ * \todo Anzeige des Dateinames (oder des Charkaternamens?) in der Titelzeile.
+ *
+ * \todo Schönere Symbole für die Seitenauswahl.
+ *
+ * \todo Zu verteilende Punkte für Spezialisierungen
+ *
+ * \todo Zu verteilende Punkte für Kräfte.
+ *
+ * \todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
  */
 
 class MainWindow : public QMainWindow {
@@ -195,6 +207,24 @@ class MainWindow : public QMainWindow {
 		 * Zeigt die Anzahl der übrigen Punkte bei der Charaktererschaffung an.
 		 **/
 		void showCreationPoints(cv_CreationPoints pt);
+		/**
+		 * Zeigt eine Warnung an, wenn nicht alle Erschafungspunkte vergeben wurden.
+		 *
+		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite blau eingefärbt.
+		 **/
+		void warnCreationPointsPositive(cv_Trait::Type type);
+		/**
+		 * Zeigt eine Warnung an, wenn zuviele Erschafungspunkte vergeben wurden.
+		 *
+		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite rot eingefärbt.
+		 **/
+		void warnCreationPointsNegative(cv_Trait::Type type);
+		/**
+		 * Zeigt eine Warnung an, wenn alle Erschafungspunkte vergeben wurden.
+		 *
+		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite wieder zur Standardfarbe verändert.
+		 **/
+		void warnCreationPointsDepleted(cv_Trait::Type type);
 		/**
 		 * Werte des Charakters auf der Oberfläche anzeigen.
 		 **/

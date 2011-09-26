@@ -33,6 +33,8 @@ const int Config::versionMinor = PROGRAM_VERSION_MINOR;
 const int Config::versionChange = PROGRAM_VERSION_CHANGE;
 const QString Config::organization = "Caern";
 const QString Config::configFile = "config.ini";
+const QColor Config::pointsNegative = QColor(255,0,0);
+const QColor Config::pointsPositive = QColor(0,0,255);
 const int Config::traitCategorySpace = 10;
 const int Config::traitMultipleMax = 3;
 const int Config::displayTimeout = 10000;
@@ -48,11 +50,21 @@ const int Config::superTraitMin = 1;
 const int Config::superTraitMax = 10;
 const int Config::superTraitDefaultValue = 1;
 const int Config::creationTraitDouble = 4;
+const int Config::creationPointsAttA = 5;
+const int Config::creationPointsAttB = 4;
+const int Config::creationPointsAttC = 3;
+const int Config::creationPointsSkillA = 11;
+const int Config::creationPointsSkillB = 7;
+const int Config::creationPointsSkillC = 4;
+const int Config::creationPointsSkillSpecialties = 3;
+const int Config::creationPointsMerits = 7;
+const int Config::creationPointsPowersVampire = 3;
 
 const qreal Config::textSizeFactorPrintNormal = 0.45;
 const qreal Config::textSizeFactorPrintSmall = 0.33;
 
 QFont Config::exportFont = QFont();
+QFont Config::windowFont = QFont();
 
 
 QString Config::name() {

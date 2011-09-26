@@ -33,6 +33,8 @@
 
 /**
  * \brief Berechnet die verbleibenden Punkte bei der Charaktererschaffung.
+ *
+ * \todo Powers werden noch nicht berücksichtigt.
  */
 
 class Creation : public QObject {
@@ -71,6 +73,16 @@ class Creation : public QObject {
 		 * Berechnet die noch verfügbaren Punkte.
 		 **/
 		void calcPoints( cv_Trait* trait );
+		/**
+		 * Kontrolliert, ob die Punkte erschöpft sind oder gar übermäßig ausgeschöpft wurden und sendet entsprechende Signale aus.
+		 *
+		 * \sa pointsDepleted
+		 *
+		 * \sa pointsNegative
+		 *
+		 * \sa pointsPositive
+		 **/
+		void controlPoints(cv_CreationPoints points );
 
 	signals:
 		/**
@@ -78,9 +90,17 @@ class Creation : public QObject {
 		**/
 		void pointsChanged( cv_CreationPoints points );
 		/**
-		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen typ erschöpft.
+		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ erschöpft.
 		**/
 		void pointsDepleted( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte erschöpft sind. */ );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ ändert und das Resultat negativ ist.
+		**/
+		void pointsNegative( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ ändert und das Resultat positiv ist.
+		**/
+		void pointsPositive( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
 };
 
 #endif

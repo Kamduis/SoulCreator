@@ -58,14 +58,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
 	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
-	// Hübsche Symbole
-	ui->actionNew->setIcon( QIcon( ":/icons/images/actions/filenew.png" ) );
-	ui->actionOpen->setIcon( QIcon( ":/icons/images/actions/fileopen.png" ) );
-	ui->actionSave->setIcon( QIcon( ":/icons/images/actions/filesave.png" ) );
-	ui->actionExport->setIcon( QIcon( ":/icons/images/actions/fileexport.png" ) );
-	ui->actionPrint->setIcon( QIcon( ":/icons/images/actions/agt_print.png" ) );
-
 	// Hier habe ich die Standardicons genommen, aber davon gibt es nur wenige und sie sehen nicht gut aus.
+	// Inzwischen lade ich die Symbole direkt über den QtDesigner
 // 	ui->actionNew->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
 // 	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
 // 	ui->actionSave->setIcon( style()->standardIcon( QStyle::SP_DriveFDIcon ) );
@@ -199,34 +193,49 @@ void MainWindow::populateUi() {
 
 	// Schreibe die übrigen Erschaffungspunkte
 	connect( creation, SIGNAL( pointsChanged( cv_CreationPoints ) ), this, SLOT( showCreationPoints( cv_CreationPoints ) ) );
+	connect( creation, SIGNAL( pointsDepleted( cv_Trait::Type ) ), this, SLOT( warnCreationPointsDepleted( cv_Trait::Type ) ) );
+	connect( creation, SIGNAL( pointsNegative(cv_Trait::Type)), this, SLOT( warnCreationPointsNegative( cv_Trait::Type ) ) );
+	connect( creation, SIGNAL( pointsPositive(cv_Trait::Type)), this, SLOT( warnCreationPointsPositive( cv_Trait::Type ) ) );
 }
 
 void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
-	for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
-		ui->stackedWidget_traits->widget( i )->setObjectName( "stackedWidget_item" + QString::number( i ) );
-	}
-
 	if ( spec == cv_Species::Changeling ) {
-		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
-			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center }" );
-		}
+		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	} else if ( spec == cv_Species::Mage ) {
-		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
-			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center }" );
-		}
+		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	} else if ( spec == cv_Species::Vampire ) {
-		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
-			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center }" );
-		}
+		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	} else if ( spec == cv_Species::Werewolf ) {
-		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
-			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center }" );
-		}
+		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	} else {
-		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
-			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mortal-gray.png); background-repeat: no-repeat; background-position: center }" );
-		}
+		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	}
+	
+// 	for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 		ui->stackedWidget_traits->widget( i )->setObjectName( "stackedWidget_item" + QString::number( i ) );
+// 	}
+// 
+// 	if ( spec == cv_Species::Changeling ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center }" );
+// 		}
+// 	} else if ( spec == cv_Species::Mage ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center }" );
+// 		}
+// 	} else if ( spec == cv_Species::Vampire ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center }" );
+// 		}
+// 	} else if ( spec == cv_Species::Werewolf ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center }" );
+// 		}
+// 	} else {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mortal-gray.png); background-repeat: no-repeat; background-position: center }" );
+// 		}
+// 	}
 }
 
 
@@ -279,7 +288,10 @@ void MainWindow::activate() {
 
 void MainWindow::showSettingsDialog() {
 	SettingsDialog dialog;
-	dialog.exec();
+	if (dialog.exec()) {
+		// Ausführen der veränderten Einstellungen.
+// 		this->setFont(Config::windowFont);
+	}
 }
 
 void MainWindow::tabPrevious() {
@@ -360,6 +372,43 @@ void MainWindow::showCreationPoints( cv_CreationPoints pt ) {
 		ui->label_pointsLeft->setText( creation->points().powersOut() );
 	}
 }
+
+void MainWindow::warnCreationPointsDepleted( cv_Trait::Type type ) {
+	if (type == cv_Trait::Attribute){
+		ui->selectWidget_select->item(1)->setForeground(QColor());
+	} else if (type == cv_Trait::Skill) {
+		ui->selectWidget_select->item(2)->setForeground(QColor());
+	} else if (type == cv_Trait::Merit) {
+		ui->selectWidget_select->item(3)->setForeground(QColor());
+	} else if (type == cv_Trait::Power) {
+		ui->selectWidget_select->item(5)->setForeground(QColor());
+	}
+}
+void MainWindow::warnCreationPointsPositive( cv_AbstractTrait::Type type )
+{
+	if (type == cv_Trait::Attribute){
+		ui->selectWidget_select->item(1)->setForeground(Config::pointsPositive);
+	} else if (type == cv_Trait::Skill) {
+		ui->selectWidget_select->item(2)->setForeground(Config::pointsPositive);
+	} else if (type == cv_Trait::Merit) {
+		ui->selectWidget_select->item(3)->setForeground(Config::pointsPositive);
+	} else if (type == cv_Trait::Power) {
+		ui->selectWidget_select->item(5)->setForeground(Config::pointsPositive);
+	}
+}
+void MainWindow::warnCreationPointsNegative( cv_AbstractTrait::Type type )
+{
+	if (type == cv_Trait::Attribute){
+		ui->selectWidget_select->item(1)->setForeground(Config::pointsNegative);
+	} else if (type == cv_Trait::Skill) {
+		ui->selectWidget_select->item(2)->setForeground(Config::pointsNegative);
+	} else if (type == cv_Trait::Merit) {
+		ui->selectWidget_select->item(3)->setForeground(Config::pointsNegative);
+	} else if (type == cv_Trait::Power) {
+		ui->selectWidget_select->item(5)->setForeground(Config::pointsNegative);
+	}
+}
+
 
 
 void MainWindow::aboutApp() {
@@ -558,6 +607,7 @@ void MainWindow::writeSettings() {
 	settings.endGroup();
 
 	settings.beginGroup( "Config" );
+// 	settings.setValue( "windowFont", Config::windowFont.family() );
 	settings.setValue( "exportFont", Config::exportFont.family() );
 	settings.endGroup();
 }
@@ -572,8 +622,12 @@ void MainWindow::readSettings() {
 	settings.endGroup();
 
 	settings.beginGroup( "Config" );
+// 	Config::windowFont = QFont( settings.value( "windowFont" ).toString() );
 	Config::exportFont = QFont( settings.value( "exportFont" ).toString() );
 	settings.endGroup();
+
+// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.
+// 	setFont(Config::windowFont);
 }
 
 

@@ -13,14 +13,14 @@
 			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
-		<Breed>
+		<Breed name="Path">
 			<trait name="Acanthus"/>
 			<trait name="Mastigos"/>
 			<trait name="Moros"/>
 			<trait name="Obrimos"/>
 			<trait name="Thyrsus"/>
 		</Breed>
-		<Faction>
+		<Faction name="Order">
 			<trait name="Apostate"/>
 			<trait name="Adamantine Arrow" alt="Ungula Draconis"/>
 			<trait name="Free Council"/>

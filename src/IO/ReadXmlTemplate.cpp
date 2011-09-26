@@ -25,6 +25,7 @@
 #include <QDebug>
 
 #include "Datatypes/cv_SuperEffect.h"
+#include "Datatypes/cv_SpeciesTitle.h"
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
 
@@ -215,13 +216,24 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a ) {
 			break;
 
 		if ( isStartElement() ) {
-			cv_Trait::Category category = cv_Trait::toCategory( name().toString() );
+			QString elementName = name().toString();
+			cv_Trait::Category category = cv_Trait::toCategory( elementName );
+
 			readTraits( sp, a, category );
 		}
 	}
 }
 
 void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b ) {
+	if ( a == cv_Trait::Breed || a == cv_Trait::Faction ) {
+		QString titleName = attributes().value( "name" ).toString();
+		cv_SpeciesTitle title = cv_SpeciesTitle( cv_SpeciesTitle::toTitle( cv_Trait::toString( a ) ), titleName, sp );
+
+// 		qDebug() << Q_FUNC_INFO << title.title << title.name << title.species;
+
+		storage->appendTitle( title );
+	}
+
 	while ( !atEnd() ) {
 		readNext();
 
@@ -238,6 +250,7 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 				}
 
 				storage->appendTrait( trait );
+
 // 				qDebug() << Q_FUNC_INFO << trait.name << trait.possibleValues;;
 
 // 				// Diese Funktion benötige ich, damit er zum nächsten trait-Eintrag springt.

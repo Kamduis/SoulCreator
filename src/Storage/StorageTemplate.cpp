@@ -31,6 +31,7 @@
 
 
 QList< cv_Species > StorageTemplate::v_species;
+QList< cv_SpeciesTitle > StorageTemplate::v_titles;
 QList< cv_Trait > StorageTemplate::v_traits;
 QList< cv_SuperEffect > StorageTemplate::v_superEffects;
 
@@ -80,6 +81,32 @@ QStringList StorageTemplate::viceNames( cv_Trait::AgeFlag age ) const {
 	return traitNames( cv_Trait::Vice, cv_Trait::CategoryNo, cv_Trait::EraAll, age );
 }
 
+QString StorageTemplate::breedTitle( cv_Species::SpeciesFlag spe ) const {
+	for (int i = 0; i < v_titles.count(); i++){
+		if (v_titles.at(i).species.testFlag(spe) && v_titles.at(i).title == cv_SpeciesTitle::Breed){
+			return v_titles.at(i).name;
+		}
+	}
+
+	return "Breed";
+}
+
+QString StorageTemplate::factionTitle( cv_Species::SpeciesFlag spe ) const {
+	for (int i = 0; i < v_titles.count(); i++){
+		if (v_titles.at(i).species.testFlag(spe) && v_titles.at(i).title == cv_SpeciesTitle::Faction){
+			return v_titles.at(i).name;
+		}
+	}
+
+	return "Faction";
+}
+
+void StorageTemplate::appendTitle( cv_SpeciesTitle title ) {
+	if (!v_titles.contains(title)){
+		v_titles.append(title);
+	}
+}
+
 QStringList StorageTemplate::breedNames( cv_Species::SpeciesFlag spe ) const {
 	QList< cv_Trait > traits = v_traits;
 	QStringList list;
@@ -97,6 +124,7 @@ QStringList StorageTemplate::breedNames( cv_Species::SpeciesFlag spe ) const {
 
 	return list;
 }
+
 QStringList StorageTemplate::factionNames( cv_Species::SpeciesFlag spe ) const {
 	QList< cv_Trait > traits = v_traits;
 	QStringList list;
@@ -214,13 +242,12 @@ QList< cv_Trait > StorageTemplate::powers( cv_Trait::Category category ) const {
 	return list;
 }
 
-QList< cv_Trait > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const
-{
+QList< cv_Trait > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
 	QList< cv_Trait > traits;
 	cv_Trait trait;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == type && v_traits.at(i).species.testFlag(species) ) {
+		if ( v_traits.at( i ).type == type && v_traits.at( i ).species.testFlag( species ) ) {
 			trait = v_traits.at( i );
 			traits.append( trait );
 		}

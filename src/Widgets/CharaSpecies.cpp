@@ -39,7 +39,7 @@ CharaSpecies::CharaSpecies( QWidget* parent ): QComboBox( parent ) {
 
 	for ( int i = 0; i < storage.species().count(); i++ ) {
 		if ( cv_Species::toSpecies( storage.species().at( i ).name ) != cv_Species::SpeciesAll ) {
-			addItem( storage.species().at( i ).name );
+			addItem( QIcon(":/icons/images/Skull-" + storage.species().at( i ).name + ".png"), storage.species().at( i ).name );
 		}
 	}
 

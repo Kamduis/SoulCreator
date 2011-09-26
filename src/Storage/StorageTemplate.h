@@ -28,6 +28,7 @@
 #include <QList>
 #include <QStringList>
 
+#include "Datatypes/cv_SpeciesTitle.h"
 #include "Datatypes/cv_Trait.h"
 // #include "Datatypes/cv_Breed.h"
 // #include "Datatypes/cv_Faction.h"
@@ -73,6 +74,18 @@ class StorageTemplate : public QObject {
 		 * Gibt eine Liste aller verfügbaren Vices aus.
 		 **/
 		QStringList viceNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		/**
+		 * Gibt die Bezeichnung für die Brut der jeweiligen Spezies zurück.
+		 *
+		 * \todo Eine Exception werfen, falls der entsprechende Titel nicht gefunden wird.
+		 **/
+		QString breedTitle( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
+		 * Gibt die Bezeichnung für die Fraktion der jeweiligen Spezies zurück.
+		 *
+		 * \todo Eine Exception werfen, falls der entsprechende Titel nicht gefunden wird.
+		 **/
+		QString factionTitle( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
 		/**
 		 * Gibt eine Liste aller verfügbaren Bruten aus.
 		 **/
@@ -172,6 +185,10 @@ class StorageTemplate : public QObject {
 		 * Eine Liste sämtlicher verfügbaren Spezies.
 		 **/
 		static QList< cv_Species > v_species;
+		/**
+		 * Eine Liste sämtlicher Titel der eizelnen Spezies.
+		 **/
+		static QList< cv_SpeciesTitle > v_titles;
 // 		/**
 // 		 * Eine Liste sämtlicher Bruten.
 // 		 **/
@@ -200,6 +217,10 @@ class StorageTemplate : public QObject {
 		 * Fügt eine Spezies hinzu.
 		 **/
 		void appendSpecies( cv_Species species );
+		/**
+		 * Fügt einen Titel hinzu.
+		 **/
+		void appendTitle( cv_SpeciesTitle title );
 		/**
 		 * Fügt eine Eigenschaft hinzu.
 		 *

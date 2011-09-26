@@ -13,14 +13,14 @@
 			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
-		<Breed>
+		<Breed name="Clan">
 			<trait name="Daeva"/>
 			<trait name="Gangrel"/>
 			<trait name="Mekhet"/>
 			<trait name="Nosferatu"/>
 			<trait name="Ventrue"/>
 		</Breed>
-		<Faction>
+		<Faction name="Covenant">
 			<trait name="Unbound"/>
 			<trait name="Lancea Sancta"/>
 			<trait name="Invictus"/>

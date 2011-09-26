@@ -91,6 +91,8 @@ class InfoWidget : public QWidget {
 		 * Auswahl der Virtues
 		 **/
 		QComboBox* virtueCombobox;
+		QLabel* labelBreed;
+		QLabel* labelFaction;
 		/**
 		 * Auswahl der Brut (Seeming, Path, Clan, Auspice)
 		 **/
@@ -153,6 +155,14 @@ class InfoWidget : public QWidget {
 		 * Aktualisiert die Anzeige der Fraktion.
 		 **/
 		void updateFaction(QString txt);
+		/**
+		 * Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Bruten.
+		 **/
+		void updateBreedTitle( cv_Species::SpeciesFlag spe );
+		/**
+		 * Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Fraktionen
+		 **/
+		void updateFactionTitle(cv_Species::SpeciesFlag spe);
 		/**
 		 * Wenn die Spezies sich ändert, muß die Auswahl der möglichen Bruten verändert werden.
 		 **/

@@ -29,26 +29,15 @@
 #include "cv_CreationPoints.h"
 
 
-const int cv_CreationPoints::creationPointsAttA = 5;
-const int cv_CreationPoints::creationPointsAttB = 4;
-const int cv_CreationPoints::creationPointsAttC = 3;
-const int cv_CreationPoints::creationPointsSkillA = 11;
-const int cv_CreationPoints::creationPointsSkillB = 7;
-const int cv_CreationPoints::creationPointsSkillC = 5;
-const int cv_CreationPoints::creationPointsSkillSpecialties = 3;
-const int cv_CreationPoints::creationPointsMerits = 7;
-const int cv_CreationPoints::creationPointsPowersVampire = 3;
-
-
 cv_CreationPoints::cv_CreationPoints() {
-	attributesA = cv_CreationPoints::creationPointsAttA;
-	attributesB = cv_CreationPoints::creationPointsAttB;
-	attributesC = cv_CreationPoints::creationPointsAttC;
-	skillsA = cv_CreationPoints::creationPointsSkillA;
-	skillsB = cv_CreationPoints::creationPointsSkillA;
-	skillsC = cv_CreationPoints::creationPointsSkillA;
-	skillSpecialties = cv_CreationPoints::creationPointsSkillSpecialties;
-	merits = cv_CreationPoints::creationPointsMerits;
+	attributesA = Config::creationPointsAttA;
+	attributesB = Config::creationPointsAttB;
+	attributesC = Config::creationPointsAttC;
+	skillsA = Config::creationPointsSkillA;
+	skillsB = Config::creationPointsSkillA;
+	skillsC = Config::creationPointsSkillA;
+	skillSpecialties = Config::creationPointsSkillSpecialties;
+	merits = Config::creationPointsMerits;
 	powers = 0;
 }
 

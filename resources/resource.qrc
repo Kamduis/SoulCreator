@@ -1,5 +1,14 @@
 <RCC>
   <qresource prefix="icons">
+    <file>images/actions/exec.png</file>
+    <file>images/actions/exit.png</file>
+    <file>images/Skull-Changeling.png</file>
+    <file>images/Skull-Human.png</file>
+    <file>images/Skull-Mage.png</file>
+    <file>images/Skull-Vampire.png</file>
+    <file>images/Skull-Werewolf.png</file>
+    <file>images/female.png</file>
+    <file>images/male.png</file>
     <file>images/actions/1leftarrow.png</file>
     <file>images/actions/1rightarrow.png</file>
     <file>images/actions/filesave.png</file>
@@ -9,21 +18,21 @@
     <file>images/actions/filenew.png</file>
     <file>images/WoD.png</file>
   </qresource>
+  <qresource prefix="background">
+    <file>images/Skull-Changeling-gray.png</file>
+    <file>images/Skull-Human-gray.png</file>
+    <file>images/Skull-Mage-gray.png</file>
+    <file>images/Skull-Vampire-gray.png</file>
+    <file>images/Skull-Werewolf-gray.png</file>
+  </qresource>
   <qresource prefix="types">
+    <file>images/core.png</file>
     <file>images/package_games_strategy.png</file>
     <file>images/cache.png</file>
     <file>images/kdmconfig.png</file>
     <file>images/kuser.png</file>
-    <file>images/os-support.png</file>
     <file>images/personal.png</file>
     <file>images/runit.png</file>
-  </qresource>
-  <qresource prefix="skulls">
-    <file>images/Skull-Werewolf-gray.png</file>
-    <file>images/Skull-Changeling-gray.png</file>
-    <file>images/Skull-Mage-gray.png</file>
-    <file>images/Skull-Mortal-gray.png</file>
-    <file>images/Skull-Vampire-gray.png</file>
   </qresource>
   <qresource prefix="template">
     <file>xml/base.xml</file>

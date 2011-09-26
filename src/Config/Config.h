@@ -118,6 +118,14 @@ class Config {
 		 **/
 		static QColor importantTextColor();
 		/**
+		 * Warnfarbe, wenn zuviele Punkte vergeben wurden.
+		 **/
+		static const QColor pointsNegative;
+		/**
+		 * Warnfarbe, wenn zuwenige Punkte vergeben wurden.
+		 **/
+		static const QColor pointsPositive;
+		/**
 		 * Das Standardverzeichnis, in welchem die zu speichernden Charaktere abgelegt werden sollen.
 		 **/
 		static QString saveDir();
@@ -160,6 +168,43 @@ class Config {
 		 * Alle Punkte bis einschließelich dieser Zahl kosten nur 1 Punkt pro Punkt, aber alle darüber kosten das Doppelte.
 		 **/
 		static const int creationTraitDouble;
+		/**
+		 * Die freien Attributspunkte für die primäre Kategorie.
+		 **/
+		static const int creationPointsAttA;
+		/**
+		 * Die freien Attributspunkte für die sekundäre Kategorie.
+		 **/
+		static const int creationPointsAttB;
+		/**
+		 * Die freien Attributspunkte für die tertiäre Kategorie.
+		 **/
+		static const int creationPointsAttC;
+		/**
+		 * Die freien Fertigkeitspunkte für die primäre Kategorie.
+		 **/
+		static const int creationPointsSkillA;
+		/**
+		 * Die freien Fertigkeitspunkte für die sekundäre Kategorie.
+		 **/
+		static const int creationPointsSkillB;
+		/**
+		 * Die freien Fertigkeitspunkte für die tertiäre Kategorie.
+		 **/
+		static const int creationPointsSkillC;
+		/**
+		 * Die freien Fertigkeitsspezialisierungen
+		 **/
+		static const int creationPointsSkillSpecialties;
+		/**
+		 * Die freien Meritpunkte.
+		 **/
+		static const int creationPointsMerits;
+		/**
+		 * Die freien Meritpunkte.
+		 **/
+		static const int creationPointsPowersVampire;
+
 
 		/**
 		 * Schriftgröße für den normalen Text auf dem ausdruckbaren Charakterbogen.
@@ -174,6 +219,10 @@ class Config {
 		 * Die Schriftart, welche für den exportierten Charakter verwendet wird.
 		 **/
 		static QFont exportFont;
+		/**
+		 * Die Schriftart, welche für das Programm verwendet wird.
+		 **/
+		static QFont windowFont;
 
 	private:
 		Config();

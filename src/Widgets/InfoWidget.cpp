@@ -46,13 +46,13 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 // 	QLabel* labelNameHonorific = new QLabel();
 // 	QLabel* labelNameSuper = new QLabel();
 
-	QLabel* labelGender = new QLabel( tr( "Gender:" ) );
+	QLabel* labelSpecies = new QLabel( tr( "Species:" ) );
 	speciesComboBox = new CharaSpecies( this );
 
-	QLabel* labelSpecies = new QLabel( tr( "Species:" ) );
+	QLabel* labelGender = new QLabel( tr( "Gender:" ) );
 	genderCombobox = new QComboBox( this );
-	genderCombobox->addItem( QString::fromUtf8( "♂" ) );
-	genderCombobox->addItem( QString::fromUtf8( "♀" ) );
+	genderCombobox->addItem( QIcon( ":/icons/images/male.png" ), tr( "Male" ) );
+	genderCombobox->addItem( QIcon( ":/icons/images/female.png" ), tr( "Female" ) );
 
 	QLabel* labelVirtue = new QLabel( tr( "Virtue:" ) );
 	virtueCombobox = new QComboBox( this );
@@ -62,11 +62,11 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 	viceCombobox = new QComboBox( this );
 	viceCombobox->addItems( storage->viceNames() );
 
-	QLabel* labelBreed = new QLabel( tr( "Breed:" ) );
+	labelBreed = new QLabel( tr( "Breed:" ) );
 	breedCombobox = new QComboBox( this );
 	breedCombobox->addItems( storage->breedNames() );
 
-	QLabel* labelFaction = new QLabel( tr( "Faction:" ) );
+	labelFaction = new QLabel( tr( "Faction:" ) );
 	factionCombobox = new QComboBox( this );
 	factionCombobox->addItems( storage->factionNames() );
 
@@ -95,6 +95,8 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 	connect( character, SIGNAL( realIdentityChanged( cv_Identity ) ), this, SLOT( updateIdentity( cv_Identity ) ) );
 	connect( character, SIGNAL( virtueChanged( QString ) ), this, SLOT( updateVirtue( QString ) ) );
 	connect( character, SIGNAL( viceChanged( QString ) ), this, SLOT( updateVice( QString ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateBreedTitle( cv_Species::SpeciesFlag ) ) );
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateFactionTitle( cv_Species::SpeciesFlag ) ) );
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateBreedBox( cv_Species::SpeciesFlag ) ) );
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateFactionBox( cv_Species::SpeciesFlag ) ) );
 	connect( character, SIGNAL( breedChanged( QString ) ), this, SLOT( updateBreed( QString ) ) );
@@ -104,6 +106,12 @@ InfoWidget::InfoWidget( QWidget *parent ) : QWidget( parent )  {
 InfoWidget::~InfoWidget() {
 	delete genderCombobox;
 	delete namePushButton;
+	delete labelBreed;
+	delete breedCombobox;
+	delete labelFaction;
+	delete factionCombobox;
+	delete viceCombobox;
+	delete virtueCombobox;
 	delete labelName;
 	delete speciesComboBox;
 	delete layout;
@@ -201,6 +209,14 @@ void InfoWidget::updateBreed( QString txt ) {
 
 void InfoWidget::updateFaction( QString txt ) {
 	factionCombobox->setCurrentIndex( factionCombobox->findText( txt ) );
+}
+
+void InfoWidget::updateBreedTitle( cv_Species::SpeciesFlag spe ) {
+	labelBreed->setText( storage->breedTitle(spe)  + ":" );
+}
+
+void InfoWidget::updateFactionTitle( cv_Species::SpeciesFlag spe ) {
+	labelFaction->setText( storage->factionTitle(spe)  + ":");
 }
 
 void InfoWidget::updateBreedBox( cv_Species::SpeciesFlag spe ) {
