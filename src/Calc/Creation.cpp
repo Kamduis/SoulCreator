@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QDebug>
@@ -62,7 +62,7 @@ void Creation::setPoints( cv_CreationPoints points ) {
 void Creation::calcPoints( cv_Trait* trait ) {
 // 	qDebug() << Q_FUNC_INFO << trait->type << "<->" << v_types;
 	if ( v_types.contains( trait->type ) ) {
-		QList< cv_Trait > list;
+		QList< cv_Trait* > list;
 		QList< int > pointList;
 		// Nur bei Attributen und Fertigkeiten sind die zu verteilenden Punkte zwischen den Kategorien aufgeteilt.
 
@@ -76,13 +76,13 @@ void Creation::calcPoints( cv_Trait* trait ) {
 
 				for ( int j = 0; j < list.count(); j++ ) {
 					// Alle Punkte über 4 kosten 2 Erschaffungspunkte
-					int ans = list.at( j ).value - Config::creationTraitDouble;
+					int ans = list.at( j )->value - Config::creationTraitDouble;
 
 					if ( ans < 0 ) {
 						ans = 0;
 					}
 
-					pts += list.at( j ).value - ans;
+					pts += list.at( j )->value - ans;
 
 					pts += ans * 2;
 				}
@@ -110,13 +110,13 @@ void Creation::calcPoints( cv_Trait* trait ) {
 
 			for ( int j = 0; j < list.count(); j++ ) {
 				// Alle Punkte über 4 kosten 2 Erschaffungspunkte
-				int ans = list.at( j ).value - Config::creationTraitDouble;
+				int ans = list.at( j )->value - Config::creationTraitDouble;
 
 				if ( ans < 0 ) {
 					ans = 0;
 				}
 
-				pts += list.at( j ).value - ans;
+				pts += list.at( j )->value - ans;
 
 				pts += ans * 2;
 			}

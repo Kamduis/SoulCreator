@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QGridLayout>
@@ -30,6 +30,7 @@
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
 #include "Storage/StorageTemplate.h"
+#include "Widgets/Dialogs/MessageBox.h"
 
 #include "PowerWidget.h"
 
@@ -51,7 +52,11 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 
 	// Powers werden in einer Spalte heruntergeschrieben.
 	for ( int i = 0; i < categories.count(); i++ ) {
-		list = storage.traitsPtr( type, categories.at( i ) );
+		try {
+			list = storage.traits( type, categories.at( i ) );
+		} catch (eTraitNotExisting &e) {
+			MessageBox::exception(this, e.message(), e.description());
+		}
 
 		for ( int j = 0; j < list.count(); j++ ) {
 // 			qDebug() << Q_FUNC_INFO << "Zähle Kräfte" << j;

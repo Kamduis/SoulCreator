@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef STORAGETEMPLATE_H
@@ -30,10 +30,9 @@
 
 #include "Datatypes/cv_SpeciesTitle.h"
 #include "Datatypes/cv_Trait.h"
-// #include "Datatypes/cv_Breed.h"
-// #include "Datatypes/cv_Faction.h"
 #include "Datatypes/cv_IdentityList.h"
 #include "Datatypes/cv_SuperEffect.h"
+#include "Datatypes/cv_CreationPoints2.h"
 
 #include <QObject>
 
@@ -95,61 +94,13 @@ class StorageTemplate : public QObject {
 		 **/
 		QStringList factionNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
 		/**
-		 * Gibt eine Liste aller verfügbaren Attribute aus.
+		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		 **/
-		QList< cv_Trait > attributes( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age =  cv_Trait::Adult ) const;
-// 		/**
-// 		 * Gibt eine Liste aller verfügbaren Vices aus.
-// 		 **/
-// 		QStringList attributeNames( cv_Trait::Category category ) const;
-		/**
-		 * Gibt eine Liste aller verfügbaren Fertigkeiten aus.
-		 **/
-		QList< cv_Trait > skills( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age =  cv_Trait::Adult ) const;
-// 		/**
-// 		 * Gibt eine Liste aller verfügbaren Fertigkeitsnamen aus.
-// 		 **/
-// 		QStringList skillNames( cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
-		/**
-		 * Gibt eine Liste aller Spezialisierungen der angegebenen Fertigkeit aus.
-		 **/
-		QList< cv_TraitDetail > skillSpecialties( QString skillName ) const;
-		/**
-		 * Gibt eine Liste aller verfügbaren Merits aus.
-		 **/
-		QList< cv_Trait > merits( cv_Trait::Category category ) const;
-// 		/**
-// 		 * Gibt eine Liste der Namen aller verfügbaren Merits aus.
-// 		 **/
-// 		QStringList meritNames( cv_Trait::Category category ) const;
-		/**
-		 * Gibt eine Liste aller möglichen Werte aus, welche der Merit annehmen kann.
-		 **/
-		QList< int > meritValues( QString meritName ) const;
-		/**
-		 * Gibt ein Logische Verkettung von Voraussetzungen aus, die zu erfüllen ist, um den Merit wählen zu können.
-		 **/
-		QString meritPrerequisites( QString meritName ) const;
-		/**
-		 * Gibt eine Liste aller verfügbaren übernatürlichen Kräfte aus.
-		 **/
-		QList< cv_Trait > powers( cv_Trait::Category category ) const;
-		/**
-		 * Gibt Alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
-		 **/
-		QList< cv_Trait > traits(cv_Trait::Type type, cv_Species::SpeciesFlag species) const;
-		/**
-		 * Gibt Alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
-		 *
-		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
-		 **/
-		QList< cv_Trait > traits(cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		QList< cv_Trait* > traits(cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
-		 *
-		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
 		 **/
-		QList< cv_Trait* > traitsPtr(cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		QList< cv_Trait* > traits(cv_Trait::Type type, cv_Species::SpeciesFlag species ) const;
 		/**
 		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_Trait::Type), Kategorie (\ref cv_Trait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
 		 **/
@@ -180,6 +131,11 @@ class StorageTemplate : public QObject {
 		 **/
 		int fuelPerTurn( cv_Species::Species species, int value );
 
+		/**
+		 * Gibt die insgesamt zur Verfügung stehenden Erschaffungspunkte zurück.
+		 **/
+		cv_CreationPoints2 creationPoints( cv_Species::Species species /** Für jede Spezies steht ein eigener Satz Erschaffungspunkte bereit. */ );
+
 	private:
 		/**
 		 * Eine Liste sämtlicher verfügbaren Spezies.
@@ -189,24 +145,19 @@ class StorageTemplate : public QObject {
 		 * Eine Liste sämtlicher Titel der eizelnen Spezies.
 		 **/
 		static QList< cv_SpeciesTitle > v_titles;
-// 		/**
-// 		 * Eine Liste sämtlicher Bruten.
-// 		 **/
-// 		static QList< cv_Breed > v_breeds;
-// 		/**
-// 		 * Eine Liste sämtlicher Fraktionen
-// 		 **/
-// 		static QList< cv_Faction > v_factions;
 		/**
 		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
-		 *
-		 * \deprecated Es sollte lieber QList< Trait* > v_traits verwendet werden.
 		 **/
 		static QList< cv_Trait > v_traits;
 		/**
 		 * Eine Liste über die Effekte der Supereigenschaft.
 		 **/
 		static QList< cv_SuperEffect > v_superEffects;
+
+		/**
+		 * Eine Liste der Erschaffungspunkte. Jeder Listeneintrag steht für eine andere Spezies.
+		 **/
+		static QList< cv_CreationPoints2 > v_creationPoints;
 
 	public slots:
 // 		/**
@@ -233,47 +184,12 @@ class StorageTemplate : public QObject {
 		 * Fügt einen Effekt eines Superattributs hinzu.
 		 **/
 		void appendSuperEffect( cv_SuperEffect effect );
-
-
-
-
-// 		/**
-// 		 * Jeder Charakter kann mehrere Namen haben. Allerdings kann jeder Charkater nur einen Namen pro Kategorie haben. Diese Variable enthält die verschiedenen Namen des Charakters.
-// 		 **/
-// 		cv_Name charaName;
-//
-// 		static QList<cv_Trait> storedTraits;
-//
-// 		QStringList speciesNames();
-// 		QStringList virtueNames( cv_Character::Age age );
-// 		QStringList viceNames( cv_Character::Age age );
-// 		QStringList attributeNames( cv_Trait::Categories categories = cv_Trait::CategoryNo );
-// 		QList<cv_Trait> attributes( cv_Trait::Categories categories = cv_Trait::CategoryNo );
-// 		QStringList skillNames( cv_Trait::Categories categories = cv_Trait::CategoryNo );
-// 		QStringList skillNames( cv_Trait::Categories categories, cv_Character::Era era, cv_Character::Age age );
-// 		QStringList skillSpecialties( QString skillName, cv_Species::Species species = cv_Species::SpeciesNo );
-// //		QStringList meritNames(cv_Character::Species species = cv_Character::SpeciesAll);
-//
-// //		static QString showName(Name::Category category);
-// //		static void storeName(QString name, Name::Category category);	///< Speichert den QString name in storedNames. Existiert bereits ein Name der selben Kategorie, wird er überschrieben.
-// 		/**
-// 		* @brief Speichert einen Trait in StorageTemplate::storedTraits.
-// 		*
-// 		* Ist der Schalter replace wahr, wird kein neuer Trait angehängt, sondern automatisch der bereits vorhandene gleichen Namens ersetzt. Bei Attributen, Fertigkeiten, Merits sollte das nicht geschehen, bei Virtue und Vice dagegen schon. Jeder Charakter hat schließlich nur eines davon, auch wenn sie unterschiedliche Namen haben.
-// 		*
-// 		* @param trait
-// 		* @param replace
-// 		*/
-// 		static void storeTrait( cv_Trait trait, bool replace = false );
-
-// 	private:
-// 		QList<cv_Trait> *traits;
-//
-// 		ReadXmlTemplate *readTemplate;
-//
-// //		static QList<Name> storedNames;
-//
-// //	public slots:
+		/**
+		 * Fügt einen neuen Satz Erschaffungspunkte zu der entsprechende Liste hinzu.
+		 *
+		 * \sa v_creationPoints
+		 **/
+		void appendCreationPoints( cv_CreationPoints2 points );
 };
 
 #endif

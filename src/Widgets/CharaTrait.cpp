@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QDebug>
@@ -234,21 +234,21 @@ QString CharaTrait::parsePrerequisites( QString text ) {
 	// Nicht vorhandene Werte verbleiben natürlich in Textform und werden vom Parser wie 0en behandelt.
 
 	if ( prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
-		QList< cv_Trait > list = character->traitsAll();
+		QList< cv_Trait >* list = character->traits();
 
-		for ( int k = 0; k < list.count(); k++ ) {
+		for ( int k = 0; k < list->count(); k++ ) {
 			// Ersetzen der Fertigkeitsspezialisierungen von dem Format Fertigkeit.Spezialisierung mit Fertigkeitswert, wenn Spezialisierung existiert oder 0, wenn nicht.
-			if ( prerequisites.contains( '.' ) && list.at( k ).type == cv_Trait::Skill && list.at( k ).details.count() > 0 ) {
-				QString testSkill = list.at( k ).name + ".";
+			if ( prerequisites.contains( '.' ) && list->at( k ).type == cv_Trait::Skill && list->at( k ).details.count() > 0 ) {
+				QString testSkill = list->at( k ).name + ".";
 
 				if ( prerequisites.contains( testSkill ) ) {
 					QString specialisation = prerequisites.right( prerequisites.indexOf( testSkill ) - testSkill.count() + 1 );
 					specialisation = specialisation.left( specialisation.indexOf( ' ' ) );
 
-					for ( int l = 0; l < list.at( k ).details.count(); l++ ) {
+					for ( int l = 0; l < list->at( k ).details.count(); l++ ) {
 						// Fertigkeiten mit Spezialisierungsanforderungen werden mit dem Fertigkeitswert ersetzt, wenn Spez existiert, ansonsten mit 0.
-						if ( specialisation == list.at( k ).details.at( l ).name ) {
-							prerequisites.replace( testSkill + specialisation, QString::number( list.at( k ).value ) );
+						if ( specialisation == list->at( k ).details.at( l ).name ) {
+							prerequisites.replace( testSkill + specialisation, QString::number( list->at( k ).value ) );
 
 							// Wenn alle Worte ersetzt wurden, kann ich aus den Schleifen raus.
 
@@ -268,7 +268,7 @@ QString CharaTrait::parsePrerequisites( QString text ) {
 				}
 			} else {
 				// Ersetzen von Eigenschaftsnamen mit ihren Werten.
-				prerequisites.replace( list.at( k ).name, QString::number( list.at( k ).value ) );
+				prerequisites.replace( list->at( k ).name, QString::number( list->at( k ).value ) );
 
 				// Wenn alle Worte ersetzt wurden, kann ich aus den Schleifen raus.
 

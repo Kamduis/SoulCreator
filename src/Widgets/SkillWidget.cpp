@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QGroupBox>
@@ -29,6 +29,7 @@
 #include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
+#include "Widgets/Dialogs/MessageBox.h"
 
 #include "SkillWidget.h"
 
@@ -48,7 +49,11 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_categories.count(); i++ ) {
-		list = storage->traitsPtr( type, v_categories.at( i ) );
+		try {
+			list = storage->traits( type, v_categories.at( i ) );
+		} catch (eTraitNotExisting &e) {
+			MessageBox::exception(this, e.message(), e.description());
+		}
 
 		// Zeichnen des Separators zwischen den einzelnen Kategorien
 		// Aber nicht an allererster Stelle

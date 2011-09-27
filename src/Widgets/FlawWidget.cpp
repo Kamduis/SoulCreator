@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QVBoxLayout>
@@ -31,6 +31,7 @@
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
 #include "Storage/StorageTemplate.h"
+#include "Widgets/Dialogs/MessageBox.h"
 
 #include "FlawWidget.h"
 
@@ -68,7 +69,11 @@ FlawWidget::FlawWidget( QWidget *parent ) : QWidget( parent )  {
 		widgetFlawCategory->setLayout( layoutFlawCategory );
 		toolBox->addItem( widgetFlawCategory, cv_Trait::toString( v_categories.at( i ), true ) );
 
-		list = storage->traitsPtr( type, v_categories.at( i ) );
+		try {
+			list = storage->traits( type, v_categories.at( i ) );
+		} catch (eTraitNotExisting &e) {
+			MessageBox::exception(this, e.message(), e.description());
+		}
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
@@ -106,12 +111,12 @@ FlawWidget::~FlawWidget() {
 
 void FlawWidget::countItems() {
 	for (int i = 0; i < v_categories.count(); i++){
-		QList< cv_Trait > list = character->traits( cv_Trait::Flaw, v_categories.at(i) );
+		QList< cv_Trait* > list = character->traits( cv_Trait::Flaw, v_categories.at(i) );
 
 		int numberInCategory = 0;
 
 		for ( int j = 0; j < list.count(); j++ ) {
-			if ( list.at( j ).value > 0 ) {
+			if ( list.at( j )->value > 0 ) {
 				numberInCategory++;
 			}
 		}

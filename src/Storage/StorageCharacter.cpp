@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QDebug>
@@ -130,52 +130,32 @@ void StorageCharacter::setRealIdentity( cv_Identity id ) {
 
 
 
-QList< cv_Trait > StorageCharacter::traitsAll() const {
-	return v_traits;
+QList< cv_Trait >* StorageCharacter::traits() const {
+	return &v_traits;
 }
 
-QList< cv_Trait > StorageCharacter::traits( cv_Trait::Type type ) const {
-	QList< cv_Trait > list;
+QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type ) const {
+	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
 		if ( v_traits.at( i ).type == type ) {
-			list.append( v_traits.at( i ) );
+			list.append( &v_traits[i] );
 		}
 	}
 
 	return list;
 }
 
-QList< cv_Trait > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Category category ) const {
-	QList< cv_Trait > list;
+QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Category category ) const {
+	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
 		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category ) {
-			list.append( v_traits.at( i ) );
+			list.append( &v_traits[i] );
 		}
 	}
 
 	return list;
-}
-
-cv_Trait StorageCharacter::trait( const cv_Trait* traitPtr ) const {
-	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( traitPtr == &v_traits.at( i ) ) {
-			return v_traits.at( i );
-		}
-	}
-}
-
-QList< cv_Trait > StorageCharacter::attributes( cv_Trait::Category category ) const {
-	return traits( cv_Trait::Attribute, category );
-}
-
-QList< cv_Trait > StorageCharacter::skills( cv_Trait::Category category ) const {
-	return traits( cv_Trait::Skill, category );
-}
-
-QList< cv_Trait > StorageCharacter::merits( cv_Trait::Category category ) const {
-	return traits( cv_Trait::Merit, category );
 }
 
 
@@ -215,16 +195,16 @@ void StorageCharacter::modifyTrait( cv_Trait trait ) {
 }
 
 
-QList< cv_Derangement > StorageCharacter::derangements() const {
-	return v_derangements;
+QList< cv_Derangement >* StorageCharacter::derangements() const {
+	return &v_derangements;
 }
 
-QList< cv_Derangement > StorageCharacter::derangements( cv_Trait::Category category ) const {
-	QList< cv_Derangement > list;
+QList< cv_Derangement* > StorageCharacter::derangements( cv_Trait::Category category ) const {
+	QList< cv_Derangement* > list;
 
 	for ( int i = 0; i < v_derangements.count(); i++ ) {
 		if ( v_derangements.at( i ).category == category ) {
-			list.append( v_derangements.at( i ) );
+			list.append( &v_derangements[i] );
 		}
 	}
 
