@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QCloseEvent>
@@ -257,8 +257,8 @@ void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_Tra
 
 void MainWindow::activate() {
 	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
-	for ( int k = 0; k < character->traitsAll().count(); k++ ) {
-		cv_Trait trait = character->traitsAll().at( k );
+	for ( int k = 0; k < character->traits()->count(); k++ ) {
+		cv_Trait trait = character->traits()->at( k );
 // 		qDebug() << Q_FUNC_INFO << "Verändere" << trait.name << trait.value;
 		// Alten Wert speichern
 		int valueOld = trait.value;

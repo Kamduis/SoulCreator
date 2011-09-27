@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef CV_DERANGEMENT_H

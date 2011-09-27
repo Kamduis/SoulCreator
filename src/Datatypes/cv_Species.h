@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef CV_SPECIES_H
@@ -130,6 +130,8 @@ class cv_Species {
 		 * Diese Methode benötige ich, um die Strings in den XML-Template-Dateien in Flags umzuwandeln.
 		 **/
 		static cv_Species::SpeciesFlag toSpecies( QString str );
+
+		bool operator==( const cv_Species &points ) const;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( cv_Species::Species )

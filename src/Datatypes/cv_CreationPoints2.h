@@ -22,8 +22,10 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CV_CREATIONPOINTS_H
-#define CV_CREATIONPOINTS_H
+#ifndef CV_CREATIONPOINTS2_H
+#define CV_CREATIONPOINTS2_H
+
+#include "Datatypes/cv_Species.h"
 
 #include <QString>
 
@@ -32,39 +34,40 @@
  *
  * Diese Punkte können bei der Charaktererschaffung auf dem Charakterbogen verteilt werden.
  */
-class cv_CreationPoints {
+class cv_CreationPoints2 {
 	public:
 		/**
 		 * Konstruktor.
 		 **/
-		cv_CreationPoints();
+		cv_CreationPoints2();
 
 		/**
-		 * Primäre Kategorie der Attribute.
+		 * Für welche Spezies diese Punkte zählen.
 		 **/
-		int attributesA;
+		cv_Species::Species species;
+		
 		/**
-		 * Sekundäre Kategorie der Attribute.
+		 * Punkte für die Attribute.
+		 *
+		 * Index 0 -> primär.
+		 *
+		 * Index 1 -> sekundär.
+		 *
+		 * Index 2 -> tertiär.
 		 **/
-		int attributesB;
+		QList< int > attributes;
 		/**
-		 * Tertiäre Kategorie der Attribute.
+		 * Punkte für die Fertigkeiten.
+		 *
+		 * Index 0 -> primär.
+		 *
+		 * Index 1 -> sekundär.
+		 *
+		 * Index 2 -> tertiär.
 		 **/
-		int attributesC;
+		QList< int > skills;
 		/**
-		 * Primäre Kategorie der Fertigkeiten.
-		 **/
-		int skillsA;
-		/**
-		 * Sekundäre Kategorie der Fertigkeiten.
-		 **/
-		int skillsB;
-		/**
-		 * Tertiäre Kategorie der Fertigkeiten.
-		 **/
-		int skillsC;
-		/**
-		 * Anzahl der freien Spezialisierungen.
+		 * Fertigkeitsspezialisierungen.
 		 **/
 		int skillSpecialties;
 		/**
@@ -85,6 +88,10 @@ class cv_CreationPoints {
 		 **/
 		QString skillsOut();
 		/**
+		 * Gibt die übrigen Spezialisierungen als String aus.
+		 **/
+		QString skillSpecialtiesOut();
+		/**
 		 * Gibt die übrigen Meritpunkte als String aus.
 		 **/
 		QString meritsOut();
@@ -93,8 +100,8 @@ class cv_CreationPoints {
 		 **/
 		QString powersOut();
 
-		bool operator==( const cv_CreationPoints &points ) const;
-		bool operator!=( const cv_CreationPoints &points ) const;
+		bool operator==( const cv_CreationPoints2 &points ) const;
+		bool operator!=( const cv_CreationPoints2 &points ) const;
 
 	private:
 		/**

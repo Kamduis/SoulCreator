@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QLineEdit>
@@ -181,15 +181,15 @@ void MoralityWidget::renameHeader( cv_Species::SpeciesFlag species ) {
 }
 
 void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
-	QList< cv_Trait > list;
+	QList< cv_Trait* > list;
 	QList< cv_Derangement > listToUse;
 
 	for ( int j = 0; j < v_categories.count(); j++ ) {
 		list = storage->traits( cv_Trait::Derangement, v_categories.at( j ) );
 
 		for ( int k = 0; k < list.count(); k++ ) {
-			if ( list.at( k ).species.testFlag( species ) ) {
-				cv_Derangement lcl_derangement( list.at( k ).name, 0, list.at( k ).species, list.at( k ).category );
+			if ( list.at( k )->species.testFlag( species ) ) {
+				cv_Derangement lcl_derangement( list.at( k )->name, 0, list.at( k )->species, list.at( k )->category );
 
 // 				qDebug() << Q_FUNC_INFO << lcl_derangement.name << lcl_derangement.morality;
 
@@ -210,7 +210,7 @@ void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 }
 
 void MoralityWidget::updateDerangements() {
-	QList< cv_Derangement > list;
+	QList< cv_Derangement* > list;
 	QList< cv_Trait::Category > categories = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
 
 	for ( int i = 0; i < categories.count(); i++ ) {
@@ -225,8 +225,8 @@ void MoralityWidget::updateDerangements() {
 			comboBox->setCurrentIndex( 0 );
 		} else {
 			for ( int k = 0; k < list.count(); k++ ) {
-				if ( list.at( k ).morality == i + 1 ) {
-					comboBox->setCurrentIndex( comboBox->findText( list.at( k ).name ) );
+				if ( list.at( k )->morality == i + 1 ) {
+					comboBox->setCurrentIndex( comboBox->findText( list.at( k )->name ) );
 					break;
 				} else if ( k == list.count() - 1 ) {	// Taucht keine Geistesstörung bei dieser Moralstufe in der Liste auzf, wird der Index auf 0 gesetzt.
 					comboBox->setCurrentIndex( 0 );

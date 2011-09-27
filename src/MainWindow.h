@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef MAINWINDOW_H
@@ -94,6 +94,8 @@ class MainWindow;
  * \todo Zu verteilende Punkte für Kräfte.
  *
  * \todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
+ *
+ * \bug Wenn man einen Charkater lädt oder einen neuen erstellt, während gerade der Knopf für das Anzeigen der Spazialisierungen einer Fertigkeit gedrückt ist, bleuibt er gedrückt und die alten Spezialisierungen bleiben angezeigt. Das ist natürlich nicht das gewünschte Verhalten.
  */
 
 class MainWindow : public QMainWindow {

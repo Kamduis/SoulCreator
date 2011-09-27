@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QGridLayout>
@@ -29,6 +29,7 @@
 #include "CharaTrait.h"
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
+#include "Widgets/Dialogs/MessageBox.h"
 
 #include "MeritWidget.h"
 
@@ -59,7 +60,12 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 		
 		toolBox->addItem( widgetMeritCategory, cv_Trait::toString( v_categories.at( i ), true ) );
 
-		list = storage->traitsPtr( type, v_categories.at( i ) );
+		try {
+			list = storage->traits( type, v_categories.at( i ) );
+		} catch (eTraitNotExisting &e) {
+			MessageBox::exception(this, e.message(), e.description());
+		}
+
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
@@ -110,12 +116,13 @@ MeritWidget::~MeritWidget() {
 
 void MeritWidget::countMerits() {
 	for (int i = 0; i < v_categories.count(); i++){
-		QList< cv_Trait > list = character->merits( v_categories.at(i) );
+// 		QList< cv_Trait > list = character->merits( v_categories.at(i) );
+		QList< cv_Trait* > list = character->traits( cv_Trait::Merit, v_categories.at(i) );
 
 		int numberInCategory = 0;
 
 		for ( int j = 0; j < list.count(); j++ ) {
-			if ( list.at( j ).value > 0 ) {
+			if ( list.at( j )->value > 0 ) {
 				numberInCategory++;
 			}
 		}

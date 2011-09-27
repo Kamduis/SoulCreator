@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QList>
@@ -94,7 +94,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 
 	QList< cv_Trait::Category > categories;
 
-	QList< cv_Trait > list;
+	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < types.count(); i++ ) {
 		try {
@@ -120,23 +120,23 @@ void WriteXmlCharacter::writeCharacterTraits() {
 
 			for ( int k = 0; k < list.count(); k++ ) {
 				// Eigenscahften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-				if ( list.at( k ).value != 0 ) {
-// 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
+				if ( list.at( k )->value != 0 ) {
+// 					qDebug() << Q_FUNC_INFO << list.at( k )->name;
 					writeStartElement( "trait" );
-					writeAttribute( "name", list.at( k ).name );
-					writeAttribute( "value", QString::number( list.at( k ).value ) );
+					writeAttribute( "name", list.at( k )->name );
+					writeAttribute( "value", QString::number( list.at( k )->value ) );
 
-// 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
+// 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k )->custom;
 
-					if ( list.at( k ).custom ) {
-						writeAttribute( "custom", list.at( k ).customText );
+					if ( list.at( k )->custom ) {
+						writeAttribute( "custom", list.at( k )->customText );
 					}
 
-// 					qDebug() << Q_FUNC_INFO << list.at( k ).details.count();
+// 					qDebug() << Q_FUNC_INFO << list.at( k )->details.count();
 // 					if ( types.at( i ) == cv_Trait::Skill ) {
-					for ( int l = 0; l < list.at( k ).details.count(); l++ ) {
-// 						qDebug() << Q_FUNC_INFO << list.at( k ).details.at( l ).name;
-						writeTextElement( "specialty",  list.at( k ).details.at( l ).name );
+					for ( int l = 0; l < list.at( k )->details.count(); l++ ) {
+// 						qDebug() << Q_FUNC_INFO << list.at( k )->details.at( l ).name;
+						writeTextElement( "specialty",  list.at( k )->details.at( l ).name );
 					}
 
 // 					}t
@@ -155,7 +155,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 }
 
 void WriteXmlCharacter::writeCharacterDerangements() {
-	QList< cv_Derangement > list;
+	QList< cv_Derangement* > list;
 
 	try {
 		writeStartElement( cv_Trait::toXmlString( cv_Trait::Derangement ) );
@@ -180,10 +180,10 @@ void WriteXmlCharacter::writeCharacterDerangements() {
 		}
 
 		for ( int k = 0; k < list.count(); k++ ) {
-// 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
+// 					qDebug() << Q_FUNC_INFO << list.at( k )->name;
 			writeStartElement( "derangement" );
-			writeAttribute( "name", list.at( k ).name );
-			writeAttribute( "morality", QString::number( list.at( k ).morality ) );
+			writeAttribute( "name", list.at( k )->name );
+			writeAttribute( "morality", QString::number( list.at( k )->morality ) );
 
 			writeEndElement();
 		}

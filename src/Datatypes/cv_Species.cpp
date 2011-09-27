@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "Exceptions/Exception.h"
@@ -68,4 +68,18 @@ cv_Species::SpeciesFlag cv_Species::toSpecies(QString str){
 		return cv_Species::SpeciesAll;
 	else
 		return cv_Species::SpeciesNo;
+}
+
+
+bool cv_Species::operator==( const cv_Species& spe ) const {
+	if ( this == &spe ) {
+		return true;
+	}
+
+	bool result = name == spe.name &&
+				  morale == spe.morale &&
+				  supertrait == spe.supertrait &&
+				  fuel == spe.fuel;
+
+	return result;
 }

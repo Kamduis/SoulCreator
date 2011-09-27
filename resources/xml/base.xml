@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.5">
+	<creation species="SpeciesAll">
+		<Attribute>
+			<points value="5"/>
+			<points value="4"/>
+			<points value="3"/>
+		</Attribute>
+		<Skill>
+			<points value="11"/>
+			<points value="7"/>
+			<points value="4"/>
+			<details value="3"/>
+		</Skill>
+		<Merit>
+			<points value="7"/>
+		</Merit>
+	</creation>
 	<traits species="SpeciesAll">
 		<Virtue>
 			<trait name="Charity" age="Adult"/>

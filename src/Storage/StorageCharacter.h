@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef STORAGECHARACTER_H
@@ -125,45 +125,27 @@ class StorageCharacter : public QObject {
 		/**
 		 * Gibt eine Liste \emph{aller} Eigenschaften des Charkaters aus.
 		 **/
-		QList< cv_Trait > traitsAll() const;
+		QList< cv_Trait >* traits() const;
 		/**
 		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 **/
-		QList< cv_Trait > traits( cv_Trait::Type type ) const;
+		QList< cv_Trait* > traits( cv_Trait::Type type ) const;
 		/**
-		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
+		 * Gibt eine Liste von Zeigern auf alle Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 *
-		 * \overload QList< cv_Trait > traits( cv_Trait::Type type )
-		 *
-		 * \bug Sehr zeitaufwendige Funktion, da bei jedem aufruf eine Liste mühsam gefüllt wird. Und diese Funktion wird \emph{oft} aufgerufen.
+		 * \overload QList< cv_Trait* > traits( cv_Trait::Type type )
 		 **/
-		QList< cv_Trait > traits( cv_Trait::Type type, cv_Trait::Category category ) const;
-		/**
-		 * Gibt die Eigenschaft aus, auf welche mit dem Zeiger im Argument verwiesen wird.
-		 **/
-		cv_Trait trait( const cv_Trait* traitPtr ) const;
-		/**
-		 * Gibt eine Liste aller Attribute des Charkaters aus.
-		 **/
-		QList< cv_Trait > attributes( cv_Trait::Category category ) const;
-		/**
-		 * Gibt eine Liste aller Fertigkeiten des Charkaters aus.
-		 **/
-		QList< cv_Trait > skills( cv_Trait::Category category ) const;
-		/**
-		 * Gibt eine Liste aller Merits des Charkaters aus.
-		 **/
-		QList< cv_Trait > merits( cv_Trait::Category category ) const;
+		QList< cv_Trait* > traits( cv_Trait::Type type, cv_Trait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus.
 		 **/
-		QList< cv_Derangement > derangements() const;
+		QList< cv_Derangement >* derangements() const;
 		/**
 		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus, welche der im Argument angegebenen Kategorie angehören.
 		 *
-		 * \overload QList< cv_Derangement > derangements()
+		 * \overload QList< cv_Derangement* > derangements()
 		 **/
-		QList< cv_Derangement > derangements( cv_Trait::Category category ) const;
+		QList< cv_Derangement* > derangements( cv_Trait::Category category ) const;
 		/**
 		 * Gibt den Wert des Super-Attributs aus.
 		 **/
