@@ -1,3 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classcv___shape.html" title="Diese Klasse hält die Funktionen bezüglich der verschiedenen Gestalten eines Werwolfs vor..." alt="" coords="7,5,89,35"/>
+<area shape="rect" id="node1" href="$classcv___name.html" title="Diese Klasse speichert den vollständigen Namen eines Charakters." alt="" coords="5,5,88,35"/>
+<area shape="rect" id="node3" href="$classcv___identity.html" title="Speichert die vollständige Identität des Charakters." alt="" coords="136,5,227,35"/>
 </map>

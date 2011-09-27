@@ -1,3 +1,33 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$class_flaw_widget.html" title="Das Widget, in welchem sämtliche Attribute angeordnet sind." alt="" coords="7,5,97,35"/>
+<area shape="rect" id="node1" href="$class_exception.html" title="Basisklasse für die Ausnahmebehandlung." alt="" coords="7,325,89,355"/>
+<area shape="rect" id="node3" href="$classe_dir.html" title="Ausnahme im Verzeichnis&#45;Management." alt="" coords="179,19,227,48"/>
+<area shape="rect" id="node7" href="$classe_entry.html" title="Ausnahme, falls Fehler bei einer Eingabe auftreten." alt="" coords="172,85,233,115"/>
+<area shape="rect" id="node13" href="$classe_file.html" title="Ausnahme im Datei&#45;Management." alt="" coords="177,165,228,195"/>
+<area shape="rect" id="node19" href="$classe_gender.html" title="Ausnahme, falls Fehler bei den Geschlechtern auftritt." alt="" coords="164,219,241,248"/>
+<area shape="rect" id="node23" href="$classe_list.html" title="Ausnahme bei Listen oder Vektoren." alt="" coords="177,272,228,301"/>
+<area shape="rect" id="node27" href="$classe_number.html" title="Ausnahme bei Zahlen." alt="" coords="161,325,244,355"/>
+<area shape="rect" id="node31" href="$classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht." alt="" coords="173,379,232,408"/>
+<area shape="rect" id="node37" href="$classe_species.html" title="Ausnahme, falls Fehler bei den Spezies auftritt." alt="" coords="163,459,243,488"/>
+<area shape="rect" id="node41" href="$classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt." alt="" coords="175,565,231,595"/>
+<area shape="rect" id="node49" href="$classe_werewolf_shape.html" title="Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt." alt="" coords="140,672,265,701"/>
+<area shape="rect" id="node53" href="$classe_xml.html" title="Ausnahme beim Lesen der XML&#45;Datei." alt="" coords="176,752,229,781"/>
+<area shape="rect" id="node5" href="$classe_dir_not_created.html" title="Verzeichnis kann nicht angelegt werden." alt="" coords="359,5,481,35"/>
+<area shape="rect" id="node9" href="$classe_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten." alt="" coords="373,59,467,88"/>
+<area shape="rect" id="node11" href="$classe_missing_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten." alt="" coords="575,59,713,88"/>
+<area shape="rect" id="node15" href="$classe_file_not_deleted.html" title="Datei kann nicht gelöscht werden." alt="" coords="359,112,481,141"/>
+<area shape="rect" id="node17" href="$classe_file_not_opened.html" title="Datei kann nicht geöffnet werden." alt="" coords="359,165,481,195"/>
+<area shape="rect" id="node21" href="$classe_gender_not_existing.html" title="Ausnahme, falls das spezifizierte Geschlecht nicht existiert." alt="" coords="345,219,495,248"/>
+<area shape="rect" id="node25" href="$classe_index_exceeds_range.html" title="Index überschreitet Listengröße." alt="" coords="341,272,499,301"/>
+<area shape="rect" id="node29" href="$classe_not_a_number.html" title="Ausnahme beim Fehlen einer Zahl." alt="" coords="363,325,477,355"/>
+<area shape="rect" id="node33" href="$classe_traits_exceed_sheet_capacity.html" title="Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen." alt="" coords="319,379,521,408"/>
+<area shape="rect" id="node35" href="$classe_value_exceeds_sheet_capacity.html" title="Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll." alt="" coords="315,432,525,461"/>
+<area shape="rect" id="node39" href="$classe_species_not_existing.html" title="Ausnahme, falls eine spezifizierte Spezies nicht existiert." alt="" coords="344,485,496,515"/>
+<area shape="rect" id="node43" href="$classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird." alt="" coords="363,539,477,568"/>
+<area shape="rect" id="node45" href="$classe_trait_not_existing.html" title="Ausnahme, falls eine spezifizierte Eigenscahft nicht existiert." alt="" coords="356,592,484,621"/>
+<area shape="rect" id="node47" href="$classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird." alt="" coords="379,645,461,675"/>
+<area shape="rect" id="node51" href="$classe_werewolf_shape_not_existing.html" title="Ausnahme, falls eine ungültige Werwolf&#45;Gestalt gewählt wird." alt="" coords="321,699,519,728"/>
+<area shape="rect" id="node55" href="$classe_xml_error.html" title="Beim Parsen der XML&#45;Datei trat ein Fehler auf." alt="" coords="377,752,463,781"/>
+<area shape="rect" id="node57" href="$classe_xml_version.html" title="Die XML&#45;Datei weist die falsche Version auf." alt="" coords="369,805,471,835"/>
+<area shape="rect" id="node59" href="$classe_xml_old_version.html" title="Die Version der XML&#45;Datei paßt zwar zu diesem programm, ist aber zu alt." alt="" coords="583,805,705,835"/>
+<area shape="rect" id="node61" href="$classe_xml_too_old_version.html" title="Die Version der XML&#45;Datei paßt zwar zu diesem Programm, ist aber viel zu alt." alt="" coords="764,805,905,835"/>
 </map>

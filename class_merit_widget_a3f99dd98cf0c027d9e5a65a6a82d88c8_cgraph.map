@@ -1,10 +1,12 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$class_storage_character.html#a96062a11fe91e1d9826470412fc64449" title="StorageCharacter::addTrait" alt="" coords="253,5,448,35"/>
-<area shape="rect" id="node5" href="$classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f" title="cv_AbstractTrait::getCategoryList" alt="" coords="235,59,467,88"/>
-<area shape="rect" id="node7" href="$class_chara_trait.html#abcfeed4a455c49246385c9bc2024ba15" title="CharaTrait::setValue" alt="" coords="276,112,425,141"/>
-<area shape="rect" id="node16" href="$classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15" title="cv_AbstractTrait::toString" alt="" coords="516,216,697,245"/>
-<area shape="rect" id="node18" href="$class_storage_template.html#a2c38d76215e4a8651f4bb6eaae03ece2" title="StorageTemplate::traitsPtr" alt="" coords="256,216,445,245"/>
-<area shape="rect" id="node9" href="$class_chara_trait.html#ab3935a94198f510d3de473a9a72692ac" title="CharaTrait::traitChanged" alt="" coords="519,59,695,88"/>
-<area shape="rect" id="node11" href="$class_chara_trait.html#acd1abb86d271f401b9856f2c8e172255" title="CharaTrait::traitPtr" alt="" coords="747,137,885,167"/>
-<area shape="rect" id="node13" href="$class_chara_trait.html#adeed572acc2fa97468285bc3267e9cb8" title="CharaTrait::value" alt="" coords="543,163,671,192"/>
+<area shape="rect" id="node5" href="$class_exception.html#a7cb124af6ec64ad88a8721b60c7932fb" title="Exception::description" alt="" coords="269,59,432,88"/>
+<area shape="rect" id="node7" href="$classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f" title="cv_AbstractTrait::getCategoryList" alt="" coords="235,112,467,141"/>
+<area shape="rect" id="node9" href="$class_exception.html#aeaf3a81717287d50938bc72ed67bacd8" title="Exception::message" alt="" coords="276,165,425,195"/>
+<area shape="rect" id="node11" href="$class_chara_trait.html#abcfeed4a455c49246385c9bc2024ba15" title="CharaTrait::setValue" alt="" coords="276,219,425,248"/>
+<area shape="rect" id="node20" href="$classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15" title="cv_AbstractTrait::toString" alt="" coords="260,272,441,301"/>
+<area shape="rect" id="node22" href="$class_storage_template.html#adee5213746a1f99f82f6229a7061d360" title="StorageTemplate::traits" alt="" coords="265,325,436,355"/>
+<area shape="rect" id="node13" href="$class_chara_trait.html#ab3935a94198f510d3de473a9a72692ac" title="CharaTrait::traitChanged" alt="" coords="516,167,692,196"/>
+<area shape="rect" id="node15" href="$class_chara_trait.html#acd1abb86d271f401b9856f2c8e172255" title="CharaTrait::traitPtr" alt="" coords="741,245,880,275"/>
+<area shape="rect" id="node17" href="$class_chara_trait.html#adeed572acc2fa97468285bc3267e9cb8" title="CharaTrait::value" alt="" coords="540,271,668,300"/>
 </map>

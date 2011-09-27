@@ -1,9 +1,9 @@
 <map id="G" name="G">
-<area shape="rect" id="node7" href="$_chara_trait_8h.html" title="CharaTrait.h" alt="" coords="691,83,789,112"/>
-<area shape="rect" id="node54" href="$_power_widget_8h.html" title="PowerWidget.h" alt="" coords="855,83,969,112"/>
+<area shape="rect" id="node7" href="$_chara_trait_8h.html" title="CharaTrait.h" alt="" coords="640,83,739,112"/>
+<area shape="rect" id="node56" href="$_power_widget_8h.html" title="PowerWidget.h" alt="" coords="801,83,916,112"/>
 <area shape="rect" id="node15" href="$_trait_line_8h.html" title="TraitLine.h" alt="" coords="528,160,613,189"/>
 <area shape="rect" id="node27" href="$_trait_dots_8h.html" title="TraitDots.h" alt="" coords="124,237,215,267"/>
 <area shape="rect" id="node37" href="$_trait_specialties_8h.html" title="TraitSpecialties.h" alt="" coords="916,237,1044,267"/>
 <area shape="rect" id="node42" href="$_checked_list_8h.html" title="CheckedList.h" alt="" coords="905,315,1015,344"/>
-<area shape="rect" id="node60" href="$_select_merits_dialog_8h.html" title="Dialogs/SelectMeritsDialog.h" alt="" coords="1315,160,1517,189"/>
+<area shape="rect" id="node62" href="$_select_merits_dialog_8h.html" title="Dialogs/SelectMeritsDialog.h" alt="" coords="1440,160,1643,189"/>
 </map>

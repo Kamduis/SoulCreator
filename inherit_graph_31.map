@@ -1,3 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$class_settings.html" title="Sorgt für das Speichern aller Einstellungen zwischen verschiedenen Instanzen dieses Prorgramms..." alt="" coords="5,5,80,35"/>
+<area shape="rect" id="node1" href="$class_select_widget.html" title="Das Widget, in welchem sämtliche berechneten Werte angeordnet sind." alt="" coords="7,5,111,35"/>
 </map>

@@ -6,13 +6,12 @@
 <area shape="rect" id="node19" href="$class_storage_character.html#add675d3174e7b9331ad95401f80da7ee" title="StorageCharacter::setVirtue" alt="" coords="328,219,531,248"/>
 <area shape="rect" id="node23" href="$class_storage_character.html#ace2a365b231b39b1857f115c7361166f" title="StorageCharacter::traitChanged" alt="" coords="316,272,543,301"/>
 <area shape="rect" id="node25" href="$class_storage_template.html#ad86a34d5b7fb0bd4f6bbb8a75f1cf5f5" title="StorageTemplate::viceNames" alt="" coords="324,325,535,355"/>
-<area shape="rect" id="node33" href="$class_storage_template.html#a6b5bc4437780ff4334b25241926512fe" title="StorageTemplate::virtueNames" alt="" coords="319,379,540,408"/>
+<area shape="rect" id="node31" href="$class_storage_template.html#a6b5bc4437780ff4334b25241926512fe" title="StorageTemplate::virtueNames" alt="" coords="319,379,540,408"/>
 <area shape="rect" id="node7" href="$class_storage_character.html#aa42c8c70147f95fc49d497cde543d765" title="StorageCharacter::moralityChanged" alt="" coords="613,5,867,35"/>
 <area shape="rect" id="node11" href="$class_storage_character.html#a003ec6624532c534b04c93f18f9c381c" title="StorageCharacter::species" alt="" coords="644,59,836,88"/>
 <area shape="rect" id="node13" href="$class_storage_character.html#a42fa91622893ca1b2005df84b3fdd1f3" title="StorageCharacter::speciesChanged" alt="" coords="616,112,864,141"/>
 <area shape="rect" id="node17" href="$class_storage_character.html#a790e4c2bd2375f7da84afaf5c5ebfa07" title="StorageCharacter::viceChanged" alt="" coords="627,165,853,195"/>
 <area shape="rect" id="node21" href="$class_storage_character.html#a9ed85dd892ba396b932bff9f167dffb0" title="StorageCharacter::virtueChanged" alt="" coords="621,219,859,248"/>
 <area shape="rect" id="node27" href="$class_storage_template.html#aa1c01bbdf076afcacd1e785d2a4d6573" title="StorageTemplate::traitNames" alt="" coords="635,352,845,381"/>
-<area shape="rect" id="node29" href="$class_storage_template.html#a5d5beec85c0760ed8129a2585e7a94d4" title="StorageTemplate::traits" alt="" coords="916,352,1087,381"/>
-<area shape="rect" id="node31" href="$class_storage_template.html#aceb757eb50e7326356f589179d78ee89" title="StorageTemplate::trait" alt="" coords="1136,352,1301,381"/>
+<area shape="rect" id="node29" href="$class_storage_template.html#adee5213746a1f99f82f6229a7061d360" title="StorageTemplate::traits" alt="" coords="916,352,1087,381"/>
 </map>

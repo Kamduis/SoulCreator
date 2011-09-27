@@ -22,6 +22,7 @@ var NAVTREE =
       [ "Creation", "class_creation.html", null ],
       [ "cv_AbstractTrait", "classcv___abstract_trait.html", null ],
       [ "cv_CreationPoints", "classcv___creation_points.html", null ],
+      [ "cv_CreationPoints2", "classcv___creation_points2.html", null ],
       [ "cv_Derangement", "classcv___derangement.html", null ],
       [ "cv_Identity", "classcv___identity.html", null ],
       [ "cv_IdentityList", "classcv___identity_list.html", null ],
@@ -109,6 +110,7 @@ var NAVTREE =
         [ "cv_Trait", "classcv___trait.html", null ]
       ] ],
       [ "cv_CreationPoints", "classcv___creation_points.html", null ],
+      [ "cv_CreationPoints2", "classcv___creation_points2.html", null ],
       [ "cv_IdentityList", "classcv___identity_list.html", null ],
       [ "cv_Name", "classcv___name.html", [
         [ "cv_Identity", "classcv___identity.html", null ]
@@ -208,6 +210,8 @@ var NAVTREE =
       [ "src/Datatypes/cv_AbstractTrait.h", "cv___abstract_trait_8h.html", null ],
       [ "src/Datatypes/cv_CreationPoints.cpp", "cv___creation_points_8cpp.html", null ],
       [ "src/Datatypes/cv_CreationPoints.h", "cv___creation_points_8h.html", null ],
+      [ "src/Datatypes/cv_CreationPoints2.cpp", "cv___creation_points2_8cpp.html", null ],
+      [ "src/Datatypes/cv_CreationPoints2.h", "cv___creation_points2_8h.html", null ],
       [ "src/Datatypes/cv_Derangement.cpp", "cv___derangement_8cpp.html", null ],
       [ "src/Datatypes/cv_Derangement.h", "cv___derangement_8h.html", null ],
       [ "src/Datatypes/cv_Identity.cpp", "cv___identity_8cpp.html", null ],
