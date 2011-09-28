@@ -120,23 +120,23 @@ void WriteXmlCharacter::writeCharacterTraits() {
 
 			for ( int k = 0; k < list.count(); k++ ) {
 				// Eigenscahften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-				if ( list.at( k )->value != 0 ) {
+				if ( list.at( k )->value() != 0 ) {
 // 					qDebug() << Q_FUNC_INFO << list.at( k )->name;
 					writeStartElement( "trait" );
-					writeAttribute( "name", list.at( k )->name );
-					writeAttribute( "value", QString::number( list.at( k )->value ) );
+					writeAttribute( "name", list.at( k )->v_name );
+					writeAttribute( "value", QString::number( list.at( k )->value() ) );
 
 // 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k )->custom;
 
-					if ( list.at( k )->custom ) {
-						writeAttribute( "custom", list.at( k )->customText );
+					if ( list.at( k )->v_custom ) {
+						writeAttribute( "custom", list.at( k )->v_customText );
 					}
 
 // 					qDebug() << Q_FUNC_INFO << list.at( k )->details.count();
 // 					if ( types.at( i ) == cv_Trait::Skill ) {
-					for ( int l = 0; l < list.at( k )->details.count(); l++ ) {
+					for ( int l = 0; l < list.at( k )->v_details.count(); l++ ) {
 // 						qDebug() << Q_FUNC_INFO << list.at( k )->details.at( l ).name;
-						writeTextElement( "specialty",  list.at( k )->details.at( l ).name );
+						writeTextElement( "specialty",  list.at( k )->v_details.at( l ).name );
 					}
 
 // 					}t
@@ -182,7 +182,7 @@ void WriteXmlCharacter::writeCharacterDerangements() {
 		for ( int k = 0; k < list.count(); k++ ) {
 // 					qDebug() << Q_FUNC_INFO << list.at( k )->name;
 			writeStartElement( "derangement" );
-			writeAttribute( "name", list.at( k )->name );
+			writeAttribute( "name", list.at( k )->v_name );
 			writeAttribute( "morality", QString::number( list.at( k )->morality ) );
 
 			writeEndElement();

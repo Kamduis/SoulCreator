@@ -70,7 +70,7 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 				layoutTop->addWidget( charaTrait );
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
-				if ( !list.at( j )->custom ) {
+				if ( !list.at( j )->v_custom ) {
 					break;
 				}
 			}

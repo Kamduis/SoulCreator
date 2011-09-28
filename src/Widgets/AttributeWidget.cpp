@@ -76,7 +76,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 	QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( type );
 
-	QList< cv_Trait* > list;
+	QList< Trait* > list;
 
 	labelStr = new QLabel( this );
 	labelDex = new QLabel( this );
@@ -90,7 +90,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 	for ( int i = 0; i < categories.count(); i++ ) {
 		try {
-			list = storage.traits( type, categories.at( i ) );
+			list = storage.traits2( type, categories.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
@@ -118,10 +118,10 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			// Anlegen der Eigenschaft im Speicher
-			cv_Trait* traitPtr = character->addTrait( *list[j] );
+			Trait* traitPtr = character->addTrait( list[j] );
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-			CharaTrait *trait = new CharaTrait( this, traitPtr, list[j] );
+			CharaTrait* trait = new CharaTrait( this, traitPtr, list[j] );
 			trait->setValue( 1 );
 
 			layout->addWidget( trait, j + 1, actualColumn );

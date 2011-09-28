@@ -28,6 +28,7 @@
 #include "Datatypes/cv_Identity.h"
 #include "Datatypes/cv_IdentityList.h"
 #include "Datatypes/cv_Trait.h"
+#include "Datatypes/Trait.h"
 #include "Datatypes/cv_Derangement.h"
 #include "Datatypes/cv_CreationPoints.h"
 #include "StorageTemplate.h"
@@ -200,6 +201,10 @@ private:
 		 **/
 		static QList< cv_Trait > v_traits;
 		/**
+		 * Eine Liste aller Eigenschaften.
+		 **/
+		static QList< Trait* > v_traits2;
+		/**
 		 * Eine Liste aller Geistesstörungen.
 		 **/
 		static QList< cv_Derangement > v_derangements;
@@ -247,6 +252,16 @@ private:
 		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 		 **/
 		cv_Trait* addTrait( cv_Trait trait );
+		/**
+		 * Fügt dem Speicher eine neue Eigenschaft hinzu.
+		 *
+		 * \return Es wird ein Zeiger auf diese Eigenschaft zurückgegeben.
+		 *
+		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
+		 *
+		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
+		 **/
+		Trait* addTrait( Trait* trait );
 		/**
 		 * Ändert eine Eigenschaft im Speicher.
 		 **/

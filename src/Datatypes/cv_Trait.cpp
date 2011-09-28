@@ -29,13 +29,22 @@
 
 
 cv_Trait::cv_Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca ) : cv_AbstractTrait( txt, spe, ty, ca ) {
-	value = val;
-	era = cv_Trait::EraNo;
-	age = cv_Trait::AgeNo;
+	v_value = val;
+	v_era = cv_Trait::EraNo;
+	v_age = cv_Trait::AgeNo;
 // 	details;
-	prerequisites = "";
-	custom = false;
-	customText = "";
+	v_prerequisites = "";
+	v_custom = false;
+	v_customText = "";
+}
+
+int cv_Trait::value() const
+{
+	return v_value;
+}
+void cv_Trait::setValue( int val )
+{
+	v_value = val;
 }
 
 
@@ -66,16 +75,16 @@ bool cv_Trait::operator==( const cv_Trait& trait ) const {
 		return true;
 	}
 
-	bool result = name == trait.name
-				  && value == trait.value
-				  && type == trait.type
-				  && category == trait.category
-				  && species == trait.species
-				  && era == trait.era
-				  && age == trait.age
-				  && details == trait.details
-				  && prerequisites == trait.prerequisites
-				  && custom == trait.custom;
+	bool result = v_name == trait.v_name
+				  && v_value == trait.v_value
+				  && v_type == trait.v_type
+				  && v_category == trait.v_category
+				  && v_species == trait.v_species
+				  && v_era == trait.v_era
+				  && v_age == trait.v_age
+				  && v_details == trait.v_details
+				  && v_prerequisites == trait.v_prerequisites
+				  && v_custom == trait.v_custom;
 
 	return result;
 }
@@ -85,5 +94,5 @@ bool cv_Trait::operator<( const cv_Trait& trait ) const {
 		return false;
 	}
 
-	bool result = value < trait.value;
+	bool result = v_value < trait.v_value;
 }

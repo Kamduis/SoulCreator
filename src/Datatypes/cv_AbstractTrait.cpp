@@ -49,10 +49,10 @@ const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListAll = 
 
 
 cv_AbstractTrait::cv_AbstractTrait( QString txt, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca ) {
-	name = txt;
-	species = spe;
-	type = ty;
-	category = ca;
+	v_name = txt;
+	v_species = spe;
+	v_type = ty;
+	v_category = ca;
 }
 
 QString cv_AbstractTrait::toXmlString( cv_AbstractTrait::Type type ) {
@@ -309,10 +309,10 @@ bool cv_AbstractTrait::operator==( const cv_AbstractTrait& trait ) const {
 		return true;
 	}
 
-	bool result = name == trait.name &&
-				  type == trait.type &&
-				  category == trait.category &&
-				  species == trait.species;
+	bool result = v_name == trait.v_name &&
+				  v_type == trait.v_type &&
+				  v_category == trait.v_category &&
+				  v_species == trait.v_species;
 
 	return result;
 }

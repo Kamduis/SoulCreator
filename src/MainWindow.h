@@ -96,6 +96,10 @@ class MainWindow;
  * \todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
  *
  * \bug Wenn man einen Charkater lädt oder einen neuen erstellt, während gerade der Knopf für das Anzeigen der Spazialisierungen einer Fertigkeit gedrückt ist, bleuibt er gedrückt und die alten Spezialisierungen bleiben angezeigt. Das ist natürlich nicht das gewünschte Verhalten.
+ *
+ * \todo Auf den Knopf für die Spezialisierungen jeder einzelnen Fertigkeit die Anzahl der bereits gewählten Spezialisierungen schreiben.
+ *
+ * \todo Fertigkeiten und Attribute wie Merits und Flaws gruppieren.
  */
 
 class MainWindow : public QMainWindow {

@@ -261,13 +261,13 @@ void MainWindow::activate() {
 		cv_Trait trait = character->traits()->at( k );
 // 		qDebug() << Q_FUNC_INFO << "Verändere" << trait.name << trait.value;
 		// Alten Wert speichern
-		int valueOld = trait.value;
+		int valueOld = trait.value();
 		// Verändern, damit er auch wirklich \emph{verändert} wurde
-		trait.value = 10;
+		trait.setValue( 10 );
 		// In den Speicher schicken.
 		character->modifyTrait( trait );
 		// Wieder auf alten Wert zurücksetzen.
-		trait.value = valueOld;
+		trait.setValue( valueOld );
 		character->modifyTrait( trait );
 	}
 
