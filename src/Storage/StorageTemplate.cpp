@@ -33,6 +33,7 @@
 QList< cv_Species > StorageTemplate::v_species;
 QList< cv_SpeciesTitle > StorageTemplate::v_titles;
 QList< cv_Trait > StorageTemplate::v_traits;
+QList< Trait* > StorageTemplate::v_traits2;
 QList< cv_SuperEffect > StorageTemplate::v_superEffects;
 QList< cv_CreationPoints2 > StorageTemplate::v_creationPoints;
 
@@ -57,13 +58,13 @@ QStringList StorageTemplate::traitNames( cv_Trait::Type type, cv_Trait::Category
 	QStringList list;
 
 	for ( int i = 0; i < traits.count(); i++ ) {
-		if ( traits.at( i ).type == type && traits.at( i ).category == category ) {
-			if ( traits.at( i ).era.testFlag( era ) ) {
-				if ( traits.at( i ).age.testFlag( age ) ) {
+		if ( traits.at( i ).v_type == type && traits.at( i ).v_category == category ) {
+			if ( traits.at( i ).v_era.testFlag( era ) ) {
+				if ( traits.at( i ).v_age.testFlag( age ) ) {
 					// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
-					if ( !list.contains( traits.at( i ).name ) ) {
+					if ( !list.contains( traits.at( i ).v_name ) ) {
 // 						qDebug() << Q_FUNC_INFO << "Gib aus" << traits.at( i ).name;
-						list.append( traits.at( i ).name );
+						list.append( traits.at( i ).v_name );
 					}
 				}
 			}
@@ -82,9 +83,9 @@ QStringList StorageTemplate::viceNames( cv_Trait::AgeFlag age ) const {
 }
 
 QString StorageTemplate::breedTitle( cv_Species::SpeciesFlag spe ) const {
-	for (int i = 0; i < v_titles.count(); i++){
-		if (v_titles.at(i).species.testFlag(spe) && v_titles.at(i).title == cv_SpeciesTitle::Breed){
-			return v_titles.at(i).name;
+	for ( int i = 0; i < v_titles.count(); i++ ) {
+		if ( v_titles.at( i ).species.testFlag( spe ) && v_titles.at( i ).title == cv_SpeciesTitle::Breed ) {
+			return v_titles.at( i ).name;
 		}
 	}
 
@@ -92,9 +93,9 @@ QString StorageTemplate::breedTitle( cv_Species::SpeciesFlag spe ) const {
 }
 
 QString StorageTemplate::factionTitle( cv_Species::SpeciesFlag spe ) const {
-	for (int i = 0; i < v_titles.count(); i++){
-		if (v_titles.at(i).species.testFlag(spe) && v_titles.at(i).title == cv_SpeciesTitle::Faction){
-			return v_titles.at(i).name;
+	for ( int i = 0; i < v_titles.count(); i++ ) {
+		if ( v_titles.at( i ).species.testFlag( spe ) && v_titles.at( i ).title == cv_SpeciesTitle::Faction ) {
+			return v_titles.at( i ).name;
 		}
 	}
 
@@ -102,8 +103,8 @@ QString StorageTemplate::factionTitle( cv_Species::SpeciesFlag spe ) const {
 }
 
 void StorageTemplate::appendTitle( cv_SpeciesTitle title ) {
-	if (!v_titles.contains(title)){
-		v_titles.append(title);
+	if ( !v_titles.contains( title ) ) {
+		v_titles.append( title );
 	}
 }
 
@@ -112,11 +113,11 @@ QStringList StorageTemplate::breedNames( cv_Species::SpeciesFlag spe ) const {
 	QStringList list;
 
 	for ( int i = 0; i < traits.count(); i++ ) {
-		if ( traits.at( i ).type == cv_Trait::Breed && traits.at( i ).category == cv_Trait::CategoryNo ) {
-			if ( traits.at( i ).species == spe ) {
+		if ( traits.at( i ).v_type == cv_Trait::Breed && traits.at( i ).v_category == cv_Trait::CategoryNo ) {
+			if ( traits.at( i ).v_species == spe ) {
 				// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
-				if ( !list.contains( traits.at( i ).name ) ) {
-					list.append( traits.at( i ).name );
+				if ( !list.contains( traits.at( i ).v_name ) ) {
+					list.append( traits.at( i ).v_name );
 				}
 			}
 		}
@@ -130,11 +131,11 @@ QStringList StorageTemplate::factionNames( cv_Species::SpeciesFlag spe ) const {
 	QStringList list;
 
 	for ( int i = 0; i < traits.count(); i++ ) {
-		if ( traits.at( i ).type == cv_Trait::Faction && traits.at( i ).category == cv_Trait::CategoryNo ) {
-			if ( traits.at( i ).species == spe ) {
+		if ( traits.at( i ).v_type == cv_Trait::Faction && traits.at( i ).v_category == cv_Trait::CategoryNo ) {
+			if ( traits.at( i ).v_species == spe ) {
 				// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
-				if ( !list.contains( traits.at( i ).name ) ) {
-					list.append( traits.at( i ).name );
+				if ( !list.contains( traits.at( i ).v_name ) ) {
+					list.append( traits.at( i ).v_name );
 				}
 			}
 		}
@@ -148,7 +149,7 @@ QList< cv_Trait* > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Categ
 	QList< cv_Trait* > traitsPtr;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category && v_traits.at( i ).era.testFlag( era ) && v_traits.at( i ).age.testFlag( age ) ) {
+		if ( v_traits.at( i ).v_type == type && v_traits.at( i ).v_category == category && v_traits.at( i ).v_era.testFlag( era ) && v_traits.at( i ).v_age.testFlag( age ) ) {
 			traitsPtr.append( &v_traits[i] );
 		}
 	}
@@ -160,11 +161,32 @@ QList< cv_Trait* > StorageTemplate::traits( cv_Trait::Type type, cv_Trait::Categ
 
 	return traitsPtr;
 }
+QList< Trait* > StorageTemplate::traits2( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
+	QList< Trait* > traitsPtr;
+
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		if ( v_traits2.at( i )->v_type == type &&
+				v_traits2.at( i )->v_category == category &&
+				v_traits2.at( i )->v_era.testFlag( era ) &&
+				v_traits2.at( i )->v_age.testFlag( age )
+		   ) {
+			traitsPtr.append( v_traits2[i] );
+		}
+	}
+
+	if ( traitsPtr.isEmpty() ) {
+// 		qDebug() << Q_FUNC_INFO << "Trait Typ" << cv_Trait::toString( type ) << "mit Kategorie" << cv_Trait::toString( category ) << "existiert nicht!";
+		throw eTraitNotExisting();
+	}
+
+	return traitsPtr;
+}
+
 QList< cv_Trait* > StorageTemplate::traits( cv_Trait::Type type, cv_Species::SpeciesFlag species ) const {
 	QList< cv_Trait* > traitsPtr;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == type && v_traits.at( i ).species.testFlag(species) ) {
+		if ( v_traits.at( i ).v_type == type && v_traits.at( i ).v_species.testFlag( species ) ) {
 			traitsPtr.append( &v_traits[i] );
 		}
 	}
@@ -185,7 +207,7 @@ cv_Trait StorageTemplate::trait( cv_Trait::Type type, cv_Trait::Category categor
 	cv_Trait trait;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category && v_traits.at( i ).name == name ) {
+		if ( v_traits.at( i ).v_type == type && v_traits.at( i ).v_category == category && v_traits.at( i ).v_name == name ) {
 			trait = v_traits.at( i );
 			trait_exists = true;
 
@@ -216,7 +238,7 @@ void StorageTemplate::appendTrait( cv_Trait trait ) {
 	bool exists = false;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == trait.type && v_traits.at( i ).name == trait.name ) {
+		if ( v_traits.at( i ).v_type == trait.v_type && v_traits.at( i ).v_name == trait.v_name ) {
 			exists = true;
 			break;
 		}
@@ -228,6 +250,20 @@ void StorageTemplate::appendTrait( cv_Trait trait ) {
 // 		}
 // 		qDebug() << Q_FUNC_INFO << "Füge" << trait.name << "hinzu." << trait.category;
 		v_traits.append( trait );
+	}
+
+	bool exists2 = false;
+
+	Trait* lcl_trait = new Trait( trait );
+
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		if ( v_traits2.at( i )->v_type == lcl_trait->v_type && v_traits2.at( i )->v_name == lcl_trait->v_name ) {
+			exists2 = true;
+			break;
+		}
+	}
+	if ( !exists2 ) {
+		v_traits2.append( lcl_trait );
 	}
 }
 
@@ -275,14 +311,14 @@ int StorageTemplate::fuelPerTurn( cv_Species::Species species, int value ) {
 
 
 cv_CreationPoints2 StorageTemplate::creationPoints( cv_Species::Species species ) {
-	for (int i = 0; i < v_creationPoints.count(); i++){
-		if (species == v_creationPoints.at(i).species){
-			return v_creationPoints.at(i);
+	for ( int i = 0; i < v_creationPoints.count(); i++ ) {
+		if ( species == v_creationPoints.at( i ).species ) {
+			return v_creationPoints.at( i );
 		}
 	}
 }
 void StorageTemplate::appendCreationPoints( cv_CreationPoints2 points ) {
-	if (!v_creationPoints.contains(points)){
-		v_creationPoints.append(points);
+	if ( !v_creationPoints.contains( points ) ) {
+		v_creationPoints.append( points );
 	}
 }

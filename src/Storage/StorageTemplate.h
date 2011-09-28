@@ -30,6 +30,7 @@
 
 #include "Datatypes/cv_SpeciesTitle.h"
 #include "Datatypes/cv_Trait.h"
+#include "Datatypes/Trait.h"
 #include "Datatypes/cv_IdentityList.h"
 #include "Datatypes/cv_SuperEffect.h"
 #include "Datatypes/cv_CreationPoints2.h"
@@ -100,6 +101,10 @@ class StorageTemplate : public QObject {
 		/**
 		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		 **/
+		QList< Trait* > traits2(cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		/**
+		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
+		 **/
 		QList< cv_Trait* > traits(cv_Trait::Type type, cv_Species::SpeciesFlag species ) const;
 		/**
 		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_Trait::Type), Kategorie (\ref cv_Trait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
@@ -149,6 +154,10 @@ class StorageTemplate : public QObject {
 		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
 		 **/
 		static QList< cv_Trait > v_traits;
+		/**
+		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
+		 **/
+		static QList< Trait* > v_traits2;
 		/**
 		 * Eine Liste über die Effekte der Supereigenschaft.
 		 **/

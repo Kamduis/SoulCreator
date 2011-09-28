@@ -132,45 +132,53 @@ class cv_Trait : public cv_AbstractTrait {
 		cv_Trait(QString txt = "", int val = 0, cv_Species::Species spe = cv_Species::SpeciesNo, cv_AbstractTrait::Type ty = cv_AbstractTrait::TypeNo, cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo);
 
 		/**
-		 * Der Wert der Eigenschaft.
+		 * Gibt den Wert der Eigenschaft wieder zurück.
+		 *
+		 * \sa setValue()
 		 **/
-		int value;
+		int value() const;
+		/**
+		 * Ändert den Wert der Eigenschaft.
+		 *
+		 * \sa value()
+		 **/
+		void setValue( int val );
 		/**
 		 * Der möglichen Werte, welche diese Eigenschaft annehmen kann.
 		 *
 		 * Fast alle Eigenschaften können Werte zwischen 0 und 10 annehmen. Allerdings gibt es beispielsweise Merits, die nur Werte zwischen 0 bis 3 oder gar nur die Werte 0, 1, 3 und 5 annehmen können.
 		 **/
-		QList< int > possibleValues;
+		QList< int > v_possibleValues;
 		/**
 		 * Welcher Era diese Eigenschaft angehört.
 		 *
 		 * \sa cv_Character::Era
 		 **/
-		cv_Trait::Era era;
+		cv_Trait::Era v_era;
 		/**
 		 * Welches Alter des Charakters Voraussetzung für diese Eigenschaft ist.
 		 *
 		 * \sa cv_Character::Age
 		 **/
-		cv_Trait::Age age;
+		cv_Trait::Age v_age;
 		/**
 		 * Eine Liste der Zusatzeigenschaften.
 		 **/
-		QList< cv_TraitDetail > details;
+		QList< cv_TraitDetail > v_details;
 		/**
 		 * Ein String mit den geforderten Voraussetzungen, um diese Eigenscahft besitzen zu dürfen.
 		 *
 		 * \note Das Format des Strings ist: (Strength > 4 AND Brawl > 3) OR Stamina < 2
 		 **/
-		QString prerequisites;
+		QString v_prerequisites;
 		/**
 		 * Manche Eigenschaften (beispielsweise der Merit Language) müssen mit einem zusätzlichen erklärenden Text versehen werden können. Wenn das der Fall ist, wird diese Variable auf 'true' gesetzt.
 		 **/
-		bool custom;
+		bool v_custom;
 		/**
 		 * Jene Eigenschaften, die einen zusätzlichen erklärenden Text haben können (siehe \ref custom), können eben diese Text hier speichern.
 		 **/
-		QString customText;
+		QString v_customText;
 
 		/**
 		 * Wandelt den Namen einer Era in den dazu passenden enum um.
@@ -195,6 +203,14 @@ class cv_Trait : public cv_AbstractTrait {
 		* Vergleich zwischen zwei Instanzen dieser Klasse nach ihrem Wert.
 		**/
 		bool operator<( const cv_Trait &trait ) const;
+
+	private:
+		/**
+		 * Der Wert der Eigenschaft.
+		 *
+		 * \todo War vorher public und jetzt wird viel nicht funktionieren, da es nun private ist.
+		 **/
+		int v_value;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( cv_Trait::Age )

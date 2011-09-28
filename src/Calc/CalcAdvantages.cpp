@@ -196,10 +196,10 @@ int CalcAdvantages::willpower() const {
 }
 
 int CalcAdvantages::calcSize( cv_Trait* trait ) {
-	if ( trait->type == cv_Trait::Merit && trait->name == "Giant" ) {
+	if ( trait->v_type == cv_Trait::Merit && trait->v_name == "Giant" ) {
 		int result = 5;
 
-		if ( trait->value > 0 ) {
+		if ( trait->value() > 0 ) {
 			result += 1;
 		}
 
@@ -213,8 +213,8 @@ int CalcAdvantages::calcSize( cv_Trait* trait ) {
 }
 
 int CalcAdvantages::calcInitiative( cv_Trait* trait ) {
-	if (( trait->type == cv_Trait::Attribute && ( trait->name == "Dexterity" || trait->name == "Composure" ) )
-			|| trait->type == cv_Trait::Merit && trait->name == "Fast Reflexes" ) {
+	if (( trait->v_type == cv_Trait::Attribute && ( trait->v_name == "Dexterity" || trait->v_name == "Composure" ) )
+			|| trait->v_type == cv_Trait::Merit && trait->v_name == "Fast Reflexes" ) {
 		int val1 = 0;
 		int val2 = 0;
 		int val3 = 0;
@@ -222,44 +222,44 @@ int CalcAdvantages::calcInitiative( cv_Trait* trait ) {
 
 		// Nur berechnen, wenn der veränderte Wert Einfluß auf die Initiative hat.
 
-		if ( trait->type == cv_Trait::Attribute ) {
-			val1 = trait->value;
+		if ( trait->v_type == cv_Trait::Attribute ) {
+			val1 = trait->value();
 
 			list = character->traits( cv_Trait::Merit, cv_Trait::Physical );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Fast Reflexes" ) {
-					val3 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Fast Reflexes" ) {
+					val3 = list.at( i )->value();
 					break;
 				}
 			}
 
-			if ( trait->name == "Composure" ) {
+			if ( trait->v_name == "Composure" ) {
 				list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
 
 				for ( int i = 0; i < list.count(); i++ ) {
-					if ( list.at( i )->name == "Dexterity" ) {
-						val2 = list.at( i )->value;
+					if ( list.at( i )->v_name == "Dexterity" ) {
+						val2 = list.at( i )->value();
 						break;
 					}
 				}
-			} else if ( trait->name == "Dexterity" ) {
+			} else if ( trait->v_name == "Dexterity" ) {
 				list = character->traits( cv_Trait::Attribute, cv_Trait::Mental );
 
 				for ( int i = 0; i < list.count(); i++ ) {
-					if ( list.at( i )->name == "Composure" ) {
-						val2 = list.at( i )->value;
+					if ( list.at( i )->v_name == "Composure" ) {
+						val2 = list.at( i )->value();
 						break;
 					}
 				}
 			}
 		} else {	// Es bleibt nur noch Fast Reflexes übrig
-			val3 = trait->value;
+			val3 = trait->value();
 			list = character->traits( cv_Trait::Attribute, cv_Trait::Mental );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Composure" ) {
-					val1 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Composure" ) {
+					val1 = list.at( i )->value();
 					break;
 				}
 			}
@@ -267,8 +267,8 @@ int CalcAdvantages::calcInitiative( cv_Trait* trait ) {
 			list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Dexterity" ) {
-					val2 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Dexterity" ) {
+					val2 = list.at( i )->value();
 					break;
 				}
 			}
@@ -286,8 +286,8 @@ int CalcAdvantages::calcInitiative( cv_Trait* trait ) {
 }
 
 int CalcAdvantages::calcSpeed( cv_Trait* trait ) {
-	if (( trait->type == cv_Trait::Attribute && ( trait->name == "Strength" || trait->name == "Dexterity" ) )
-			|| ( trait->type == cv_Trait::Merit && trait->name == "Fleet of Foot" ) ) {
+	if (( trait->v_type == cv_Trait::Attribute && ( trait->v_name == "Strength" || trait->v_name == "Dexterity" ) )
+			|| ( trait->v_type == cv_Trait::Merit && trait->v_name == "Fleet of Foot" ) ) {
 		int val1 = 0;
 		int val2 = 0;
 		int val3 = 0;
@@ -295,50 +295,50 @@ int CalcAdvantages::calcSpeed( cv_Trait* trait ) {
 
 		// Nur berechnen, wenn der veränderte Wert Einfluß auf die Initiative hat.
 
-		if ( trait->type == cv_Trait::Attribute ) {
-			val1 = trait->value;
+		if ( trait->v_type == cv_Trait::Attribute ) {
+			val1 = trait->value();
 			list = character->traits( cv_Trait::Merit, cv_Trait::Physical );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Fleet of Foot" ) {
-					val3 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Fleet of Foot" ) {
+					val3 = list.at( i )->value();
 					break;
 				}
 			}
 
-			if ( trait->name == "Strength" ) {
+			if ( trait->v_name == "Strength" ) {
 				list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
 
 				for ( int i = 0; i < list.count(); i++ ) {
-					if ( list.at( i )->name == "Dexterity" ) {
-						val2 = list.at( i )->value;
+					if ( list.at( i )->v_name == "Dexterity" ) {
+						val2 = list.at( i )->value();
 						break;
 					}
 				}
-			} else if ( trait->name == "Dexterity" ) {
+			} else if ( trait->v_name == "Dexterity" ) {
 				list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
 
 				for ( int i = 0; i < list.count(); i++ ) {
-					if ( list.at( i )->name == "Strength" ) {
-						val2 = list.at( i )->value;
+					if ( list.at( i )->v_name == "Strength" ) {
+						val2 = list.at( i )->value();
 						break;
 					}
 				}
 			}
 		} else {	// Es bleibt nur noch Fleet of Foot übrig
-			val3 = trait->value;
+			val3 = trait->value();
 			list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Strength" ) {
-					val1 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Strength" ) {
+					val1 = list.at( i )->value();
 					break;
 				}
 			}
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Dexterity" ) {
-					val2 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Dexterity" ) {
+					val2 = list.at( i )->value();
 					break;
 				}
 			}
@@ -357,26 +357,26 @@ int CalcAdvantages::calcSpeed( cv_Trait* trait ) {
 
 int CalcAdvantages::calcDefense( cv_Trait* trait ) {
 	// Nur berechnen, wenn der veränderte Wert Einfluß auf die Defense hat.
-	if ( trait->type == cv_Trait::Attribute && ( trait->name == "Wits" || trait->name == "Dexterity" ) ) {
-		int val1 = trait->value;
+	if ( trait->v_type == cv_Trait::Attribute && ( trait->v_name == "Wits" || trait->v_name == "Dexterity" ) ) {
+		int val1 = trait->value();
 		int val2 = 0;
 		QList< cv_Trait* > list;
 
-		if ( trait->name == "Wits" ) {
+		if ( trait->v_name == "Wits" ) {
 			list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Dexterity" ) {
-					val2 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Dexterity" ) {
+					val2 = list.at( i )->value();
 					break;
 				}
 			}
-		} else if ( trait->name == "Dexterity" ) {
+		} else if ( trait->v_name == "Dexterity" ) {
 			list = character->traits( cv_Trait::Attribute, cv_Trait::Mental );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Wits" ) {
-					val2 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Wits" ) {
+					val2 = list.at( i )->value();
 					break;
 				}
 			}
@@ -394,8 +394,8 @@ int CalcAdvantages::calcDefense( cv_Trait* trait ) {
 }
 
 int CalcAdvantages::calcHealth( cv_Trait* trait ) {
-	if ( trait->type == cv_Trait::Attribute && trait->name == "Stamina" ) {
-		int result = trait->value + v_size;
+	if ( trait->v_type == cv_Trait::Attribute && trait->v_name == "Stamina" ) {
+		int result = trait->value() + v_size;
 
 		if ( v_health != result ) {
 			v_health = result;
@@ -411,8 +411,8 @@ int CalcAdvantages::calcHealth( int size ) {
 	QList< cv_Trait* > list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
 
 	for ( int i = 0; i < list.count(); i++ ) {
-		if ( list.at( i )->name == "Stamina" ) {
-			val1 = list.at( i )->value;
+		if ( list.at( i )->v_name == "Stamina" ) {
+			val1 = list.at( i )->value();
 			break;
 		}
 	}
@@ -429,26 +429,26 @@ int CalcAdvantages::calcHealth( int size ) {
 
 int CalcAdvantages::calcWillpower( cv_Trait* trait ) {
 	// Nur berechnen, wenn der veränderte Wert Einfluß auf die Defense hat.
-	if ( trait->type == cv_Trait::Attribute && ( trait->name == "Resolve" || trait->name == "Composure" ) ) {
-		int val1 = trait->value;
+	if ( trait->v_type == cv_Trait::Attribute && ( trait->v_name == "Resolve" || trait->v_name == "Composure" ) ) {
+		int val1 = trait->value();
 		int val2 = 0;
 		QList< cv_Trait* > list;
 
-		if ( trait->name == "Resolve" ) {
+		if ( trait->v_name == "Resolve" ) {
 			list = character->traits( cv_Trait::Attribute, cv_Trait::Social );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Composure" ) {
-					val2 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Composure" ) {
+					val2 = list.at( i )->value();
 					break;
 				}
 			}
-		} else if ( trait->name == "Composure" ) {
+		} else if ( trait->v_name == "Composure" ) {
 			list = character->traits( cv_Trait::Attribute, cv_Trait::Mental );
 
 			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->name == "Resolve" ) {
-					val2 = list.at( i )->value;
+				if ( list.at( i )->v_name == "Resolve" ) {
+					val2 = list.at( i )->value();
 					break;
 				}
 			}

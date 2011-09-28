@@ -85,7 +85,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			// Anlegen der Eigenschaft im Speicher
 			cv_Trait lcl_trait = *list[j];
 			// Die Spezialisierungen werden nicht übernommen, da im Charakter nur jene gespeichert werden, die der Charakter auch tatsächlich hat.
-			lcl_trait.details.clear();
+			lcl_trait.v_details.clear();
 			cv_Trait* traitPtr = character->addTrait( lcl_trait );
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.

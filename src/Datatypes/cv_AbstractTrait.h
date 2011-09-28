@@ -160,23 +160,23 @@ class cv_AbstractTrait {
 		/**
 		 * Der Name der Eigenschaft.
 		 **/
-		QString name;
+		QString v_name;
 		/**
 		 * Welche Spezies über diese Eigenschaft verfügen.
 		 **/
-		cv_Species::Species species;
+		cv_Species::Species v_species;
 		/**
 		 * Der Typ, dem diese Eigenschaft angehört.
 		 *
 		 * \sa Type
 		 **/
-		Type type;
+		Type v_type;
 		/**
 		 * Die Kategorie, der diese Eigenschaft angehört.
 		 *
 		 * \sa Category
 		 **/
-		Category category;
+		Category v_category;
 
 		/**
 		 * Wandelt einen Typ in seinen in den Xml-Dateien gebräuchlichen Namen um.

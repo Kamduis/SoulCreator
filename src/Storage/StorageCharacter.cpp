@@ -43,6 +43,7 @@ int StorageCharacter::v_armorFirearms = 0;
 bool StorageCharacter::v_modified = false;
 cv_IdentityList StorageCharacter::v_identities;
 QList< cv_Trait > StorageCharacter::v_traits;
+QList< Trait* > StorageCharacter::v_traits2;
 cv_Species::SpeciesFlag StorageCharacter::v_species;
 QList< cv_Derangement > StorageCharacter::v_derangements;
 
@@ -138,7 +139,7 @@ QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type ) const {
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == type ) {
+		if ( v_traits.at( i ).v_type == type ) {
 			list.append( &v_traits[i] );
 		}
 	}
@@ -150,7 +151,7 @@ QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Cate
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type == type && v_traits.at( i ).category == category ) {
+		if ( v_traits.at( i ).v_type == type && v_traits.at( i ).v_category == category ) {
 			list.append( &v_traits[i] );
 		}
 	}
@@ -173,15 +174,22 @@ cv_Trait* StorageCharacter::addTrait( cv_Trait trait ) {
 
 	return traitPtr;
 }
+Trait* StorageCharacter::addTrait( Trait* trait ) {
+	Trait* lcl_trait = new Trait(trait);
+
+	v_traits2.append( lcl_trait );
+
+	return lcl_trait;
+}
 
 void StorageCharacter::modifyTrait( cv_Trait trait ) {
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( trait.type == v_traits.at( i ).type && trait.category == v_traits.at( i ).category && trait.name == v_traits.at( i ).name ) {
-			if ( !v_traits.at( i ).custom || trait.customText == v_traits.at( i ).customText || v_traits.at( i ).customText.isEmpty() ) {
+		if ( trait.v_type == v_traits.at( i ).v_type && trait.v_category == v_traits.at( i ).v_category && trait.v_name == v_traits.at( i ).v_name ) {
+			if ( !v_traits.at( i ).v_custom || trait.v_customText == v_traits.at( i ).v_customText || v_traits.at( i ).v_customText.isEmpty() ) {
 				// Custom bleibt immer gleich.
-				v_traits[i].value = trait.value;
-				v_traits[i].customText = trait.customText;
-				v_traits[i].details = trait.details;
+				v_traits[i].setValue ( trait.value() );
+				v_traits[i].v_customText = trait.v_customText;
+				v_traits[i].v_details = trait.v_details;
 // 				qDebug() << Q_FUNC_INFO << v_traits.at( i ).name << "Adresse:" << &v_traits[i] << "verändert zu" << v_traits.at( i ).value << "Und zusatztext:" << v_traits.at( i ).customText << v_traits.at( i ).custom;
 
 				emit traitChanged( &v_traits[i] );
@@ -203,7 +211,7 @@ QList< cv_Derangement* > StorageCharacter::derangements( cv_Trait::Category cate
 	QList< cv_Derangement* > list;
 
 	for ( int i = 0; i < v_derangements.count(); i++ ) {
-		if ( v_derangements.at( i ).category == category ) {
+		if ( v_derangements.at( i ).v_category == category ) {
 			list.append( &v_derangements[i] );
 		}
 	}
@@ -212,7 +220,7 @@ QList< cv_Derangement* > StorageCharacter::derangements( cv_Trait::Category cate
 }
 
 void StorageCharacter::addDerangement( cv_Derangement derang ) {
-	if ( derang.name != "" && !v_derangements.contains( derang ) ) {
+	if ( derang.v_name != "" && !v_derangements.contains( derang ) ) {
 // 		qDebug() << Q_FUNC_INFO << derang.name << derang.morality;
 		v_derangements.append( derang );
 
@@ -239,12 +247,12 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 		// Spezialisieren gibt es nur bei Fertigkeiten.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
-		if ( v_traits.at( i ).type == cv_Trait::Skill && v_traits.at( i ).name == name && v_traits.at( i ).value > 0 ) {
+		if ( v_traits.at( i ).v_type == cv_Trait::Skill && v_traits.at( i ).v_name == name && v_traits.at( i ).value() > 0 ) {
 			trait_exists = true;
 
 			cv_Trait trait = v_traits.at( i );
 			// Erst alle Spezialisieren löschen
-			trait.details.clear();
+			trait.v_details.clear();
 
 			// Dann neu setzen.
 			int detailsCount = details.count();
@@ -254,7 +262,7 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 				specialty.name = details.at( j ).name;
 				specialty.value = true;
 // 				qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << specialty.name << "zu Fertigkeit" << name << "hinzu";
-				trait.details.append( specialty );
+				trait.v_details.append( specialty );
 			}
 
 			v_traits.replace( i, trait );
@@ -373,15 +381,15 @@ void StorageCharacter::resetCharacter() {
 // 	setFaction(storage->breedNames(species()).at(0));
 
 	for ( int i = 0; i < v_traits.count();i++ ) {
-		if ( v_traits[i].type == cv_Trait::Attribute ) {
-			v_traits[i].value = 1;
+		if ( v_traits[i].v_type == cv_Trait::Attribute ) {
+			v_traits[i].setValue( 1 );
 		} else {
-			v_traits[i].value = 0;
+			v_traits[i].setValue( 0 );
 		}
 
-		v_traits[i].details.clear();
+		v_traits[i].v_details.clear();
 
-		v_traits[i].customText = "";
+		v_traits[i].v_customText = "";
 
 		emit traitChanged( &v_traits[i] );
 	}

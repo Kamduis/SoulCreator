@@ -188,8 +188,8 @@ void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 		list = storage->traits( cv_Trait::Derangement, v_categories.at( j ) );
 
 		for ( int k = 0; k < list.count(); k++ ) {
-			if ( list.at( k )->species.testFlag( species ) ) {
-				cv_Derangement lcl_derangement( list.at( k )->name, 0, list.at( k )->species, list.at( k )->category );
+			if ( list.at( k )->v_species.testFlag( species ) ) {
+				cv_Derangement lcl_derangement( list.at( k )->v_name, 0, list.at( k )->v_species, list.at( k )->v_category );
 
 // 				qDebug() << Q_FUNC_INFO << lcl_derangement.name << lcl_derangement.morality;
 
@@ -226,7 +226,7 @@ void MoralityWidget::updateDerangements() {
 		} else {
 			for ( int k = 0; k < list.count(); k++ ) {
 				if ( list.at( k )->morality == i + 1 ) {
-					comboBox->setCurrentIndex( comboBox->findText( list.at( k )->name ) );
+					comboBox->setCurrentIndex( comboBox->findText( list.at( k )->v_name ) );
 					break;
 				} else if ( k == list.count() - 1 ) {	// Taucht keine Geistesstörung bei dieser Moralstufe in der Liste auzf, wird der Index auf 0 gesetzt.
 					comboBox->setCurrentIndex( 0 );

@@ -245,8 +245,8 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 				cv_Trait trait = storeTraitData( sp, a, b );
 				// Alle Eigenschaften können 0 als Wert haben, auch wenn dies nicht in den XML-Dateien steht.
 
-				if ( !trait.possibleValues.isEmpty() ) {
-					trait.possibleValues.append( 0 );
+				if ( !trait.v_possibleValues.isEmpty() ) {
+					trait.v_possibleValues.append( 0 );
 				}
 
 				storage->appendTrait( trait );
@@ -287,18 +287,18 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 // 	QString specialtyName;
 
 	cv_Trait trait;
-	trait.species = sp;
-	trait.type = a;
-	trait.category = b;
+	trait.v_species = sp;
+	trait.v_type = a;
+	trait.v_category = b;
 	// Keinefalls darf ich zulassen, daß dieser Wert uninitialisiert bleibt, sonst führt das zu Problemen.
-	trait.value = 0;
+	trait.setValue( 0 );
 
 	if ( isStartElement() ) {
-		trait.name = attributes().value( "name" ).toString();
+		trait.v_name = attributes().value( "name" ).toString();
 // 		qDebug() << Q_FUNC_INFO << trait.name;
-		trait.era = cv_Trait::toEra( attributes().value( "era" ).toString() );
-		trait.age = cv_Trait::toAge( attributes().value( "age" ).toString() );
-		trait.custom = attributes().value( "custom" ).toString() == QString( "true" );
+		trait.v_era = cv_Trait::toEra( attributes().value( "era" ).toString() );
+		trait.v_age = cv_Trait::toAge( attributes().value( "age" ).toString() );
+		trait.v_custom = attributes().value( "custom" ).toString() == QString( "true" );
 
 // 		if (trait.custom){
 // 			qDebug() << Q_FUNC_INFO << trait.name << "ist besonders!";
@@ -318,13 +318,13 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 					traitDetail.name = specialtyName;
 					traitDetail.value = false;
 // 					traitDetail.species = sp;
-					trait.details.append( traitDetail );
+					trait.v_details.append( traitDetail );
 				} else if ( name() == "value" ) {
 					int value = readElementText().toInt();
-					trait.possibleValues.append( value );
+					trait.v_possibleValues.append( value );
 				} else if ( name() == "prerequisite" ) {
 					QString text = readElementText();
-					trait.prerequisites.append( text );
+					trait.v_prerequisites.append( text );
 				} else {
 					readUnknownElement();
 				}

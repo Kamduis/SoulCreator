@@ -106,8 +106,8 @@ void ReadXmlCharacter::readSoulCreator() {
 				int moralityValue = readElementText().toInt();
 				character->setMorality( moralityValue );
 			} else if ( elementName == "armor" ) {
-				int armorGeneral = attributes().value("general").toString().toInt();
-				int armorFirearms = attributes().value("firearms").toString().toInt();
+				int armorGeneral = attributes().value( "general" ).toString().toInt();
+				int armorFirearms = attributes().value( "firearms" ).toString().toInt();
 				character->setArmor( armorGeneral, armorFirearms );
 				readUnknownElement();
 			} else if ( elementName != cv_Trait::toXmlString( cv_Trait::TypeNo ) ) {
@@ -120,8 +120,7 @@ void ReadXmlCharacter::readSoulCreator() {
 	}
 }
 
-void ReadXmlCharacter::readIdentities()
-{
+void ReadXmlCharacter::readIdentities() {
 	while ( !atEnd() ) {
 		readNext();
 
@@ -130,16 +129,16 @@ void ReadXmlCharacter::readIdentities()
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
-			
-			if (elementName == "identity" ){
+
+			if ( elementName == "identity" ) {
 				cv_Identity id;
 
-				id.foreNames = attributes().value("forenames").toString().split( " " );
-				id.sureName = attributes().value("surename").toString();
-				id.honorificName = attributes().value("honorname").toString();
-				id.nickName =attributes().value("nickname").toString();
-				id.supernaturalName =attributes().value("supername").toString();
-				id.gender = cv_Identity::toGender(attributes().value("gender").toString());
+				id.foreNames = attributes().value( "forenames" ).toString().split( " " );
+				id.sureName = attributes().value( "surename" ).toString();
+				id.honorificName = attributes().value( "honorname" ).toString();
+				id.nickName = attributes().value( "nickname" ).toString();
+				id.supernaturalName = attributes().value( "supername" ).toString();
+				id.gender = cv_Identity::toGender( attributes().value( "gender" ).toString() );
 
 				readUnknownElement();
 
@@ -178,13 +177,16 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 
 			if ( type == cv_Trait::Derangement && elementName == "derangement" ) {
 				cv_Derangement derangement;
-				derangement.name = attributes().value( "name" ).toString();
-				derangement.type = type;
-				derangement.category = category;
+				derangement.v_name
+				= attributes().value( "name" ).toString();
+				derangement.v_type
+				= type;
+				derangement.v_category
+				= category;
 				derangement.morality = attributes().value( "morality" ).toString().toInt();
 
 				character->addDerangement( derangement );
-				
+
 				while ( !atEnd() ) {
 					readNext();
 
@@ -197,19 +199,21 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 				}
 			} else if ( elementName == "trait" ) {
 				cv_Trait trait;
-				trait.name = attributes().value( "name" ).toString();
-				trait.type = type;
-				trait.category = category;
-				trait.value = attributes().value( "value" ).toString().toInt();
+				trait.v_name = attributes().value( "name" ).toString();
+				trait.v_type = type;
+				trait.v_category = category;
+				trait.setValue( attributes().value( "value" ).toString().toInt() );
 				QString customText = attributes().value( "custom" ).toString();
 
 				if ( customText.isEmpty() ) {
 // 					trait.custom = false;
-					trait.customText = "";
+					trait.v_customText
+					= "";
 				} else {
 // 					qDebug() << Q_FUNC_INFO << customText;
 // 					trait.custom = true;
-					trait.customText = customText;
+					trait.v_customText
+					= customText;
 				}
 
 				QList< cv_TraitDetail > list;
@@ -235,7 +239,8 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 					}
 				}
 
-				trait.details = list;
+				trait.v_details
+				= list;
 
 				character->modifyTrait( trait );
 			} else

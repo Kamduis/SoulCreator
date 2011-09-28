@@ -41,7 +41,7 @@ CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 	setLayout( layout );
 
 	checkBox = new QCheckBox( this );
-	checkBox->setText( trait->name );
+	checkBox->setText( trait->v_name );
 	checkBox->setMaximumHeight(Config::inlineWidgetHeightMax);
 
 	lineEdit = new QLineEdit( this );
@@ -86,12 +86,12 @@ void CheckTrait::setTraitPtr( cv_Trait* trait ) {
 
 
 int CheckTrait::value() const {
-	return traitPtr()->value;
+	return traitPtr()->value();
 }
 
 void CheckTrait::setValue( int val ) {
-	if ( traitPtr()->value != val ) {
-		traitPtr()->value = val;
+	if ( traitPtr()->value() != val ) {
+		traitPtr()->setValue( val );
 
 // 		qDebug() << Q_FUNC_INFO << "Test" << val;
 
@@ -101,12 +101,12 @@ void CheckTrait::setValue( int val ) {
 
 
 QString CheckTrait::customText() const {
-	return traitPtr()->customText;
+	return traitPtr()->v_customText;
 }
 
 void CheckTrait::setCustomText( QString txt ) {
-	if ( traitPtr()->customText != txt ) {
-		traitPtr()->customText = txt;
+	if ( traitPtr()->v_customText != txt ) {
+		traitPtr()->v_customText = txt;
 // 		TraitLine::setText( txt );
 
 		emit traitChanged( traitPtr() );
@@ -115,12 +115,12 @@ void CheckTrait::setCustomText( QString txt ) {
 
 
 cv_Trait::Type CheckTrait::type() const {
-	return ptr_trait->type;
+	return ptr_trait->v_type;
 }
 
 void CheckTrait::setType( cv_Trait::Type type ) {
-	if ( ptr_trait->type != type ) {
-		ptr_trait->type = type;
+	if ( ptr_trait->v_type != type ) {
+		ptr_trait->v_type = type;
 
 		emit typeChanged( type );
 		emit traitChanged( traitPtr() );
@@ -128,24 +128,24 @@ void CheckTrait::setType( cv_Trait::Type type ) {
 }
 
 cv_Trait::Category CheckTrait::category() const {
-	return ptr_trait->category;
+	return ptr_trait->v_category;
 }
 
 void CheckTrait::setCategory( cv_Trait::Category category ) {
-	if ( ptr_trait->category != category ) {
-		ptr_trait->category = category;
+	if ( ptr_trait->v_category != category ) {
+		ptr_trait->v_category = category;
 
 		emit traitChanged( traitPtr() );
 	}
 }
 
 cv_Species::Species CheckTrait::species() const {
-	return ptr_trait->species;
+	return ptr_trait->v_species;
 }
 
 void CheckTrait::setSpecies( cv_Species::Species species ) {
-	if ( ptr_trait->species != species ) {
-		ptr_trait->species = species;
+	if ( ptr_trait->v_species != species ) {
+		ptr_trait->v_species = species;
 // 		emit speciesChanged(species);
 
 		emit traitChanged( traitPtr() );
@@ -154,12 +154,12 @@ void CheckTrait::setSpecies( cv_Species::Species species ) {
 
 
 bool CheckTrait::custom() const {
-	return ptr_trait->custom;
+	return ptr_trait->v_custom;
 }
 
 void CheckTrait::setCustom( bool sw ) {
-	if ( ptr_trait->custom != sw ) {
-		ptr_trait->custom = sw;
+	if ( ptr_trait->v_custom != sw ) {
+		ptr_trait->v_custom = sw;
 
 		emit traitChanged( traitPtr() );
 	}
