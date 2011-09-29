@@ -62,17 +62,49 @@ class Trait : public QObject, public cv_Trait {
 		 **/
 		Trait( Trait* trait, QObject* parent = 0 );
 
+	private:
+		/**
+		 * Für alle Konstruktoren gleich.
+		 **/
+		void construct();
+
 	public slots:
 		/**
 		 * Verändert den Wert der Eigenschaft.
 		 **/
 		void setValue(int val);
+		/**
+		 * Legt die Zusatzeigenschaften fest.
+		 **/
+		void setDetails(QList< cv_TraitDetail > list);
+		/**
+		 * Legt die Zusatzeigenschaften fest.
+		 **/
+		void addDetail(cv_TraitDetail det);
+		/**
+		 * Löscht sämtliche Zusatzeigenschaften.
+		 **/
+		void clearDetails();
+
+	private slots:
+		/**
+		 * Sendet das Signal traitChanged() aus.
+		 **/
+		void emitTraitChanged();
 
 	signals:
 		/**
 		 * Der Wert der Eigenschaft hat sich verändert.
 		 **/
 		void valueChanged(int);
+		/**
+		 * Die Details der Eigenscahft haben sich verändert.
+		 **/
+		void detailsChanged();
+		/**
+		 * Irgendein Aspekt der Eigenschaft hat sich verändert.
+		 **/
+		void traitChanged(Trait* trait);
 };
 
 #endif

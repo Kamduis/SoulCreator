@@ -38,19 +38,20 @@ CharaTrait2::CharaTrait2( QWidget* parent, Trait* trait, Trait* traitStorage ) :
 
 	character = StorageCharacter::getInstance();
 
-	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( setValue( int ) ) );
+	// Falls ich mit der Maus den Wert ändere, muß er auch entsprechend verändert werden.
+	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( setTraitValue( int ) ) );
 	connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
 
 // 	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
-// 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( checkTraitPrerequisites( cv_Trait* ) ) );
+	connect( character, SIGNAL( traitChanged( Trait* ) ), this, SLOT( checkTraitPrerequisites( Trait* ) ) );
 // 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 
 	setTraitPtr( trait );
 	
-	connect( ptr_trait, SIGNAL(valueChanged(int)), this, SLOT(setValue(int)) );
+	connect( traitPtr(), SIGNAL(valueChanged(int)), this, SLOT(setValue(int)) );
 
 	if (!traitPtr()->possibleValues().isEmpty()){
 		setPossibleValues(traitPtr()->possibleValues());
@@ -72,16 +73,19 @@ void CharaTrait2::setTraitPtr( Trait* trait ) {
 }
 
 
-
-
 // int CharaTrait2::value() const {
 // 	return traitPtr()->value();
 // }
-void CharaTrait2::setValue( int val ) {
-	if ( value() != val ) {
+// void CharaTrait2::setValue( int val ) {
+// 	qDebug() << Q_FUNC_INFO << name() << val << value();
+// 	if ( value() != val ) {
+// 		TraitLine::setValue( val );
+// 	}
+// }
+void CharaTrait2::setTraitValue( int val ) {
+	qDebug() << Q_FUNC_INFO << name() << val << value();
+	if ( traitPtr()->value() != val ) {
 		traitPtr()->setValue( val );
-
-		TraitLine::setValue( val );
 	}
 }
 
@@ -190,11 +194,9 @@ void CharaTrait2::emitSpecialtiesClicked( bool sw ) {
 
 
 void CharaTrait2::checkTraitPrerequisites( Trait* trait ) {
-// 	qDebug() << Q_FUNC_INFO << name() << ptr_traitStorage->details;
-
-// 	qDebug() << Q_FUNC_INFO << name() << ptr_traitStorage;
-
 	if ( !ptr_traitStorage->prerequisites().isEmpty() && ptr_traitStorage->prerequisites().contains( trait->name() ) ) {
+		qDebug() << Q_FUNC_INFO << "Wird für" << this->name() << "ausgeführt, weil sich Fertigkeit" << trait->name() << "geändert hat";
+
 		QString prerequisites = parsePrerequisites( ptr_traitStorage->prerequisites() );
 
 		// Alles was an Wörtern übriggeblieben ist durch 0 ersetzen.

@@ -51,15 +51,15 @@ QList< int > cv_Trait::possibleValues() const {
 void cv_Trait::setPossibleValues( QList< int > list ) {
 	v_possibleValues = list;
 }
-void cv_Trait::addPossibleValue( int val )
-{
-	v_possibleValues.append(val);
+void cv_Trait::addPossibleValue( int val ) {
+	v_possibleValues.append( val );
 }
 
 
 cv_Trait::Era cv_Trait::era() const {
 	return v_era;
 }
+
 void cv_Trait::setEra( cv_Trait::Era er ) {
 	v_era = er;
 }
@@ -67,6 +67,7 @@ void cv_Trait::setEra( cv_Trait::Era er ) {
 cv_Trait::Age cv_Trait::age() const {
 	return v_age;
 }
+
 void cv_Trait::setAge( cv_Trait::Age ag ) {
 	v_age = ag;
 }
@@ -74,21 +75,28 @@ void cv_Trait::setAge( cv_Trait::Age ag ) {
 QList< cv_TraitDetail > cv_Trait::details() const {
 	return v_details;
 }
+
 void cv_Trait::setDetails( QList< cv_TraitDetail > list ) {
-	v_details = list;
+	if ( v_details != list ) {
+		v_details = list;
+	}
 }
-void cv_Trait::addDetail( cv_TraitDetail det )
-{
-	v_details.append(det);
+void cv_Trait::addDetail( cv_TraitDetail det ) {
+	if ( !v_details.contains( det ) ) {
+		v_details.append( det );
+	}
 }
 void cv_Trait::clearDetails() {
-	v_details.clear();
+	if ( !v_details.isEmpty() ) {
+		v_details.clear();
+	}
 }
 
 
 QString cv_Trait::prerequisites() const {
 	return v_prerequisites;
 }
+
 void cv_Trait::setPrerequisites( QString txt ) {
 	v_prerequisites = txt;
 }
@@ -96,6 +104,7 @@ void cv_Trait::setPrerequisites( QString txt ) {
 bool cv_Trait::custom() const {
 	return v_custom;
 }
+
 void cv_Trait::setCustom( bool sw ) {
 	v_custom = sw;
 }
@@ -107,8 +116,9 @@ QString cv_Trait::customText() const {
 		return "";
 	}
 }
+
 void cv_Trait::setCustomText( QString txt ) {
-	if (!txt.isEmpty()){
+	if ( !txt.isEmpty() ) {
 		v_custom = true;
 	}
 
@@ -145,6 +155,7 @@ bool cv_Trait::operator==( const cv_Trait& trait ) const {
 	}
 
 	bool result = name() == trait.name()
+
 				  && v_value == trait.v_value
 				  && type() == trait.type()
 				  && category() == trait.category()

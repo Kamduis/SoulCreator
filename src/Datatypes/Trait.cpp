@@ -29,33 +29,73 @@
 #include "Trait.h"
 
 
-Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject(parent), cv_Trait( txt, val, spe, ty, ca ) {
+Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject( parent ), cv_Trait( txt, val, spe, ty, ca ) {
+	construct();
 }
 
-Trait::Trait( cv_Trait trait, QObject* parent ) : QObject(parent), cv_Trait( trait.name(), trait.value(), trait.species(), trait.type(), trait.category() ) {
-	setEra(trait.era());
-	setAge(trait.age());
-	setPrerequisites(trait.prerequisites());
-	setCustom( trait.custom());
-	setCustomText(trait.customText());
-	setDetails(trait.details());
+Trait::Trait( cv_Trait trait, QObject* parent ) : QObject( parent ), cv_Trait( trait.name(), trait.value(), trait.species(), trait.type(), trait.category() ) {
+	construct();
+
+	setEra( trait.era() );
+	setAge( trait.age() );
+	setPrerequisites( trait.prerequisites() );
+	setCustom( trait.custom() );
+	setCustomText( trait.customText() );
+	setDetails( trait.details() );
+	setPossibleValues( trait.possibleValues() );
 }
 
 Trait::Trait( Trait* trait, QObject* parent ) : QObject( parent ), cv_Trait( trait->name(), trait->value(), trait->species(), trait->type(), trait->category() ) {
-	setEra(trait->era());
-	setAge(trait->age());
-	setPrerequisites(trait->prerequisites());
-	setCustom(trait->custom());
-	setCustomText(trait->customText());
-	setDetails(trait->details());
+	construct();
+
+	setEra( trait->era() );
+	setAge( trait->age() );
+	setPrerequisites( trait->prerequisites() );
+	setCustom( trait->custom() );
+	setCustomText( trait->customText() );
+	setDetails( trait->details() );
+	setPossibleValues( trait->possibleValues() );
+}
+
+void Trait::construct() {
+	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitTraitChanged() ) );
+	connect( this, SIGNAL( detailsChanged() ), this, SLOT( emitTraitChanged() ) );
 }
 
 
+
 void Trait::setValue( int val ) {
-	if ( value() != val){
+	qDebug() << Q_FUNC_INFO << name() << val << value();
+	if ( value() != val ) {
 		cv_Trait::setValue( val );
 
-// 		qDebug() << Q_FUNC_INFO << "Wert verändert zu:" << val;
 		emit valueChanged( val );
 	}
+}
+
+void Trait::setDetails( QList< cv_TraitDetail > list ) {
+	if ( details() != list ) {
+		cv_Trait::setDetails( list );
+
+		emit detailsChanged();
+	}
+}
+void Trait::addDetail( cv_TraitDetail det ) {
+	if ( !details().contains( det ) ) {
+		cv_Trait::addDetail( det );
+
+		emit detailsChanged();
+	}
+}
+void Trait::clearDetails() {
+	if ( !details().isEmpty() ) {
+		cv_Trait::clearDetails();
+
+		emit detailsChanged();
+	}
+}
+
+
+void Trait::emitTraitChanged() {
+	emit traitChanged(this);
 }

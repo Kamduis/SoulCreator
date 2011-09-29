@@ -95,12 +95,6 @@ class CharaTrait2 : public TraitLine {
 
 	public slots:
 		/**
-		 * Legt den Wert der Eigenschaft fest.
-		 *
-		 * Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
-		 **/
-		void setValue( int val );
-		/**
 		 * Legt den Zusatztext fest.
 		 *
 		 * Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
@@ -154,6 +148,12 @@ class CharaTrait2 : public TraitLine {
 		 * Richtet den Zeiger auf die Eigenschaft im Speicher, welche von diesem Widget repräsentiert wird.
 		 **/
 		void setTraitPtr( Trait* trait );
+
+	private slots:
+		/**
+		 * Wenn der Wert dieses Widgets verändert wird, muß auch der dadurch repräsentierte Wert im Speicher verändert werden. Dies geschieht über diesen Slot.
+		 **/
+		void setTraitValue( int val );
 
 	signals:
 		void typeChanged( cv_Trait::Type type );

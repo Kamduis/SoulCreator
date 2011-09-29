@@ -206,17 +206,17 @@ class cv_Trait : public cv_AbstractTrait {
 		 *
 		 * \sa addDetail()
 		 **/
-		void setDetails(QList< cv_TraitDetail > list);
+		virtual void setDetails(QList< cv_TraitDetail > list);
 		/**
 		 * Legt die Zusatzeigenschaften fest.
 		 *
 		 * \sa setDetails()
 		 **/
-		void addDetail(cv_TraitDetail det);
+		virtual void addDetail(cv_TraitDetail det);
 		/**
 		 * Löscht sämtliche Zusatzeigenschaften.
 		 **/
-		void clearDetails();
+		virtual void clearDetails();
 		/**
 		 * Gibt einen String mit den geforderten Voraussetzungen zurück, die notwendig sind, um diese Eigenschaft besitzen zu dürfen.
 		 *

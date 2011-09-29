@@ -346,6 +346,7 @@ class StorageCharacter : public QObject {
 
 	private slots:
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
+		void test();
 
 	signals:
 		/**
@@ -364,6 +365,10 @@ class StorageCharacter : public QObject {
 		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
 		**/
 		void traitChanged( cv_Trait* trait );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
+		**/
+		void traitChanged( Trait* trait );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich eine Geistesstörung ändert.
 		**/
