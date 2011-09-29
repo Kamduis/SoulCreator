@@ -37,14 +37,14 @@ cv_Derangement DerangementComboBox::currentItem() {
 
 void DerangementComboBox::addItem( cv_Derangement item ) {
 	v_list.append( item );
-	QComboBox::addItem( item.v_name );
+	QComboBox::addItem( item.name() );
 }
 
 void DerangementComboBox::addItems( QList< cv_Derangement > items ) {
 	v_list.append( items );
 
 	for ( int i = 0; i < items.count(); i++ ) {
-		QComboBox::addItem( items.at( i ).v_name );
+		QComboBox::addItem( items.at( i ).name() );
 	}
 }
 

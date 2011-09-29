@@ -81,7 +81,7 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
 
-				if ( !list.at( j )->v_custom ) {
+				if ( !list.at( j )->custom() ) {
 					break;
 				}
 			}

@@ -29,5 +29,15 @@
 
 
 cv_Derangement::cv_Derangement( QString txt, int mor, cv_Species::Species spe, cv_AbstractTrait::Category ca ) : cv_AbstractTrait( txt, spe, cv_AbstractTrait::Derangement, ca ) {
-	morality = mor;
+	v_morality = mor;
 }
+
+int cv_Derangement::morality() const
+{
+	return v_morality;
+}
+void cv_Derangement::setMorality( int val )
+{
+	v_morality = val;
+}
+

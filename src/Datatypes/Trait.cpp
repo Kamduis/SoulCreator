@@ -22,6 +22,7 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDebug>
 
 #include "Exceptions/Exception.h"
 
@@ -31,26 +32,28 @@
 Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject(parent), cv_Trait( txt, val, spe, ty, ca ) {
 }
 
-Trait::Trait( cv_Trait trait, QObject* parent ): QObject(parent), cv_Trait( trait.v_name, trait.value(), trait.v_species, trait.v_type, trait.v_category ) {
-	v_era = trait.v_era;
-	v_age = trait.v_age;
-	v_prerequisites = trait.v_prerequisites;
-	v_custom = trait.v_custom;
-	v_customText = trait.v_customText;
+Trait::Trait( cv_Trait trait, QObject* parent ) : QObject(parent), cv_Trait( trait.name(), trait.value(), trait.species(), trait.type(), trait.category() ) {
+	setEra(trait.era());
+	setAge(trait.age());
+	setPrerequisites(trait.prerequisites());
+	setCustom( trait.custom());
+	setCustomText(trait.customText());
 }
 
-Trait::Trait( Trait* trait, QObject* parent ): QObject( parent ), cv_Trait( trait->v_name, trait->value(), trait->v_species, trait->v_type, trait->v_category ) {
-	v_era = trait->v_era;
-	v_age = trait->v_age;
-	v_prerequisites = trait->v_prerequisites;
-	v_custom = trait->v_custom;
-	v_customText = trait->v_customText;
+Trait::Trait( Trait* trait, QObject* parent ) : QObject( parent ), cv_Trait( trait->name(), trait->value(), trait->species(), trait->type(), trait->category() ) {
+	setEra(trait->era());
+	setAge(trait->age());
+	setPrerequisites(trait->prerequisites());
+	setCustom(trait->custom());
+	setCustomText(trait->customText());
 }
 
 
 void Trait::setValue( int val ) {
 	if ( value() != val){
 		cv_Trait::setValue( val );
+
+		qDebug() << Q_FUNC_INFO << "Wert verändert zu:" << val;
 		emit valueChanged( val );
 	}
 }

@@ -270,6 +270,12 @@ void MainWindow::activate() {
 		trait.setValue( valueOld );
 		character->modifyTrait( trait );
 	}
+	// nEue Version
+	for ( int k = 0; k < character->traits2()->count(); k++ ) {
+		int valueOld = character->traits2()->at(k)->value();
+		character->traits2()->at(k)->setValue(10);
+		character->traits2()->at(k)->setValue(valueOld);
+	}
 
 	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
 	character->setSpecies( cv_Species::Changeling );

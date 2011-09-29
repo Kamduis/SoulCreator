@@ -548,14 +548,14 @@ void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qre
 				painter->drawEllipse( dotsRect );
 			}
 
-			if ( !list.at( j )->v_details.isEmpty() ) {
+			if ( !list.at( j )->details().isEmpty() ) {
 				QString specialities;
 
-				for ( int k = 0; k < list.at( j )->v_details.count(); k++ ) {
+				for ( int k = 0; k < list.at( j )->details().count(); k++ ) {
 					// Spezialisierungen hinzufügen
-					specialities.append( list.at( j )->v_details.at( k ).name );
+					specialities.append( list.at( j )->details().at( k ).name );
 
-					if ( k < list.at( j )->v_details.count() - 1 ) {
+					if ( k < list.at( j )->details().count() - 1 ) {
 						specialities.append( ", " );
 					}
 				}
@@ -599,9 +599,9 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 			painter->drawEllipse( dotsRect );
 		}
 
-		QString name = listToUse.at( j )->v_name;
+		QString name = listToUse.at( j )->name();
 
-		QString customText = listToUse.at( j )->v_customText;
+		QString customText = listToUse.at( j )->customText();
 
 		// Namen
 		QRect textRect( offsetH - textWidth, offsetV - v_textDotsHeightDifference + distanceV*j, textWidth, v_textHeight );
@@ -633,10 +633,10 @@ void DrawSheet::drawFlaws( QPainter* painter, qreal offsetH, qreal offsetV, qrea
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			if ( list.at( j )->value() > 0 ) {
-				QString lcl_text = list.at( j )->v_name;
+				QString lcl_text = list.at( j )->name();
 
-				if ( list.at( j )->v_custom ) {
-					lcl_text += " (" + list.at( j )->v_customText + ")";
+				if ( list.at( j )->custom() ) {
+					lcl_text += " (" + list.at( j )->customText() + ")";
 				}
 
 				stringList.append( lcl_text );
@@ -778,10 +778,10 @@ void DrawSheet::drawMorality( QPainter* painter, qreal offsetH, qreal offsetV, q
 
 	for ( int i = value; i < Config::derangementMoralityTraitMax; i++ ) {
 		for ( int j = 0; j < list->count(); j++ ) {
-			if ( list->at( j ).morality == i + 1 ) {
+			if ( list->at( j ).morality() == i + 1 ) {
 				QRect textRect = QRect( offsetH - textWidth, offsetV + v_dotDiameterV * dotSizeFactor + v_textDotsHeightDifference - distanceV * i - v_textHeight, textWidth, v_textHeight );
 // 				painter->drawRect( textRect );
-				painter->drawText( textRect, Qt::AlignLeft | Qt::AlignBottom, list->at( j ).v_name );
+				painter->drawText( textRect, Qt::AlignLeft | Qt::AlignBottom, list->at( j ).name() );
 
 				break;
 			}
@@ -809,7 +809,7 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 
 		for ( int i = 0; i < half; i++ ) {
 			for ( int k = 0; k < listToUse.count(); k++ ) {
-				if ( listToUse.at( k )->v_name == list.at( i )->v_name ) {
+				if ( listToUse.at( k )->name() == list.at( i )->name() ) {
 					for ( int j = 0; j < listToUse.at( k )->value(); j++ ) {
 						// Punkte malen.
 						QRectF dotsRect( offsetH + v_dotDiameterH*j, offsetV + distanceV*i, v_dotDiameterH, v_dotDiameterV );
@@ -823,7 +823,7 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 
 		for ( int i = half; i < list.count(); i++ ) {
 			for ( int k = 0; k < listToUse.count(); k++ ) {
-				if ( listToUse.at( k )->v_name == list.at( i )->v_name ) {
+				if ( listToUse.at( k )->name() == list.at( i )->name() ) {
 					for ( int j = 0; j < listToUse.at( k )->value(); j++ ) {
 						// Punkte malen.
 						QRectF dotsRect( offsetH + distanceH - v_dotDiameterH*j, offsetV + distanceV*( i - half ), v_dotDiameterH, v_dotDiameterV );
@@ -841,9 +841,9 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 				painter->drawEllipse( dotsRect );
 			}
 
-			QString name = listToUse.at( j )->v_name;
+			QString name = listToUse.at( j )->name();
 
-			QString customText = listToUse.at( j )->v_customText;
+			QString customText = listToUse.at( j )->customText();
 
 			// Namen
 			QRect textRect( offsetH - textWidth, offsetV - v_textDotsHeightDifference + distanceV*j, textWidth, v_textHeight );

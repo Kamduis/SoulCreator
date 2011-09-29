@@ -134,13 +134,29 @@ void StorageCharacter::setRealIdentity( cv_Identity id ) {
 QList< cv_Trait >* StorageCharacter::traits() const {
 	return &v_traits;
 }
+QList< Trait* >* StorageCharacter::traits2() const
+{
+	return &v_traits2;
+}
+
 
 QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type ) const {
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).v_type == type ) {
+		if ( v_traits.at( i ).type() == type ) {
 			list.append( &v_traits[i] );
+		}
+	}
+
+	return list;
+}
+QList< Trait* > StorageCharacter::traits2( cv_Trait::Type type ) const {
+	QList< Trait* > list;
+
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		if ( v_traits2.at( i )->type() == type ) {
+			list.append( v_traits2[i] );
 		}
 	}
 
@@ -151,8 +167,19 @@ QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Cate
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).v_type == type && v_traits.at( i ).v_category == category ) {
+		if ( v_traits.at( i ).type() == type && v_traits.at( i ).category() == category ) {
 			list.append( &v_traits[i] );
+		}
+	}
+
+	return list;
+}
+QList< Trait* > StorageCharacter::traits2( cv_Trait::Type type, cv_Trait::Category category ) const {
+	QList< Trait* > list;
+
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		if ( v_traits2.at( i )->type() == type && v_traits2.at( i )->category() == category ) {
+			list.append( v_traits2[i] );
 		}
 	}
 
@@ -184,15 +211,34 @@ Trait* StorageCharacter::addTrait( Trait* trait ) {
 
 void StorageCharacter::modifyTrait( cv_Trait trait ) {
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( trait.v_type == v_traits.at( i ).v_type && trait.v_category == v_traits.at( i ).v_category && trait.v_name == v_traits.at( i ).v_name ) {
-			if ( !v_traits.at( i ).v_custom || trait.v_customText == v_traits.at( i ).v_customText || v_traits.at( i ).v_customText.isEmpty() ) {
+		if ( trait.type() == v_traits.at( i ).type() && trait.category() == v_traits.at( i ).category() && trait.name() == v_traits.at( i ).name() ) {
+			if ( !v_traits.at( i ).custom() || trait.customText() == v_traits.at( i ).customText() || v_traits.at( i ).customText().isEmpty() ) {
 				// Custom bleibt immer gleich.
 				v_traits[i].setValue ( trait.value() );
-				v_traits[i].v_customText = trait.v_customText;
-				v_traits[i].v_details = trait.v_details;
+				v_traits[i].setCustomText(trait.customText());
+				v_traits[i].setDetails(trait.details());
 // 				qDebug() << Q_FUNC_INFO << v_traits.at( i ).name << "Adresse:" << &v_traits[i] << "verändert zu" << v_traits.at( i ).value << "Und zusatztext:" << v_traits.at( i ).customText << v_traits.at( i ).custom;
 
 				emit traitChanged( &v_traits[i] );
+
+				// Wenn der Eintrage geschrieben ist, wird die Schleife abgebrochen.
+// 				qDebug() << Q_FUNC_INFO << "breche ab";
+				break;
+			}
+		}
+	}
+}
+void StorageCharacter::modifyTrait( Trait* trait ) {
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		if ( trait->type() == v_traits2.at( i )->type() && trait->category() == v_traits2.at( i )->category() && trait->name() == v_traits2.at( i )->name() ) {
+			if ( !v_traits2.at( i )->custom() || trait->customText() == v_traits2.at( i )->customText() || v_traits2.at( i )->customText().isEmpty() ) {
+				// Custom bleibt immer gleich.
+				v_traits2[i]->setValue ( trait->value() );
+				v_traits2[i]->setCustomText(trait->customText());
+				v_traits2[i]->setDetails(trait->details());
+// 				qDebug() << Q_FUNC_INFO << v_traits2.at( i )->name << "Adresse:" << &v_traits2[i] << "verändert zu" << v_traits2.at( i )->value << "Und zusatztext:" << v_traits2.at( i )->customText << v_traits2.at( i )->custom;
+
+// 				emit traitChanged( &v_traits2[i] );
 
 				// Wenn der Eintrage geschrieben ist, wird die Schleife abgebrochen.
 // 				qDebug() << Q_FUNC_INFO << "breche ab";
@@ -211,7 +257,7 @@ QList< cv_Derangement* > StorageCharacter::derangements( cv_Trait::Category cate
 	QList< cv_Derangement* > list;
 
 	for ( int i = 0; i < v_derangements.count(); i++ ) {
-		if ( v_derangements.at( i ).v_category == category ) {
+		if ( v_derangements.at( i ).category() == category ) {
 			list.append( &v_derangements[i] );
 		}
 	}
@@ -220,7 +266,7 @@ QList< cv_Derangement* > StorageCharacter::derangements( cv_Trait::Category cate
 }
 
 void StorageCharacter::addDerangement( cv_Derangement derang ) {
-	if ( derang.v_name != "" && !v_derangements.contains( derang ) ) {
+	if ( !derang.name().isEmpty() && !v_derangements.contains( derang ) ) {
 // 		qDebug() << Q_FUNC_INFO << derang.name << derang.morality;
 		v_derangements.append( derang );
 
@@ -247,12 +293,12 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 		// Spezialisieren gibt es nur bei Fertigkeiten.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
-		if ( v_traits.at( i ).v_type == cv_Trait::Skill && v_traits.at( i ).v_name == name && v_traits.at( i ).value() > 0 ) {
+		if ( v_traits.at( i ).type() == cv_Trait::Skill && v_traits.at( i ).name() == name && v_traits.at( i ).value() > 0 ) {
 			trait_exists = true;
 
 			cv_Trait trait = v_traits.at( i );
 			// Erst alle Spezialisieren löschen
-			trait.v_details.clear();
+			trait.clearDetails();
 
 			// Dann neu setzen.
 			int detailsCount = details.count();
@@ -262,7 +308,7 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 				specialty.name = details.at( j ).name;
 				specialty.value = true;
 // 				qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << specialty.name << "zu Fertigkeit" << name << "hinzu";
-				trait.v_details.append( specialty );
+				trait.addDetail( specialty );
 			}
 
 			v_traits.replace( i, trait );
@@ -381,15 +427,15 @@ void StorageCharacter::resetCharacter() {
 // 	setFaction(storage->breedNames(species()).at(0));
 
 	for ( int i = 0; i < v_traits.count();i++ ) {
-		if ( v_traits[i].v_type == cv_Trait::Attribute ) {
+		if ( v_traits[i].type() == cv_Trait::Attribute ) {
 			v_traits[i].setValue( 1 );
 		} else {
 			v_traits[i].setValue( 0 );
 		}
 
-		v_traits[i].v_details.clear();
+		v_traits[i].clearDetails();
 
-		v_traits[i].v_customText = "";
+		v_traits[i].setCustomText("");
 
 		emit traitChanged( &v_traits[i] );
 	}
