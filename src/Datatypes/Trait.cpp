@@ -38,6 +38,7 @@ Trait::Trait( cv_Trait trait, QObject* parent ) : QObject(parent), cv_Trait( tra
 	setPrerequisites(trait.prerequisites());
 	setCustom( trait.custom());
 	setCustomText(trait.customText());
+	setDetails(trait.details());
 }
 
 Trait::Trait( Trait* trait, QObject* parent ) : QObject( parent ), cv_Trait( trait->name(), trait->value(), trait->species(), trait->type(), trait->category() ) {
@@ -46,6 +47,7 @@ Trait::Trait( Trait* trait, QObject* parent ) : QObject( parent ), cv_Trait( tra
 	setPrerequisites(trait->prerequisites());
 	setCustom(trait->custom());
 	setCustomText(trait->customText());
+	setDetails(trait->details());
 }
 
 
@@ -53,7 +55,7 @@ void Trait::setValue( int val ) {
 	if ( value() != val){
 		cv_Trait::setValue( val );
 
-		qDebug() << Q_FUNC_INFO << "Wert verändert zu:" << val;
+// 		qDebug() << Q_FUNC_INFO << "Wert verändert zu:" << val;
 		emit valueChanged( val );
 	}
 }

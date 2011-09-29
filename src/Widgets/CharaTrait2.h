@@ -52,10 +52,10 @@ class CharaTrait2 : public TraitLine {
 		 **/
 		CharaTrait2( QWidget *parent, Trait* trait, Trait* traitStorage = 0 );
 
-		/**
-		 * Gibt den Wert zurück, der hier angezeigt wird bzw. werden soll.
-		 **/
-		int value() const;
+// 		/**
+// 		 * Gibt den Wert zurück, der hier angezeigt wird bzw. werden soll.
+// 		 **/
+// 		int value() const;
 		/**
 		 * Gibt den Text zurück, der als zusätzliche Beschreibung angezeigt werden soll.
 		 **/
@@ -154,10 +154,6 @@ class CharaTrait2 : public TraitLine {
 		 * Richtet den Zeiger auf die Eigenschaft im Speicher, welche von diesem Widget repräsentiert wird.
 		 **/
 		void setTraitPtr( Trait* trait );
-		/**
-		 * Sorgt dafür daß das Widget aktualisiert wird und die Werte anzeigt, auf welche es zeigt.
-		 **/
-		void updateWidget(Trait* trait);
 
 	signals:
 		void typeChanged( cv_Trait::Type type );

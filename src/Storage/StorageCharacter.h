@@ -281,10 +281,6 @@ class StorageCharacter : public QObject {
 		 **/
 		void modifyTrait( cv_Trait trait );
 		/**
-		 * Ändert eine Eigenschaft im Speicher.
-		 **/
-		void modifyTrait( Trait* trait );
-		/**
 		 * Fügt eine neue Geistesstörung hinzu.
 		 **/
 		void addDerangement( cv_Derangement derang );

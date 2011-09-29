@@ -44,7 +44,6 @@ CharaTrait2::CharaTrait2( QWidget* parent, Trait* trait, Trait* traitStorage ) :
 	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
 
-// 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( updateWidget( cv_Trait* ) ) );
 // 	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
 // 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( checkTraitPrerequisites( cv_Trait* ) ) );
 // 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
@@ -75,16 +74,14 @@ void CharaTrait2::setTraitPtr( Trait* trait ) {
 
 
 
-int CharaTrait2::value() const {
-	return traitPtr()->value();
-}
+// int CharaTrait2::value() const {
+// 	return traitPtr()->value();
+// }
 void CharaTrait2::setValue( int val ) {
-	if ( traitPtr()->value() != val ) {
+	if ( value() != val ) {
 		traitPtr()->setValue( val );
-		
-		TraitLine::setValue( val );
 
-		emit traitChanged( traitPtr() );
+		TraitLine::setValue( val );
 	}
 }
 
@@ -175,7 +172,7 @@ void CharaTrait2::emitSpecialtiesClicked( bool sw ) {
 		QList< cv_TraitDetail > listStora = ptr_traitStorage->details();
 		QList< cv_TraitDetail > listChara = traitPtr()->details();
 
-		qDebug() << Q_FUNC_INFO << "TEst";
+		qDebug() << Q_FUNC_INFO << traitPtr()->name() << ptr_traitStorage->name() << traitPtr()->details().count() << ptr_traitStorage->details().count();
 
 		for ( int i = 0; i < listStora.count(); i++ ) {
 			for ( int j = 0; j < listChara.count(); j++ ) {
@@ -295,15 +292,5 @@ void CharaTrait2::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {
 	} else {
 		setValue( 0 );
 		setHidden( true );
-	}
-}
-
-
-
-
-void CharaTrait2::updateWidget( Trait* trait ) {
-	if ( traitPtr() == trait ) {
-		TraitLine::setValue( value() );
-		TraitLine::setText( customText() );
 	}
 }

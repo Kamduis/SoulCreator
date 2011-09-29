@@ -227,26 +227,22 @@ void StorageCharacter::modifyTrait( cv_Trait trait ) {
 			}
 		}
 	}
-}
-void StorageCharacter::modifyTrait( Trait* trait ) {
+
+	// Neue Version
 	for ( int i = 0; i < v_traits2.count(); i++ ) {
-		if ( trait->type() == v_traits2.at( i )->type() && trait->category() == v_traits2.at( i )->category() && trait->name() == v_traits2.at( i )->name() ) {
-			if ( !v_traits2.at( i )->custom() || trait->customText() == v_traits2.at( i )->customText() || v_traits2.at( i )->customText().isEmpty() ) {
+		if ( trait.type() == v_traits2.at( i )->type() && trait.category() == v_traits2.at( i )->category() && trait.name() == v_traits2.at( i )->name() ) {
+			if ( !v_traits2.at( i )->custom() || trait.customText() == v_traits2.at( i )->customText() || v_traits2.at( i )->customText().isEmpty() ) {
 				// Custom bleibt immer gleich.
-				v_traits2[i]->setValue ( trait->value() );
-				v_traits2[i]->setCustomText(trait->customText());
-				v_traits2[i]->setDetails(trait->details());
-// 				qDebug() << Q_FUNC_INFO << v_traits2.at( i )->name << "Adresse:" << &v_traits2[i] << "verändert zu" << v_traits2.at( i )->value << "Und zusatztext:" << v_traits2.at( i )->customText << v_traits2.at( i )->custom;
+				v_traits2[i]->setValue ( trait.value() );
+				v_traits2[i]->setCustomText(trait.customText());
+				v_traits2[i]->setDetails(trait.details());
 
-// 				emit traitChanged( &v_traits2[i] );
-
-				// Wenn der Eintrage geschrieben ist, wird die Schleife abgebrochen.
-// 				qDebug() << Q_FUNC_INFO << "breche ab";
 				break;
 			}
 		}
 	}
 }
+
 
 
 QList< cv_Derangement >* StorageCharacter::derangements() const {

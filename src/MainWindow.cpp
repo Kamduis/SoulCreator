@@ -270,7 +270,7 @@ void MainWindow::activate() {
 		trait.setValue( valueOld );
 		character->modifyTrait( trait );
 	}
-	// nEue Version
+	// neue Version
 	for ( int k = 0; k < character->traits2()->count(); k++ ) {
 		int valueOld = character->traits2()->at(k)->value();
 		character->traits2()->at(k)->setValue(10);

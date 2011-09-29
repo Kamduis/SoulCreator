@@ -25,7 +25,7 @@
 #include <QGroupBox>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "CharaTrait2.h"
 #include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
@@ -46,11 +46,11 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 
 	v_categories = cv_Trait::getCategoryList( type );
 
-	QList< cv_Trait* > list;
+	QList< Trait* > list;
 
 	for ( int i = 0; i < v_categories.count(); i++ ) {
 		try {
-			list = storage->traits( type, v_categories.at( i ) );
+			list = storage->traits2( type, v_categories.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
@@ -83,13 +83,13 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 		// Einfügen der tatsächlichen Fertigkeiten
 		for ( int j = 0; j < list.count(); j++ ) {
 			// Anlegen der Eigenschaft im Speicher
-			cv_Trait lcl_trait = *list[j];
+			Trait* lcl_trait = list[j];
+			Trait* traitPtr = character->addTrait( lcl_trait );
 			// Die Spezialisierungen werden nicht übernommen, da im Charakter nur jene gespeichert werden, die der Charakter auch tatsächlich hat.
-			lcl_trait.clearDetails();
-			cv_Trait* traitPtr = character->addTrait( lcl_trait );
+			traitPtr->clearDetails();
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-			CharaTrait *charaTrait = new CharaTrait( this, traitPtr, list[j] );
+			CharaTrait2* charaTrait = new CharaTrait2( this, traitPtr, list[j] );
 			charaTrait->setValue( 0 );
 
 			// Nur Fertigkeiten haben Spezialisierungen.
@@ -120,7 +120,7 @@ SkillWidget::~SkillWidget() {
 
 void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
 // 	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
-	QList< cv_Trait > list;
+	QList< Trait* > list;
 
 	// Nur Spalten 0, 2 und 4 werden verwendet. 1 und 3 sind für optische Trennung.
 	for ( int i = 0; i < layout->columnCount(); i=i+2 ) {
@@ -132,7 +132,7 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 		for ( int j = 1; j < layout->rowCount(); j++ ) {
 // 			qDebug() << Q_FUNC_INFO << "Reihe" << j << "Spalte" << i;
 			
-			CharaTrait *trait = qobject_cast<CharaTrait*>( layout->itemAtPosition( j, i )->widget() );
+			CharaTrait2* trait = qobject_cast<CharaTrait2*>( layout->itemAtPosition( j, i )->widget() );
 
 			if ( trait->name() != skillName ) {
 				trait->setSpecialtyButtonChecked( false );

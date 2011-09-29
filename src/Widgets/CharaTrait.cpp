@@ -76,7 +76,6 @@ int CharaTrait::value() const {
 }
 void CharaTrait::setValue( int val ) {
 	if ( traitPtr()->value() != val ) {
-	qDebug() << Q_FUNC_INFO << traitPtr()->name() << "geändert zu" << val;
 		traitPtr()->setValue( val );
 		TraitLine::setValue( val );
 
