@@ -55,6 +55,36 @@ cv_AbstractTrait::cv_AbstractTrait( QString txt, cv_Species::Species spe, cv_Abs
 	v_category = ca;
 }
 
+QString cv_AbstractTrait::name() const {
+	return v_name;
+}
+void cv_AbstractTrait::setName( QString nam ) {
+	v_name = nam;
+}
+
+cv_Species::Species cv_AbstractTrait::species() const {
+	return v_species;
+}
+void cv_AbstractTrait::setSpecies( cv_Species::Species spe ) {
+	v_species = spe;
+}
+
+cv_AbstractTrait::Type cv_AbstractTrait::type() const {
+	return v_type;
+}
+void cv_AbstractTrait::setType( cv_AbstractTrait::Type typ ) {
+	v_type = typ;
+}
+
+cv_AbstractTrait::Category cv_AbstractTrait::category() const {
+	return v_category;
+}
+void cv_AbstractTrait::setCategory( cv_AbstractTrait::Category cat ) {
+	v_category = cat;
+}
+
+
+
 QString cv_AbstractTrait::toXmlString( cv_AbstractTrait::Type type ) {
 	switch ( type ) {
 		case cv_AbstractTrait::TypeNo:

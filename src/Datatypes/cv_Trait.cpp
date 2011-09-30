@@ -38,13 +38,91 @@ cv_Trait::cv_Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTr
 	v_customText = "";
 }
 
-int cv_Trait::value() const
-{
+int cv_Trait::value() const {
 	return v_value;
 }
-void cv_Trait::setValue( int val )
-{
+void cv_Trait::setValue( int val ) {
 	v_value = val;
+}
+
+QList< int > cv_Trait::possibleValues() const {
+	return v_possibleValues;
+}
+void cv_Trait::setPossibleValues( QList< int > list ) {
+	v_possibleValues = list;
+}
+void cv_Trait::addPossibleValue( int val ) {
+	v_possibleValues.append( val );
+}
+
+
+cv_Trait::Era cv_Trait::era() const {
+	return v_era;
+}
+
+void cv_Trait::setEra( cv_Trait::Era er ) {
+	v_era = er;
+}
+
+cv_Trait::Age cv_Trait::age() const {
+	return v_age;
+}
+
+void cv_Trait::setAge( cv_Trait::Age ag ) {
+	v_age = ag;
+}
+
+QList< cv_TraitDetail > cv_Trait::details() const {
+	return v_details;
+}
+
+void cv_Trait::setDetails( QList< cv_TraitDetail > list ) {
+	if ( v_details != list ) {
+		v_details = list;
+	}
+}
+void cv_Trait::addDetail( cv_TraitDetail det ) {
+	if ( !v_details.contains( det ) ) {
+		v_details.append( det );
+	}
+}
+void cv_Trait::clearDetails() {
+	if ( !v_details.isEmpty() ) {
+		v_details.clear();
+	}
+}
+
+
+QString cv_Trait::prerequisites() const {
+	return v_prerequisites;
+}
+
+void cv_Trait::setPrerequisites( QString txt ) {
+	v_prerequisites = txt;
+}
+
+bool cv_Trait::custom() const {
+	return v_custom;
+}
+
+void cv_Trait::setCustom( bool sw ) {
+	v_custom = sw;
+}
+
+QString cv_Trait::customText() const {
+	if ( custom() ) {
+		return v_customText;
+	} else {
+		return "";
+	}
+}
+
+void cv_Trait::setCustomText( QString txt ) {
+	if ( !txt.isEmpty() ) {
+		v_custom = true;
+	}
+
+	v_customText = txt;
 }
 
 
@@ -70,16 +148,18 @@ cv_Trait::Age cv_Trait::toAge( QString str ) {
 }
 
 
+
 bool cv_Trait::operator==( const cv_Trait& trait ) const {
 	if ( this == &trait ) {
 		return true;
 	}
 
-	bool result = v_name == trait.v_name
+	bool result = name() == trait.name()
+
 				  && v_value == trait.v_value
-				  && v_type == trait.v_type
-				  && v_category == trait.v_category
-				  && v_species == trait.v_species
+				  && type() == trait.type()
+				  && category() == trait.category()
+				  && species() == trait.species()
 				  && v_era == trait.v_era
 				  && v_age == trait.v_age
 				  && v_details == trait.v_details

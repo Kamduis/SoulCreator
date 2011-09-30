@@ -128,15 +128,29 @@ class StorageCharacter : public QObject {
 		 **/
 		QList< cv_Trait >* traits() const;
 		/**
+		 * Gibt eine Liste \emph{aller} Eigenschaften des Charkaters aus.
+		 **/
+		QList< Trait* >* traits2() const;
+		/**
 		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 **/
 		QList< cv_Trait* > traits( cv_Trait::Type type ) const;
+		/**
+		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
+		 **/
+		QList< Trait* > traits2( cv_Trait::Type type ) const;
 		/**
 		 * Gibt eine Liste von Zeigern auf alle Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 *
 		 * \overload QList< cv_Trait* > traits( cv_Trait::Type type )
 		 **/
 		QList< cv_Trait* > traits( cv_Trait::Type type, cv_Trait::Category category ) const;
+		/**
+		 * Gibt eine Liste von Zeigern auf alle Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
+		 *
+		 * \overload QList< cv_Trait* > traits( cv_Trait::Type type )
+		 **/
+		QList< Trait* > traits2( cv_Trait::Type type, cv_Trait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus.
 		 **/
@@ -173,7 +187,7 @@ class StorageCharacter : public QObject {
 		 **/
 		bool isModifed() const;
 
-private:
+	private:
 		StorageTemplate* storage;
 		/**
 		 * Die Spezies des Charakters.
@@ -260,6 +274,8 @@ private:
 		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
 		 *
 		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
+		 *
+		 * \bug Ich muß alle Eigenschaften vor den Merits erzeugen, sonst stürzt das programm aus irgendeinem Grund ab.
 		 **/
 		Trait* addTrait( Trait* trait );
 		/**
@@ -350,6 +366,10 @@ private:
 		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
 		**/
 		void traitChanged( cv_Trait* trait );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
+		**/
+		void traitChanged( Trait* trait );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich eine Geistesstörung ändert.
 		**/

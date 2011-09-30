@@ -158,25 +158,37 @@ class cv_AbstractTrait {
 		cv_AbstractTrait( QString txt = "", cv_Species::Species spe = cv_Species::SpeciesNo, cv_AbstractTrait::Type ty = cv_AbstractTrait::TypeNo, cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo );
 		
 		/**
-		 * Der Name der Eigenschaft.
+		 * Gibt den Namen der Eigenschaft zurück.
 		 **/
-		QString v_name;
+		QString name() const;
 		/**
-		 * Welche Spezies über diese Eigenschaft verfügen.
+		 * Legt den Namen der Eigenschaft fest
 		 **/
-		cv_Species::Species v_species;
+		void setName(QString nam);
 		/**
-		 * Der Typ, dem diese Eigenschaft angehört.
-		 *
-		 * \sa Type
+		 * Gibt aus, welche Spezies über diese Eigenschaft verfügen.
 		 **/
-		Type v_type;
+		cv_Species::Species species() const;
 		/**
-		 * Die Kategorie, der diese Eigenschaft angehört.
-		 *
-		 * \sa Category
+		 * Legt fest, welche Spezies über diese Eigenschaft verfügen.
 		 **/
-		Category v_category;
+		virtual void setSpecies(cv_Species::Species spe);
+		/**
+		 * Gibt zurück, welchem Typ diese Eigenschaft angehört.
+		 **/
+		Type type() const;
+		/**
+		 * Legt fest, welchem Typ diese Eigenschaft angehört.
+		 **/
+		virtual void setType(Type typ);
+		/**
+		 * Gibt zurpck, welcher Kategorie diese Eigenschaft angehört.
+		 **/
+		Category category() const;
+		/**
+		 * Legt fest, welcher Kategorie diese Eigenschaft angehört.
+		 **/
+		void setCategory(Category cat);
 
 		/**
 		 * Wandelt einen Typ in seinen in den Xml-Dateien gebräuchlichen Namen um.
@@ -231,6 +243,27 @@ class cv_AbstractTrait {
 
 
 	private:
+		/**
+		 * Der Name der Eigenschaft.
+		 **/
+		QString v_name;
+		/**
+		 * Welche Spezies über diese Eigenschaft verfügen.
+		 **/
+		cv_Species::Species v_species;
+		/**
+		 * Der Typ, dem diese Eigenschaft angehört.
+		 *
+		 * \sa Type
+		 **/
+		Type v_type;
+		/**
+		 * Die Kategorie, der diese Eigenschaft angehört.
+		 *
+		 * \sa Category
+		 **/
+		Category v_category;
+
 		/**
 		 * Eine Liste aller Kategorien für Attribute und Fertigkeiten.
 		 **/

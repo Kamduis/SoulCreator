@@ -163,10 +163,11 @@ void MainWindow::populateUi() {
 	// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
+	flaws = new FlawWidget( this );
+	// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 	merits = new MeritWidget( this );
 	morality = new MoralityWidget( this );
 	powers = new PowerWidget( this );
-	flaws = new FlawWidget( this );
 	advantages = new AdvantagesWidget( this );
 
 	ui->layout_info->addWidget( info );
@@ -269,6 +270,12 @@ void MainWindow::activate() {
 		// Wieder auf alten Wert zurücksetzen.
 		trait.setValue( valueOld );
 		character->modifyTrait( trait );
+	}
+	// neue Version
+	for ( int k = 0; k < character->traits2()->count(); k++ ) {
+		int valueOld = character->traits2()->at(k)->value();
+		character->traits2()->at(k)->setValue(10);
+		character->traits2()->at(k)->setValue(valueOld);
 	}
 
 	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.

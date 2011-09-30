@@ -48,7 +48,7 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 	v_categories = cv_Trait::getCategoryList(type);
 
-	QList< cv_Trait* > list;
+	QList< Trait* > list;
 
 	// Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < v_categories.count(); i++ ) {
@@ -61,7 +61,7 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 		toolBox->addItem( widgetMeritCategory, cv_Trait::toString( v_categories.at( i ), true ) );
 
 		try {
-			list = storage->traits( type, v_categories.at( i ) );
+			list = storage->traits2( type, v_categories.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
@@ -70,10 +70,10 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
 				// Anlegen der Eigenschaft im Speicher
-				cv_Trait* traitPtr = character->addTrait( *list[j] );
+				Trait* traitPtr = character->addTrait( list[j] );
 
 				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				CharaTrait *charaTrait = new CharaTrait( this, traitPtr, list[j] );
+				CharaTrait* charaTrait = new CharaTrait( this, traitPtr, list[j] );
 				charaTrait->setValue( 0 );
 				layoutMeritCategory->addWidget( charaTrait );
 
@@ -81,7 +81,7 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
 
-				if ( !list.at( j )->v_custom ) {
+				if ( !list.at( j )->custom() ) {
 					break;
 				}
 			}
@@ -116,8 +116,7 @@ MeritWidget::~MeritWidget() {
 
 void MeritWidget::countMerits() {
 	for (int i = 0; i < v_categories.count(); i++){
-// 		QList< cv_Trait > list = character->merits( v_categories.at(i) );
-		QList< cv_Trait* > list = character->traits( cv_Trait::Merit, v_categories.at(i) );
+		QList< Trait* > list = character->traits2( cv_Trait::Merit, v_categories.at(i) );
 
 		int numberInCategory = 0;
 

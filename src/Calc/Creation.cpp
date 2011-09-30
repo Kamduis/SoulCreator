@@ -61,18 +61,18 @@ void Creation::setPoints( cv_CreationPoints points ) {
 
 void Creation::calcPoints( cv_Trait* trait ) {
 // 	qDebug() << Q_FUNC_INFO << trait->type << "<->" << v_types;
-	if ( v_types.contains( trait->v_type ) ) {
+	if ( v_types.contains( trait->type() ) ) {
 		QList< cv_Trait* > list;
 		QList< int > pointList;
 		// Nur bei Attributen und Fertigkeiten sind die zu verteilenden Punkte zwischen den Kategorien aufgeteilt.
 
-		if ( trait->v_type == cv_Trait::Attribute || trait->v_type == cv_Trait::Skill ) {
-			QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( trait->v_type );
+		if ( trait->type() == cv_Trait::Attribute || trait->type() == cv_Trait::Skill ) {
+			QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( trait->type() );
 
 			for ( int i = 0; i < categories.count(); i++ ) {
 				int pts = 0;
 
-				list = character->traits( trait->v_type, categories.at( i ) );
+				list = character->traits( trait->type(), categories.at( i ) );
 
 				for ( int j = 0; j < list.count(); j++ ) {
 					// Alle Punkte über 4 kosten 2 Erschaffungspunkte
@@ -94,11 +94,11 @@ void Creation::calcPoints( cv_Trait* trait ) {
 			qSort( pointList );
 
 			// Bei Attributen ist der jeweils erste Punkt umsonst.
-			if ( trait->v_type == cv_Trait::Attribute ) {
+			if ( trait->type() == cv_Trait::Attribute ) {
 				v_points.attributesA = Config::creationPointsAttA + 3 - pointList.at( 2 );
 				v_points.attributesB = Config::creationPointsAttB + 3 - pointList.at( 1 );
 				v_points.attributesC = Config::creationPointsAttC + 3 - pointList.at( 0 );
-			} else if ( trait->v_type == cv_Trait::Skill ) {
+			} else if ( trait->type() == cv_Trait::Skill ) {
 				v_points.skillsA = Config::creationPointsSkillA - pointList.at( 2 );
 				v_points.skillsB = Config::creationPointsSkillB - pointList.at( 1 );
 				v_points.skillsC = Config::creationPointsSkillC - pointList.at( 0 );
@@ -106,7 +106,7 @@ void Creation::calcPoints( cv_Trait* trait ) {
 		} else {
 			int pts = 0;
 
-			list = character->traits( trait->v_type );
+			list = character->traits( trait->type() );
 
 			for ( int j = 0; j < list.count(); j++ ) {
 				// Alle Punkte über 4 kosten 2 Erschaffungspunkte
@@ -121,7 +121,7 @@ void Creation::calcPoints( cv_Trait* trait ) {
 				pts += ans * 2;
 			}
 
-			if ( trait->v_type == cv_Trait::Merit ) {
+			if ( trait->type() == cv_Trait::Merit ) {
 				v_points.merits = Config::creationPointsMerits - pts;
 			}
 		}

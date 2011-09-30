@@ -39,6 +39,8 @@
  * \todo Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.
  *
  * \todo Den Parser \ref StringBoolParser erweitern, damit übriggebliebener Text nach den Ersetzungen der Eigesncahften durch ihre Werte mit 0 gleichgesetzt wird. Aktuell mache ich das durch Stringmanipulation, aber das ist natürlich langsamer.
+ *
+ * \todo eine fast identische Klasse schaffen, welche Trait anstelle von cv_Trait nutzt und direkte Siganel empfangen kann.
  **/
 
 class CharaTrait : public TraitLine {
@@ -48,12 +50,12 @@ class CharaTrait : public TraitLine {
 		/**
 		 * An diesen Konstruktor kann direkt die Eigenschaft übergeben werden, welche dieses Widget anzeigt.
 		 **/
-		CharaTrait( QWidget *parent, cv_Trait* trait, cv_Trait* traitStorage = 0 );
+		CharaTrait( QWidget *parent, Trait* trait, Trait* traitStorage = 0 );
 
-		/**
-		 * Gibt den Wert zurück, der hier angezeigt wird bzw. werden soll.
-		 **/
-		int value() const;
+// 		/**
+// 		 * Gibt den Wert zurück, der hier angezeigt wird bzw. werden soll.
+// 		 **/
+// 		int value() const;
 		/**
 		 * Gibt den Text zurück, der als zusätzliche Beschreibung angezeigt werden soll.
 		 **/
@@ -78,13 +80,13 @@ class CharaTrait : public TraitLine {
 		/**
 		 * Gibt den Zeiger zurück, welcher auf die Eigenschaft im Speicher verweist, welche durch dieses jeweilige Widget repräsentiert wird.
 		 **/
-		cv_Trait* traitPtr() const;
+		Trait* traitPtr() const;
 
 	private:
 		StorageCharacter *character;
 
-		cv_Trait* ptr_trait;
-		cv_Trait* ptr_traitStorage;
+		Trait* ptr_trait;
+		Trait* ptr_traitStorage;
 
 		/**
 		 * Hilfsfunktion für checkTraitPrerequisites().
@@ -92,12 +94,6 @@ class CharaTrait : public TraitLine {
 		QString parsePrerequisites( QString text );
 
 	public slots:
-		/**
-		 * Legt den Wert der Eigenschaft fest.
-		 *
-		 * Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
-		 **/
-		void setValue( int val );
 		/**
 		 * Legt den Zusatztext fest.
 		 *
@@ -140,7 +136,7 @@ class CharaTrait : public TraitLine {
 		/**
 		 * Sorgt dafür, daß das Widget disabled wird, wenn die Voraussetzungen nicht erfüllt sind. Diese Funktion überprüft nur, ob sich die Voraussetzungen verändert haben, weil sich diese eine Eigenschaft verändert hat.
 		 **/
-		void checkTraitPrerequisites( cv_Trait* trait /** Veränderte Eigenschaft, die \emph{möglicherweise} Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */);
+		void checkTraitPrerequisites( Trait* trait /** Veränderte Eigenschaft, die \emph{möglicherweise} Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */);
 		/**
 		 * Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.
 		 *
@@ -151,11 +147,13 @@ class CharaTrait : public TraitLine {
 		/**
 		 * Richtet den Zeiger auf die Eigenschaft im Speicher, welche von diesem Widget repräsentiert wird.
 		 **/
-		void setTraitPtr( cv_Trait* trait );
+		void setTraitPtr( Trait* trait );
+
+	private slots:
 		/**
-		 * Sorgt dafür daß das Widget aktualisiert wird und die Werte anzeigt, auf welche es zeigt.
+		 * Wenn der Wert dieses Widgets verändert wird, muß auch der dadurch repräsentierte Wert im Speicher verändert werden. Dies geschieht über diesen Slot.
 		 **/
-		void updateWidget(cv_Trait* trait);
+		void setTraitValue( int val );
 
 	signals:
 		void typeChanged( cv_Trait::Type type );
