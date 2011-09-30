@@ -83,7 +83,7 @@ void CharaTrait2::setTraitPtr( Trait* trait ) {
 // 	}
 // }
 void CharaTrait2::setTraitValue( int val ) {
-	qDebug() << Q_FUNC_INFO << name() << val << value();
+// 	qDebug() << Q_FUNC_INFO << name() << val << value();
 	if ( traitPtr()->value() != val ) {
 		traitPtr()->setValue( val );
 	}

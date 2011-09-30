@@ -103,6 +103,8 @@ class Trait : public QObject, public cv_Trait {
 		void detailsChanged();
 		/**
 		 * Irgendein Aspekt der Eigenschaft hat sich verändert.
+		 *
+		 * \note Derzeit werden nur Veränderungen des Wertes oder der Details (Spezialisierungen) beachtet. Änderungen des Namens etc lösen kein Aussenden dieses Signals aus.
 		 **/
 		void traitChanged(Trait* trait);
 };

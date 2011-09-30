@@ -41,7 +41,25 @@ class CalcAdvantages : public QObject {
 		Q_OBJECT
 
 	public:
+		/**
+		 * Konstruktor.
+		 **/
 		CalcAdvantages( QObject* parent = 0 );
+		/**
+		 * Konstruktor, welcher direkt Zeiger zu den relevanten Eigenschaften erfordert, um nur dann neu zu berechnen, wenn diese sich ändern.
+		 *
+		 * \todo Hat noch keinen Effekt.
+		 *
+		 * \todo Soll später den Konstruktor ersetzen.
+		 **/
+		CalcAdvantages( Trait* tmp /** Temporär, damit der Konstruktor überladen wird. */,
+						QObject* parent = 0 );
+		/**
+		 * Destruktor.
+		 *
+		 * Gibt die verwendeten Ressourcen wieder frei.
+		 **/
+		~CalcAdvantages();
 
 		/**
 		 * Berechnet die Größe des Charakters abhängig von den unterschiedlichen Gestalten.
@@ -54,13 +72,13 @@ class CalcAdvantages : public QObject {
 		 *
 		 * \note Es wird auf das Ergebnis der Funktion calcInitiativa() zurückgegriffen, welche bei jeder Veränderung einer Eigenschaft, die Auswirkung auf die Initiative haben kann, aufgerufen wird.
 		 **/
-		int initiative(cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo) const;
+		int initiative( cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo ) const;
 		/**
 		 * Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
 		 *
 		 * \note Es wird auf das Ergebnis der Funktion calcSpeed() zurückgegriffen, welche bei jeder Veränderung einer Eigenschaft, die Auswirkung auf diee Eigenschaft haben kann, aufgerufen wird.
 		 **/
-		int speed(cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo) const;
+		int speed( cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo ) const;
 		/**
 		 * Berechnet die Defensive des Charakters.
 		 **/
@@ -78,9 +96,19 @@ class CalcAdvantages : public QObject {
 		static int dexterity( int dex, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
 		static int stamina( int sta, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
 		static int manipulation( int man, cv_Shape::WerewolfShape shape = cv_Shape::ShapeNo );
-		
+
 	private:
 		StorageCharacter* character;
+
+		Trait* attrWit;
+		Trait* attrRes;
+		Trait* attrStr;
+		Trait* attrDex;
+		Trait* attrSta;
+		Trait* attrCom;
+		Trait* meritGiant;
+		Trait* meritFastReflexes;
+		Trait* meritFleetOfFoot;
 
 		static int v_size;
 		static int v_initiative;
@@ -89,47 +117,44 @@ class CalcAdvantages : public QObject {
 		static int v_health;
 		static int v_willpower;
 
+		/**
+		 * Findet anwendung in sämtlichen Konstruktoren.
+		 **/
+		void construct();
+
 	private slots:
 		/**
 		 * Berechnung der Größe des Charakters.
 		 *
 		 * \todo Bislang nur vom Merit Size abhängig. Nicht von anderen Merits oder dem Alter (Kinder haben Size = 4).
 		 **/
-		int calcSize( cv_Trait* trait );
+		int calcSize();
 		/**
 		 * Berechnung der Initiative des Charakters.
 		 *
 		 * \todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig.
 		 **/
-		int calcInitiative( cv_Trait* trait );
+		int calcInitiative();
 		/**
 		 * Berechnung der Geschwindigkeit des Charakters.
 		 *
 		 * \todo Bislang nur von Strength und Dexterity abhängig.
 		 **/
-		int calcSpeed( cv_Trait* trait );
+		int calcSpeed();
 		/**
 		 * Berechnung der Defense
 		 *
 		 * \todo Bislang nicht von der Spezies abhängig. Tiere haben stets das größere von Dex und Wits als Defense.
 		 **/
-		int calcDefense( cv_Trait* trait );
+		int calcDefense();
 		/**
 		 * Berechnung der Gesundheit.
-		 *
-		 * Dieser Slot wird nur bei einer Veränderung von Stamina angesprochen. Für eine Veränderung der Größe gibt es einen extra slot (siehe calcHealth( int size )).
 		 **/
-		int calcHealth( cv_Trait* trait );
+		int calcHealth();
 		/**
 		 * Berechnung der Willenskraft.
 		 **/
-		int calcWillpower( cv_Trait* trait );
-		/**
-		 * Berechnung der Gesundheit.
-		 *
-		 * Dieser Slot wird nur bei einer Veränderung der Größe angesprochen. Für eine Veränderung der Stamina gibt es einen extra slot (siehe calcHealth( cv_Trait trait )).
-		 **/
-		int calcHealth( int size );
+		int calcWillpower();
 
 	signals:
 		/**

@@ -207,17 +207,9 @@ Trait* StorageCharacter::addTrait( Trait* trait ) {
 	v_traits2.append( lcl_trait );
 
 	// Wann immer sich eine Eigenschaft ändert, muß dies auch ein passendes Signal aussenden.
-	// Hier gibt es Probleme. Beim Starten des Programms stürzt es ab, wahrscheinlich weil etwas verändert werden soll, was noch garnicht richtig existiert.
-	// Das ganze passiert nach "Subterfuge"
 	connect( lcl_trait, SIGNAL( traitChanged( Trait* ) ), this, SIGNAL( traitChanged(Trait*)) );
-	connect( lcl_trait, SIGNAL( valueChanged( int ) ), this, SLOT( test()) );
 
 	return lcl_trait;
-}
-
-void StorageCharacter::test()
-{
-	qDebug() << Q_FUNC_INFO << "Test";
 }
 
 

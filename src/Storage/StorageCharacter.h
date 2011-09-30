@@ -346,7 +346,6 @@ class StorageCharacter : public QObject {
 
 	private slots:
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
-		void test();
 
 	signals:
 		/**

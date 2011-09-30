@@ -65,7 +65,7 @@ void Trait::construct() {
 
 
 void Trait::setValue( int val ) {
-	qDebug() << Q_FUNC_INFO << name() << val << value();
+// 	qDebug() << Q_FUNC_INFO << name() << val << value();
 	if ( value() != val ) {
 		cv_Trait::setValue( val );
 
