@@ -1,8 +1,10 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$cv___abstract_trait_8cpp.html" title="src/Datatypes/cv_AbstractTrait.cpp" alt="" coords="5,83,248,112"/>
 <area shape="rect" id="node5" href="$cv___derangement_8h.html" title="src/Datatypes/cv_Derangement.h" alt="" coords="272,83,509,112"/>
-<area shape="rect" id="node9" href="$cv___trait_8h.html" title="src/Datatypes/cv_Trait.h" alt="" coords="540,83,713,112"/>
-<area shape="rect" id="node7" href="$cv___derangement_8cpp.html" title="src/Datatypes/cv_Derangement.cpp" alt="" coords="257,160,508,189"/>
-<area shape="rect" id="node11" href="$cv___trait_8cpp.html" title="src/Datatypes/cv_Trait.cpp" alt="" coords="532,160,721,189"/>
-<area shape="rect" id="node13" href="$_main_window_8cpp.html" title="src/MainWindow.cpp" alt="" coords="745,160,892,189"/>
+<area shape="rect" id="node9" href="$cv___trait_8h.html" title="src/Datatypes/cv_Trait.h" alt="" coords="589,83,763,112"/>
+<area shape="rect" id="node7" href="$cv___derangement_8cpp.html" title="src/Datatypes/cv_Derangement.cpp" alt="" coords="209,160,460,189"/>
+<area shape="rect" id="node11" href="$cv___trait_8cpp.html" title="src/Datatypes/cv_Trait.cpp" alt="" coords="484,160,673,189"/>
+<area shape="rect" id="node13" href="$_trait_8h.html" title="src/Datatypes/Trait.h" alt="" coords="697,160,849,189"/>
+<area shape="rect" id="node17" href="$_main_window_8cpp.html" title="src/MainWindow.cpp" alt="" coords="873,160,1020,189"/>
+<area shape="rect" id="node15" href="$_trait_8cpp.html" title="src/Datatypes/Trait.cpp" alt="" coords="689,237,857,267"/>
 </map>

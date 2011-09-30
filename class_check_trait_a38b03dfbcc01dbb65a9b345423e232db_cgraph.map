@@ -1,7 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_check_trait.html#a9073e7f8bbac8c351bf829b23a9fc850" title="CheckTrait::setValue" alt="" coords="289,57,439,87"/>
-<area shape="rect" id="node12" href="$class_check_trait.html#ae1f7c66daf473387e3c8ea8e4857bc14" title="CheckTrait::species" alt="" coords="293,111,435,140"/>
-<area shape="rect" id="node5" href="$class_check_trait.html#a6fc70482737108eb58606a8eed553e04" title="CheckTrait::traitChanged" alt="" coords="488,5,667,35"/>
-<area shape="rect" id="node7" href="$class_check_trait.html#a85928c20fd7d921c1d9b831168b9964e" title="CheckTrait::traitPtr" alt="" coords="715,84,853,113"/>
-<area shape="rect" id="node9" href="$class_check_trait.html#a4399a810312044b74f6227955a1879a9" title="CheckTrait::value" alt="" coords="513,109,641,139"/>
+<area shape="rect" id="node3" href="$class_check_trait.html#a9073e7f8bbac8c351bf829b23a9fc850" title="CheckTrait::setValue" alt="" coords="289,99,439,128"/>
+<area shape="rect" id="node15" href="$class_check_trait.html#ae1f7c66daf473387e3c8ea8e4857bc14" title="CheckTrait::species" alt="" coords="293,165,435,195"/>
+<area shape="rect" id="node5" href="$class_trait.html#aff507cb19b22e5668fc20b471d73d691" title="Trait::setValue" alt="" coords="523,32,632,61"/>
+<area shape="rect" id="node11" href="$class_check_trait.html#a5dde04a27f8ada588ecb3516630c9e6f" title="CheckTrait::traitPtr" alt="" coords="508,85,647,115"/>
+<area shape="rect" id="node13" href="$class_check_trait.html#a4399a810312044b74f6227955a1879a9" title="CheckTrait::value" alt="" coords="513,139,641,168"/>
+<area shape="rect" id="node7" href="$classcv___trait.html#a965fb56fc4ff6e659b4c44752cfaa538" title="cv_Trait::value" alt="" coords="733,5,843,35"/>
+<area shape="rect" id="node9" href="$class_trait.html#a953d7925e76098c051e7ade90a25cc03" title="Trait::valueChanged" alt="" coords="715,59,861,88"/>
+<area shape="rect" id="node17" href="$classcv___abstract_trait.html#a5550607235c2a5875f84d13fb6f9aa3f" title="cv_AbstractTrait::species" alt="" coords="488,192,667,221"/>
 </map>

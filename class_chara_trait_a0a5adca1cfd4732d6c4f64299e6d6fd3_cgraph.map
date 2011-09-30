@@ -1,7 +1,9 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$class_chara_trait.html#a7cc9b10030c5e6d5030fb898506ee070" title="CharaTrait::customText" alt="" coords="239,5,404,35"/>
 <area shape="rect" id="node5" href="$class_chara_trait.html#acd1abb86d271f401b9856f2c8e172255" title="CharaTrait::traitPtr" alt="" coords="680,83,819,112"/>
-<area shape="rect" id="node7" href="$class_chara_trait.html#abcfeed4a455c49246385c9bc2024ba15" title="CharaTrait::setValue" alt="" coords="247,135,396,164"/>
-<area shape="rect" id="node12" href="$class_chara_trait.html#adeed572acc2fa97468285bc3267e9cb8" title="CharaTrait::value" alt="" coords="479,213,607,243"/>
-<area shape="rect" id="node9" href="$class_chara_trait.html#ab3935a94198f510d3de473a9a72692ac" title="CharaTrait::traitChanged" alt="" coords="455,160,631,189"/>
+<area shape="rect" id="node7" href="$class_chara_trait.html#abcfeed4a455c49246385c9bc2024ba15" title="CharaTrait::setValue" alt="" coords="247,160,396,189"/>
+<area shape="rect" id="node14" href="$class_chara_trait.html#adeed572acc2fa97468285bc3267e9cb8" title="CharaTrait::value" alt="" coords="479,267,607,296"/>
+<area shape="rect" id="node9" href="$classcv___trait.html#aa1d68882182c6858991571f21ddef507" title="cv_Trait::setValue" alt="" coords="477,160,608,189"/>
+<area shape="rect" id="node11" href="$class_chara_trait.html#ab3935a94198f510d3de473a9a72692ac" title="CharaTrait::traitChanged" alt="" coords="455,213,631,243"/>
+<area shape="rect" id="node17" href="$classcv___trait.html#a965fb56fc4ff6e659b4c44752cfaa538" title="cv_Trait::value" alt="" coords="695,267,804,296"/>
 </map>

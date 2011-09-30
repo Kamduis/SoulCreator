@@ -137,8 +137,9 @@ function toggleVisibility(linkObj) {
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Öffentliche Methoden</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6efd3ae9b2a4cd9fb606ff5f29f0c44e"></a><!-- doxytag: member="CalcAdvantages::CalcAdvantages" ref="a6efd3ae9b2a4cd9fb606ff5f29f0c44e" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>CalcAdvantages</b> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_calc_advantages.html#a6efd3ae9b2a4cd9fb606ff5f29f0c44e">CalcAdvantages</a> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_calc_advantages.html#abb4dfdc6c26b4e59b140831cfa3df49e">CalcAdvantages</a> (<a class="el" href="class_trait.html">Trait</a> *tmp, QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_calc_advantages.html#af3498befedfc4b0e86476b4873bc7343">~CalcAdvantages</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_calc_advantages.html#a1192ed1561572b251a36c82ee2610c8e">defense</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_calc_advantages.html#ac118e546fa5479a2fb57cdce7893eb42">health</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_calc_advantages.html#aeabf624df4f0651882ad0409f607d8c2">initiative</a> (cv_Shape::WerewolfShape shape=cv_Shape::ShapeNo) const </td></tr>
@@ -167,7 +168,90 @@ Signale</h2></td></tr>
 <hr/><a name="_details"></a><h2>Ausführliche Beschreibung</h2>
 <div class="textblock"><p>Diese Klasse führt die berechnung der abgeleiteten Eigenschaften durch. </p>
 <p>Die hier deklarierten Berechnungsfunktionen werden zwar bei der Änderung jeder Eigenschaft aufgerufen, aber berechnen die Werte nur, wenn eine Eigenschaft verändert wurde, welche Einfluß auf das Ergebnis nimmt. Sie geben allerdings immer das Ergebnis der berechnung aus. Entweder den neuen Wert, oder den alten Wert, der in dieser Klasse gespeichert wird. </p>
-</div><hr/><h2>Dokumentation der Elementfunktionen</h2>
+</div><hr/><h2>Beschreibung der Konstruktoren und Destruktoren</h2>
+<a class="anchor" id="a6efd3ae9b2a4cd9fb606ff5f29f0c44e"></a><!-- doxytag: member="CalcAdvantages::CalcAdvantages" ref="a6efd3ae9b2a4cd9fb606ff5f29f0c44e" args="(QObject *parent=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CalcAdvantages::CalcAdvantages </td>
+          <td>(</td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Konstruktor. </p>
+
+<p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_calc_advantages_a6efd3ae9b2a4cd9fb606ff5f29f0c44e_cgraph.svg" width="512" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="abb4dfdc6c26b4e59b140831cfa3df49e"></a><!-- doxytag: member="CalcAdvantages::CalcAdvantages" ref="abb4dfdc6c26b4e59b140831cfa3df49e" args="(Trait *tmp, QObject *parent=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CalcAdvantages::CalcAdvantages </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_trait.html">Trait</a> *&#160;</td>
+          <td class="paramname"><em>tmp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Konstruktor, welcher direkt Zeiger zu den relevanten Eigenschaften erfordert, um nur dann neu zu berechnen, wenn diese sich ändern.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Noch zu erledigen:</a></b></dt><dd>Hat noch keinen Effekt.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Noch zu erledigen:</a></b></dt><dd>Soll später den Konstruktor ersetzen. </dd></dl>
+<dl><dt><b>Parameter:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tmp</td><td>Temporär, damit der Konstruktor überladen wird. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af3498befedfc4b0e86476b4873bc7343"></a><!-- doxytag: member="CalcAdvantages::~CalcAdvantages" ref="af3498befedfc4b0e86476b4873bc7343" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CalcAdvantages::~CalcAdvantages </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Destruktor.</p>
+<p>Gibt die verwendeten Ressourcen wieder frei. </p>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Elementfunktionen</h2>
 <a class="anchor" id="a1192ed1561572b251a36c82ee2610c8e"></a><!-- doxytag: member="CalcAdvantages::defense" ref="a1192ed1561572b251a36c82ee2610c8e" args="() const " -->
 <div class="memitem">
 <div class="memproto">
@@ -310,6 +394,16 @@ Signale</h2></td></tr>
 <div class="memdoc">
 <p>Size hat sich verändert. </p>
 
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_calc_advantages_ac91d31d1779333427049169b66ed8ff6_icgraph.svg" width="512" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="ade16c5338dc583a81ca9808e312f295e"></a><!-- doxytag: member="CalcAdvantages::speed" ref="ade16c5338dc583a81ca9808e312f295e" args="(cv_Shape::WerewolfShape shape=cv_Shape::ShapeNo) const " -->
@@ -389,7 +483,7 @@ Signale</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="class_calc_advantages.html">CalcAdvantages</a>      </li>
-      <li class="footer">Erzeugt am Tue Sep 27 2011 18:49:52 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

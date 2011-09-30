@@ -161,38 +161,47 @@ function toggleVisibility(linkObj) {
 <a name="l00154"></a>00154 
 <a name="l00158"></a>00158         <a class="code" href="classcv___abstract_trait.html#a293e22e3182aa859ff2587b9878700fa">cv_AbstractTrait</a>( QString txt = <span class="stringliteral">&quot;&quot;</span>, cv_Species::Species spe = cv_Species::SpeciesNo, <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> ty = cv_AbstractTrait::TypeNo, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> ca = cv_AbstractTrait::CategoryNo );
 <a name="l00159"></a>00159         
-<a name="l00163"></a><a class="code" href="classcv___abstract_trait.html#a26438d0b9e279daea8b93fa8e8b64424">00163</a>         QString <a class="code" href="classcv___abstract_trait.html#a26438d0b9e279daea8b93fa8e8b64424">name</a>;
-<a name="l00167"></a><a class="code" href="classcv___abstract_trait.html#a98184988820501bb1f75827f96a90275">00167</a>         cv_Species::Species <a class="code" href="classcv___abstract_trait.html#a98184988820501bb1f75827f96a90275">species</a>;
-<a name="l00173"></a><a class="code" href="classcv___abstract_trait.html#abd70e5e7cbcfc344676525f027c05232">00173</a>         <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">Type</a> <a class="code" href="classcv___abstract_trait.html#abd70e5e7cbcfc344676525f027c05232">type</a>;
-<a name="l00179"></a><a class="code" href="classcv___abstract_trait.html#af840a97614a08c245998c51ca18fc2cd">00179</a>         <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">Category</a> <a class="code" href="classcv___abstract_trait.html#af840a97614a08c245998c51ca18fc2cd">category</a>;
-<a name="l00180"></a>00180 
-<a name="l00186"></a>00186         <span class="keyword">static</span> QString <a class="code" href="classcv___abstract_trait.html#aa056183da0b12c6282da71d1f25c0191">toXmlString</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="classcv___abstract_trait.html#abd70e5e7cbcfc344676525f027c05232">type</a> );
-<a name="l00192"></a>00192         <span class="keyword">static</span> QString <a class="code" href="classcv___abstract_trait.html#aa056183da0b12c6282da71d1f25c0191">toXmlString</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> <a class="code" href="classcv___abstract_trait.html#af840a97614a08c245998c51ca18fc2cd">category</a> );
-<a name="l00198"></a>00198         <span class="keyword">static</span> QString <a class="code" href="classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15">toString</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="classcv___abstract_trait.html#abd70e5e7cbcfc344676525f027c05232">type</a>, <span class="keywordtype">bool</span> plural = <span class="keyword">false</span>  );
-<a name="l00204"></a>00204         <span class="keyword">static</span> QString <a class="code" href="classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15">toString</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> <a class="code" href="classcv___abstract_trait.html#af840a97614a08c245998c51ca18fc2cd">category</a>, <span class="keywordtype">bool</span> plural = <span class="keyword">false</span>  );
-<a name="l00210"></a>00210         <span class="keyword">static</span> <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="classcv___abstract_trait.html#a8f6c7e92639212742699f4a694210e29">toType</a>( QString str );
-<a name="l00216"></a>00216         <span class="keyword">static</span> <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> <a class="code" href="classcv___abstract_trait.html#a2e80178ace3c05c3e37342a66a90d6b8">toCategory</a>( QString str );
-<a name="l00217"></a>00217 
-<a name="l00223"></a>00223         <span class="keyword">static</span> QList&lt; cv_AbstractTrait::Category &gt; <a class="code" href="classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f">getCategoryList</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="classcv___abstract_trait.html#abd70e5e7cbcfc344676525f027c05232">type</a> );
-<a name="l00224"></a>00224 
-<a name="l00230"></a>00230         <span class="keywordtype">bool</span> <a class="code" href="classcv___abstract_trait.html#a8348d3df93415c4dd31838ad79f3d176">operator==</a>( <span class="keyword">const</span> <a class="code" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a> &amp;trait ) <span class="keyword">const</span>;
-<a name="l00231"></a>00231 
-<a name="l00232"></a>00232 
-<a name="l00233"></a>00233     <span class="keyword">private</span>:
-<a name="l00237"></a>00237         <span class="keyword">static</span> <span class="keyword">const</span> QList&lt; cv_AbstractTrait::Category &gt; v_categoryListGeneral;
-<a name="l00241"></a>00241         <span class="keyword">static</span> <span class="keyword">const</span> QList&lt; cv_AbstractTrait::Category &gt; v_categoryListExtended;
-<a name="l00245"></a>00245         <span class="keyword">static</span> <span class="keyword">const</span> QList&lt; cv_AbstractTrait::Category &gt; v_categoryListDerangements;
-<a name="l00249"></a>00249         <span class="keyword">static</span> <span class="keyword">const</span> QList&lt; cv_AbstractTrait::Category &gt; v_categoryListAll;
-<a name="l00250"></a>00250 };
-<a name="l00251"></a>00251 
-<a name="l00252"></a>00252 <span class="preprocessor">#endif</span>
-<a name="l00253"></a>00253 <span class="preprocessor"></span>
+<a name="l00163"></a>00163         QString <a class="code" href="classcv___abstract_trait.html#a3bbbc5a0073617a70c86741d4c918576">name</a>() <span class="keyword">const</span>;
+<a name="l00167"></a>00167         <span class="keywordtype">void</span> <a class="code" href="classcv___abstract_trait.html#a4dd729908215df1ad08363eda065df91">setName</a>(QString nam);
+<a name="l00171"></a>00171         cv_Species::Species <a class="code" href="classcv___abstract_trait.html#a5550607235c2a5875f84d13fb6f9aa3f">species</a>() <span class="keyword">const</span>;
+<a name="l00175"></a>00175         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcv___abstract_trait.html#ae7f6cc0af48f8d04c228bc87c8f7bd25">setSpecies</a>(cv_Species::Species spe);
+<a name="l00179"></a>00179         <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">Type</a> <a class="code" href="classcv___abstract_trait.html#aba0dfcb5b539afe0db14c6e3c4ddd4bc">type</a>() <span class="keyword">const</span>;
+<a name="l00183"></a>00183         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classcv___abstract_trait.html#a47cca97b0ef76778473a5c62c06f023b">setType</a>(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">Type</a> typ);
+<a name="l00187"></a>00187         <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">Category</a> <a class="code" href="classcv___abstract_trait.html#a0735a751e8ce6edb85957bcfb2a723f7">category</a>() <span class="keyword">const</span>;
+<a name="l00191"></a>00191         <span class="keywordtype">void</span> <a class="code" href="classcv___abstract_trait.html#aa032a829044f50688909a58081c130e4">setCategory</a>(<a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">Category</a> cat);
+<a name="l00192"></a>00192 
+<a name="l00198"></a>00198         <span class="keyword">static</span> QString <a class="code" href="classcv___abstract_trait.html#aa056183da0b12c6282da71d1f25c0191">toXmlString</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="classcv___abstract_trait.html#aba0dfcb5b539afe0db14c6e3c4ddd4bc">type</a> );
+<a name="l00204"></a>00204         <span class="keyword">static</span> QString <a class="code" href="classcv___abstract_trait.html#aa056183da0b12c6282da71d1f25c0191">toXmlString</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> <a class="code" href="classcv___abstract_trait.html#a0735a751e8ce6edb85957bcfb2a723f7">category</a> );
+<a name="l00210"></a>00210         <span class="keyword">static</span> QString <a class="code" href="classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15">toString</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="classcv___abstract_trait.html#aba0dfcb5b539afe0db14c6e3c4ddd4bc">type</a>, <span class="keywordtype">bool</span> plural = <span class="keyword">false</span>  );
+<a name="l00216"></a>00216         <span class="keyword">static</span> QString <a class="code" href="classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15">toString</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> <a class="code" href="classcv___abstract_trait.html#a0735a751e8ce6edb85957bcfb2a723f7">category</a>, <span class="keywordtype">bool</span> plural = <span class="keyword">false</span>  );
+<a name="l00222"></a>00222         <span class="keyword">static</span> <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="classcv___abstract_trait.html#a8f6c7e92639212742699f4a694210e29">toType</a>( QString str );
+<a name="l00228"></a>00228         <span class="keyword">static</span> <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> <a class="code" href="classcv___abstract_trait.html#a2e80178ace3c05c3e37342a66a90d6b8">toCategory</a>( QString str );
+<a name="l00229"></a>00229 
+<a name="l00235"></a>00235         <span class="keyword">static</span> QList&lt; cv_AbstractTrait::Category &gt; <a class="code" href="classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f">getCategoryList</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="classcv___abstract_trait.html#aba0dfcb5b539afe0db14c6e3c4ddd4bc">type</a> );
+<a name="l00236"></a>00236 
+<a name="l00242"></a>00242         <span class="keywordtype">bool</span> <a class="code" href="classcv___abstract_trait.html#a8348d3df93415c4dd31838ad79f3d176">operator==</a>( <span class="keyword">const</span> <a class="code" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a> &amp;trait ) <span class="keyword">const</span>;
+<a name="l00243"></a>00243 
+<a name="l00244"></a>00244 
+<a name="l00245"></a>00245     <span class="keyword">private</span>:
+<a name="l00249"></a>00249         QString v_name;
+<a name="l00253"></a>00253         cv_Species::Species v_species;
+<a name="l00259"></a>00259         <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">Type</a> v_type;
+<a name="l00265"></a>00265         <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">Category</a> v_category;
+<a name="l00266"></a>00266 
+<a name="l00270"></a>00270         <span class="keyword">static</span> <span class="keyword">const</span> QList&lt; cv_AbstractTrait::Category &gt; v_categoryListGeneral;
+<a name="l00274"></a>00274         <span class="keyword">static</span> <span class="keyword">const</span> QList&lt; cv_AbstractTrait::Category &gt; v_categoryListExtended;
+<a name="l00278"></a>00278         <span class="keyword">static</span> <span class="keyword">const</span> QList&lt; cv_AbstractTrait::Category &gt; v_categoryListDerangements;
+<a name="l00282"></a>00282         <span class="keyword">static</span> <span class="keyword">const</span> QList&lt; cv_AbstractTrait::Category &gt; v_categoryListAll;
+<a name="l00283"></a>00283 };
+<a name="l00284"></a>00284 
+<a name="l00285"></a>00285 <span class="preprocessor">#endif</span>
+<a name="l00286"></a>00286 <span class="preprocessor"></span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="cv___abstract_trait_8h.html">cv_AbstractTrait.h</a>      </li>
-      <li class="footer">Erzeugt am Tue Sep 27 2011 18:49:52 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

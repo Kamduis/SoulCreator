@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_chara_trait.html#a21787eb972b4fc8779368a78f4430f14" title="CharaTrait::CharaTrait" alt="" coords="700,73,857,103"/>
+<area shape="rect" id="node5" href="$class_chara_trait.html#a7cc9b10030c5e6d5030fb898506ee070" title="CharaTrait::customText" alt="" coords="196,61,361,91"/>
+<area shape="rect" id="node7" href="$class_chara_trait.html#ace22816278072df97eb782603153600b" title="CharaTrait::setCustomText" alt="" coords="437,73,627,103"/>
+<area shape="rect" id="node10" href="$class_chara_trait.html#ab04ba68cad00668e6379a9e3fb1e5d8a" title="CharaTrait::emitSpecialtiesClicked" alt="" coords="413,151,651,180"/>
+<area shape="rect" id="node13" href="$class_chara_trait.html#ad3abff76332080dfd9e487287537b8a2" title="CharaTrait::setCategory" alt="" coords="193,216,364,245"/>
+<area shape="rect" id="node15" href="$class_chara_trait.html#a620d140e562c4102205d2c2a44af5622" title="CharaTrait::setCustom" alt="" coords="197,269,360,299"/>
+<area shape="rect" id="node18" href="$class_chara_trait.html#a340feb7c80cc516245c80d1ff03a8aec" title="CharaTrait::setSpecies" alt="" coords="197,323,360,352"/>
+<area shape="rect" id="node20" href="$class_chara_trait.html#a2b019cd655e56e8113ecfcf6913681cc" title="CharaTrait::setType" alt="" coords="208,376,349,405"/>
+</map>

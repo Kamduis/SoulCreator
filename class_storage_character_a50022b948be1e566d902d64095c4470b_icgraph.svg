@@ -64,7 +64,7 @@
 </g>
 <!-- Node6 -->
 <g id="node11" class="node"><title>Node6</title>
-<a xlink:href="class_chara_trait.html#acfe4795a41019f6c92e85e82c0a6ab1a" target="_top" xlink:title="CharaTrait::CharaTrait">
+<a xlink:href="class_chara_trait.html#a21787eb972b4fc8779368a78f4430f14" target="_top" xlink:title="CharaTrait::CharaTrait">
 <polygon fill="white" stroke="black" points="241.5,-160.5 241.5,-181.5 360.5,-181.5 360.5,-160.5 241.5,-160.5"/>
 <text text-anchor="middle" x="301" y="-168.5" font-family="DejaVuSans" font-size="10.00">CharaTrait::CharaTrait</text>
 </a>
@@ -76,7 +76,7 @@
 </g>
 <!-- Node7 -->
 <g id="node13" class="node"><title>Node7</title>
-<a xlink:href="class_check_trait.html#a0e37d389c1ccaf32a2157463d3c055c6" target="_top" xlink:title="CheckTrait::CheckTrait">
+<a xlink:href="class_check_trait.html#a3d74335165852938fb58d285bcc25b52" target="_top" xlink:title="CheckTrait::CheckTrait">
 <polygon fill="white" stroke="black" points="241,-120.5 241,-141.5 361,-141.5 361,-120.5 241,-120.5"/>
 <text text-anchor="middle" x="301" y="-128.5" font-family="DejaVuSans" font-size="10.00">CheckTrait::CheckTrait</text>
 </a>

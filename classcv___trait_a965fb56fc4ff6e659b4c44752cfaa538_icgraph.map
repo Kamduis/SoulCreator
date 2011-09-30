@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_storage_character.html#aabaae6015f75abfc6411f5a388418a3b" title="StorageCharacter::modifyTrait" alt="" coords="165,5,379,35"/>
+<area shape="rect" id="node5" href="$class_trait.html#aff507cb19b22e5668fc20b471d73d691" title="Trait::setValue" alt="" coords="217,59,327,88"/>
+<area shape="rect" id="node7" href="$class_check_trait.html#a9073e7f8bbac8c351bf829b23a9fc850" title="CheckTrait::setValue" alt="" coords="428,59,577,88"/>
+<area shape="rect" id="node9" href="$class_check_trait.html#a3d74335165852938fb58d285bcc25b52" title="CheckTrait::CheckTrait" alt="" coords="909,60,1069,89"/>
+<area shape="rect" id="node11" href="$class_flaw_widget.html#af387a892373d07ce615ad19d6da45448" title="FlawWidget::FlawWidget" alt="" coords="659,59,829,88"/>
+<area shape="rect" id="node13" href="$class_check_trait.html#a38b03dfbcc01dbb65a9b345423e232db" title="CheckTrait::hideTraitIfNotAvailable" alt="" coords="627,112,861,141"/>
+</map>

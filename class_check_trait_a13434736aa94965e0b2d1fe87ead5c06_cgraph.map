@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_check_trait.html#ae1f7c66daf473387e3c8ea8e4857bc14" title="CheckTrait::species" alt="" coords="237,5,379,35"/>
-<area shape="rect" id="node5" href="$class_check_trait.html#a6fc70482737108eb58606a8eed553e04" title="CheckTrait::traitChanged" alt="" coords="219,59,397,88"/>
-<area shape="rect" id="node7" href="$class_check_trait.html#a85928c20fd7d921c1d9b831168b9964e" title="CheckTrait::traitPtr" alt="" coords="239,112,377,141"/>
+<area shape="rect" id="node3" href="$classcv___abstract_trait.html#ae7f6cc0af48f8d04c228bc87c8f7bd25" title="cv_AbstractTrait::setSpecies" alt="" coords="220,5,420,35"/>
+<area shape="rect" id="node5" href="$class_check_trait.html#ae1f7c66daf473387e3c8ea8e4857bc14" title="CheckTrait::species" alt="" coords="249,59,391,88"/>
+<area shape="rect" id="node7" href="$classcv___abstract_trait.html#a5550607235c2a5875f84d13fb6f9aa3f" title="cv_AbstractTrait::species" alt="" coords="469,85,648,115"/>
 </map>

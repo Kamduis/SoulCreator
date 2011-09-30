@@ -1,16 +1,18 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$cv___abstract_trait_8h.html" title="src/Datatypes/cv_AbstractTrait.h" alt="" coords="251,83,477,112"/>
+<area shape="rect" id="node3" href="$cv___abstract_trait_8h.html" title="src/Datatypes/cv_AbstractTrait.h" alt="" coords="321,83,548,112"/>
 <area shape="rect" id="node7" href="$cv___derangement_8h.html" title="src/Datatypes/cv_Derangement.h" alt="" coords="12,160,249,189"/>
 <area shape="rect" id="node11" href="$cv___trait_8h.html" title="src/Datatypes/cv_Trait.h" alt="" coords="540,160,713,189"/>
-<area shape="rect" id="node18" href="$cv___species_8cpp.html" title="src/Datatypes/cv_Species.cpp" alt="" coords="552,83,765,112"/>
-<area shape="rect" id="node20" href="$cv___species_title_8h.html" title="src/Datatypes/cv_SpeciesTitle.h" alt="" coords="1024,83,1248,112"/>
-<area shape="rect" id="node24" href="$cv___super_effect_8h.html" title="src/Datatypes/cv_SuperEffect.h" alt="" coords="1279,83,1500,112"/>
-<area shape="rect" id="node29" href="$cv___trait_detail_8h.html" title="src/Datatypes/cv_TraitDetail.h" alt="" coords="789,83,1000,112"/>
+<area shape="rect" id="node15" href="$_trait_8h.html" title="src/Datatypes/Trait.h" alt="" coords="724,237,876,267"/>
+<area shape="rect" id="node22" href="$cv___species_8cpp.html" title="src/Datatypes/cv_Species.cpp" alt="" coords="1004,83,1217,112"/>
+<area shape="rect" id="node24" href="$cv___species_title_8h.html" title="src/Datatypes/cv_SpeciesTitle.h" alt="" coords="1241,83,1465,112"/>
+<area shape="rect" id="node28" href="$cv___super_effect_8h.html" title="src/Datatypes/cv_SuperEffect.h" alt="" coords="1496,83,1717,112"/>
+<area shape="rect" id="node33" href="$cv___trait_detail_8h.html" title="src/Datatypes/cv_TraitDetail.h" alt="" coords="769,83,980,112"/>
 <area shape="rect" id="node5" href="$cv___abstract_trait_8cpp.html" title="src/Datatypes/cv_AbstractTrait.cpp" alt="" coords="273,160,516,189"/>
 <area shape="rect" id="node9" href="$cv___derangement_8cpp.html" title="src/Datatypes/cv_Derangement.cpp" alt="" coords="5,237,256,267"/>
-<area shape="rect" id="node13" href="$cv___trait_8cpp.html" title="src/Datatypes/cv_Trait.cpp" alt="" coords="628,237,817,267"/>
-<area shape="rect" id="node15" href="$_main_window_8cpp.html" title="src/MainWindow.cpp" alt="" coords="457,237,604,267"/>
-<area shape="rect" id="node22" href="$cv___species_title_8cpp.html" title="src/Datatypes/cv_SpeciesTitle.cpp" alt="" coords="1017,160,1255,189"/>
-<area shape="rect" id="node26" href="$cv___super_effect_8cpp.html" title="src/Datatypes/cv_SuperEffect.cpp" alt="" coords="1279,160,1516,189"/>
-<area shape="rect" id="node32" href="$cv___trait_detail_8cpp.html" title="src/Datatypes/cv_TraitDetail.cpp" alt="" coords="767,160,993,189"/>
+<area shape="rect" id="node13" href="$cv___trait_8cpp.html" title="src/Datatypes/cv_Trait.cpp" alt="" coords="340,237,529,267"/>
+<area shape="rect" id="node19" href="$_main_window_8cpp.html" title="src/MainWindow.cpp" alt="" coords="553,237,700,267"/>
+<area shape="rect" id="node17" href="$_trait_8cpp.html" title="src/Datatypes/Trait.cpp" alt="" coords="716,315,884,344"/>
+<area shape="rect" id="node26" href="$cv___species_title_8cpp.html" title="src/Datatypes/cv_SpeciesTitle.cpp" alt="" coords="1231,160,1468,189"/>
+<area shape="rect" id="node30" href="$cv___super_effect_8cpp.html" title="src/Datatypes/cv_SuperEffect.cpp" alt="" coords="1492,160,1729,189"/>
+<area shape="rect" id="node36" href="$cv___trait_detail_8cpp.html" title="src/Datatypes/cv_TraitDetail.cpp" alt="" coords="839,160,1065,189"/>
 </map>

@@ -1,5 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_check_trait.html#a6fc70482737108eb58606a8eed553e04" title="CheckTrait::traitChanged" alt="" coords="197,5,376,35"/>
-<area shape="rect" id="node5" href="$class_check_trait.html#a85928c20fd7d921c1d9b831168b9964e" title="CheckTrait::traitPtr" alt="" coords="217,59,356,88"/>
-<area shape="rect" id="node7" href="$class_check_trait.html#a49c1abd75a391a80d402d20e6896ab77" title="CheckTrait::type" alt="" coords="225,112,348,141"/>
+<area shape="rect" id="node3" href="$class_trait.html#a4c8c6f7af3db42f87732862a91329de8" title="Trait::setType" alt="" coords="207,75,311,104"/>
+<area shape="rect" id="node5" href="$classcv___abstract_trait.html#aba0dfcb5b539afe0db14c6e3c4ddd4bc" title="cv_AbstractTrait::type" alt="" coords="369,22,527,51"/>
+<area shape="rect" id="node9" href="$class_check_trait.html#a49c1abd75a391a80d402d20e6896ab77" title="CheckTrait::type" alt="" coords="197,22,320,51"/>
+<area shape="rect" id="node7" href="$class_trait.html#ae00311fac86b6949a3c6c823fad2c95c" title="Trait::typeChanged" alt="" coords="377,75,519,104"/>
 </map>

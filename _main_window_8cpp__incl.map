@@ -1,18 +1,18 @@
 <map id="G" name="G">
 <area shape="rect" id="node21" href="$_creation_8h.html" title="Calc/Creation.h" alt="" coords="1097,160,1215,189"/>
-<area shape="rect" id="node31" href="$_config_8h.html" title="Config/Config.h" alt="" coords="2720,83,2837,112"/>
-<area shape="rect" id="node39" href="$cv___trait_8h.html" title="Datatypes/cv_Trait.h" alt="" coords="2547,83,2696,112"/>
-<area shape="rect" id="node61" href="$_exception_8h_source.html" title="Exceptions/Exception.h" alt="" coords="2139,160,2307,189"/>
-<area shape="rect" id="node71" href="$_read_xml_template_8h.html" title="IO/ReadXmlTemplate.h" alt="" coords="487,160,649,189"/>
-<area shape="rect" id="node85" href="$_settings_8h.html" title="IO/Settings.h" alt="" coords="3683,83,3787,112"/>
-<area shape="rect" id="node89" href="$_storage_character_8h.html" title="Storage/StorageCharacter.h" alt="" coords="1613,160,1816,189"/>
-<area shape="rect" id="node98" href="$_storage_template_8h.html" title="StorageTemplate.h" alt="" coords="1997,237,2139,267"/>
-<area shape="rect" id="node113" href="$_trait_line_8h.html" title="Widgets/TraitLine.h" alt="" coords="2384,83,2523,112"/>
-<area shape="rect" id="node118" href="$_message_box_8h.html" title="Widgets/Dialogs/MessageBox.h" alt="" coords="2861,83,3080,112"/>
-<area shape="rect" id="node122" href="$_settings_dialog_8h.html" title="Widgets/Dialogs/SettingsDialog.h" alt="" coords="3811,83,4043,112"/>
-<area shape="rect" id="node126" href="$_main_window_8h.html" title="MainWindow.h" alt="" coords="1765,83,1875,112"/>
-<area shape="rect" id="node48" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="2899,237,3003,267"/>
-<area shape="rect" id="node51" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="2704,160,2821,189"/>
-<area shape="rect" id="node57" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="2947,160,3080,189"/>
-<area shape="rect" id="node80" href="$_read_xml_8h.html" title="ReadXml.h" alt="" coords="307,237,395,267"/>
+<area shape="rect" id="node31" href="$_config_8h.html" title="Config/Config.h" alt="" coords="2853,83,2971,112"/>
+<area shape="rect" id="node39" href="$cv___trait_8h.html" title="Datatypes/cv_Trait.h" alt="" coords="2680,83,2829,112"/>
+<area shape="rect" id="node61" href="$_exception_8h.html" title="Exceptions/Exception.h" alt="" coords="2292,160,2460,189"/>
+<area shape="rect" id="node71" href="$_read_xml_template_8h.html" title="IO/ReadXmlTemplate.h" alt="" coords="572,160,735,189"/>
+<area shape="rect" id="node85" href="$_settings_8h.html" title="IO/Settings.h" alt="" coords="3816,83,3920,112"/>
+<area shape="rect" id="node89" href="$_storage_character_8h.html" title="Storage/StorageCharacter.h" alt="" coords="1639,160,1841,189"/>
+<area shape="rect" id="node100" href="$_storage_template_8h.html" title="StorageTemplate.h" alt="" coords="2048,237,2189,267"/>
+<area shape="rect" id="node116" href="$_trait_line_8h.html" title="Widgets/TraitLine.h" alt="" coords="2595,237,2733,267"/>
+<area shape="rect" id="node119" href="$_message_box_8h.html" title="Widgets/Dialogs/MessageBox.h" alt="" coords="2995,83,3213,112"/>
+<area shape="rect" id="node123" href="$_settings_dialog_8h.html" title="Widgets/Dialogs/SettingsDialog.h" alt="" coords="3944,83,4176,112"/>
+<area shape="rect" id="node127" href="$_main_window_8h.html" title="MainWindow.h" alt="" coords="1953,83,2063,112"/>
+<area shape="rect" id="node48" href="$cv___species_8h.html" title="cv_Species.h" alt="" coords="3061,237,3165,267"/>
+<area shape="rect" id="node51" href="$cv___trait_detail_8h.html" title="cv_TraitDetail.h" alt="" coords="2869,160,2987,189"/>
+<area shape="rect" id="node57" href="$cv___abstract_trait_8h.html" title="cv_AbstractTrait.h" alt="" coords="3112,160,3245,189"/>
+<area shape="rect" id="node80" href="$_read_xml_8h.html" title="ReadXml.h" alt="" coords="528,237,616,267"/>
 </map>

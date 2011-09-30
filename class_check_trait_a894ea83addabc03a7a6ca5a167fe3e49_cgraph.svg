@@ -29,14 +29,14 @@
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
 <a xlink:href="class_check_trait.html#a85928c20fd7d921c1d9b831168b9964e" target="_top" xlink:title="CheckTrait::traitPtr">
-<polygon fill="white" stroke="black" points="336,-39.5 336,-60.5 440,-60.5 440,-39.5 336,-39.5"/>
-<text text-anchor="middle" x="388" y="-47.5" font-family="DejaVuSans" font-size="10.00">CheckTrait::traitPtr</text>
+<polygon fill="white" stroke="black" points="336,-40.5 336,-61.5 440,-61.5 440,-40.5 336,-40.5"/>
+<text text-anchor="middle" x="388" y="-48.5" font-family="DejaVuSans" font-size="10.00">CheckTrait::traitPtr</text>
 </a>
 </g>
 <!-- Node1&#45;&gt;Node3 -->
 <g id="edge6" class="edge"><title>Node1&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M137.826,-50C193.576,-50 271.458,-50 325.453,-50"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="325.583,-53.5001 335.583,-50 325.583,-46.5001 325.583,-53.5001"/>
+<path fill="none" stroke="midnightblue" d="M137.826,-50.2158C193.576,-50.3905 271.458,-50.6347 325.453,-50.8039"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="325.572,-54.3042 335.583,-50.8357 325.594,-47.3043 325.572,-54.3042"/>
 </g>
 <!-- Node4 -->
 <g id="node8" class="node"><title>Node4</title>
@@ -52,13 +52,25 @@
 </g>
 <!-- Node2&#45;&gt;Node3 -->
 <g id="edge4" class="edge"><title>Node2&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M277.863,-78.446C296.16,-73.7204 317.922,-68.0997 337.25,-63.1076"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="338.298,-66.452 347.105,-60.5624 336.547,-59.6744 338.298,-66.452"/>
+<path fill="none" stroke="midnightblue" d="M279.062,-78.4149C296.815,-73.9472 317.659,-68.7017 336.335,-64.0018"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="337.32,-67.3631 346.164,-61.5284 335.612,-60.5747 337.32,-67.3631"/>
 </g>
 <!-- Node4&#45;&gt;Node3 -->
 <g id="edge10" class="edge"><title>Node4&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M277.863,-21.554C296.16,-26.2796 317.922,-31.9003 337.25,-36.8924"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="336.547,-40.3256 347.105,-39.4376 338.298,-33.548 336.547,-40.3256"/>
+<path fill="none" stroke="midnightblue" d="M276.673,-21.5095C295.585,-26.5193 318.402,-32.5634 338.442,-37.8721"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="337.767,-41.3138 348.33,-40.4913 339.559,-34.5472 337.767,-41.3138"/>
+</g>
+<!-- Node5 -->
+<g id="node11" class="node"><title>Node5</title>
+<a xlink:href="classcv___trait.html#a965fb56fc4ff6e659b4c44752cfaa538" target="_top" xlink:title="cv_Trait::value">
+<polygon fill="white" stroke="black" points="346.5,-0.5 346.5,-21.5 429.5,-21.5 429.5,-0.5 346.5,-0.5"/>
+<text text-anchor="middle" x="388" y="-8.5" font-family="DejaVuSans" font-size="10.00">cv_Trait::value</text>
+</a>
+</g>
+<!-- Node4&#45;&gt;Node5 -->
+<g id="edge12" class="edge"><title>Node4&#45;&gt;Node5</title>
+<path fill="none" stroke="midnightblue" d="M285.609,-11C301.592,-11 319.425,-11 335.673,-11"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="336.085,-14.5001 346.085,-11 336.085,-7.5001 336.085,-14.5001"/>
 </g>
 </g>
 </svg>

@@ -1,3 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_storage_character.html#ace2a365b231b39b1857f115c7361166f" title="StorageCharacter::traitChanged" alt="" coords="267,5,493,35"/>
+<area shape="rect" id="node3" href="$classcv___abstract_trait.html#a0735a751e8ce6edb85957bcfb2a723f7" title="cv_AbstractTrait::category" alt="" coords="287,5,473,35"/>
+<area shape="rect" id="node5" href="$classcv___trait.html#adee2adf82138573180ff0d1486974ff6" title="cv_Trait::customText" alt="" coords="305,59,455,88"/>
+<area shape="rect" id="node9" href="$classcv___trait.html#ab81924fd5e51488a35a63e246830e143" title="cv_Trait::details" alt="" coords="321,112,439,141"/>
+<area shape="rect" id="node11" href="$classcv___abstract_trait.html#a3bbbc5a0073617a70c86741d4c918576" title="cv_AbstractTrait::name" alt="" coords="296,165,464,195"/>
+<area shape="rect" id="node13" href="$class_storage_character.html#ace2a365b231b39b1857f115c7361166f" title="StorageCharacter::traitChanged" alt="" coords="267,219,493,248"/>
+<area shape="rect" id="node15" href="$classcv___abstract_trait.html#aba0dfcb5b539afe0db14c6e3c4ddd4bc" title="cv_AbstractTrait::type" alt="" coords="301,272,459,301"/>
+<area shape="rect" id="node17" href="$classcv___trait.html#a965fb56fc4ff6e659b4c44752cfaa538" title="cv_Trait::value" alt="" coords="325,325,435,355"/>
+<area shape="rect" id="node7" href="$classcv___trait.html#af96ea047974ec3f6bb2cd1b0ade7cf13" title="cv_Trait::custom" alt="" coords="541,59,667,88"/>
 </map>

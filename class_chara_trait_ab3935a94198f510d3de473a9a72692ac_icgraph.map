@@ -1,14 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_chara_trait.html#acfe4795a41019f6c92e85e82c0a6ab1a" title="CharaTrait::CharaTrait" alt="" coords="743,217,900,246"/>
-<area shape="rect" id="node5" href="$class_chara_trait.html#ad3abff76332080dfd9e487287537b8a2" title="CharaTrait::setCategory" alt="" coords="233,33,404,62"/>
-<area shape="rect" id="node7" href="$class_chara_trait.html#a620d140e562c4102205d2c2a44af5622" title="CharaTrait::setCustom" alt="" coords="237,86,400,116"/>
-<area shape="rect" id="node9" href="$class_chara_trait.html#ace22816278072df97eb782603153600b" title="CharaTrait::setCustomText" alt="" coords="479,112,668,141"/>
-<area shape="rect" id="node12" href="$class_chara_trait.html#a340feb7c80cc516245c80d1ff03a8aec" title="CharaTrait::setSpecies" alt="" coords="237,190,400,220"/>
-<area shape="rect" id="node14" href="$class_chara_trait.html#a2b019cd655e56e8113ecfcf6913681cc" title="CharaTrait::setType" alt="" coords="248,244,389,273"/>
-<area shape="rect" id="node16" href="$class_chara_trait.html#abcfeed4a455c49246385c9bc2024ba15" title="CharaTrait::setValue" alt="" coords="244,297,393,326"/>
-<area shape="rect" id="node18" href="$class_attribute_widget.html#ab498116d47f94a62e3b82eaa79976b36" title="AttributeWidget::AttributeWidget" alt="" coords="460,216,687,245"/>
-<area shape="rect" id="node21" href="$class_chara_trait.html#ab02b27973fec9c68cee320dd61e5c618" title="CharaTrait::checkTraitPrerequisites" alt="" coords="453,269,693,298"/>
-<area shape="rect" id="node24" href="$class_chara_trait.html#a8b30fcf229fb59f96c3926a59269194e" title="CharaTrait::hideTraitIfNotAvailable" alt="" coords="457,322,689,352"/>
-<area shape="rect" id="node27" href="$class_merit_widget.html#a3f99dd98cf0c027d9e5a65a6a82d88c8" title="MeritWidget::MeritWidget" alt="" coords="484,376,663,405"/>
-<area shape="rect" id="node29" href="$class_chara_trait.html#a0a5adca1cfd4732d6c4f64299e6d6fd3" title="CharaTrait::updateWidget" alt="" coords="483,429,664,458"/>
+<area shape="rect" id="node3" href="$class_chara_trait.html#a21787eb972b4fc8779368a78f4430f14" title="CharaTrait::CharaTrait" alt="" coords="471,63,628,92"/>
+<area shape="rect" id="node5" href="$class_chara_trait.html#ad3abff76332080dfd9e487287537b8a2" title="CharaTrait::setCategory" alt="" coords="241,35,412,64"/>
+<area shape="rect" id="node7" href="$class_chara_trait.html#a620d140e562c4102205d2c2a44af5622" title="CharaTrait::setCustom" alt="" coords="245,88,408,117"/>
+<area shape="rect" id="node9" href="$class_chara_trait.html#ace22816278072df97eb782603153600b" title="CharaTrait::setCustomText" alt="" coords="232,141,421,171"/>
+<area shape="rect" id="node12" href="$class_chara_trait.html#a340feb7c80cc516245c80d1ff03a8aec" title="CharaTrait::setSpecies" alt="" coords="245,195,408,224"/>
+<area shape="rect" id="node14" href="$class_chara_trait.html#a2b019cd655e56e8113ecfcf6913681cc" title="CharaTrait::setType" alt="" coords="256,248,397,277"/>
 </map>

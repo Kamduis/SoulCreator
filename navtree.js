@@ -86,6 +86,7 @@ var NAVTREE =
       [ "StorageCharacter", "class_storage_character.html", null ],
       [ "StorageTemplate", "class_storage_template.html", null ],
       [ "StringBoolParser", "class_string_bool_parser.html", null ],
+      [ "Trait", "class_trait.html", null ],
       [ "TraitDots", "class_trait_dots.html", null ],
       [ "TraitLine", "class_trait_line.html", null ],
       [ "TraitSpecialties", "class_trait_specialties.html", null ],
@@ -107,7 +108,9 @@ var NAVTREE =
       [ "Creation", "class_creation.html", null ],
       [ "cv_AbstractTrait", "classcv___abstract_trait.html", [
         [ "cv_Derangement", "classcv___derangement.html", null ],
-        [ "cv_Trait", "classcv___trait.html", null ]
+        [ "cv_Trait", "classcv___trait.html", [
+          [ "Trait", "class_trait.html", null ]
+        ] ]
       ] ],
       [ "cv_CreationPoints", "classcv___creation_points.html", null ],
       [ "cv_CreationPoints2", "classcv___creation_points2.html", null ],
@@ -232,10 +235,12 @@ var NAVTREE =
       [ "src/Datatypes/cv_Trait.h", "cv___trait_8h.html", null ],
       [ "src/Datatypes/cv_TraitDetail.cpp", "cv___trait_detail_8cpp.html", null ],
       [ "src/Datatypes/cv_TraitDetail.h", "cv___trait_detail_8h.html", null ],
+      [ "src/Datatypes/Trait.cpp", "_trait_8cpp.html", null ],
+      [ "src/Datatypes/Trait.h", "_trait_8h.html", null ],
       [ "src/Draw/DrawSheet.cpp", "_draw_sheet_8cpp.html", null ],
       [ "src/Draw/DrawSheet.h", "_draw_sheet_8h.html", null ],
       [ "src/Exceptions/Exception.cpp", "_exception_8cpp.html", null ],
-      [ "src/Exceptions/Exception.h", null, null ],
+      [ "src/Exceptions/Exception.h", "_exception_8h.html", null ],
       [ "src/IO/ReadXml.cpp", "_read_xml_8cpp.html", null ],
       [ "src/IO/ReadXml.h", "_read_xml_8h.html", null ],
       [ "src/IO/ReadXmlCharacter.cpp", "_read_xml_character_8cpp.html", null ],
