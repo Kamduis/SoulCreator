@@ -30,7 +30,7 @@
 #include "CheckTrait.h"
 
 
-CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage ) : QWidget( parent ) {
+CheckTrait::CheckTrait( QWidget* parent, Trait* trait, Trait* traitStorage ) : QWidget( parent ) {
 	// Vorsicht: Nullzeiger ist immer gefährlich!
 	ptr_trait = 0;
 	ptr_traitStorage = traitStorage;
@@ -52,16 +52,13 @@ CheckTrait::CheckTrait( QWidget* parent, cv_Trait* trait, cv_Trait* traitStorage
 	layout->addStretch();
 	layout->addWidget( lineEdit );
 
+	setTraitPtr( trait );
+
 	connect( checkBox, SIGNAL( stateChanged( int ) ), this, SLOT( setValue( int ) ) );
 	connect( lineEdit, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
-	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
-	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( updateWidget( cv_Trait* ) ) );
+	connect( traitPtr(), SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( checkBox, SIGNAL( stateChanged( int ) ), this, SIGNAL( stateChanged( int ) ) );
-// 	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
-// 	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( checkTraitPrerequisites( cv_Trait* ) ) );
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
-
-	setTraitPtr( trait );
 
 	hideDescriptionWidget();
 }
@@ -72,11 +69,11 @@ CheckTrait::~CheckTrait() {
 
 
 
-cv_Trait* CheckTrait::traitPtr() const {
+Trait* CheckTrait::traitPtr() const {
 	return ptr_trait;
 }
 
-void CheckTrait::setTraitPtr( cv_Trait* trait ) {
+void CheckTrait::setTraitPtr( Trait* trait ) {
 	if ( ptr_trait != trait ) {
 		ptr_trait = trait;
 	}
@@ -86,16 +83,11 @@ void CheckTrait::setTraitPtr( cv_Trait* trait ) {
 
 
 int CheckTrait::value() const {
-	return traitPtr()->value();
+	return checkBox->checkState();
 }
-
 void CheckTrait::setValue( int val ) {
 	if ( traitPtr()->value() != val ) {
 		traitPtr()->setValue( val );
-
-// 		qDebug() << Q_FUNC_INFO << "Test" << val;
-
-		emit traitChanged( traitPtr() );
 	}
 }
 
@@ -107,9 +99,6 @@ QString CheckTrait::customText() const {
 void CheckTrait::setCustomText( QString txt ) {
 	if ( traitPtr()->customText() != txt ) {
 		traitPtr()->setCustomText( txt );
-// 		TraitLine::setText( txt );
-
-		emit traitChanged( traitPtr() );
 	}
 }
 
@@ -121,9 +110,6 @@ cv_Trait::Type CheckTrait::type() const {
 void CheckTrait::setType( cv_Trait::Type type ) {
 	if ( ptr_trait->type() != type ) {
 		ptr_trait->setType(type);
-
-		emit typeChanged( type );
-		emit traitChanged( traitPtr() );
 	}
 }
 
@@ -134,8 +120,6 @@ cv_Trait::Category CheckTrait::category() const {
 void CheckTrait::setCategory( cv_Trait::Category category ) {
 	if ( ptr_trait->category() != category ) {
 		ptr_trait->setCategory(category);
-
-		emit traitChanged( traitPtr() );
 	}
 }
 
@@ -146,9 +130,6 @@ cv_Species::Species CheckTrait::species() const {
 void CheckTrait::setSpecies( cv_Species::Species species ) {
 	if ( ptr_trait->species() != species ) {
 		ptr_trait->setSpecies(species);
-// 		emit speciesChanged(species);
-
-		emit traitChanged( traitPtr() );
 	}
 }
 
@@ -160,8 +141,6 @@ bool CheckTrait::custom() const {
 void CheckTrait::setCustom( bool sw ) {
 	if ( ptr_trait->custom() != sw ) {
 		ptr_trait->setCustom(sw);
-
-		emit traitChanged( traitPtr() );
 	}
 }
 
@@ -180,22 +159,5 @@ void CheckTrait::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {
 	} else {
 		setValue( 0 );
 		setHidden( true );
-	}
-}
-
-
-
-
-void CheckTrait::updateWidget( cv_Trait* trait ) {
-	if ( traitPtr() == trait ) {
-
-		// Tristate ist nicht möglich!
-		if ( value() > 0 ) {
-			checkBox->setCheckState( Qt::Checked );
-		} else {
-			checkBox->setCheckState( Qt::Unchecked );
-		}
-
-		lineEdit->setText( customText() );
 	}
 }

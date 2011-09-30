@@ -89,6 +89,10 @@ class Trait : public QObject, public cv_Trait {
 		 * Legt den Typ fest und sendet ein entsprechendes Signal aus.
 		 **/
 		void setType( cv_AbstractTrait::Type typ );
+// 		/**
+// 		 * Legt fest, welche Spezies über diese Eigenschaft verfügen und sendet bei Änderung ein entsprechendes Signal aus.
+// 		 **/
+// 		void setSpecies(cv_Species::Species spe);
 
 	private slots:
 		/**
@@ -105,6 +109,10 @@ class Trait : public QObject, public cv_Trait {
 		 * Der Typ der Eigenschaft hat sich verändert.
 		 **/
 		void typeChanged( cv_AbstractTrait::Type );
+		/**
+		 * Der Typ der Eigenschaft hat sich verändert.
+		 **/
+		void speciesChanged( cv_Species::SpeciesFlag );
 		/**
 		 * Die Details der Eigenscahft haben sich verändert.
 		 **/

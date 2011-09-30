@@ -25,7 +25,7 @@
 #include <QGridLayout>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "CharaTrait2.h"
 #include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
@@ -48,12 +48,12 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 	QList< cv_Trait::Category > categories;
 	categories.append( cv_Trait::CategoryNo );
 
-	QList< cv_Trait* > list;
+	QList< Trait* > list;
 
 	// Powers werden in einer Spalte heruntergeschrieben.
 	for ( int i = 0; i < categories.count(); i++ ) {
 		try {
-			list = storage.traits( type, categories.at( i ) );
+			list = storage.traits2( type, categories.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
@@ -62,10 +62,10 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 // 			qDebug() << Q_FUNC_INFO << "Zähle Kräfte" << j;
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
 				// Anlegen der Eigenschaft im Speicher
-				cv_Trait* traitPtr = character->addTrait( *list[j] );
+				Trait* traitPtr = character->addTrait( list[j] );
 
 				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				CharaTrait *charaTrait = new CharaTrait( this, traitPtr, list[j] );
+				CharaTrait2* charaTrait = new CharaTrait2( this, traitPtr, list[j] );
 				charaTrait->setValue( 0 );
 				layoutTop->addWidget( charaTrait );
 

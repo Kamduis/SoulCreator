@@ -38,6 +38,8 @@ CharaTrait2::CharaTrait2( QWidget* parent, Trait* trait, Trait* traitStorage ) :
 
 	character = StorageCharacter::getInstance();
 
+	setTraitPtr( trait );
+
 	// Falls ich mit der Maus den Wert ändere, muß er auch entsprechend verändert werden.
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( setTraitValue( int ) ) );
 	connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
@@ -47,10 +49,7 @@ CharaTrait2::CharaTrait2( QWidget* parent, Trait* trait, Trait* traitStorage ) :
 
 // 	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
 	connect( character, SIGNAL( traitChanged( Trait* ) ), this, SLOT( checkTraitPrerequisites( Trait* ) ) );
-// 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
-
-	setTraitPtr( trait );
-	
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 	connect( traitPtr(), SIGNAL(valueChanged(int)), this, SLOT(setValue(int)) );
 
 	if (!traitPtr()->possibleValues().isEmpty()){

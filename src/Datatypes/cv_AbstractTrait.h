@@ -172,7 +172,7 @@ class cv_AbstractTrait {
 		/**
 		 * Legt fest, welche Spezies über diese Eigenschaft verfügen.
 		 **/
-		void setSpecies(cv_Species::Species spe);
+		virtual void setSpecies(cv_Species::Species spe);
 		/**
 		 * Gibt zurück, welchem Typ diese Eigenschaft angehört.
 		 **/

@@ -26,7 +26,7 @@
 #include <QGroupBox>
 #include <QDebug>
 
-#include "CheckTrait2.h"
+#include "CheckTrait.h"
 #include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
@@ -82,7 +82,7 @@ FlawWidget::FlawWidget( QWidget *parent ) : QWidget( parent )  {
 				Trait* traitPtr = character->addTrait( lcl_trait );
 
 				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				CheckTrait2* checkTrait = new CheckTrait2( this, traitPtr, list[j] );
+				CheckTrait* checkTrait = new CheckTrait( this, traitPtr, list[j] );
 				checkTrait->setValue( 0 );
 				layoutFlawCategory->addWidget( checkTrait );
 
