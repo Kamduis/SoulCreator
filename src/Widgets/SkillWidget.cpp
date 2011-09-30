@@ -25,7 +25,7 @@
 #include <QGroupBox>
 #include <QDebug>
 
-#include "CharaTrait2.h"
+#include "CharaTrait.h"
 #include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
@@ -89,7 +89,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			traitPtr->clearDetails();
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-			CharaTrait2* charaTrait = new CharaTrait2( this, traitPtr, list[j] );
+			CharaTrait* charaTrait = new CharaTrait( this, traitPtr, list[j] );
 			charaTrait->setValue( 0 );
 
 			// Nur Fertigkeiten haben Spezialisierungen.
@@ -130,7 +130,7 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 		for ( int j = 1; j < layout->rowCount(); j++ ) {
 // 			qDebug() << Q_FUNC_INFO << "Reihe" << j << "Spalte" << i;
 
-			CharaTrait2* trait = qobject_cast<CharaTrait2*>( layout->itemAtPosition( j, i )->widget() );
+			CharaTrait* trait = qobject_cast<CharaTrait*>( layout->itemAtPosition( j, i )->widget() );
 
 			if ( trait->name() != skillName ) {
 				trait->setSpecialtyButtonChecked( false );

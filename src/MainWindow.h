@@ -100,6 +100,8 @@ class MainWindow;
  * \todo Auf den Knopf für die Spezialisierungen jeder einzelnen Fertigkeit die Anzahl der bereits gewählten Spezialisierungen schreiben.
  *
  * \todo Fertigkeiten und Attribute wie Merits und Flaws gruppieren.
+ *
+ * \todo Bei langen Liste (Powers) Wird das Stacked Widget zu groß und es wird überall ein Scrollbalken angezeigt und das Bild liegt nicht in der Mitte!
  */
 
 class MainWindow : public QMainWindow {

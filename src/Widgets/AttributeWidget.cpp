@@ -28,7 +28,7 @@
 #include <QStringList>
 #include <QDebug>
 
-#include "CharaTrait2.h"
+#include "CharaTrait.h"
 #include "Calc/CalcAdvantages.h"
 #include "Datatypes/cv_Trait.h"
 #include "Datatypes/cv_Shape.h"
@@ -121,7 +121,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 			Trait* traitPtr = character->addTrait( list[j] );
 
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-			CharaTrait2* trait = new CharaTrait2( this, traitPtr, list[j] );
+			CharaTrait* trait = new CharaTrait( this, traitPtr, list[j] );
 			trait->setValue( 1 );
 
 			layout->addWidget( trait, j + 1, actualColumn );

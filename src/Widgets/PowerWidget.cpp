@@ -25,7 +25,7 @@
 #include <QGridLayout>
 #include <QDebug>
 
-#include "CharaTrait2.h"
+#include "CharaTrait.h"
 #include "Datatypes/cv_Trait.h"
 #include "Exceptions/Exception.h"
 #include "Config/Config.h"
@@ -65,7 +65,7 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 				Trait* traitPtr = character->addTrait( list[j] );
 
 				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				CharaTrait2* charaTrait = new CharaTrait2( this, traitPtr, list[j] );
+				CharaTrait* charaTrait = new CharaTrait( this, traitPtr, list[j] );
 				charaTrait->setValue( 0 );
 				layoutTop->addWidget( charaTrait );
 
