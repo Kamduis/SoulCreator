@@ -85,6 +85,10 @@ class Trait : public QObject, public cv_Trait {
 		 * Löscht sämtliche Zusatzeigenschaften.
 		 **/
 		void clearDetails();
+		/**
+		 * Legt den Typ fest und sendet ein entsprechendes Signal aus.
+		 **/
+		void setType( cv_AbstractTrait::Type typ );
 
 	private slots:
 		/**
@@ -97,6 +101,10 @@ class Trait : public QObject, public cv_Trait {
 		 * Der Wert der Eigenschaft hat sich verändert.
 		 **/
 		void valueChanged(int);
+		/**
+		 * Der Typ der Eigenschaft hat sich verändert.
+		 **/
+		void typeChanged( cv_AbstractTrait::Type );
 		/**
 		 * Die Details der Eigenscahft haben sich verändert.
 		 **/

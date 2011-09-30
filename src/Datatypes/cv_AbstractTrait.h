@@ -180,7 +180,7 @@ class cv_AbstractTrait {
 		/**
 		 * Legt fest, welchem Typ diese Eigenschaft angehört.
 		 **/
-		void setType(Type typ);
+		virtual void setType(Type typ);
 		/**
 		 * Gibt zurpck, welcher Kategorie diese Eigenschaft angehört.
 		 **/

@@ -134,8 +134,7 @@ void StorageCharacter::setRealIdentity( cv_Identity id ) {
 QList< cv_Trait >* StorageCharacter::traits() const {
 	return &v_traits;
 }
-QList< Trait* >* StorageCharacter::traits2() const
-{
+QList< Trait* >* StorageCharacter::traits2() const {
 	return &v_traits2;
 }
 
@@ -202,12 +201,13 @@ cv_Trait* StorageCharacter::addTrait( cv_Trait trait ) {
 	return traitPtr;
 }
 Trait* StorageCharacter::addTrait( Trait* trait ) {
-	Trait* lcl_trait = new Trait(trait);
-	
+	Trait* lcl_trait = new Trait( trait );
+
 	v_traits2.append( lcl_trait );
 
 	// Wann immer sich eine Eigenschaft ändert, muß dies auch ein passendes Signal aussenden.
-	connect( lcl_trait, SIGNAL( traitChanged( Trait* ) ), this, SIGNAL( traitChanged(Trait*)) );
+	// Hier gibt es Probleme, wenn Eigenschaften nach den Merits erzeugt werden.
+	connect( lcl_trait, SIGNAL( traitChanged( Trait* ) ), SIGNAL( traitChanged( Trait* ) ) );
 
 	return lcl_trait;
 }
@@ -218,9 +218,9 @@ void StorageCharacter::modifyTrait( cv_Trait trait ) {
 		if ( trait.type() == v_traits.at( i ).type() && trait.category() == v_traits.at( i ).category() && trait.name() == v_traits.at( i ).name() ) {
 			if ( !v_traits.at( i ).custom() || trait.customText() == v_traits.at( i ).customText() || v_traits.at( i ).customText().isEmpty() ) {
 				// Custom bleibt immer gleich.
-				v_traits[i].setValue ( trait.value() );
-				v_traits[i].setCustomText(trait.customText());
-				v_traits[i].setDetails(trait.details());
+				v_traits[i].setValue( trait.value() );
+				v_traits[i].setCustomText( trait.customText() );
+				v_traits[i].setDetails( trait.details() );
 // 				qDebug() << Q_FUNC_INFO << v_traits.at( i ).name << "Adresse:" << &v_traits[i] << "verändert zu" << v_traits.at( i ).value << "Und zusatztext:" << v_traits.at( i ).customText << v_traits.at( i ).custom;
 
 				emit traitChanged( &v_traits[i] );
@@ -237,9 +237,9 @@ void StorageCharacter::modifyTrait( cv_Trait trait ) {
 		if ( trait.type() == v_traits2.at( i )->type() && trait.category() == v_traits2.at( i )->category() && trait.name() == v_traits2.at( i )->name() ) {
 			if ( !v_traits2.at( i )->custom() || trait.customText() == v_traits2.at( i )->customText() || v_traits2.at( i )->customText().isEmpty() ) {
 				// Custom bleibt immer gleich.
-				v_traits2[i]->setValue ( trait.value() );
-				v_traits2[i]->setCustomText(trait.customText());
-				v_traits2[i]->setDetails(trait.details());
+				v_traits2[i]->setValue( trait.value() );
+				v_traits2[i]->setCustomText( trait.customText() );
+				v_traits2[i]->setDetails( trait.details() );
 
 // 				// Dieses Signal benötige ich wegen der Prerequisites einiger Merits. Diese müssen kontrolliert werden, wann immer sich eine Eigenschaft ändert, welche Teil dieser Voraussetzungen sein könnte.
 // 				emit traitChanged( v_traits2[i] );
@@ -438,7 +438,7 @@ void StorageCharacter::resetCharacter() {
 
 		v_traits[i].clearDetails();
 
-		v_traits[i].setCustomText("");
+		v_traits[i].setCustomText( "" );
 
 		emit traitChanged( &v_traits[i] );
 	}

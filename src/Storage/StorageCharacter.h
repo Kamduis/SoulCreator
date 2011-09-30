@@ -274,6 +274,8 @@ class StorageCharacter : public QObject {
 		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
 		 *
 		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
+		 *
+		 * \bug Ich muß alle Eigenschaften vor den Merits erzeugen, sonst stürzt das programm aus irgendeinem Grund ab.
 		 **/
 		Trait* addTrait( Trait* trait );
 		/**

@@ -51,8 +51,8 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	for ( int i = 0; i < v_categories.count(); i++ ) {
 		try {
 			list = storage->traits2( type, v_categories.at( i ) );
-		} catch (eTraitNotExisting &e) {
-			MessageBox::exception(this, e.message(), e.description());
+		} catch ( eTraitNotExisting &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
 		}
 
 		// Zeichnen des Separators zwischen den einzelnen Kategorien
@@ -93,9 +93,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			charaTrait->setValue( 0 );
 
 			// Nur Fertigkeiten haben Spezialisierungen.
-
 			if ( type = cv_Trait::Skill ) {
-
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 
 				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
@@ -123,15 +121,15 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 	QList< Trait* > list;
 
 	// Nur Spalten 0, 2 und 4 werden verwendet. 1 und 3 sind für optische Trennung.
-	for ( int i = 0; i < layout->columnCount(); i=i+2 ) {
+	for ( int i = 0; i < layout->columnCount(); i = i + 2 ) {
 		// durch das +2 kann die Schleife für einen Ausgang über ihre Grenze hinausspringen. Also diese zusätzliche Abbruchbedingung.
 // 		if (i >= layout->columnCount()){
 // 			break;
 // 		}
-		
+
 		for ( int j = 1; j < layout->rowCount(); j++ ) {
 // 			qDebug() << Q_FUNC_INFO << "Reihe" << j << "Spalte" << i;
-			
+
 			CharaTrait2* trait = qobject_cast<CharaTrait2*>( layout->itemAtPosition( j, i )->widget() );
 
 			if ( trait->name() != skillName ) {

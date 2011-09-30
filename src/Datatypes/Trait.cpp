@@ -95,7 +95,17 @@ void Trait::clearDetails() {
 	}
 }
 
+void Trait::setType( cv_AbstractTrait::Type typ )
+{
+	if (type() != typ) {
+		cv_AbstractTrait::setType( typ );
+
+		emit typeChanged(typ);
+	}
+}
+
+
 
 void Trait::emitTraitChanged() {
-	emit traitChanged(this);
+	emit traitChanged( this );
 }
