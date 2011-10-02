@@ -24,17 +24,17 @@
 
 #include <QDebug>
 
-#include "Exceptions/Exception.h"
+// #include "Exceptions/Exception.h"
 #include "Config/Config.h"
 
 #include "Creation.h"
 
 
-const QList< cv_Trait::Type > Creation::v_types = QList< cv_Trait::Type >()
-		<< cv_Trait::Attribute
-		<< cv_Trait::Skill
-		<< cv_Trait::Merit
-		<< cv_Trait::Power;
+const QList< cv_AbstractTrait::Type > Creation::v_types = QList< cv_AbstractTrait::Type >()
+		<< cv_AbstractTrait::Attribute
+		<< cv_AbstractTrait::Skill
+		<< cv_AbstractTrait::Merit
+		<< cv_AbstractTrait::Power;
 
 
 Creation::Creation( QObject* parent ): QObject( parent ) {
@@ -66,8 +66,8 @@ void Creation::calcPoints( cv_Trait* trait ) {
 		QList< int > pointList;
 		// Nur bei Attributen und Fertigkeiten sind die zu verteilenden Punkte zwischen den Kategorien aufgeteilt.
 
-		if ( trait->type() == cv_Trait::Attribute || trait->type() == cv_Trait::Skill ) {
-			QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( trait->type() );
+		if ( trait->type() == cv_AbstractTrait::Attribute || trait->type() == cv_AbstractTrait::Skill ) {
+			QList< cv_AbstractTrait::Category > categories = cv_AbstractTrait::getCategoryList( trait->type() );
 
 			for ( int i = 0; i < categories.count(); i++ ) {
 				int pts = 0;
@@ -94,11 +94,11 @@ void Creation::calcPoints( cv_Trait* trait ) {
 			qSort( pointList );
 
 			// Bei Attributen ist der jeweils erste Punkt umsonst.
-			if ( trait->type() == cv_Trait::Attribute ) {
+			if ( trait->type() == cv_AbstractTrait::Attribute ) {
 				v_points.attributesA = Config::creationPointsAttA + 3 - pointList.at( 2 );
 				v_points.attributesB = Config::creationPointsAttB + 3 - pointList.at( 1 );
 				v_points.attributesC = Config::creationPointsAttC + 3 - pointList.at( 0 );
-			} else if ( trait->type() == cv_Trait::Skill ) {
+			} else if ( trait->type() == cv_AbstractTrait::Skill ) {
 				v_points.skillsA = Config::creationPointsSkillA - pointList.at( 2 );
 				v_points.skillsB = Config::creationPointsSkillB - pointList.at( 1 );
 				v_points.skillsC = Config::creationPointsSkillC - pointList.at( 0 );
@@ -121,7 +121,7 @@ void Creation::calcPoints( cv_Trait* trait ) {
 				pts += ans * 2;
 			}
 
-			if ( trait->type() == cv_Trait::Merit ) {
+			if ( trait->type() == cv_AbstractTrait::Merit ) {
 				v_points.merits = Config::creationPointsMerits - pts;
 			}
 		}
@@ -135,27 +135,27 @@ void Creation::calcPoints( cv_Trait* trait ) {
 void Creation::controlPoints( cv_CreationPoints points )
 {
 	if (points.attributesA == 0 && points.attributesB == 0 && points.attributesC == 0){
-		emit pointsDepleted(cv_Trait::Attribute);
+		emit pointsDepleted(cv_AbstractTrait::Attribute);
 	} else if (points.attributesA < 0 || points.attributesB < 0 || points.attributesC < 0){
-		emit pointsNegative(cv_Trait::Attribute);
+		emit pointsNegative(cv_AbstractTrait::Attribute);
 	} else {
-		emit pointsPositive(cv_Trait::Attribute);
+		emit pointsPositive(cv_AbstractTrait::Attribute);
 	}
 
 	if (points.skillsA == 0 && points.skillsB == 0 && points.skillsC == 0){
-		emit pointsDepleted(cv_Trait::Skill);
+		emit pointsDepleted(cv_AbstractTrait::Skill);
 	} else if (points.skillsA < 0 || points.skillsB < 0 || points.skillsC < 0){
-		emit pointsNegative(cv_Trait::Skill);
+		emit pointsNegative(cv_AbstractTrait::Skill);
 	} else {
-		emit pointsPositive(cv_Trait::Skill);
+		emit pointsPositive(cv_AbstractTrait::Skill);
 	}
 
 	if (points.merits == 0){
-		emit pointsDepleted(cv_Trait::Merit);
+		emit pointsDepleted(cv_AbstractTrait::Merit);
 	} else if (points.merits < 0){
-		emit pointsNegative(cv_Trait::Merit);
+		emit pointsNegative(cv_AbstractTrait::Merit);
 	} else {
-		emit pointsPositive(cv_Trait::Merit);
+		emit pointsPositive(cv_AbstractTrait::Merit);
 	}
 }
 

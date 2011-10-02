@@ -25,7 +25,7 @@
 #include <QDebug>
 
 #include "Parser/StringBoolParser.h"
-#include "Exceptions/Exception.h"
+// #include "Exceptions/Exception.h"
 #include "Dialogs/MessageBox.h"
 
 #include "CharaTrait.h"
@@ -43,8 +43,8 @@ CharaTrait::CharaTrait( QWidget* parent, Trait* trait, Trait* traitStorage ) : T
 	// Falls ich mit der Maus den Wert ändere, muß er auch entsprechend verändert werden.
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( setTraitValue( int ) ) );
 	connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
-	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_Trait::Type ) ) );
-	connect( this, SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
+	connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_AbstractTrait::Type ) ) );
+	connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
 
 // 	connect( this, SIGNAL( traitChanged( cv_Trait* ) ), character, SIGNAL( traitChanged( cv_Trait* ) ) );
@@ -103,11 +103,11 @@ void CharaTrait::setCustomText( QString txt ) {
 }
 
 
-cv_Trait::Type CharaTrait::type() const {
+cv_AbstractTrait::Type CharaTrait::type() const {
 	return ptr_trait->type();
 }
 
-void CharaTrait::setType( cv_Trait::Type type ) {
+void CharaTrait::setType( cv_AbstractTrait::Type type ) {
 	if ( ptr_trait->type() != type ) {
 		ptr_trait->setType(type);
 
@@ -116,11 +116,11 @@ void CharaTrait::setType( cv_Trait::Type type ) {
 	}
 }
 
-cv_Trait::Category CharaTrait::category() const {
+cv_AbstractTrait::Category CharaTrait::category() const {
 	return ptr_trait->category();
 }
 
-void CharaTrait::setCategory( cv_Trait::Category category ) {
+void CharaTrait::setCategory( cv_AbstractTrait::Category category ) {
 	if ( ptr_trait->category() != category ) {
 		ptr_trait->setCategory(category);
 
@@ -154,8 +154,8 @@ void CharaTrait::setCustom( bool sw ) {
 	}
 }
 
-void CharaTrait::hideSpecialtyWidget( cv_Trait::Type type ) {
-	if ( type == cv_Trait::Skill ) {
+void CharaTrait::hideSpecialtyWidget( cv_AbstractTrait::Type type ) {
+	if ( type == cv_AbstractTrait::Skill ) {
 		hideSpecialties( false );
 	} else {
 		hideSpecialties( true );
@@ -242,7 +242,7 @@ QString CharaTrait::parsePrerequisites( QString text ) {
 
 		for ( int k = 0; k < list->count(); k++ ) {
 			// Ersetzen der Fertigkeitsspezialisierungen von dem Format Fertigkeit.Spezialisierung mit Fertigkeitswert, wenn Spezialisierung existiert oder 0, wenn nicht.
-			if ( prerequisites.contains( '.' ) && list->at( k )->type() == cv_Trait::Skill && list->at( k )->details().count() > 0 ) {
+			if ( prerequisites.contains( '.' ) && list->at( k )->type() == cv_AbstractTrait::Skill && list->at( k )->details().count() > 0 ) {
 				QString testSkill = list->at( k )->name() + ".";
 
 				if ( prerequisites.contains( testSkill ) ) {

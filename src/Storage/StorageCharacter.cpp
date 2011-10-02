@@ -24,7 +24,7 @@
 
 #include <QDebug>
 
-#include "StorageTemplate.h"
+// #include "StorageTemplate.h"
 
 #include "StorageCharacter.h"
 #include "Config/Config.h"
@@ -139,7 +139,7 @@ QList< Trait* >* StorageCharacter::traits2() const {
 }
 
 
-QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type ) const {
+QList< cv_Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type ) const {
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
@@ -150,7 +150,7 @@ QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type ) const {
 
 	return list;
 }
-QList< Trait* > StorageCharacter::traits2( cv_Trait::Type type ) const {
+QList< Trait* > StorageCharacter::traits2( cv_AbstractTrait::Type type ) const {
 	QList< Trait* > list;
 
 	for ( int i = 0; i < v_traits2.count(); i++ ) {
@@ -162,7 +162,7 @@ QList< Trait* > StorageCharacter::traits2( cv_Trait::Type type ) const {
 	return list;
 }
 
-QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Category category ) const {
+QList< cv_Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const {
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
@@ -173,7 +173,7 @@ QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Cate
 
 	return list;
 }
-QList< Trait* > StorageCharacter::traits2( cv_Trait::Type type, cv_Trait::Category category ) const {
+QList< Trait* > StorageCharacter::traits2( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const {
 	QList< Trait* > list;
 
 	for ( int i = 0; i < v_traits2.count(); i++ ) {
@@ -207,7 +207,7 @@ Trait* StorageCharacter::addTrait( Trait* trait ) {
 
 	// Wann immer sich eine Eigenschaft ändert, muß dies auch ein passendes Signal aussenden.
 	// Hier gibt es Probleme, wenn Eigenschaften nach den Merits erzeugt werden.
-	connect( lcl_trait, SIGNAL( traitChanged( Trait* ) ), SIGNAL( traitChanged( Trait* ) ) );
+// 	connect( lcl_trait, SIGNAL( traitChanged( Trait* ) ), SIGNAL( traitChanged( Trait* ) ) );
 
 	return lcl_trait;
 }
@@ -256,7 +256,7 @@ QList< cv_Derangement >* StorageCharacter::derangements() const {
 	return &v_derangements;
 }
 
-QList< cv_Derangement* > StorageCharacter::derangements( cv_Trait::Category category ) const {
+QList< cv_Derangement* > StorageCharacter::derangements( cv_AbstractTrait::Category category ) const {
 	QList< cv_Derangement* > list;
 
 	for ( int i = 0; i < v_derangements.count(); i++ ) {
@@ -296,7 +296,7 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 		// Spezialisieren gibt es nur bei Fertigkeiten.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
-		if ( v_traits.at( i ).type() == cv_Trait::Skill && v_traits.at( i ).name() == name && v_traits.at( i ).value() > 0 ) {
+		if ( v_traits.at( i ).type() == cv_AbstractTrait::Skill && v_traits.at( i ).name() == name && v_traits.at( i ).value() > 0 ) {
 			trait_exists = true;
 
 			cv_Trait trait = v_traits.at( i );
@@ -430,7 +430,7 @@ void StorageCharacter::resetCharacter() {
 // 	setFaction(storage->breedNames(species()).at(0));
 
 	for ( int i = 0; i < v_traits.count();i++ ) {
-		if ( v_traits[i].type() == cv_Trait::Attribute ) {
+		if ( v_traits[i].type() == cv_AbstractTrait::Attribute ) {
 			v_traits[i].setValue( 1 );
 		} else {
 			v_traits[i].setValue( 0 );

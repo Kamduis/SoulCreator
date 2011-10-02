@@ -28,8 +28,8 @@
 #include <QHBoxLayout>
 #include <QToolBox>
 
-#include "Datatypes/cv_TraitDetail.h"
-#include "Storage/StorageTemplate.h"
+// #include "Datatypes/cv_TraitDetail.h"
+// #include "Storage/StorageTemplate.h"
 #include "Storage/StorageCharacter.h"
 
 #include <QWidget>
@@ -58,7 +58,7 @@ class SkillWidget : public QWidget {
 		StorageTemplate* storage;
 		StorageCharacter* character;
 
-		QList< cv_Trait::Category > v_categories;
+		QList< cv_AbstractTrait::Category > v_categoryList;
 
 	public slots:
 

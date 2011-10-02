@@ -24,7 +24,7 @@
 
 /**
  * \author Victor von Rhein
- * 
+ *
  * \mainpage Hauptseite
  *
  * \section Zweck

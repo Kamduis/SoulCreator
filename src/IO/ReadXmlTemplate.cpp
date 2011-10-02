@@ -24,10 +24,10 @@
 
 #include <QDebug>
 
-#include "Datatypes/cv_SuperEffect.h"
-#include "Datatypes/cv_SpeciesTitle.h"
+// #include "Datatypes/cv_SuperEffect.h"
+// #include "Datatypes/cv_SpeciesTitle.h"
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Config/Config.h"
 
 #include "ReadXmlTemplate.h"
 
@@ -159,19 +159,18 @@ void ReadXmlTemplate::readTree( cv_Species::Species sp ) {
 			break;
 
 		if ( isStartElement() ) {
-			cv_Trait::Type type = cv_Trait::toType( name().toString() );
+			cv_AbstractTrait::Type type = cv_AbstractTrait::toType( name().toString() );
 
-			if ( type != cv_Trait::TypeNo ) {
+			if ( type != cv_AbstractTrait::TypeNo ) {
 // 				qDebug() << "Typ " << type << " gefunden.";
 				// Virtues und Vices haben keine Kategorie, also darf ich dort auch nicht so tief den Baum hinuntersteigen. Bei allen anderen aber muß ich erst die Kategorie einlesen.
 
-				if ( type == cv_Trait::Virtue ||
-						type == cv_Trait::Vice ||
-						type == cv_Trait::Breed ||
-						type == cv_Trait::Faction ||
-						type == cv_Trait::Power ) {
-					readTraits( sp, type, cv_Trait::CategoryNo );
-				} else if ( type == cv_Trait::Super ) {
+				if ( type == cv_AbstractTrait::Virtue ||
+						type == cv_AbstractTrait::Vice ||
+						type == cv_AbstractTrait::Breed ||
+						type == cv_AbstractTrait::Faction ) {
+					readTraits( sp, type, cv_AbstractTrait::CategoryNo );
+				} else if ( type == cv_AbstractTrait::Super ) {
 					readSuperTrait( sp );
 				} else {
 					readTraits( sp, type );
@@ -207,7 +206,7 @@ void ReadXmlTemplate::readSuperTrait( cv_Species::Species sp ) {
 }
 
 
-void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a ) {
+void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type a ) {
 
 	while ( !atEnd() ) {
 		readNext();
@@ -217,17 +216,17 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a ) {
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
-			cv_Trait::Category category = cv_Trait::toCategory( elementName );
+			cv_AbstractTrait::Category category = cv_AbstractTrait::toCategory( elementName );
 
 			readTraits( sp, a, category );
 		}
 	}
 }
 
-void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b ) {
-	if ( a == cv_Trait::Breed || a == cv_Trait::Faction ) {
+void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b ) {
+	if ( a == cv_AbstractTrait::Breed || a == cv_AbstractTrait::Faction ) {
 		QString titleName = attributes().value( "name" ).toString();
-		cv_SpeciesTitle title = cv_SpeciesTitle( cv_SpeciesTitle::toTitle( cv_Trait::toString( a ) ), titleName, sp );
+		cv_SpeciesTitle title = cv_SpeciesTitle( cv_SpeciesTitle::toTitle( cv_AbstractTrait::toString( a ) ), titleName, sp );
 
 // 		qDebug() << Q_FUNC_INFO << title.title << title.name << title.species;
 
@@ -281,7 +280,7 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 	}
 }
 
-cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b ) {
+cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b ) {
 	// Es besteht die Möglichkeit, daß einzelne Eigenschaften in mehreren XML-DAteien auftauchen. Beispiel: Fertigkeit mit Spezialisierungen speziell für eine Spezies.
 	// Momentan löse ich das Problem nicht hier beim Einlesen, sondern bei der Ausgabe in Storage.cpp
 // 	QString specialtyName;

@@ -141,46 +141,48 @@
 			</Extraordinary>
 		</Merit>
 		<Power>
-			<trait name="Animalism">
-				<cheap>Gangrel</cheap>
-				<cheap>Ventrue</cheap>
-				<cheap>Julii</cheap>
-			</trait>
-			<trait name="Auspex">
-				<cheap>Mekhet</cheap>
-			</trait>
-			<trait name="Celerity">
-				<cheap>Daeva</cheap>
-				<cheap>Mekhet</cheap>
-			</trait>
-			<trait name="Dominate">
-				<cheap>Ventrue</cheap>
-			</trait>
-			<trait name="Nightmare">
-				<cheap>Nosferatu</cheap>
-			</trait>
-			<trait name="Obtenebration">
-				<cheap>Julii</cheap>
-			</trait>
-			<trait name="Obfuscate">
-				<cheap>Mekhet</cheap>
-				<cheap>Nosferatu</cheap>
-			</trait>
-			<trait name="Presence">
-				<cheap>Daeva</cheap>
-			</trait>
-			<trait name="Protean">
-				<cheap>Gangrel</cheap>
-			</trait>
-			<trait name="Resilience">
-				<cheap>Gangrel</cheap>
-				<cheap>Ventrue</cheap>
-			</trait>
-			<trait name="Vigor">
-				<cheap>Daeva</cheap>
-				<cheap>Nosferatu</cheap>
-				<cheap>Julii</cheap>
-			</trait>
+			<BreedPower>
+				<trait name="Animalism">
+					<cheap>Gangrel</cheap>
+					<cheap>Ventrue</cheap>
+					<cheap>Julii</cheap>
+				</trait>
+				<trait name="Auspex">
+					<cheap>Mekhet</cheap>
+				</trait>
+				<trait name="Celerity">
+					<cheap>Daeva</cheap>
+					<cheap>Mekhet</cheap>
+				</trait>
+				<trait name="Dominate">
+					<cheap>Ventrue</cheap>
+				</trait>
+				<trait name="Nightmare">
+					<cheap>Nosferatu</cheap>
+				</trait>
+				<trait name="Obtenebration">
+					<cheap>Julii</cheap>
+				</trait>
+				<trait name="Obfuscate">
+					<cheap>Mekhet</cheap>
+					<cheap>Nosferatu</cheap>
+				</trait>
+				<trait name="Presence">
+					<cheap>Daeva</cheap>
+				</trait>
+				<trait name="Protean">
+					<cheap>Gangrel</cheap>
+				</trait>
+				<trait name="Resilience">
+					<cheap>Gangrel</cheap>
+					<cheap>Ventrue</cheap>
+				</trait>
+				<trait name="Vigor">
+					<cheap>Daeva</cheap>
+					<cheap>Nosferatu</cheap>
+					<cheap>Julii</cheap>
+				</trait>
+			</BreedPower>
 		</Power>
 		<Derangement>
 			<Mild>

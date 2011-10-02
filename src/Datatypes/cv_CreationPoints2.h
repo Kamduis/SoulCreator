@@ -25,6 +25,8 @@
 #ifndef CV_CREATIONPOINTS2_H
 #define CV_CREATIONPOINTS2_H
 
+#include <QList>
+
 #include "Datatypes/cv_Species.h"
 
 #include <QString>

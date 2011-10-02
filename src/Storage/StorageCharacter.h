@@ -25,12 +25,12 @@
 #ifndef STORAGECHARACTER_H
 #define STORAGECHARACTER_H
 
-#include "Datatypes/cv_Identity.h"
+// #include "Datatypes/cv_Identity.h"
 #include "Datatypes/cv_IdentityList.h"
-#include "Datatypes/cv_Trait.h"
-#include "Datatypes/Trait.h"
+// #include "Datatypes/Trait.h"
+// #include "Datatypes/Trait.h"
 #include "Datatypes/cv_Derangement.h"
-#include "Datatypes/cv_CreationPoints.h"
+// #include "Datatypes/cv_CreationPoints.h"
 #include "StorageTemplate.h"
 
 #include <QObject>
@@ -134,23 +134,23 @@ class StorageCharacter : public QObject {
 		/**
 		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 **/
-		QList< cv_Trait* > traits( cv_Trait::Type type ) const;
+		QList< cv_Trait* > traits( cv_AbstractTrait::Type type ) const;
 		/**
 		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 **/
-		QList< Trait* > traits2( cv_Trait::Type type ) const;
+		QList< Trait* > traits2( cv_AbstractTrait::Type type ) const;
 		/**
 		 * Gibt eine Liste von Zeigern auf alle Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 *
-		 * \overload QList< cv_Trait* > traits( cv_Trait::Type type )
+		 * \overload QList< cv_Trait* > traits( cv_AbstractTrait::Type type )
 		 **/
-		QList< cv_Trait* > traits( cv_Trait::Type type, cv_Trait::Category category ) const;
+		QList< cv_Trait* > traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const;
 		/**
 		 * Gibt eine Liste von Zeigern auf alle Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 *
-		 * \overload QList< cv_Trait* > traits( cv_Trait::Type type )
+		 * \overload QList< cv_Trait* > traits( cv_AbstractTrait::Type type )
 		 **/
-		QList< Trait* > traits2( cv_Trait::Type type, cv_Trait::Category category ) const;
+		QList< Trait* > traits2( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus.
 		 **/
@@ -160,7 +160,7 @@ class StorageCharacter : public QObject {
 		 *
 		 * \overload QList< cv_Derangement* > derangements()
 		 **/
-		QList< cv_Derangement* > derangements( cv_Trait::Category category ) const;
+		QList< cv_Derangement* > derangements( cv_AbstractTrait::Category category ) const;
 		/**
 		 * Gibt den Wert des Super-Attributs aus.
 		 **/
@@ -276,6 +276,8 @@ class StorageCharacter : public QObject {
 		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 		 *
 		 * \bug Ich muß alle Eigenschaften vor den Merits erzeugen, sonst stürzt das programm aus irgendeinem Grund ab.
+		 *
+		 * \bug Das connect in dieser Methode macht mir Sorgen. Ist scheinbar für viele Fehlfunktionen des Programms verantwortlich. Deswegen habe ich dies abgeschalten. Aber solange dieser Connect nicht arbeitet, funktionier Momenthan das Deaktivieren von Eigenschaften aufgrund ihrer Anforderungen nicht.
 		 **/
 		Trait* addTrait( Trait* trait );
 		/**

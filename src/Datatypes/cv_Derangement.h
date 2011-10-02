@@ -27,7 +27,7 @@
 
 #include <QString>
 
-#include "cv_Species.h"
+// #include "cv_Species.h"
 
 #include "cv_AbstractTrait.h"
 

@@ -26,8 +26,8 @@
 #define CHARATRAIT_H
 
 #include "Storage/StorageCharacter.h"
-#include "Datatypes/cv_Trait.h"
-#include "Datatypes/cv_TraitDetail.h"
+// #include "Datatypes/Trait.h"
+// #include "Datatypes/cv_TraitDetail.h"
 
 #include "TraitLine.h"
 
@@ -63,11 +63,11 @@ class CharaTrait : public TraitLine {
 		/**
 		 * Gibt den Typ zurück, dem die hier dargestellte Eigenschaft angehört.
 		 **/
-		cv_Trait::Type type() const;
+		cv_AbstractTrait::Type type() const;
 		/**
 		 * Gibt die Kategorie zurück, der die hier dargestellte Eigenschaft angehört.
 		 **/
-		cv_Trait::Category category() const;
+		cv_AbstractTrait::Category category() const;
 		/**
 		 * Gibt die Spezies zurück, der die hier dargestellte Eigenschaft angehört.
 		 **/
@@ -103,11 +103,11 @@ class CharaTrait : public TraitLine {
 		/**
 		 * Legt den Typ der hier dargestellten Eigenschaft fest.
 		 **/
-		void setType( cv_Trait::Type type );
+		void setType( cv_AbstractTrait::Type type );
 		/**
 		 * Legt die Kategorie der hier dargestellten Eigenschaft fest.
 		 **/
-		void setCategory( cv_Trait::Category category );
+		void setCategory( cv_AbstractTrait::Category category );
 		/**
 		 * Legt fest, welche Spezies alles über diese Eigenschaft verfügen können.
 		 **/
@@ -120,7 +120,7 @@ class CharaTrait : public TraitLine {
 		/**
 		 * Verbirgt die Schaltfläche für Spezialisierungen für alle Eigenschaften außer den Fertigkeiten.
 		 **/
-		void hideSpecialtyWidget( cv_Trait::Type type );
+		void hideSpecialtyWidget( cv_AbstractTrait::Type type );
 		/**
 		 * Verbirgt die Textzeile für den Beschreibungstext bei allen, außer Merits mit custom=true.
 		 *
@@ -156,7 +156,7 @@ class CharaTrait : public TraitLine {
 		void setTraitValue( int val );
 
 	signals:
-		void typeChanged( cv_Trait::Type type );
+		void typeChanged( cv_AbstractTrait::Type type );
 		/**
 		 * Der Knopf zum Anzeigen der Spazialisierungen wurde gedrückt.
 		 **/

@@ -25,7 +25,7 @@
 #ifndef CREATION_H
 #define CREATION_H
 
-#include "Datatypes/cv_Trait.h"
+// #include "Datatypes/cv_Trait.h"
 #include "Datatypes/cv_CreationPoints.h"
 #include "Storage/StorageCharacter.h"
 
@@ -57,7 +57,7 @@ class Creation : public QObject {
 		 */
 		StorageCharacter* character;
 
-		static const QList< cv_Trait::Type > v_types;
+		static const QList< cv_AbstractTrait::Type > v_types;
 		cv_CreationPoints v_points;
 
 	public slots:
@@ -92,15 +92,15 @@ class Creation : public QObject {
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ erschöpft.
 		**/
-		void pointsDepleted( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte erschöpft sind. */ );
+		void pointsDepleted( cv_AbstractTrait::Type type /** Dies ist der Typ, dessen Punkte erschöpft sind. */ );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ ändert und das Resultat negativ ist.
 		**/
-		void pointsNegative( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
+		void pointsNegative( cv_AbstractTrait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ ändert und das Resultat positiv ist.
 		**/
-		void pointsPositive( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
+		void pointsPositive( cv_AbstractTrait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
 };
 
 #endif

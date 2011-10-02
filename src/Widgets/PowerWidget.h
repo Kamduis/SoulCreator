@@ -25,10 +25,11 @@
 #ifndef POWERWIDGET_H
 #define POWERWIDGET_H
 
-#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QToolBox>
 #include <QPushButton>
 
-#include "Datatypes/cv_TraitDetail.h"
+// #include "Datatypes/cv_TraitDetail.h"
 #include "Dialogs/SelectMeritsDialog.h"
 #include "Storage/StorageCharacter.h"
 
@@ -49,6 +50,8 @@ class PowerWidget : public QWidget {
 		~PowerWidget();
 
 	private:
+		QHBoxLayout* layout;
+		QToolBox* toolBox;
 		StorageCharacter* character;
 
 	public slots:

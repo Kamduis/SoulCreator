@@ -23,8 +23,10 @@
  */
 
 
-#include "Config/Config.h"
-#include "Exceptions/Exception.h"
+#include <QStringList>
+
+// #include "Config/Config.h"
+// #include "Exceptions/Exception.h"
 
 #include "cv_CreationPoints2.h"
 

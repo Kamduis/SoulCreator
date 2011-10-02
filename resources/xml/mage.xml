@@ -164,36 +164,38 @@
 			</Extraordinary>
 		</Merit>
 		<Power>
-			<trait name="Death">
-				<cheap>Moros</cheap>
-			</trait>
-			<trait name="Fate">
-				<cheap>Acanthus</cheap>
-			</trait>
-			<trait name="Forces">
-				<cheap>Obrimos</cheap>
-			</trait>
-			<trait name="Life">
-				<cheap>Thyrsus</cheap>
-			</trait>
-			<trait name="Matter">
-				<cheap>Moros</cheap>
-			</trait>
-			<trait name="Mind">
-				<cheap>Mastigos</cheap>
-			</trait>
-			<trait name="Prime">
-				<cheap>Obrimos</cheap>
-			</trait>
-			<trait name="Space">
-				<cheap>Mastigos</cheap>
-			</trait>
-			<trait name="Spirit">
-				<cheap>Thyrsus</cheap>
-			</trait>
-			<trait name="Time">
-				<cheap>Acanthus</cheap>
-			</trait>
+			<AllPower>
+				<trait name="Death">
+					<cheap>Moros</cheap>
+				</trait>
+				<trait name="Fate">
+					<cheap>Acanthus</cheap>
+				</trait>
+				<trait name="Forces">
+					<cheap>Obrimos</cheap>
+				</trait>
+				<trait name="Life">
+					<cheap>Thyrsus</cheap>
+				</trait>
+				<trait name="Matter">
+					<cheap>Moros</cheap>
+				</trait>
+				<trait name="Mind">
+					<cheap>Mastigos</cheap>
+				</trait>
+				<trait name="Prime">
+					<cheap>Obrimos</cheap>
+				</trait>
+				<trait name="Space">
+					<cheap>Mastigos</cheap>
+				</trait>
+				<trait name="Spirit">
+					<cheap>Thyrsus</cheap>
+				</trait>
+				<trait name="Time">
+					<cheap>Acanthus</cheap>
+				</trait>
+			</AllPower>
 		</Power>
 		<Flaw>
 			<Extraordinary>

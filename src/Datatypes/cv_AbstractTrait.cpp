@@ -41,12 +41,17 @@ const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListDerang
 		<< cv_AbstractTrait::Mild
 		<< cv_AbstractTrait::Severe;
 
-const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListAll = QList< cv_AbstractTrait::Category >()
+const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListMerits = QList< cv_AbstractTrait::Category >()
 		<< cv_AbstractTrait::v_categoryListExtended
 		<< cv_AbstractTrait::Item
 		<< cv_AbstractTrait::FightingStyle
 		<< cv_AbstractTrait::DebateStyle;
 
+const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListPowers = QList< cv_AbstractTrait::Category >()
+		<< cv_AbstractTrait::BreedPower
+		<< cv_AbstractTrait::FactionPower
+		<< cv_AbstractTrait::ClubPower
+		<< cv_AbstractTrait::AllPower;
 
 cv_AbstractTrait::cv_AbstractTrait( QString txt, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca ) {
 	v_name = txt;
@@ -139,6 +144,14 @@ QString cv_AbstractTrait::toXmlString( cv_AbstractTrait::Category category ) {
 			return "Mild";
 		case cv_AbstractTrait::Severe:
 			return "Severe";
+		case cv_AbstractTrait::BreedPower:
+			return "BreedPower";
+		case cv_AbstractTrait::FactionPower:
+			return "FactionPower";
+		case cv_AbstractTrait::ClubPower:
+			return "ClubPower";
+		case cv_AbstractTrait::AllPower:
+			return "AllPower";
 		default:
 			throw eTraitCategory( category );
 // 			return "ERROR";
@@ -232,6 +245,14 @@ QString cv_AbstractTrait::toString( cv_AbstractTrait::Category category, bool pl
 				return QObject::tr( "Mild" );
 			case cv_AbstractTrait::Severe:
 				return QObject::tr( "Severe" );
+			case cv_AbstractTrait::BreedPower:
+				return QObject::tr( "Breeds" );
+			case cv_AbstractTrait::FactionPower:
+				return QObject::tr( "Factions" );
+			case cv_AbstractTrait::ClubPower:
+				return QObject::tr( "Clubs" );
+			case cv_AbstractTrait::AllPower:
+				return QObject::tr( "All" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -257,6 +278,14 @@ QString cv_AbstractTrait::toString( cv_AbstractTrait::Category category, bool pl
 				return QObject::tr( "Mild" );
 			case cv_AbstractTrait::Severe:
 				return QObject::tr( "Severe" );
+			case cv_AbstractTrait::BreedPower:
+				return QObject::tr( "Breed" );
+			case cv_AbstractTrait::FactionPower:
+				return QObject::tr( "Faction" );
+			case cv_AbstractTrait::ClubPower:
+				return QObject::tr( "Club" );
+			case cv_AbstractTrait::AllPower:
+				return QObject::tr( "All" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -312,21 +341,29 @@ cv_AbstractTrait::Category cv_AbstractTrait::toCategory( QString str ) {
 		return cv_AbstractTrait::Mild;
 	else if ( str == "Severe" )
 		return cv_AbstractTrait::Severe;
+	else if ( str == "BreedPower" )
+		return cv_AbstractTrait::BreedPower;
+	else if ( str == "FactionPower" )
+		return cv_AbstractTrait::FactionPower;
+	else if ( str == "ClubPower" )
+		return cv_AbstractTrait::ClubPower;
+	else if ( str == "AllPower" )
+		return cv_AbstractTrait::AllPower;
 	else
 		return cv_AbstractTrait::CategoryNo;
 }
 
 
-QList< cv_AbstractTrait::Category > cv_AbstractTrait::getCategoryList( cv_Trait::Type type ) {
-	if ( type == cv_Trait::Attribute || type == cv_Trait::Skill ) {
+QList< cv_AbstractTrait::Category > cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Type type ) {
+	if ( type == cv_AbstractTrait::Attribute || type == cv_AbstractTrait::Skill ) {
 		return v_categoryListGeneral;
-	} else if ( type == cv_Trait::Merit ) {
-		return v_categoryListAll;
-	} else if ( type == cv_Trait::Power ) {
-		return QList< cv_Trait::Category >() << cv_Trait::CategoryNo;
-	} else if ( type == cv_Trait::Flaw ) {
+	} else if ( type == cv_AbstractTrait::Merit ) {
+		return v_categoryListMerits;
+	} else if ( type == cv_AbstractTrait::Power ) {
+		return v_categoryListPowers;
+	} else if ( type == cv_AbstractTrait::Flaw ) {
 		return v_categoryListExtended;
-	} else if ( type == cv_Trait::Derangement ) {
+	} else if ( type == cv_AbstractTrait::Derangement ) {
 		return v_categoryListDerangements;
 	} else {
 		throw eTraitType( type );

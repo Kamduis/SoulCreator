@@ -28,10 +28,10 @@
 #include <QPrinter>
 #include <QColor>
 
-#include "Storage/StorageCharacter.h"
+// #include "Storage/StorageCharacter.h"
 #include "Calc/CalcAdvantages.h"
-#include "Datatypes/cv_Species.h"
-#include "Datatypes/cv_Shape.h"
+// #include "Datatypes/cv_Species.h"
+// #include "Datatypes/cv_Shape.h"
 
 #include <QObject>
 
@@ -96,7 +96,7 @@ class DrawSheet : public QObject {
 		 *
 		 * Diese globale Variable legt fest, ob bei einer Überschreitung der Eigenschaftshöchstwerte eine Ausnahme geworfen wird (false/Standardverhalten), oder die Grenzen einfach fest durchgesetzt werden.
 		 **/
-		QList< cv_Trait* > getTraits( cv_Trait::Type type, int maxNumber, bool enforceTraitLimits = false /** Wird dieser Schalter auf true gesetzt (standardmäßig ist er false), werden die Grenzen für die maximale Anzahl durchgesetzt, auch wenn dadurch nicht alle Eigenschaften des Charakters auf Papier gebannt werden. */ );
+		QList< cv_Trait* > getTraits( cv_AbstractTrait::Type type, int maxNumber, bool enforceTraitLimits = false /** Wird dieser Schalter auf true gesetzt (standardmäßig ist er false), werden die Grenzen für die maximale Anzahl durchgesetzt, auch wenn dadurch nicht alle Eigenschaften des Charakters auf Papier gebannt werden. */ );
 
 	public slots:
 		/**
@@ -250,7 +250,7 @@ class DrawSheet : public QObject {
 		 *
 		 * \warning Aktuell ist das Programm so beschaffen, daß dieses Signal ausgesandt wird der Druck aber fortgesetzt wird, wobei jedoch die überzähligen Eigenschaften ignoriert werden.
 		 **/
-		void enforcedTraitLimits( cv_Trait::Type type /** Dieses Argument teilt mit, bei der Bearbeitung welchen Eigenschaftstyps das Limit überschritten wurde. */ );
+		void enforcedTraitLimits( cv_AbstractTrait::Type type /** Dieses Argument teilt mit, bei der Bearbeitung welchen Eigenschaftstyps das Limit überschritten wurde. */ );
 };
 
 #endif

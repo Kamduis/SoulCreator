@@ -29,7 +29,7 @@
 #include <QScrollArea>
 #include <QToolBox>
 
-#include "Storage/StorageTemplate.h"
+// #include "Storage/StorageTemplate.h"
 #include "Storage/StorageCharacter.h"
 
 #include <QWidget>
@@ -63,7 +63,7 @@ class FlawWidget : public QWidget {
 		/**
 		 * Damit ich nicht auch in anderen Funktionen stets alle Kategorien zusammensuchen muß, wird das hier global definiert und im Konstruktor gefüllt.
 		 **/
-		QList< cv_Trait::Category > v_categories;
+		QList< cv_AbstractTrait::Category > v_category;
 
 	public slots:
 

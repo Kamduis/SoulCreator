@@ -93,26 +93,28 @@
 			</FightingStyle>
 		</Merit>
 		<Power>
-			<trait name="Purity">
-				<cheap>Rahu</cheap>
-				<cheap>Hunters in Darkness</cheap>
-			</trait>
-			<trait name="Glory">
-				<cheap>Cahalith</cheap>
-				<cheap>Blood Talons</cheap>
-			</trait>
-			<trait name="Honor">
-				<cheap>Elodoth</cheap>
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Wisdom">
-				<cheap>Ithaeur</cheap>
-				<cheap>Bone Shadows</cheap>
-			</trait>
-			<trait name="Cunning">
-				<cheap>Irraka</cheap>
-				<cheap>Iron Masters</cheap>
-			</trait>
+			<AllPower>
+				<trait name="Purity">
+					<cheap>Rahu</cheap>
+					<cheap>Hunters in Darkness</cheap>
+				</trait>
+				<trait name="Glory">
+					<cheap>Cahalith</cheap>
+					<cheap>Blood Talons</cheap>
+				</trait>
+				<trait name="Honor">
+					<cheap>Elodoth</cheap>
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Wisdom">
+					<cheap>Ithaeur</cheap>
+					<cheap>Bone Shadows</cheap>
+				</trait>
+				<trait name="Cunning">
+					<cheap>Irraka</cheap>
+					<cheap>Iron Masters</cheap>
+				</trait>
+			</AllPower>
 		</Power>
 <!--		<Power>
 			<trait name="Full Moon">

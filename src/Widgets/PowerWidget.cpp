@@ -26,10 +26,10 @@
 #include <QDebug>
 
 #include "CharaTrait.h"
-#include "Datatypes/cv_Trait.h"
-#include "Exceptions/Exception.h"
-#include "Config/Config.h"
-#include "Storage/StorageTemplate.h"
+// #include "Datatypes/cv_Trait.h"
+// #include "Exceptions/Exception.h"
+// #include "Config/Config.h"
+// #include "Storage/StorageTemplate.h"
 #include "Widgets/Dialogs/MessageBox.h"
 
 #include "PowerWidget.h"
@@ -37,29 +37,39 @@
 
 PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 	character = StorageCharacter::getInstance();
-	
-	QVBoxLayout* layoutTop = new QVBoxLayout( this );
-	setLayout( layoutTop );
+
+	layout = new QHBoxLayout( this );
+	setLayout( layout );
+
+	toolBox = new QToolBox();
+
+	layout->addWidget( toolBox );
 
 	StorageTemplate storage;
 
-	cv_Trait::Type type = cv_Trait::Power;
+	cv_AbstractTrait::Type type = cv_AbstractTrait::Power;
 
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::CategoryNo );
+	QList< cv_AbstractTrait::Category > categoryList = cv_AbstractTrait::getCategoryList( type );
 
 	QList< Trait* > list;
 
 	// Powers werden in einer Spalte heruntergeschrieben.
-	for ( int i = 0; i < categories.count(); i++ ) {
+	for ( int i = 0; i < categoryList.count(); i++ ) {
 		try {
-			list = storage.traits2( type, categories.at( i ) );
-		} catch (eTraitNotExisting &e) {
-			MessageBox::exception(this, e.message(), e.description());
+			list = storage.traits2( type, categoryList.at( i ) );
+		} catch ( eTraitNotExisting &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
 		}
 
+		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
+		QWidget* widgetPowerCategory = new QWidget();
+		QVBoxLayout* layoutPowerCategory = new QVBoxLayout();
+
+		widgetPowerCategory->setLayout( layoutPowerCategory );
+
+		toolBox->addItem( widgetPowerCategory, cv_AbstractTrait::toString( categoryList.at( i ), true ) );
+
 		for ( int j = 0; j < list.count(); j++ ) {
-// 			qDebug() << Q_FUNC_INFO << "Zähle Kräfte" << j;
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
 				// Anlegen der Eigenschaft im Speicher
 				Trait* traitPtr = character->addTrait( list[j] );
@@ -67,18 +77,24 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 				// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				CharaTrait* charaTrait = new CharaTrait( this, traitPtr, list[j] );
 				charaTrait->setValue( 0 );
-				layoutTop->addWidget( charaTrait );
+
+				layoutPowerCategory->addWidget( charaTrait );
 
 				// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
 				if ( !list.at( j )->custom() ) {
 					break;
 				}
 			}
+
+			// Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
+			layoutPowerCategory->addStretch();
 		}
 	}
 }
 
 PowerWidget::~PowerWidget() {
+	delete toolBox;
+	delete layout;
 }
 
 

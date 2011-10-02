@@ -28,8 +28,8 @@
 #include <QGridLayout>
 #include <QLabel>
 
-#include "Datatypes/cv_Species.h"
-#include "Storage/StorageTemplate.h"
+// #include "Datatypes/cv_Species.h"
+// #include "Storage/StorageTemplate.h"
 #include "Storage/StorageCharacter.h"
 
 #include <QWidget>
@@ -72,7 +72,7 @@ class MoralityWidget : public QWidget {
 		QGridLayout* layout;
 		StorageTemplate* storage;
 		StorageCharacter* character;
-		QList< cv_Trait::Category > v_categories;
+		QList< cv_AbstractTrait::Category > v_category;
 
 		int v_value;
 

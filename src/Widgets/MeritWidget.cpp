@@ -26,8 +26,8 @@
 #include <QDebug>
 
 #include "CharaTrait.h"
-#include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Exceptions/Exception.h".h"
+// #include "Config/Config.h"
 #include "Widgets/Dialogs/MessageBox.h"
 
 #include "MeritWidget.h"
@@ -43,28 +43,27 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 
 	storage = new StorageTemplate( this );
 
-	cv_Trait::Type type = cv_Trait::Merit;
+	cv_AbstractTrait::Type type = cv_AbstractTrait::Merit;
 
-	v_categories = cv_Trait::getCategoryList(type);
+	v_category = cv_AbstractTrait::getCategoryList(type);
 
 	QList< Trait* > list;
 
 	// Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
-	for ( int i = 0; i < v_categories.count(); i++ ) {
+	for ( int i = 0; i < v_category.count(); i++ ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 		QWidget* widgetMeritCategory = new QWidget();
 		QVBoxLayout* layoutMeritCategory = new QVBoxLayout();
 		
 		widgetMeritCategory->setLayout( layoutMeritCategory );
 		
-		toolBox->addItem( widgetMeritCategory, cv_Trait::toString( v_categories.at( i ), true ) );
+		toolBox->addItem( widgetMeritCategory, cv_AbstractTrait::toString( v_category.at( i ), true ) );
 
 		try {
-			list = storage->traits2( type, v_categories.at( i ) );
+			list = storage->traits2( type, v_category.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
-
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
@@ -114,8 +113,8 @@ MeritWidget::~MeritWidget() {
 
 
 void MeritWidget::countMerits() {
-	for (int i = 0; i < v_categories.count(); i++){
-		QList< Trait* > list = character->traits2( cv_Trait::Merit, v_categories.at(i) );
+	for (int i = 0; i < v_category.count(); i++){
+		QList< Trait* > list = character->traits2( cv_AbstractTrait::Merit, v_category.at(i) );
 
 		int numberInCategory = 0;
 
@@ -126,12 +125,12 @@ void MeritWidget::countMerits() {
 		}
 
 		// Index der veränderten Kategorie in Liste suchen und dann die toolBox-Seite mit der identischen Indexzahl anpassen.
-		int categoryIndex = v_categories.indexOf( v_categories.at(i) );
+		int categoryIndex = v_category.indexOf( v_category.at(i) );
 
 		if ( numberInCategory > 0 ) {
-			toolBox->setItemText( categoryIndex, cv_Trait::toString( v_categories.at( categoryIndex ), true ) + " (" + QString::number( numberInCategory ) + ")" );
+			toolBox->setItemText( categoryIndex, cv_AbstractTrait::toString( v_category.at( categoryIndex ), true ) + " (" + QString::number( numberInCategory ) + ")" );
 		} else {
-			toolBox->setItemText( categoryIndex, cv_Trait::toString( v_categories.at( categoryIndex ), true ) );
+			toolBox->setItemText( categoryIndex, cv_AbstractTrait::toString( v_category.at( categoryIndex ), true ) );
 		}
 	}
 }

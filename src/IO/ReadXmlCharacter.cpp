@@ -25,7 +25,7 @@
 #include <QDebug>
 
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Config/Config.h"
 
 #include "ReadXmlCharacter.h"
 
@@ -110,9 +110,9 @@ void ReadXmlCharacter::readSoulCreator() {
 				int armorFirearms = attributes().value( "firearms" ).toString().toInt();
 				character->setArmor( armorGeneral, armorFirearms );
 				readUnknownElement();
-			} else if ( elementName != cv_Trait::toXmlString( cv_Trait::TypeNo ) ) {
+			} else if ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
 // 				qDebug() << Q_FUNC_INFO << elementName << "!";
-				readTraits( cv_Trait::toType( elementName ) );
+				readTraits( cv_AbstractTrait::toType( elementName ) );
 			} else {
 				readUnknownElement();
 			}
@@ -151,7 +151,7 @@ void ReadXmlCharacter::readIdentities() {
 }
 
 
-void ReadXmlCharacter::readTraits( cv_Trait::Type type ) {
+void ReadXmlCharacter::readTraits( cv_AbstractTrait::Type type ) {
 	while ( !atEnd() ) {
 		readNext();
 
@@ -160,12 +160,12 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type ) {
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
-			readTraits( type, cv_Trait::toCategory( elementName ) );
+			readTraits( type, cv_AbstractTrait::toCategory( elementName ) );
 		}
 	}
 }
 
-void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category category ) {
+void ReadXmlCharacter::readTraits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) {
 	while ( !atEnd() ) {
 		readNext();
 
@@ -175,7 +175,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
 
-			if ( type == cv_Trait::Derangement && elementName == "derangement" ) {
+			if ( type == cv_AbstractTrait::Derangement && elementName == "derangement" ) {
 				cv_Derangement derangement;
 				derangement.setName(attributes().value( "name" ).toString());
 				derangement.setType(type);

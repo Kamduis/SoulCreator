@@ -30,8 +30,8 @@
 #include <QList>
 #include <QStringList>
 
-#include "cv_Species.h"
-#include "cv_TraitDetail.h"
+// #include "cv_Species.h"
+// #include "cv_TraitDetail.h"
 
 #include "cv_Trait.h"
 #include <QObject>

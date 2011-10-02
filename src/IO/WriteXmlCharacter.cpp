@@ -26,7 +26,7 @@
 #include <QDebug>
 
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Config/Config.h"
 
 #include "WriteXmlCharacter.h"
 
@@ -85,35 +85,35 @@ void WriteXmlCharacter::write( QFile *file ) {
 }
 
 void WriteXmlCharacter::writeCharacterTraits() {
-	QList< cv_Trait::Type > types;
-	types.append( cv_Trait::Attribute );
-	types.append( cv_Trait::Skill );
-	types.append( cv_Trait::Merit );
-	types.append( cv_Trait::Power );
-	types.append( cv_Trait::Flaw );
+	QList< cv_AbstractTrait::Type > types;
+	types.append( cv_AbstractTrait::Attribute );
+	types.append( cv_AbstractTrait::Skill );
+	types.append( cv_AbstractTrait::Merit );
+	types.append( cv_AbstractTrait::Power );
+	types.append( cv_AbstractTrait::Flaw );
 
-	QList< cv_Trait::Category > categories;
+	QList< cv_AbstractTrait::Category > category;
 
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < types.count(); i++ ) {
 		try {
-			writeStartElement( cv_Trait::toXmlString( types.at( i ) ) );
+			writeStartElement( cv_AbstractTrait::toXmlString( types.at( i ) ) );
 		} catch ( eTraitType &e ) {
 			qDebug() << Q_FUNC_INFO << e.message();
 		}
 
 		// Liste der Kategorien ist je nach Typ unterschiedlich
-		categories = cv_Trait::getCategoryList( types.at( i ) );
+		category = cv_AbstractTrait::getCategoryList( types.at( i ) );
 
-		for ( int j = 0; j < categories.count(); j++ ) {
-			list = character->traits( types.at( i ), categories.at( j ) );
+		for ( int j = 0; j < category.count(); j++ ) {
+			list = character->traits( types.at( i ), category.at( j ) );
 
 // 			qDebug() << Q_FUNC_INFO << "Type" << types.at(i) << "Category" << categories.at(j) << list.count();
 // 			if ( !list.isEmpty() ) {
 
 			try {
-				writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
+				writeStartElement( cv_AbstractTrait::toXmlString( category.at( j ) ) );
 			} catch ( eTraitCategory &e ) {
 				qDebug() << Q_FUNC_INFO << e.message();
 			}
@@ -133,7 +133,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 					}
 
 // 					qDebug() << Q_FUNC_INFO << list.at( k )->details.count();
-// 					if ( types.at( i ) == cv_Trait::Skill ) {
+// 					if ( types.at( i ) == cv_AbstractTrait::Skill ) {
 					for ( int l = 0; l < list.at( k )->details().count(); l++ ) {
 // 						qDebug() << Q_FUNC_INFO << list.at( k )->details.at( l ).name;
 						writeTextElement( "specialty",  list.at( k )->details().at( l ).name );
@@ -158,23 +158,23 @@ void WriteXmlCharacter::writeCharacterDerangements() {
 	QList< cv_Derangement* > list;
 
 	try {
-		writeStartElement( cv_Trait::toXmlString( cv_Trait::Derangement ) );
+		writeStartElement( cv_AbstractTrait::toXmlString( cv_AbstractTrait::Derangement ) );
 	} catch ( eTraitType &e ) {
 		qDebug() << Q_FUNC_INFO << e.message();
 	}
 
 	// Liste der Kategorien ist je nach Typ unterschiedlich
-	QList< cv_Trait::Category > categories;
+	QList< cv_AbstractTrait::Category > category;
 
-	categories = cv_Trait::getCategoryList( cv_Trait::Derangement );
+	category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
 
-	for ( int j = 0; j < categories.count(); j++ ) {
-		list = character->derangements( categories.at( j ) );
+	for ( int j = 0; j < category.count(); j++ ) {
+		list = character->derangements( category.at( j ) );
 
 		qDebug() << Q_FUNC_INFO << list.count();
 
 		try {
-			writeStartElement( cv_Trait::toXmlString( categories.at( j ) ) );
+			writeStartElement( cv_AbstractTrait::toXmlString( category.at( j ) ) );
 		} catch ( eTraitCategory &e ) {
 			qDebug() << Q_FUNC_INFO << e.message();
 		}

@@ -26,7 +26,7 @@
 #define CALCADVANTAGES_H
 
 #include "Storage/StorageCharacter.h"
-#include "Config/Config.h"
+// #include "Config/Config.h"
 #include "Datatypes/cv_Shape.h"
 
 #include <QObject>

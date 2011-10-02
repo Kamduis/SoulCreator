@@ -29,7 +29,7 @@
 #include "TraitLine.h"
 
 
-// TraitLine::TraitLine( QWidget *parent, cv_Trait::Type type, cv_Trait::Category category, QString name, int value) : QWidget(parent){
+// TraitLine::TraitLine( QWidget *parent, cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name, int value) : QWidget(parent){
 // 	QHBoxLayout *layout = new QHBoxLayout();
 // 	layout->setMargin(0);
 // 	setLayout(layout);

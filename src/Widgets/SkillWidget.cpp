@@ -27,9 +27,9 @@
 #include <QDebug>
 
 #include "CharaTrait.h"
-#include "Datatypes/cv_Trait.h"
-#include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Datatypes/cv_Trait.h"
+// #include "Exceptions/Exception.h"
+// #include "Config/Config.h"
 #include "Widgets/Dialogs/MessageBox.h"
 
 #include "SkillWidget.h"
@@ -46,24 +46,24 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
 
-	cv_Trait::Type type = cv_Trait::Skill;
+	cv_AbstractTrait::Type type = cv_AbstractTrait::Skill;
 
-	v_categories = cv_Trait::getCategoryList(type);
+	v_categoryList = cv_AbstractTrait::getCategoryList(type);
 
 	QList< Trait* > list;
 
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
-	for ( int i = 0; i < v_categories.count(); i++ ) {
+	for ( int i = 0; i < v_categoryList.count(); i++ ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 		QWidget* widgetSkillCategory = new QWidget();
 		QVBoxLayout* layoutSkillCategory = new QVBoxLayout();
 
 		widgetSkillCategory->setLayout( layoutSkillCategory );
 
-		toolBox->addItem( widgetSkillCategory, cv_Trait::toString( v_categories.at( i ), true ) );
+		toolBox->addItem( widgetSkillCategory, cv_AbstractTrait::toString( v_categoryList.at( i ), true ) );
 
 		try {
-			list = storage->traits2( type, v_categories.at( i ) );
+			list = storage->traits2( type, v_categoryList.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}

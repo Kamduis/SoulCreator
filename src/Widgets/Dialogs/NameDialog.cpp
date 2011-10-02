@@ -26,8 +26,8 @@
 #include <QStringList>
 #include <QDebug>
 
-#include "Datatypes/cv_Identity.h"
-#include "Exceptions/Exception.h"
+// #include "Datatypes/cv_Identity.h"
+// #include "Exceptions/Exception.h"
 
 #include "NameDialog.h"
 #include "ui_NameDialog.h"

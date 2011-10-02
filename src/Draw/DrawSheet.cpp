@@ -28,9 +28,9 @@
 
 #include <math.h>
 
-#include "Storage/StorageTemplate.h"
+// #include "Storage/StorageTemplate.h"
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Config/Config.h"
 
 #include "DrawSheet.h"
 
@@ -508,17 +508,17 @@ void DrawSheet::drawInfo( QPainter* painter, qreal offsetH, qreal offsetV, qreal
 }
 
 void DrawSheet::drawAttributes( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal distanceV ) {
-	QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( cv_Trait::Attribute );
+	QList< cv_AbstractTrait::Category > category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Attribute );
 
 	QList< cv_Trait* > list;
 
-	for ( int i = 0; i < categories.count(); i++ ) {
+	for ( int i = 0; i < category.count(); i++ ) {
 		// Bei Werwölfen ist der Abstand zwischen den Kategorien nicht identisch.
 		if ( character->species() == cv_Species::Werewolf && i > 1 ) {
 			distanceH *= 1.164;
 		}
 
-		list = character->traits( cv_Trait::Attribute, categories.at( i ) );
+		list = character->traits( cv_AbstractTrait::Attribute, category.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < list.at( j )->value(); k++ ) {
@@ -531,15 +531,12 @@ void DrawSheet::drawAttributes( QPainter* painter, qreal offsetH, qreal offsetV,
 }
 
 void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal distanceVCat, qreal textWidth ) {
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::Mental );
-	categories.append( cv_Trait::Physical );
-	categories.append( cv_Trait::Social );
+	QList< cv_AbstractTrait::Category > categories = cv_AbstractTrait::getCategoryList(cv_AbstractTrait::Skill);
 
 	QList< cv_Trait* > list;
 
 	for ( int i = 0; i < categories.count(); i++ ) {
-		list = character->traits( cv_Trait::Skill, categories.at( i ) );
+		list = character->traits( cv_AbstractTrait::Skill, categories.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < list.at( j )->value(); k++ ) {
@@ -586,10 +583,10 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 	QList< cv_Trait* > listToUse;
 
 	try {
-		listToUse = getTraits( cv_Trait::Merit, maxNumber );
+		listToUse = getTraits( cv_AbstractTrait::Merit, maxNumber );
 	} catch ( eTraitsExceedSheetCapacity &e ) {
-		listToUse = getTraits( cv_Trait::Merit, maxNumber, true );
-		emit enforcedTraitLimits( cv_Trait::Merit );
+		listToUse = getTraits( cv_AbstractTrait::Merit, maxNumber, true );
+		emit enforcedTraitLimits( cv_AbstractTrait::Merit );
 	}
 
 	for ( int j = 0; j < listToUse.count(); j++ ) {
@@ -623,13 +620,13 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 }
 
 void DrawSheet::drawFlaws( QPainter* painter, qreal offsetH, qreal offsetV, qreal textWidth ) {
-	QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( cv_Trait::Flaw );
+	QList< cv_AbstractTrait::Category > category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Flaw );
 
 	QList< cv_Trait* > list;
 	QStringList stringList;
 
-	for ( int i = 0; i < categories.count(); i++ ) {
-		list = character->traits( cv_Trait::Flaw, categories.at( i ) );
+	for ( int i = 0; i < category.count(); i++ ) {
+		list = character->traits( cv_AbstractTrait::Flaw, category.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			if ( list.at( j )->value() > 0 ) {
@@ -793,16 +790,16 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 	QList< cv_Trait* > listToUse;
 
 	try {
-		listToUse = getTraits( cv_Trait::Power, maxNumber );
+		listToUse = getTraits( cv_AbstractTrait::Power, maxNumber );
 	} catch ( eTraitsExceedSheetCapacity &e ) {
-		listToUse = getTraits( cv_Trait::Power, maxNumber, true );
-		emit enforcedTraitLimits( cv_Trait::Power );
+		listToUse = getTraits( cv_AbstractTrait::Power, maxNumber, true );
+		emit enforcedTraitLimits( cv_AbstractTrait::Power );
 	}
 
 	if ( species == cv_Species::Mage || species == cv_Species::Werewolf ) {
 		// Bei Magiern und Werwölfen sind alle Kräfte schon auf dem Charakterbogen, also muß ich aufpassen, daß sie in der richtigen Reihenfolge an der richtigen Stelle auftauchen, auch wenn einige im Charkater fehlen.
 		StorageTemplate storage;
-		QList< cv_Trait* > list = storage.traits( cv_Trait::Power, species );
+		QList< cv_Trait* > list = storage.traits( cv_AbstractTrait::Power, species );
 		qreal half = ceil( static_cast<qreal>( list.count() ) / 2 );
 
 // 		qDebug() << Q_FUNC_INFO << half;
@@ -920,12 +917,12 @@ void DrawSheet::drawFuelPerTurn( QPainter* painter, qreal offsetH, qreal offsetV
 
 
 
-QList< cv_Trait* > DrawSheet::getTraits( cv_Trait::Type type, int maxNumber, bool enforceTraitLimits ) {
-	QList< cv_Trait::Category > categories;
-	categories.append( cv_Trait::CategoryNo );
+QList< cv_Trait* > DrawSheet::getTraits( cv_AbstractTrait::Type type, int maxNumber, bool enforceTraitLimits ) {
+	QList< cv_AbstractTrait::Category > category;
+	category.append( cv_AbstractTrait::CategoryNo );
 
-	if ( type == cv_Trait::Merit ) {
-		categories.append( cv_Trait::getCategoryList( cv_Trait::Merit ) );
+	if ( type == cv_AbstractTrait::Merit ) {
+		category.append( cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Merit ) );
 	}
 
 	QList< cv_Trait* > list;
@@ -934,8 +931,8 @@ QList< cv_Trait* > DrawSheet::getTraits( cv_Trait::Type type, int maxNumber, boo
 
 	int iter = 0;
 
-	for ( int i = 0; i < categories.count(); i++ ) {
-		list = character->traits( type, categories.at( i ) );
+	for ( int i = 0; i < category.count(); i++ ) {
+		list = character->traits( type, category.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			if ( list.at( j )->value() > 0 ) {

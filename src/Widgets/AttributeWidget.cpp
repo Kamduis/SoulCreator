@@ -30,11 +30,11 @@
 
 #include "CharaTrait.h"
 #include "Calc/CalcAdvantages.h"
-#include "Datatypes/cv_Trait.h"
-#include "Datatypes/cv_Shape.h"
-#include "Exceptions/Exception.h"
-#include "Config/Config.h"
-#include "Storage/StorageTemplate.h"
+// #include "Datatypes/cv_Trait.h"
+// #include "Datatypes/cv_Shape.h"
+// #include "Exceptions/Exception.h"
+// #include "Config/Config.h"
+// #include "Storage/StorageTemplate.h"
 #include "Widgets/Dialogs/MessageBox.h"
 
 #include "AttributeWidget.h"
@@ -72,9 +72,9 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 	StorageTemplate storage;
 
-	cv_Trait::Type type = cv_Trait::Attribute;
+	cv_AbstractTrait::Type type = cv_AbstractTrait::Attribute;
 
-	QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( type );
+	QList< cv_AbstractTrait::Category > categoryList = cv_AbstractTrait::getCategoryList( type );
 
 	QList< Trait* > list;
 
@@ -88,9 +88,9 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	connect( this, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) );
 	connect( this, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) );
 
-	for ( int i = 0; i < categories.count(); i++ ) {
+	for ( int i = 0; i < categoryList.count(); i++ ) {
 		try {
-			list = storage.traits2( type, categories.at( i ) );
+			list = storage.traits2( type, categoryList.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
@@ -111,7 +111,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 		// Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
 		QLabel* header = new QLabel();
 		header->setAlignment( Qt::AlignHCenter );
-		header->setText( "<b>" + cv_Trait::toString( categories.at( i ) ) + "</b>" );
+		header->setText( "<b>" + cv_AbstractTrait::toString( categoryList.at( i ) ) + "</b>" );
 		layout->addWidget( header, 0, actualColumn );
 
 		// Einfügen der tatsächlichen Attribute
@@ -126,7 +126,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 			layout->addWidget( trait, j + 1, actualColumn );
 
-			if ( trait->category() == cv_Trait::Physical ) {
+			if ( trait->category() == cv_AbstractTrait::Physical ) {
 				if ( trait->name() == "Strength" ) {
 					layout->addWidget( labelStr, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesStr( int ) ) );
@@ -137,7 +137,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 					layout->addWidget( labelSta, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesSta( int ) ) );
 				}
-			} else if ( trait->category() == cv_Trait::Social ) {
+			} else if ( trait->category() == cv_AbstractTrait::Social ) {
 				if ( trait->name() == "Manipulation" ) {
 					layout->addWidget( labelMan, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesMan( int ) ) );

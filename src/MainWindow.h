@@ -26,12 +26,12 @@
 #define MAINWINDOW_H
 
 #include "Calc/Creation.h"
-#include "Datatypes/cv_CreationPoints.h"
+// #include "Datatypes/cv_CreationPoints.h"
 #include "Draw/DrawSheet.h"
 #include "IO/ReadXmlCharacter.h"
 #include "IO/WriteXmlCharacter.h"
-#include "Storage/StorageTemplate.h"
-#include "Storage/StorageCharacter.h"
+// #include "Storage/StorageTemplate.h"
+// #include "Storage/StorageCharacter.h"
 #include "Widgets/InfoWidget.h"
 #include "Widgets/AttributeWidget.h"
 #include "Widgets/SkillWidget.h"
@@ -220,19 +220,19 @@ class MainWindow : public QMainWindow {
 		 *
 		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite blau eingefärbt.
 		 **/
-		void warnCreationPointsPositive(cv_Trait::Type type);
+		void warnCreationPointsPositive(cv_AbstractTrait::Type type);
 		/**
 		 * Zeigt eine Warnung an, wenn zuviele Erschafungspunkte vergeben wurden.
 		 *
 		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite rot eingefärbt.
 		 **/
-		void warnCreationPointsNegative(cv_Trait::Type type);
+		void warnCreationPointsNegative(cv_AbstractTrait::Type type);
 		/**
 		 * Zeigt eine Warnung an, wenn alle Erschafungspunkte vergeben wurden.
 		 *
 		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite wieder zur Standardfarbe verändert.
 		 **/
-		void warnCreationPointsDepleted(cv_Trait::Type type);
+		void warnCreationPointsDepleted(cv_AbstractTrait::Type type);
 		/**
 		 * Werte des Charakters auf der Oberfläche anzeigen.
 		 **/
@@ -300,7 +300,7 @@ class MainWindow : public QMainWindow {
 		/**
 		 * Zeigt eine Nachricht an, daß die Eigenschaftsanzahl das für den Charakterbogen gesetzte Limit übertrifft, und daß alle überzähligen Eigenschaften des mitgegebenen Typs ignoriert werden.
 		 **/
-		void messageEnforcedTraitLimits( cv_Trait::Type );
+		void messageEnforcedTraitLimits( cv_AbstractTrait::Type );
 		/**
 		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
 		 **/

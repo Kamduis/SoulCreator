@@ -27,10 +27,10 @@
 
 #include <QFile>
 
-#include "Storage/StorageTemplate.h"
+// #include "Storage/StorageTemplate.h"
 #include "Storage/StorageCharacter.h"
-#include "Datatypes/cv_Species.h"
-#include "Datatypes/cv_Trait.h"
+// #include "Datatypes/cv_Species.h"
+// #include "Datatypes/cv_Trait.h"
 
 #include <QObject>
 #include "ReadXml.h"
@@ -88,11 +88,11 @@ class ReadXmlCharacter : public QObject, public ReadXml {
 		/**
 		 * Lese die Eigenschaften aus dem gespeicherten Charakter.
 		 **/
-		void readTraits( cv_Trait::Type type );
+		void readTraits( cv_AbstractTrait::Type type );
 		/**
 		 * Lese die Eigenschaften aus dem gespeicherten Charakter.
 		 **/
-		void readTraits( cv_Trait::Type type, cv_Trait::Category category );
+		void readTraits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category );
 
 	signals:
 		void oldVersion( QString, QString );

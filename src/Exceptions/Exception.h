@@ -27,7 +27,7 @@
 
 #include <QString>
 
-#include "Datatypes/cv_Trait.h"
+#include "Datatypes/cv_AbstractTrait.h"
 #include "Datatypes/cv_Shape.h"
 #include "Datatypes/cv_Identity.h"
 #include "Config/Config.h"
@@ -293,7 +293,7 @@ class eTraitNotExisting : public eTrait {
  */
 class eTraitCategory : public eTrait {
 	public:
-		eTraitCategory( cv_Trait::Category category );
+		eTraitCategory( cv_AbstractTrait::Category category );
 };
 
 /**
@@ -303,7 +303,7 @@ class eTraitCategory : public eTrait {
  */
 class eTraitType : public eTrait {
 	public:
-		eTraitType( cv_Trait::Type type );
+		eTraitType( cv_AbstractTrait::Type type );
 };
 
 
@@ -324,7 +324,7 @@ class ePrint : public Exception {
  */
 class eTraitsExceedSheetCapacity : public ePrint {
 	public:
-		eTraitsExceedSheetCapacity( cv_Trait::Type type, int maxNumber );
+		eTraitsExceedSheetCapacity( cv_AbstractTrait::Type type, int maxNumber );
 };
 
 /**

@@ -25,10 +25,10 @@
 #include <QGridLayout>
 #include <QDebug>
 
-#include "Datatypes/cv_Trait.h"
-#include "Exceptions/Exception.h"
-#include "Config/Config.h"
-#include "Storage/StorageTemplate.h"
+// #include "Datatypes/cv_Trait.h"
+// #include "Exceptions/Exception.h"
+// #include "Config/Config.h"
+// #include "Storage/StorageTemplate.h"
 
 #include "SelectMeritsDialog.h"
 #include "ui_SelectMeritsDialog.h"

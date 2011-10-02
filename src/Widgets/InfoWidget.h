@@ -31,8 +31,8 @@
 #include <QPushButton>
 #include <QComboBox>
 
-#include "Storage/StorageCharacter.h"
-#include "Storage/StorageTemplate.h"
+// #include "Storage/StorageCharacter.h"
+// #include "Storage/StorageTemplate.h"
 #include "CharaSpecies.h"
 
 #include <QWidget>

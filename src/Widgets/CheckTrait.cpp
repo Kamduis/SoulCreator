@@ -24,7 +24,7 @@
 
 #include <QDebug>
 
-#include "Exceptions/Exception.h"
+// #include "Exceptions/Exception.h"
 #include "Config/Config.h"
 
 #include "CheckTrait.h"
@@ -56,7 +56,7 @@ CheckTrait::CheckTrait( QWidget* parent, Trait* trait, Trait* traitStorage ) : Q
 
 	connect( checkBox, SIGNAL( stateChanged( int ) ), this, SLOT( setValue( int ) ) );
 	connect( lineEdit, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
-	connect( traitPtr(), SIGNAL( typeChanged( cv_Trait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
+	connect( traitPtr(), SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( checkBox, SIGNAL( stateChanged( int ) ), this, SIGNAL( stateChanged( int ) ) );
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 
@@ -103,21 +103,21 @@ void CheckTrait::setCustomText( QString txt ) {
 }
 
 
-cv_Trait::Type CheckTrait::type() const {
+cv_AbstractTrait::Type CheckTrait::type() const {
 	return ptr_trait->type();
 }
 
-void CheckTrait::setType( cv_Trait::Type type ) {
+void CheckTrait::setType( cv_AbstractTrait::Type type ) {
 	if ( ptr_trait->type() != type ) {
 		ptr_trait->setType(type);
 	}
 }
 
-cv_Trait::Category CheckTrait::category() const {
+cv_AbstractTrait::Category CheckTrait::category() const {
 	return ptr_trait->category();
 }
 
-void CheckTrait::setCategory( cv_Trait::Category category ) {
+void CheckTrait::setCategory( cv_AbstractTrait::Category category ) {
 	if ( ptr_trait->category() != category ) {
 		ptr_trait->setCategory(category);
 	}

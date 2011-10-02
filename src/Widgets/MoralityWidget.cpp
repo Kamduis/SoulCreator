@@ -27,8 +27,8 @@
 
 #include "DerangementComboBox.h"
 #include "TraitDots.h"
-#include "Storage/StorageTemplate.h"
-#include "Datatypes/cv_Derangement.h"
+// #include "Storage/StorageTemplate.h"
+// #include "Datatypes/cv_Derangement.h"
 #include "Config/Config.h"
 
 #include "MoralityWidget.h"
@@ -51,7 +51,7 @@ MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
 	int layoutLine;
 
 	QList< cv_Trait > list;
-	v_categories = cv_Trait::getCategoryList( cv_Trait::Derangement );
+	v_category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
 
 	for ( int i = Config::moralityTraitMax; i > 0; i-- ) {
 		layoutLine =  Config::moralityTraitMax - i + 1;
@@ -184,8 +184,8 @@ void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 	QList< cv_Trait* > list;
 	QList< cv_Derangement > listToUse;
 
-	for ( int j = 0; j < v_categories.count(); j++ ) {
-		list = storage->traits( cv_Trait::Derangement, v_categories.at( j ) );
+	for ( int j = 0; j < v_category.count(); j++ ) {
+		list = storage->traits( cv_AbstractTrait::Derangement, v_category.at( j ) );
 
 		for ( int k = 0; k < list.count(); k++ ) {
 			if ( list.at( k )->species().testFlag( species ) ) {
@@ -211,10 +211,10 @@ void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 
 void MoralityWidget::updateDerangements() {
 	QList< cv_Derangement* > list;
-	QList< cv_Trait::Category > categories = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
+	QList< cv_AbstractTrait::Category > category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
 
-	for ( int i = 0; i < categories.count(); i++ ) {
-		list.append( character->derangements( categories.at( i ) ) );
+	for ( int i = 0; i < category.count(); i++ ) {
+		list.append( character->derangements( category.at( i ) ) );
 	}
 
 	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {

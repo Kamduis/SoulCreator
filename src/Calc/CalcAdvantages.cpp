@@ -39,9 +39,9 @@ int CalcAdvantages::v_willpower = 0;
 CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
 	construct();
 
-	QList< cv_Trait::Type > types;
-	types.append( cv_Trait::Attribute );
-	types.append( cv_Trait::Merit );
+	QList< cv_AbstractTrait::Type > types;
+	types.append( cv_AbstractTrait::Attribute );
+	types.append( cv_AbstractTrait::Merit );
 
 	QList< Trait* > list;
 
@@ -51,7 +51,7 @@ CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
 		list = character->traits2( types.at( i ) );
 
 		for ( int j = 0; j < list.count(); j++ ) {
-			if ( types.at( i ) == cv_Trait::Attribute ) {
+			if ( types.at( i ) == cv_AbstractTrait::Attribute ) {
 				if ( list.at( j )->name() == "Wits" ) {
 					attrWit = list.at( j );
 				} else if ( list.at( j )->name() == "Resolve" ) {
@@ -69,7 +69,7 @@ CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
 				if ( attrWit != 0 && attrRes != 0 && attrStr != 0 && attrDex != 0 && attrSta != 0 && attrCom != 0 ) {
 					break;
 				}
-			} else if ( types.at( i ) == cv_Trait::Merit ) {
+			} else if ( types.at( i ) == cv_AbstractTrait::Merit ) {
 				if ( list.at( j )->name() == "Giant" ) {
 					meritGiant = list.at( j );
 				} else if ( list.at( j )->name() == "Fast Reflexes" ) {
