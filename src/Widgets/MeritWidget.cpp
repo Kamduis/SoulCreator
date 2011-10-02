@@ -22,7 +22,6 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGridLayout>
 #include <QToolBox>
 #include <QDebug>
 

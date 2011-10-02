@@ -200,17 +200,17 @@ void MainWindow::populateUi() {
 }
 
 void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
-	if ( spec == cv_Species::Changeling ) {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	} else if ( spec == cv_Species::Mage ) {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	} else if ( spec == cv_Species::Vampire ) {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	} else if ( spec == cv_Species::Werewolf ) {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	} else {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	}
+// 	if ( spec == cv_Species::Changeling ) {
+// 		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QAbstractScrollArea#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+// 	} else if ( spec == cv_Species::Mage ) {
+// 		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+// 	} else if ( spec == cv_Species::Vampire ) {
+// 		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+// 	} else if ( spec == cv_Species::Werewolf ) {
+// 		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+// 	} else {
+// 		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+// 	}
 	
 // 	for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
 // 		ui->stackedWidget_traits->widget( i )->setObjectName( "stackedWidget_item" + QString::number( i ) );

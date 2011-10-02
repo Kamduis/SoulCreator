@@ -31,6 +31,8 @@ CharaSpecialties::CharaSpecialties( QWidget* parent ) : TraitSpecialties( parent
 	character = StorageCharacter::getInstance();
 
 	connect( this, SIGNAL( checkedSpecialtiesChanged( QStringList ) ), this, SLOT( saveSpecialties( QStringList ) ) );
+
+	setMinimumWidth(150);
 }
 
 CharaSpecialties::~CharaSpecialties() {

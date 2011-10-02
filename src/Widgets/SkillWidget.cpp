@@ -23,6 +23,7 @@
  */
 
 #include <QGroupBox>
+#include <QToolBox>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -35,56 +36,41 @@
 
 
 SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
-	character = StorageCharacter::getInstance();
-
-	layout = new QGridLayout( this );
+	layout = new QHBoxLayout( this );
 	setLayout( layout );
 
-	int actualColumn = 0;
+	toolBox = new QToolBox();
+
+	layout->addWidget(toolBox);
+
+	character = StorageCharacter::getInstance();
+	storage = new StorageTemplate( this );
 
 	cv_Trait::Type type = cv_Trait::Skill;
 
-	v_categories = cv_Trait::getCategoryList( type );
+	v_categories = cv_Trait::getCategoryList(type);
 
 	QList< Trait* > list;
 
+	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < v_categories.count(); i++ ) {
+		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
+		QWidget* widgetSkillCategory = new QWidget();
+		QVBoxLayout* layoutSkillCategory = new QVBoxLayout();
+
+		widgetSkillCategory->setLayout( layoutSkillCategory );
+
+		toolBox->addItem( widgetSkillCategory, cv_Trait::toString( v_categories.at( i ), true ) );
+
 		try {
 			list = storage->traits2( type, v_categories.at( i ) );
-		} catch ( eTraitNotExisting &e ) {
-			MessageBox::exception( this, e.message(), e.description() );
+		} catch (eTraitNotExisting &e) {
+			MessageBox::exception(this, e.message(), e.description());
 		}
 
-		// Zeichnen des Separators zwischen den einzelnen Kategorien
-		// Aber nicht an allererster Stelle
-		if ( i > 0 ) {
-			actualColumn++;
-
-			QFrame* vLine = new QFrame( this );
-			vLine->setFrameStyle( QFrame::VLine );
-			layout->addWidget( vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter );
-
-// 			layout->setColumnMinimumWidth( actualColumn, Config::traitCategorySpace );
-			layout->setColumnStretch( actualColumn, 1 );
-
-			// Jetzt sind wir in der Spalte für die tatsächlchen Eigenschaften
-			actualColumn++;
-		}
-
-		// Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
-		QLabel* header = new QLabel();
-
-		header->setAlignment( Qt::AlignHCenter );
-
-		header->setText( "<b>" + cv_Trait::toString( v_categories.at( i ) ) + "</b>" );
-
-		layout->addWidget( header, 0, actualColumn );
-
-		// Einfügen der tatsächlichen Fertigkeiten
 		for ( int j = 0; j < list.count(); j++ ) {
 			// Anlegen der Eigenschaft im Speicher
-			Trait* lcl_trait = list[j];
-			Trait* traitPtr = character->addTrait( lcl_trait );
+			Trait* traitPtr = character->addTrait( list[j] );
 			// Die Spezialisierungen werden nicht übernommen, da im Charakter nur jene gespeichert werden, die der Charakter auch tatsächlich hat.
 			traitPtr->clearDetails();
 
@@ -92,24 +78,16 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			CharaTrait* charaTrait = new CharaTrait( this, traitPtr, list[j] );
 			charaTrait->setValue( 0 );
 
-			// Nur Fertigkeiten haben Spezialisierungen.
-			if ( type = cv_Trait::Skill ) {
-				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
-
-				connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
-			}
-
-			layout->addWidget( charaTrait, j + 1, actualColumn );
+			// Fertigkeiten haben Spezialisierungen.
+			connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
+			connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
+			
+			layoutSkillCategory->addWidget( charaTrait );
 		}
 
-// 		// Abstand zwischen den Kategorien, aber nicht am Ende.
-// 		if ( i < categories.count() - 1 ) {
-// 			layout->addSpacing( Config::traitCategorySpace );
-// 		}
+		// Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
+		layoutSkillCategory->addStretch();
 	}
-
-// 	layout->setRowMinimumHeight( storage->skillNames( cv_Trait::Mental ).count(), Config::traitCategorySpace );
-// 	layout->setRowMinimumHeight( storage->skillNames( cv_Trait::Mental ).count() + storage->skillNames( cv_Trait::Physical ).count() + 1, Config::traitCategorySpace );
 }
 
 SkillWidget::~SkillWidget() {
@@ -120,22 +98,12 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 // 	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
 	QList< Trait* > list;
 
-	// Nur Spalten 0, 2 und 4 werden verwendet. 1 und 3 sind für optische Trennung.
-	for ( int i = 0; i < layout->columnCount(); i = i + 2 ) {
-		// durch das +2 kann die Schleife für einen Ausgang über ihre Grenze hinausspringen. Also diese zusätzliche Abbruchbedingung.
-// 		if (i >= layout->columnCount()){
-// 			break;
-// 		}
+	for ( int j = 1; j < layout->count(); j++ ) {
+		CharaTrait* trait = qobject_cast<CharaTrait*>( layout->itemAt( j )->widget() );
 
-		for ( int j = 1; j < layout->rowCount(); j++ ) {
-// 			qDebug() << Q_FUNC_INFO << "Reihe" << j << "Spalte" << i;
-
-			CharaTrait* trait = qobject_cast<CharaTrait*>( layout->itemAtPosition( j, i )->widget() );
-
-			if ( trait->name() != skillName ) {
-				trait->setSpecialtyButtonChecked( false );
+		if ( trait->name() != skillName ) {
+			trait->setSpecialtyButtonChecked( false );
 // 				qDebug() << Q_FUNC_INFO << "Deaktivieren von" << trait->name();
-			}
 		}
 	}
 }
