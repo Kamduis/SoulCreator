@@ -41,7 +41,8 @@ class cv_SpeciesTitle {
 		enum Title {
 			TitleNo,
 			Breed,
-			Faction
+			Faction,
+			Power
 		};
 		/**
 		 * Konstruktor.

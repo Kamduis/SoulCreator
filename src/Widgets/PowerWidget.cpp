@@ -45,7 +45,7 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 
 	layout->addWidget( toolBox );
 
-	StorageTemplate storage;
+	storage = new StorageTemplate(this);
 
 	cv_AbstractTrait::Type type = cv_AbstractTrait::Power;
 
@@ -56,7 +56,7 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 	// Powers werden in einer Spalte heruntergeschrieben.
 	for ( int i = 0; i < categoryList.count(); i++ ) {
 		try {
-			list = storage.traits( type, categoryList.at( i ) );
+			list = storage->traits( type, categoryList.at( i ) );
 		} catch ( eTraitNotExisting &e ) {
 			MessageBox::exception( this, e.message(), e.description() );
 		}
@@ -68,6 +68,8 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 		widgetPowerCategory->setLayout( layoutPowerCategory );
 
 		toolBox->addItem( widgetPowerCategory, cv_AbstractTrait::toString( categoryList.at( i ), true ) );
+
+		connect(character, SIGNAL(speciesChanged(cv_Species::SpeciesFlag)), this, SLOT(updateHeaders(cv_Species::SpeciesFlag)));
 
 		for ( int j = 0; j < list.count(); j++ ) {
 			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
@@ -95,7 +97,23 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 PowerWidget::~PowerWidget() {
 	delete toolBox;
 	delete layout;
+	delete storage;
 }
 
 
+void PowerWidget::updateHeaders( cv_Species::SpeciesFlag spe )
+{
+	QStringList list = storage->powerHeaders( spe );
+
+	for (int i = 0; i < list.count(); i++){
+		toolBox->setItemEnabled(i, true);
+		toolBox->setItemText(i, list.at(i));
+	}
+	if (list.count() < toolBox->count()){
+		for (int i = list.count(); i < toolBox->count(); i++){
+			toolBox->setItemText(i, "");
+			toolBox->setItemEnabled(i, false);
+		}
+	}
+}
 

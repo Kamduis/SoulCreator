@@ -87,6 +87,10 @@ class StorageTemplate : public QObject {
 		 **/
 		QString factionTitle( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
 		/**
+		 *Gibt eine Liste mit den Einzelnen Überschriften der Power-Kategorien je Spezies zurück.
+		 **/
+		QStringList powerHeaders( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
 		 * Gibt eine Liste aller verfügbaren Bruten aus.
 		 **/
 		QStringList breedNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
@@ -151,11 +155,7 @@ class StorageTemplate : public QObject {
 		/**
 		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
 		 **/
-		static QList< cv_Trait > v_traits;
-		/**
-		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
-		 **/
-		static QList< Trait* > v_traits2;
+		static QList< Trait* > v_traits;
 		/**
 		 * Eine Liste über die Effekte der Supereigenschaft.
 		 **/

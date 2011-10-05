@@ -171,10 +171,9 @@ class cv_AbstractTrait {
 			Extraordinary	= 0x0040,
 			Mild			= 0x0080,
 			Severe			= 0x0100,
-			BreedPower		= 0x0200,
-			FactionPower	= 0x0400,
-			ClubPower		= 0x0800,
-			AllPower		= 0x0e00
+			Primary			= 0x0200,
+			Secondary		= 0x0400,
+			Tertiary		= 0x0800
 		};
 		Q_DECLARE_FLAGS( Categories, Category )	// Hiermit ermögliche ich die Verwendung von xx1|xx2|xx3
 

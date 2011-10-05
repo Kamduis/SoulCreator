@@ -48,10 +48,9 @@ const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListMerits
 		<< cv_AbstractTrait::DebateStyle;
 
 const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListPowers = QList< cv_AbstractTrait::Category >()
-		<< cv_AbstractTrait::BreedPower
-		<< cv_AbstractTrait::FactionPower
-		<< cv_AbstractTrait::ClubPower
-		<< cv_AbstractTrait::AllPower;
+		<< cv_AbstractTrait::Primary
+		<< cv_AbstractTrait::Secondary
+		<< cv_AbstractTrait::Tertiary;
 
 cv_AbstractTrait::cv_AbstractTrait( QString txt, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca ) {
 	v_name = txt;
@@ -144,14 +143,12 @@ QString cv_AbstractTrait::toXmlString( cv_AbstractTrait::Category category ) {
 			return "Mild";
 		case cv_AbstractTrait::Severe:
 			return "Severe";
-		case cv_AbstractTrait::BreedPower:
-			return "BreedPower";
-		case cv_AbstractTrait::FactionPower:
-			return "FactionPower";
-		case cv_AbstractTrait::ClubPower:
-			return "ClubPower";
-		case cv_AbstractTrait::AllPower:
-			return "AllPower";
+		case cv_AbstractTrait::Primary:
+			return "Primary";
+		case cv_AbstractTrait::Secondary:
+			return "Secondary";
+		case cv_AbstractTrait::Tertiary:
+			return "Tertiary";
 		default:
 			throw eTraitCategory( category );
 // 			return "ERROR";
@@ -245,14 +242,12 @@ QString cv_AbstractTrait::toString( cv_AbstractTrait::Category category, bool pl
 				return QObject::tr( "Mild" );
 			case cv_AbstractTrait::Severe:
 				return QObject::tr( "Severe" );
-			case cv_AbstractTrait::BreedPower:
-				return QObject::tr( "Breeds" );
-			case cv_AbstractTrait::FactionPower:
-				return QObject::tr( "Factions" );
-			case cv_AbstractTrait::ClubPower:
-				return QObject::tr( "Clubs" );
-			case cv_AbstractTrait::AllPower:
-				return QObject::tr( "All" );
+			case cv_AbstractTrait::Primary:
+				return QObject::tr( "Primary" );
+			case cv_AbstractTrait::Secondary:
+				return QObject::tr( "Secondary" );
+			case cv_AbstractTrait::Tertiary:
+				return QObject::tr( "Tertiary" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -278,14 +273,12 @@ QString cv_AbstractTrait::toString( cv_AbstractTrait::Category category, bool pl
 				return QObject::tr( "Mild" );
 			case cv_AbstractTrait::Severe:
 				return QObject::tr( "Severe" );
-			case cv_AbstractTrait::BreedPower:
-				return QObject::tr( "Breed" );
-			case cv_AbstractTrait::FactionPower:
-				return QObject::tr( "Faction" );
-			case cv_AbstractTrait::ClubPower:
-				return QObject::tr( "Club" );
-			case cv_AbstractTrait::AllPower:
-				return QObject::tr( "All" );
+			case cv_AbstractTrait::Primary:
+				return QObject::tr( "Primary" );
+			case cv_AbstractTrait::Secondary:
+				return QObject::tr( "Secondary" );
+			case cv_AbstractTrait::Tertiary:
+				return QObject::tr( "Tertiary" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -341,14 +334,12 @@ cv_AbstractTrait::Category cv_AbstractTrait::toCategory( QString str ) {
 		return cv_AbstractTrait::Mild;
 	else if ( str == "Severe" )
 		return cv_AbstractTrait::Severe;
-	else if ( str == "BreedPower" )
-		return cv_AbstractTrait::BreedPower;
-	else if ( str == "FactionPower" )
-		return cv_AbstractTrait::FactionPower;
-	else if ( str == "ClubPower" )
-		return cv_AbstractTrait::ClubPower;
-	else if ( str == "AllPower" )
-		return cv_AbstractTrait::AllPower;
+	else if ( str == "Primary" )
+		return cv_AbstractTrait::Primary;
+	else if ( str == "Secondary" )
+		return cv_AbstractTrait::Secondary;
+	else if ( str == "Tertiary" )
+		return cv_AbstractTrait::Tertiary;
 	else
 		return cv_AbstractTrait::CategoryNo;
 }

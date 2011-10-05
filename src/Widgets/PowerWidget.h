@@ -37,11 +37,16 @@
 
 /**
  * @brief Das Widget, in welchem sämtliche Übernatürlichen Kräfte angeordnet sind.
+ *
+ * \bug Da ich die Eigenschaften, welche für die jeweilige Spezies nicht gelten nur verstecke, nehmen sie doch ein klein Wenig Platz weg. Und das fällt tatsächlich auf!
  **/
 class PowerWidget : public QWidget {
 		Q_OBJECT
 
 	public:
+		/**
+		 * Konstruktor.
+		 **/
 		PowerWidget( QWidget *parent = 0 );
 		/**
 		 * Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
@@ -52,10 +57,15 @@ class PowerWidget : public QWidget {
 		QHBoxLayout* layout;
 		QToolBox* toolBox;
 		StorageCharacter* character;
+		StorageTemplate* storage;
 
 	public slots:
 
 	private slots:
+		/**
+		 * Verändert bei jedem wechsel der Spezies die Überschriften der einzelnen Kategorien der Kräfte.
+		 **/
+		void updateHeaders( cv_Species::SpeciesFlag spe );
 
 	signals:
 };

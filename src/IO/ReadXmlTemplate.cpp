@@ -224,7 +224,10 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type
 }
 
 void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b ) {
-	if ( a == cv_AbstractTrait::Breed || a == cv_AbstractTrait::Faction ) {
+	if ( a == cv_AbstractTrait::Breed
+		|| a == cv_AbstractTrait::Faction
+		|| a == cv_AbstractTrait::Power
+	) {
 		QString titleName = attributes().value( "name" ).toString();
 		cv_SpeciesTitle title = cv_SpeciesTitle( cv_SpeciesTitle::toTitle( cv_AbstractTrait::toString( a ) ), titleName, sp );
 

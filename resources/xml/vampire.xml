@@ -140,8 +140,8 @@
 				</trait>
 			</Extraordinary>
 		</Merit>
-		<Power>
-			<BreedPower>
+		<Power name="Disciplines">
+			<Primary name="Disciplines">
 				<trait name="Animalism">
 					<cheap>Gangrel</cheap>
 					<cheap>Ventrue</cheap>
@@ -182,7 +182,63 @@
 					<cheap>Nosferatu</cheap>
 					<cheap>Julii</cheap>
 				</trait>
-			</BreedPower>
+			</Primary>
+			<Secondary name="Bloodline Disciplines">
+				<trait name="Abjurism">
+				</trait>
+				<trait name="Asphyx">
+				</trait>
+				<trait name="Bloodworking">
+				</trait>
+				<trait name="Blut Alchemie">
+				</trait>
+				<trait name="Cachaxy">
+				</trait>
+				<trait name="Cattiveria">
+				</trait>
+				<trait name="Crochan">
+				</trait>
+				<trait name="Domus">
+				</trait>
+				<trait name="Getsumei">
+				</trait>
+				<trait name="Kamen">
+				</trait>
+				<trait name="Kingian">
+				</trait>
+				<trait name="Licencieux">
+				</trait>
+				<trait name="Linagem">
+				</trait>
+				<trait name="Mimetismo">
+				</trait>
+				<trait name="Nepenthe">
+				</trait>
+				<trait name="Stigmatica">
+				</trait>
+				<trait name="Sunnikuse">
+				</trait>
+				<trait name="Xinyao">
+				</trait>
+			</Secondary>
+			<Tertiary name="Blood Sorcery">
+				<trait name="Abjurism">
+				</trait>
+				<trait name="Cruac">
+				</trait>
+				<trait name="Veneficia">
+				</trait>
+				<trait name="Coils of the Dragon">
+				</trait>
+<!--				<trait name="Coil of the Beast">
+				</trait>
+				<trait name="Coil of Flesh">
+				</trait>
+				<trait name="Coil of Slumber">
+				</trait>
+				<trait name="Coil of the Soul">
+				</trait>-->
+			</Tertiary>
 		</Power>
 		<Derangement>
 			<Mild>

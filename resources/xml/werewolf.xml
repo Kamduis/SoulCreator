@@ -93,7 +93,7 @@
 			</FightingStyle>
 		</Merit>
 		<Power>
-			<AllPower>
+			<Primary name="Renown">
 				<trait name="Purity">
 					<cheap>Rahu</cheap>
 					<cheap>Hunters in Darkness</cheap>
@@ -114,7 +114,11 @@
 					<cheap>Irraka</cheap>
 					<cheap>Iron Masters</cheap>
 				</trait>
-			</AllPower>
+			</Primary>
+			<Secondary name="Ritual">
+				<trait name="Rites">
+				</trait>
+			</Secondary>
 		</Power>
 <!--		<Power>
 			<trait name="Full Moon">

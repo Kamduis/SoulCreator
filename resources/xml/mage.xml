@@ -163,8 +163,8 @@
 				</trait>
 			</Extraordinary>
 		</Merit>
-		<Power>
-			<AllPower>
+		<Power name="Arcana">
+			<Primary name="Arcana">
 				<trait name="Death">
 					<cheap>Moros</cheap>
 				</trait>
@@ -195,7 +195,7 @@
 				<trait name="Time">
 					<cheap>Acanthus</cheap>
 				</trait>
-			</AllPower>
+			</Primary>
 		</Power>
 		<Flaw>
 			<Extraordinary>
