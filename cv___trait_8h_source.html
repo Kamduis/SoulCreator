@@ -126,11 +126,11 @@ function toggleVisibility(linkObj) {
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define CV_TRAIT_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QFlags&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QList&gt;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QStringList&gt;</span>
+<a name="l00029"></a>00029 <span class="comment">// #include &lt;QString&gt;</span>
+<a name="l00030"></a>00030 <span class="comment">// #include &lt;QList&gt;</span>
+<a name="l00031"></a>00031 <span class="comment">// #include &lt;QStringList&gt;</span>
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="cv___species_8h.html">cv_Species.h</a>&quot;</span>
+<a name="l00033"></a>00033 <span class="comment">// #include &quot;cv_Species.h&quot;</span>
 <a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="cv___trait_detail_8h.html">cv_TraitDetail.h</a>&quot;</span>
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="cv___abstract_trait_8h.html">cv_AbstractTrait.h</a>&quot;</span>
@@ -172,7 +172,7 @@ function toggleVisibility(linkObj) {
 <a name="l00215"></a>00215         virtual <span class="keywordtype">void</span> <a class="code" href="classcv___trait.html#a106364397116c087601df0734531aa82">addDetail</a>(<a class="code" href="structcv___trait_detail.html" title="Speichert die zusätzlichen Parameter einer Eigenschaft.">cv_TraitDetail</a> det);
 <a name="l00219"></a>00219         virtual <span class="keywordtype">void</span> <a class="code" href="classcv___trait.html#ad9d7fbc8d0e542536371aba6f7dcce44">clearDetails</a>();
 <a name="l00225"></a>00225         QString <a class="code" href="classcv___trait.html#a6bc140c1db6f0b138451fb8ab38b0661">prerequisites</a>() const;
-<a name="l00233"></a>00233         <span class="keywordtype">void</span> <a class="code" href="classcv___trait.html#a0b99115c2818972e82ac1f58b2489e81">setPrerequisites</a>(QString txt);
+<a name="l00233"></a>00233         virtual <span class="keywordtype">void</span> <a class="code" href="classcv___trait.html#a0b99115c2818972e82ac1f58b2489e81">setPrerequisites</a>(QString txt);
 <a name="l00239"></a>00239         <span class="keywordtype">bool</span> <a class="code" href="classcv___trait.html#af96ea047974ec3f6bb2cd1b0ade7cf13">custom</a>() const;
 <a name="l00245"></a>00245         <span class="keywordtype">void</span> <a class="code" href="classcv___trait.html#a53165218ab534ea949fa036f91da8bd7">setCustom</a>(<span class="keywordtype">bool</span> sw);
 <a name="l00255"></a>00255         QString <a class="code" href="classcv___trait.html#adee2adf82138573180ff0d1486974ff6">customText</a>() const;
@@ -205,7 +205,7 @@ function toggleVisibility(linkObj) {
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="cv___trait_8h.html">cv_Trait.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:35 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

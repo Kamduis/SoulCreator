@@ -1,12 +1,12 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_storage_character.html#a96062a11fe91e1d9826470412fc64449" title="StorageCharacter::addTrait" alt="" coords="303,5,497,35"/>
-<area shape="rect" id="node5" href="$class_chara_trait.html#a1fe9b2316d8daebdf80ddad832ef818a" title="CharaTrait::category" alt="" coords="325,59,475,88"/>
+<area shape="rect" id="node3" href="$class_storage_character.html#a2093dc6b7f575513846c3e8cd2fa0985" title="StorageCharacter::addTrait" alt="" coords="303,5,497,35"/>
+<area shape="rect" id="node5" href="$class_chara_trait.html#a09c7510a4bfc6569908bca307131e913" title="CharaTrait::category" alt="" coords="325,59,475,88"/>
 <area shape="rect" id="node9" href="$class_exception.html#a7cb124af6ec64ad88a8721b60c7932fb" title="Exception::description" alt="" coords="319,112,481,141"/>
 <area shape="rect" id="node11" href="$classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f" title="cv_AbstractTrait::getCategoryList" alt="" coords="284,165,516,195"/>
 <area shape="rect" id="node13" href="$class_storage_character.html#a50022b948be1e566d902d64095c4470b" title="StorageCharacter::getInstance" alt="" coords="291,219,509,248"/>
 <area shape="rect" id="node15" href="$class_exception.html#aeaf3a81717287d50938bc72ed67bacd8" title="Exception::message" alt="" coords="325,272,475,301"/>
 <area shape="rect" id="node17" href="$class_attribute_widget.html#aa54e0d5d9c9feeed7baa78cd5a2bd969" title="AttributeWidget::speciesChanged" alt="" coords="283,325,517,355"/>
 <area shape="rect" id="node19" href="$classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15" title="cv_AbstractTrait::toString" alt="" coords="309,379,491,408"/>
-<area shape="rect" id="node21" href="$class_storage_template.html#a5dee996b5f02d1e39bde1040c1a9a839" title="StorageTemplate::traits2" alt="" coords="311,432,489,461"/>
+<area shape="rect" id="node21" href="$class_storage_template.html#a75022d10255d8f09b675d8c01d2295f3" title="StorageTemplate::traits" alt="" coords="315,432,485,461"/>
 <area shape="rect" id="node7" href="$classcv___abstract_trait.html#a0735a751e8ce6edb85957bcfb2a723f7" title="cv_AbstractTrait::category" alt="" coords="565,59,752,88"/>
 </map>

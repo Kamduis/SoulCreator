@@ -125,13 +125,13 @@ function toggleVisibility(linkObj) {
 <a name="l00025"></a>00025 <span class="preprocessor">#ifndef TRAIT_H</span>
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define TRAIT_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QFlags&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QList&gt;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QStringList&gt;</span>
+<a name="l00028"></a>00028 <span class="comment">// #include &lt;QFlags&gt;</span>
+<a name="l00029"></a>00029 <span class="comment">// #include &lt;QString&gt;</span>
+<a name="l00030"></a>00030 <span class="comment">// #include &lt;QList&gt;</span>
+<a name="l00031"></a>00031 <span class="comment">// #include &lt;QStringList&gt;</span>
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="cv___species_8h.html">cv_Species.h</a>&quot;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="cv___trait_detail_8h.html">cv_TraitDetail.h</a>&quot;</span>
+<a name="l00033"></a>00033 <span class="comment">// #include &quot;cv_Species.h&quot;</span>
+<a name="l00034"></a>00034 <span class="comment">// #include &quot;cv_TraitDetail.h&quot;</span>
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="cv___trait_8h.html">cv_Trait.h</a>&quot;</span>
 <a name="l00037"></a>00037 <span class="preprocessor">#include &lt;QObject&gt;</span>
@@ -144,39 +144,51 @@ function toggleVisibility(linkObj) {
 <a name="l00057"></a>00057         <a class="code" href="class_trait.html#aef0e71fe3ca05543a5b6b4c8e38fdaa8">Trait</a>( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> trait, QObject* parent = 0 );
 <a name="l00063"></a>00063         <a class="code" href="class_trait.html#aef0e71fe3ca05543a5b6b4c8e38fdaa8">Trait</a>( <a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* trait, QObject* parent = 0 );
 <a name="l00064"></a>00064 
-<a name="l00065"></a>00065     <span class="keyword">private</span>:
-<a name="l00069"></a>00069         <span class="keywordtype">void</span> construct();
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071     <span class="keyword">public</span> slots:
-<a name="l00075"></a>00075         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#aff507cb19b22e5668fc20b471d73d691">setValue</a>(<span class="keywordtype">int</span> val);
-<a name="l00079"></a>00079         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a8d2ca547e2dd3189858cbd8aa1c52efd">setDetails</a>(QList&lt; cv_TraitDetail &gt; list);
-<a name="l00083"></a>00083         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#ab6460ff9f5e4837d97c857cc06e0fa21">addDetail</a>(<a class="code" href="structcv___trait_detail.html" title="Speichert die zusätzlichen Parameter einer Eigenschaft.">cv_TraitDetail</a> det);
-<a name="l00087"></a>00087         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#aa416615b30fcac6dbcfc064d7ad1d40b">clearDetails</a>();
-<a name="l00091"></a>00091         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a4c8c6f7af3db42f87732862a91329de8">setType</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> typ );
-<a name="l00092"></a>00092 <span class="comment">//      /**</span>
-<a name="l00093"></a>00093 <span class="comment">//       * Legt fest, welche Spezies über diese Eigenschaft verfügen und sendet bei Änderung ein entsprechendes Signal aus.</span>
-<a name="l00094"></a>00094 <span class="comment">//       **/</span>
-<a name="l00095"></a>00095 <span class="comment">//      void setSpecies(cv_Species::Species spe);</span>
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097     <span class="keyword">private</span> slots:
-<a name="l00101"></a>00101         <span class="keywordtype">void</span> emitTraitChanged();
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103     signals:
-<a name="l00107"></a>00107         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a953d7925e76098c051e7ade90a25cc03">valueChanged</a>(<span class="keywordtype">int</span>);
-<a name="l00111"></a>00111         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#ae00311fac86b6949a3c6c823fad2c95c">typeChanged</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> );
-<a name="l00115"></a>00115         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a0cb477539c96acb9334fa78b2831c475">speciesChanged</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> );
-<a name="l00119"></a>00119         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#ac5a2dc044e1ea5691273c8cd8636afc9">detailsChanged</a>();
-<a name="l00125"></a>00125         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a9cbe09d1f22c80ce56056d11e9ae0adb">traitChanged</a>(<a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* trait);
-<a name="l00126"></a>00126 };
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128 <span class="preprocessor">#endif</span>
-<a name="l00129"></a>00129 <span class="preprocessor"></span>
+<a name="l00068"></a>00068         QList&lt; Trait* &gt; <a class="code" href="class_trait.html#acb5c6e66ed14d1d6105a40c0babad47c">prerequisitePtrs</a>() <span class="keyword">const</span>;
+<a name="l00072"></a>00072         <span class="keywordtype">bool</span> <a class="code" href="class_trait.html#a243b169e6e1a53b7261c329481abb784">isAvailable</a>() <span class="keyword">const</span>;
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074     <span class="keyword">private</span>:
+<a name="l00078"></a>00078         <span class="keywordtype">void</span> construct();
+<a name="l00082"></a>00082         QString parsePrerequisites( QString text, QList&lt; Trait* &gt; list );
+<a name="l00083"></a>00083 
+<a name="l00087"></a>00087         QList&lt; Trait* &gt; v_prerequisitePtrs;
+<a name="l00091"></a>00091         <span class="keywordtype">bool</span> v_available;
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093     <span class="keyword">public</span> slots:
+<a name="l00097"></a>00097         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#aff507cb19b22e5668fc20b471d73d691">setValue</a>(<span class="keywordtype">int</span> val);
+<a name="l00101"></a>00101         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a8d2ca547e2dd3189858cbd8aa1c52efd">setDetails</a>(QList&lt; cv_TraitDetail &gt; list);
+<a name="l00105"></a>00105         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#ab6460ff9f5e4837d97c857cc06e0fa21">addDetail</a>(<a class="code" href="structcv___trait_detail.html" title="Speichert die zusätzlichen Parameter einer Eigenschaft.">cv_TraitDetail</a> det);
+<a name="l00109"></a>00109         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#aa416615b30fcac6dbcfc064d7ad1d40b">clearDetails</a>();
+<a name="l00113"></a>00113         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a4c8c6f7af3db42f87732862a91329de8">setType</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> typ );
+<a name="l00114"></a>00114 <span class="comment">//      /**</span>
+<a name="l00115"></a>00115 <span class="comment">//       * Legt fest, welche Spezies über diese Eigenschaft verfügen und sendet bei Änderung ein entsprechendes Signal aus.</span>
+<a name="l00116"></a>00116 <span class="comment">//       **/</span>
+<a name="l00117"></a>00117 <span class="comment">//      void setSpecies(cv_Species::Species spe);</span>
+<a name="l00121"></a>00121 <span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="class_trait.html#aac64fbf7e3b37865732ea785528c4fc2">clearPrerequisitePtrs</a>();
+<a name="l00129"></a>00129         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a2978f151799625492ce4bae4b3db5c04">addPrerequisitePtrs</a>( <a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* replacement );
+<a name="l00133"></a>00133         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a8a1b0f1a3a2388e4f7c2d85b7e95fc7e">checkPrerequisites</a>( <a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* trait );
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135     <span class="keyword">private</span> slots:
+<a name="l00141"></a>00141         <span class="keywordtype">void</span> setAvailability(<span class="keywordtype">bool</span> sw);
+<a name="l00145"></a>00145         <span class="keywordtype">void</span> emitTraitChanged();
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147     signals:
+<a name="l00151"></a>00151         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a953d7925e76098c051e7ade90a25cc03">valueChanged</a>(<span class="keywordtype">int</span>);
+<a name="l00155"></a>00155         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#ae00311fac86b6949a3c6c823fad2c95c">typeChanged</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> );
+<a name="l00159"></a>00159         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a0cb477539c96acb9334fa78b2831c475">speciesChanged</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> );
+<a name="l00163"></a>00163         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#ad83afc8c75c12274528a49fe56d10271">detailsChanged</a>( <span class="keywordtype">int</span>  );
+<a name="l00169"></a>00169         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#a9cbe09d1f22c80ce56056d11e9ae0adb">traitChanged</a>(<a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* trait);
+<a name="l00173"></a>00173         <span class="keywordtype">void</span> <a class="code" href="class_trait.html#aae3b3f42419623ee57375f7c92d381ff">availabilityChanged</a>(<span class="keywordtype">bool</span> sw );
+<a name="l00174"></a>00174 };
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176 <span class="preprocessor">#endif</span>
+<a name="l00177"></a>00177 <span class="preprocessor"></span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_trait_8h.html">Trait.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:35 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

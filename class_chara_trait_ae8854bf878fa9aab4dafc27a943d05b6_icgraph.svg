@@ -64,7 +64,7 @@
 </g>
 <!-- Node6 -->
 <g id="node13" class="node"><title>Node6</title>
-<a xlink:href="class_chara_trait.html#ad3abff76332080dfd9e487287537b8a2" target="_top" xlink:title="CharaTrait::setCategory">
+<a xlink:href="class_chara_trait.html#a73cbb56f5bc87964994e962168d04e69" target="_top" xlink:title="CharaTrait::setCategory">
 <polygon fill="white" stroke="black" points="140.5,-120.5 140.5,-141.5 269.5,-141.5 269.5,-120.5 140.5,-120.5"/>
 <text text-anchor="middle" x="205" y="-128.5" font-family="DejaVuSans" font-size="10.00">CharaTrait::setCategory</text>
 </a>
@@ -100,7 +100,7 @@
 </g>
 <!-- Node9 -->
 <g id="node20" class="node"><title>Node9</title>
-<a xlink:href="class_chara_trait.html#a2b019cd655e56e8113ecfcf6913681cc" target="_top" xlink:title="CharaTrait::setType">
+<a xlink:href="class_chara_trait.html#aa119a2d69592d27154b05a52dfeb21bd" target="_top" xlink:title="CharaTrait::setType">
 <polygon fill="white" stroke="black" points="151.5,-0.5 151.5,-21.5 258.5,-21.5 258.5,-0.5 151.5,-0.5"/>
 <text text-anchor="middle" x="205" y="-8.5" font-family="DejaVuSans" font-size="10.00">CharaTrait::setType</text>
 </a>

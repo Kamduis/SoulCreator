@@ -126,8 +126,8 @@ function toggleVisibility(linkObj) {
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define CHARATRAIT_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;Datatypes/cv_Trait.h&quot;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;Datatypes/cv_TraitDetail.h&quot;</span>
+<a name="l00029"></a>00029 <span class="comment">// #include &quot;Datatypes/Trait.h&quot;</span>
+<a name="l00030"></a>00030 <span class="comment">// #include &quot;Datatypes/cv_TraitDetail.h&quot;</span>
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_trait_line_8h.html">TraitLine.h</a>&quot;</span>
 <a name="l00033"></a>00033 
@@ -142,8 +142,8 @@ function toggleVisibility(linkObj) {
 <a name="l00057"></a>00057 <span class="comment">//       **/</span>
 <a name="l00058"></a>00058 <span class="comment">//      int value() const;</span>
 <a name="l00062"></a>00062 <span class="comment"></span>        QString <a class="code" href="class_chara_trait.html#a7cc9b10030c5e6d5030fb898506ee070">customText</a>() <span class="keyword">const</span>;
-<a name="l00066"></a>00066         <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> <a class="code" href="class_chara_trait.html#a0eee9e5210d8c2b458db352c8d0d5bb4">type</a>() <span class="keyword">const</span>;
-<a name="l00070"></a>00070         <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> <a class="code" href="class_chara_trait.html#a1fe9b2316d8daebdf80ddad832ef818a">category</a>() <span class="keyword">const</span>;
+<a name="l00066"></a>00066         <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> <a class="code" href="class_chara_trait.html#a0de44908d1c0bfd7cf0fa3a1158f8132">type</a>() <span class="keyword">const</span>;
+<a name="l00070"></a>00070         <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> <a class="code" href="class_chara_trait.html#a09c7510a4bfc6569908bca307131e913">category</a>() <span class="keyword">const</span>;
 <a name="l00074"></a>00074         cv_Species::Species <a class="code" href="class_chara_trait.html#ae8c46557a34a5586b1fbcac00a7c47d6">species</a>() <span class="keyword">const</span>;
 <a name="l00078"></a>00078         <span class="keywordtype">bool</span> <a class="code" href="class_chara_trait.html#a6f2348de11d23f9f44eb81335a9edf19">custom</a>() <span class="keyword">const</span>;
 <a name="l00079"></a>00079 
@@ -155,44 +155,41 @@ function toggleVisibility(linkObj) {
 <a name="l00088"></a>00088         <a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* ptr_trait;
 <a name="l00089"></a>00089         <a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* ptr_traitStorage;
 <a name="l00090"></a>00090 
-<a name="l00094"></a>00094         QString parsePrerequisites( QString <a class="code" href="class_trait_line.html#a47b02db462cae13826d7ca14bb8de63e">text</a> );
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096     <span class="keyword">public</span> slots:
-<a name="l00102"></a>00102         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ace22816278072df97eb782603153600b">setCustomText</a>( QString txt );
-<a name="l00106"></a>00106         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a2b019cd655e56e8113ecfcf6913681cc">setType</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
-<a name="l00110"></a>00110         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ad3abff76332080dfd9e487287537b8a2">setCategory</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category );
-<a name="l00114"></a>00114         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a340feb7c80cc516245c80d1ff03a8aec">setSpecies</a>( cv_Species::Species species );
-<a name="l00118"></a>00118         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a620d140e562c4102205d2c2a44af5622">setCustom</a>( <span class="keywordtype">bool</span> sw );
-<a name="l00119"></a>00119         
-<a name="l00123"></a>00123         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a06ea530908c65caf8aad3f494f0d2cb8">hideSpecialtyWidget</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
-<a name="l00129"></a>00129         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a794ddd73f3604b16fe4b468b4a02f7df">hideDescriptionWidget</a>();
-<a name="l00130"></a>00130 
-<a name="l00134"></a>00134         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ab04ba68cad00668e6379a9e3fb1e5d8a">emitSpecialtiesClicked</a>(<span class="keywordtype">bool</span> sw);
-<a name="l00135"></a>00135         
-<a name="l00139"></a>00139         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a873be3dccac875262e6f7b350663b542">checkTraitPrerequisites</a>( <a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* trait );
-<a name="l00145"></a>00145         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a8b30fcf229fb59f96c3926a59269194e">hideTraitIfNotAvailable</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species );
-<a name="l00146"></a>00146 
-<a name="l00150"></a>00150         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#abd56630f06841ee374edce8bc31575cb">setTraitPtr</a>( <a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* trait );
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152     <span class="keyword">private</span> slots:
-<a name="l00156"></a>00156         <span class="keywordtype">void</span> setTraitValue( <span class="keywordtype">int</span> val );
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158     signals:
-<a name="l00159"></a>00159         <span class="keywordtype">void</span> typeChanged( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
-<a name="l00163"></a>00163         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ab3935a94198f510d3de473a9a72692ac">traitChanged</a>(<a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait);
-<a name="l00167"></a>00167         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ae6604555d60fe78d7473942e3502060b">specialtiesClicked</a>( <span class="keywordtype">bool</span> state ,
-<a name="l00168"></a>00168                                  QString <a class="code" href="class_trait_line.html#aab91b42ed078ee480734f96d0e0342f4">name</a> ,
-<a name="l00169"></a>00169                                  QList&lt; cv_TraitDetail &gt; specialtyList 
-<a name="l00170"></a>00170                                );
-<a name="l00171"></a>00171 };
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173 <span class="preprocessor">#endif</span>
+<a name="l00091"></a>00091     <span class="keyword">public</span> slots:
+<a name="l00097"></a>00097         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ace22816278072df97eb782603153600b">setCustomText</a>( QString txt );
+<a name="l00101"></a>00101         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#aa119a2d69592d27154b05a52dfeb21bd">setType</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type );
+<a name="l00105"></a>00105         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a73cbb56f5bc87964994e962168d04e69">setCategory</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> category );
+<a name="l00109"></a>00109         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a340feb7c80cc516245c80d1ff03a8aec">setSpecies</a>( cv_Species::Species species );
+<a name="l00113"></a>00113         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a620d140e562c4102205d2c2a44af5622">setCustom</a>( <span class="keywordtype">bool</span> sw );
+<a name="l00114"></a>00114         
+<a name="l00118"></a>00118         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a6ccfc01fdf16b09ebfbdac163dc611b1">hideSpecialtyWidget</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type );
+<a name="l00124"></a>00124         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a794ddd73f3604b16fe4b468b4a02f7df">hideDescriptionWidget</a>();
+<a name="l00125"></a>00125 
+<a name="l00129"></a>00129         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ab04ba68cad00668e6379a9e3fb1e5d8a">emitSpecialtiesClicked</a>(<span class="keywordtype">bool</span> sw);
+<a name="l00130"></a>00130         
+<a name="l00136"></a>00136         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#a8b30fcf229fb59f96c3926a59269194e">hideTraitIfNotAvailable</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species );
+<a name="l00137"></a>00137 
+<a name="l00141"></a>00141         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#abd56630f06841ee374edce8bc31575cb">setTraitPtr</a>( <a class="code" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a>* trait );
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143     <span class="keyword">private</span> slots:
+<a name="l00147"></a>00147         <span class="keywordtype">void</span> setTraitValue( <span class="keywordtype">int</span> val );
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149     signals:
+<a name="l00150"></a>00150         <span class="keywordtype">void</span> typeChanged( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type );
+<a name="l00154"></a>00154         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ab3935a94198f510d3de473a9a72692ac">traitChanged</a>(<a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a>* trait);
+<a name="l00158"></a>00158         <span class="keywordtype">void</span> <a class="code" href="class_chara_trait.html#ae6604555d60fe78d7473942e3502060b">specialtiesClicked</a>( <span class="keywordtype">bool</span> state ,
+<a name="l00159"></a>00159                                  QString <a class="code" href="class_trait_line.html#aab91b42ed078ee480734f96d0e0342f4">name</a> ,
+<a name="l00160"></a>00160                                  QList&lt; cv_TraitDetail &gt; specialtyList 
+<a name="l00161"></a>00161                                );
+<a name="l00162"></a>00162 };
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_chara_trait_8h.html">CharaTrait.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

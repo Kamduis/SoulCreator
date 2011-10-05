@@ -1,17 +1,17 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_attribute_widget.html#ab498116d47f94a62e3b82eaa79976b36" title="AttributeWidget::AttributeWidget" alt="" coords="212,5,439,35"/>
-<area shape="rect" id="node5" href="$class_chara_trait.html#a873be3dccac875262e6f7b350663b542" title="CharaTrait::checkTraitPrerequisites" alt="" coords="205,59,445,88"/>
-<area shape="rect" id="node9" href="$class_flaw_widget.html#af387a892373d07ce615ad19d6da45448" title="FlawWidget::FlawWidget" alt="" coords="240,112,411,141"/>
-<area shape="rect" id="node11" href="$class_merit_widget.html#a3f99dd98cf0c027d9e5a65a6a82d88c8" title="MeritWidget::MeritWidget" alt="" coords="236,165,415,195"/>
-<area shape="rect" id="node13" href="$class_read_xml_character.html#a5857936ddba1793fd089d9f169ed73de" title="ReadXmlCharacter::read" alt="" coords="237,219,413,248"/>
-<area shape="rect" id="node15" href="$class_exception.html#a16b5202a71fe00abb2c278adca10b415" title="Exception::setMessage" alt="" coords="241,272,409,301"/>
-<area shape="rect" id="node7" href="$class_chara_trait.html#a21787eb972b4fc8779368a78f4430f14" title="CharaTrait::CharaTrait" alt="" coords="548,59,705,88"/>
-<area shape="rect" id="node17" href="$classe_entry.html#af2bff1ad646f97d52c00bf8569548a3b" title="eEntry::eEntry" alt="" coords="572,112,681,141"/>
-<area shape="rect" id="node19" href="$classe_file.html#a85a19ce77ddf85fb9f0225be74c6aaa8" title="eFile::eFile" alt="" coords="584,165,669,195"/>
-<area shape="rect" id="node21" href="$classe_file_not_deleted.html#a9e586fbfbf59382683a5a7be2f5632d8" title="eFileNotDeleted::eFileNotDeleted" alt="" coords="511,219,743,248"/>
-<area shape="rect" id="node23" href="$classe_missing_user_entry.html#aceba43c80e53b7b00c6c1362df490226" title="eMissingUserEntry::eMissingUserEntry" alt="" coords="495,272,759,301"/>
-<area shape="rect" id="node25" href="$classe_not_a_number.html#a6dabec017857726ad6400354871a8aca" title="eNotANumber::eNotANumber" alt="" coords="520,325,733,355"/>
-<area shape="rect" id="node27" href="$classe_number.html#a27c099a9af640d009a4e25f7454252bf" title="eNumber::eNumber" alt="" coords="552,379,701,408"/>
-<area shape="rect" id="node29" href="$classe_user_entry.html#a8865bccf1cf63218bd651713b777507d" title="eUserEntry::eUserEntry" alt="" coords="541,432,712,461"/>
-<area shape="rect" id="node31" href="$class_exception.html#aeb292f06dab004c0d314c0375dc5ac24" title="Exception::Exception" alt="" coords="549,485,704,515"/>
+<area shape="rect" id="node3" href="$class_attribute_widget.html#ab498116d47f94a62e3b82eaa79976b36" title="AttributeWidget::AttributeWidget" alt="" coords="207,5,433,35"/>
+<area shape="rect" id="node5" href="$class_trait.html#a8a1b0f1a3a2388e4f7c2d85b7e95fc7e" title="Trait::checkPrerequisites" alt="" coords="232,59,408,88"/>
+<area shape="rect" id="node7" href="$class_flaw_widget.html#af387a892373d07ce615ad19d6da45448" title="FlawWidget::FlawWidget" alt="" coords="235,112,405,141"/>
+<area shape="rect" id="node9" href="$class_merit_widget.html#a3f99dd98cf0c027d9e5a65a6a82d88c8" title="MeritWidget::MeritWidget" alt="" coords="231,165,409,195"/>
+<area shape="rect" id="node11" href="$class_power_widget.html#a07bb0283ac179fda85ae3f2e38f17b71" title="PowerWidget::PowerWidget" alt="" coords="224,219,416,248"/>
+<area shape="rect" id="node13" href="$class_read_xml_character.html#a5857936ddba1793fd089d9f169ed73de" title="ReadXmlCharacter::read" alt="" coords="232,272,408,301"/>
+<area shape="rect" id="node15" href="$class_exception.html#a16b5202a71fe00abb2c278adca10b415" title="Exception::setMessage" alt="" coords="236,325,404,355"/>
+<area shape="rect" id="node17" href="$classe_entry.html#af2bff1ad646f97d52c00bf8569548a3b" title="eEntry::eEntry" alt="" coords="561,139,671,168"/>
+<area shape="rect" id="node19" href="$classe_file.html#a85a19ce77ddf85fb9f0225be74c6aaa8" title="eFile::eFile" alt="" coords="573,192,659,221"/>
+<area shape="rect" id="node21" href="$classe_file_not_deleted.html#a9e586fbfbf59382683a5a7be2f5632d8" title="eFileNotDeleted::eFileNotDeleted" alt="" coords="500,245,732,275"/>
+<area shape="rect" id="node23" href="$classe_missing_user_entry.html#aceba43c80e53b7b00c6c1362df490226" title="eMissingUserEntry::eMissingUserEntry" alt="" coords="484,299,748,328"/>
+<area shape="rect" id="node25" href="$classe_not_a_number.html#a6dabec017857726ad6400354871a8aca" title="eNotANumber::eNotANumber" alt="" coords="509,352,723,381"/>
+<area shape="rect" id="node27" href="$classe_number.html#a27c099a9af640d009a4e25f7454252bf" title="eNumber::eNumber" alt="" coords="541,405,691,435"/>
+<area shape="rect" id="node29" href="$classe_user_entry.html#a8865bccf1cf63218bd651713b777507d" title="eUserEntry::eUserEntry" alt="" coords="531,459,701,488"/>
+<area shape="rect" id="node31" href="$class_exception.html#aeb292f06dab004c0d314c0375dc5ac24" title="Exception::Exception" alt="" coords="539,512,693,541"/>
 </map>

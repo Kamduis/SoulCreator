@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_chara_trait.html#a873be3dccac875262e6f7b350663b542" title="CharaTrait::checkTraitPrerequisites" alt="" coords="213,5,453,35"/>
-<area shape="rect" id="node7" href="$class_trait.html#af91999c7db93d064bf79f1a72133152a" title="Trait::Trait" alt="" coords="292,59,375,88"/>
-<area shape="rect" id="node5" href="$class_chara_trait.html#a21787eb972b4fc8779368a78f4430f14" title="CharaTrait::CharaTrait" alt="" coords="503,5,660,35"/>
+<area shape="rect" id="node3" href="$class_trait.html#a2978f151799625492ce4bae4b3db5c04" title="Trait::addPrerequisitePtrs" alt="" coords="213,5,395,35"/>
+<area shape="rect" id="node5" href="$class_trait.html#a8a1b0f1a3a2388e4f7c2d85b7e95fc7e" title="Trait::checkPrerequisites" alt="" coords="216,59,392,88"/>
+<area shape="rect" id="node7" href="$class_trait.html#af91999c7db93d064bf79f1a72133152a" title="Trait::Trait" alt="" coords="263,112,345,141"/>
 </map>

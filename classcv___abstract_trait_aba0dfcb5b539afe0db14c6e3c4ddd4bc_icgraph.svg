@@ -64,7 +64,7 @@
 </g>
 <!-- Node6 -->
 <g id="node11" class="node"><title>Node6</title>
-<a xlink:href="class_check_trait.html#ac8c0ce9b6169d62ad48af359efcebf3f" target="_top" xlink:title="CheckTrait::setType">
+<a xlink:href="class_check_trait.html#a4d08c3a079c757e4a0351b04228b7398" target="_top" xlink:title="CheckTrait::setType">
 <polygon fill="white" stroke="black" points="352.5,-118.5 352.5,-139.5 459.5,-139.5 459.5,-118.5 352.5,-118.5"/>
 <text text-anchor="middle" x="406" y="-126.5" font-family="DejaVuSans" font-size="10.00">CheckTrait::setType</text>
 </a>
@@ -76,7 +76,7 @@
 </g>
 <!-- Node7 -->
 <g id="node13" class="node"><title>Node7</title>
-<a xlink:href="class_chara_trait.html#a2b019cd655e56e8113ecfcf6913681cc" target="_top" xlink:title="CharaTrait::setType">
+<a xlink:href="class_chara_trait.html#aa119a2d69592d27154b05a52dfeb21bd" target="_top" xlink:title="CharaTrait::setType">
 <polygon fill="white" stroke="black" points="352.5,-39.5 352.5,-60.5 459.5,-60.5 459.5,-39.5 352.5,-39.5"/>
 <text text-anchor="middle" x="406" y="-47.5" font-family="DejaVuSans" font-size="10.00">CharaTrait::setType</text>
 </a>
@@ -100,7 +100,7 @@
 </g>
 <!-- Node9 -->
 <g id="node19" class="node"><title>Node9</title>
-<a xlink:href="class_check_trait.html#a49c1abd75a391a80d402d20e6896ab77" target="_top" xlink:title="CheckTrait::type">
+<a xlink:href="class_check_trait.html#a94ca29d8920490f02a9f4a73ec1f6500" target="_top" xlink:title="CheckTrait::type">
 <polygon fill="white" stroke="black" points="190,-118.5 190,-139.5 282,-139.5 282,-118.5 190,-118.5"/>
 <text text-anchor="middle" x="236" y="-126.5" font-family="DejaVuSans" font-size="10.00">CheckTrait::type</text>
 </a>
@@ -112,7 +112,7 @@
 </g>
 <!-- Node10 -->
 <g id="node22" class="node"><title>Node10</title>
-<a xlink:href="class_chara_trait.html#a0eee9e5210d8c2b458db352c8d0d5bb4" target="_top" xlink:title="CharaTrait::type">
+<a xlink:href="class_chara_trait.html#a0de44908d1c0bfd7cf0fa3a1158f8132" target="_top" xlink:title="CharaTrait::type">
 <polygon fill="white" stroke="black" points="190,-0.5 190,-21.5 282,-21.5 282,-0.5 190,-0.5"/>
 <text text-anchor="middle" x="236" y="-8.5" font-family="DejaVuSans" font-size="10.00">CharaTrait::type</text>
 </a>

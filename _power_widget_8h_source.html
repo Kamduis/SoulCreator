@@ -125,40 +125,44 @@ function toggleVisibility(linkObj) {
 <a name="l00025"></a>00025 <span class="preprocessor">#ifndef POWERWIDGET_H</span>
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define POWERWIDGET_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QVBoxLayout&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;Datatypes/cv_TraitDetail.h&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="_select_merits_dialog_8h.html">Dialogs/SelectMeritsDialog.h</a>&quot;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QHBoxLayout&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QToolBox&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="comment">// #include &quot;Datatypes/cv_TraitDetail.h&quot;</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035 <span class="preprocessor">#include &lt;QWidget&gt;</span>
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037 
-<a name="l00041"></a><a class="code" href="class_power_widget.html">00041</a> <span class="keyword">class </span><a class="code" href="class_power_widget.html" title="Das Widget, in welchem sämtliche Übernatürlichen Kräfte angeordnet sind.">PowerWidget</a> : <span class="keyword">public</span> QWidget {
-<a name="l00042"></a>00042         Q_OBJECT
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044     <span class="keyword">public</span>:
-<a name="l00045"></a>00045         <a class="code" href="class_power_widget.html" title="Das Widget, in welchem sämtliche Übernatürlichen Kräfte angeordnet sind.">PowerWidget</a>( QWidget *parent = 0 );
-<a name="l00049"></a>00049         <a class="code" href="class_power_widget.html#ac9047aab743169b45dcf4da07886bd4e">~PowerWidget</a>();
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051     <span class="keyword">private</span>:
-<a name="l00052"></a>00052         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054     <span class="keyword">public</span> slots:
+<a name="l00043"></a><a class="code" href="class_power_widget.html">00043</a> <span class="keyword">class </span><a class="code" href="class_power_widget.html" title="Das Widget, in welchem sämtliche Übernatürlichen Kräfte angeordnet sind.">PowerWidget</a> : <span class="keyword">public</span> QWidget {
+<a name="l00044"></a>00044         Q_OBJECT
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046     <span class="keyword">public</span>:
+<a name="l00050"></a>00050         <a class="code" href="class_power_widget.html#a07bb0283ac179fda85ae3f2e38f17b71">PowerWidget</a>( QWidget *parent = 0 );
+<a name="l00054"></a>00054         <a class="code" href="class_power_widget.html#ac9047aab743169b45dcf4da07886bd4e">~PowerWidget</a>();
 <a name="l00055"></a>00055 
-<a name="l00056"></a>00056     <span class="keyword">private</span> slots:
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058     signals:
-<a name="l00059"></a>00059 };
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061 <span class="preprocessor">#endif</span>
+<a name="l00056"></a>00056     <span class="keyword">private</span>:
+<a name="l00057"></a>00057         QHBoxLayout* layout;
+<a name="l00058"></a>00058         QToolBox* toolBox;
+<a name="l00059"></a>00059         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
+<a name="l00060"></a>00060         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a>* storage;
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062     <span class="keyword">public</span> slots:
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064     <span class="keyword">private</span> slots:
+<a name="l00068"></a>00068         <span class="keywordtype">void</span> updateHeaders( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe );
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070     signals:
+<a name="l00071"></a>00071 };
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_power_widget_8h.html">PowerWidget.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

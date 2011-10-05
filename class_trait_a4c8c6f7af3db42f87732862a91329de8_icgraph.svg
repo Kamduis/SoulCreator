@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node3" class="node"><title>Node2</title>
-<a xlink:href="class_check_trait.html#ac8c0ce9b6169d62ad48af359efcebf3f" target="_top" xlink:title="CheckTrait::setType">
+<a xlink:href="class_check_trait.html#a4d08c3a079c757e4a0351b04228b7398" target="_top" xlink:title="CheckTrait::setType">
 <polygon fill="white" stroke="black" points="114.5,-40.5 114.5,-61.5 221.5,-61.5 221.5,-40.5 114.5,-40.5"/>
 <text text-anchor="middle" x="168" y="-48.5" font-family="DejaVuSans" font-size="10.00">CheckTrait::setType</text>
 </a>
@@ -28,7 +28,7 @@
 </g>
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
-<a xlink:href="class_chara_trait.html#a2b019cd655e56e8113ecfcf6913681cc" target="_top" xlink:title="CharaTrait::setType">
+<a xlink:href="class_chara_trait.html#aa119a2d69592d27154b05a52dfeb21bd" target="_top" xlink:title="CharaTrait::setType">
 <polygon fill="white" stroke="black" points="114.5,-0.5 114.5,-21.5 221.5,-21.5 221.5,-0.5 114.5,-0.5"/>
 <text text-anchor="middle" x="168" y="-8.5" font-family="DejaVuSans" font-size="10.00">CharaTrait::setType</text>
 </a>

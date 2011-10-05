@@ -125,45 +125,49 @@ function toggleVisibility(linkObj) {
 <a name="l00025"></a>00025 <span class="preprocessor">#ifndef SKILLWIDGET_H</span>
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define SKILLWIDGET_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QGridLayout&gt;</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;Datatypes/cv_TraitDetail.h&quot;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;Storage/StorageTemplate.h&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;QWidget&gt;</span>
-<a name="l00035"></a>00035 
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QHBoxLayout&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QScrollArea&gt;</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="comment">// #include &quot;Datatypes/cv_TraitDetail.h&quot;</span>
+<a name="l00032"></a>00032 <span class="comment">// #include &quot;Storage/StorageTemplate.h&quot;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;QWidget&gt;</span>
 <a name="l00036"></a>00036 
-<a name="l00044"></a><a class="code" href="class_skill_widget.html">00044</a> <span class="keyword">class </span><a class="code" href="class_skill_widget.html" title="Das Widget, in welchem sämtliche Attribute angeordnet sind.">SkillWidget</a> : <span class="keyword">public</span> QWidget {
-<a name="l00045"></a>00045         Q_OBJECT
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047     <span class="keyword">public</span>:
-<a name="l00048"></a>00048         <a class="code" href="class_skill_widget.html" title="Das Widget, in welchem sämtliche Attribute angeordnet sind.">SkillWidget</a>( QWidget *parent = 0 );
-<a name="l00052"></a>00052         <a class="code" href="class_skill_widget.html#a8ed735cfabcd0f20c54161606d08eab8">~SkillWidget</a>();
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054     <span class="keyword">private</span>:
-<a name="l00055"></a>00055         QGridLayout* layout;
-<a name="l00056"></a>00056         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a>* storage;
-<a name="l00057"></a>00057         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059         QList&lt; cv_Trait::Category &gt; v_categories;
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061     <span class="keyword">public</span> slots:
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063     <span class="keyword">private</span> slots:
-<a name="l00067"></a>00067         <span class="keywordtype">void</span> toggleOffSpecialties(<span class="keywordtype">bool</span> sw, QString skillName, QList&lt; cv_TraitDetail &gt; specialtyList);
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069     signals:
-<a name="l00070"></a>00070         <span class="keywordtype">void</span> specialtiesClicked(<span class="keywordtype">bool</span> sw, QString skillName, QList&lt; cv_TraitDetail &gt; specialtyList);
-<a name="l00071"></a>00071 };
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073 <span class="preprocessor">#endif</span>
+<a name="l00037"></a>00037 
+<a name="l00045"></a><a class="code" href="class_skill_widget.html">00045</a> <span class="keyword">class </span><a class="code" href="class_skill_widget.html" title="Das Widget, in welchem sämtliche Attribute angeordnet sind.">SkillWidget</a> : <span class="keyword">public</span> QWidget {
+<a name="l00046"></a>00046         Q_OBJECT
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048     <span class="keyword">public</span>:
+<a name="l00049"></a>00049         <a class="code" href="class_skill_widget.html" title="Das Widget, in welchem sämtliche Attribute angeordnet sind.">SkillWidget</a>( QWidget *parent = 0 );
+<a name="l00053"></a>00053         <a class="code" href="class_skill_widget.html#a8ed735cfabcd0f20c54161606d08eab8">~SkillWidget</a>();
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055     <span class="keyword">private</span>:
+<a name="l00056"></a>00056         QHBoxLayout* layout;
+<a name="l00057"></a>00057         QVBoxLayout* scrollLayout;
+<a name="l00058"></a>00058         QScrollArea* scrollArea;
+<a name="l00059"></a>00059         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a>* storage;
+<a name="l00060"></a>00060         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062         QList&lt; cv_AbstractTrait::Category &gt; v_categoryList;
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064     <span class="keyword">public</span> slots:
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066     <span class="keyword">private</span> slots:
+<a name="l00070"></a>00070         <span class="keywordtype">void</span> toggleOffSpecialties(<span class="keywordtype">bool</span> sw, QString skillName, QList&lt; cv_TraitDetail &gt; specialtyList);
+<a name="l00074"></a>00074         <span class="keywordtype">void</span> uncheckButtons();
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076     signals:
+<a name="l00077"></a>00077         <span class="keywordtype">void</span> specialtiesClicked(<span class="keywordtype">bool</span> sw, QString skillName, QList&lt; cv_TraitDetail &gt; specialtyList);
+<a name="l00078"></a>00078 };
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_skill_widget_8h.html">SkillWidget.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

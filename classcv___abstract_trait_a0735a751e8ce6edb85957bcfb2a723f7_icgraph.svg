@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node3" class="node"><title>Node2</title>
-<a xlink:href="class_check_trait.html#afaae5fe6f014343ff07514b615ce9036" target="_top" xlink:title="CheckTrait::category">
+<a xlink:href="class_check_trait.html#ae987ceb5b1be28de9dc4700d42e00b66" target="_top" xlink:title="CheckTrait::category">
 <polygon fill="white" stroke="black" points="199.5,-196.5 199.5,-217.5 312.5,-217.5 312.5,-196.5 199.5,-196.5"/>
 <text text-anchor="middle" x="256" y="-204.5" font-family="DejaVuSans" font-size="10.00">CheckTrait::category</text>
 </a>
@@ -28,7 +28,7 @@
 </g>
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
-<a xlink:href="class_check_trait.html#a435fdd90ff430b86bdcd0da51c3e61e0" target="_top" xlink:title="CheckTrait::setCategory">
+<a xlink:href="class_check_trait.html#a51f3c15ba4f54f325627a7ad6ca026a8" target="_top" xlink:title="CheckTrait::setCategory">
 <polygon fill="white" stroke="black" points="393,-177.5 393,-198.5 523,-198.5 523,-177.5 393,-177.5"/>
 <text text-anchor="middle" x="458" y="-185.5" font-family="DejaVuSans" font-size="10.00">CheckTrait::setCategory</text>
 </a>
@@ -40,7 +40,7 @@
 </g>
 <!-- Node4 -->
 <g id="node7" class="node"><title>Node4</title>
-<a xlink:href="class_chara_trait.html#a1fe9b2316d8daebdf80ddad832ef818a" target="_top" xlink:title="CharaTrait::category">
+<a xlink:href="class_chara_trait.html#a09c7510a4bfc6569908bca307131e913" target="_top" xlink:title="CharaTrait::category">
 <polygon fill="white" stroke="black" points="199.5,-118.5 199.5,-139.5 312.5,-139.5 312.5,-118.5 199.5,-118.5"/>
 <text text-anchor="middle" x="256" y="-126.5" font-family="DejaVuSans" font-size="10.00">CharaTrait::category</text>
 </a>
@@ -52,7 +52,7 @@
 </g>
 <!-- Node6 -->
 <g id="node11" class="node"><title>Node6</title>
-<a xlink:href="class_chara_trait.html#ad3abff76332080dfd9e487287537b8a2" target="_top" xlink:title="CharaTrait::setCategory">
+<a xlink:href="class_chara_trait.html#a73cbb56f5bc87964994e962168d04e69" target="_top" xlink:title="CharaTrait::setCategory">
 <polygon fill="white" stroke="black" points="393.5,-79.5 393.5,-100.5 522.5,-100.5 522.5,-79.5 393.5,-79.5"/>
 <text text-anchor="middle" x="458" y="-87.5" font-family="DejaVuSans" font-size="10.00">CharaTrait::setCategory</text>
 </a>

@@ -130,10 +130,10 @@ function toggleVisibility(linkObj) {
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QToolBox&gt;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;Storage/StorageTemplate.h&quot;</span>
+<a name="l00033"></a>00033 <span class="comment">// #include &quot;Storage/StorageTemplate.h&quot;</span>
 <a name="l00034"></a>00034 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;Datatypes/cv_Trait.h&quot;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;Datatypes/cv_TraitDetail.h&quot;</span>
+<a name="l00035"></a>00035 <span class="comment">// #include &quot;Datatypes/cv_Trait.h&quot;</span>
+<a name="l00036"></a>00036 <span class="comment">// #include &quot;Datatypes/cv_TraitDetail.h&quot;</span>
 <a name="l00037"></a>00037 <span class="preprocessor">#include &quot;<a class="code" href="_select_merits_dialog_8h.html">Dialogs/SelectMeritsDialog.h</a>&quot;</span>
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039 <span class="preprocessor">#include &lt;QWidget&gt;</span>
@@ -156,7 +156,7 @@ function toggleVisibility(linkObj) {
 <a name="l00069"></a>00069         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
 <a name="l00070"></a>00070         
 <a name="l00071"></a>00071 
-<a name="l00075"></a>00075         QList&lt; cv_Trait::Category &gt; v_categories;
+<a name="l00075"></a>00075         QList&lt; cv_AbstractTrait::Category &gt; v_category;
 <a name="l00076"></a>00076 
 <a name="l00077"></a>00077     <span class="keyword">public</span> slots:
 <a name="l00078"></a>00078 
@@ -167,7 +167,7 @@ function toggleVisibility(linkObj) {
 <a name="l00092"></a>00092 <span class="comment">//      /**</span>
 <a name="l00093"></a>00093 <span class="comment">//       * Die Anzahl der Angewählten Merits hat sich verändert, also wird dieses Signal gesandt.</span>
 <a name="l00094"></a>00094 <span class="comment">//       **/</span>
-<a name="l00095"></a>00095 <span class="comment">//      numberOfMeritsChanged(cv_Trait::Category category /** Die Anzahl der Merits in dieser Kategorie hat sich verändert. */ );</span>
+<a name="l00095"></a>00095 <span class="comment">//      numberOfMeritsChanged(cv_AbstractTrait::Category category /** Die Anzahl der Merits in dieser Kategorie hat sich verändert. */ );</span>
 <a name="l00096"></a>00096 };
 <a name="l00097"></a>00097 
 <a name="l00098"></a>00098 <span class="preprocessor">#endif</span>
@@ -176,7 +176,7 @@ function toggleVisibility(linkObj) {
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_merit_widget_8h.html">MeritWidget.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

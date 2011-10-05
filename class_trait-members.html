@@ -126,6 +126,7 @@ function toggleVisibility(linkObj) {
 Vollständige Aufstellung aller Elemente für <a class="el" href="class_trait.html">Trait</a> einschließlich aller geerbten Elemente.<table>
   <tr class="memlist"><td><a class="el" href="class_trait.html#ab6460ff9f5e4837d97c857cc06e0fa21">addDetail</a>(cv_TraitDetail det)</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [virtual, slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a7fa69c42c4bed86b6b72743bf0980535">addPossibleValue</a>(int val)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_trait.html#a2978f151799625492ce4bae4b3db5c04">addPrerequisitePtrs</a>(Trait *replacement)</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [slot]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Adult</b> enum Wert (Definiert in <a class="el" href="classcv___trait.html">cv_Trait</a>)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a2034742d24b57e2c4e813d3ab7e2083c">age</a>() const </td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>AgeAll</b> enum Wert (Definiert in <a class="el" href="classcv___trait.html">cv_Trait</a>)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
@@ -133,11 +134,14 @@ Vollständige Aufstellung aller Elemente für <a class="el" href="class_trait.ht
   <tr bgcolor="#f0f0f0"><td><b>AgeNo</b> enum Wert (Definiert in <a class="el" href="classcv___trait.html">cv_Trait</a>)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Antique</b> enum Wert (Definiert in <a class="el" href="classcv___trait.html">cv_Trait</a>)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Attribute</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_trait.html#aae3b3f42419623ee57375f7c92d381ff">availabilityChanged</a>(bool sw)</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [signal]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Breed</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#a0735a751e8ce6edb85957bcfb2a723f7">category</a>() const </td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">Category</a> enum Bezeichner</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#a0735a751e8ce6edb85957bcfb2a723f7">category</a>() const </td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>CategoryNo</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_trait.html#a8a1b0f1a3a2388e4f7c2d85b7e95fc7e">checkPrerequisites</a>(Trait *trait)</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_trait.html#aa416615b30fcac6dbcfc064d7ad1d40b">clearDetails</a>()</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [virtual, slot]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_trait.html#aac64fbf7e3b37865732ea785528c4fc2">clearPrerequisitePtrs</a>()</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#af96ea047974ec3f6bb2cd1b0ade7cf13">custom</a>() const </td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#adee2adf82138573180ff0d1486974ff6">customText</a>() const </td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#a293e22e3182aa859ff2587b9878700fa">cv_AbstractTrait</a>(QString txt=&quot;&quot;, cv_Species::Species spe=cv_Species::SpeciesNo, cv_AbstractTrait::Type ty=cv_AbstractTrait::TypeNo, cv_AbstractTrait::Category ca=cv_AbstractTrait::CategoryNo)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
@@ -145,7 +149,7 @@ Vollständige Aufstellung aller Elemente für <a class="el" href="class_trait.ht
   <tr bgcolor="#f0f0f0"><td><b>DebateStyle</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Derangement</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#ab81924fd5e51488a35a63e246830e143">details</a>() const </td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="class_trait.html#ac5a2dc044e1ea5691273c8cd8636afc9">detailsChanged</a>()</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_trait.html#ad83afc8c75c12274528a49fe56d10271">detailsChanged</a>(int)</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#ae3c00932e41ea222aa0080bcd8715406">era</a>() const </td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>EraAll</b> enum Wert (Definiert in <a class="el" href="classcv___trait.html">cv_Trait</a>)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">EraFlag</a> enum Bezeichner</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
@@ -155,6 +159,7 @@ Vollständige Aufstellung aller Elemente für <a class="el" href="class_trait.ht
   <tr bgcolor="#f0f0f0"><td><b>FightingStyle</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Flaw</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f">getCategoryList</a>(cv_AbstractTrait::Type type)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_trait.html#a243b169e6e1a53b7261c329481abb784">isAvailable</a>() const </td><td><a class="el" href="class_trait.html">Trait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Item</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Kid</b> enum Wert (Definiert in <a class="el" href="classcv___trait.html">cv_Trait</a>)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Mental</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
@@ -168,8 +173,11 @@ Vollständige Aufstellung aller Elemente für <a class="el" href="class_trait.ht
   <tr bgcolor="#f0f0f0"><td><b>Physical</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#afbc6b7ce3d7d7be49f456ae6e555ae91">possibleValues</a>() const </td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Power</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="class_trait.html#acb5c6e66ed14d1d6105a40c0babad47c">prerequisitePtrs</a>() const </td><td><a class="el" href="class_trait.html">Trait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a6bc140c1db6f0b138451fb8ab38b0661">prerequisites</a>() const </td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>Primary</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Reason</b> enum Wert (Definiert in <a class="el" href="classcv___trait.html">cv_Trait</a>)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>Secondary</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a6d097e30d2ea04c5e6eae68e032428a3">setAge</a>(cv_Trait::Age ag)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#aa032a829044f50688909a58081c130e4">setCategory</a>(Category cat)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a53165218ab534ea949fa036f91da8bd7">setCustom</a>(bool sw)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
@@ -178,7 +186,7 @@ Vollständige Aufstellung aller Elemente für <a class="el" href="class_trait.ht
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#aa3b34c0a07817c322655e54ae4a7ce7f">setEra</a>(cv_Trait::Era er)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#a4dd729908215df1ad08363eda065df91">setName</a>(QString nam)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a20b4e99f8419eefacf3dd013c2257136">setPossibleValues</a>(QList&lt; int &gt; list)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classcv___trait.html#a0b99115c2818972e82ac1f58b2489e81">setPrerequisites</a>(QString txt)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classcv___trait.html#a0b99115c2818972e82ac1f58b2489e81">setPrerequisites</a>(QString txt)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#ae7f6cc0af48f8d04c228bc87c8f7bd25">setSpecies</a>(cv_Species::Species spe)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_trait.html#a4c8c6f7af3db42f87732862a91329de8">setType</a>(cv_AbstractTrait::Type typ)</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [virtual, slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="class_trait.html#aff507cb19b22e5668fc20b471d73d691">setValue</a>(int val)</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [virtual, slot]</code></td></tr>
@@ -188,6 +196,7 @@ Vollständige Aufstellung aller Elemente für <a class="el" href="class_trait.ht
   <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#a5550607235c2a5875f84d13fb6f9aa3f">species</a>() const </td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="class_trait.html#a0cb477539c96acb9334fa78b2831c475">speciesChanged</a>(cv_Species::SpeciesFlag)</td><td><a class="el" href="class_trait.html">Trait</a></td><td><code> [signal]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>Super</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>Tertiary</b> enum Wert (Definiert in <a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a>)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a776af93d2332bdaa4631e22e6bdb7ace">toAge</a>(QString str)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td><code> [static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___abstract_trait.html#a2e80178ace3c05c3e37342a66a90d6b8">toCategory</a>(QString str)</td><td><a class="el" href="classcv___abstract_trait.html">cv_AbstractTrait</a></td><td><code> [static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classcv___trait.html#a5a4e945a0525b67b5a5154cfff9fb96f">toEra</a>(QString str)</td><td><a class="el" href="classcv___trait.html">cv_Trait</a></td><td><code> [static]</code></td></tr>
@@ -212,7 +221,7 @@ Vollständige Aufstellung aller Elemente für <a class="el" href="class_trait.ht
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:04 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:39 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

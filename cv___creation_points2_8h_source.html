@@ -125,43 +125,45 @@ function toggleVisibility(linkObj) {
 <a name="l00025"></a>00025 <span class="preprocessor">#ifndef CV_CREATIONPOINTS2_H</span>
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define CV_CREATIONPOINTS2_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;Datatypes/cv_Species.h&quot;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QList&gt;</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;Datatypes/cv_Species.h&quot;</span>
 <a name="l00031"></a>00031 
-<a name="l00037"></a><a class="code" href="classcv___creation_points2.html">00037</a> <span class="keyword">class </span><a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> {
-<a name="l00038"></a>00038     <span class="keyword">public</span>:
-<a name="l00042"></a>00042         <a class="code" href="classcv___creation_points2.html#a6310ef14920137c34cd5f1e47bf81b8f">cv_CreationPoints2</a>();
-<a name="l00043"></a>00043 
-<a name="l00047"></a><a class="code" href="classcv___creation_points2.html#a15a80e47d6c3661c24cc71155bd464d8">00047</a>         cv_Species::Species <a class="code" href="classcv___creation_points2.html#a15a80e47d6c3661c24cc71155bd464d8">species</a>;
-<a name="l00048"></a>00048         
-<a name="l00058"></a><a class="code" href="classcv___creation_points2.html#a9047fb3e12cd55448e246aa4de284f4f">00058</a>         QList&lt; int &gt; <a class="code" href="classcv___creation_points2.html#a9047fb3e12cd55448e246aa4de284f4f">attributes</a>;
-<a name="l00068"></a><a class="code" href="classcv___creation_points2.html#a3cd998afbe5436b8f7bb5d441c593202">00068</a>         QList&lt; int &gt; <a class="code" href="classcv___creation_points2.html#a3cd998afbe5436b8f7bb5d441c593202">skills</a>;
-<a name="l00072"></a><a class="code" href="classcv___creation_points2.html#aa90eee23a8da550d7ac8392a91a8816d">00072</a>         <span class="keywordtype">int</span> <a class="code" href="classcv___creation_points2.html#aa90eee23a8da550d7ac8392a91a8816d">skillSpecialties</a>;
-<a name="l00076"></a><a class="code" href="classcv___creation_points2.html#a988c21c0f15c091de2c4194786d1dc12">00076</a>         <span class="keywordtype">int</span> <a class="code" href="classcv___creation_points2.html#a988c21c0f15c091de2c4194786d1dc12">merits</a>;
-<a name="l00080"></a><a class="code" href="classcv___creation_points2.html#a061eaca1fbf10828a365eae0117acac2">00080</a>         <span class="keywordtype">int</span> <a class="code" href="classcv___creation_points2.html#a061eaca1fbf10828a365eae0117acac2">powers</a>;
-<a name="l00081"></a>00081 
-<a name="l00085"></a>00085         QString <a class="code" href="classcv___creation_points2.html#a9bbcd0b324004a863fe74437ceb7d8c0">attributesOut</a>();
-<a name="l00089"></a>00089         QString <a class="code" href="classcv___creation_points2.html#a5d65e4267ebca3d3670356177ebfdc0f">skillsOut</a>();
-<a name="l00093"></a>00093         QString <a class="code" href="classcv___creation_points2.html#a7277283d79f496327863f3939896a097">skillSpecialtiesOut</a>();
-<a name="l00097"></a>00097         QString <a class="code" href="classcv___creation_points2.html#a6003bc2555d8e84128cb577b944a2996">meritsOut</a>();
-<a name="l00101"></a>00101         QString <a class="code" href="classcv___creation_points2.html#af637de47be6b8b1b85b52c3032347987">powersOut</a>();
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103         <span class="keywordtype">bool</span> operator==( <span class="keyword">const</span> <a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> &amp;points ) <span class="keyword">const</span>;
-<a name="l00104"></a>00104         <span class="keywordtype">bool</span> operator!=( <span class="keyword">const</span> <a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> &amp;points ) <span class="keyword">const</span>;
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106     <span class="keyword">private</span>:
-<a name="l00110"></a>00110         QString outputPoint(<span class="keywordtype">int</span> val);
-<a name="l00111"></a>00111 };
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113 <span class="preprocessor">#endif</span>
-<a name="l00114"></a>00114 <span class="preprocessor"></span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00033"></a>00033 
+<a name="l00039"></a><a class="code" href="classcv___creation_points2.html">00039</a> <span class="keyword">class </span><a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> {
+<a name="l00040"></a>00040     <span class="keyword">public</span>:
+<a name="l00044"></a>00044         <a class="code" href="classcv___creation_points2.html#a6310ef14920137c34cd5f1e47bf81b8f">cv_CreationPoints2</a>();
+<a name="l00045"></a>00045 
+<a name="l00049"></a><a class="code" href="classcv___creation_points2.html#a15a80e47d6c3661c24cc71155bd464d8">00049</a>         cv_Species::Species <a class="code" href="classcv___creation_points2.html#a15a80e47d6c3661c24cc71155bd464d8">species</a>;
+<a name="l00050"></a>00050         
+<a name="l00060"></a><a class="code" href="classcv___creation_points2.html#a9047fb3e12cd55448e246aa4de284f4f">00060</a>         QList&lt; int &gt; <a class="code" href="classcv___creation_points2.html#a9047fb3e12cd55448e246aa4de284f4f">attributes</a>;
+<a name="l00070"></a><a class="code" href="classcv___creation_points2.html#a3cd998afbe5436b8f7bb5d441c593202">00070</a>         QList&lt; int &gt; <a class="code" href="classcv___creation_points2.html#a3cd998afbe5436b8f7bb5d441c593202">skills</a>;
+<a name="l00074"></a><a class="code" href="classcv___creation_points2.html#aa90eee23a8da550d7ac8392a91a8816d">00074</a>         <span class="keywordtype">int</span> <a class="code" href="classcv___creation_points2.html#aa90eee23a8da550d7ac8392a91a8816d">skillSpecialties</a>;
+<a name="l00078"></a><a class="code" href="classcv___creation_points2.html#a988c21c0f15c091de2c4194786d1dc12">00078</a>         <span class="keywordtype">int</span> <a class="code" href="classcv___creation_points2.html#a988c21c0f15c091de2c4194786d1dc12">merits</a>;
+<a name="l00082"></a><a class="code" href="classcv___creation_points2.html#a061eaca1fbf10828a365eae0117acac2">00082</a>         <span class="keywordtype">int</span> <a class="code" href="classcv___creation_points2.html#a061eaca1fbf10828a365eae0117acac2">powers</a>;
+<a name="l00083"></a>00083 
+<a name="l00087"></a>00087         QString <a class="code" href="classcv___creation_points2.html#a9bbcd0b324004a863fe74437ceb7d8c0">attributesOut</a>();
+<a name="l00091"></a>00091         QString <a class="code" href="classcv___creation_points2.html#a5d65e4267ebca3d3670356177ebfdc0f">skillsOut</a>();
+<a name="l00095"></a>00095         QString <a class="code" href="classcv___creation_points2.html#a7277283d79f496327863f3939896a097">skillSpecialtiesOut</a>();
+<a name="l00099"></a>00099         QString <a class="code" href="classcv___creation_points2.html#a6003bc2555d8e84128cb577b944a2996">meritsOut</a>();
+<a name="l00103"></a>00103         QString <a class="code" href="classcv___creation_points2.html#af637de47be6b8b1b85b52c3032347987">powersOut</a>();
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105         <span class="keywordtype">bool</span> operator==( <span class="keyword">const</span> <a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> &amp;points ) <span class="keyword">const</span>;
+<a name="l00106"></a>00106         <span class="keywordtype">bool</span> operator!=( <span class="keyword">const</span> <a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> &amp;points ) <span class="keyword">const</span>;
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108     <span class="keyword">private</span>:
+<a name="l00112"></a>00112         QString outputPoint(<span class="keywordtype">int</span> val);
+<a name="l00113"></a>00113 };
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115 <span class="preprocessor">#endif</span>
+<a name="l00116"></a>00116 <span class="preprocessor"></span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="cv___creation_points2_8h.html">cv_CreationPoints2.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:35 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

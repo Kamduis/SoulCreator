@@ -28,15 +28,15 @@
 </g>
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
-<a xlink:href="class_storage_character.html#aec823a512ecdcb0e60452eb1cb3bb0a6" target="_top" xlink:title="StorageCharacter::traits2">
-<polygon fill="white" stroke="black" points="225.5,-0.5 225.5,-21.5 364.5,-21.5 364.5,-0.5 225.5,-0.5"/>
-<text text-anchor="middle" x="295" y="-8.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::traits2</text>
+<a xlink:href="class_storage_character.html#a2db5654b50bd29cc391c05ec220b2e08" target="_top" xlink:title="StorageCharacter::traits">
+<polygon fill="white" stroke="black" points="228.5,-0.5 228.5,-21.5 361.5,-21.5 361.5,-0.5 228.5,-0.5"/>
+<text text-anchor="middle" x="295" y="-8.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::traits</text>
 </a>
 </g>
 <!-- Node1&#45;&gt;Node3 -->
 <g id="edge4" class="edge"><title>Node1&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M177.558,-22.4021C190.082,-21.1862 202.896,-19.9422 215.24,-18.7437"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="215.867,-22.1993 225.482,-17.7493 215.191,-15.2321 215.867,-22.1993"/>
+<path fill="none" stroke="midnightblue" d="M177.558,-22.4021C191.114,-21.086 205.011,-19.7368 218.283,-18.4482"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="218.681,-21.9262 228.296,-17.4762 218.004,-14.959 218.681,-21.9262"/>
 </g>
 </g>
 </svg>

@@ -145,18 +145,24 @@ function toggleVisibility(linkObj) {
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Öffentliche Methoden</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#aef0e71fe3ca05543a5b6b4c8e38fdaa8">Trait</a> (QString txt=&quot;&quot;, int val=0, cv_Species::Species spe=cv_Species::SpeciesNo, <a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> ty=cv_AbstractTrait::TypeNo, <a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> ca=cv_AbstractTrait::CategoryNo, QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#ae9c8771cd8749ff4dd1446ff62f8e4d1">Trait</a> (<a class="el" href="class_trait.html">Trait</a> *trait, QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#af91999c7db93d064bf79f1a72133152a">Trait</a> (<a class="el" href="classcv___trait.html">cv_Trait</a> trait, QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#ae9c8771cd8749ff4dd1446ff62f8e4d1">Trait</a> (<a class="el" href="class_trait.html">Trait</a> *trait, QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#a243b169e6e1a53b7261c329481abb784">isAvailable</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="class_trait.html">Trait</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#acb5c6e66ed14d1d6105a40c0babad47c">prerequisitePtrs</a> () const </td></tr>
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Öffentliche Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#ab6460ff9f5e4837d97c857cc06e0fa21">addDetail</a> (<a class="el" href="structcv___trait_detail.html">cv_TraitDetail</a> det)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#a2978f151799625492ce4bae4b3db5c04">addPrerequisitePtrs</a> (<a class="el" href="class_trait.html">Trait</a> *replacement)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#a8a1b0f1a3a2388e4f7c2d85b7e95fc7e">checkPrerequisites</a> (<a class="el" href="class_trait.html">Trait</a> *trait)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#aa416615b30fcac6dbcfc064d7ad1d40b">clearDetails</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#aac64fbf7e3b37865732ea785528c4fc2">clearPrerequisitePtrs</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#a8d2ca547e2dd3189858cbd8aa1c52efd">setDetails</a> (QList&lt; <a class="el" href="structcv___trait_detail.html">cv_TraitDetail</a> &gt; list)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#a4c8c6f7af3db42f87732862a91329de8">setType</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> typ)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#aff507cb19b22e5668fc20b471d73d691">setValue</a> (int val)</td></tr>
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signale</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#ac5a2dc044e1ea5691273c8cd8636afc9">detailsChanged</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#aae3b3f42419623ee57375f7c92d381ff">availabilityChanged</a> (bool sw)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#ad83afc8c75c12274528a49fe56d10271">detailsChanged</a> (int)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#a0cb477539c96acb9334fa78b2831c475">speciesChanged</a> (<a class="el" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#a9cbe09d1f22c80ce56056d11e9ae0adb">traitChanged</a> (<a class="el" href="class_trait.html">Trait</a> *trait)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trait.html#ae00311fac86b6949a3c6c823fad2c95c">typeChanged</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a>)</td></tr>
@@ -325,6 +331,104 @@ Signale</h2></td></tr>
 </div>
 </p>
 
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_ab6460ff9f5e4837d97c857cc06e0fa21_icgraph.svg" width="435" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a2978f151799625492ce4bae4b3db5c04"></a><!-- doxytag: member="Trait::addPrerequisitePtrs" ref="a2978f151799625492ce4bae4b3db5c04" args="(Trait *replacement)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Trait::addPrerequisitePtrs </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_trait.html">Trait</a> *&#160;</td>
+          <td class="paramname"><em>replacement</em></td><td>)</td>
+          <td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Ursprünglich steht im prerequisites-String Name und Wert der Eigenscahften, von denen diese Eigenschaft abhängen kann. Dies soll durch die Adressen der jeweiligen Eigenschaften ersetzt werden.</p>
+<dl class="warning"><dt><b>Warnung:</b></dt><dd>Darf erst aufgerufen werden, wenn schon alle Eigenschaften im Speicher stehen, sonst können möglicherweise einige Namen nicht übersetzt werden.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Noch zu erledigen:</a></b></dt><dd>Besser wäre natürlich, aus dem Textstring ein C++-if-Konstrukt zu erzeugen. </dd></dl>
+
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_a2978f151799625492ce4bae4b3db5c04_cgraph.svg" width="408" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aae3b3f42419623ee57375f7c92d381ff"></a><!-- doxytag: member="Trait::availabilityChanged" ref="aae3b3f42419623ee57375f7c92d381ff" args="(bool sw)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Trait::availabilityChanged </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>sw</em></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Verfügbarkeit hat sich verändert. </p>
+<dl><dt><b>Parameter:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sw</td><td>Dieses Argument bestimmt, ob die Eigenscahft dem Cahrakter zur Verfügung steht (true) oder nicht (false). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8a1b0f1a3a2388e4f7c2d85b7e95fc7e"></a><!-- doxytag: member="Trait::checkPrerequisites" ref="a8a1b0f1a3a2388e4f7c2d85b7e95fc7e" args="(Trait *trait)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Trait::checkPrerequisites </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_trait.html">Trait</a> *&#160;</td>
+          <td class="paramname"><em>trait</em></td><td>)</td>
+          <td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Überprüft, ob alle Voraussetzungen für diese Eigenschaft erfüllt werden. </p>
+<dl><dt><b>Parameter:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trait</td><td>Veränderte Eigenschaft, die möglicherweise Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_a8a1b0f1a3a2388e4f7c2d85b7e95fc7e_cgraph.svg" width="403" height="254" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="aa416615b30fcac6dbcfc064d7ad1d40b"></a><!-- doxytag: member="Trait::clearDetails" ref="aa416615b30fcac6dbcfc064d7ad1d40b" args="()" -->
@@ -344,39 +448,111 @@ Signale</h2></td></tr>
 
 <p>Erneute Implementation von <a class="el" href="classcv___trait.html#ad9d7fbc8d0e542536371aba6f7dcce44">cv_Trait</a>.</p>
 
-<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe src="class_trait_aa416615b30fcac6dbcfc064d7ad1d40b_cgraph.svg" width="344" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</p>
+
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_aa416615b30fcac6dbcfc064d7ad1d40b_icgraph.svg" width="448" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </p>
 
 </div>
 </div>
-<a class="anchor" id="ac5a2dc044e1ea5691273c8cd8636afc9"></a><!-- doxytag: member="Trait::detailsChanged" ref="ac5a2dc044e1ea5691273c8cd8636afc9" args="()" -->
+<a class="anchor" id="aac64fbf7e3b37865732ea785528c4fc2"></a><!-- doxytag: member="Trait::clearPrerequisitePtrs" ref="aac64fbf7e3b37865732ea785528c4fc2" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Trait::clearPrerequisitePtrs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Legt fest, welche Spezies über diese Eigenschaft verfügen und sendet bei Änderung ein entsprechendes Signal aus. Löscht die Liste mit Zeigern, welche auf Eigenschaften zeigen, welche Voraussetzungen für diese Eigenschaft sind. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad83afc8c75c12274528a49fe56d10271"></a><!-- doxytag: member="Trait::detailsChanged" ref="ad83afc8c75c12274528a49fe56d10271" args="(int)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Trait::detailsChanged </td>
           <td>(</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [signal]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Die Details der Eigenscahft haben sich verändert. </p>
+<p>Die Details der Eigenschaft haben sich verändert. </p>
 
-<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_trait_ac5a2dc044e1ea5691273c8cd8636afc9_icgraph.svg" width="475" height="147" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_ad83afc8c75c12274528a49fe56d10271_icgraph.svg" width="651" height="147" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a243b169e6e1a53b7261c329481abb784"></a><!-- doxytag: member="Trait::isAvailable" ref="a243b169e6e1a53b7261c329481abb784" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Trait::isAvailable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt zurück, ob die Voraussetzungen der Eigenschaft erfüllt sind, ode rnicht. </p>
+
+</div>
+</div>
+<a class="anchor" id="acb5c6e66ed14d1d6105a40c0babad47c"></a><!-- doxytag: member="Trait::prerequisitePtrs" ref="acb5c6e66ed14d1d6105a40c0babad47c" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; <a class="el" href="class_trait.html">Trait</a> * &gt; Trait::prerequisitePtrs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt die Liste mit voraussetzungen zurück. </p>
+
+<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_acb5c6e66ed14d1d6105a40c0babad47c_icgraph.svg" width="392" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </p>
@@ -401,23 +577,22 @@ Signale</h2></td></tr>
 
 <p>Erneute Implementation von <a class="el" href="classcv___trait.html#a2291f251e239528ec95a08897987cfaf">cv_Trait</a>.</p>
 
-<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe src="class_trait_a8d2ca547e2dd3189858cbd8aa1c52efd_cgraph.svg" width="334" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </p>
 
-<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_trait_a8d2ca547e2dd3189858cbd8aa1c52efd_icgraph.svg" width="262" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_a8d2ca547e2dd3189858cbd8aa1c52efd_icgraph.svg" width="262" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
@@ -441,21 +616,20 @@ Signale</h2></td></tr>
 
 <p>Erneute Implementation von <a class="el" href="classcv___abstract_trait.html#a47cca97b0ef76778473a5c62c06f023b">cv_AbstractTrait</a>.</p>
 
-<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_trait_a4c8c6f7af3db42f87732862a91329de8_cgraph.svg" width="323" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_a4c8c6f7af3db42f87732862a91329de8_cgraph.svg" width="323" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
-<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe src="class_trait_a4c8c6f7af3db42f87732862a91329de8_icgraph.svg" width="307" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -481,22 +655,21 @@ Signale</h2></td></tr>
 
 <p>Erneute Implementation von <a class="el" href="classcv___trait.html#aa1d68882182c6858991571f21ddef507">cv_Trait</a>.</p>
 
-<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe src="class_trait_aff507cb19b22e5668fc20b471d73d691_cgraph.svg" width="318" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
-<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_trait_aff507cb19b22e5668fc20b471d73d691_icgraph.svg" width="814" height="114" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_aff507cb19b22e5668fc20b471d73d691_icgraph.svg" width="814" height="114" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
@@ -555,11 +728,11 @@ Signale</h2></td></tr>
 <div class="memdoc">
 <p>Der Typ der Eigenschaft hat sich verändert. </p>
 
-<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-17-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe src="class_trait_ae00311fac86b6949a3c6c823fad2c95c_icgraph.svg" width="496" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -583,13 +756,12 @@ Signale</h2></td></tr>
 <div class="memdoc">
 <p>Der Wert der Eigenschaft hat sich verändert. </p>
 
-<p><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-18-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_trait_a953d7925e76098c051e7ade90a25cc03_icgraph.svg" width="1008" height="114" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="class_trait_a953d7925e76098c051e7ade90a25cc03_icgraph.svg" width="1008" height="114" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
@@ -600,7 +772,7 @@ Signale</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="class_trait.html">Trait</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:04 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:39 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

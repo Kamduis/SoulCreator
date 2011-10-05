@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node3" class="node"><title>Node2</title>
-<a xlink:href="class_storage_template.html#aa1c01bbdf076afcacd1e785d2a4d6573" target="_top" xlink:title="StorageTemplate::traitNames">
+<a xlink:href="class_storage_template.html#a2e80f31564a058b2a7df5f092dc46eba" target="_top" xlink:title="StorageTemplate::traitNames">
 <polygon fill="white" stroke="black" points="202,-0.5 202,-21.5 360,-21.5 360,-0.5 202,-0.5"/>
 <text text-anchor="middle" x="281" y="-8.5" font-family="DejaVuSans" font-size="10.00">StorageTemplate::traitNames</text>
 </a>
@@ -28,7 +28,7 @@
 </g>
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
-<a xlink:href="class_storage_template.html#adee5213746a1f99f82f6229a7061d360" target="_top" xlink:title="StorageTemplate::traits">
+<a xlink:href="class_storage_template.html#a75022d10255d8f09b675d8c01d2295f3" target="_top" xlink:title="StorageTemplate::traits">
 <polygon fill="white" stroke="black" points="396.5,-0.5 396.5,-21.5 525.5,-21.5 525.5,-0.5 396.5,-0.5"/>
 <text text-anchor="middle" x="461" y="-8.5" font-family="DejaVuSans" font-size="10.00">StorageTemplate::traits</text>
 </a>

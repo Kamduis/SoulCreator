@@ -16,9 +16,9 @@
 </g>
 <!-- Node2 -->
 <g id="node3" class="node"><title>Node2</title>
-<a xlink:href="class_storage_character.html#a1a573fb4f44cea6f113f9638af0c46da" target="_top" xlink:title="StorageCharacter::realIdentityChanged">
-<polygon fill="white" stroke="black" points="216,-280.5 216,-301.5 420,-301.5 420,-280.5 216,-280.5"/>
-<text text-anchor="middle" x="318" y="-288.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::realIdentityChanged</text>
+<a xlink:href="class_storage_character.html#a8078e06fff79384a77dd868a6c3f0a6e" target="_top" xlink:title="StorageCharacter::characterResetted">
+<polygon fill="white" stroke="black" points="220,-280.5 220,-301.5 416,-301.5 416,-280.5 220,-280.5"/>
+<text text-anchor="middle" x="318" y="-288.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::characterResetted</text>
 </a>
 </g>
 <!-- Node1&#45;&gt;Node2 -->
@@ -28,9 +28,9 @@
 </g>
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
-<a xlink:href="class_storage_character.html#aaaaa83765f09e957f5592def8849765f" target="_top" xlink:title="StorageCharacter::setMorality">
-<polygon fill="white" stroke="black" points="237.5,-240.5 237.5,-261.5 398.5,-261.5 398.5,-240.5 237.5,-240.5"/>
-<text text-anchor="middle" x="318" y="-248.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::setMorality</text>
+<a xlink:href="class_storage_character.html#a1a573fb4f44cea6f113f9638af0c46da" target="_top" xlink:title="StorageCharacter::realIdentityChanged">
+<polygon fill="white" stroke="black" points="216,-240.5 216,-261.5 420,-261.5 420,-240.5 216,-240.5"/>
+<text text-anchor="middle" x="318" y="-248.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::realIdentityChanged</text>
 </a>
 </g>
 <!-- Node1&#45;&gt;Node3 -->
@@ -38,51 +38,51 @@
 <path fill="none" stroke="midnightblue" d="M103.07,-161.667C125.005,-179 171.236,-213.138 216,-231 222.419,-233.561 229.2,-235.804 236.091,-237.766"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="235.675,-241.275 246.237,-240.443 237.461,-234.507 235.675,-241.275"/>
 </g>
-<!-- Node5 -->
-<g id="node9" class="node"><title>Node5</title>
-<a xlink:href="class_storage_character.html#ac708bf6fd9e70736fe84e9529d2dfe18" target="_top" xlink:title="StorageCharacter::setSpecies">
+<!-- Node4 -->
+<g id="node7" class="node"><title>Node4</title>
+<a xlink:href="class_storage_character.html#aaaaa83765f09e957f5592def8849765f" target="_top" xlink:title="StorageCharacter::setMorality">
 <polygon fill="white" stroke="black" points="237.5,-200.5 237.5,-221.5 398.5,-221.5 398.5,-200.5 237.5,-200.5"/>
-<text text-anchor="middle" x="318" y="-208.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::setSpecies</text>
+<text text-anchor="middle" x="318" y="-208.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::setMorality</text>
 </a>
 </g>
-<!-- Node1&#45;&gt;Node5 -->
-<g id="edge8" class="edge"><title>Node1&#45;&gt;Node5</title>
+<!-- Node1&#45;&gt;Node4 -->
+<g id="edge6" class="edge"><title>Node1&#45;&gt;Node4</title>
 <path fill="none" stroke="midnightblue" d="M119.764,-161.505C145.122,-170.2 182.648,-182.466 216,-191 226.44,-193.671 237.56,-196.185 248.474,-198.469"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="247.916,-201.927 258.415,-200.499 249.318,-195.069 247.916,-201.927"/>
 </g>
-<!-- Node8 -->
-<g id="node15" class="node"><title>Node8</title>
+<!-- Node6 -->
+<g id="node11" class="node"><title>Node6</title>
+<a xlink:href="class_storage_character.html#ac708bf6fd9e70736fe84e9529d2dfe18" target="_top" xlink:title="StorageCharacter::setSpecies">
+<polygon fill="white" stroke="black" points="237.5,-160.5 237.5,-181.5 398.5,-181.5 398.5,-160.5 237.5,-160.5"/>
+<text text-anchor="middle" x="318" y="-168.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::setSpecies</text>
+</a>
+</g>
+<!-- Node1&#45;&gt;Node6 -->
+<g id="edge10" class="edge"><title>Node1&#45;&gt;Node6</title>
+<path fill="none" stroke="midnightblue" d="M180.112,-158.905C195.632,-160.266 211.77,-161.682 227.306,-163.044"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="227.148,-166.544 237.415,-163.931 227.759,-159.571 227.148,-166.544"/>
+</g>
+<!-- Node9 -->
+<g id="node17" class="node"><title>Node9</title>
 <a xlink:href="class_storage_character.html#a87224c378e7576e028c9f9a697bd23e8" target="_top" xlink:title="StorageCharacter::setVice">
-<polygon fill="white" stroke="black" points="246.5,-160.5 246.5,-181.5 389.5,-181.5 389.5,-160.5 246.5,-160.5"/>
-<text text-anchor="middle" x="318" y="-168.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::setVice</text>
+<polygon fill="white" stroke="black" points="246.5,-120.5 246.5,-141.5 389.5,-141.5 389.5,-120.5 246.5,-120.5"/>
+<text text-anchor="middle" x="318" y="-128.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::setVice</text>
 </a>
 </g>
-<!-- Node1&#45;&gt;Node8 -->
-<g id="edge14" class="edge"><title>Node1&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M180.112,-158.905C198.701,-160.535 218.177,-162.244 236.442,-163.846"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="236.183,-167.336 246.451,-164.724 236.795,-160.363 236.183,-167.336"/>
+<!-- Node1&#45;&gt;Node9 -->
+<g id="edge16" class="edge"><title>Node1&#45;&gt;Node9</title>
+<path fill="none" stroke="midnightblue" d="M180.112,-143.095C198.701,-141.465 218.177,-139.756 236.442,-138.154"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="236.795,-141.637 246.451,-137.276 236.183,-134.664 236.795,-141.637"/>
 </g>
-<!-- Node10 -->
-<g id="node19" class="node"><title>Node10</title>
+<!-- Node11 -->
+<g id="node21" class="node"><title>Node11</title>
 <a xlink:href="class_storage_character.html#add675d3174e7b9331ad95401f80da7ee" target="_top" xlink:title="StorageCharacter::setVirtue">
-<polygon fill="white" stroke="black" points="242,-120.5 242,-141.5 394,-141.5 394,-120.5 242,-120.5"/>
-<text text-anchor="middle" x="318" y="-128.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::setVirtue</text>
+<polygon fill="white" stroke="black" points="242,-80.5 242,-101.5 394,-101.5 394,-80.5 242,-80.5"/>
+<text text-anchor="middle" x="318" y="-88.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::setVirtue</text>
 </a>
 </g>
-<!-- Node1&#45;&gt;Node10 -->
-<g id="edge18" class="edge"><title>Node1&#45;&gt;Node10</title>
-<path fill="none" stroke="midnightblue" d="M180.112,-143.095C197.017,-141.613 214.655,-140.065 231.449,-138.592"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="232.126,-142.046 241.782,-137.686 231.515,-135.073 232.126,-142.046"/>
-</g>
-<!-- Node12 -->
-<g id="node23" class="node"><title>Node12</title>
-<a xlink:href="class_storage_character.html#ace2a365b231b39b1857f115c7361166f" target="_top" xlink:title="StorageCharacter::traitChanged">
-<polygon fill="white" stroke="black" points="233,-80.5 233,-101.5 403,-101.5 403,-80.5 233,-80.5"/>
-<text text-anchor="middle" x="318" y="-88.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::traitChanged</text>
-</a>
-</g>
-<!-- Node1&#45;&gt;Node12 -->
-<g id="edge22" class="edge"><title>Node1&#45;&gt;Node12</title>
+<!-- Node1&#45;&gt;Node11 -->
+<g id="edge20" class="edge"><title>Node1&#45;&gt;Node11</title>
 <path fill="none" stroke="midnightblue" d="M119.764,-140.495C145.122,-131.8 182.648,-119.534 216,-111 226.44,-108.329 237.56,-105.815 248.474,-103.531"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="249.318,-106.931 258.415,-101.501 247.916,-100.073 249.318,-106.931"/>
 </g>
@@ -110,69 +110,69 @@
 <path fill="none" stroke="midnightblue" d="M97.7464,-140.27C115.618,-116.385 162.336,-58.7553 216,-31 220.542,-28.6509 225.328,-26.5768 230.249,-24.7457"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="231.487,-28.0219 239.848,-21.5151 229.254,-21.3875 231.487,-28.0219"/>
 </g>
-<!-- Node4 -->
-<g id="node7" class="node"><title>Node4</title>
+<!-- Node5 -->
+<g id="node9" class="node"><title>Node5</title>
 <a xlink:href="class_storage_character.html#aa42c8c70147f95fc49d497cde543d765" target="_top" xlink:title="StorageCharacter::moralityChanged">
-<polygon fill="white" stroke="black" points="456,-280.5 456,-301.5 646,-301.5 646,-280.5 456,-280.5"/>
-<text text-anchor="middle" x="551" y="-288.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::moralityChanged</text>
+<polygon fill="white" stroke="black" points="456,-240.5 456,-261.5 646,-261.5 646,-240.5 456,-240.5"/>
+<text text-anchor="middle" x="551" y="-248.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::moralityChanged</text>
 </a>
 </g>
-<!-- Node3&#45;&gt;Node4 -->
-<g id="edge6" class="edge"><title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M379.218,-261.51C409.999,-266.794 447.483,-273.229 479.573,-278.738"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="479.339,-282.249 489.787,-280.491 480.523,-275.35 479.339,-282.249"/>
-</g>
-<!-- Node6 -->
-<g id="node11" class="node"><title>Node6</title>
-<a xlink:href="class_storage_character.html#a003ec6624532c534b04c93f18f9c381c" target="_top" xlink:title="StorageCharacter::species">
-<polygon fill="white" stroke="black" points="479,-240.5 479,-261.5 623,-261.5 623,-240.5 479,-240.5"/>
-<text text-anchor="middle" x="551" y="-248.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::species</text>
-</a>
-</g>
-<!-- Node5&#45;&gt;Node6 -->
-<g id="edge10" class="edge"><title>Node5&#45;&gt;Node6</title>
+<!-- Node4&#45;&gt;Node5 -->
+<g id="edge8" class="edge"><title>Node4&#45;&gt;Node5</title>
 <path fill="none" stroke="midnightblue" d="M379.218,-221.51C409.999,-226.794 447.483,-233.229 479.573,-238.738"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="479.339,-242.249 489.787,-240.491 480.523,-235.35 479.339,-242.249"/>
 </g>
 <!-- Node7 -->
 <g id="node13" class="node"><title>Node7</title>
+<a xlink:href="class_storage_character.html#a003ec6624532c534b04c93f18f9c381c" target="_top" xlink:title="StorageCharacter::species">
+<polygon fill="white" stroke="black" points="479,-200.5 479,-221.5 623,-221.5 623,-200.5 479,-200.5"/>
+<text text-anchor="middle" x="551" y="-208.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::species</text>
+</a>
+</g>
+<!-- Node6&#45;&gt;Node7 -->
+<g id="edge12" class="edge"><title>Node6&#45;&gt;Node7</title>
+<path fill="none" stroke="midnightblue" d="M379.218,-181.51C409.999,-186.794 447.483,-193.229 479.573,-198.738"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="479.339,-202.249 489.787,-200.491 480.523,-195.35 479.339,-202.249"/>
+</g>
+<!-- Node8 -->
+<g id="node15" class="node"><title>Node8</title>
 <a xlink:href="class_storage_character.html#a42fa91622893ca1b2005df84b3fdd1f3" target="_top" xlink:title="StorageCharacter::speciesChanged">
-<polygon fill="white" stroke="black" points="457.5,-200.5 457.5,-221.5 644.5,-221.5 644.5,-200.5 457.5,-200.5"/>
-<text text-anchor="middle" x="551" y="-208.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::speciesChanged</text>
+<polygon fill="white" stroke="black" points="457.5,-160.5 457.5,-181.5 644.5,-181.5 644.5,-160.5 457.5,-160.5"/>
+<text text-anchor="middle" x="551" y="-168.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::speciesChanged</text>
 </a>
 </g>
-<!-- Node5&#45;&gt;Node7 -->
-<g id="edge12" class="edge"><title>Node5&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M398.512,-211C414.198,-211 430.849,-211 447.165,-211"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="447.269,-214.5 457.269,-211 447.269,-207.5 447.269,-214.5"/>
+<!-- Node6&#45;&gt;Node8 -->
+<g id="edge14" class="edge"><title>Node6&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M398.512,-171C414.198,-171 430.849,-171 447.165,-171"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="447.269,-174.5 457.269,-171 447.269,-167.5 447.269,-174.5"/>
 </g>
-<!-- Node9 -->
-<g id="node17" class="node"><title>Node9</title>
+<!-- Node10 -->
+<g id="node19" class="node"><title>Node10</title>
 <a xlink:href="class_storage_character.html#a790e4c2bd2375f7da84afaf5c5ebfa07" target="_top" xlink:title="StorageCharacter::viceChanged">
-<polygon fill="white" stroke="black" points="466,-160.5 466,-181.5 636,-181.5 636,-160.5 466,-160.5"/>
-<text text-anchor="middle" x="551" y="-168.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::viceChanged</text>
+<polygon fill="white" stroke="black" points="466,-120.5 466,-141.5 636,-141.5 636,-120.5 466,-120.5"/>
+<text text-anchor="middle" x="551" y="-128.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::viceChanged</text>
 </a>
 </g>
-<!-- Node8&#45;&gt;Node9 -->
-<g id="edge16" class="edge"><title>Node8&#45;&gt;Node9</title>
-<path fill="none" stroke="midnightblue" d="M389.809,-171C410.681,-171 433.808,-171 455.876,-171"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="455.929,-174.5 465.929,-171 455.929,-167.5 455.929,-174.5"/>
+<!-- Node9&#45;&gt;Node10 -->
+<g id="edge18" class="edge"><title>Node9&#45;&gt;Node10</title>
+<path fill="none" stroke="midnightblue" d="M389.809,-131C410.681,-131 433.808,-131 455.876,-131"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="455.929,-134.5 465.929,-131 455.929,-127.5 455.929,-134.5"/>
 </g>
-<!-- Node11 -->
-<g id="node21" class="node"><title>Node11</title>
+<!-- Node12 -->
+<g id="node23" class="node"><title>Node12</title>
 <a xlink:href="class_storage_character.html#a9ed85dd892ba396b932bff9f167dffb0" target="_top" xlink:title="StorageCharacter::virtueChanged">
-<polygon fill="white" stroke="black" points="462,-120.5 462,-141.5 640,-141.5 640,-120.5 462,-120.5"/>
-<text text-anchor="middle" x="551" y="-128.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::virtueChanged</text>
+<polygon fill="white" stroke="black" points="462,-80.5 462,-101.5 640,-101.5 640,-80.5 462,-80.5"/>
+<text text-anchor="middle" x="551" y="-88.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::virtueChanged</text>
 </a>
 </g>
-<!-- Node10&#45;&gt;Node11 -->
-<g id="edge20" class="edge"><title>Node10&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M394.293,-131C412.715,-131 432.666,-131 451.963,-131"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="451.983,-134.5 461.983,-131 451.983,-127.5 451.983,-134.5"/>
+<!-- Node11&#45;&gt;Node12 -->
+<g id="edge22" class="edge"><title>Node11&#45;&gt;Node12</title>
+<path fill="none" stroke="midnightblue" d="M394.293,-91C412.715,-91 432.666,-91 451.963,-91"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="451.983,-94.5001 461.983,-91 451.983,-87.5001 451.983,-94.5001"/>
 </g>
 <!-- Node14 -->
 <g id="node27" class="node"><title>Node14</title>
-<a xlink:href="class_storage_template.html#aa1c01bbdf076afcacd1e785d2a4d6573" target="_top" xlink:title="StorageTemplate::traitNames">
+<a xlink:href="class_storage_template.html#a2e80f31564a058b2a7df5f092dc46eba" target="_top" xlink:title="StorageTemplate::traitNames">
 <polygon fill="white" stroke="black" points="472,-20.5 472,-41.5 630,-41.5 630,-20.5 472,-20.5"/>
 <text text-anchor="middle" x="551" y="-28.5" font-family="DejaVuSans" font-size="10.00">StorageTemplate::traitNames</text>
 </a>
@@ -184,7 +184,7 @@
 </g>
 <!-- Node15 -->
 <g id="node29" class="node"><title>Node15</title>
-<a xlink:href="class_storage_template.html#adee5213746a1f99f82f6229a7061d360" target="_top" xlink:title="StorageTemplate::traits">
+<a xlink:href="class_storage_template.html#a75022d10255d8f09b675d8c01d2295f3" target="_top" xlink:title="StorageTemplate::traits">
 <polygon fill="white" stroke="black" points="682.5,-20.5 682.5,-41.5 811.5,-41.5 811.5,-20.5 682.5,-20.5"/>
 <text text-anchor="middle" x="747" y="-28.5" font-family="DejaVuSans" font-size="10.00">StorageTemplate::traits</text>
 </a>

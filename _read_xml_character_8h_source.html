@@ -125,12 +125,12 @@ function toggleVisibility(linkObj) {
 <a name="l00025"></a>00025 <span class="preprocessor">#ifndef READXMLCHARACTER_H</span>
 <a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define READXMLCHARACTER_H</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QFile&gt;</span>
+<a name="l00028"></a>00028 <span class="comment">// #include &lt;QFile&gt;</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;Storage/StorageTemplate.h&quot;</span>
+<a name="l00030"></a>00030 <span class="comment">// #include &quot;Storage/StorageTemplate.h&quot;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;Datatypes/cv_Species.h&quot;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;Datatypes/cv_Trait.h&quot;</span>
+<a name="l00032"></a>00032 <span class="comment">// #include &quot;Datatypes/cv_Species.h&quot;</span>
+<a name="l00033"></a>00033 <span class="comment">// #include &quot;Datatypes/cv_Trait.h&quot;</span>
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035 <span class="preprocessor">#include &lt;QObject&gt;</span>
 <a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="_read_xml_8h.html">ReadXml.h</a>&quot;</span>
@@ -152,8 +152,8 @@ function toggleVisibility(linkObj) {
 <a name="l00077"></a>00077         <span class="keyword">static</span> QList&lt; cv_Trait &gt; traitList;
 <a name="l00081"></a>00081         <span class="keywordtype">void</span> readSoulCreator();
 <a name="l00087"></a>00087         <span class="keywordtype">void</span> readIdentities();
-<a name="l00091"></a>00091         <span class="keywordtype">void</span> readTraits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
-<a name="l00095"></a>00095         <span class="keywordtype">void</span> readTraits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category );
+<a name="l00091"></a>00091         <span class="keywordtype">void</span> readTraits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type );
+<a name="l00095"></a>00095         <span class="keywordtype">void</span> readTraits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> category );
 <a name="l00096"></a>00096 
 <a name="l00097"></a>00097     signals:
 <a name="l00098"></a>00098         <span class="keywordtype">void</span> oldVersion( QString, QString );
@@ -165,7 +165,7 @@ function toggleVisibility(linkObj) {
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_read_xml_character_8h.html">ReadXmlCharacter.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

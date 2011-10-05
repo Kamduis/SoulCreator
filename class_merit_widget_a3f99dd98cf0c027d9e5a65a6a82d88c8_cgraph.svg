@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node3" class="node"><title>Node2</title>
-<a xlink:href="class_storage_character.html#a96062a11fe91e1d9826470412fc64449" target="_top" xlink:title="StorageCharacter::addTrait">
+<a xlink:href="class_storage_character.html#a2093dc6b7f575513846c3e8cd2fa0985" target="_top" xlink:title="StorageCharacter::addTrait">
 <polygon fill="white" stroke="black" points="186,-200.5 186,-221.5 332,-221.5 332,-200.5 186,-200.5"/>
 <text text-anchor="middle" x="259" y="-208.5" font-family="DejaVuSans" font-size="10.00">StorageCharacter::addTrait</text>
 </a>
@@ -76,9 +76,9 @@
 </g>
 <!-- Node7 -->
 <g id="node13" class="node"><title>Node7</title>
-<a xlink:href="class_storage_template.html#a5dee996b5f02d1e39bde1040c1a9a839" target="_top" xlink:title="StorageTemplate::traits2">
-<polygon fill="white" stroke="black" points="191.5,-0.5 191.5,-21.5 326.5,-21.5 326.5,-0.5 191.5,-0.5"/>
-<text text-anchor="middle" x="259" y="-8.5" font-family="DejaVuSans" font-size="10.00">StorageTemplate::traits2</text>
+<a xlink:href="class_storage_template.html#a75022d10255d8f09b675d8c01d2295f3" target="_top" xlink:title="StorageTemplate::traits">
+<polygon fill="white" stroke="black" points="194.5,-0.5 194.5,-21.5 323.5,-21.5 323.5,-0.5 194.5,-0.5"/>
+<text text-anchor="middle" x="259" y="-8.5" font-family="DejaVuSans" font-size="10.00">StorageTemplate::traits</text>
 </a>
 </g>
 <!-- Node1&#45;&gt;Node7 -->

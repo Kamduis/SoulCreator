@@ -128,8 +128,8 @@ function toggleVisibility(linkObj) {
 <a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QGridLayout&gt;</span>
 <a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QLabel&gt;</span>
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="preprocessor">#include &quot;Datatypes/cv_Species.h&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;Storage/StorageTemplate.h&quot;</span>
+<a name="l00031"></a>00031 <span class="comment">// #include &quot;Datatypes/cv_Species.h&quot;</span>
+<a name="l00032"></a>00032 <span class="comment">// #include &quot;Storage/StorageTemplate.h&quot;</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include &quot;Storage/StorageCharacter.h&quot;</span>
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035 <span class="preprocessor">#include &lt;QWidget&gt;</span>
@@ -151,7 +151,7 @@ function toggleVisibility(linkObj) {
 <a name="l00072"></a>00072         QGridLayout* layout;
 <a name="l00073"></a>00073         <a class="code" href="class_storage_template.html" title="In dieser Klasse werden sämtliche Daten für das Programm gespeichert.">StorageTemplate</a>* storage;
 <a name="l00074"></a>00074         <a class="code" href="class_storage_character.html" title="In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.">StorageCharacter</a>* character;
-<a name="l00075"></a>00075         QList&lt; cv_Trait::Category &gt; v_categories;
+<a name="l00075"></a>00075         QList&lt; cv_AbstractTrait::Category &gt; v_category;
 <a name="l00076"></a>00076 
 <a name="l00077"></a>00077         <span class="keywordtype">int</span> v_value;
 <a name="l00078"></a>00078 
@@ -177,7 +177,7 @@ function toggleVisibility(linkObj) {
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_morality_widget_8h.html">MoralityWidget.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

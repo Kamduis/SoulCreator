@@ -127,7 +127,7 @@ function toggleVisibility(linkObj) {
 <a name="l00027"></a>00027 <span class="preprocessor"></span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QString&gt;</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;Datatypes/cv_Trait.h&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;Datatypes/cv_AbstractTrait.h&quot;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &quot;Datatypes/cv_Shape.h&quot;</span>
 <a name="l00032"></a>00032 <span class="preprocessor">#include &quot;Datatypes/cv_Identity.h&quot;</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include &quot;Config/Config.h&quot;</span>
@@ -257,12 +257,12 @@ function toggleVisibility(linkObj) {
 <a name="l00288"></a>00288 
 <a name="l00294"></a><a class="code" href="classe_trait_category.html">00294</a> <span class="keyword">class </span><a class="code" href="classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird.">eTraitCategory</a> : <span class="keyword">public</span> <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> {
 <a name="l00295"></a>00295     <span class="keyword">public</span>:
-<a name="l00296"></a>00296         <a class="code" href="classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird.">eTraitCategory</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category );
+<a name="l00296"></a>00296         <a class="code" href="classe_trait_category.html" title="Ausnahme, falls eine falsche Kategorie genutzt wird.">eTraitCategory</a>( <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> category );
 <a name="l00297"></a>00297 };
 <a name="l00298"></a>00298 
 <a name="l00304"></a><a class="code" href="classe_trait_type.html">00304</a> <span class="keyword">class </span><a class="code" href="classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird.">eTraitType</a> : <span class="keyword">public</span> <a class="code" href="classe_trait.html" title="Ausnahme, falls Fehler bei den Eigenschaften auftritt.">eTrait</a> {
 <a name="l00305"></a>00305     <span class="keyword">public</span>:
-<a name="l00306"></a>00306         <a class="code" href="classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird.">eTraitType</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type );
+<a name="l00306"></a>00306         <a class="code" href="classe_trait_type.html" title="Ausnahme, falls ein falscher Typ genutzt wird.">eTraitType</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type );
 <a name="l00307"></a>00307 };
 <a name="l00308"></a>00308 
 <a name="l00309"></a>00309 
@@ -273,7 +273,7 @@ function toggleVisibility(linkObj) {
 <a name="l00319"></a>00319 
 <a name="l00325"></a><a class="code" href="classe_traits_exceed_sheet_capacity.html">00325</a> <span class="keyword">class </span><a class="code" href="classe_traits_exceed_sheet_capacity.html" title="Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.">eTraitsExceedSheetCapacity</a> : <span class="keyword">public</span> <a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a> {
 <a name="l00326"></a>00326     <span class="keyword">public</span>:
-<a name="l00327"></a>00327         <a class="code" href="classe_traits_exceed_sheet_capacity.html" title="Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.">eTraitsExceedSheetCapacity</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <span class="keywordtype">int</span> maxNumber );
+<a name="l00327"></a>00327         <a class="code" href="classe_traits_exceed_sheet_capacity.html" title="Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.">eTraitsExceedSheetCapacity</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type, <span class="keywordtype">int</span> maxNumber );
 <a name="l00328"></a>00328 };
 <a name="l00329"></a>00329 
 <a name="l00335"></a><a class="code" href="classe_value_exceeds_sheet_capacity.html">00335</a> <span class="keyword">class </span><a class="code" href="classe_value_exceeds_sheet_capacity.html" title="Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll.">eValueExceedsSheetCapacity</a> : <span class="keyword">public</span> <a class="code" href="classe_print.html" title="Ausnahme, falls beim Audrucken ein Fehler entsteht.">ePrint</a> {
@@ -315,7 +315,7 @@ function toggleVisibility(linkObj) {
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_exception_8h.html">Exception.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

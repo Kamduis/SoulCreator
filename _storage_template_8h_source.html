@@ -129,9 +129,9 @@ function toggleVisibility(linkObj) {
 <a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QStringList&gt;</span>
 <a name="l00030"></a>00030 
 <a name="l00031"></a>00031 <span class="preprocessor">#include &quot;Datatypes/cv_SpeciesTitle.h&quot;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;Datatypes/cv_Trait.h&quot;</span>
+<a name="l00032"></a>00032 <span class="comment">// #include &quot;Datatypes/cv_Trait.h&quot;</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include &quot;Datatypes/Trait.h&quot;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;Datatypes/cv_IdentityList.h&quot;</span>
+<a name="l00034"></a>00034 <span class="comment">// #include &quot;Datatypes/cv_IdentityList.h&quot;</span>
 <a name="l00035"></a>00035 <span class="preprocessor">#include &quot;Datatypes/cv_SuperEffect.h&quot;</span>
 <a name="l00036"></a>00036 <span class="preprocessor">#include &quot;Datatypes/cv_CreationPoints2.h&quot;</span>
 <a name="l00037"></a>00037 
@@ -157,49 +157,55 @@ function toggleVisibility(linkObj) {
 <a name="l00076"></a>00076         QStringList <a class="code" href="class_storage_template.html#ad86a34d5b7fb0bd4f6bbb8a75f1cf5f5">viceNames</a>( <a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age = cv_Trait::Adult ) <span class="keyword">const</span>;
 <a name="l00082"></a>00082         QString <a class="code" href="class_storage_template.html#afd7774df0806805b5edf6055cdac41d5">breedTitle</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe = cv_Species::SpeciesNo ) <span class="keyword">const</span>;
 <a name="l00088"></a>00088         QString <a class="code" href="class_storage_template.html#a75e002ef5fe704b9073bcc9ff1b58b98">factionTitle</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe = cv_Species::SpeciesNo ) <span class="keyword">const</span>;
-<a name="l00092"></a>00092         QStringList <a class="code" href="class_storage_template.html#ada340e5acda2a32b7157c6c29cd64399">breedNames</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe = cv_Species::SpeciesNo ) <span class="keyword">const</span>;
-<a name="l00096"></a>00096         QStringList <a class="code" href="class_storage_template.html#a6db02d80cae1dc3bfc10e586e9aef016">factionNames</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe = cv_Species::SpeciesNo ) <span class="keyword">const</span>;
-<a name="l00100"></a>00100         QList&lt; cv_Trait* &gt; <a class="code" href="class_storage_template.html#adee5213746a1f99f82f6229a7061d360">traits</a>(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, <a class="code" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era = cv_Trait::Modern, <a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age = cv_Trait::Adult ) <span class="keyword">const</span>;
-<a name="l00104"></a>00104         QList&lt; Trait* &gt; <a class="code" href="class_storage_template.html#a5dee996b5f02d1e39bde1040c1a9a839">traits2</a>(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, <a class="code" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era = cv_Trait::Modern, <a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age = cv_Trait::Adult ) <span class="keyword">const</span>;
-<a name="l00108"></a>00108         QList&lt; cv_Trait* &gt; <a class="code" href="class_storage_template.html#adee5213746a1f99f82f6229a7061d360">traits</a>(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species ) <span class="keyword">const</span>;
-<a name="l00112"></a>00112         QStringList <a class="code" href="class_storage_template.html#aa1c01bbdf076afcacd1e785d2a4d6573">traitNames</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, <a class="code" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era = cv_Trait::EraAll, <a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age = cv_Trait::AgeAll ) <span class="keyword">const</span>;
-<a name="l00120"></a>00120         <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> <a class="code" href="class_storage_template.html#aceb757eb50e7326356f589179d78ee89">trait</a>(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_Trait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_Trait::Category</a> category, QString name);
-<a name="l00124"></a>00124         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#a24fae94e62d885bfb3a3ecb36bfeb96f">sortTraits</a>();
-<a name="l00125"></a>00125 
-<a name="l00129"></a>00129         <span class="keywordtype">int</span> <a class="code" href="class_storage_template.html#af5e8a53f096a03f377cfedcbe2c476b3">traitMax</a>( cv_Species::Species species, <span class="keywordtype">int</span> value );
-<a name="l00133"></a>00133         <span class="keywordtype">int</span> <a class="code" href="class_storage_template.html#ab1cbf91553890c5a7ec6b5e7dd8aca09">fuelMax</a>( cv_Species::Species species, <span class="keywordtype">int</span> value );
-<a name="l00137"></a>00137         <span class="keywordtype">int</span> <a class="code" href="class_storage_template.html#af0e9b8d8056a71cd2427e0d7c069e503">fuelPerTurn</a>( cv_Species::Species species, <span class="keywordtype">int</span> value );
-<a name="l00138"></a>00138 
-<a name="l00142"></a>00142         <a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> <a class="code" href="class_storage_template.html#af3aed06f3b83a8f72bea6f0f6846836d">creationPoints</a>( cv_Species::Species species  );
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144     <span class="keyword">private</span>:
-<a name="l00148"></a>00148         <span class="keyword">static</span> QList&lt; cv_Species &gt; v_species;
-<a name="l00152"></a>00152         <span class="keyword">static</span> QList&lt; cv_SpeciesTitle &gt; v_titles;
-<a name="l00156"></a>00156         <span class="keyword">static</span> QList&lt; cv_Trait &gt; v_traits;
-<a name="l00160"></a>00160         <span class="keyword">static</span> QList&lt; Trait* &gt; v_traits2;
-<a name="l00164"></a>00164         <span class="keyword">static</span> QList&lt; cv_SuperEffect &gt; v_superEffects;
-<a name="l00165"></a>00165 
-<a name="l00169"></a>00169         <span class="keyword">static</span> QList&lt; cv_CreationPoints2 &gt; v_creationPoints;
-<a name="l00170"></a>00170 
-<a name="l00171"></a>00171     <span class="keyword">public</span> slots:
-<a name="l00172"></a>00172 <span class="comment">//      /**</span>
-<a name="l00173"></a>00173 <span class="comment">//       * Speichert sämtliche verfügbaren Eigenschaften.</span>
-<a name="l00174"></a>00174 <span class="comment">//       **/</span>
-<a name="l00175"></a>00175 <span class="comment">//      void setTraits( QList&lt;cv_Trait&gt; traits );</span>
-<a name="l00179"></a>00179 <span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#a443cb52143ffdf4a816b9babb6899998">appendSpecies</a>( <a class="code" href="classcv___species.html" title="Datentyp für unterschiedliche Spezies der WoD.">cv_Species</a> species );
-<a name="l00183"></a>00183         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#ac984e9e29b36db1bce2d05ecf632a4f1">appendTitle</a>( <a class="code" href="classcv___species_title.html" title="Grundlegender Datentyp die unterchiedlichen Bezeichnungen von Eigenschaften bei Spezies.">cv_SpeciesTitle</a> title );
-<a name="l00191"></a>00191         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#a59dec084ce51d53a5a92071883d43b3e">appendTrait</a>( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> trait );
-<a name="l00195"></a>00195         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#a8d5d2d2aaf5ee99217cc4b1d76f69b3c">appendSuperEffect</a>( <a class="code" href="classcv___super_effect.html" title="Speichert die Effekte, welche das Superattribut je nach Spezies besitzt.">cv_SuperEffect</a> effect );
-<a name="l00201"></a>00201         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#acb398ac0d24fd6f1cbd34e22aa2a616f">appendCreationPoints</a>( <a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> points );
-<a name="l00202"></a>00202 };
-<a name="l00203"></a>00203 
-<a name="l00204"></a>00204 <span class="preprocessor">#endif</span>
+<a name="l00092"></a>00092         QStringList <a class="code" href="class_storage_template.html#a088c66533305af3507e19950b8de694d">powerHeaders</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe = cv_Species::SpeciesNo ) <span class="keyword">const</span>;
+<a name="l00096"></a>00096         QStringList <a class="code" href="class_storage_template.html#ada340e5acda2a32b7157c6c29cd64399">breedNames</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe = cv_Species::SpeciesNo ) <span class="keyword">const</span>;
+<a name="l00100"></a>00100         QStringList <a class="code" href="class_storage_template.html#a6db02d80cae1dc3bfc10e586e9aef016">factionNames</a>( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe = cv_Species::SpeciesNo ) <span class="keyword">const</span>;
+<a name="l00106"></a>00106         QList&lt; Trait* &gt; <a class="code" href="class_storage_template.html#a75022d10255d8f09b675d8c01d2295f3">traits</a>(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> category, <a class="code" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era = cv_Trait::Modern, <a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age = cv_Trait::Adult ) <span class="keyword">const</span>;
+<a name="l00110"></a>00110         QList&lt; Trait* &gt; <a class="code" href="class_storage_template.html#a75022d10255d8f09b675d8c01d2295f3">traits</a>(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type, <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species ) <span class="keyword">const</span>;
+<a name="l00114"></a>00114         QStringList <a class="code" href="class_storage_template.html#a2e80f31564a058b2a7df5f092dc46eba">traitNames</a>( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type, <a class="code" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> category, <a class="code" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era = cv_Trait::EraAll, <a class="code" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age = cv_Trait::AgeAll ) <span class="keyword">const</span>;
+<a name="l00115"></a>00115 <span class="comment">//      /**</span>
+<a name="l00116"></a>00116 <span class="comment">//       * Gibt die gesamte Eigenschaft zurück, welche über Typ, Kategorie und Name spezifiziert ist.</span>
+<a name="l00117"></a>00117 <span class="comment">//       *</span>
+<a name="l00118"></a>00118 <span class="comment">//       * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.</span>
+<a name="l00119"></a>00119 <span class="comment">//       *</span>
+<a name="l00120"></a>00120 <span class="comment">//       * \todo Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren.</span>
+<a name="l00121"></a>00121 <span class="comment">//       **/</span>
+<a name="l00122"></a>00122 <span class="comment">//      cv_Trait trait(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name);</span>
+<a name="l00126"></a>00126 <span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#a24fae94e62d885bfb3a3ecb36bfeb96f">sortTraits</a>();
+<a name="l00127"></a>00127 
+<a name="l00131"></a>00131         <span class="keywordtype">int</span> <a class="code" href="class_storage_template.html#af5e8a53f096a03f377cfedcbe2c476b3">traitMax</a>( cv_Species::Species species, <span class="keywordtype">int</span> value );
+<a name="l00135"></a>00135         <span class="keywordtype">int</span> <a class="code" href="class_storage_template.html#ab1cbf91553890c5a7ec6b5e7dd8aca09">fuelMax</a>( cv_Species::Species species, <span class="keywordtype">int</span> value );
+<a name="l00139"></a>00139         <span class="keywordtype">int</span> <a class="code" href="class_storage_template.html#af0e9b8d8056a71cd2427e0d7c069e503">fuelPerTurn</a>( cv_Species::Species species, <span class="keywordtype">int</span> value );
+<a name="l00140"></a>00140 
+<a name="l00144"></a>00144         <a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> <a class="code" href="class_storage_template.html#af3aed06f3b83a8f72bea6f0f6846836d">creationPoints</a>( cv_Species::Species species  );
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146     <span class="keyword">private</span>:
+<a name="l00150"></a>00150         <span class="keyword">static</span> QList&lt; cv_Species &gt; v_species;
+<a name="l00154"></a>00154         <span class="keyword">static</span> QList&lt; cv_SpeciesTitle &gt; v_titles;
+<a name="l00158"></a>00158         <span class="keyword">static</span> QList&lt; Trait* &gt; v_traits;
+<a name="l00162"></a>00162         <span class="keyword">static</span> QList&lt; cv_SuperEffect &gt; v_superEffects;
+<a name="l00163"></a>00163 
+<a name="l00167"></a>00167         <span class="keyword">static</span> QList&lt; cv_CreationPoints2 &gt; v_creationPoints;
+<a name="l00168"></a>00168 
+<a name="l00169"></a>00169     <span class="keyword">public</span> slots:
+<a name="l00170"></a>00170 <span class="comment">//      /**</span>
+<a name="l00171"></a>00171 <span class="comment">//       * Speichert sämtliche verfügbaren Eigenschaften.</span>
+<a name="l00172"></a>00172 <span class="comment">//       **/</span>
+<a name="l00173"></a>00173 <span class="comment">//      void setTraits( QList&lt;cv_Trait&gt; traits );</span>
+<a name="l00177"></a>00177 <span class="comment"></span>        <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#a443cb52143ffdf4a816b9babb6899998">appendSpecies</a>( <a class="code" href="classcv___species.html" title="Datentyp für unterschiedliche Spezies der WoD.">cv_Species</a> species );
+<a name="l00181"></a>00181         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#ac984e9e29b36db1bce2d05ecf632a4f1">appendTitle</a>( <a class="code" href="classcv___species_title.html" title="Grundlegender Datentyp die unterchiedlichen Bezeichnungen von Eigenschaften bei Spezies.">cv_SpeciesTitle</a> title );
+<a name="l00189"></a>00189         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#a59dec084ce51d53a5a92071883d43b3e">appendTrait</a>( <a class="code" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> trait );
+<a name="l00193"></a>00193         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#a8d5d2d2aaf5ee99217cc4b1d76f69b3c">appendSuperEffect</a>( <a class="code" href="classcv___super_effect.html" title="Speichert die Effekte, welche das Superattribut je nach Spezies besitzt.">cv_SuperEffect</a> effect );
+<a name="l00199"></a>00199         <span class="keywordtype">void</span> <a class="code" href="class_storage_template.html#acb398ac0d24fd6f1cbd34e22aa2a616f">appendCreationPoints</a>( <a class="code" href="classcv___creation_points2.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints2</a> points );
+<a name="l00200"></a>00200 };
+<a name="l00201"></a>00201 
+<a name="l00202"></a>00202 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_storage_template_8h.html">StorageTemplate.h</a>      </li>
-      <li class="footer">Erzeugt am Fri Sep 30 2011 19:15:03 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>
