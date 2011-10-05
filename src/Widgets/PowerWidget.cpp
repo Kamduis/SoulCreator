@@ -56,7 +56,7 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 	// Powers werden in einer Spalte heruntergeschrieben.
 	for ( int i = 0; i < categoryList.count(); i++ ) {
 		try {
-			list = storage.traits2( type, categoryList.at( i ) );
+			list = storage.traits( type, categoryList.at( i ) );
 		} catch ( eTraitNotExisting &e ) {
 			MessageBox::exception( this, e.message(), e.description() );
 		}

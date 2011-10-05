@@ -145,23 +145,7 @@ QStringList StorageTemplate::factionNames( cv_Species::SpeciesFlag spe ) const {
 }
 
 
-QList< cv_Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
-	QList< cv_Trait* > traitsPtr;
-
-	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type() == type && v_traits.at( i ).category() == category && v_traits.at( i ).era().testFlag( era ) && v_traits.at( i ).age().testFlag( age ) ) {
-			traitsPtr.append( &v_traits[i] );
-		}
-	}
-
-	if ( traitsPtr.isEmpty() ) {
-// 		qDebug() << Q_FUNC_INFO << "Trait Typ" << cv_AbstractTrait::toString( type ) << "mit Kategorie" << cv_AbstractTrait::toString( category ) << "existiert nicht!";
-		throw eTraitNotExisting();
-	}
-
-	return traitsPtr;
-}
-QList< Trait* > StorageTemplate::traits2( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
+QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
 	QList< Trait* > traitsPtr;
 
 	for ( int i = 0; i < v_traits2.count(); i++ ) {
@@ -182,12 +166,12 @@ QList< Trait* > StorageTemplate::traits2( cv_AbstractTrait::Type type, cv_Abstra
 	return traitsPtr;
 }
 
-QList< cv_Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
-	QList< cv_Trait* > traitsPtr;
+QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
+	QList< Trait* > traitsPtr;
 
 	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type() == type && v_traits.at( i ).species().testFlag( species ) ) {
-			traitsPtr.append( &v_traits[i] );
+		if ( v_traits2.at( i )->type() == type && v_traits2.at( i )->species().testFlag( species ) ) {
+			traitsPtr.append( v_traits2[i] );
 		}
 	}
 
@@ -200,28 +184,27 @@ QList< cv_Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Spec
 }
 
 
-
-cv_Trait StorageTemplate::trait( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name ) {
-	bool trait_exists = false;
-
-	cv_Trait trait;
-
-	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).type() == type && v_traits.at( i ).category() == category && v_traits.at( i ).name() == name ) {
-			trait = v_traits.at( i );
-			trait_exists = true;
-
-			break;
-		}
-	}
-
-	if ( !trait_exists ) {
-// 		qDebug() << Q_FUNC_INFO << "Trait" << type << category << name << "existiert nicht!";
-// 		throw eTraitNotExisting();
-	}
-
-	return trait;
-}
+// cv_Trait StorageTemplate::trait( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name ) {
+// 	bool trait_exists = false;
+// 
+// 	cv_Trait trait;
+// 
+// 	for ( int i = 0; i < v_traits.count(); i++ ) {
+// 		if ( v_traits.at( i ).type() == type && v_traits.at( i ).category() == category && v_traits.at( i ).name() == name ) {
+// 			trait = v_traits.at( i );
+// 			trait_exists = true;
+// 
+// 			break;
+// 		}
+// 	}
+// 
+// 	if ( !trait_exists ) {
+// // 		qDebug() << Q_FUNC_INFO << "Trait" << type << category << name << "existiert nicht!";
+// // 		throw eTraitNotExisting();
+// 	}
+// 
+// 	return trait;
+// }
 
 
 

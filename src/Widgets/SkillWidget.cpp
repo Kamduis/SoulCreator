@@ -23,7 +23,7 @@
  */
 
 #include <QGroupBox>
-#include <QToolBox>
+// #include <QToolBox>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -39,9 +39,14 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	layout = new QHBoxLayout( this );
 	setLayout( layout );
 
-	toolBox = new QToolBox();
+	scrollArea = new QScrollArea();
+	layout->addWidget( scrollArea);
 
-	layout->addWidget(toolBox);
+	scrollLayout = new QVBoxLayout();
+	
+	QWidget* scrollWidget = new QWidget();
+// 	scrollWidget->setMinimumSize(this->width(), 400);
+	scrollWidget->setLayout(scrollLayout);
 
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
@@ -55,15 +60,17 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 	for ( int i = 0; i < v_categoryList.count(); i++ ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
-		QWidget* widgetSkillCategory = new QWidget();
+		QGroupBox* widgetSkillCategory = new QGroupBox();
+		widgetSkillCategory->setTitle(cv_AbstractTrait::toString( v_categoryList.at( i ), true ));
+		widgetSkillCategory->setFlat(true);
 		QVBoxLayout* layoutSkillCategory = new QVBoxLayout();
 
 		widgetSkillCategory->setLayout( layoutSkillCategory );
 
-		toolBox->addItem( widgetSkillCategory, cv_AbstractTrait::toString( v_categoryList.at( i ), true ) );
+		scrollLayout->addWidget( widgetSkillCategory );
 
 		try {
-			list = storage->traits2( type, v_categoryList.at( i ) );
+			list = storage->traits( type, v_categoryList.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
@@ -77,8 +84,11 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 			CharaTrait* charaTrait = new CharaTrait( this, traitPtr, list[j] );
 			charaTrait->setValue( 0 );
+			charaTrait->setButtonText(0);
 
 			// Fertigkeiten haben Spezialisierungen.
+			connect( traitPtr, SIGNAL( detailsChanged( int )), charaTrait, SLOT( setButtonText(int)) );
+			connect( character, SIGNAL( characterResetted()), this, SLOT( uncheckButtons()) );
 			connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 			connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 			
@@ -86,26 +96,52 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 		}
 
 		// Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
-		layoutSkillCategory->addStretch();
+		scrollLayout->addStretch();
 	}
+
+	scrollArea->setWidget(scrollWidget);
+	scrollArea->setWidgetResizable(true);
+	scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	scrollArea->setMinimumWidth(scrollArea->viewport()->minimumWidth());
 }
 
 SkillWidget::~SkillWidget() {
 	delete layout;
+	delete scrollLayout;
+	delete scrollArea;
 }
 
 void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
 // 	qDebug() << Q_FUNC_INFO << "Drücke" << skillName;
 	QList< Trait* > list;
 
-	for ( int j = 1; j < layout->count(); j++ ) {
-		CharaTrait* trait = qobject_cast<CharaTrait*>( layout->itemAt( j )->widget() );
+	// Da hinter jeder Box ein Stretch eingefügt ist, muß dieser übersprungen werden.
+	for ( int j = 0; j < scrollLayout->count(); j=j+2 ) {
+		QGroupBox* box = qobject_cast<QGroupBox*>( scrollLayout->itemAt( j )->widget() );
+// 		qDebug() << Q_FUNC_INFO << box->layout()->count();
+		
+		for (int k = 0; k < box->layout()->count(); k++){
+			CharaTrait* trait = qobject_cast<CharaTrait*>( box->layout()->itemAt( k )->widget() );
 
-		if ( trait->name() != skillName ) {
-			trait->setSpecialtyButtonChecked( false );
+			if ( trait->name() != skillName ) {
+				trait->setSpecialtyButtonChecked( false );
 // 				qDebug() << Q_FUNC_INFO << "Deaktivieren von" << trait->name();
+			}
 		}
 	}
 }
 
+void SkillWidget::uncheckButtons() {
+	// Da hinter jeder Box ein Stretch eingefügt ist, muß dieser übersprungen werden.
+	for ( int j = 0; j < scrollLayout->count(); j=j+2 ) {
+		QGroupBox* box = qobject_cast<QGroupBox*>( scrollLayout->itemAt( j )->widget() );
+// 		qDebug() << Q_FUNC_INFO << box->layout()->count();
+
+		for (int k = 0; k < box->layout()->count(); k++){
+			CharaTrait* trait = qobject_cast<CharaTrait*>( box->layout()->itemAt( k )->widget() );
+
+			trait->setSpecialtyButtonChecked( false );
+		}
+	}
+}
 

@@ -96,30 +96,26 @@ class StorageTemplate : public QObject {
 		QStringList factionNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
 		/**
 		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
-		 **/
-		QList< cv_Trait* > traits(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
-		/**
-		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		 *
 		 * \note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
 		 **/
-		QList< Trait* > traits2(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		QList< Trait* > traits(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		 **/
-		QList< cv_Trait* > traits(cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const;
+		QList< Trait* > traits(cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const;
 		/**
 		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_AbstractTrait::Type), Kategorie (\ref cv_AbstractTrait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
 		 **/
 		QStringList traitNames( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::EraAll, cv_Trait::AgeFlag age = cv_Trait::AgeAll ) const;
-		/**
-		 * Gibt die gesamte Eigenschaft zurück, welche über Typ, Kategorie und Name spezifiziert ist.
-		 *
-		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
-		 *
-		 * \todo Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren.
-		 **/
-		cv_Trait trait(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name);
+// 		/**
+// 		 * Gibt die gesamte Eigenschaft zurück, welche über Typ, Kategorie und Name spezifiziert ist.
+// 		 *
+// 		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
+// 		 *
+// 		 * \todo Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren.
+// 		 **/
+// 		cv_Trait trait(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name);
 		/**
 		 * Sortiert die Liste.
 		 **/

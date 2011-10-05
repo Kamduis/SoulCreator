@@ -26,7 +26,7 @@
 #define SKILLWIDGET_H
 
 #include <QHBoxLayout>
-#include <QToolBox>
+#include <QScrollArea>
 
 // #include "Datatypes/cv_TraitDetail.h"
 // #include "Storage/StorageTemplate.h"
@@ -54,7 +54,8 @@ class SkillWidget : public QWidget {
 
 	private:
 		QHBoxLayout* layout;
-		QToolBox* toolBox;
+		QVBoxLayout* scrollLayout;
+		QScrollArea* scrollArea;
 		StorageTemplate* storage;
 		StorageCharacter* character;
 
@@ -67,6 +68,10 @@ class SkillWidget : public QWidget {
 		 * Über diese Funktion werden alle anderen Spezialisierungs-Knöpfe deaktiviert, sobald einer aktiviert wird.
 		 **/
 		void toggleOffSpecialties(bool sw, QString skillName, QList< cv_TraitDetail > specialtyList);
+		/**
+		 * Alle Spezialisierungsknöpfe werden wieder auf Standard gesetzt.
+		 **/
+		void uncheckButtons();
 
 	signals:
 		void specialtiesClicked(bool sw, QString skillName, QList< cv_TraitDetail > specialtyList);

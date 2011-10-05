@@ -26,9 +26,9 @@
 #define CV_TRAIT_H
 
 #include <QFlags>
-#include <QString>
-#include <QList>
-#include <QStringList>
+// #include <QString>
+// #include <QList>
+// #include <QStringList>
 
 // #include "cv_Species.h"
 #include "cv_TraitDetail.h"
@@ -230,7 +230,7 @@ class cv_Trait : public cv_AbstractTrait {
 		 *
 		 * \sa prerequisites()
 		 **/
-		void setPrerequisites(QString txt);
+		virtual void setPrerequisites(QString txt);
 		/**
 		 * Liest aus, ob diese Eigenschaft mit einem zusätzlichen erklärenden text versehen werden kann. Wenn ja, wird diese Funktion 'true' zurückgeben.
 		 *

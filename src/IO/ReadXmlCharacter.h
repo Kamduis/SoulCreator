@@ -25,7 +25,7 @@
 #ifndef READXMLCHARACTER_H
 #define READXMLCHARACTER_H
 
-#include <QFile>
+// #include <QFile>
 
 // #include "Storage/StorageTemplate.h"
 #include "Storage/StorageCharacter.h"

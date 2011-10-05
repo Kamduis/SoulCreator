@@ -25,7 +25,7 @@
 #ifndef CV_DERANGEMENT_H
 #define CV_DERANGEMENT_H
 
-#include <QString>
+// #include <QString>
 
 // #include "cv_Species.h"
 

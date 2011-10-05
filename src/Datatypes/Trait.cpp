@@ -24,7 +24,8 @@
 
 #include <QDebug>
 
-// #include "Exceptions/Exception.h"
+#include "Exceptions/Exception.h"
+#include "Parser/StringBoolParser.h"
 
 #include "Trait.h"
 
@@ -58,8 +59,11 @@ Trait::Trait( Trait* trait, QObject* parent ) : QObject( parent ), cv_Trait( tra
 }
 
 void Trait::construct() {
+	// Am Anfang stehen alle Fertigkeiten zur Verfügung, aber wenn dann die Voraussetzungen geprüft werden, kann sich das ändern.
+	v_available = true;
+
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitTraitChanged() ) );
-	connect( this, SIGNAL( detailsChanged() ), this, SLOT( emitTraitChanged() ) );
+	connect( this, SIGNAL( detailsChanged( int ) ), this, SLOT( emitTraitChanged() ) );
 }
 
 
@@ -77,21 +81,21 @@ void Trait::setDetails( QList< cv_TraitDetail > list ) {
 	if ( details() != list ) {
 		cv_Trait::setDetails( list );
 
-		emit detailsChanged();
+		emit detailsChanged( list.count() );
 	}
 }
 void Trait::addDetail( cv_TraitDetail det ) {
 	if ( !details().contains( det ) ) {
 		cv_Trait::addDetail( det );
 
-		emit detailsChanged();
+		emit detailsChanged( details().count() );
 	}
 }
 void Trait::clearDetails() {
 	if ( !details().isEmpty() ) {
 		cv_Trait::clearDetails();
 
-		emit detailsChanged();
+		emit detailsChanged( 0 );
 	}
 }
 
@@ -103,7 +107,126 @@ void Trait::setType( cv_AbstractTrait::Type typ ) {
 	}
 }
 
+bool Trait::isAvailable() const {
+	return v_available;
+}
+void Trait::setAvailability( bool sw ) {
+	if ( v_available != sw ) {
+		v_available = sw;
 
+		emit availabilityChanged( sw );
+	}
+}
+
+
+
+QList< Trait* > Trait::prerequisitePtrs() const {
+	return v_prerequisitePtrs;
+}
+void Trait::clearPrerequisitePtrs() {
+	v_prerequisitePtrs.clear();
+}
+void Trait::addPrerequisitePtrs( Trait* replacement ) {
+	if ( !prerequisites().isEmpty() && ( prerequisites().contains( replacement->name() ) ) ) {
+		// In die Liste einfügen.
+		v_prerequisitePtrs.append( replacement );
+	}
+}
+
+
+void Trait::checkPrerequisites( Trait* trait ) {
+	if ( !prerequisitePtrs().isEmpty() ) {
+// 		qDebug() << Q_FUNC_INFO << "Wird für" << this->name() << "ausgeführt, weil sich Fertigkeit" << trait->name() << "geändert hat";
+
+		QString lcl_prerequisites = parsePrerequisites( prerequisites(), prerequisitePtrs() );
+
+		// Alles was an Wörtern übriggeblieben ist durch 0 ersetzen.
+		// Wäre schön, wenn das der Parser könnte, da kriege ich das aber nicht hin.
+		QString replacementText;
+		QRegExp rx( "([a-zA-Z]+)\\s*[<>=]+" );
+
+		while ( lcl_prerequisites.contains( rx ) ) {
+// 			qDebug() << Q_FUNC_INFO << name() << prerequisites;
+			lcl_prerequisites.replace( "AND", "999" );
+			lcl_prerequisites.replace( "OR", "88" );
+			lcl_prerequisites.replace( QRegExp( "([a-zA-Z]+)" ), "0" );
+			lcl_prerequisites.replace( ".0", "0" );
+// 			prerequisites.replace(QRegExp("(0 0)"), '0');
+			lcl_prerequisites.replace( "999", "AND" );
+			lcl_prerequisites.replace( "88", "OR" );
+		}
+
+// 		qDebug() << Q_FUNC_INFO << "Voraussetzungen für" << this->name() << "sind" << lcl_prerequisites;
+
+		StringBoolParser parser;
+
+		try {
+			if ( parser.validate( lcl_prerequisites ) ) {
+				setAvailability(true);
+			} else {
+				setAvailability(false);
+			}
+		} catch ( Exception &e ) {
+			qDebug() << Q_FUNC_INFO << name() << lcl_prerequisites << e.description() << e.message();
+		}
+
+// 		qDebug() << Q_FUNC_INFO << "Wurde für" << this->name() << "ausgeführt, weil sich Fertigkeit" << trait->name() << "geändert hat. Ergebnis ist:" << isAvailable();
+	}
+}
+
+
+QString Trait::parsePrerequisites( QString text, QList< Trait* > list ) {
+	QString prerequisites = text;
+
+	// Ersetze alle Atrtribute, Fertigkeiten etc. in dem Textstring mit den entsprechenden Zahlen, damit diese später über den Parser ausgewertet werden können.
+	// Nicht vorhandene Werte verbleiben natürlich in Textform und werden vom Parser wie 0en behandelt.
+
+	if ( prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
+		for ( int k = 0; k < list.count(); k++ ) {
+			// Ersetzen der Fertigkeitsspezialisierungen von dem Format Fertigkeit.Spezialisierung mit Fertigkeitswert, wenn Spezialisierung existiert oder 0, wenn nicht.
+			if ( prerequisites.contains( '.' ) && list.at( k )->type() == cv_AbstractTrait::Skill && list.at( k )->details().count() > 0 ) {
+				QString testSkill = list.at( k )->name() + ".";
+
+				if ( prerequisites.contains( testSkill ) ) {
+					QString specialisation = prerequisites.right( prerequisites.indexOf( testSkill ) - testSkill.count() + 1 );
+					specialisation = specialisation.left( specialisation.indexOf( ' ' ) );
+
+					for ( int l = 0; l < list.at( k )->details().count(); l++ ) {
+						// Fertigkeiten mit Spezialisierungsanforderungen werden mit dem Fertigkeitswert ersetzt, wenn Spez existiert, ansonsten mit 0.
+						if ( specialisation == list.at( k )->details().at( l ).name ) {
+							prerequisites.replace( testSkill + specialisation, QString::number( list.at( k )->value() ) );
+
+							// Wenn alle Worte ersetzt wurden, kann ich aus den Schleifen raus.
+
+							if ( !prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
+								return prerequisites;
+							}
+						} else {
+							prerequisites.replace( testSkill + specialisation, "0" );
+
+							// Wenn alle Worte ersetzt wurden, kann ich aus den Schleifen raus.
+
+							if ( !prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
+								return prerequisites;
+							}
+						}
+					}
+				}
+			} else {
+				// Ersetzen von Eigenschaftsnamen mit ihren Werten.
+				prerequisites.replace( list.at( k )->name(), QString::number( list.at( k )->value() ) );
+
+				// Wenn alle Worte ersetzt wurden, kann ich aus den Schleifen raus.
+
+				if ( !prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
+					return prerequisites;
+				}
+			}
+		}
+	} else {
+		qDebug() << Q_FUNC_INFO << "Nicht durch die Schleifen." << name();
+	}
+}
 
 
 void Trait::emitTraitChanged() {

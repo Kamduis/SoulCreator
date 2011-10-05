@@ -62,7 +62,7 @@ void Creation::setPoints( cv_CreationPoints points ) {
 void Creation::calcPoints( cv_Trait* trait ) {
 // 	qDebug() << Q_FUNC_INFO << trait->type << "<->" << v_types;
 	if ( v_types.contains( trait->type() ) ) {
-		QList< cv_Trait* > list;
+		QList< Trait* > list;
 		QList< int > pointList;
 		// Nur bei Attributen und Fertigkeiten sind die zu verteilenden Punkte zwischen den Kategorien aufgeteilt.
 

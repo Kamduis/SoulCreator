@@ -70,7 +70,7 @@ FlawWidget::FlawWidget( QWidget *parent ) : QWidget( parent )  {
 		toolBox->addItem( widgetFlawCategory, cv_AbstractTrait::toString( v_category.at( i ), true ) );
 
 		try {
-			list = storage->traits2( type, v_category.at( i ) );
+			list = storage->traits( type, v_category.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
@@ -111,7 +111,7 @@ FlawWidget::~FlawWidget() {
 
 void FlawWidget::countItems() {
 	for (int i = 0; i < v_category.count(); i++){
-		QList< Trait* > list = character->traits2( cv_AbstractTrait::Flaw, v_category.at(i) );
+		QList< Trait* > list = character->traits( cv_AbstractTrait::Flaw, v_category.at(i) );
 
 		int numberInCategory = 0;
 

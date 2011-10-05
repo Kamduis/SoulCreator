@@ -22,10 +22,10 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QHBoxLayout>
+// #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGroupBox>
-#include <QStringList>
+// #include <QStringList>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -90,7 +90,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 	for ( int i = 0; i < categoryList.count(); i++ ) {
 		try {
-			list = storage.traits2( type, categoryList.at( i ) );
+			list = storage.traits( type, categoryList.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}

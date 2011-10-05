@@ -94,7 +94,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 
 	QList< cv_AbstractTrait::Category > category;
 
-	QList< cv_Trait* > list;
+	QList< Trait* > list;
 
 	for ( int i = 0; i < types.count(); i++ ) {
 		try {

@@ -24,16 +24,16 @@
 
 #include <QCloseEvent>
 #include <QDir>
-#include <QFile>
+// #include <QFile>
 #include <QFileDialog>
-#include <QMessageBox>
+// #include <QMessageBox>
 #include <QPrintDialog>
-#include <QPrinter>
+// #include <QPrinter>
 #include <QTimer>
 // #include <QGtkStyle>
 #include <QDebug>
 
-#include "Calc/Creation.h"
+// #include "Calc/Creation.h"
 // #include "Config/Config.h"
 // #include "Datatypes/cv_Trait.h"
 // #include "Exceptions/Exception.h"
@@ -58,7 +58,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 // 	QApplication::setStyle(new QGtkStyle(this));
 
-	this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
+	setTitle("");
 	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
 	// Hier habe ich die Standardicons genommen, aber davon gibt es nur wenige und sie sehen nicht gut aus.
@@ -94,6 +94,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( ui->actionExport, SIGNAL( triggered() ), this, SLOT( exportCharacter() ) );
 	connect( ui->actionPrint, SIGNAL( triggered() ), this, SLOT( printCharacter() ) );
 	connect( ui->actionAbout, SIGNAL( triggered() ), this, SLOT( aboutApp() ) );
+
+	connect( character, SIGNAL( nameChanged(QString) ), this, SLOT( setTitle(QString)) );
 
 	// Laden der Konfiguration
 	readSettings();
@@ -165,9 +167,9 @@ void MainWindow::populateUi() {
 	// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
-	flaws = new FlawWidget( this );
 	// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 	merits = new MeritWidget( this );
+	flaws = new FlawWidget( this );
 	morality = new MoralityWidget( this );
 	powers = new PowerWidget( this );
 	advantages = new AdvantagesWidget( this );
@@ -260,24 +262,31 @@ void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_Tra
 
 void MainWindow::activate() {
 	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
-	for ( int k = 0; k < character->traits()->count(); k++ ) {
-		cv_Trait trait = character->traits()->at( k );
-// 		qDebug() << Q_FUNC_INFO << "Verändere" << trait.name << trait.value;
-		// Alten Wert speichern
-		int valueOld = trait.value();
-		// Verändern, damit er auch wirklich \emph{verändert} wurde
-		trait.setValue( 10 );
-		// In den Speicher schicken.
-		character->modifyTrait( trait );
-		// Wieder auf alten Wert zurücksetzen.
-		trait.setValue( valueOld );
-		character->modifyTrait( trait );
-	}
-	// neue Version
-	for ( int k = 0; k < character->traits2()->count(); k++ ) {
-		int valueOld = character->traits2()->at( k )->value();
-		character->traits2()->at( k )->setValue( 10 );
-		character->traits2()->at( k )->setValue( valueOld );
+	QList< Trait* >* list = character->traits();
+	for ( int i = 0; i < list->count(); i++ ) {
+		int valueOld = character->traits()->at( i )->value();
+		list->at( i )->setValue( 10 );
+		list->at( i )->clearDetails();
+		
+		// Löschen der Zeigerliste
+		list->at( i )->clearPrerequisitePtrs();
+		
+		for ( int j = 0; j < list->count(); j++ ) {
+			// Erst müssen die Voraussetzungen übersetzt werden, so daß direkt die Adressen im String stehen.
+			list->at( i )->addPrerequisitePtrs( list->at(j) );
+		}
+
+		// Danach verbinden wir die Signale, aber nur, wenn sie benötigt werden.
+		if (!list->at( i )->prerequisitePtrs().isEmpty()){
+// 			qDebug() << Q_FUNC_INFO << character->traits2()->at( i )->prerequisitPtrs();
+
+			for (int j = 0; j < list->at( i )->prerequisitePtrs().count(); j++){
+				connect (list->at(i)->prerequisitePtrs().at(j), SIGNAL(traitChanged(Trait*)), list->at(i), SLOT(checkPrerequisites(Trait*)));
+			}
+		}
+
+		// Alten Wert wiederherstellen.
+		list->at( i )->setValue( valueOld );
 	}
 
 	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
@@ -433,6 +442,15 @@ void MainWindow::aboutApp() {
 	QMessageBox::about( this, tr( "About %1" ).arg( Config::name() ), aboutText );
 }
 
+void MainWindow::setTitle( QString txt ) {
+	if (txt.isEmpty()) {
+		this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
+	} else {
+		this->setWindowTitle( Config::name() + " " + Config::versionDetail() + " (" + txt + ") " );
+	}
+}
+
+
 
 void MainWindow::newCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
@@ -447,6 +465,8 @@ void MainWindow::newCharacter() {
 void MainWindow::openCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 	if ( maybeSave() ) {
+		character->resetCharacter();
+		
 		QString appPath = QApplication::applicationDirPath();
 
 		// Pfad zum Speicherverzeichnis
