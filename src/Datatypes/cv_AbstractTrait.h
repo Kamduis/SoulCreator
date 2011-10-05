@@ -25,7 +25,7 @@
 #ifndef CV_ABSTRACTTRAIT_H
 #define CV_ABSTRACTTRAIT_H
 
-#include <QString>
+// #include <QString>
 #include <QList>
 
 #include "cv_Species.h"

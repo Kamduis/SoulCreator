@@ -22,7 +22,7 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QGridLayout>
+// #include <QGridLayout>
 #include <QDebug>
 
 // #include "Datatypes/cv_Trait.h"

@@ -64,13 +64,13 @@ TraitLine::TraitLine( QWidget *parent, QString name, int value ) : QWidget( pare
 	button = new QPushButton( this );
 // 	button->setText( tr( "Specialties" ) );
 	button->setText( "..." );
-	button->setMaximumHeight(Config::inlineWidgetHeightMax);
+	button->setMaximumHeight( Config::inlineWidgetHeightMax );
 	button->setCheckable( true );
-	
+
 	lineEdit = new QLineEdit( this );
-	lineEdit->setMinimumWidth(Config::traitCustomTextWidthMin);
-	lineEdit->setMaximumHeight(Config::inlineWidgetHeightMax);
-	
+	lineEdit->setMinimumWidth( Config::traitCustomTextWidthMin );
+	lineEdit->setMaximumHeight( Config::inlineWidgetHeightMax );
+
 	traitDots = new TraitDots( this );
 
 	connect( traitDots, SIGNAL( valueChanged( int ) ), SIGNAL( valueChanged( int ) ) );
@@ -122,6 +122,13 @@ QString TraitLine::text() const {
 
 void TraitLine::setText( QString text ) {
 	lineEdit->setText( text );
+}
+
+void TraitLine::setButtonText( QString txt ) {
+	button->setText( txt );
+}
+void TraitLine::setButtonText( int val ) {
+	button->setText( QString::number(val) );
 }
 
 

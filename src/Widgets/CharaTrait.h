@@ -88,11 +88,6 @@ class CharaTrait : public TraitLine {
 		Trait* ptr_trait;
 		Trait* ptr_traitStorage;
 
-		/**
-		 * Hilfsfunktion für checkTraitPrerequisites().
-		 **/
-		QString parsePrerequisites( QString text );
-
 	public slots:
 		/**
 		 * Legt den Zusatztext fest.
@@ -133,10 +128,6 @@ class CharaTrait : public TraitLine {
 		 **/
 		void emitSpecialtiesClicked(bool sw);
 		
-		/**
-		 * Sorgt dafür, daß das Widget disabled wird, wenn die Voraussetzungen nicht erfüllt sind. Diese Funktion überprüft nur, ob sich die Voraussetzungen verändert haben, weil sich diese eine Eigenschaft verändert hat.
-		 **/
-		void checkTraitPrerequisites( Trait* trait /** Veränderte Eigenschaft, die \emph{möglicherweise} Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */);
 		/**
 		 * Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.
 		 *

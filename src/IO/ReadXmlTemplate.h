@@ -25,7 +25,7 @@
 #ifndef READXMLTEMPLATE_H
 #define READXMLTEMPLATE_H
 
-#include <QFile>
+// #include <QFile>
 
 #include "Storage/StorageTemplate.h"
 // #include "Datatypes/cv_Species.h"

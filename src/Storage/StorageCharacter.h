@@ -126,31 +126,17 @@ class StorageCharacter : public QObject {
 		/**
 		 * Gibt eine Liste \emph{aller} Eigenschaften des Charkaters aus.
 		 **/
-		QList< cv_Trait >* traits() const;
-		/**
-		 * Gibt eine Liste \emph{aller} Eigenschaften des Charkaters aus.
-		 **/
-		QList< Trait* >* traits2() const;
+		QList< Trait* >* traits() const;
 		/**
 		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 **/
-		QList< cv_Trait* > traits( cv_AbstractTrait::Type type ) const;
-		/**
-		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
-		 **/
-		QList< Trait* > traits2( cv_AbstractTrait::Type type ) const;
+		QList< Trait* > traits( cv_AbstractTrait::Type type ) const;
 		/**
 		 * Gibt eine Liste von Zeigern auf alle Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 *
 		 * \overload QList< cv_Trait* > traits( cv_AbstractTrait::Type type )
 		 **/
-		QList< cv_Trait* > traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const;
-		/**
-		 * Gibt eine Liste von Zeigern auf alle Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
-		 *
-		 * \overload QList< cv_Trait* > traits( cv_AbstractTrait::Type type )
-		 **/
-		QList< Trait* > traits2( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const;
+		QList< Trait* > traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus.
 		 **/
@@ -213,10 +199,6 @@ class StorageCharacter : public QObject {
 		/**
 		 * Eine Liste aller Eigenschaften.
 		 **/
-		static QList< cv_Trait > v_traits;
-		/**
-		 * Eine Liste aller Eigenschaften.
-		 **/
 		static QList< Trait* > v_traits2;
 		/**
 		 * Eine Liste aller Geistesstörungen.
@@ -263,21 +245,7 @@ class StorageCharacter : public QObject {
 		 *
 		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
 		 *
-		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
-		 **/
-		cv_Trait* addTrait( cv_Trait trait );
-		/**
-		 * Fügt dem Speicher eine neue Eigenschaft hinzu.
-		 *
-		 * \return Es wird ein Zeiger auf diese Eigenschaft zurückgegeben.
-		 *
-		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
-		 *
-		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
-		 *
-		 * \bug Ich muß alle Eigenschaften vor den Merits erzeugen, sonst stürzt das programm aus irgendeinem Grund ab.
-		 *
-		 * \bug Das connect in dieser Methode macht mir Sorgen. Ist scheinbar für viele Fehlfunktionen des Programms verantwortlich. Deswegen habe ich dies abgeschalten. Aber solange dieser Connect nicht arbeitet, funktionier Momenthan das Deaktivieren von Eigenschaften aufgrund ihrer Anforderungen nicht.
+		 * \todo Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 		 **/
 		Trait* addTrait( Trait* trait );
 		/**
@@ -349,9 +317,14 @@ class StorageCharacter : public QObject {
 		void setModified( bool sw = true /** 'true' -> der Charakter wurde verändert, 'false' -> der Charakter wurde \emph{nicht} verändert */ );
 
 	private slots:
+		void emitNameChanged( cv_Identity id );
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
 
 	signals:
+		/**
+		* Dieses Signal wird ausgesandt, wann immer der Charakter ein Reset erfährt.
+		**/
+		void characterResetted();
 		/**
 		* Dieses Signal wird ausgesandt, wann immer eine Identität des Charakters verändert wird.
 		**/
@@ -360,6 +333,7 @@ class StorageCharacter : public QObject {
 		* Dieses Signal wird ausgesandt, wann immer sich der echte Name des Charakters ändert.
 		**/
 		void realIdentityChanged( cv_Identity id );
+		void nameChanged(QString name);
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Spezies des Charakters ändert.
 		**/

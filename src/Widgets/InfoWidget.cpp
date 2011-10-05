@@ -22,7 +22,7 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QLabel>
+// #include <QLabel>
 #include <QDebug>
 
 // #include "Exceptions/Exception.h"

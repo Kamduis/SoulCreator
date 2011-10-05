@@ -181,7 +181,7 @@ void MoralityWidget::renameHeader( cv_Species::SpeciesFlag species ) {
 }
 
 void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
-	QList< cv_Trait* > list;
+	QList< Trait* > list;
 	QList< cv_Derangement > listToUse;
 
 	for ( int j = 0; j < v_category.count(); j++ ) {

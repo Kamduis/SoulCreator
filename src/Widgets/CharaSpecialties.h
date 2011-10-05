@@ -25,7 +25,7 @@
 #ifndef CHARASPECIALTIES_H
 #define CHARASPECIALTIES_H
 
-#include <QString>
+// #include <QString>
 
 #include "Storage/StorageCharacter.h"
 

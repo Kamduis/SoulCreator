@@ -109,6 +109,16 @@ class TraitLine : public QWidget {
 		 **/
 		void setPossibleValues(QList<int> valueList);
 		void setText(QString text);
+		/**
+		 * Legt die Beschriftung des Buttons fest.
+		 **/
+		void setButtonText(QString txt);
+		/**
+		 * Legt die Beschriftung des Buttons fest.
+		 *
+		 * \overload setButtonText(QString txt)
+		 **/
+		void setButtonText( int val );
 		void setMinimum(int value);
 		/**
 		 * Mit dieser Methode verstecke ich die Liste der Spezialisierungen. Schließlich haben nur Fertigkeiten eine Notwendigkeit dafür.

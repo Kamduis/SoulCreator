@@ -25,8 +25,8 @@
 #ifndef CV_IDENTITY_H
 #define CV_IDENTITY_H
 
-#include <QStringList>
-#include <QString>
+// #include <QStringList>
+// #include <QString>
 
 #include "cv_Name.h"
 

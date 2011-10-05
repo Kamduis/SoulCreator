@@ -22,7 +22,7 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QToolBox>
+// #include <QToolBox>
 #include <QDebug>
 
 #include "CharaTrait.h"
@@ -60,7 +60,7 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 		toolBox->addItem( widgetMeritCategory, cv_AbstractTrait::toString( v_category.at( i ), true ) );
 
 		try {
-			list = storage->traits2( type, v_category.at( i ) );
+			list = storage->traits( type, v_category.at( i ) );
 		} catch (eTraitNotExisting &e) {
 			MessageBox::exception(this, e.message(), e.description());
 		}
@@ -114,7 +114,7 @@ MeritWidget::~MeritWidget() {
 
 void MeritWidget::countMerits() {
 	for (int i = 0; i < v_category.count(); i++){
-		QList< Trait* > list = character->traits2( cv_AbstractTrait::Merit, v_category.at(i) );
+		QList< Trait* > list = character->traits( cv_AbstractTrait::Merit, v_category.at(i) );
 
 		int numberInCategory = 0;
 
