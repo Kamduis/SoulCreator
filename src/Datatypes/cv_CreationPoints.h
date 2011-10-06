@@ -25,12 +25,15 @@
 #ifndef CV_CREATIONPOINTS_H
 #define CV_CREATIONPOINTS_H
 
-#include <QString>
+#include <QList>
+
+#include "Datatypes/cv_Species.h"
+#include "Datatypes/cv_AbstractTrait.h"
 
 /**
  * @brief Datentyp für die freien Erschaffungspunkte.
  *
- * Diese Punkte können bei der Charaktererschaffung auf dem Charakterbogen verteilt werden.
+ * In dieser Klasse werden die freien Erschaffungspunkte eines einzigen Eigenschaftstyps gespeichert, natürlich abhängig von der Spezies.
  */
 class cv_CreationPoints {
 	public:
@@ -40,67 +43,40 @@ class cv_CreationPoints {
 		cv_CreationPoints();
 
 		/**
-		 * Primäre Kategorie der Attribute.
+		 * Für welche Spezies diese Punkte zählen.
 		 **/
-		int attributesA;
+		cv_Species::Species species;
+		
 		/**
-		 * Sekundäre Kategorie der Attribute.
+		 * Für welchen Eigenscahftstyp diese Punkte zählen.
 		 **/
-		int attributesB;
-		/**
-		 * Tertiäre Kategorie der Attribute.
-		 **/
-		int attributesC;
-		/**
-		 * Primäre Kategorie der Fertigkeiten.
-		 **/
-		int skillsA;
-		/**
-		 * Sekundäre Kategorie der Fertigkeiten.
-		 **/
-		int skillsB;
-		/**
-		 * Tertiäre Kategorie der Fertigkeiten.
-		 **/
-		int skillsC;
-		/**
-		 * Anzahl der freien Spezialisierungen.
-		 **/
-		int skillSpecialties;
-		/**
-		 * Merits
-		 **/
-		int merits;
-		/**
-		 * Powers
-		 **/
-		int powers;
+		cv_AbstractTrait::Type type;
 
 		/**
-		 * Gibt die übrigen Attributspunkte als String aus.
+		 * Punkte.
+		 *
+		 * Bei Attributen und Fertigkeiten:
+		 *
+		 * Index 0 -> primär.
+		 *
+		 * Index 1 -> sekundär.
+		 *
+		 * Index 2 -> tertiär.
+		 *
+		 * Bei Fertigkeiten:
+		 *
+		 * Index 3 -> Spezialisierungen
 		 **/
-		QString attributesOut();
-		/**
-		 * Gibt die übrigen Fertigkeitspunkte als String aus.
-		 **/
-		QString skillsOut();
-		/**
-		 * Gibt die übrigen Meritpunkte als String aus.
-		 **/
-		QString meritsOut();
-		/**
-		 * Gibt die übrigen Punkte für übernatürliche Kräfte als String aus.
-		 **/
-		QString powersOut();
+		QList< int > points;
 
 		bool operator==( const cv_CreationPoints &points ) const;
-		bool operator!=( const cv_CreationPoints &points ) const;
+// 		bool operator!=( const cv_CreationPoints2 &points ) const;
 
 	private:
-		/**
-		 * Gibt die negativen Werte in Warnfarbe aus.
-		 **/
-		QString outputPoint(int val);
+// 		/**
+// 		 * Gibt die negativen Werte in Warnfarbe aus.
+// 		 **/
+// 		QString outputPoint(int val);
 };
 
 #endif

@@ -64,6 +64,7 @@ void Trait::construct() {
 
 	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( emitTraitChanged() ) );
 	connect( this, SIGNAL( detailsChanged( int ) ), this, SLOT( emitTraitChanged() ) );
+	connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( clearDetails( int ) ) );
 }
 
 
@@ -89,15 +90,24 @@ void Trait::addDetail( cv_TraitDetail det ) {
 		cv_Trait::addDetail( det );
 
 		emit detailsChanged( details().count() );
+	} else {
+// 		qDebug() << Q_FUNC_INFO << "Spezialisierung" << det.name << "existiert schon";
 	}
 }
 void Trait::clearDetails() {
+// 	qDebug() << Q_FUNC_INFO << "Hallo?";
 	if ( !details().isEmpty() ) {
 		cv_Trait::clearDetails();
 
 		emit detailsChanged( 0 );
 	}
 }
+void Trait::clearDetails( int val ) {
+	if ( val < 1 ) {
+		this->clearDetails();
+	}
+}
+
 
 void Trait::setType( cv_AbstractTrait::Type typ ) {
 	if ( type() != typ ) {
@@ -162,9 +172,9 @@ void Trait::checkPrerequisites( Trait* trait ) {
 
 		try {
 			if ( parser.validate( lcl_prerequisites ) ) {
-				setAvailability(true);
+				setAvailability( true );
 			} else {
-				setAvailability(false);
+				setAvailability( false );
 			}
 		} catch ( Exception &e ) {
 			qDebug() << Q_FUNC_INFO << name() << lcl_prerequisites << e.description() << e.message();

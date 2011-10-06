@@ -140,6 +140,10 @@ class Trait : public QObject, public cv_Trait {
 		 **/
 		void setAvailability(bool sw);
 		/**
+		 * Wenn der Wert einer Fertigkeit auf 0 sinkt, werden alle ihre Spezialisierungen gelöscht.
+		 **/
+		void clearDetails(int val);
+		/**
 		 * Sendet das Signal traitChanged() aus.
 		 **/
 		void emitTraitChanged();

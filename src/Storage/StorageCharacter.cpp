@@ -266,6 +266,32 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 		qDebug() << Q_FUNC_INFO << "Spezialisierungen nicht angelegt, da Fertigkeit" << name << "nicht existiert.";
 	}
 }
+void StorageCharacter::addSkillSpecialties( QString name, cv_TraitDetail detail )
+{
+	bool trait_exists = false;
+
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		// Spezialisieren gibt es nur bei Fertigkeiten.
+		// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
+		// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
+		if ( v_traits2.at( i )->type() == cv_AbstractTrait::Skill
+			&& v_traits2.at( i )->name() == name
+			&& v_traits2.at( i )->value() > 0
+		) {
+			trait_exists = true;
+
+			v_traits2[i]->addDetail(detail);
+
+			break;
+		}
+	}
+
+	// Existiert die Fertigkeit nicht, für die eine Spezialisierung eingetragen werden soll, muß etwas getan werden. Anlegen ist aber nicht dier richtige Lösung (welcher Wert denn?).
+	if ( !trait_exists ) {
+		qDebug() << Q_FUNC_INFO << "Spezialisierung nicht hinzugefügt, da Fertigkeit" << name << "nicht existiert.";
+	}
+}
+
 
 QString StorageCharacter::virtue() const {
 	return v_virtue;

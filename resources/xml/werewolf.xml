@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.5">
+	<creation species="Werewolf">
+		<Power>
+			<points value="3"/>
+		</Power>
+	</creation>
 	<traits species="Werewolf" morale="Harmony" supertrait="Primal Urge" fuel="Essence">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
@@ -119,180 +124,180 @@
 				<trait name="Rites">
 				</trait>
 			</Secondary>
+			<Tertiary name="Gifts">
+				<trait name="Full Moon">
+					<cheap>Rahu</cheap>
+					<only>Rahu</only>
+				</trait>
+				<trait name="Warrior's Moon">
+					<cheap>Rahu</cheap>
+					<only>Rahu</only>
+				</trait>
+				<trait name="Gibbous Moon">
+					<cheap>Cahalith</cheap>
+					<only>Cahalith</only>
+				</trait>
+				<trait name="Dreamer's Moon">
+					<cheap>Cahalith</cheap>
+					<only>Cahalith</only>
+				</trait>
+				<trait name="Half Moon">
+					<cheap>Elodoth</cheap>
+					<only>Elodoth</only>
+				</trait>
+				<trait name="Judge's Moon">
+					<cheap>Elodoth</cheap>
+					<only>Elodoth</only>
+				</trait>
+				<trait name="Crescent Moon">
+					<cheap>Ithaeur</cheap>
+					<only>Ithaeur</only>
+				</trait>
+				<trait name="Witch's Moon">
+					<cheap>Ithaeur</cheap>
+					<only>Ithaeur</only>
+				</trait>
+				<trait name="New Moon">
+					<cheap>Irraka</cheap>
+					<only>Irraka</only>
+				</trait>
+				<trait name="Stalker's Moon">
+					<cheap>Irraka</cheap>
+					<only>Irraka</only>
+				</trait>
+				<trait name="Dominance">
+					<cheap>Rahu</cheap>
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Strength">
+					<cheap>Rahu</cheap>
+					<cheap>Blood Talons</cheap>
+				</trait>
+				<trait name="Inspiration">
+					<cheap>Cahalith</cheap>
+					<cheap>Blood Talons</cheap>
+				</trait>
+				<trait name="Insight">
+					<cheap>Elodoth</cheap>
+					<cheap>Bone Shadows</cheap>
+				</trait>
+				<trait name="Warding">
+					<cheap>Cahalith</cheap>
+					<cheap>Elodoth</cheap>
+					<cheap>Bone Shadows</cheap>
+				</trait>
+				<trait name="Elemental">
+					<cheap>Ithaeur</cheap>
+					<cheap>Hunters in Darkness</cheap>
+				</trait>
+				<trait name="Shaping">
+					<cheap>Ithaeur</cheap>
+					<cheap>Iron Masters</cheap>
+				</trait>
+				<trait name="Evasion">
+					<cheap>Irraka</cheap>
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Stealth">
+					<cheap>Irraka</cheap>
+					<cheap>Hunters in Darkness</cheap>
+				</trait>
+				<trait name="Battle">
+					<cheap>Blood Talons</cheap>
+				</trait>
+				<trait name="Blood">
+					<cheap>Blood Talons</cheap>
+				</trait>
+				<trait name="Rage">
+					<cheap>Blood Talons</cheap>
+				</trait>
+				<trait name="Death">
+					<cheap>Bone Shadows</cheap>
+				</trait>
+				<trait name="Ending">
+					<cheap>Bone Shadows</cheap>
+				</trait>
+				<trait name="Information">
+					<cheap>Bone Shadows</cheap>
+				</trait>
+				<trait name="Darkness">
+					<cheap>Hunters in Darkness</cheap>
+				</trait>
+				<trait name="Nature">
+					<cheap>Hunters in Darkness</cheap>
+				</trait>
+				<trait name="Stalking">
+					<cheap>Hunters in Darkness</cheap>
+				</trait>
+				<trait name="Blending">
+					<cheap>Iron Masters</cheap>
+				</trait>
+				<trait name="Knowledge">
+					<cheap>Iron Masters</cheap>
+				</trait>
+				<trait name="Technology">
+					<cheap>Iron Masters</cheap>
+				</trait>
+				<trait name="Urban">
+					<cheap>Iron Masters</cheap>
+				</trait>
+				<trait name="Alpha">
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Halcyon">
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Weather">
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Father Wolf">
+					<cheap>Rahu</cheap>
+					<cheap>Cahalith</cheap>
+					<cheap>Elodoth</cheap>
+					<cheap>Ithaeur</cheap>
+					<cheap>Irraka</cheap>
+					<cheap>Blood Talons</cheap>
+					<cheap>Bone Shadows</cheap>
+					<cheap>Hunters in Darkness</cheap>
+					<cheap>Iron Masters</cheap>
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Mother Luna">
+					<cheap>Rahu</cheap>
+					<cheap>Cahalith</cheap>
+					<cheap>Elodoth</cheap>
+					<cheap>Ithaeur</cheap>
+					<cheap>Irraka</cheap>
+					<cheap>Blood Talons</cheap>
+					<cheap>Bone Shadows</cheap>
+					<cheap>Hunters in Darkness</cheap>
+					<cheap>Iron Masters</cheap>
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Pack">
+					<cheap>Rahu</cheap>
+					<cheap>Cahalith</cheap>
+					<cheap>Elodoth</cheap>
+					<cheap>Ithaeur</cheap>
+					<cheap>Irraka</cheap>
+					<cheap>Blood Talons</cheap>
+					<cheap>Bone Shadows</cheap>
+					<cheap>Hunters in Darkness</cheap>
+					<cheap>Iron Masters</cheap>
+					<cheap>Storm Lords</cheap>
+				</trait>
+				<trait name="Pack">
+				</trait>
+				<trait name="City">
+				</trait>
+				<trait name="Endurance">
+				</trait>
+				<trait name="Predator">
+				</trait>
+				<trait name="Weakness">
+				</trait>
+			</Tertiary>
 		</Power>
-<!--		<Power>
-			<trait name="Full Moon">
-				<cheap>Rahu</cheap>
-				<only>Rahu</only>
-			</trait>
-			<trait name="Warrior's Moon">
-				<cheap>Rahu</cheap>
-				<only>Rahu</only>
-			</trait>
-			<trait name="Gibbous Moon">
-				<cheap>Cahalith</cheap>
-				<only>Cahalith</only>
-			</trait>
-			<trait name="Dreamer's Moon">
-				<cheap>Cahalith</cheap>
-				<only>Cahalith</only>
-			</trait>
-			<trait name="Half Moon">
-				<cheap>Elodoth</cheap>
-				<only>Elodoth</only>
-			</trait>
-			<trait name="Judge's Moon">
-				<cheap>Elodoth</cheap>
-				<only>Elodoth</only>
-			</trait>
-			<trait name="Crescent Moon">
-				<cheap>Ithaeur</cheap>
-				<only>Ithaeur</only>
-			</trait>
-			<trait name="Witch's Moon">
-				<cheap>Ithaeur</cheap>
-				<only>Ithaeur</only>
-			</trait>
-			<trait name="New Moon">
-				<cheap>Irraka</cheap>
-				<only>Irraka</only>
-			</trait>
-			<trait name="Stalker's Moon">
-				<cheap>Irraka</cheap>
-				<only>Irraka</only>
-			</trait>
-			<trait name="Dominance">
-				<cheap>Rahu</cheap>
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Strength">
-				<cheap>Rahu</cheap>
-				<cheap>Blood Talons</cheap>
-			</trait>
-			<trait name="Inspiration">
-				<cheap>Cahalith</cheap>
-				<cheap>Blood Talons</cheap>
-			</trait>
-			<trait name="Insight">
-				<cheap>Elodoth</cheap>
-				<cheap>Bone Shadows</cheap>
-			</trait>
-			<trait name="Warding">
-				<cheap>Cahalith</cheap>
-				<cheap>Elodoth</cheap>
-				<cheap>Bone Shadows</cheap>
-			</trait>
-			<trait name="Elemental">
-				<cheap>Ithaeur</cheap>
-				<cheap>Hunters in Darkness</cheap>
-			</trait>
-			<trait name="Shaping">
-				<cheap>Ithaeur</cheap>
-				<cheap>Iron Masters</cheap>
-			</trait>
-			<trait name="Evasion">
-				<cheap>Irraka</cheap>
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Stealth">
-				<cheap>Irraka</cheap>
-				<cheap>Hunters in Darkness</cheap>
-			</trait>
-			<trait name="Battle">
-				<cheap>Blood Talons</cheap>
-			</trait>
-			<trait name="Blood">
-				<cheap>Blood Talons</cheap>
-			</trait>
-			<trait name="Rage">
-				<cheap>Blood Talons</cheap>
-			</trait>
-			<trait name="Death">
-				<cheap>Bone Shadows</cheap>
-			</trait>
-			<trait name="Ending">
-				<cheap>Bone Shadows</cheap>
-			</trait>
-			<trait name="Information">
-				<cheap>Bone Shadows</cheap>
-			</trait>
-			<trait name="Darkness">
-				<cheap>Hunters in Darkness</cheap>
-			</trait>
-			<trait name="Nature">
-				<cheap>Hunters in Darkness</cheap>
-			</trait>
-			<trait name="Stalking">
-				<cheap>Hunters in Darkness</cheap>
-			</trait>
-			<trait name="Blending">
-				<cheap>Iron Masters</cheap>
-			</trait>
-			<trait name="Knowledge">
-				<cheap>Iron Masters</cheap>
-			</trait>
-			<trait name="Technology">
-				<cheap>Iron Masters</cheap>
-			</trait>
-			<trait name="Urban">
-				<cheap>Iron Masters</cheap>
-			</trait>
-			<trait name="Alpha">
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Halcyon">
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Weather">
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Father Wolf">
-				<cheap>Rahu</cheap>
-				<cheap>Cahalith</cheap>
-				<cheap>Elodoth</cheap>
-				<cheap>Ithaeur</cheap>
-				<cheap>Irraka</cheap>
-				<cheap>Blood Talons</cheap>
-				<cheap>Bone Shadows</cheap>
-				<cheap>Hunters in Darkness</cheap>
-				<cheap>Iron Masters</cheap>
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Mother Luna">
-				<cheap>Rahu</cheap>
-				<cheap>Cahalith</cheap>
-				<cheap>Elodoth</cheap>
-				<cheap>Ithaeur</cheap>
-				<cheap>Irraka</cheap>
-				<cheap>Blood Talons</cheap>
-				<cheap>Bone Shadows</cheap>
-				<cheap>Hunters in Darkness</cheap>
-				<cheap>Iron Masters</cheap>
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Pack">
-				<cheap>Rahu</cheap>
-				<cheap>Cahalith</cheap>
-				<cheap>Elodoth</cheap>
-				<cheap>Ithaeur</cheap>
-				<cheap>Irraka</cheap>
-				<cheap>Blood Talons</cheap>
-				<cheap>Bone Shadows</cheap>
-				<cheap>Hunters in Darkness</cheap>
-				<cheap>Iron Masters</cheap>
-				<cheap>Storm Lords</cheap>
-			</trait>
-			<trait name="Pack">
-			</trait>
-			<trait name="City">
-			</trait>
-			<trait name="Endurance">
-			</trait>
-			<trait name="Predator">
-			</trait>
-			<trait name="Weakness">
-			</trait>
-		</Power>-->
 		<Flaw>
 			<Physical>
 				<trait name="Bad Regeneration"/>

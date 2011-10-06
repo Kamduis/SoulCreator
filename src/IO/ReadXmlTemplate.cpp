@@ -146,7 +146,15 @@ void ReadXmlTemplate::readSoulCreator() {
 					readTree( speciesFlag );
 				}
 			} else
-				readUnknownElement();
+				if ( name() == "creation" ) {
+					QString tmp = attributes().value( "species" ).toString();
+					cv_Species::SpeciesFlag speciesFlag = cv_Species::toSpecies( tmp );
+
+					if ( speciesFlag != cv_Species::SpeciesNo ) {
+						readCreationTree( speciesFlag );
+					}
+				} else
+					readUnknownElement();
 		}
 	}
 }
@@ -170,11 +178,12 @@ void ReadXmlTemplate::readTree( cv_Species::Species sp ) {
 						type == cv_AbstractTrait::Breed ||
 						type == cv_AbstractTrait::Faction ) {
 					readTraits( sp, type, cv_AbstractTrait::CategoryNo );
-				} else if ( type == cv_AbstractTrait::Super ) {
-					readSuperTrait( sp );
-				} else {
-					readTraits( sp, type );
-				}
+				} else
+					if ( type == cv_AbstractTrait::Super ) {
+						readSuperTrait( sp );
+					} else {
+						readTraits( sp, type );
+					}
 			} else {
 				readUnknownElement();
 			}
@@ -225,9 +234,9 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type
 
 void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b ) {
 	if ( a == cv_AbstractTrait::Breed
-		|| a == cv_AbstractTrait::Faction
-		|| a == cv_AbstractTrait::Power
-	) {
+			|| a == cv_AbstractTrait::Faction
+			|| a == cv_AbstractTrait::Power
+	   ) {
 		QString titleName = attributes().value( "name" ).toString();
 		cv_SpeciesTitle title = cv_SpeciesTitle( cv_SpeciesTitle::toTitle( cv_AbstractTrait::toString( a ) ), titleName, sp );
 
@@ -289,18 +298,18 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_AbstractTra
 // 	QString specialtyName;
 
 	cv_Trait trait;
-	trait.setSpecies(sp);
-	trait.setType(a);
-	trait.setCategory(b);
+	trait.setSpecies( sp );
+	trait.setType( a );
+	trait.setCategory( b );
 	// Keinefalls darf ich zulassen, daß dieser Wert uninitialisiert bleibt, sonst führt das zu Problemen.
 	trait.setValue( 0 );
 
 	if ( isStartElement() ) {
-		trait.setName(attributes().value( "name" ).toString());
+		trait.setName( attributes().value( "name" ).toString() );
 // 		qDebug() << Q_FUNC_INFO << trait.name;
-		trait.setEra(cv_Trait::toEra( attributes().value( "era" ).toString() ));
-		trait.setAge(cv_Trait::toAge( attributes().value( "age" ).toString() ));
-		trait.setCustom(attributes().value( "custom" ).toString() == QString( "true" ));
+		trait.setEra( cv_Trait::toEra( attributes().value( "era" ).toString() ) );
+		trait.setAge( cv_Trait::toAge( attributes().value( "age" ).toString() ) );
+		trait.setCustom( attributes().value( "custom" ).toString() == QString( "true" ) );
 
 // 		if (trait.custom){
 // 			qDebug() << Q_FUNC_INFO << trait.name << "ist besonders!";
@@ -321,16 +330,18 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_AbstractTra
 					traitDetail.value = false;
 // 					traitDetail.species = sp;
 					trait.addDetail( traitDetail );
-				} else if ( name() == "value" ) {
-					int value = readElementText().toInt();
-					trait.addPossibleValue( value );
-				} else if ( name() == "prerequisite" ) {
-					QString text = readElementText();
+				} else
+					if ( name() == "value" ) {
+						int value = readElementText().toInt();
+						trait.addPossibleValue( value );
+					} else
+						if ( name() == "prerequisite" ) {
+							QString text = readElementText();
 // 					trait.v_prerequisites.append( text );
-					trait.setPrerequisites(text);
-				} else {
-					readUnknownElement();
-				}
+							trait.setPrerequisites( text );
+						} else {
+							readUnknownElement();
+						}
 			}
 		}
 	}
@@ -339,3 +350,50 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_AbstractTra
 }
 
 
+void ReadXmlTemplate::readCreationTree( cv_Species::Species sp ) {
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			cv_AbstractTrait::Type type = cv_AbstractTrait::toType( name().toString() );
+
+			if ( type != cv_AbstractTrait::TypeNo ) {
+				cv_CreationPoints points;
+				points.species = sp;
+				points.type = type;
+				points.points = readCreationPoints();
+
+// 				qDebug() << Q_FUNC_INFO << points.species << points.type << points.points;
+
+				storage->appendCreationPoints( points );
+			} else {
+				readUnknownElement();
+			}
+		}
+	}
+}
+
+QList< int > ReadXmlTemplate::readCreationPoints() {
+	QList< int > resultList;
+	
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			if ( name() == "points" ) {
+				resultList.append( attributes().value( "value" ).toString().toInt() );
+				readUnknownElement();
+			} else {
+				readUnknownElement();
+			}
+		}
+	}
+
+	return resultList;
+}

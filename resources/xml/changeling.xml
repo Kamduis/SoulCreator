@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.5">
+	<creation species="Changeling">
+		<Power>
+			<points value="5"/>
+		</Power>
+	</creation>
 	<traits species="Changeling" morale="Clarity" supertrait="Wyrd" fuel="Glamour">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>

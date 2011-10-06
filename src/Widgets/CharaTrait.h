@@ -127,6 +127,7 @@ class CharaTrait : public TraitLine {
 		 * Signal soll ausgesandt werden.
 		 **/
 		void emitSpecialtiesClicked(bool sw);
+		void unclickButton(int val);
 		
 		/**
 		 * Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.

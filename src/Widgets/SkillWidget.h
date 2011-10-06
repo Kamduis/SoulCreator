@@ -72,7 +72,7 @@ class SkillWidget : public QWidget {
 		 * Alle Spezialisierungsknöpfe werden wieder auf Standard gesetzt.
 		 **/
 		void uncheckButtons();
-
+		
 	signals:
 		void specialtiesClicked(bool sw, QString skillName, QList< cv_TraitDetail > specialtyList);
 };

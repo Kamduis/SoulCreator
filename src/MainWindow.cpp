@@ -61,17 +61,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	setTitle("");
 	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
-	// Hier habe ich die Standardicons genommen, aber davon gibt es nur wenige und sie sehen nicht gut aus.
-	// Inzwischen lade ich die Symbole direkt über den QtDesigner
-// 	ui->actionNew->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
-// 	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
-// 	ui->actionSave->setIcon( style()->standardIcon( QStyle::SP_DriveFDIcon ) );
-// 	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
-// 	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
-
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
-	creation = new Creation( this );
 	readCharacter = new ReadXmlCharacter();
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
@@ -81,9 +72,10 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( ui->selectWidget_select, SIGNAL( currentRowChanged( int ) ), ui->stackedWidget_traits, SLOT( setCurrentIndex( int ) ) );
 	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( setTabButtonState( int ) ) );
 	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( selectSelectorItem( int ) ) );
-	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( showCreationPoints( int ) ) );
 
 	initialize();
+
+	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( showCreationPoints( int ) ) );
 
 	connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), this, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
@@ -195,12 +187,87 @@ void MainWindow::populateUi() {
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( disablePowerItem( cv_Species::SpeciesFlag ) ) );
 
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( showBackround( cv_Species::SpeciesFlag ) ) );
+}
 
+
+void MainWindow::activate() {
+	creation = new Creation( this );
 	// Schreibe die übrigen Erschaffungspunkte
-	connect( creation, SIGNAL( pointsChanged( cv_CreationPoints ) ), this, SLOT( showCreationPoints( cv_CreationPoints ) ) );
+	connect( creation, SIGNAL( pointsChanged() ), this, SLOT( showCreationPoints() ) );
 	connect( creation, SIGNAL( pointsDepleted( cv_AbstractTrait::Type ) ), this, SLOT( warnCreationPointsDepleted( cv_AbstractTrait::Type ) ) );
 	connect( creation, SIGNAL( pointsNegative( cv_AbstractTrait::Type ) ), this, SLOT( warnCreationPointsNegative( cv_AbstractTrait::Type ) ) );
 	connect( creation, SIGNAL( pointsPositive( cv_AbstractTrait::Type ) ), this, SLOT( warnCreationPointsPositive( cv_AbstractTrait::Type ) ) );
+
+	character->setSpecies(cv_Species::Human);
+
+	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
+	QList< Trait* >* list = character->traits();
+	for ( int i = 0; i < list->count(); i++ ) {
+		int valueOld = character->traits()->at( i )->value();
+		list->at( i )->setValue( 10 );
+		list->at( i )->clearDetails();
+
+		// Eine Änderung der Eigenschaften sorgt dafür, daß sich die verfügbaren Erschaffungspunkte verändern.
+		if (Creation::types().contains(list->at(i)->type()) ){
+			connect( list->at(i), SIGNAL( traitChanged( Trait* ) ), creation, SLOT( calcPoints( Trait* ) ) );
+		}
+
+		
+		// Löschen der Zeigerliste
+		list->at( i )->clearPrerequisitePtrs();
+		
+		for ( int j = 0; j < list->count(); j++ ) {
+			// Erst müssen die Voraussetzungen übersetzt werden, so daß direkt die Adressen im String stehen.
+			list->at( i )->addPrerequisitePtrs( list->at(j) );
+		}
+
+		// Danach verbinden wir die Signale, aber nur, wenn sie benötigt werden.
+		if (!list->at( i )->prerequisitePtrs().isEmpty()){
+// 			qDebug() << Q_FUNC_INFO << character->traits2()->at( i )->prerequisitPtrs();
+
+			for (int j = 0; j < list->at( i )->prerequisitePtrs().count(); j++){
+				connect (list->at(i)->prerequisitePtrs().at(j), SIGNAL(traitChanged(Trait*)), list->at(i), SLOT(checkPrerequisites(Trait*)));
+			}
+		}
+
+		// Alten Wert wiederherstellen.
+		list->at( i )->setValue( valueOld );
+	}
+
+	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
+	character->setSpecies( cv_Species::Human );
+
+	// Virtue und Vice müssen auch initial einmal festgelegt werden.
+	character->setVirtue( storage->virtueNames( cv_Trait::Adult ).at( 0 ) );
+
+	character->setVice( storage->viceNames( cv_Trait::Adult ).at( 0 ) );
+
+	// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
+	character->setModified( false );
+}
+
+
+void MainWindow::showSettingsDialog() {
+	SettingsDialog dialog;
+	if ( dialog.exec() ) {
+		// Ausführen der veränderten Einstellungen.
+// 		this->setFont(Config::windowFont);
+	}
+}
+
+void MainWindow::showCharacterTraits() {
+}
+
+void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
+// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
+
+	specialties->clear();
+
+	if ( sw ) {
+// 		qDebug() << Q_FUNC_INFO << "Test Specialties";
+		specialties->setSkill( skillName );
+		specialties->setSpecialties( specialtyList );
+	}
 }
 
 void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
@@ -243,74 +310,6 @@ void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
 // 	}
 }
 
-
-void MainWindow::showCharacterTraits() {
-}
-
-void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
-
-	specialties->clear();
-
-	if ( sw ) {
-// 		qDebug() << Q_FUNC_INFO << "Test Specialties";
-		specialties->setSkill( skillName );
-		specialties->setSpecialties( specialtyList );
-	}
-}
-
-
-void MainWindow::activate() {
-	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
-	QList< Trait* >* list = character->traits();
-	for ( int i = 0; i < list->count(); i++ ) {
-		int valueOld = character->traits()->at( i )->value();
-		list->at( i )->setValue( 10 );
-		list->at( i )->clearDetails();
-		
-		// Löschen der Zeigerliste
-		list->at( i )->clearPrerequisitePtrs();
-		
-		for ( int j = 0; j < list->count(); j++ ) {
-			// Erst müssen die Voraussetzungen übersetzt werden, so daß direkt die Adressen im String stehen.
-			list->at( i )->addPrerequisitePtrs( list->at(j) );
-		}
-
-		// Danach verbinden wir die Signale, aber nur, wenn sie benötigt werden.
-		if (!list->at( i )->prerequisitePtrs().isEmpty()){
-// 			qDebug() << Q_FUNC_INFO << character->traits2()->at( i )->prerequisitPtrs();
-
-			for (int j = 0; j < list->at( i )->prerequisitePtrs().count(); j++){
-				connect (list->at(i)->prerequisitePtrs().at(j), SIGNAL(traitChanged(Trait*)), list->at(i), SLOT(checkPrerequisites(Trait*)));
-			}
-		}
-
-		// Alten Wert wiederherstellen.
-		list->at( i )->setValue( valueOld );
-	}
-
-	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
-	character->setSpecies( cv_Species::Changeling );
-
-	character->setSpecies( cv_Species::Human );
-
-	// Virtue und Vice müssen auch initial einmal festgelegt werden.
-	character->setVirtue( storage->virtueNames( cv_Trait::Adult ).at( 0 ) );
-
-	character->setVice( storage->viceNames( cv_Trait::Adult ).at( 0 ) );
-
-	// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
-	character->setModified( false );
-}
-
-
-void MainWindow::showSettingsDialog() {
-	SettingsDialog dialog;
-	if ( dialog.exec() ) {
-		// Ausführen der veränderten Einstellungen.
-// 		this->setFont(Config::windowFont);
-	}
-}
 
 void MainWindow::tabPrevious() {
 	if ( ui->stackedWidget_traits->currentIndex() > 0 ) {
@@ -360,34 +359,34 @@ void MainWindow::setTabButtonState( int index ) {
 }
 
 void MainWindow::showCreationPoints( int idx ) {
-	ui->frame_creationPoints->setHidden( true );
-	ui->frame_creationPointsSpecialties->setHidden( true );
+	ui->label_pointsLeft->setHidden( true );
+// 	ui->frame_creationPointsSpecialties->setHidden( true );
 
 	if ( idx == 1 || idx == 2 || idx == 3 || idx == 5 ) {
-		ui->frame_creationPoints->setHidden( false );
+		ui->label_pointsLeft->setHidden( false );
 
 		if ( idx == 1 ) {
-			ui->label_pointsLeft->setText( creation->points().attributesOut() );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Attribute) );
 		} else if ( idx == 2 ) {
-			ui->frame_creationPointsSpecialties->setHidden( false );
-			ui->label_pointsLeft->setText( creation->points().skillsOut() );
+// 			ui->frame_creationPointsSpecialties->setHidden( false );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Skill) );
 		} else if ( idx == 3 ) {
-			ui->label_pointsLeft->setText( creation->points().meritsOut() );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Merit) );
 		} else if ( idx == 5 ) {
-			ui->label_pointsLeft->setText( creation->points().powersOut() );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Power) );
 		}
 	}
 }
 
-void MainWindow::showCreationPoints( cv_CreationPoints pt ) {
+void MainWindow::showCreationPoints() {
 	if ( ui->stackedWidget_traits->currentIndex() == 1 ) {
-		ui->label_pointsLeft->setText( creation->points().attributesOut() );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Attribute) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 2 ) {
-		ui->label_pointsLeft->setText( creation->points().skillsOut() );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Skill) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 3 ) {
-		ui->label_pointsLeft->setText( creation->points().meritsOut() );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Merit) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 5 ) {
-		ui->label_pointsLeft->setText( creation->points().powersOut() );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Power) );
 	}
 }
 

@@ -33,7 +33,7 @@
 #include "Datatypes/Trait.h"
 // #include "Datatypes/cv_IdentityList.h"
 #include "Datatypes/cv_SuperEffect.h"
-#include "Datatypes/cv_CreationPoints2.h"
+#include "Datatypes/cv_CreationPointsList.h"
 
 #include <QObject>
 
@@ -102,6 +102,8 @@ class StorageTemplate : public QObject {
 		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		 *
 		 * \note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
+		 *
+		 * \todo Vielleicht kann ich die Anzahl der at()s reduzieren durch speichern des Zeigers? vor den if-Abfragen und Zuweisungen. Gilt auch für ähnliche Funktionen.
 		 **/
 		QList< Trait* > traits(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
@@ -139,9 +141,9 @@ class StorageTemplate : public QObject {
 		int fuelPerTurn( cv_Species::Species species, int value );
 
 		/**
-		 * Gibt die insgesamt zur Verfügung stehenden Erschaffungspunkte zurück.
+		 * Gibt die für einen Eigenschaftstyp zur Verfügung stehenden Erschaffungspunkte zurück.
 		 **/
-		cv_CreationPoints2 creationPoints( cv_Species::Species species /** Für jede Spezies steht ein eigener Satz Erschaffungspunkte bereit. */ );
+		cv_CreationPointsList* creationPoints();
 
 	private:
 		/**
@@ -164,7 +166,7 @@ class StorageTemplate : public QObject {
 		/**
 		 * Eine Liste der Erschaffungspunkte. Jeder Listeneintrag steht für eine andere Spezies.
 		 **/
-		static QList< cv_CreationPoints2 > v_creationPoints;
+		static cv_CreationPointsList v_creationPointsList;
 
 	public slots:
 // 		/**
@@ -196,7 +198,7 @@ class StorageTemplate : public QObject {
 		 *
 		 * \sa v_creationPoints
 		 **/
-		void appendCreationPoints( cv_CreationPoints2 points );
+		void appendCreationPoints( cv_CreationPoints points );
 };
 
 #endif

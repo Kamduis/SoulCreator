@@ -203,8 +203,10 @@ class MainWindow : public QMainWindow {
 		void showBackround( cv_Species::SpeciesFlag spec );
 		/**
 		 * Zeigt die Anzahl der übrigen Punkte bei der Charaktererschaffung an.
+		 *
+		 * \todo Mit Wirkung versehen.
 		 **/
-		void showCreationPoints(cv_CreationPoints pt);
+		void showCreationPoints();
 		/**
 		 * Zeigt eine Warnung an, wenn nicht alle Erschafungspunkte vergeben wurden.
 		 *

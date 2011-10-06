@@ -28,6 +28,7 @@
 #include "Storage/StorageCharacter.h"
 // #include "Config/Config.h"
 #include "Datatypes/cv_Shape.h"
+#include "Datatypes/Trait.h"
 
 #include <QObject>
 

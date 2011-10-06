@@ -135,6 +135,14 @@ class ReadXmlTemplate : public QObject, public ReadXml {
 		 * Mit dieser Funktion werden die daten über die besondere Eigenschaft der spezies ausgelsen: Eigenschaftsmaxima, Energiespeicher etc.
 		 **/
 		void readSuperTrait( cv_Species::Species sp );
+		/**
+		 * Ab hier werden die Erschaffungspunkte ausgelesen.
+		 **/
+		void readCreationTree( cv_Species::Species sp );
+		/**
+		 * Das tatsächliche Auslesen erfolgt hier.
+		 **/
+		QList< int > readCreationPoints();
 
 	signals:
 		void oldVersion( QString, QString );

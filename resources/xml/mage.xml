@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.5">
+	<creation species="Mage">
+		<Power>
+			<points value="9"/>
+		</Power>
+	</creation>
 	<traits species="Mage" morale="Wisdom" supertrait="Gnosis" fuel="Mana">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>

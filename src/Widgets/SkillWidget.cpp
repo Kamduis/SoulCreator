@@ -131,6 +131,7 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 	}
 }
 
+
 void SkillWidget::uncheckButtons() {
 	// Da hinter jeder Box ein Stretch eingefügt ist, muß dieser übersprungen werden.
 	for ( int j = 0; j < scrollLayout->count(); j=j+2 ) {

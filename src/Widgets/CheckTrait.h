@@ -30,6 +30,7 @@
 #include <QCheckBox>
 
 #include "Storage/StorageCharacter.h"
+// #include "Datatypes/Trait.h"
 // #include "Datatypes/cv_Trait.h"
 
 #include <QWidget>

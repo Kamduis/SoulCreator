@@ -239,6 +239,16 @@ class StorageCharacter : public QObject {
 								  QList< cv_TraitDetail > details /** Liste der Spezialisierungen. */
 								);
 		/**
+		 * Fügt eine neue Spezialisierung hinzu.
+		 *
+		 * \warning Wenn die Spezialisierung schon existiert, wird sie nicht hinzugefügt.
+		 *
+		 * \todo Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen.
+		 **/
+		void addSkillSpecialties( QString name /** Name der Fertigkeit, zu welcher diese Spezialisierungen gehören. */,
+								  cv_TraitDetail detail /** Spezialisierung */
+								);
+		/**
 		 * Fügt dem Speicher eine neue Eigenschaft hinzu.
 		 *
 		 * \return Es wird ein Zeiger auf diese Eigenschaft zurückgegeben.

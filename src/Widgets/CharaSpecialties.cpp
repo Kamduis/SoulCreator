@@ -46,12 +46,10 @@ void CharaSpecialties::saveSpecialties( QStringList list ) {
 	for ( int i = 0; i < list.count(); i++ ) {
 		cv_TraitDetail detail;
 		detail.name = list.at( i );
-		specialties.append( detail );
-
-// 		qDebug() << Q_FUNC_INFO << "Speichere" << specialties.at( i ).name << "von" << skill();
+		detail.value = true;
+		
+		character->addSkillSpecialties(skill(), detail);
 	}
-
-	character->setSkillSpecialties( skill(), specialties );
 }
 
 

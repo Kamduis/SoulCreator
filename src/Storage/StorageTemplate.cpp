@@ -34,7 +34,7 @@ QList< cv_Species > StorageTemplate::v_species;
 QList< cv_SpeciesTitle > StorageTemplate::v_titles;
 QList< Trait* > StorageTemplate::v_traits;
 QList< cv_SuperEffect > StorageTemplate::v_superEffects;
-QList< cv_CreationPoints2 > StorageTemplate::v_creationPoints;
+cv_CreationPointsList StorageTemplate::v_creationPointsList;
 
 StorageTemplate::StorageTemplate( QObject *parent ) : QObject( parent ) {
 }
@@ -281,15 +281,14 @@ int StorageTemplate::fuelPerTurn( cv_Species::Species species, int value ) {
 }
 
 
-cv_CreationPoints2 StorageTemplate::creationPoints( cv_Species::Species species ) {
-	for ( int i = 0; i < v_creationPoints.count(); i++ ) {
-		if ( species == v_creationPoints.at( i ).species ) {
-			return v_creationPoints.at( i );
-		}
-	}
+cv_CreationPointsList* StorageTemplate::creationPoints() {
+	return &v_creationPointsList;
 }
-void StorageTemplate::appendCreationPoints( cv_CreationPoints2 points ) {
-	if ( !v_creationPoints.contains( points ) ) {
-		v_creationPoints.append( points );
+void StorageTemplate::appendCreationPoints( cv_CreationPoints points ) {
+// 	qDebug() << Q_FUNC_INFO << "Füge creationPoints hinzu!";
+	if ( !v_creationPointsList.contains( points ) ) {
+		v_creationPointsList.append( points );
+	} else {
+		qDebug() << Q_FUNC_INFO << "Gibt es schon!";
 	}
 }

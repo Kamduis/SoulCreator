@@ -46,6 +46,7 @@ CharaTrait::CharaTrait( QWidget* parent, Trait* trait, Trait* traitStorage ) : T
 	connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_AbstractTrait::Type ) ) );
 	connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 	connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
+	connect( traitPtr(), SIGNAL( detailsChanged(int)), this, SLOT( unclickButton( int ) ) );
 
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 	connect( traitPtr(), SIGNAL( valueChanged( int ) ), this, SLOT( setValue( int ) ) );
@@ -177,12 +178,12 @@ void CharaTrait::emitSpecialtiesClicked( bool sw ) {
 		QList< cv_TraitDetail > listStora = ptr_traitStorage->details();
 		QList< cv_TraitDetail > listChara = traitPtr()->details();
 
-		qDebug() << Q_FUNC_INFO << traitPtr()->name() << ptr_traitStorage->name() << traitPtr()->details().count() << ptr_traitStorage->details().count();
+// 		qDebug() << Q_FUNC_INFO << traitPtr()->name() << ptr_traitStorage->name() << traitPtr()->details().count() << ptr_traitStorage->details().count();
 
 		for ( int i = 0; i < listStora.count(); i++ ) {
 			for ( int j = 0; j < listChara.count(); j++ ) {
 				if ( listStora.at( i ).name == listChara.at( j ).name ) {
-					qDebug() << Q_FUNC_INFO << sw << listStora.at( i ).name << listChara.at( j ).name << listChara.at( j ).value;
+// 					qDebug() << Q_FUNC_INFO << sw << listStora.at( i ).name << listChara.at( j ).name << listChara.at( j ).value;
 					cv_TraitDetail traitDetail = listChara.at( j );
 					listStora.replace( i, traitDetail );
 				}
@@ -192,6 +193,15 @@ void CharaTrait::emitSpecialtiesClicked( bool sw ) {
 		emit specialtiesClicked( sw, name(), listStora );
 	}
 }
+void CharaTrait::unclickButton( int val )
+{
+// 	qDebug() << Q_FUNC_INFO << val;
+	if (val < 1){
+		setSpecialtyButtonChecked(false);
+		emit specialtiesClicked( false, name(), ptr_traitStorage->details());
+	}
+}
+
 
 
 void CharaTrait::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {

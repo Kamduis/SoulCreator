@@ -39,6 +39,8 @@
  * \brief Führt das Drucken des Charakters aus.
  *
  * Mit Hilfe dieser Klasse können die Charakterwerte auf Papier gebannt werden.
+ *
+ * \todo Bei Werwölfen wird die Rites-Kraft noch nicht beim Zeichnen der Kräfte unter Renown berücksichtigt.
  **/
 
 class DrawSheet : public QObject {
