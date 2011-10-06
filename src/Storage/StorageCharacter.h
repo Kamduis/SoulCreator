@@ -25,12 +25,12 @@
 #ifndef STORAGECHARACTER_H
 #define STORAGECHARACTER_H
 
-#include "Datatypes/cv_Identity.h"
+// #include "Datatypes/cv_Identity.h"
 #include "Datatypes/cv_IdentityList.h"
-#include "Datatypes/cv_Trait.h"
-#include "Datatypes/Trait.h"
+// #include "Datatypes/Trait.h"
+// #include "Datatypes/Trait.h"
 #include "Datatypes/cv_Derangement.h"
-#include "Datatypes/cv_CreationPoints.h"
+// #include "Datatypes/cv_CreationPoints.h"
 #include "StorageTemplate.h"
 
 #include <QObject>
@@ -126,17 +126,17 @@ class StorageCharacter : public QObject {
 		/**
 		 * Gibt eine Liste \emph{aller} Eigenschaften des Charkaters aus.
 		 **/
-		QList< cv_Trait >* traits() const;
+		QList< Trait* >* traits() const;
 		/**
 		 * Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 **/
-		QList< cv_Trait* > traits( cv_Trait::Type type ) const;
+		QList< Trait* > traits( cv_AbstractTrait::Type type ) const;
 		/**
 		 * Gibt eine Liste von Zeigern auf alle Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind.
 		 *
-		 * \overload QList< cv_Trait* > traits( cv_Trait::Type type )
+		 * \overload QList< cv_Trait* > traits( cv_AbstractTrait::Type type )
 		 **/
-		QList< cv_Trait* > traits( cv_Trait::Type type, cv_Trait::Category category ) const;
+		QList< Trait* > traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const;
 		/**
 		 * Gibt eine Liste aller Geistesstörungen des Charkaters aus.
 		 **/
@@ -146,7 +146,7 @@ class StorageCharacter : public QObject {
 		 *
 		 * \overload QList< cv_Derangement* > derangements()
 		 **/
-		QList< cv_Derangement* > derangements( cv_Trait::Category category ) const;
+		QList< cv_Derangement* > derangements( cv_AbstractTrait::Category category ) const;
 		/**
 		 * Gibt den Wert des Super-Attributs aus.
 		 **/
@@ -173,7 +173,7 @@ class StorageCharacter : public QObject {
 		 **/
 		bool isModifed() const;
 
-private:
+	private:
 		StorageTemplate* storage;
 		/**
 		 * Die Spezies des Charakters.
@@ -196,10 +196,6 @@ private:
 		static QString v_vice;
 		static QString v_breed;
 		static QString v_faction;
-		/**
-		 * Eine Liste aller Eigenschaften.
-		 **/
-		static QList< cv_Trait > v_traits;
 		/**
 		 * Eine Liste aller Eigenschaften.
 		 **/
@@ -243,15 +239,15 @@ private:
 								  QList< cv_TraitDetail > details /** Liste der Spezialisierungen. */
 								);
 		/**
-		 * Fügt dem Speicher eine neue Eigenschaft hinzu.
+		 * Fügt eine neue Spezialisierung hinzu.
 		 *
-		 * \return Es wird ein Zeiger auf diese Eigenschaft zurückgegeben.
+		 * \warning Wenn die Spezialisierung schon existiert, wird sie nicht hinzugefügt.
 		 *
-		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
-		 *
-		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
+		 * \todo Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen.
 		 **/
-		cv_Trait* addTrait( cv_Trait trait );
+		void addSkillSpecialties( QString name /** Name der Fertigkeit, zu welcher diese Spezialisierungen gehören. */,
+								  cv_TraitDetail detail /** Spezialisierung */
+								);
 		/**
 		 * Fügt dem Speicher eine neue Eigenschaft hinzu.
 		 *
@@ -259,7 +255,7 @@ private:
 		 *
 		 * \note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
 		 *
-		 * \note Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
+		 * \todo Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 		 **/
 		Trait* addTrait( Trait* trait );
 		/**
@@ -331,9 +327,14 @@ private:
 		void setModified( bool sw = true /** 'true' -> der Charakter wurde verändert, 'false' -> der Charakter wurde \emph{nicht} verändert */ );
 
 	private slots:
+		void emitNameChanged( cv_Identity id );
 // 		void emitSpeciesChanged( cv_Species::SpeciesFlag species );
 
 	signals:
+		/**
+		* Dieses Signal wird ausgesandt, wann immer der Charakter ein Reset erfährt.
+		**/
+		void characterResetted();
 		/**
 		* Dieses Signal wird ausgesandt, wann immer eine Identität des Charakters verändert wird.
 		**/
@@ -342,6 +343,7 @@ private:
 		* Dieses Signal wird ausgesandt, wann immer sich der echte Name des Charakters ändert.
 		**/
 		void realIdentityChanged( cv_Identity id );
+		void nameChanged(QString name);
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Spezies des Charakters ändert.
 		**/
@@ -350,6 +352,10 @@ private:
 		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
 		**/
 		void traitChanged( cv_Trait* trait );
+		/**
+		* Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert.
+		**/
+		void traitChanged( Trait* trait );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich eine Geistesstörung ändert.
 		**/

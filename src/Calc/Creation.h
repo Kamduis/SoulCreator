@@ -25,16 +25,14 @@
 #ifndef CREATION_H
 #define CREATION_H
 
-#include "Datatypes/cv_Trait.h"
-#include "Datatypes/cv_CreationPoints.h"
+// #include "Datatypes/cv_Trait.h"
+#include "Datatypes/cv_CreationPointsList.h"
 #include "Storage/StorageCharacter.h"
 
 #include <QObject>
 
 /**
  * \brief Berechnet die verbleibenden Punkte bei der Charaktererschaffung.
- *
- * \todo Powers werden noch nicht berücksichtigt.
  */
 
 class Creation : public QObject {
@@ -42,13 +40,18 @@ class Creation : public QObject {
 
 	public:
 		Creation( QObject* parent = 0 );
+		~Creation();
 
 		/**
 		 * Gibt die Anzahl der noch verfügbaren Punkte bei der Charaktererschaffung zurück.
 		 *
 		 * \note Bevor die Anzahl der freien Punkte ausgegeben wird, wird sie jedesmal berechnet.
 		 **/
-		cv_CreationPoints points() const;
+		cv_CreationPointsList pointsList() const;
+		/**
+		 * Gibt alle Eigenschaftstypen aus, bei denen die Berechnung der freien Erschaffungspunkte überhaupt nötig ist.
+		 **/
+		static QList< cv_AbstractTrait::Type > types();
 
 		
 	private:
@@ -56,9 +59,10 @@ class Creation : public QObject {
 		 * Zeiger auf die Klasse, welche sämtliche Charaterwerte enthält. Eine Änderung der Werte in dieser Klasse sorgen dafür, daß sich auch die Anzeige anpaßt. Und ändert man einen Wert in der Anzeige, wird automatisch die dadurch repräsentierte Eigenschaft in dieser Klasse verändert.
 		 */
 		StorageCharacter* character;
+		StorageTemplate* storage;
 
-		static const QList< cv_Trait::Type > v_types;
-		cv_CreationPoints v_points;
+		static const QList< cv_AbstractTrait::Type > v_types;
+		cv_CreationPointsList v_pointsList;
 
 	public slots:
 		/**
@@ -66,13 +70,13 @@ class Creation : public QObject {
 		 *
 		 * \note Sendet das Signal creationPointsChanged() aus.
 		 **/
-		void setPoints( cv_CreationPoints points );
-
-	private slots:
+		void setPoints( cv_CreationPointsList pts );
 		/**
 		 * Berechnet die noch verfügbaren Punkte.
 		 **/
-		void calcPoints( cv_Trait* trait );
+		void calcPoints( Trait* trait );
+
+	private slots:
 		/**
 		 * Kontrolliert, ob die Punkte erschöpft sind oder gar übermäßig ausgeschöpft wurden und sendet entsprechende Signale aus.
 		 *
@@ -82,25 +86,25 @@ class Creation : public QObject {
 		 *
 		 * \sa pointsPositive
 		 **/
-		void controlPoints(cv_CreationPoints points );
+		void controlPoints();
 
 	signals:
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte ändert.
 		**/
-		void pointsChanged( cv_CreationPoints points );
+		void pointsChanged();
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ erschöpft.
 		**/
-		void pointsDepleted( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte erschöpft sind. */ );
+		void pointsDepleted( cv_AbstractTrait::Type type /** Dies ist der Typ, dessen Punkte erschöpft sind. */ );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ ändert und das Resultat negativ ist.
 		**/
-		void pointsNegative( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
+		void pointsNegative( cv_AbstractTrait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
 		/**
 		* Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ ändert und das Resultat positiv ist.
 		**/
-		void pointsPositive( cv_Trait::Type type /** Dies ist der Typ, dessen Punkte negativ sind. */ );
+		void pointsPositive( cv_AbstractTrait::Type type /** Dies ist der Typ, dessen Punkte positiv sind. */ );
 };
 
 #endif

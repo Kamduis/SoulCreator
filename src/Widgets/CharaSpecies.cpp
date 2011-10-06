@@ -24,8 +24,8 @@
 
 #include <QDebug>
 
-#include "Storage/StorageTemplate.h"
-#include "Storage/StorageCharacter.h"
+// #include "Storage/StorageTemplate.h"
+// #include "Storage/StorageCharacter.h"
 #include "Exceptions/Exception.h"
 
 #include "CharaSpecies.h"

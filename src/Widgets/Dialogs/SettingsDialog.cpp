@@ -27,7 +27,7 @@
 #include <QDebug>
 
 #include "Config/Config.h"
-#include "Exceptions/Exception.h"
+// #include "Exceptions/Exception.h"
 
 #include "SettingsDialog.h"
 #include "ui_SettingsDialog.h"

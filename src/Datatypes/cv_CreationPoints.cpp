@@ -23,86 +23,83 @@
  */
 
 
-#include "Config/Config.h"
-#include "Exceptions/Exception.h"
+#include <QStringList>
+
+// #include "Config/Config.h"
+// #include "Exceptions/Exception.h"
 
 #include "cv_CreationPoints.h"
 
 
 cv_CreationPoints::cv_CreationPoints() {
-	attributesA = Config::creationPointsAttA;
-	attributesB = Config::creationPointsAttB;
-	attributesC = Config::creationPointsAttC;
-	skillsA = Config::creationPointsSkillA;
-	skillsB = Config::creationPointsSkillA;
-	skillsC = Config::creationPointsSkillA;
-	skillSpecialties = Config::creationPointsSkillSpecialties;
-	merits = Config::creationPointsMerits;
-	powers = 0;
+	points = QList<int>();
 }
 
 
-QString cv_CreationPoints::outputPoint( int val ) {
-	if ( val < 0 ) {
-		return "<font color='red'>" + QString::number( val ) + "</font>";
-	}
-	return QString::number(val);
-}
+// QString cv_CreationPoints2::outputPoint( int val ) {
+// 	if ( val < 0 ) {
+// 		return "<font color='red'>" + QString::number( val ) + "</font>";
+// 	}
+// 	return QString::number( val );
+// }
+// 
+// 
+// QString cv_CreationPoints2::attributesOut() {
+// 	QStringList resultList;
+// 
+// 	for ( int i = 0; i < attributes.count(); i++ ) {
+// 		resultList.append( outputPoint( attributes.at( i ) ) );
+// 	}
+// 
+// 	return resultList.join( "/" );
+// }
+// 
+// QString cv_CreationPoints2::skillsOut() {
+// 	QStringList resultList;
+// 
+// 	for ( int i = 0; i < skills.count(); i++ ) {
+// 		resultList.append( outputPoint( skills.at( i ) ) );
+// 	}
+// 
+// 	return resultList.join( "/" );
+// }
+// 
+// QString cv_CreationPoints2::skillSpecialtiesOut() {
+// 	return outputPoint( skillSpecialties );
+// }
+// 
+// QString cv_CreationPoints2::meritsOut() {
+// 	return outputPoint( merits );
+// }
+// 
+// QString cv_CreationPoints2::powersOut() {
+// 	return outputPoint( powers );
+// }
 
 
-
-QString cv_CreationPoints::attributesOut() {
-	return outputPoint( attributesA ) + "/" + outputPoint( attributesB ) + "/" + outputPoint( attributesC );
-}
-
-QString cv_CreationPoints::skillsOut() {
-	return outputPoint( skillsA ) + "/" + outputPoint( skillsB ) + "/" + outputPoint( skillsC );
-}
-
-QString cv_CreationPoints::meritsOut() {
-	return outputPoint( merits );
-}
-
-QString cv_CreationPoints::powersOut() {
-	return outputPoint( powers );
-}
-
-
-bool cv_CreationPoints::operator==( const cv_CreationPoints& points ) const {
-	if ( this == &points ) {
+bool cv_CreationPoints::operator==( const cv_CreationPoints& pts ) const {
+	if ( this == &pts ) {
 		return true;
 	}
 
-	bool result = attributesA == points.attributesA &&
-
-				  attributesB == points.attributesB &&
-				  attributesC == points.attributesC &&
-				  skillsA == points.skillsA &&
-				  skillsB == points.skillsB &&
-				  skillsC == points.skillsC &&
-				  skillSpecialties == points.skillSpecialties &&
-				  merits == points.merits &&
-				  powers == points.powers;
+	bool result = species == pts.species &&
+				  type == pts.type &&
+				  points == pts.points;
 
 	return result;
 }
 
-bool cv_CreationPoints::operator!=( const cv_CreationPoints& points ) const {
-	if ( this == &points ) {
-		return false;
-	}
-
-	bool result = attributesA != points.attributesA ||
-
-				  attributesB != points.attributesB ||
-				  attributesC != points.attributesC ||
-				  skillsA != points.skillsA ||
-				  skillsB != points.skillsB ||
-				  skillsC != points.skillsC ||
-				  skillSpecialties != points.skillSpecialties ||
-				  merits != points.merits ||
-				  powers != points.powers;
-
-	return result;
-}
-
+// bool cv_CreationPoints2::operator!=( const cv_CreationPoints2& points ) const {
+// 	if ( this == &points ) {
+// 		return false;
+// 	}
+// 
+// 	bool result = species != points.species ||
+// 				  attributes != points.attributes ||
+// 				  skills != points.skills ||
+// 				  skillSpecialties != points.skillSpecialties ||
+// 				  merits != points.merits ||
+// 				  powers != points.powers;
+// 
+// 	return result;
+// }

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.5">
+	<creation species="Vampire">
+		<Power>
+			<points value="3"/>
+		</Power>
+	</creation>
 	<traits species="Vampire" morale="Humanity" supertrait="Blood Potency" fuel="Vitae">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
@@ -140,47 +145,105 @@
 				</trait>
 			</Extraordinary>
 		</Merit>
-		<Power>
-			<trait name="Animalism">
-				<cheap>Gangrel</cheap>
-				<cheap>Ventrue</cheap>
-				<cheap>Julii</cheap>
-			</trait>
-			<trait name="Auspex">
-				<cheap>Mekhet</cheap>
-			</trait>
-			<trait name="Celerity">
-				<cheap>Daeva</cheap>
-				<cheap>Mekhet</cheap>
-			</trait>
-			<trait name="Dominate">
-				<cheap>Ventrue</cheap>
-			</trait>
-			<trait name="Nightmare">
-				<cheap>Nosferatu</cheap>
-			</trait>
-			<trait name="Obtenebration">
-				<cheap>Julii</cheap>
-			</trait>
-			<trait name="Obfuscate">
-				<cheap>Mekhet</cheap>
-				<cheap>Nosferatu</cheap>
-			</trait>
-			<trait name="Presence">
-				<cheap>Daeva</cheap>
-			</trait>
-			<trait name="Protean">
-				<cheap>Gangrel</cheap>
-			</trait>
-			<trait name="Resilience">
-				<cheap>Gangrel</cheap>
-				<cheap>Ventrue</cheap>
-			</trait>
-			<trait name="Vigor">
-				<cheap>Daeva</cheap>
-				<cheap>Nosferatu</cheap>
-				<cheap>Julii</cheap>
-			</trait>
+		<Power name="Disciplines">
+			<Primary name="Disciplines">
+				<trait name="Animalism">
+					<cheap>Gangrel</cheap>
+					<cheap>Ventrue</cheap>
+					<cheap>Julii</cheap>
+				</trait>
+				<trait name="Auspex">
+					<cheap>Mekhet</cheap>
+				</trait>
+				<trait name="Celerity">
+					<cheap>Daeva</cheap>
+					<cheap>Mekhet</cheap>
+				</trait>
+				<trait name="Dominate">
+					<cheap>Ventrue</cheap>
+				</trait>
+				<trait name="Nightmare">
+					<cheap>Nosferatu</cheap>
+				</trait>
+				<trait name="Obtenebration">
+					<cheap>Julii</cheap>
+				</trait>
+				<trait name="Obfuscate">
+					<cheap>Mekhet</cheap>
+					<cheap>Nosferatu</cheap>
+				</trait>
+				<trait name="Presence">
+					<cheap>Daeva</cheap>
+				</trait>
+				<trait name="Protean">
+					<cheap>Gangrel</cheap>
+				</trait>
+				<trait name="Resilience">
+					<cheap>Gangrel</cheap>
+					<cheap>Ventrue</cheap>
+				</trait>
+				<trait name="Vigor">
+					<cheap>Daeva</cheap>
+					<cheap>Nosferatu</cheap>
+					<cheap>Julii</cheap>
+				</trait>
+			</Primary>
+			<Secondary name="Bloodline Disciplines">
+				<trait name="Abjurism">
+				</trait>
+				<trait name="Asphyx">
+				</trait>
+				<trait name="Bloodworking">
+				</trait>
+				<trait name="Blut Alchemie">
+				</trait>
+				<trait name="Cachaxy">
+				</trait>
+				<trait name="Cattiveria">
+				</trait>
+				<trait name="Crochan">
+				</trait>
+				<trait name="Domus">
+				</trait>
+				<trait name="Getsumei">
+				</trait>
+				<trait name="Kamen">
+				</trait>
+				<trait name="Kingian">
+				</trait>
+				<trait name="Licencieux">
+				</trait>
+				<trait name="Linagem">
+				</trait>
+				<trait name="Mimetismo">
+				</trait>
+				<trait name="Nepenthe">
+				</trait>
+				<trait name="Stigmatica">
+				</trait>
+				<trait name="Sunnikuse">
+				</trait>
+				<trait name="Xinyao">
+				</trait>
+			</Secondary>
+			<Tertiary name="Blood Sorcery">
+				<trait name="Abjurism">
+				</trait>
+				<trait name="Cruac">
+				</trait>
+				<trait name="Veneficia">
+				</trait>
+				<trait name="Coils of the Dragon">
+				</trait>
+<!--				<trait name="Coil of the Beast">
+				</trait>
+				<trait name="Coil of Flesh">
+				</trait>
+				<trait name="Coil of Slumber">
+				</trait>
+				<trait name="Coil of the Soul">
+				</trait>-->
+			</Tertiary>
 		</Power>
 		<Derangement>
 			<Mild>

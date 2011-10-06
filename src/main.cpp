@@ -23,8 +23,8 @@
  */
 
 /**
- * \author Roman von Rhein
- * 
+ * \author Victor von Rhein
+ *
  * \mainpage Hauptseite
  *
  * \section Zweck

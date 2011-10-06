@@ -24,138 +24,149 @@
 
 #include <QDebug>
 
-#include "Exceptions/Exception.h"
+// #include "Exceptions/Exception.h"
 #include "Config/Config.h"
 
 #include "Creation.h"
 
 
-const QList< cv_Trait::Type > Creation::v_types = QList< cv_Trait::Type >()
-		<< cv_Trait::Attribute
-		<< cv_Trait::Skill
-		<< cv_Trait::Merit
-		<< cv_Trait::Power;
+const QList< cv_AbstractTrait::Type > Creation::v_types = QList< cv_AbstractTrait::Type >()
+		<< cv_AbstractTrait::Attribute
+		<< cv_AbstractTrait::Skill
+		<< cv_AbstractTrait::Merit
+		<< cv_AbstractTrait::Power;
+
+QList< cv_AbstractTrait::Type > Creation::types() {
+	return v_types;
+}
 
 
 Creation::Creation( QObject* parent ): QObject( parent ) {
-	v_points = cv_CreationPoints();
-
 	character = StorageCharacter::getInstance();
+	storage = new StorageTemplate( this );
 
-	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( calcPoints( cv_Trait* ) ) );
-	connect( this, SIGNAL(pointsChanged(cv_CreationPoints)), this, SLOT( controlPoints(cv_CreationPoints) ));
+	v_pointsList = *storage->creationPoints();
+
+	connect( this, SIGNAL( pointsChanged() ), this, SLOT( controlPoints() ) );
+	connect( character, SIGNAL( speciesChanged(cv_Species::SpeciesFlag)), this, SLOT( controlPoints() ) );
+}
+
+Creation::~Creation() {
+	delete storage;
 }
 
 
-cv_CreationPoints Creation::points() const {
-	return v_points;
+
+cv_CreationPointsList Creation::pointsList() const {
+	return v_pointsList;
 }
 
-void Creation::setPoints( cv_CreationPoints points ) {
-	if ( v_points != points ) {
-		v_points = points;
+void Creation::setPoints( cv_CreationPointsList pts ) {
+	if ( v_pointsList != pts ) {
+		v_pointsList = pts;
 
-		emit pointsChanged( points );
+		emit pointsChanged();
 	}
 }
 
-void Creation::calcPoints( cv_Trait* trait ) {
-// 	qDebug() << Q_FUNC_INFO << trait->type << "<->" << v_types;
-	if ( v_types.contains( trait->v_type ) ) {
-		QList< cv_Trait* > list;
-		QList< int > pointList;
-		// Nur bei Attributen und Fertigkeiten sind die zu verteilenden Punkte zwischen den Kategorien aufgeteilt.
+void Creation::calcPoints( Trait* trait ) {
+	QList< Trait* > list;
+	QList< int > pointList;
+	QList< cv_AbstractTrait::Category > categories = cv_AbstractTrait::getCategoryList( trait->type() );
 
-		if ( trait->v_type == cv_Trait::Attribute || trait->v_type == cv_Trait::Skill ) {
-			QList< cv_Trait::Category > categories = cv_Trait::getCategoryList( trait->v_type );
+	// Für die Fertigkeitsspezialisierungen.
+	int dets = 0;
+	
+	for ( int i = 0; i < categories.count(); i++ ) {
+		int pts = 0;
 
-			for ( int i = 0; i < categories.count(); i++ ) {
-				int pts = 0;
+		list = character->traits( trait->type(), categories.at( i ) );
 
-				list = character->traits( trait->v_type, categories.at( i ) );
+		for ( int j = 0; j < list.count(); j++ ) {
+			// Alle Punkte über 4 kosten 2 Erschaffungspunkte
+			int ans = list.at( j )->value() - Config::creationTraitDouble;
 
-				for ( int j = 0; j < list.count(); j++ ) {
-					// Alle Punkte über 4 kosten 2 Erschaffungspunkte
-					int ans = list.at( j )->value() - Config::creationTraitDouble;
-
-					if ( ans < 0 ) {
-						ans = 0;
-					}
-
-					pts += list.at( j )->value() - ans;
-
-					pts += ans * 2;
-				}
-
-				pointList.append( pts );
+			if ( ans < 0 ) {
+				ans = 0;
 			}
 
-			// Liste wird nach größe sortiert, damit steht die größte Zahl ganz am Anfang un danach absteigend.
-			qSort( pointList );
+			pts += list.at( j )->value() - ans;
 
-			// Bei Attributen ist der jeweils erste Punkt umsonst.
-			if ( trait->v_type == cv_Trait::Attribute ) {
-				v_points.attributesA = Config::creationPointsAttA + 3 - pointList.at( 2 );
-				v_points.attributesB = Config::creationPointsAttB + 3 - pointList.at( 1 );
-				v_points.attributesC = Config::creationPointsAttC + 3 - pointList.at( 0 );
-			} else if ( trait->v_type == cv_Trait::Skill ) {
-				v_points.skillsA = Config::creationPointsSkillA - pointList.at( 2 );
-				v_points.skillsB = Config::creationPointsSkillB - pointList.at( 1 );
-				v_points.skillsC = Config::creationPointsSkillC - pointList.at( 0 );
-			}
-		} else {
-			int pts = 0;
+			pts += ans * 2;
 
-			list = character->traits( trait->v_type );
-
-			for ( int j = 0; j < list.count(); j++ ) {
-				// Alle Punkte über 4 kosten 2 Erschaffungspunkte
-				int ans = list.at( j )->value() - Config::creationTraitDouble;
-
-				if ( ans < 0 ) {
-					ans = 0;
-				}
-
-				pts += list.at( j )->value() - ans;
-
-				pts += ans * 2;
-			}
-
-			if ( trait->v_type == cv_Trait::Merit ) {
-				v_points.merits = Config::creationPointsMerits - pts;
+			if (!list.at(j)->details().isEmpty()) {
+				dets += list.at(j)->details().count();
+// 				qDebug() << Q_FUNC_INFO << dets;
 			}
 		}
 
-// 		qDebug() << Q_FUNC_INFO << pointList;
-
-		emit pointsChanged( points() );
+		pointList.append( pts );
 	}
+
+	// Liste wird nach Größe sortiert, damit steht die größte Zahl ganz am Anfang un danach absteigend.
+	qSort( pointList );
+
+	// Natürlich gilt das nicht für den Eintrag des Spezialisierungen, die immer am Anfang stehen.
+	// Am Anfang deswegen, weil qSort von Klein nach groß sortiert, und ich deswegen von hinten die Liste auslese.
+	if (trait->type() == cv_AbstractTrait::Skill){
+		pointList.prepend( dets );
+	}
+
+	// Bei Attributen ist der jeweils erste Punkt umsonst.
+	if ( trait->type() == cv_AbstractTrait::Attribute ) {
+		for ( int i = 0; i < pointList.count(); i++ ) {
+			v_pointsList.pointList( character->species(), trait->type() )->operator[]( i ) = storage->creationPoints()->pointList( character->species(), trait->type() )->at( i ) + 3 - pointList.at( pointList.count() - 1 - i );
+
+// 			qDebug() << Q_FUNC_INFO << *v_pointsList.pointList(character->species(), trait->type());
+		}
+	} else
+		if ( trait->type() == cv_AbstractTrait::Merit || trait->type() == cv_AbstractTrait::Power ) {
+			int sum = 0;
+
+			for ( int i = 0; i < pointList.count(); i++ ) {
+				sum += pointList.at( i );
+			}
+
+			v_pointsList.pointList( character->species(), trait->type() )->operator[]( 0 ) = storage->creationPoints()->pointList( character->species(), trait->type() )->at( 0 ) - sum;
+
+// 			qDebug() << Q_FUNC_INFO << *v_pointsList.pointList(character->species(), trait->type()) << character->species() << trait->type();
+		} else {
+			for ( int i = 0; i < pointList.count(); i++ ) {
+// 			qDebug() << Q_FUNC_INFO << pointList.count();
+
+				v_pointsList.pointList( character->species(), trait->type() )->operator[]( i ) = storage->creationPoints()->pointList( character->species(), trait->type() )->at( i ) - pointList.at( pointList.count() - 1 - i );
+
+// 			qDebug() << Q_FUNC_INFO << *v_pointsList.pointList(character->species(), trait->type());
+			}
+		}
+
+	emit pointsChanged();
 }
 
-void Creation::controlPoints( cv_CreationPoints points )
-{
-	if (points.attributesA == 0 && points.attributesB == 0 && points.attributesC == 0){
-		emit pointsDepleted(cv_Trait::Attribute);
-	} else if (points.attributesA < 0 || points.attributesB < 0 || points.attributesC < 0){
-		emit pointsNegative(cv_Trait::Attribute);
-	} else {
-		emit pointsPositive(cv_Trait::Attribute);
-	}
 
-	if (points.skillsA == 0 && points.skillsB == 0 && points.skillsC == 0){
-		emit pointsDepleted(cv_Trait::Skill);
-	} else if (points.skillsA < 0 || points.skillsB < 0 || points.skillsC < 0){
-		emit pointsNegative(cv_Trait::Skill);
-	} else {
-		emit pointsPositive(cv_Trait::Skill);
-	}
+void Creation::controlPoints() {
+	for ( int i = 0; i < v_types.count(); i++ ) {
+		bool isZero = true;
+		bool isNegative = false;
 
-	if (points.merits == 0){
-		emit pointsDepleted(cv_Trait::Merit);
-	} else if (points.merits < 0){
-		emit pointsNegative(cv_Trait::Merit);
-	} else {
-		emit pointsPositive(cv_Trait::Merit);
+		for ( int j = 0; j < v_pointsList.pointList( character->species(), v_types.at( i ) )->count(); j++ ) {
+			if ( v_pointsList.pointList( character->species(), v_types.at( i ) )->at( j ) < 0 ) {
+				// Wenn schon eine Kategorie negativ ist, muß ich nicht weiterkontrollieren.
+				isNegative = true;
+				break;
+			} else if ( v_pointsList.pointList( character->species(), v_types.at( i ) )->at( j ) != 0 ) {
+				isZero = false;
+			}
+		}
+
+		if (isNegative){
+			emit pointsNegative( v_types.at( i ) );
+			continue;
+		} else if ( isZero ) {
+			emit pointsDepleted( v_types.at( i ) );
+		} else {
+			emit pointsPositive( v_types.at( i ) );
+		}
 	}
 }
 

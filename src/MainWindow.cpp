@@ -24,26 +24,27 @@
 
 #include <QCloseEvent>
 #include <QDir>
-#include <QFile>
+// #include <QFile>
 #include <QFileDialog>
-#include <QMessageBox>
+// #include <QMessageBox>
 #include <QPrintDialog>
-#include <QPrinter>
+// #include <QPrinter>
 #include <QTimer>
+// #include <QGtkStyle>
 #include <QDebug>
 
-#include "Calc/Creation.h"
-#include "Config/Config.h"
-#include "Datatypes/cv_Trait.h"
-#include "Exceptions/Exception.h"
+// #include "Calc/Creation.h"
+// #include "Config/Config.h"
+// #include "Datatypes/cv_Trait.h"
+// #include "Exceptions/Exception.h"
 #include "IO/ReadXmlTemplate.h"
 #include "IO/Settings.h"
-#include "Storage/StorageCharacter.h"
+// #include "Storage/StorageCharacter.h"
 #include "Storage/StorageTemplate.h"
 #include "Widgets/TraitLine.h"
 #include "Widgets/Dialogs/MessageBox.h"
 #include "Widgets/Dialogs/SettingsDialog.h"
-#include "CMakeConfig.h"
+// #include "CMakeConfig.h"
 
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
@@ -55,32 +56,26 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	QCoreApplication::setApplicationName( Config::name() );
 	QCoreApplication::setApplicationVersion( Config::version() );
 
-	this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
-	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
+// 	QApplication::setStyle(new QGtkStyle(this));
 
-	// Hier habe ich die Standardicons genommen, aber davon gibt es nur wenige und sie sehen nicht gut aus.
-	// Inzwischen lade ich die Symbole direkt über den QtDesigner
-// 	ui->actionNew->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
-// 	ui->actionOpen->setIcon( style()->standardIcon( QStyle::SP_DirOpenIcon ) );
-// 	ui->actionSave->setIcon( style()->standardIcon( QStyle::SP_DriveFDIcon ) );
-// 	ui->actionExport->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
-// 	ui->actionPrint->setIcon( style()->standardIcon( QStyle::SP_FileIcon ) );
+	setTitle("");
+	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
 	character = StorageCharacter::getInstance();
 	storage = new StorageTemplate( this );
-	creation = new Creation( this );
 	readCharacter = new ReadXmlCharacter();
 	writeCharacter = new WriteXmlCharacter();
 	specialties = new CharaSpecialties( this );
 
 	connect( ui->pushButton_next, SIGNAL( clicked() ), this, SLOT( tabNext() ) );
 	connect( ui->pushButton_previous, SIGNAL( clicked() ), this, SLOT( tabPrevious() ) );
-	connect( ui->selectWidget_select, SIGNAL( currentRowChanged(int)), ui->stackedWidget_traits, SLOT( setCurrentIndex(int)) );
+	connect( ui->selectWidget_select, SIGNAL( currentRowChanged( int ) ), ui->stackedWidget_traits, SLOT( setCurrentIndex( int ) ) );
 	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( setTabButtonState( int ) ) );
 	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( selectSelectorItem( int ) ) );
-	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( showCreationPoints( int ) ) );
 
 	initialize();
+
+	connect( ui->stackedWidget_traits, SIGNAL( currentChanged( int ) ), this, SLOT( showCreationPoints( int ) ) );
 
 	connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), this, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
@@ -91,6 +86,8 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( ui->actionExport, SIGNAL( triggered() ), this, SLOT( exportCharacter() ) );
 	connect( ui->actionPrint, SIGNAL( triggered() ), this, SLOT( printCharacter() ) );
 	connect( ui->actionAbout, SIGNAL( triggered() ), this, SLOT( aboutApp() ) );
+
+	connect( character, SIGNAL( nameChanged(QString) ), this, SLOT( setTitle(QString)) );
 
 	// Laden der Konfiguration
 	readSettings();
@@ -153,7 +150,6 @@ void MainWindow::storeTemplateData() {
 }
 
 void MainWindow::populateUi() {
-
 	// Funktioniert nicht richtig.
 // 	// Bevor wir alles in der GUI anzeigen, wollen wir ersteinmal eine alphabetische Reihefolge garantieren.
 // 	// Ich weiß nicht, ob das bei den Attributen so gut ist.
@@ -163,10 +159,11 @@ void MainWindow::populateUi() {
 	// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
 	attributes = new AttributeWidget( this );
 	skills = new SkillWidget( this );
+	// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 	merits = new MeritWidget( this );
+	flaws = new FlawWidget( this );
 	morality = new MoralityWidget( this );
 	powers = new PowerWidget( this );
-	flaws = new FlawWidget( this );
 	advantages = new AdvantagesWidget( this );
 
 	ui->layout_info->addWidget( info );
@@ -190,31 +187,106 @@ void MainWindow::populateUi() {
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( disablePowerItem( cv_Species::SpeciesFlag ) ) );
 
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( showBackround( cv_Species::SpeciesFlag ) ) );
+}
 
+
+void MainWindow::activate() {
+	creation = new Creation( this );
 	// Schreibe die übrigen Erschaffungspunkte
-	connect( creation, SIGNAL( pointsChanged( cv_CreationPoints ) ), this, SLOT( showCreationPoints( cv_CreationPoints ) ) );
-	connect( creation, SIGNAL( pointsDepleted( cv_Trait::Type ) ), this, SLOT( warnCreationPointsDepleted( cv_Trait::Type ) ) );
-	connect( creation, SIGNAL( pointsNegative(cv_Trait::Type)), this, SLOT( warnCreationPointsNegative( cv_Trait::Type ) ) );
-	connect( creation, SIGNAL( pointsPositive(cv_Trait::Type)), this, SLOT( warnCreationPointsPositive( cv_Trait::Type ) ) );
+	connect( creation, SIGNAL( pointsChanged() ), this, SLOT( showCreationPoints() ) );
+	connect( creation, SIGNAL( pointsDepleted( cv_AbstractTrait::Type ) ), this, SLOT( warnCreationPointsDepleted( cv_AbstractTrait::Type ) ) );
+	connect( creation, SIGNAL( pointsNegative( cv_AbstractTrait::Type ) ), this, SLOT( warnCreationPointsNegative( cv_AbstractTrait::Type ) ) );
+	connect( creation, SIGNAL( pointsPositive( cv_AbstractTrait::Type ) ), this, SLOT( warnCreationPointsPositive( cv_AbstractTrait::Type ) ) );
+
+	character->setSpecies(cv_Species::Human);
+
+	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
+	QList< Trait* >* list = character->traits();
+	for ( int i = 0; i < list->count(); i++ ) {
+		int valueOld = character->traits()->at( i )->value();
+		list->at( i )->setValue( 10 );
+		list->at( i )->clearDetails();
+
+		// Eine Änderung der Eigenschaften sorgt dafür, daß sich die verfügbaren Erschaffungspunkte verändern.
+		if (Creation::types().contains(list->at(i)->type()) ){
+			connect( list->at(i), SIGNAL( traitChanged( Trait* ) ), creation, SLOT( calcPoints( Trait* ) ) );
+		}
+
+		
+		// Löschen der Zeigerliste
+		list->at( i )->clearPrerequisitePtrs();
+		
+		for ( int j = 0; j < list->count(); j++ ) {
+			// Erst müssen die Voraussetzungen übersetzt werden, so daß direkt die Adressen im String stehen.
+			list->at( i )->addPrerequisitePtrs( list->at(j) );
+		}
+
+		// Danach verbinden wir die Signale, aber nur, wenn sie benötigt werden.
+		if (!list->at( i )->prerequisitePtrs().isEmpty()){
+// 			qDebug() << Q_FUNC_INFO << character->traits2()->at( i )->prerequisitPtrs();
+
+			for (int j = 0; j < list->at( i )->prerequisitePtrs().count(); j++){
+				connect (list->at(i)->prerequisitePtrs().at(j), SIGNAL(traitChanged(Trait*)), list->at(i), SLOT(checkPrerequisites(Trait*)));
+			}
+		}
+
+		// Alten Wert wiederherstellen.
+		list->at( i )->setValue( valueOld );
+	}
+
+	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
+	character->setSpecies( cv_Species::Human );
+
+	// Virtue und Vice müssen auch initial einmal festgelegt werden.
+	character->setVirtue( storage->virtueNames( cv_Trait::Adult ).at( 0 ) );
+
+	character->setVice( storage->viceNames( cv_Trait::Adult ).at( 0 ) );
+
+	// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
+	character->setModified( false );
+}
+
+
+void MainWindow::showSettingsDialog() {
+	SettingsDialog dialog;
+	if ( dialog.exec() ) {
+		// Ausführen der veränderten Einstellungen.
+// 		this->setFont(Config::windowFont);
+	}
+}
+
+void MainWindow::showCharacterTraits() {
+}
+
+void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
+// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
+
+	specialties->clear();
+
+	if ( sw ) {
+// 		qDebug() << Q_FUNC_INFO << "Test Specialties";
+		specialties->setSkill( skillName );
+		specialties->setSpecialties( specialtyList );
+	}
 }
 
 void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
 	if ( spec == cv_Species::Changeling ) {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+		ui->widget_traits->setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	} else if ( spec == cv_Species::Mage ) {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+		ui->widget_traits->setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	} else if ( spec == cv_Species::Vampire ) {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+		ui->widget_traits->setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	} else if ( spec == cv_Species::Werewolf ) {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+		ui->widget_traits->setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	} else {
-		ui->scrollAreaWidgetContents_traits->setStyleSheet( "QWidget#scrollAreaWidgetContents_traits { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
+		ui->widget_traits->setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	}
-	
+
 // 	for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
 // 		ui->stackedWidget_traits->widget( i )->setObjectName( "stackedWidget_item" + QString::number( i ) );
 // 	}
-// 
+//
 // 	if ( spec == cv_Species::Changeling ) {
 // 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
 // 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center }" );
@@ -239,66 +311,11 @@ void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
 }
 
 
-void MainWindow::showCharacterTraits() {
-}
-
-void MainWindow::showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
-
-	specialties->clear();
-
-	if ( sw ) {
-// 		qDebug() << Q_FUNC_INFO << "Test Specialties";
-		specialties->setSkill( skillName );
-		specialties->setSpecialties( specialtyList );
-	}
-}
-
-
-void MainWindow::activate() {
-	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
-	for ( int k = 0; k < character->traits()->count(); k++ ) {
-		cv_Trait trait = character->traits()->at( k );
-// 		qDebug() << Q_FUNC_INFO << "Verändere" << trait.name << trait.value;
-		// Alten Wert speichern
-		int valueOld = trait.value();
-		// Verändern, damit er auch wirklich \emph{verändert} wurde
-		trait.setValue( 10 );
-		// In den Speicher schicken.
-		character->modifyTrait( trait );
-		// Wieder auf alten Wert zurücksetzen.
-		trait.setValue( valueOld );
-		character->modifyTrait( trait );
-	}
-
-	// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
-	character->setSpecies( cv_Species::Changeling );
-
-	character->setSpecies( cv_Species::Human );
-
-	// Virtue und Vice müssen auch initial einmal festgelegt werden.
-	character->setVirtue( storage->virtueNames( cv_Trait::Adult ).at( 0 ) );
-
-	character->setVice( storage->viceNames( cv_Trait::Adult ).at( 0 ) );
-
-	// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
-	character->setModified( false );
-}
-
-
-void MainWindow::showSettingsDialog() {
-	SettingsDialog dialog;
-	if (dialog.exec()) {
-		// Ausführen der veränderten Einstellungen.
-// 		this->setFont(Config::windowFont);
-	}
-}
-
 void MainWindow::tabPrevious() {
 	if ( ui->stackedWidget_traits->currentIndex() > 0 ) {
 		ui->stackedWidget_traits->setCurrentIndex( ui->stackedWidget_traits->currentIndex() - 1 );
 
-		if ( !ui->selectWidget_select->item(ui->stackedWidget_traits->currentIndex())->flags().testFlag(Qt::ItemIsEnabled) ) {
+		if ( !ui->selectWidget_select->item( ui->stackedWidget_traits->currentIndex() )->flags().testFlag( Qt::ItemIsEnabled ) ) {
 			if ( ui->stackedWidget_traits->currentIndex() > 0 ) {
 				tabPrevious();
 			} else {
@@ -313,7 +330,7 @@ void MainWindow::tabNext() {
 		ui->stackedWidget_traits->setCurrentIndex( ui->stackedWidget_traits->currentIndex() + 1 );
 
 		// Ist die neue Seite disabled, müssen wir noch eine Seite weiter springen.
-		if ( !ui->selectWidget_select->item(ui->stackedWidget_traits->currentIndex())->flags().testFlag(Qt::ItemIsEnabled) ) {
+		if ( !ui->selectWidget_select->item( ui->stackedWidget_traits->currentIndex() )->flags().testFlag( Qt::ItemIsEnabled ) ) {
 			if ( ui->stackedWidget_traits->currentIndex() < ui->stackedWidget_traits->count() - 1 ) {
 				tabNext();
 			} else {
@@ -324,7 +341,7 @@ void MainWindow::tabNext() {
 }
 
 void MainWindow::selectSelectorItem( int idx ) {
-	ui->selectWidget_select->setCurrentItem(ui->selectWidget_select->item( idx ));
+	ui->selectWidget_select->setCurrentItem( ui->selectWidget_select->item( idx ) );
 }
 
 void MainWindow::setTabButtonState( int index ) {
@@ -342,70 +359,68 @@ void MainWindow::setTabButtonState( int index ) {
 }
 
 void MainWindow::showCreationPoints( int idx ) {
-	ui->frame_creationPoints->setHidden( true );
-	ui->frame_creationPointsSpecialties->setHidden( true );
+	ui->label_pointsLeft->setHidden( true );
+// 	ui->frame_creationPointsSpecialties->setHidden( true );
 
 	if ( idx == 1 || idx == 2 || idx == 3 || idx == 5 ) {
-		ui->frame_creationPoints->setHidden( false );
+		ui->label_pointsLeft->setHidden( false );
 
 		if ( idx == 1 ) {
-			ui->label_pointsLeft->setText( creation->points().attributesOut() );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Attribute) );
 		} else if ( idx == 2 ) {
-			ui->frame_creationPointsSpecialties->setHidden( false );
-			ui->label_pointsLeft->setText( creation->points().skillsOut() );
+// 			ui->frame_creationPointsSpecialties->setHidden( false );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Skill) );
 		} else if ( idx == 3 ) {
-			ui->label_pointsLeft->setText( creation->points().meritsOut() );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Merit) );
 		} else if ( idx == 5 ) {
-			ui->label_pointsLeft->setText( creation->points().powersOut() );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Power) );
 		}
 	}
 }
 
-void MainWindow::showCreationPoints( cv_CreationPoints pt ) {
+void MainWindow::showCreationPoints() {
 	if ( ui->stackedWidget_traits->currentIndex() == 1 ) {
-		ui->label_pointsLeft->setText( creation->points().attributesOut() );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Attribute) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 2 ) {
-		ui->label_pointsLeft->setText( creation->points().skillsOut() );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Skill) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 3 ) {
-		ui->label_pointsLeft->setText( creation->points().meritsOut() );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Merit) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 5 ) {
-		ui->label_pointsLeft->setText( creation->points().powersOut() );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Power) );
 	}
 }
 
-void MainWindow::warnCreationPointsDepleted( cv_Trait::Type type ) {
-	if (type == cv_Trait::Attribute){
-		ui->selectWidget_select->item(1)->setForeground(QColor());
-	} else if (type == cv_Trait::Skill) {
-		ui->selectWidget_select->item(2)->setForeground(QColor());
-	} else if (type == cv_Trait::Merit) {
-		ui->selectWidget_select->item(3)->setForeground(QColor());
-	} else if (type == cv_Trait::Power) {
-		ui->selectWidget_select->item(5)->setForeground(QColor());
+void MainWindow::warnCreationPointsDepleted( cv_AbstractTrait::Type type ) {
+	if ( type == cv_AbstractTrait::Attribute ) {
+		ui->selectWidget_select->item( 1 )->setForeground( QColor() );
+	} else if ( type == cv_AbstractTrait::Skill ) {
+		ui->selectWidget_select->item( 2 )->setForeground( QColor() );
+	} else if ( type == cv_AbstractTrait::Merit ) {
+		ui->selectWidget_select->item( 3 )->setForeground( QColor() );
+	} else if ( type == cv_AbstractTrait::Power ) {
+		ui->selectWidget_select->item( 5 )->setForeground( QColor() );
 	}
 }
-void MainWindow::warnCreationPointsPositive( cv_AbstractTrait::Type type )
-{
-	if (type == cv_Trait::Attribute){
-		ui->selectWidget_select->item(1)->setForeground(Config::pointsPositive);
-	} else if (type == cv_Trait::Skill) {
-		ui->selectWidget_select->item(2)->setForeground(Config::pointsPositive);
-	} else if (type == cv_Trait::Merit) {
-		ui->selectWidget_select->item(3)->setForeground(Config::pointsPositive);
-	} else if (type == cv_Trait::Power) {
-		ui->selectWidget_select->item(5)->setForeground(Config::pointsPositive);
+void MainWindow::warnCreationPointsPositive( cv_AbstractTrait::Type type ) {
+	if ( type == cv_AbstractTrait::Attribute ) {
+		ui->selectWidget_select->item( 1 )->setForeground( Config::pointsPositive );
+	} else if ( type == cv_AbstractTrait::Skill ) {
+		ui->selectWidget_select->item( 2 )->setForeground( Config::pointsPositive );
+	} else if ( type == cv_AbstractTrait::Merit ) {
+		ui->selectWidget_select->item( 3 )->setForeground( Config::pointsPositive );
+	} else if ( type == cv_AbstractTrait::Power ) {
+		ui->selectWidget_select->item( 5 )->setForeground( Config::pointsPositive );
 	}
 }
-void MainWindow::warnCreationPointsNegative( cv_AbstractTrait::Type type )
-{
-	if (type == cv_Trait::Attribute){
-		ui->selectWidget_select->item(1)->setForeground(Config::pointsNegative);
-	} else if (type == cv_Trait::Skill) {
-		ui->selectWidget_select->item(2)->setForeground(Config::pointsNegative);
-	} else if (type == cv_Trait::Merit) {
-		ui->selectWidget_select->item(3)->setForeground(Config::pointsNegative);
-	} else if (type == cv_Trait::Power) {
-		ui->selectWidget_select->item(5)->setForeground(Config::pointsNegative);
+void MainWindow::warnCreationPointsNegative( cv_AbstractTrait::Type type ) {
+	if ( type == cv_AbstractTrait::Attribute ) {
+		ui->selectWidget_select->item( 1 )->setForeground( Config::pointsNegative );
+	} else if ( type == cv_AbstractTrait::Skill ) {
+		ui->selectWidget_select->item( 2 )->setForeground( Config::pointsNegative );
+	} else if ( type == cv_AbstractTrait::Merit ) {
+		ui->selectWidget_select->item( 3 )->setForeground( Config::pointsNegative );
+	} else if ( type == cv_AbstractTrait::Power ) {
+		ui->selectWidget_select->item( 5 )->setForeground( Config::pointsNegative );
 	}
 }
 
@@ -426,6 +441,15 @@ void MainWindow::aboutApp() {
 	QMessageBox::about( this, tr( "About %1" ).arg( Config::name() ), aboutText );
 }
 
+void MainWindow::setTitle( QString txt ) {
+	if (txt.isEmpty()) {
+		this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
+	} else {
+		this->setWindowTitle( Config::name() + " " + Config::versionDetail() + " (" + txt + ") " );
+	}
+}
+
+
 
 void MainWindow::newCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
@@ -440,6 +464,8 @@ void MainWindow::newCharacter() {
 void MainWindow::openCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 	if ( maybeSave() ) {
+		character->resetCharacter();
+		
 		QString appPath = QApplication::applicationDirPath();
 
 		// Pfad zum Speicherverzeichnis
@@ -520,9 +546,9 @@ void MainWindow::saveCharacter() {
 
 void MainWindow::disablePowerItem( cv_Species::SpeciesFlag species ) {
 	if ( species == cv_Species::Human ) {
-		ui->selectWidget_select->item( 5 )->setFlags(Qt::NoItemFlags);;
+		ui->selectWidget_select->item( 5 )->setFlags( Qt::NoItemFlags );;
 	} else {
-		ui->selectWidget_select->item( 5 )->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+		ui->selectWidget_select->item( 5 )->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
 	}
 }
 
@@ -562,7 +588,7 @@ void MainWindow::exportCharacter() {
 
 	DrawSheet drawSheet( this, printer );
 
-	connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_Trait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_Trait::Type ) ) );
+	connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait::Type ) ) );
 
 	try {
 		drawSheet.print();
@@ -584,7 +610,7 @@ void MainWindow::printCharacter() {
 	if ( printDialog.exec() == QDialog::Accepted ) {
 		DrawSheet drawSheet( this, printer );
 
-		connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_Trait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_Trait::Type ) ) );
+		connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait::Type ) ) );
 
 		try {
 			drawSheet.print();
@@ -654,8 +680,8 @@ void MainWindow::raiseExceptionMessage( QString message, QString description ) {
 	MessageBox::warning( this, tr( "Warning" ), tr( "While opening the file the following problem arised:\n%1\n%2\nIt appears, that the character will be importable, so the process will be continued." ).arg( message ).arg( description ) );
 }
 
-void MainWindow::messageEnforcedTraitLimits( cv_Trait::Type type ) {
-	MessageBox::warning( this, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_Trait::toString( type, true ) ) );
+void MainWindow::messageEnforcedTraitLimits( cv_AbstractTrait::Type type ) {
+	MessageBox::warning( this, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_AbstractTrait::toString( type, true ) ) );
 }
 
 

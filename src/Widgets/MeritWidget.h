@@ -30,10 +30,10 @@
 #include <QToolBox>
 #include <QPushButton>
 
-#include "Storage/StorageTemplate.h"
+// #include "Storage/StorageTemplate.h"
 #include "Storage/StorageCharacter.h"
-#include "Datatypes/cv_Trait.h"
-#include "Datatypes/cv_TraitDetail.h"
+// #include "Datatypes/cv_Trait.h"
+// #include "Datatypes/cv_TraitDetail.h"
 #include "Dialogs/SelectMeritsDialog.h"
 
 #include <QWidget>
@@ -72,7 +72,7 @@ class MeritWidget : public QWidget {
 		/**
 		 * Damit ich nicht auch in anderen Funktionen stets alle Kategorien zusammensuchen muß, wird das hier global definiert und im Konstruktor gefüllt.
 		 **/
-		QList< cv_Trait::Category > v_categories;
+		QList< cv_AbstractTrait::Category > v_category;
 
 	public slots:
 
@@ -92,7 +92,7 @@ class MeritWidget : public QWidget {
 // 		/**
 // 		 * Die Anzahl der Angewählten Merits hat sich verändert, also wird dieses Signal gesandt.
 // 		 **/
-// 		numberOfMeritsChanged(cv_Trait::Category category /** Die Anzahl der Merits in dieser Kategorie hat sich verändert. */ );
+// 		numberOfMeritsChanged(cv_AbstractTrait::Category category /** Die Anzahl der Merits in dieser Kategorie hat sich verändert. */ );
 };
 
 #endif

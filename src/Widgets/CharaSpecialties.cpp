@@ -31,6 +31,9 @@ CharaSpecialties::CharaSpecialties( QWidget* parent ) : TraitSpecialties( parent
 	character = StorageCharacter::getInstance();
 
 	connect( this, SIGNAL( checkedSpecialtiesChanged( QStringList ) ), this, SLOT( saveSpecialties( QStringList ) ) );
+	connect(character, SIGNAL(characterResetted()), this, SLOT(clear()) );
+
+	setMinimumWidth(150);
 }
 
 CharaSpecialties::~CharaSpecialties() {
@@ -43,12 +46,15 @@ void CharaSpecialties::saveSpecialties( QStringList list ) {
 	for ( int i = 0; i < list.count(); i++ ) {
 		cv_TraitDetail detail;
 		detail.name = list.at( i );
-		specialties.append( detail );
+		detail.value = true;
 
-// 		qDebug() << Q_FUNC_INFO << "Speichere" << specialties.at( i ).name << "von" << skill();
+		// Kann ich nicht machen, da ja dann keine Spezialisierungen mehr gelöscht werden.
+// 		character->addSkillSpecialties(skill(), detail);
+
+		specialties.append(detail);
 	}
 
-	character->setSkillSpecialties( skill(), specialties );
+	character->setSkillSpecialties(skill(), specialties);
 }
 
 

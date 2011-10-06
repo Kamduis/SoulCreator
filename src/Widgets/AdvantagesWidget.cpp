@@ -25,8 +25,8 @@
 #include <QDialog>
 #include <QDebug>
 
-#include "Datatypes/cv_Trait.h"
-#include "Exceptions/Exception.h"
+// #include "Datatypes/cv_Trait.h"
+// #include "Exceptions/Exception.h"
 #include "Config/Config.h"
 
 #include "AdvantagesWidget.h"
@@ -353,7 +353,7 @@ void AdvantagesWidget::updateArmor( int general, int firearms )
 
 
 // void AdvantagesWidget::changeSuper( cv_Trait trait ) {
-// 	if ( trait.type == cv_Trait::Super ) {
+// 	if ( trait.type == cv_AbstractTrait::Super ) {
 // 		dotsSuper->setValue( trait.value );
 // 	}
 // }
@@ -362,8 +362,8 @@ void AdvantagesWidget::updateArmor( int general, int firearms )
 // void AdvantagesWidget::emitSuperChanged( int value ) {
 // 	cv_Trait trait;
 // 	trait.name = "Super";
-// 	trait.value = value;trait.type = cv_Trait::Super;
-// 	trait.category = cv_Trait::CategoryNo;
+// 	trait.value = value;trait.type = cv_AbstractTrait::Super;
+// 	trait.category = cv_AbstractTrait::CategoryNo;
 //
 // 	emit superChanged(trait);
 // }

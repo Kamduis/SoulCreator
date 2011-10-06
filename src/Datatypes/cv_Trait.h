@@ -26,11 +26,11 @@
 #define CV_TRAIT_H
 
 #include <QFlags>
-#include <QString>
-#include <QList>
-#include <QStringList>
+// #include <QString>
+// #include <QList>
+// #include <QStringList>
 
-#include "cv_Species.h"
+// #include "cv_Species.h"
 #include "cv_TraitDetail.h"
 
 #include "cv_AbstractTrait.h"
@@ -142,43 +142,123 @@ class cv_Trait : public cv_AbstractTrait {
 		 *
 		 * \sa value()
 		 **/
-		void setValue( int val );
+		virtual void setValue( int val );
 		/**
-		 * Der möglichen Werte, welche diese Eigenschaft annehmen kann.
+		 * Liest die möglichen Werte aus, welche diese Eigenschaft annehmen kann.
+		 *
+		 * \sa setPossibleValues()
+		 **/
+		QList< int > possibleValues() const;
+		/**
+		 * Legt alle möglichen Werte fest, welche diese Eigenschaft annehmen kann.
 		 *
 		 * Fast alle Eigenschaften können Werte zwischen 0 und 10 annehmen. Allerdings gibt es beispielsweise Merits, die nur Werte zwischen 0 bis 3 oder gar nur die Werte 0, 1, 3 und 5 annehmen können.
+		 *
+		 * \sa possibleValues()
+		 *
+		 * \sa addPossibleValues()
 		 **/
-		QList< int > v_possibleValues;
+		void setPossibleValues( QList< int > list );
 		/**
-		 * Welcher Era diese Eigenschaft angehört.
+		 * Fügt eine zusätzliche mögliche Eigenschaft hinzu.
+		 *
+		 * \sa possibleValues()
+		 **/
+		void addPossibleValue( int val );
+		/**
+		 * Liest aus, welcher Era diese Eigenschaft angehört.
 		 *
 		 * \sa cv_Character::Era
+		 *
+		 * \sa setEra()
 		 **/
-		cv_Trait::Era v_era;
+		cv_Trait::Era era() const;
 		/**
-		 * Welches Alter des Charakters Voraussetzung für diese Eigenschaft ist.
+		 * Legt fest, welcher Era diese Eigenschaft angehört.
+		 *
+		 * \sa cv_Character::Era
+		 *
+		 * \sa era()
+		 **/
+		void setEra( cv_Trait::Era er );
+		/**
+		 * Liest aus, elches Alter des Charakters Voraussetzung für diese Eigenschaft ist.
 		 *
 		 * \sa cv_Character::Age
+		 *
+		 * \sa setAge()
 		 **/
-		cv_Trait::Age v_age;
+		cv_Trait::Age age() const;
 		/**
-		 * Eine Liste der Zusatzeigenschaften.
+		 * Legt fest, welches Alter des Charakters Voraussetzung für diese Eigenschaft ist.
+		 *
+		 * \sa cv_Character::Age
+		 *
+		 * \sa age()
 		 **/
-		QList< cv_TraitDetail > v_details;
+		void setAge(cv_Trait::Age ag);
 		/**
-		 * Ein String mit den geforderten Voraussetzungen, um diese Eigenscahft besitzen zu dürfen.
+		 * Gibt eine Liste aller Zusatzeigenschaften zurück.
+		 **/
+		QList< cv_TraitDetail > details() const;
+		/**
+		 * Legt die Zusatzeigenschaften fest.
+		 *
+		 * \sa addDetail()
+		 **/
+		virtual void setDetails(QList< cv_TraitDetail > list);
+		/**
+		 * Legt die Zusatzeigenschaften fest.
+		 *
+		 * \sa setDetails()
+		 **/
+		virtual void addDetail(cv_TraitDetail det);
+		/**
+		 * Löscht sämtliche Zusatzeigenschaften.
+		 **/
+		virtual void clearDetails();
+		/**
+		 * Gibt einen String mit den geforderten Voraussetzungen zurück, die notwendig sind, um diese Eigenschaft besitzen zu dürfen.
+		 *
+		 * \sa setPrerequisites()
+		 **/
+		QString prerequisites() const;
+		/**
+		 * Legt die Voraussetzungen fest, die notwendig sind, um diese Eigenschaft besitzen zu dürfen.
 		 *
 		 * \note Das Format des Strings ist: (Strength > 4 AND Brawl > 3) OR Stamina < 2
+		 *
+		 * \sa prerequisites()
 		 **/
-		QString v_prerequisites;
+		virtual void setPrerequisites(QString txt);
 		/**
-		 * Manche Eigenschaften (beispielsweise der Merit Language) müssen mit einem zusätzlichen erklärenden Text versehen werden können. Wenn das der Fall ist, wird diese Variable auf 'true' gesetzt.
+		 * Liest aus, ob diese Eigenschaft mit einem zusätzlichen erklärenden text versehen werden kann. Wenn ja, wird diese Funktion 'true' zurückgeben.
+		 *
+		 * \sa setCustom()
 		 **/
-		bool v_custom;
+		bool custom() const;
 		/**
-		 * Jene Eigenschaften, die einen zusätzlichen erklärenden Text haben können (siehe \ref custom), können eben diese Text hier speichern.
+		 * Legt fest, ob diese Eigenschaft mit einem zusätzlichen Text versehen werden kann. Wenn ja, muß dieser Funktion 'true' übergeben werden.
+		 *
+		 * \sa custom()
 		 **/
-		QString v_customText;
+		void setCustom(bool sw);
+		/**
+		 * Gibt den zusätzlichen erklärenden Text dieser Eigenschaft aus. Ist kein derartiger Text vorgesehen wird ein leerer String zurückgegeben.
+		 *
+		 * \todo Eine Exception werfen, wenn kein Zusatztext vorgesehen ist.
+		 *
+		 * \sa setCustomText()
+		 *
+		 * \sa custom()
+		 **/
+		QString customText() const;
+		/**
+		 * Mit dieser Methode kann der zusätzliche Text der Eigenschaft festgelegt werden. Wird ein derartiger Text festgelegt, ohne daß dies eigentlich vorgesehen war, wird auch custom() verändert, so daß der text nun vorgesehen ist.
+		 *
+		 * \sa customText()
+		 **/
+		void setCustomText(QString txt);
 
 		/**
 		 * Wandelt den Namen einer Era in den dazu passenden enum um.
@@ -211,6 +291,38 @@ class cv_Trait : public cv_AbstractTrait {
 		 * \todo War vorher public und jetzt wird viel nicht funktionieren, da es nun private ist.
 		 **/
 		int v_value;
+		/**
+		 * Eine Liste aller möglichen Werte, welche diese Eigenschaft annehmen kann.
+		 **/
+		QList< int > v_possibleValues;
+		/**
+		 * Enthält, welcher Era diese Eigenschaft angehört.
+		 *
+		 * \sa cv_Character::Era
+		 **/
+		cv_Trait::Era v_era;
+		/**
+		 * Welches Alter des Charakters Voraussetzung für diese Eigenschaft ist.
+		 *
+		 * \sa cv_Character::Age
+		 **/
+		cv_Trait::Age v_age;
+		/**
+		 * Eine Liste der Zusatzeigenschaften.
+		 **/
+		QList< cv_TraitDetail > v_details;
+		/**
+		 * Ein String mit den geforderten Voraussetzungen, um diese Eigenscahft besitzen zu dürfen.
+		 **/
+		QString v_prerequisites;
+		/**
+		 * Manche Eigenschaften (beispielsweise der Merit Language) müssen mit einem zusätzlichen erklärenden Text versehen werden können. Wenn das der Fall ist, wird diese Variable auf 'true' gesetzt.
+		 **/
+		bool v_custom;
+		/**
+		 * Jene Eigenschaften, die einen zusätzlichen erklärenden Text haben können (siehe \ref custom), können eben diese Text hier speichern.
+		 **/
+		QString v_customText;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( cv_Trait::Age )

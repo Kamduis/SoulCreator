@@ -25,9 +25,9 @@
 #ifndef CV_DERANGEMENT_H
 #define CV_DERANGEMENT_H
 
-#include <QString>
+// #include <QString>
 
-#include "cv_Species.h"
+// #include "cv_Species.h"
 
 #include "cv_AbstractTrait.h"
 
@@ -44,13 +44,21 @@ class cv_Derangement : public cv_AbstractTrait {
 		cv_Derangement( QString txt = "", int mor = 0, cv_Species::Species spe = cv_Species::SpeciesNo, cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo );
 		
 		/**
-		 * Der Moralwert, dem diese Geistesstörung zugeordnet ist.
+		 * Gibt den Moralwert zurück, der dieser Geistesstörung zugeordnet ist.
 		 *
 		 * Ist dieser Wert 0, ist die Geistesstörung keinem Moralwert zugeordnet.
 		 **/
-		int morality;
+		int morality() const;
+		/**
+		 * Legt den Moralwert fest, dem diese Geistesstörung zugeordnet ist.
+		 **/
+		void setMorality(int val);
 
 	private:
+		/**
+		 * Der Moralwert, dem diese Geistesstörung zugeordnet ist.
+		 **/
+		int v_morality;
 };
 
 #endif

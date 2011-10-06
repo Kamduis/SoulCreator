@@ -24,10 +24,10 @@
 
 #include <QDebug>
 
-#include "Datatypes/cv_SuperEffect.h"
-#include "Datatypes/cv_SpeciesTitle.h"
+// #include "Datatypes/cv_SuperEffect.h"
+// #include "Datatypes/cv_SpeciesTitle.h"
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Config/Config.h"
 
 #include "ReadXmlTemplate.h"
 
@@ -146,7 +146,15 @@ void ReadXmlTemplate::readSoulCreator() {
 					readTree( speciesFlag );
 				}
 			} else
-				readUnknownElement();
+				if ( name() == "creation" ) {
+					QString tmp = attributes().value( "species" ).toString();
+					cv_Species::SpeciesFlag speciesFlag = cv_Species::toSpecies( tmp );
+
+					if ( speciesFlag != cv_Species::SpeciesNo ) {
+						readCreationTree( speciesFlag );
+					}
+				} else
+					readUnknownElement();
 		}
 	}
 }
@@ -159,23 +167,23 @@ void ReadXmlTemplate::readTree( cv_Species::Species sp ) {
 			break;
 
 		if ( isStartElement() ) {
-			cv_Trait::Type type = cv_Trait::toType( name().toString() );
+			cv_AbstractTrait::Type type = cv_AbstractTrait::toType( name().toString() );
 
-			if ( type != cv_Trait::TypeNo ) {
+			if ( type != cv_AbstractTrait::TypeNo ) {
 // 				qDebug() << "Typ " << type << " gefunden.";
 				// Virtues und Vices haben keine Kategorie, also darf ich dort auch nicht so tief den Baum hinuntersteigen. Bei allen anderen aber muß ich erst die Kategorie einlesen.
 
-				if ( type == cv_Trait::Virtue ||
-						type == cv_Trait::Vice ||
-						type == cv_Trait::Breed ||
-						type == cv_Trait::Faction ||
-						type == cv_Trait::Power ) {
-					readTraits( sp, type, cv_Trait::CategoryNo );
-				} else if ( type == cv_Trait::Super ) {
-					readSuperTrait( sp );
-				} else {
-					readTraits( sp, type );
-				}
+				if ( type == cv_AbstractTrait::Virtue ||
+						type == cv_AbstractTrait::Vice ||
+						type == cv_AbstractTrait::Breed ||
+						type == cv_AbstractTrait::Faction ) {
+					readTraits( sp, type, cv_AbstractTrait::CategoryNo );
+				} else
+					if ( type == cv_AbstractTrait::Super ) {
+						readSuperTrait( sp );
+					} else {
+						readTraits( sp, type );
+					}
 			} else {
 				readUnknownElement();
 			}
@@ -207,7 +215,7 @@ void ReadXmlTemplate::readSuperTrait( cv_Species::Species sp ) {
 }
 
 
-void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a ) {
+void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type a ) {
 
 	while ( !atEnd() ) {
 		readNext();
@@ -217,17 +225,20 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a ) {
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
-			cv_Trait::Category category = cv_Trait::toCategory( elementName );
+			cv_AbstractTrait::Category category = cv_AbstractTrait::toCategory( elementName );
 
 			readTraits( sp, a, category );
 		}
 	}
 }
 
-void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b ) {
-	if ( a == cv_Trait::Breed || a == cv_Trait::Faction ) {
+void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b ) {
+	if ( a == cv_AbstractTrait::Breed
+			|| a == cv_AbstractTrait::Faction
+			|| a == cv_AbstractTrait::Power
+	   ) {
 		QString titleName = attributes().value( "name" ).toString();
-		cv_SpeciesTitle title = cv_SpeciesTitle( cv_SpeciesTitle::toTitle( cv_Trait::toString( a ) ), titleName, sp );
+		cv_SpeciesTitle title = cv_SpeciesTitle( cv_SpeciesTitle::toTitle( cv_AbstractTrait::toString( a ) ), titleName, sp );
 
 // 		qDebug() << Q_FUNC_INFO << title.title << title.name << title.species;
 
@@ -245,8 +256,8 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 				cv_Trait trait = storeTraitData( sp, a, b );
 				// Alle Eigenschaften können 0 als Wert haben, auch wenn dies nicht in den XML-Dateien steht.
 
-				if ( !trait.v_possibleValues.isEmpty() ) {
-					trait.v_possibleValues.append( 0 );
+				if ( !trait.possibleValues().isEmpty() ) {
+					trait.addPossibleValue( 0 );
 				}
 
 				storage->appendTrait( trait );
@@ -281,24 +292,24 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_Trait::Type a, cv_T
 	}
 }
 
-cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type a, cv_Trait::Category b ) {
+cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b ) {
 	// Es besteht die Möglichkeit, daß einzelne Eigenschaften in mehreren XML-DAteien auftauchen. Beispiel: Fertigkeit mit Spezialisierungen speziell für eine Spezies.
 	// Momentan löse ich das Problem nicht hier beim Einlesen, sondern bei der Ausgabe in Storage.cpp
 // 	QString specialtyName;
 
 	cv_Trait trait;
-	trait.v_species = sp;
-	trait.v_type = a;
-	trait.v_category = b;
+	trait.setSpecies( sp );
+	trait.setType( a );
+	trait.setCategory( b );
 	// Keinefalls darf ich zulassen, daß dieser Wert uninitialisiert bleibt, sonst führt das zu Problemen.
 	trait.setValue( 0 );
 
 	if ( isStartElement() ) {
-		trait.v_name = attributes().value( "name" ).toString();
+		trait.setName( attributes().value( "name" ).toString() );
 // 		qDebug() << Q_FUNC_INFO << trait.name;
-		trait.v_era = cv_Trait::toEra( attributes().value( "era" ).toString() );
-		trait.v_age = cv_Trait::toAge( attributes().value( "age" ).toString() );
-		trait.v_custom = attributes().value( "custom" ).toString() == QString( "true" );
+		trait.setEra( cv_Trait::toEra( attributes().value( "era" ).toString() ) );
+		trait.setAge( cv_Trait::toAge( attributes().value( "age" ).toString() ) );
+		trait.setCustom( attributes().value( "custom" ).toString() == QString( "true" ) );
 
 // 		if (trait.custom){
 // 			qDebug() << Q_FUNC_INFO << trait.name << "ist besonders!";
@@ -318,16 +329,19 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 					traitDetail.name = specialtyName;
 					traitDetail.value = false;
 // 					traitDetail.species = sp;
-					trait.v_details.append( traitDetail );
-				} else if ( name() == "value" ) {
-					int value = readElementText().toInt();
-					trait.v_possibleValues.append( value );
-				} else if ( name() == "prerequisite" ) {
-					QString text = readElementText();
-					trait.v_prerequisites.append( text );
-				} else {
-					readUnknownElement();
-				}
+					trait.addDetail( traitDetail );
+				} else
+					if ( name() == "value" ) {
+						int value = readElementText().toInt();
+						trait.addPossibleValue( value );
+					} else
+						if ( name() == "prerequisite" ) {
+							QString text = readElementText();
+// 					trait.v_prerequisites.append( text );
+							trait.setPrerequisites( text );
+						} else {
+							readUnknownElement();
+						}
 			}
 		}
 	}
@@ -336,3 +350,50 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_Trait::Type
 }
 
 
+void ReadXmlTemplate::readCreationTree( cv_Species::Species sp ) {
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			cv_AbstractTrait::Type type = cv_AbstractTrait::toType( name().toString() );
+
+			if ( type != cv_AbstractTrait::TypeNo ) {
+				cv_CreationPoints points;
+				points.species = sp;
+				points.type = type;
+				points.points = readCreationPoints();
+
+// 				qDebug() << Q_FUNC_INFO << points.species << points.type << points.points;
+
+				storage->appendCreationPoints( points );
+			} else {
+				readUnknownElement();
+			}
+		}
+	}
+}
+
+QList< int > ReadXmlTemplate::readCreationPoints() {
+	QList< int > resultList;
+	
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			if ( name() == "points" ) {
+				resultList.append( attributes().value( "value" ).toString().toInt() );
+				readUnknownElement();
+			} else {
+				readUnknownElement();
+			}
+		}
+	}
+
+	return resultList;
+}

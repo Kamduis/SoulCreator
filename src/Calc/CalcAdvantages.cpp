@@ -36,17 +36,94 @@ int CalcAdvantages::v_health = 0;
 int CalcAdvantages::v_willpower = 0;
 
 
-CalcAdvantages::CalcAdvantages( QObject* parent ): QObject( parent ) {
+CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
+	construct();
+
+	QList< cv_AbstractTrait::Type > types;
+	types.append( cv_AbstractTrait::Attribute );
+	types.append( cv_AbstractTrait::Merit );
+
+	QList< Trait* > list;
+
+	bool stopLoop = false;
+
+	for ( int i = 0; i < types.count(); i++ ) {
+		list = character->traits( types.at( i ) );
+
+		for ( int j = 0; j < list.count(); j++ ) {
+			if ( types.at( i ) == cv_AbstractTrait::Attribute ) {
+				if ( list.at( j )->name() == "Wits" ) {
+					attrWit = list.at( j );
+				} else if ( list.at( j )->name() == "Resolve" ) {
+					attrRes = list.at( j );
+				} else if ( list.at( j )->name() == "Strength" ) {
+					attrStr = list.at( j );
+				} else if ( list.at( j )->name() == "Dexterity" ) {
+					attrDex = list.at( j );
+				} else if ( list.at( j )->name() == "Stamina" ) {
+					attrSta = list.at( j );
+				} else if ( list.at( j )->name() == "Composure" ) {
+					attrCom = list.at( j );
+				}
+
+				if ( attrWit != 0 && attrRes != 0 && attrStr != 0 && attrDex != 0 && attrSta != 0 && attrCom != 0 ) {
+					break;
+				}
+			} else if ( types.at( i ) == cv_AbstractTrait::Merit ) {
+				if ( list.at( j )->name() == "Giant" ) {
+					meritGiant = list.at( j );
+				} else if ( list.at( j )->name() == "Fast Reflexes" ) {
+					meritFastReflexes = list.at( j );
+				} else if ( list.at( j )->name() == "Fleet of Foot" ) {
+					meritFleetOfFoot = list.at( j );
+				}
+
+				if ( meritGiant != 0 && meritFleetOfFoot != 0 && meritFastReflexes != 0 ) {
+					break;
+				}
+			}
+		}
+	}
+
+	connect( attrWit, SIGNAL( valueChanged( int ) ), this, SLOT( calcInitiative() ) );
+	connect( attrRes, SIGNAL( valueChanged( int ) ), this, SLOT( calcWillpower() ) );
+	connect( attrStr, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
+	connect( attrDex, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
+	connect( attrDex, SIGNAL( valueChanged( int ) ), this, SLOT( calcInitiative() ) );
+	connect( attrSta, SIGNAL( valueChanged( int ) ), this, SLOT( calcHealth() ) );
+	connect( attrCom, SIGNAL( valueChanged( int ) ), this, SLOT( calcWillpower() ) );
+	connect( meritGiant, SIGNAL( valueChanged( int ) ), this, SLOT( calcSize() ) );
+	connect( meritFastReflexes, SIGNAL( valueChanged( int ) ), this, SLOT( calcInitiative() ) );
+	connect( meritFleetOfFoot, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
+	connect( this, SIGNAL( sizeChanged( int ) ), this, SLOT( calcHealth() ) );
+}
+
+CalcAdvantages::~CalcAdvantages() {
+	delete attrWit;
+	delete attrRes;
+	delete attrStr;
+	delete attrDex;
+	delete attrSta;
+	delete attrCom;
+	delete meritGiant;
+	delete meritFastReflexes;
+	delete meritFleetOfFoot;
+}
+
+
+void CalcAdvantages::construct() {
 	character = StorageCharacter::getInstance();
 
-	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( calcSize( cv_Trait* ) ) );
-	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( calcInitiative( cv_Trait* ) ) );
-	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( calcSpeed( cv_Trait* ) ) );
-	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( calcDefense( cv_Trait* ) ) );
-	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( calcHealth( cv_Trait* ) ) );
-	connect( character, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( calcWillpower( cv_Trait* ) ) );
-	connect( this, SIGNAL( sizeChanged( int ) ), this, SLOT( calcHealth( int ) ) );
+	attrRes = 0;
+	attrStr = 0;
+	attrDex = 0;
+	attrSta = 0;
+	attrCom = 0;
+	meritGiant = 0;
+	meritFleetOfFoot = 0;
+	meritFastReflexes = 0;
 }
+
 
 
 int CalcAdvantages::strength( int str, cv_Shape::WerewolfShape shape ) {
@@ -195,229 +272,57 @@ int CalcAdvantages::willpower() const {
 	return v_willpower;
 }
 
-int CalcAdvantages::calcSize( cv_Trait* trait ) {
-	if ( trait->v_type == cv_Trait::Merit && trait->v_name == "Giant" ) {
-		int result = 5;
 
-		if ( trait->value() > 0 ) {
-			result += 1;
-		}
+int CalcAdvantages::calcSize() {
+	int result = 5;
 
-		if ( v_size != result ) {
-			v_size = result;
-			emit sizeChanged( result );
-		}
+	if ( meritGiant->value() > 0 ) {
+		result += 1;
+	}
+
+	if ( v_size != result ) {
+		v_size = result;
+		emit sizeChanged( result );
 	}
 
 	return v_size;
 }
 
-int CalcAdvantages::calcInitiative( cv_Trait* trait ) {
-	if (( trait->v_type == cv_Trait::Attribute && ( trait->v_name == "Dexterity" || trait->v_name == "Composure" ) )
-			|| trait->v_type == cv_Trait::Merit && trait->v_name == "Fast Reflexes" ) {
-		int val1 = 0;
-		int val2 = 0;
-		int val3 = 0;
-		QList< cv_Trait* > list;
+int CalcAdvantages::calcInitiative() {
+	int result = attrDex->value() + attrCom->value() + meritFastReflexes->value();
 
-		// Nur berechnen, wenn der veränderte Wert Einfluß auf die Initiative hat.
-
-		if ( trait->v_type == cv_Trait::Attribute ) {
-			val1 = trait->value();
-
-			list = character->traits( cv_Trait::Merit, cv_Trait::Physical );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Fast Reflexes" ) {
-					val3 = list.at( i )->value();
-					break;
-				}
-			}
-
-			if ( trait->v_name == "Composure" ) {
-				list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
-
-				for ( int i = 0; i < list.count(); i++ ) {
-					if ( list.at( i )->v_name == "Dexterity" ) {
-						val2 = list.at( i )->value();
-						break;
-					}
-				}
-			} else if ( trait->v_name == "Dexterity" ) {
-				list = character->traits( cv_Trait::Attribute, cv_Trait::Mental );
-
-				for ( int i = 0; i < list.count(); i++ ) {
-					if ( list.at( i )->v_name == "Composure" ) {
-						val2 = list.at( i )->value();
-						break;
-					}
-				}
-			}
-		} else {	// Es bleibt nur noch Fast Reflexes übrig
-			val3 = trait->value();
-			list = character->traits( cv_Trait::Attribute, cv_Trait::Mental );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Composure" ) {
-					val1 = list.at( i )->value();
-					break;
-				}
-			}
-
-			list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Dexterity" ) {
-					val2 = list.at( i )->value();
-					break;
-				}
-			}
-		}
-
-		int result = val1 + val2 + val3;
-
-		if ( v_initiative != result ) {
-			v_initiative = result;
-			emit initiativeChanged( result );
-		}
+	if ( v_initiative != result ) {
+		v_initiative = result;
+		emit initiativeChanged( result );
 	}
 
 	return v_initiative;
 }
 
-int CalcAdvantages::calcSpeed( cv_Trait* trait ) {
-	if (( trait->v_type == cv_Trait::Attribute && ( trait->v_name == "Strength" || trait->v_name == "Dexterity" ) )
-			|| ( trait->v_type == cv_Trait::Merit && trait->v_name == "Fleet of Foot" ) ) {
-		int val1 = 0;
-		int val2 = 0;
-		int val3 = 0;
-		QList< cv_Trait* > list;
+int CalcAdvantages::calcSpeed() {
+	int result = attrStr->value() + attrDex->value() + 5 + meritFleetOfFoot->value();
 
-		// Nur berechnen, wenn der veränderte Wert Einfluß auf die Initiative hat.
-
-		if ( trait->v_type == cv_Trait::Attribute ) {
-			val1 = trait->value();
-			list = character->traits( cv_Trait::Merit, cv_Trait::Physical );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Fleet of Foot" ) {
-					val3 = list.at( i )->value();
-					break;
-				}
-			}
-
-			if ( trait->v_name == "Strength" ) {
-				list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
-
-				for ( int i = 0; i < list.count(); i++ ) {
-					if ( list.at( i )->v_name == "Dexterity" ) {
-						val2 = list.at( i )->value();
-						break;
-					}
-				}
-			} else if ( trait->v_name == "Dexterity" ) {
-				list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
-
-				for ( int i = 0; i < list.count(); i++ ) {
-					if ( list.at( i )->v_name == "Strength" ) {
-						val2 = list.at( i )->value();
-						break;
-					}
-				}
-			}
-		} else {	// Es bleibt nur noch Fleet of Foot übrig
-			val3 = trait->value();
-			list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Strength" ) {
-					val1 = list.at( i )->value();
-					break;
-				}
-			}
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Dexterity" ) {
-					val2 = list.at( i )->value();
-					break;
-				}
-			}
-		}
-
-		int result = val1 + val2 + 5 + val3;
-
-		if ( v_speed != result ) {
-			v_speed = result;
-			emit speedChanged( result );
-		}
+	if ( v_speed != result ) {
+		v_speed = result;
+		emit speedChanged( result );
 	}
 
 	return v_speed;
 }
 
-int CalcAdvantages::calcDefense( cv_Trait* trait ) {
-	// Nur berechnen, wenn der veränderte Wert Einfluß auf die Defense hat.
-	if ( trait->v_type == cv_Trait::Attribute && ( trait->v_name == "Wits" || trait->v_name == "Dexterity" ) ) {
-		int val1 = trait->value();
-		int val2 = 0;
-		QList< cv_Trait* > list;
+int CalcAdvantages::calcDefense() {
+	int result = qMin( attrWit->value(), attrDex->value() );
 
-		if ( trait->v_name == "Wits" ) {
-			list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Dexterity" ) {
-					val2 = list.at( i )->value();
-					break;
-				}
-			}
-		} else if ( trait->v_name == "Dexterity" ) {
-			list = character->traits( cv_Trait::Attribute, cv_Trait::Mental );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Wits" ) {
-					val2 = list.at( i )->value();
-					break;
-				}
-			}
-		}
-
-		int result = qMin( val1, val2 );
-
-		if ( v_defense != result ) {
-			v_defense = result;
-			emit defenseChanged( result );
-		}
+	if ( v_defense != result ) {
+		v_defense = result;
+		emit defenseChanged( result );
 	}
 
 	return v_defense;
 }
 
-int CalcAdvantages::calcHealth( cv_Trait* trait ) {
-	if ( trait->v_type == cv_Trait::Attribute && trait->v_name == "Stamina" ) {
-		int result = trait->value() + v_size;
-
-		if ( v_health != result ) {
-			v_health = result;
-			emit healthChanged( result );
-		}
-	}
-
-	return v_health;
-}
-
-int CalcAdvantages::calcHealth( int size ) {
-	int val1 = 0;
-	QList< cv_Trait* > list = character->traits( cv_Trait::Attribute, cv_Trait::Physical );
-
-	for ( int i = 0; i < list.count(); i++ ) {
-		if ( list.at( i )->v_name == "Stamina" ) {
-			val1 = list.at( i )->value();
-			break;
-		}
-	}
-
-	int result = size + val1;
+int CalcAdvantages::calcHealth() {
+	int result = attrSta->value() + v_size;
 
 	if ( v_health != result ) {
 		v_health = result;
@@ -427,41 +332,15 @@ int CalcAdvantages::calcHealth( int size ) {
 	return v_health;
 }
 
-int CalcAdvantages::calcWillpower( cv_Trait* trait ) {
-	// Nur berechnen, wenn der veränderte Wert Einfluß auf die Defense hat.
-	if ( trait->v_type == cv_Trait::Attribute && ( trait->v_name == "Resolve" || trait->v_name == "Composure" ) ) {
-		int val1 = trait->value();
-		int val2 = 0;
-		QList< cv_Trait* > list;
+int CalcAdvantages::calcWillpower() {
+	int result = attrRes->value() + attrCom->value();
 
-		if ( trait->v_name == "Resolve" ) {
-			list = character->traits( cv_Trait::Attribute, cv_Trait::Social );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Composure" ) {
-					val2 = list.at( i )->value();
-					break;
-				}
-			}
-		} else if ( trait->v_name == "Composure" ) {
-			list = character->traits( cv_Trait::Attribute, cv_Trait::Mental );
-
-			for ( int i = 0; i < list.count(); i++ ) {
-				if ( list.at( i )->v_name == "Resolve" ) {
-					val2 = list.at( i )->value();
-					break;
-				}
-			}
-		}
-
-		int result = val1 + val2;
-
-		if ( v_willpower != result ) {
-			v_willpower = result;
-			emit willpowerChanged( result );
-		}
+	if ( v_willpower != result ) {
+		v_willpower = result;
+		emit willpowerChanged( result );
 	}
 
-	return v_defense;
+	return v_willpower;
 }
+
 

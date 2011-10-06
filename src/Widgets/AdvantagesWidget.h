@@ -32,8 +32,8 @@
 
 #include "TraitDots.h"
 #include "Squares.h"
-#include "Storage/StorageTemplate.h"
-#include "Storage/StorageCharacter.h"
+// #include "Storage/StorageTemplate.h"
+// #include "Storage/StorageCharacter.h"
 #include "Calc/CalcAdvantages.h"
 
 #include <QWidget>

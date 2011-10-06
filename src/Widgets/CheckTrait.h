@@ -30,7 +30,8 @@
 #include <QCheckBox>
 
 #include "Storage/StorageCharacter.h"
-#include "Datatypes/cv_Trait.h"
+// #include "Datatypes/Trait.h"
+// #include "Datatypes/cv_Trait.h"
 
 #include <QWidget>
 
@@ -47,7 +48,7 @@ class CheckTrait : public QWidget {
 		/**
 		 * An diesen Konstruktor kann direkt die Eigenschaft übergeben werden, welche dieses Widget anzeigt.
 		 **/
-		CheckTrait( QWidget *parent, cv_Trait* trait, cv_Trait* traitStorage = 0 );
+		CheckTrait( QWidget *parent, Trait* trait, Trait* traitStorage = 0 );
 		virtual ~CheckTrait();
 
 		/**
@@ -61,11 +62,11 @@ class CheckTrait : public QWidget {
 		/**
 		 * Gibt den Typ zurück, dem die hier dargestellte Eigenschaft angehört.
 		 **/
-		cv_Trait::Type type() const;
+		cv_AbstractTrait::Type type() const;
 		/**
 		 * Gibt die Kategorie zurück, der die hier dargestellte Eigenschaft angehört.
 		 **/
-		cv_Trait::Category category() const;
+		cv_AbstractTrait::Category category() const;
 		/**
 		 * Gibt die Spezies zurück, der die hier dargestellte Eigenschaft angehört.
 		 **/
@@ -78,13 +79,13 @@ class CheckTrait : public QWidget {
 		/**
 		 * Gibt den Zeiger zurück, welcher auf die Eigenschaft im Speicher verweist, welche durch dieses jeweilige Widget repräsentiert wird.
 		 **/
-		cv_Trait* traitPtr() const;
+		Trait* traitPtr() const;
 
 	private:
 		StorageCharacter *character;
 
-		cv_Trait* ptr_trait;
-		cv_Trait* ptr_traitStorage;
+		Trait* ptr_trait;
+		Trait* ptr_traitStorage;
 
 		QHBoxLayout* layout;
 		QLineEdit* lineEdit;
@@ -111,11 +112,11 @@ class CheckTrait : public QWidget {
 		/**
 		 * Legt den Typ der hier dargestellten Eigenschaft fest.
 		 **/
-		void setType( cv_Trait::Type type );
+		void setType( cv_AbstractTrait::Type type );
 		/**
 		 * Legt die Kategorie der hier dargestellten Eigenschaft fest.
 		 **/
-		void setCategory( cv_Trait::Category category );
+		void setCategory( cv_AbstractTrait::Category category );
 		/**
 		 * Legt fest, welche Spezies alles über diese Eigenschaft verfügen können.
 		 **/
@@ -140,31 +141,13 @@ class CheckTrait : public QWidget {
 		/**
 		 * Richtet den Zeiger auf die Eigenschaft im Speicher, welche von diesem Widget repräsentiert wird.
 		 **/
-		void setTraitPtr( cv_Trait* trait );
-		/**
-		 * Sorgt dafür daß das Widget aktualisiert wird und die Werte anzeigt, auf welche es zeigt.
-		 *
-		 * \warning Wenn der Wert des Widget != 0 ist, wird es als gewählt markiert, andernfalls als ungewählt.
-		 **/
-		void updateWidget(cv_Trait* trait);
+		void setTraitPtr( Trait* trait );
 
 	signals:
 		/**
 		 * Der Status der Eigenscahft wurde verändert.
 		 **/
 		void stateChanged(int);
-		void typeChanged( cv_Trait::Type type );
-		/**
-		 * Der Knopf zum Anzeigen der Spazialisierungen wurde gedrückt.
-		 **/
-		void traitChanged(cv_Trait* trait);
-		/**
-		 * Der Knopf zum Anzeigen der Spazialisierungen wurde gedrückt.
-		 **/
-		void specialtiesClicked( bool state /** Gibt an, welchen Zusatand (checked | unchecked) der Knopf nun hat. */,
-								 QString name /** der Name der Eigenschaft. */,
-								 QList< cv_TraitDetail > specialtyList /** Eine Liste der Spezialisierungen für diese Fertigkeit. Diese Liste beinhaltet zwar \emph{alle} Spezialisierungen für die spez */
-							   );
 };
 
 #endif

@@ -41,12 +41,16 @@ const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListDerang
 		<< cv_AbstractTrait::Mild
 		<< cv_AbstractTrait::Severe;
 
-const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListAll = QList< cv_AbstractTrait::Category >()
+const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListMerits = QList< cv_AbstractTrait::Category >()
 		<< cv_AbstractTrait::v_categoryListExtended
 		<< cv_AbstractTrait::Item
 		<< cv_AbstractTrait::FightingStyle
 		<< cv_AbstractTrait::DebateStyle;
 
+const QList< cv_AbstractTrait::Category > cv_AbstractTrait::v_categoryListPowers = QList< cv_AbstractTrait::Category >()
+		<< cv_AbstractTrait::Primary
+		<< cv_AbstractTrait::Secondary
+		<< cv_AbstractTrait::Tertiary;
 
 cv_AbstractTrait::cv_AbstractTrait( QString txt, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca ) {
 	v_name = txt;
@@ -54,6 +58,36 @@ cv_AbstractTrait::cv_AbstractTrait( QString txt, cv_Species::Species spe, cv_Abs
 	v_type = ty;
 	v_category = ca;
 }
+
+QString cv_AbstractTrait::name() const {
+	return v_name;
+}
+void cv_AbstractTrait::setName( QString nam ) {
+	v_name = nam;
+}
+
+cv_Species::Species cv_AbstractTrait::species() const {
+	return v_species;
+}
+void cv_AbstractTrait::setSpecies( cv_Species::Species spe ) {
+	v_species = spe;
+}
+
+cv_AbstractTrait::Type cv_AbstractTrait::type() const {
+	return v_type;
+}
+void cv_AbstractTrait::setType( cv_AbstractTrait::Type typ ) {
+	v_type = typ;
+}
+
+cv_AbstractTrait::Category cv_AbstractTrait::category() const {
+	return v_category;
+}
+void cv_AbstractTrait::setCategory( cv_AbstractTrait::Category cat ) {
+	v_category = cat;
+}
+
+
 
 QString cv_AbstractTrait::toXmlString( cv_AbstractTrait::Type type ) {
 	switch ( type ) {
@@ -109,6 +143,12 @@ QString cv_AbstractTrait::toXmlString( cv_AbstractTrait::Category category ) {
 			return "Mild";
 		case cv_AbstractTrait::Severe:
 			return "Severe";
+		case cv_AbstractTrait::Primary:
+			return "Primary";
+		case cv_AbstractTrait::Secondary:
+			return "Secondary";
+		case cv_AbstractTrait::Tertiary:
+			return "Tertiary";
 		default:
 			throw eTraitCategory( category );
 // 			return "ERROR";
@@ -202,6 +242,12 @@ QString cv_AbstractTrait::toString( cv_AbstractTrait::Category category, bool pl
 				return QObject::tr( "Mild" );
 			case cv_AbstractTrait::Severe:
 				return QObject::tr( "Severe" );
+			case cv_AbstractTrait::Primary:
+				return QObject::tr( "Primary" );
+			case cv_AbstractTrait::Secondary:
+				return QObject::tr( "Secondary" );
+			case cv_AbstractTrait::Tertiary:
+				return QObject::tr( "Tertiary" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -227,6 +273,12 @@ QString cv_AbstractTrait::toString( cv_AbstractTrait::Category category, bool pl
 				return QObject::tr( "Mild" );
 			case cv_AbstractTrait::Severe:
 				return QObject::tr( "Severe" );
+			case cv_AbstractTrait::Primary:
+				return QObject::tr( "Primary" );
+			case cv_AbstractTrait::Secondary:
+				return QObject::tr( "Secondary" );
+			case cv_AbstractTrait::Tertiary:
+				return QObject::tr( "Tertiary" );
 			default:
 				throw eTraitCategory( category );
 		}
@@ -282,21 +334,27 @@ cv_AbstractTrait::Category cv_AbstractTrait::toCategory( QString str ) {
 		return cv_AbstractTrait::Mild;
 	else if ( str == "Severe" )
 		return cv_AbstractTrait::Severe;
+	else if ( str == "Primary" )
+		return cv_AbstractTrait::Primary;
+	else if ( str == "Secondary" )
+		return cv_AbstractTrait::Secondary;
+	else if ( str == "Tertiary" )
+		return cv_AbstractTrait::Tertiary;
 	else
 		return cv_AbstractTrait::CategoryNo;
 }
 
 
-QList< cv_AbstractTrait::Category > cv_AbstractTrait::getCategoryList( cv_Trait::Type type ) {
-	if ( type == cv_Trait::Attribute || type == cv_Trait::Skill ) {
+QList< cv_AbstractTrait::Category > cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Type type ) {
+	if ( type == cv_AbstractTrait::Attribute || type == cv_AbstractTrait::Skill ) {
 		return v_categoryListGeneral;
-	} else if ( type == cv_Trait::Merit ) {
-		return v_categoryListAll;
-	} else if ( type == cv_Trait::Power ) {
-		return QList< cv_Trait::Category >() << cv_Trait::CategoryNo;
-	} else if ( type == cv_Trait::Flaw ) {
+	} else if ( type == cv_AbstractTrait::Merit ) {
+		return v_categoryListMerits;
+	} else if ( type == cv_AbstractTrait::Power ) {
+		return v_categoryListPowers;
+	} else if ( type == cv_AbstractTrait::Flaw ) {
 		return v_categoryListExtended;
-	} else if ( type == cv_Trait::Derangement ) {
+	} else if ( type == cv_AbstractTrait::Derangement ) {
 		return v_categoryListDerangements;
 	} else {
 		throw eTraitType( type );

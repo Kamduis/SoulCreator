@@ -26,12 +26,12 @@
 #define MAINWINDOW_H
 
 #include "Calc/Creation.h"
-#include "Datatypes/cv_CreationPoints.h"
+// #include "Datatypes/cv_CreationPoints.h"
 #include "Draw/DrawSheet.h"
 #include "IO/ReadXmlCharacter.h"
 #include "IO/WriteXmlCharacter.h"
-#include "Storage/StorageTemplate.h"
-#include "Storage/StorageCharacter.h"
+// #include "Storage/StorageTemplate.h"
+// #include "Storage/StorageCharacter.h"
 #include "Widgets/InfoWidget.h"
 #include "Widgets/AttributeWidget.h"
 #include "Widgets/SkillWidget.h"
@@ -55,7 +55,7 @@ class MainWindow;
  *
  * Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
  *
- * \todo Der TExt im Reiter Powers sollte je nach Spezies angepaßt werden (Disciplines, Renown, etc.)
+ * \todo Der Text im Reiter Powers sollte je nach Spezies angepaßt werden (Disciplines, Renown, etc.)
  *
  * \todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
  *
@@ -81,13 +81,7 @@ class MainWindow;
  *
  * \todo Alle Reiter, bei denen nicht alle Punkte vergeben wurden grün färben und jene, bei denen zu viele vergeben wurde, rot färben.
  *
- * \todo eine Seitenleiste mit Bildern einführen, wo man die Reister auswählen kann. Dort kann man auch die verbleibenden Punkte hinschreiben und markieren, wenn ein Typ zuviele/wenige Punkte vergeben hat.
- *
  * \todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-DAtei bereitstellen, i welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
- *
- * \todo Anzeige des Dateinames (oder des Charkaternamens?) in der Titelzeile.
- *
- * \todo Schönere Symbole für die Seitenauswahl.
  *
  * \todo Zu verteilende Punkte für Spezialisierungen
  *
@@ -95,11 +89,9 @@ class MainWindow;
  *
  * \todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
  *
- * \bug Wenn man einen Charkater lädt oder einen neuen erstellt, während gerade der Knopf für das Anzeigen der Spazialisierungen einer Fertigkeit gedrückt ist, bleuibt er gedrückt und die alten Spezialisierungen bleiben angezeigt. Das ist natürlich nicht das gewünschte Verhalten.
+ * \todo Bei langen Liste (Powers) Wird das Stacked Widget zu groß und es wird überall ein Scrollbalken angezeigt und das Bild liegt nicht in der Mitte!
  *
- * \todo Auf den Knopf für die Spezialisierungen jeder einzelnen Fertigkeit die Anzahl der bereits gewählten Spezialisierungen schreiben.
- *
- * \todo Fertigkeiten und Attribute wie Merits und Flaws gruppieren.
+ * \todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
  */
 
 class MainWindow : public QMainWindow {
@@ -211,26 +203,28 @@ class MainWindow : public QMainWindow {
 		void showBackround( cv_Species::SpeciesFlag spec );
 		/**
 		 * Zeigt die Anzahl der übrigen Punkte bei der Charaktererschaffung an.
+		 *
+		 * \todo Mit Wirkung versehen.
 		 **/
-		void showCreationPoints(cv_CreationPoints pt);
+		void showCreationPoints();
 		/**
 		 * Zeigt eine Warnung an, wenn nicht alle Erschafungspunkte vergeben wurden.
 		 *
 		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite blau eingefärbt.
 		 **/
-		void warnCreationPointsPositive(cv_Trait::Type type);
+		void warnCreationPointsPositive(cv_AbstractTrait::Type type);
 		/**
 		 * Zeigt eine Warnung an, wenn zuviele Erschafungspunkte vergeben wurden.
 		 *
 		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite rot eingefärbt.
 		 **/
-		void warnCreationPointsNegative(cv_Trait::Type type);
+		void warnCreationPointsNegative(cv_AbstractTrait::Type type);
 		/**
 		 * Zeigt eine Warnung an, wenn alle Erschafungspunkte vergeben wurden.
 		 *
 		 * \note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite wieder zur Standardfarbe verändert.
 		 **/
-		void warnCreationPointsDepleted(cv_Trait::Type type);
+		void warnCreationPointsDepleted(cv_AbstractTrait::Type type);
 		/**
 		 * Werte des Charakters auf der Oberfläche anzeigen.
 		 **/
@@ -288,6 +282,10 @@ class MainWindow : public QMainWindow {
 		 **/
 		void aboutApp();
 		/**
+		 * Fügt den Inhalt des Arguments zum Fenstertitel hinzu.
+		 **/
+		void setTitle( QString txt );
+		/**
 		 * Diese Funktion druckt den Charakter in ein PDF-Dokument.
 		 **/
 		void exportCharacter();
@@ -298,7 +296,7 @@ class MainWindow : public QMainWindow {
 		/**
 		 * Zeigt eine Nachricht an, daß die Eigenschaftsanzahl das für den Charakterbogen gesetzte Limit übertrifft, und daß alle überzähligen Eigenschaften des mitgegebenen Typs ignoriert werden.
 		 **/
-		void messageEnforcedTraitLimits( cv_Trait::Type );
+		void messageEnforcedTraitLimits( cv_AbstractTrait::Type );
 		/**
 		 * Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
 		 **/

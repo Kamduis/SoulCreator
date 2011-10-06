@@ -25,7 +25,7 @@
 #include <QDebug>
 
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Config/Config.h"
 
 #include "ReadXmlCharacter.h"
 
@@ -110,9 +110,9 @@ void ReadXmlCharacter::readSoulCreator() {
 				int armorFirearms = attributes().value( "firearms" ).toString().toInt();
 				character->setArmor( armorGeneral, armorFirearms );
 				readUnknownElement();
-			} else if ( elementName != cv_Trait::toXmlString( cv_Trait::TypeNo ) ) {
+			} else if ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
 // 				qDebug() << Q_FUNC_INFO << elementName << "!";
-				readTraits( cv_Trait::toType( elementName ) );
+				readTraits( cv_AbstractTrait::toType( elementName ) );
 			} else {
 				readUnknownElement();
 			}
@@ -151,7 +151,7 @@ void ReadXmlCharacter::readIdentities() {
 }
 
 
-void ReadXmlCharacter::readTraits( cv_Trait::Type type ) {
+void ReadXmlCharacter::readTraits( cv_AbstractTrait::Type type ) {
 	while ( !atEnd() ) {
 		readNext();
 
@@ -160,12 +160,12 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type ) {
 
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
-			readTraits( type, cv_Trait::toCategory( elementName ) );
+			readTraits( type, cv_AbstractTrait::toCategory( elementName ) );
 		}
 	}
 }
 
-void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category category ) {
+void ReadXmlCharacter::readTraits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) {
 	while ( !atEnd() ) {
 		readNext();
 
@@ -175,15 +175,12 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 		if ( isStartElement() ) {
 			QString elementName = name().toString();
 
-			if ( type == cv_Trait::Derangement && elementName == "derangement" ) {
+			if ( type == cv_AbstractTrait::Derangement && elementName == "derangement" ) {
 				cv_Derangement derangement;
-				derangement.v_name
-				= attributes().value( "name" ).toString();
-				derangement.v_type
-				= type;
-				derangement.v_category
-				= category;
-				derangement.morality = attributes().value( "morality" ).toString().toInt();
+				derangement.setName(attributes().value( "name" ).toString());
+				derangement.setType(type);
+				derangement.setCategory(category);
+				derangement.setMorality(attributes().value( "morality" ).toString().toInt());
 
 				character->addDerangement( derangement );
 
@@ -199,21 +196,19 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 				}
 			} else if ( elementName == "trait" ) {
 				cv_Trait trait;
-				trait.v_name = attributes().value( "name" ).toString();
-				trait.v_type = type;
-				trait.v_category = category;
+				trait.setName(attributes().value( "name" ).toString());
+				trait.setType(type);
+				trait.setCategory(category);
 				trait.setValue( attributes().value( "value" ).toString().toInt() );
 				QString customText = attributes().value( "custom" ).toString();
 
 				if ( customText.isEmpty() ) {
 // 					trait.custom = false;
-					trait.v_customText
-					= "";
+					trait.setCustomText( "" );
 				} else {
 // 					qDebug() << Q_FUNC_INFO << customText;
 // 					trait.custom = true;
-					trait.v_customText
-					= customText;
+					trait.setCustomText( customText );
 				}
 
 				QList< cv_TraitDetail > list;
@@ -239,8 +234,7 @@ void ReadXmlCharacter::readTraits( cv_Trait::Type type, cv_Trait::Category categ
 					}
 				}
 
-				trait.v_details
-				= list;
+				trait.setDetails( list );
 
 				character->modifyTrait( trait );
 			} else

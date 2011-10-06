@@ -25,7 +25,7 @@
 #include <QDebug>
 
 #include "Exceptions/Exception.h"
-#include "Config/Config.h"
+// #include "Config/Config.h"
 
 #include "ReadXml.h"
 

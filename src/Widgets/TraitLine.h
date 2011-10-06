@@ -70,7 +70,7 @@ class TraitLine : public QWidget {
 		/**
 		 * Dieser Konstruktor übergibt sämtliche Werte.
 		 **/
-// 		TraitLine(QWidget *parent = 0, cv_Trait::Type type = cv_Trait::TypeNo, cv_Trait::Category category = cv_Trait::CategoryNo, QString name = "", int value = 0);
+// 		TraitLine(QWidget *parent = 0, cv_AbstractTrait::Type type = cv_AbstractTrait::TypeNo, cv_AbstractTrait::Category category = cv_AbstractTrait::CategoryNo, QString name = "", int value = 0);
 		/**
 		 * Simpler Konstruktor, der einige Werte übergeben kann.
 		 **/
@@ -109,6 +109,16 @@ class TraitLine : public QWidget {
 		 **/
 		void setPossibleValues(QList<int> valueList);
 		void setText(QString text);
+		/**
+		 * Legt die Beschriftung des Buttons fest.
+		 **/
+		void setButtonText(QString txt);
+		/**
+		 * Legt die Beschriftung des Buttons fest.
+		 *
+		 * \overload setButtonText(QString txt)
+		 **/
+		void setButtonText( int val );
 		void setMinimum(int value);
 		/**
 		 * Mit dieser Methode verstecke ich die Liste der Spezialisierungen. Schließlich haben nur Fertigkeiten eine Notwendigkeit dafür.

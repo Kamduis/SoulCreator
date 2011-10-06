@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.5">
+	<creation species="Changeling">
+		<Power>
+			<points value="5"/>
+		</Power>
+	</creation>
 	<traits species="Changeling" morale="Clarity" supertrait="Wyrd" fuel="Glamour">
 		<Super>
 			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
@@ -291,321 +296,327 @@
 				</trait>
 			</FightingStyle>
 		</Merit>
-		<Power>
-			<trait name="Den">
-				<cheap>Beast</cheap>
-			</trait>
-			<trait name="Fang and Talon" custom="true">
-				<cheap>Beast</cheap>
-			</trait>
-			<trait name="Wild">
-				<cheap>Beast</cheap>
-				<cheap>Elemental</cheap>
-			</trait>
-			<trait name="Darkness">
-				<cheap>Darkling</cheap>
-			</trait>
-			<trait name="Reflections">
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-			</trait>
-			<trait name="Shade and Spirit">
-				<cheap>Darkling</cheap>
-			</trait>
-			<trait name="Communion">
-				<cheap>Elemental</cheap>
-			</trait>
-			<trait name="Elements">
-				<cheap>Elemental</cheap>
-			</trait>
-			<trait name="Separation">
-				<cheap>Fairest</cheap>
-			</trait>
-			<trait name="Vainglory">
-				<cheap>Fairest</cheap>
-			</trait>
-			<trait name="Forge">
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-			</trait>
-			<trait name="Oath and Punishment">
-				<cheap>Ogre</cheap>
-			</trait>
-			<trait name="Stone">
-				<cheap>Ogre</cheap>
-			</trait>
-			<trait name="Animation">
-				<cheap>Wizened</cheap>
-			</trait>
-			<trait name="Artifice">
-				<cheap>Wizened</cheap>
-			</trait>
-			<trait name="Fleeting Spring">
-				<cheap>Spring</cheap>
-			</trait>
-			<trait name="Eternal Spring">
-				<cheap>Spring</cheap>
-			</trait>
-			<trait name="Verdant Spring">
-				<cheap>Spring</cheap>
-			</trait>
-			<trait name="Fleeting Summer">
-				<cheap>Summer</cheap>
-			</trait>
-			<trait name="Eternal Summer">
-				<cheap>Summer</cheap>
-			</trait>
-			<trait name="Punishing Summer">
-				<cheap>Summer</cheap>
-			</trait>
-			<trait name="Fleeting Autumn">
-				<cheap>Autumn</cheap>
-			</trait>
-			<trait name="Eternal Autumn">
-				<cheap>Autumn</cheap>
-			</trait>
-			<trait name="Spellbound Autumn">
-				<cheap>Autumn</cheap>
-			</trait>
-			<trait name="Fleeting Winter">
-				<cheap>Winter</cheap>
-			</trait>
-			<trait name="Eternal Winter">
-				<cheap>Winter</cheap>
-			</trait>
-			<trait name="Sorrow-Frozen Heart">
-				<cheap>Winter</cheap>
-			</trait>
-			<trait name="Noon">
-				<cheap>Sun</cheap>
-			</trait>
-			<trait name="Midnight">
-				<cheap>Moon</cheap>
-			</trait>
-			<trait name="Entropy">
-				<cheap>Dusk</cheap>
-			</trait>
-			<trait name="Potential">
-				<cheap>Dawn</cheap>
-			</trait>
-			<trait name="Four Directions">
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Imminent North">
-				<cheap>North</cheap>
-			</trait>
-			<trait name="Imminent East">
-				<cheap>East</cheap>
-			</trait>
-			<trait name="Imminent South">
-				<cheap>South</cheap>
-			</trait>
-			<trait name="Imminent West">
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Board">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Brambles">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Dream">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Hearth">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Hours">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Mirror">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Moon">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Omen">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Smoke">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
-			<trait name="Thorn">
-				<cheap>Beast</cheap>
-				<cheap>Darkling</cheap>
-				<cheap>Fairest</cheap>
-				<cheap>Elemental</cheap>
-				<cheap>Ogre</cheap>
-				<cheap>Wizened</cheap>
-				<cheap>Spring</cheap>
-				<cheap>Summer</cheap>
-				<cheap>Autumn</cheap>
-				<cheap>Winter</cheap>
-				<cheap>Sun</cheap>
-				<cheap>Moon</cheap>
-				<cheap>Dusk</cheap>
-				<cheap>Dawn</cheap>
-				<cheap>North</cheap>
-				<cheap>East</cheap>
-				<cheap>South</cheap>
-				<cheap>West</cheap>
-			</trait>
+		<Power name="Contracts">
+			<Primary name="Universal Contracts">
+				<trait name="Board">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Brambles">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Dream">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Hearth">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Hours">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Mirror">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Moon">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Omen">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Smoke">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Thorn">
+					<cheap>Beast</cheap>
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+					<cheap>Elemental</cheap>
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+					<cheap>Spring</cheap>
+					<cheap>Summer</cheap>
+					<cheap>Autumn</cheap>
+					<cheap>Winter</cheap>
+					<cheap>Sun</cheap>
+					<cheap>Moon</cheap>
+					<cheap>Dusk</cheap>
+					<cheap>Dawn</cheap>
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+			</Primary>
+			<Secondary name="Seeming Contracts">
+				<trait name="Den">
+					<cheap>Beast</cheap>
+				</trait>
+				<trait name="Fang and Talon" custom="true">
+					<cheap>Beast</cheap>
+				</trait>
+				<trait name="Wild">
+					<cheap>Beast</cheap>
+					<cheap>Elemental</cheap>
+				</trait>
+				<trait name="Darkness">
+					<cheap>Darkling</cheap>
+				</trait>
+				<trait name="Reflections">
+					<cheap>Darkling</cheap>
+					<cheap>Fairest</cheap>
+				</trait>
+				<trait name="Shade and Spirit">
+					<cheap>Darkling</cheap>
+				</trait>
+				<trait name="Communion">
+					<cheap>Elemental</cheap>
+				</trait>
+				<trait name="Elements">
+					<cheap>Elemental</cheap>
+				</trait>
+				<trait name="Separation">
+					<cheap>Fairest</cheap>
+				</trait>
+				<trait name="Vainglory">
+					<cheap>Fairest</cheap>
+				</trait>
+				<trait name="Forge">
+					<cheap>Ogre</cheap>
+					<cheap>Wizened</cheap>
+				</trait>
+				<trait name="Oath and Punishment">
+					<cheap>Ogre</cheap>
+				</trait>
+				<trait name="Stone">
+					<cheap>Ogre</cheap>
+				</trait>
+				<trait name="Animation">
+					<cheap>Wizened</cheap>
+				</trait>
+				<trait name="Artifice">
+					<cheap>Wizened</cheap>
+				</trait>
+			</Secondary>
+			<Tertiary name="Court Contracts">
+				<trait name="Fleeting Spring">
+					<cheap>Spring</cheap>
+				</trait>
+				<trait name="Eternal Spring">
+					<cheap>Spring</cheap>
+				</trait>
+				<trait name="Verdant Spring">
+					<cheap>Spring</cheap>
+				</trait>
+				<trait name="Fleeting Summer">
+					<cheap>Summer</cheap>
+				</trait>
+				<trait name="Eternal Summer">
+					<cheap>Summer</cheap>
+				</trait>
+				<trait name="Punishing Summer">
+					<cheap>Summer</cheap>
+				</trait>
+				<trait name="Fleeting Autumn">
+					<cheap>Autumn</cheap>
+				</trait>
+				<trait name="Eternal Autumn">
+					<cheap>Autumn</cheap>
+				</trait>
+				<trait name="Spellbound Autumn">
+					<cheap>Autumn</cheap>
+				</trait>
+				<trait name="Fleeting Winter">
+					<cheap>Winter</cheap>
+				</trait>
+				<trait name="Eternal Winter">
+					<cheap>Winter</cheap>
+				</trait>
+				<trait name="Sorrow-Frozen Heart">
+					<cheap>Winter</cheap>
+				</trait>
+				<trait name="Noon">
+					<cheap>Sun</cheap>
+				</trait>
+				<trait name="Midnight">
+					<cheap>Moon</cheap>
+				</trait>
+				<trait name="Entropy">
+					<cheap>Dusk</cheap>
+				</trait>
+				<trait name="Potential">
+					<cheap>Dawn</cheap>
+				</trait>
+				<trait name="Four Directions">
+					<cheap>North</cheap>
+					<cheap>East</cheap>
+					<cheap>South</cheap>
+					<cheap>West</cheap>
+				</trait>
+				<trait name="Imminent North">
+					<cheap>North</cheap>
+				</trait>
+				<trait name="Imminent East">
+					<cheap>East</cheap>
+				</trait>
+				<trait name="Imminent South">
+					<cheap>South</cheap>
+				</trait>
+				<trait name="Imminent West">
+					<cheap>West</cheap>
+				</trait>
+			</Tertiary>
 		</Power>
 		<Derangement>
 			<Mild>

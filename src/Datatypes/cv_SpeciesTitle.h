@@ -25,7 +25,7 @@
 #ifndef CV_SPECIESTITLES_H
 #define CV_SPECIESTITLES_H
 
-#include <QString>
+// #include <QString>
 
 #include "cv_Species.h"
 
@@ -41,7 +41,8 @@ class cv_SpeciesTitle {
 		enum Title {
 			TitleNo,
 			Breed,
-			Faction
+			Faction,
+			Power
 		};
 		/**
 		 * Konstruktor.

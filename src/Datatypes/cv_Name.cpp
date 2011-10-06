@@ -38,7 +38,13 @@ QString cv_Name::firstName() const {
 }
 
 QString cv_Name::birthName() const {
-	return firstName() + " " + sureName;
+	if (firstName().isEmpty() || sureName.isEmpty()){
+		// In diesem Fall benötige ich keinen Abstand zwischen den Namen, da je einer leer ist.
+		return firstName() + sureName;
+	} else {
+		return firstName() + " " + sureName;
+	}
+
 }
 
 QString cv_Name::displayNameFull( QString last, QStringList fores ) {

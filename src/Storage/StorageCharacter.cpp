@@ -24,7 +24,7 @@
 
 #include <QDebug>
 
-#include "StorageTemplate.h"
+// #include "StorageTemplate.h"
 
 #include "StorageCharacter.h"
 #include "Config/Config.h"
@@ -42,7 +42,7 @@ int StorageCharacter::v_armorGeneral = 0;
 int StorageCharacter::v_armorFirearms = 0;
 bool StorageCharacter::v_modified = false;
 cv_IdentityList StorageCharacter::v_identities;
-QList< cv_Trait > StorageCharacter::v_traits;
+// QList< cv_Trait > StorageCharacter::v_traits;
 QList< Trait* > StorageCharacter::v_traits2;
 cv_Species::SpeciesFlag StorageCharacter::v_species;
 QList< cv_Derangement > StorageCharacter::v_derangements;
@@ -79,6 +79,8 @@ StorageCharacter::StorageCharacter( QObject* parent ) : QObject( parent ) {
 	connect( this, SIGNAL( superTraitChanged( int ) ), this, SLOT( setModified() ) );
 	connect( this, SIGNAL( moralityChanged( int ) ), this, SLOT( setModified() ) );
 	connect( this, SIGNAL( armorChanged( int, int ) ), this, SLOT( setModified() ) );
+
+	connect (this, SIGNAL(realIdentityChanged(cv_Identity)), this, SLOT(emitNameChanged(cv_Identity)));
 }
 
 StorageCharacter::~StorageCharacter() {
@@ -131,28 +133,28 @@ void StorageCharacter::setRealIdentity( cv_Identity id ) {
 
 
 
-QList< cv_Trait >* StorageCharacter::traits() const {
-	return &v_traits;
+QList< Trait* >* StorageCharacter::traits() const {
+	return &v_traits2;
 }
 
-QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type ) const {
-	QList< cv_Trait* > list;
+QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type ) const {
+	QList< Trait* > list;
 
-	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).v_type == type ) {
-			list.append( &v_traits[i] );
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		if ( v_traits2.at( i )->type() == type ) {
+			list.append( v_traits2[i] );
 		}
 	}
 
 	return list;
 }
 
-QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Category category ) const {
-	QList< cv_Trait* > list;
+QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const {
+	QList< Trait* > list;
 
-	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( v_traits.at( i ).v_type == type && v_traits.at( i ).v_category == category ) {
-			list.append( &v_traits[i] );
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		if ( v_traits2.at( i )->type() == type && v_traits2.at( i )->category() == category ) {
+			list.append( v_traits2[i] );
 		}
 	}
 
@@ -160,42 +162,31 @@ QList< cv_Trait* > StorageCharacter::traits( cv_Trait::Type type, cv_Trait::Cate
 }
 
 
-cv_Trait* StorageCharacter::addTrait( cv_Trait trait ) {
-	cv_Trait* traitPtr;
-
-// 	qDebug() << Q_FUNC_INFO << "Füge hinzu:" << trait.name << "mit" << trait.custom << "und" << trait.customText;
-	v_traits.append( trait );
-	traitPtr = &v_traits[ v_traits.count() - 1 ];
-
-// 	Q_CHECK_PTR(traitPtr);
-
-// 	emit traitChanged( trait );
-// 	emit traitChanged( traitPtr );
-
-	return traitPtr;
-}
 Trait* StorageCharacter::addTrait( Trait* trait ) {
-	Trait* lcl_trait = new Trait(trait);
+	Trait* lcl_trait = new Trait( trait );
 
 	v_traits2.append( lcl_trait );
+
+	// Wann immer sich eine Eigenschaft ändert, muß dies auch ein passendes Signal aussenden.
+	// Hier gibt es Probleme, wenn Eigenschaften nach den Merits erzeugt werden.
+// 	connect( lcl_trait, SIGNAL( traitChanged( Trait* ) ), SIGNAL( traitChanged( Trait* ) ) );
 
 	return lcl_trait;
 }
 
+
 void StorageCharacter::modifyTrait( cv_Trait trait ) {
-	for ( int i = 0; i < v_traits.count(); i++ ) {
-		if ( trait.v_type == v_traits.at( i ).v_type && trait.v_category == v_traits.at( i ).v_category && trait.v_name == v_traits.at( i ).v_name ) {
-			if ( !v_traits.at( i ).v_custom || trait.v_customText == v_traits.at( i ).v_customText || v_traits.at( i ).v_customText.isEmpty() ) {
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		if ( trait.type() == v_traits2.at( i )->type() && trait.category() == v_traits2.at( i )->category() && trait.name() == v_traits2.at( i )->name() ) {
+			if ( !v_traits2.at( i )->custom() || trait.customText() == v_traits2.at( i )->customText() || v_traits2.at( i )->customText().isEmpty() ) {
 				// Custom bleibt immer gleich.
-				v_traits[i].setValue ( trait.value() );
-				v_traits[i].v_customText = trait.v_customText;
-				v_traits[i].v_details = trait.v_details;
-// 				qDebug() << Q_FUNC_INFO << v_traits.at( i ).name << "Adresse:" << &v_traits[i] << "verändert zu" << v_traits.at( i ).value << "Und zusatztext:" << v_traits.at( i ).customText << v_traits.at( i ).custom;
+				v_traits2[i]->setValue( trait.value() );
+				v_traits2[i]->setCustomText( trait.customText() );
+				v_traits2[i]->setDetails( trait.details() );
 
-				emit traitChanged( &v_traits[i] );
+// 				// Dieses Signal benötige ich wegen der Prerequisites einiger Merits. Diese müssen kontrolliert werden, wann immer sich eine Eigenschaft ändert, welche Teil dieser Voraussetzungen sein könnte.
+// 				emit traitChanged( v_traits2[i] );
 
-				// Wenn der Eintrage geschrieben ist, wird die Schleife abgebrochen.
-// 				qDebug() << Q_FUNC_INFO << "breche ab";
 				break;
 			}
 		}
@@ -203,15 +194,16 @@ void StorageCharacter::modifyTrait( cv_Trait trait ) {
 }
 
 
+
 QList< cv_Derangement >* StorageCharacter::derangements() const {
 	return &v_derangements;
 }
 
-QList< cv_Derangement* > StorageCharacter::derangements( cv_Trait::Category category ) const {
+QList< cv_Derangement* > StorageCharacter::derangements( cv_AbstractTrait::Category category ) const {
 	QList< cv_Derangement* > list;
 
 	for ( int i = 0; i < v_derangements.count(); i++ ) {
-		if ( v_derangements.at( i ).v_category == category ) {
+		if ( v_derangements.at( i ).category() == category ) {
 			list.append( &v_derangements[i] );
 		}
 	}
@@ -220,7 +212,7 @@ QList< cv_Derangement* > StorageCharacter::derangements( cv_Trait::Category cate
 }
 
 void StorageCharacter::addDerangement( cv_Derangement derang ) {
-	if ( derang.v_name != "" && !v_derangements.contains( derang ) ) {
+	if ( !derang.name().isEmpty() && !v_derangements.contains( derang ) ) {
 // 		qDebug() << Q_FUNC_INFO << derang.name << derang.morality;
 		v_derangements.append( derang );
 
@@ -243,32 +235,33 @@ void StorageCharacter::removeDerangement( cv_Derangement derang ) {
 void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail > details ) {
 	bool trait_exists = false;
 
-	for ( int i = 0; i < v_traits.count(); i++ ) {
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
 		// Spezialisieren gibt es nur bei Fertigkeiten.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
-		if ( v_traits.at( i ).v_type == cv_Trait::Skill && v_traits.at( i ).v_name == name && v_traits.at( i ).value() > 0 ) {
+		if ( v_traits2.at( i )->type() == cv_AbstractTrait::Skill && v_traits2.at( i )->name() == name && v_traits2.at( i )->value() > 0 ) {
 			trait_exists = true;
 
-			cv_Trait trait = v_traits.at( i );
+			Trait* trait = v_traits2.at( i );
 			// Erst alle Spezialisieren löschen
-			trait.v_details.clear();
+// 			trait->clearDetails();
+			// Das muß ich allerdings so machen, daß kein Signal ausgesandt wird, weswegen ich nicht die übergeordnete Funktion clearDetails() wähle.
+			trait->details().clear();
 
 			// Dann neu setzen.
 			int detailsCount = details.count();
+
+			QList< cv_TraitDetail > list;
 
 			for ( int j = 0; j < detailsCount; j++ ) {
 				cv_TraitDetail specialty;
 				specialty.name = details.at( j ).name;
 				specialty.value = true;
 // 				qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << specialty.name << "zu Fertigkeit" << name << "hinzu";
-				trait.v_details.append( specialty );
+				list.append( specialty );
 			}
 
-			v_traits.replace( i, trait );
-
-// 			emit traitChanged( trait );
-// 			emit traitChanged( &v_traits[ i ] );
+			trait->setDetails(list);
 
 			break;
 		}
@@ -279,6 +272,32 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 		qDebug() << Q_FUNC_INFO << "Spezialisierungen nicht angelegt, da Fertigkeit" << name << "nicht existiert.";
 	}
 }
+void StorageCharacter::addSkillSpecialties( QString name, cv_TraitDetail detail )
+{
+	bool trait_exists = false;
+
+	for ( int i = 0; i < v_traits2.count(); i++ ) {
+		// Spezialisieren gibt es nur bei Fertigkeiten.
+		// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
+		// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
+		if ( v_traits2.at( i )->type() == cv_AbstractTrait::Skill
+			&& v_traits2.at( i )->name() == name
+			&& v_traits2.at( i )->value() > 0
+		) {
+			trait_exists = true;
+
+			v_traits2[i]->addDetail(detail);
+
+			break;
+		}
+	}
+
+	// Existiert die Fertigkeit nicht, für die eine Spezialisierung eingetragen werden soll, muß etwas getan werden. Anlegen ist aber nicht dier richtige Lösung (welcher Wert denn?).
+	if ( !trait_exists ) {
+		qDebug() << Q_FUNC_INFO << "Spezialisierung nicht hinzugefügt, da Fertigkeit" << name << "nicht existiert.";
+	}
+}
+
 
 QString StorageCharacter::virtue() const {
 	return v_virtue;
@@ -380,23 +399,25 @@ void StorageCharacter::resetCharacter() {
 // 	setBreed(storage->breedNames(species()).at(0));
 // 	setFaction(storage->breedNames(species()).at(0));
 
-	for ( int i = 0; i < v_traits.count();i++ ) {
-		if ( v_traits[i].v_type == cv_Trait::Attribute ) {
-			v_traits[i].setValue( 1 );
+	for ( int i = 0; i < v_traits2.count();i++ ) {
+		if ( v_traits2[i]->type() == cv_AbstractTrait::Attribute ) {
+			v_traits2[i]->setValue( 1 );
 		} else {
-			v_traits[i].setValue( 0 );
+			v_traits2[i]->setValue( 0 );
 		}
 
-		v_traits[i].v_details.clear();
+		v_traits2[i]->clearDetails();
 
-		v_traits[i].v_customText = "";
+		v_traits2[i]->setCustomText( "" );
 
-		emit traitChanged( &v_traits[i] );
+// 		emit traitChanged( v_traits2[i] );
 	}
 
 	v_derangements.clear();
 
 	setMorality( Config::derangementMoralityTraitMax );
+
+	emit characterResetted();
 }
 
 
@@ -411,5 +432,9 @@ void StorageCharacter::setModified( bool sw ) {
 	}
 }
 
+void StorageCharacter::emitNameChanged( cv_Identity id )
+{
+	emit nameChanged(id.birthName());
+}
 
 

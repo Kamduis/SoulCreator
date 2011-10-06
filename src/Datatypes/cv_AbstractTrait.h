@@ -25,7 +25,8 @@
 #ifndef CV_ABSTRACTTRAIT_H
 #define CV_ABSTRACTTRAIT_H
 
-#include <QString>
+// #include <QString>
+#include <QList>
 
 #include "cv_Species.h"
 
@@ -137,20 +138,44 @@ class cv_AbstractTrait {
 		 *     <td>Category::Extraordinary</td>
 		 *     <td>Psychische Phänomene wie Psi oder Hellsicht. Auch mit Geistern in Verbindung stehende Merits.</td>
 		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::Mild</td>
+		 *     <td>Milde Geistesstörungen</td>
+		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::Severe</td>
+		 *     <td>Ernste Geistesstörungen.</td>
+		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::BreedPower</td>
+		 *     <td>Kräfte welche hauptsächlich Angehörigen der jeweiligen Brut zugeschrieben werden.</td>
+		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::FactionPower</td>
+		 *     <td>Kräfte welche hauptsächlich Angehörigen der jeweiligen Fraktion zugeschrieben werden.</td>
+		 *  </tr>
+		 *  <tr>
+		 *     <td>Category::ClubPower</td>
+		 *     <td>Kräfte welche hauptsächlich Angehörigen der jeweiligen Sonderfraktion (Blutlinie, Legat etc.) zugeschrieben werden.</td>
+		 *  </tr>
 		 *  </table>
 		 */
 		enum Category {
-			CategoryNo,
-			Mental,
-			Physical,
-			Social,
-			Item,
-			FightingStyle,
-			DebateStyle,
-			Extraordinary,
-			Mild,
-			Severe
+			CategoryNo		= 0x0000,
+			Mental			= 0x0001,
+			Physical		= 0x0002,
+			Social			= 0x0004,
+			Item			= 0x0008,
+			FightingStyle	= 0x0010,
+			DebateStyle		= 0x0020,
+			Extraordinary	= 0x0040,
+			Mild			= 0x0080,
+			Severe			= 0x0100,
+			Primary			= 0x0200,
+			Secondary		= 0x0400,
+			Tertiary		= 0x0800
 		};
+		Q_DECLARE_FLAGS( Categories, Category )	// Hiermit ermögliche ich die Verwendung von xx1|xx2|xx3
 
 		/**
 		 * Konstruktor.
@@ -158,25 +183,37 @@ class cv_AbstractTrait {
 		cv_AbstractTrait( QString txt = "", cv_Species::Species spe = cv_Species::SpeciesNo, cv_AbstractTrait::Type ty = cv_AbstractTrait::TypeNo, cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo );
 		
 		/**
-		 * Der Name der Eigenschaft.
+		 * Gibt den Namen der Eigenschaft zurück.
 		 **/
-		QString v_name;
+		QString name() const;
 		/**
-		 * Welche Spezies über diese Eigenschaft verfügen.
+		 * Legt den Namen der Eigenschaft fest
 		 **/
-		cv_Species::Species v_species;
+		void setName(QString nam);
 		/**
-		 * Der Typ, dem diese Eigenschaft angehört.
-		 *
-		 * \sa Type
+		 * Gibt aus, welche Spezies über diese Eigenschaft verfügen.
 		 **/
-		Type v_type;
+		cv_Species::Species species() const;
 		/**
-		 * Die Kategorie, der diese Eigenschaft angehört.
-		 *
-		 * \sa Category
+		 * Legt fest, welche Spezies über diese Eigenschaft verfügen.
 		 **/
-		Category v_category;
+		virtual void setSpecies(cv_Species::Species spe);
+		/**
+		 * Gibt zurück, welchem Typ diese Eigenschaft angehört.
+		 **/
+		Type type() const;
+		/**
+		 * Legt fest, welchem Typ diese Eigenschaft angehört.
+		 **/
+		virtual void setType(Type typ);
+		/**
+		 * Gibt zurpck, welcher Kategorie diese Eigenschaft angehört.
+		 **/
+		Category category() const;
+		/**
+		 * Legt fest, welcher Kategorie diese Eigenschaft angehört.
+		 **/
+		void setCategory(Category cat);
 
 		/**
 		 * Wandelt einen Typ in seinen in den Xml-Dateien gebräuchlichen Namen um.
@@ -232,6 +269,27 @@ class cv_AbstractTrait {
 
 	private:
 		/**
+		 * Der Name der Eigenschaft.
+		 **/
+		QString v_name;
+		/**
+		 * Welche Spezies über diese Eigenschaft verfügen.
+		 **/
+		cv_Species::Species v_species;
+		/**
+		 * Der Typ, dem diese Eigenschaft angehört.
+		 *
+		 * \sa Type
+		 **/
+		Type v_type;
+		/**
+		 * Die Kategorie, der diese Eigenschaft angehört.
+		 *
+		 * \sa Category
+		 **/
+		Category v_category;
+
+		/**
 		 * Eine Liste aller Kategorien für Attribute und Fertigkeiten.
 		 **/
 		static const QList< cv_AbstractTrait::Category > v_categoryListGeneral;
@@ -246,8 +304,14 @@ class cv_AbstractTrait {
 		/**
 		 * Eine Liste aller Kategorien für Merits.
 		 **/
-		static const QList< cv_AbstractTrait::Category > v_categoryListAll;
+		static const QList< cv_AbstractTrait::Category > v_categoryListMerits;
+		/**
+		 * Eine Liste aller Kategorien für Powers.
+		 **/
+		static const QList< cv_AbstractTrait::Category > v_categoryListPowers;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( cv_AbstractTrait::Categories )
 
 #endif
 

@@ -29,7 +29,7 @@
 #include <QList>
 #include <QStringList>
 
-#include "cv_Species.h"
+// #include "cv_Species.h"
 
 /**
  * @brief Speichert die zusätzlichen Parameter einer Eigenschaft.

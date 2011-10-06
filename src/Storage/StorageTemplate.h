@@ -29,11 +29,11 @@
 #include <QStringList>
 
 #include "Datatypes/cv_SpeciesTitle.h"
-#include "Datatypes/cv_Trait.h"
+// #include "Datatypes/cv_Trait.h"
 #include "Datatypes/Trait.h"
-#include "Datatypes/cv_IdentityList.h"
+// #include "Datatypes/cv_IdentityList.h"
 #include "Datatypes/cv_SuperEffect.h"
-#include "Datatypes/cv_CreationPoints2.h"
+#include "Datatypes/cv_CreationPointsList.h"
 
 #include <QObject>
 
@@ -87,6 +87,10 @@ class StorageTemplate : public QObject {
 		 **/
 		QString factionTitle( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
 		/**
+		 *Gibt eine Liste mit den Einzelnen Überschriften der Power-Kategorien je Spezies zurück.
+		 **/
+		QStringList powerHeaders( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
 		 * Gibt eine Liste aller verfügbaren Bruten aus.
 		 **/
 		QStringList breedNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
@@ -96,28 +100,28 @@ class StorageTemplate : public QObject {
 		QStringList factionNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
 		/**
 		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
+		 *
+		 * \note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
+		 *
+		 * \todo Vielleicht kann ich die Anzahl der at()s reduzieren durch speichern des Zeigers? vor den if-Abfragen und Zuweisungen. Gilt auch für ähnliche Funktionen.
 		 **/
-		QList< cv_Trait* > traits(cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		QList< Trait* > traits(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
 		/**
 		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		 **/
-		QList< Trait* > traits2(cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		QList< Trait* > traits(cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const;
 		/**
-		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
+		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_AbstractTrait::Type), Kategorie (\ref cv_AbstractTrait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
 		 **/
-		QList< cv_Trait* > traits(cv_Trait::Type type, cv_Species::SpeciesFlag species ) const;
-		/**
-		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_Trait::Type), Kategorie (\ref cv_Trait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
-		 **/
-		QStringList traitNames( cv_Trait::Type type, cv_Trait::Category category, cv_Trait::EraFlag era = cv_Trait::EraAll, cv_Trait::AgeFlag age = cv_Trait::AgeAll ) const;
-		/**
-		 * Gibt die gesamte Eigenschaft zurück, welche über Typ, Kategorie und Name spezifiziert ist.
-		 *
-		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
-		 *
-		 * \todo Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren.
-		 **/
-		cv_Trait trait(cv_Trait::Type type, cv_Trait::Category category, QString name);
+		QStringList traitNames( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::EraAll, cv_Trait::AgeFlag age = cv_Trait::AgeAll ) const;
+// 		/**
+// 		 * Gibt die gesamte Eigenschaft zurück, welche über Typ, Kategorie und Name spezifiziert ist.
+// 		 *
+// 		 * \todo Sollte vielleicht eine Exception werfen, wenn keine passende Eigenschaft gefunden wurde.
+// 		 *
+// 		 * \todo Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren.
+// 		 **/
+// 		cv_Trait trait(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name);
 		/**
 		 * Sortiert die Liste.
 		 **/
@@ -137,9 +141,9 @@ class StorageTemplate : public QObject {
 		int fuelPerTurn( cv_Species::Species species, int value );
 
 		/**
-		 * Gibt die insgesamt zur Verfügung stehenden Erschaffungspunkte zurück.
+		 * Gibt die für einen Eigenschaftstyp zur Verfügung stehenden Erschaffungspunkte zurück.
 		 **/
-		cv_CreationPoints2 creationPoints( cv_Species::Species species /** Für jede Spezies steht ein eigener Satz Erschaffungspunkte bereit. */ );
+		cv_CreationPointsList* creationPoints();
 
 	private:
 		/**
@@ -153,11 +157,7 @@ class StorageTemplate : public QObject {
 		/**
 		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
 		 **/
-		static QList< cv_Trait > v_traits;
-		/**
-		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
-		 **/
-		static QList< Trait* > v_traits2;
+		static QList< Trait* > v_traits;
 		/**
 		 * Eine Liste über die Effekte der Supereigenschaft.
 		 **/
@@ -166,7 +166,7 @@ class StorageTemplate : public QObject {
 		/**
 		 * Eine Liste der Erschaffungspunkte. Jeder Listeneintrag steht für eine andere Spezies.
 		 **/
-		static QList< cv_CreationPoints2 > v_creationPoints;
+		static cv_CreationPointsList v_creationPointsList;
 
 	public slots:
 // 		/**
@@ -198,7 +198,7 @@ class StorageTemplate : public QObject {
 		 *
 		 * \sa v_creationPoints
 		 **/
-		void appendCreationPoints( cv_CreationPoints2 points );
+		void appendCreationPoints( cv_CreationPoints points );
 };
 
 #endif

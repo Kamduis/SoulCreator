@@ -24,7 +24,7 @@
 
 #include <QDebug>
 
-#include "Exceptions/Exception.h"
+// #include "Exceptions/Exception.h"
 
 #include "SelectWidget.h"
 

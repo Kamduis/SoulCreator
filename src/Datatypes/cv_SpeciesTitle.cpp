@@ -23,7 +23,7 @@
  */
 
 
-#include "Exceptions/Exception.h"
+// #include "Exceptions/Exception.h"
 
 #include "cv_SpeciesTitle.h"
 
@@ -34,24 +34,20 @@ cv_SpeciesTitle::cv_SpeciesTitle( Title tit, QString txt, cv_Species::Species sp
 }
 
 
-cv_SpeciesTitle::Title cv_SpeciesTitle::toTitle( QString str )
-{
+cv_SpeciesTitle::Title cv_SpeciesTitle::toTitle( QString str ) {
 	if ( str == "Breed" )
-		return cv_SpeciesTitle
-::Breed;
+		return cv_SpeciesTitle::Breed;
 	else if ( str == "Faction" )
-		return cv_SpeciesTitle
-::Faction;
+		return cv_SpeciesTitle::Faction;
+	else if ( str == "Power" )
+		return cv_SpeciesTitle::Power;
 	else
-		return cv_SpeciesTitle
-::TitleNo;
+		return cv_SpeciesTitle::TitleNo;
 }
 
 
 
-bool cv_SpeciesTitle
-::operator==( const cv_SpeciesTitle
-& tit ) const {
+bool cv_SpeciesTitle::operator==( const cv_SpeciesTitle & tit ) const {
 	if ( this == &tit ) {
 		return true;
 	}

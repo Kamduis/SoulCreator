@@ -27,8 +27,8 @@
 
 #include "DerangementComboBox.h"
 #include "TraitDots.h"
-#include "Storage/StorageTemplate.h"
-#include "Datatypes/cv_Derangement.h"
+// #include "Storage/StorageTemplate.h"
+// #include "Datatypes/cv_Derangement.h"
 #include "Config/Config.h"
 
 #include "MoralityWidget.h"
@@ -51,7 +51,7 @@ MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
 	int layoutLine;
 
 	QList< cv_Trait > list;
-	v_categories = cv_Trait::getCategoryList( cv_Trait::Derangement );
+	v_category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
 
 	for ( int i = Config::moralityTraitMax; i > 0; i-- ) {
 		layoutLine =  Config::moralityTraitMax - i + 1;
@@ -181,15 +181,15 @@ void MoralityWidget::renameHeader( cv_Species::SpeciesFlag species ) {
 }
 
 void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
-	QList< cv_Trait* > list;
+	QList< Trait* > list;
 	QList< cv_Derangement > listToUse;
 
-	for ( int j = 0; j < v_categories.count(); j++ ) {
-		list = storage->traits( cv_Trait::Derangement, v_categories.at( j ) );
+	for ( int j = 0; j < v_category.count(); j++ ) {
+		list = storage->traits( cv_AbstractTrait::Derangement, v_category.at( j ) );
 
 		for ( int k = 0; k < list.count(); k++ ) {
-			if ( list.at( k )->v_species.testFlag( species ) ) {
-				cv_Derangement lcl_derangement( list.at( k )->v_name, 0, list.at( k )->v_species, list.at( k )->v_category );
+			if ( list.at( k )->species().testFlag( species ) ) {
+				cv_Derangement lcl_derangement( list.at( k )->name(), 0, list.at( k )->species(), list.at( k )->category() );
 
 // 				qDebug() << Q_FUNC_INFO << lcl_derangement.name << lcl_derangement.morality;
 
@@ -211,10 +211,10 @@ void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 
 void MoralityWidget::updateDerangements() {
 	QList< cv_Derangement* > list;
-	QList< cv_Trait::Category > categories = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
+	QList< cv_AbstractTrait::Category > category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
 
-	for ( int i = 0; i < categories.count(); i++ ) {
-		list.append( character->derangements( categories.at( i ) ) );
+	for ( int i = 0; i < category.count(); i++ ) {
+		list.append( character->derangements( category.at( i ) ) );
 	}
 
 	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
@@ -225,8 +225,8 @@ void MoralityWidget::updateDerangements() {
 			comboBox->setCurrentIndex( 0 );
 		} else {
 			for ( int k = 0; k < list.count(); k++ ) {
-				if ( list.at( k )->morality == i + 1 ) {
-					comboBox->setCurrentIndex( comboBox->findText( list.at( k )->v_name ) );
+				if ( list.at( k )->morality() == i + 1 ) {
+					comboBox->setCurrentIndex( comboBox->findText( list.at( k )->name() ) );
 					break;
 				} else if ( k == list.count() - 1 ) {	// Taucht keine Geistesstörung bei dieser Moralstufe in der Liste auzf, wird der Index auf 0 gesetzt.
 					comboBox->setCurrentIndex( 0 );
@@ -269,7 +269,7 @@ void MoralityWidget::saveDerangements( cv_Derangement dera ) {
 
 		if ( comboBox->currentItem() == dera ) {
 			derang = dera;
-			derang.morality = i + 1;
+			derang.setMorality(i + 1);
 			break;
 		}
 	}
