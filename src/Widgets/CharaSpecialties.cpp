@@ -47,9 +47,14 @@ void CharaSpecialties::saveSpecialties( QStringList list ) {
 		cv_TraitDetail detail;
 		detail.name = list.at( i );
 		detail.value = true;
-		
-		character->addSkillSpecialties(skill(), detail);
+
+		// Kann ich nicht machen, da ja dann keine Spezialisierungen mehr gelöscht werden.
+// 		character->addSkillSpecialties(skill(), detail);
+
+		specialties.append(detail);
 	}
+
+	character->setSkillSpecialties(skill(), specialties);
 }
 
 

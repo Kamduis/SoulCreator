@@ -244,18 +244,24 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 
 			Trait* trait = v_traits2.at( i );
 			// Erst alle Spezialisieren löschen
-			trait->clearDetails();
+// 			trait->clearDetails();
+			// Das muß ich allerdings so machen, daß kein Signal ausgesandt wird, weswegen ich nicht die übergeordnete Funktion clearDetails() wähle.
+			trait->details().clear();
 
 			// Dann neu setzen.
 			int detailsCount = details.count();
+
+			QList< cv_TraitDetail > list;
 
 			for ( int j = 0; j < detailsCount; j++ ) {
 				cv_TraitDetail specialty;
 				specialty.name = details.at( j ).name;
 				specialty.value = true;
 // 				qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << specialty.name << "zu Fertigkeit" << name << "hinzu";
-				trait->addDetail( specialty );
+				list.append( specialty );
 			}
+
+			trait->setDetails(list);
 
 			break;
 		}
