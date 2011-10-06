@@ -188,48 +188,48 @@ function toggleVisibility(linkObj) {
 <a name="l00195"></a>00195         <span class="keywordtype">void</span> storeTemplateData();
 <a name="l00199"></a>00199         <span class="keywordtype">void</span> populateUi();
 <a name="l00203"></a>00203         <span class="keywordtype">void</span> showBackround( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spec );
-<a name="l00207"></a>00207         <span class="keywordtype">void</span> showCreationPoints(<a class="code" href="classcv___creation_points.html" title="Datentyp für die freien Erschaffungspunkte.">cv_CreationPoints</a> pt);
-<a name="l00213"></a>00213         <span class="keywordtype">void</span> warnCreationPointsPositive(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type);
-<a name="l00219"></a>00219         <span class="keywordtype">void</span> warnCreationPointsNegative(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type);
-<a name="l00225"></a>00225         <span class="keywordtype">void</span> warnCreationPointsDepleted(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type);
-<a name="l00229"></a>00229         <span class="keywordtype">void</span> showCharacterTraits();
-<a name="l00233"></a>00233         <span class="keywordtype">void</span> showSkillSpecialties( <span class="keywordtype">bool</span> sw, QString skillName, QList&lt; cv_TraitDetail &gt; specialtyList );
-<a name="l00241"></a>00241         <span class="keywordtype">void</span> activate();
-<a name="l00245"></a>00245         <span class="keywordtype">void</span> showSettingsDialog();
-<a name="l00249"></a>00249         <span class="keywordtype">void</span> tabPrevious();
-<a name="l00253"></a>00253         <span class="keywordtype">void</span> tabNext();
-<a name="l00257"></a>00257         <span class="keywordtype">void</span> selectSelectorItem( <span class="keywordtype">int</span> idx );
-<a name="l00261"></a>00261         <span class="keywordtype">void</span> setTabButtonState( <span class="keywordtype">int</span> index );
-<a name="l00265"></a>00265         <span class="keywordtype">void</span> showCreationPoints( <span class="keywordtype">int</span> idx );
-<a name="l00269"></a>00269         <span class="keywordtype">void</span> newCharacter();
-<a name="l00273"></a>00273         <span class="keywordtype">void</span> openCharacter();
-<a name="l00277"></a>00277         <span class="keywordtype">void</span> saveCharacter();
-<a name="l00281"></a>00281         <span class="keywordtype">void</span> aboutApp();
-<a name="l00285"></a>00285         <span class="keywordtype">void</span> setTitle( QString txt );
-<a name="l00289"></a>00289         <span class="keywordtype">void</span> exportCharacter();
-<a name="l00293"></a>00293         <span class="keywordtype">void</span> printCharacter();
-<a name="l00297"></a>00297         <span class="keywordtype">void</span> messageEnforcedTraitLimits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> );
-<a name="l00301"></a>00301         <span class="keywordtype">void</span> disablePowerItem( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species );
-<a name="l00302"></a>00302 
-<a name="l00306"></a>00306         <span class="keywordtype">void</span> writeSettings();
-<a name="l00310"></a>00310         <span class="keywordtype">void</span> readSettings();
-<a name="l00316"></a>00316         <span class="keywordtype">bool</span> maybeSave();
-<a name="l00317"></a>00317 
-<a name="l00321"></a>00321         <span class="keywordtype">void</span> raiseExceptionMessage( QString message, QString description );
-<a name="l00322"></a>00322 
-<a name="l00323"></a>00323     <span class="keyword">protected</span>:
-<a name="l00324"></a>00324         <span class="keywordtype">void</span> closeEvent( QCloseEvent *event );
-<a name="l00325"></a>00325 
-<a name="l00326"></a>00326     signals:
-<a name="l00327"></a>00327 };
-<a name="l00328"></a>00328 
-<a name="l00329"></a>00329 <span class="preprocessor">#endif</span>
+<a name="l00209"></a>00209         <span class="keywordtype">void</span> showCreationPoints();
+<a name="l00215"></a>00215         <span class="keywordtype">void</span> warnCreationPointsPositive(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type);
+<a name="l00221"></a>00221         <span class="keywordtype">void</span> warnCreationPointsNegative(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type);
+<a name="l00227"></a>00227         <span class="keywordtype">void</span> warnCreationPointsDepleted(<a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type);
+<a name="l00231"></a>00231         <span class="keywordtype">void</span> showCharacterTraits();
+<a name="l00235"></a>00235         <span class="keywordtype">void</span> showSkillSpecialties( <span class="keywordtype">bool</span> sw, QString skillName, QList&lt; cv_TraitDetail &gt; specialtyList );
+<a name="l00243"></a>00243         <span class="keywordtype">void</span> activate();
+<a name="l00247"></a>00247         <span class="keywordtype">void</span> showSettingsDialog();
+<a name="l00251"></a>00251         <span class="keywordtype">void</span> tabPrevious();
+<a name="l00255"></a>00255         <span class="keywordtype">void</span> tabNext();
+<a name="l00259"></a>00259         <span class="keywordtype">void</span> selectSelectorItem( <span class="keywordtype">int</span> idx );
+<a name="l00263"></a>00263         <span class="keywordtype">void</span> setTabButtonState( <span class="keywordtype">int</span> index );
+<a name="l00267"></a>00267         <span class="keywordtype">void</span> showCreationPoints( <span class="keywordtype">int</span> idx );
+<a name="l00271"></a>00271         <span class="keywordtype">void</span> newCharacter();
+<a name="l00275"></a>00275         <span class="keywordtype">void</span> openCharacter();
+<a name="l00279"></a>00279         <span class="keywordtype">void</span> saveCharacter();
+<a name="l00283"></a>00283         <span class="keywordtype">void</span> aboutApp();
+<a name="l00287"></a>00287         <span class="keywordtype">void</span> setTitle( QString txt );
+<a name="l00291"></a>00291         <span class="keywordtype">void</span> exportCharacter();
+<a name="l00295"></a>00295         <span class="keywordtype">void</span> printCharacter();
+<a name="l00299"></a>00299         <span class="keywordtype">void</span> messageEnforcedTraitLimits( <a class="code" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> );
+<a name="l00303"></a>00303         <span class="keywordtype">void</span> disablePowerItem( <a class="code" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> species );
+<a name="l00304"></a>00304 
+<a name="l00308"></a>00308         <span class="keywordtype">void</span> writeSettings();
+<a name="l00312"></a>00312         <span class="keywordtype">void</span> readSettings();
+<a name="l00318"></a>00318         <span class="keywordtype">bool</span> maybeSave();
+<a name="l00319"></a>00319 
+<a name="l00323"></a>00323         <span class="keywordtype">void</span> raiseExceptionMessage( QString message, QString description );
+<a name="l00324"></a>00324 
+<a name="l00325"></a>00325     <span class="keyword">protected</span>:
+<a name="l00326"></a>00326         <span class="keywordtype">void</span> closeEvent( QCloseEvent *event );
+<a name="l00327"></a>00327 
+<a name="l00328"></a>00328     signals:
+<a name="l00329"></a>00329 };
+<a name="l00330"></a>00330 
+<a name="l00331"></a>00331 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="_main_window_8h.html">MainWindow.h</a>      </li>
-      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:36 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Thu Oct 6 2011 19:42:08 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

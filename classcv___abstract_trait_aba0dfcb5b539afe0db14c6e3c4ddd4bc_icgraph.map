@@ -1,11 +1,12 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$class_storage_template.html#a59dec084ce51d53a5a92071883d43b3e" title="StorageTemplate::appendTrait" alt="" coords="213,5,427,35"/>
-<area shape="rect" id="node5" href="$class_chara_trait.html#a21787eb972b4fc8779368a78f4430f14" title="CharaTrait::CharaTrait" alt="" coords="241,59,399,88"/>
-<area shape="rect" id="node7" href="$class_storage_character.html#aabaae6015f75abfc6411f5a388418a3b" title="StorageCharacter::modifyTrait" alt="" coords="213,112,427,141"/>
-<area shape="rect" id="node9" href="$classcv___trait.html#a8c0d39d14efbcce546fbc6212f6e984b" title="cv_Trait::operator==" alt="" coords="243,165,397,195"/>
-<area shape="rect" id="node11" href="$class_check_trait.html#a4d08c3a079c757e4a0351b04228b7398" title="CheckTrait::setType" alt="" coords="476,269,617,299"/>
-<area shape="rect" id="node13" href="$class_chara_trait.html#aa119a2d69592d27154b05a52dfeb21bd" title="CharaTrait::setType" alt="" coords="476,375,617,404"/>
-<area shape="rect" id="node15" href="$class_trait.html#a4c8c6f7af3db42f87732862a91329de8" title="Trait::setType" alt="" coords="268,323,372,352"/>
-<area shape="rect" id="node19" href="$class_check_trait.html#a94ca29d8920490f02a9f4a73ec1f6500" title="CheckTrait::type" alt="" coords="259,269,381,299"/>
-<area shape="rect" id="node22" href="$class_chara_trait.html#a0de44908d1c0bfd7cf0fa3a1158f8132" title="CharaTrait::type" alt="" coords="259,427,381,456"/>
+<area shape="rect" id="node5" href="$class_creation.html#a2fc5625819c4f10884e0c31b594700a4" title="Creation::calcPoints" alt="" coords="247,59,393,88"/>
+<area shape="rect" id="node7" href="$class_chara_trait.html#a21787eb972b4fc8779368a78f4430f14" title="CharaTrait::CharaTrait" alt="" coords="241,112,399,141"/>
+<area shape="rect" id="node9" href="$class_storage_character.html#aabaae6015f75abfc6411f5a388418a3b" title="StorageCharacter::modifyTrait" alt="" coords="213,165,427,195"/>
+<area shape="rect" id="node11" href="$classcv___trait.html#a8c0d39d14efbcce546fbc6212f6e984b" title="cv_Trait::operator==" alt="" coords="243,219,397,248"/>
+<area shape="rect" id="node13" href="$class_check_trait.html#a4d08c3a079c757e4a0351b04228b7398" title="CheckTrait::setType" alt="" coords="476,323,617,352"/>
+<area shape="rect" id="node15" href="$class_chara_trait.html#aa119a2d69592d27154b05a52dfeb21bd" title="CharaTrait::setType" alt="" coords="476,428,617,457"/>
+<area shape="rect" id="node17" href="$class_trait.html#a4c8c6f7af3db42f87732862a91329de8" title="Trait::setType" alt="" coords="268,376,372,405"/>
+<area shape="rect" id="node21" href="$class_check_trait.html#a94ca29d8920490f02a9f4a73ec1f6500" title="CheckTrait::type" alt="" coords="259,323,381,352"/>
+<area shape="rect" id="node24" href="$class_chara_trait.html#a0de44908d1c0bfd7cf0fa3a1158f8132" title="CharaTrait::type" alt="" coords="259,480,381,509"/>
 </map>

@@ -161,6 +161,7 @@ QList&lt; <a class="el" href="class_trait.html">Trait</a> * &gt;&#160;</td><td c
 Öffentliche Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_storage_character.html#a647f9a298613000dac06739b6e0f25c4">addDerangement</a> (<a class="el" href="classcv___derangement.html">cv_Derangement</a> derang)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_storage_character.html#a6a8921fe9bedaadee6d4f680438a8872">addIdentity</a> (<a class="el" href="classcv___identity.html">cv_Identity</a> id)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_storage_character.html#aa39c61634020fb271ef6428ffe533cd1">addSkillSpecialties</a> (QString name, <a class="el" href="structcv___trait_detail.html">cv_TraitDetail</a> detail)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_trait.html">Trait</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_storage_character.html#a2093dc6b7f575513846c3e8cd2fa0985">addTrait</a> (<a class="el" href="class_trait.html">Trait</a> *trait)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_storage_character.html#a802f3481674acdc5cb0a8623de21e919">insertIdentity</a> (int index, <a class="el" href="classcv___identity.html">cv_Identity</a> id)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_storage_character.html#aabaae6015f75abfc6411f5a388418a3b">modifyTrait</a> (<a class="el" href="classcv___trait.html">cv_Trait</a> trait)</td></tr>
@@ -264,6 +265,43 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 
 </div>
 </div>
+<a class="anchor" id="aa39c61634020fb271ef6428ffe533cd1"></a><!-- doxytag: member="StorageCharacter::addSkillSpecialties" ref="aa39c61634020fb271ef6428ffe533cd1" args="(QString name, cv_TraitDetail detail)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StorageCharacter::addSkillSpecialties </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcv___trait_detail.html">cv_TraitDetail</a>&#160;</td>
+          <td class="paramname"><em>detail</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Fügt eine neue Spezialisierung hinzu.</p>
+<dl class="warning"><dt><b>Warnung:</b></dt><dd>Wenn die Spezialisierung schon existiert, wird sie nicht hinzugefügt.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Noch zu erledigen:</a></b></dt><dd>Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen. </dd></dl>
+<dl><dt><b>Parameter:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name der Fertigkeit, zu welcher diese Spezialisierungen gehören. </td></tr>
+    <tr><td class="paramname">detail</td><td>Spezialisierung </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a2093dc6b7f575513846c3e8cd2fa0985"></a><!-- doxytag: member="StorageCharacter::addTrait" ref="a2093dc6b7f575513846c3e8cd2fa0985" args="(Trait *trait)" -->
 <div class="memitem">
 <div class="memproto">
@@ -281,15 +319,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 <p>Fügt dem Speicher eine neue Eigenschaft hinzu.</p>
 <dl class="return"><dt><b>Rückgabe:</b></dt><dd>Es wird ein Zeiger auf diese Eigenschaft zurückgegeben.</dd></dl>
 <dl class="note"><dt><b>Zu beachten:</b></dt><dd>Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Noch zu erledigen:</a></b></dt><dd>Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000045">Noch zu erledigen:</a></b></dt><dd>Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist. </dd></dl>
 
 <p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_storage_character_a2093dc6b7f575513846c3e8cd2fa0985_icgraph.svg" width="483" height="200" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe src="class_storage_character_a2093dc6b7f575513846c3e8cd2fa0985_icgraph.svg" width="483" height="200" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
@@ -459,8 +496,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_storage_character_a8078e06fff79384a77dd868a6c3f0a6e_icgraph.svg" width="560" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe src="class_storage_character_a8078e06fff79384a77dd868a6c3f0a6e_icgraph.svg" width="560" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
@@ -608,8 +644,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 <div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-13-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_storage_character_a50022b948be1e566d902d64095c4470b_icgraph.svg" width="547" height="520" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe src="class_storage_character_a50022b948be1e566d902d64095c4470b_icgraph.svg" width="547" height="520" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
@@ -752,8 +787,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 <div id="dynsection-18-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-18-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_storage_character_aabaae6015f75abfc6411f5a388418a3b_cgraph.svg" width="632" height="307" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe src="class_storage_character_aabaae6015f75abfc6411f5a388418a3b_cgraph.svg" width="632" height="307" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
@@ -881,15 +915,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 <div class="memdoc">
 <p>Löscht alle Charakterwerte.</p>
 <dl class="note"><dt><b>Zu beachten:</b></dt><dd>Tatsächlich werden die Werte nicht gelöscht, sondern auf 0 gesetzt.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Noch zu erledigen:</a></b></dt><dd>Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Noch zu erledigen:</a></b></dt><dd>Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze. </dd></dl>
 
 <p><div id="dynsection-23" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-23-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
 <div id="dynsection-23-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-23-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_storage_character_a6534667b942bd21253c432fee79a8850_cgraph.svg" width="1094" height="414" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe src="class_storage_character_a6534667b942bd21253c432fee79a8850_cgraph.svg" width="1094" height="414" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </p>
 
@@ -1065,7 +1098,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 </div>
 <div class="memdoc">
 <p>Legt die <em>echte</em> Identität des Charakters fest. Diese Identität hat immer INdex 0 in der v_identities -Liste</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000041">Noch zu erledigen:</a></b></dt><dd>Momentan ist dies die einzige identität, die von diesem programm genutzt wird. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Noch zu erledigen:</a></b></dt><dd>Momentan ist dies die einzige identität, die von diesem programm genutzt wird. </dd></dl>
 
 <p><div id="dynsection-29" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-29-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
@@ -1103,7 +1136,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 </div>
 <div class="memdoc">
 <p>Legt die Spezialisierungen des Charakters fest.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Noch zu erledigen:</a></b></dt><dd>Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Noch zu erledigen:</a></b></dt><dd>Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen. </dd></dl>
 <dl><dt><b>Parameter:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Name der Fertigkeit, zu welcher diese Spezialisierungen gehören. </td></tr>
@@ -1117,7 +1150,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 <div id="dynsection-30-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-30-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_storage_character_a6273e4a5881f52b074bb1e4885ce70a6_cgraph.svg" width="651" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe src="class_storage_character_a6273e4a5881f52b074bb1e4885ce70a6_cgraph.svg" width="640" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </p>
@@ -1282,7 +1315,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 <div id="dynsection-38-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-38-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_storage_character_a003ec6624532c534b04c93f18f9c381c_icgraph.svg" width="808" height="200" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe src="class_storage_character_a003ec6624532c534b04c93f18f9c381c_icgraph.svg" width="808" height="254" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </p>
 
@@ -1368,6 +1402,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 
 </div>
 </div>
+<a class="anchor" id="afe6cb259e8faddecb24f128aaad893a9"></a><!-- doxytag: member="StorageCharacter::traitChanged" ref="afe6cb259e8faddecb24f128aaad893a9" args="(Trait *trait)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StorageCharacter::traitChanged </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_trait.html">Trait</a> *&#160;</td>
+          <td class="paramname"><em>trait</em></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert. </p>
+
+</div>
+</div>
 <a class="anchor" id="ace2a365b231b39b1857f115c7361166f"></a><!-- doxytag: member="StorageCharacter::traitChanged" ref="ace2a365b231b39b1857f115c7361166f" args="(cv_Trait *trait)" -->
 <div class="memitem">
 <div class="memproto">
@@ -1386,21 +1438,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 
 </div>
 </div>
-<a class="anchor" id="afe6cb259e8faddecb24f128aaad893a9"></a><!-- doxytag: member="StorageCharacter::traitChanged" ref="afe6cb259e8faddecb24f128aaad893a9" args="(Trait *trait)" -->
+<a class="anchor" id="a507cf04df69febde151461d3e8430be5"></a><!-- doxytag: member="StorageCharacter::traits" ref="a507cf04df69febde151461d3e8430be5" args="(cv_AbstractTrait::Type type) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void StorageCharacter::traitChanged </td>
+          <td class="memname">QList&lt; <a class="el" href="class_trait.html">Trait</a> * &gt; StorageCharacter::traits </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_trait.html">Trait</a> *&#160;</td>
-          <td class="paramname"><em>trait</em></td><td>)</td>
-          <td><code> [signal]</code></td>
+          <td class="paramtype"><a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a>&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Dieses Signal wird ausgesandt, wann immer sich eine Eigenschaft ändert. </p>
+<p>Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind. </p>
 
 </div>
 </div>
@@ -1424,28 +1476,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
 <div id="dynsection-42-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-42-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_storage_character_a2db5654b50bd29cc391c05ec220b2e08_icgraph.svg" width="475" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe src="class_storage_character_a2db5654b50bd29cc391c05ec220b2e08_icgraph.svg" width="475" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </p>
-
-</div>
-</div>
-<a class="anchor" id="a507cf04df69febde151461d3e8430be5"></a><!-- doxytag: member="StorageCharacter::traits" ref="a507cf04df69febde151461d3e8430be5" args="(cv_AbstractTrait::Type type) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QList&lt; <a class="el" href="class_trait.html">Trait</a> * &gt; StorageCharacter::traits </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a>&#160;</td>
-          <td class="paramname"><em>type</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Gibt eine Liste aller Eigenschaften des Charkaters aus, welche über die Argumente spezifiziert sind. </p>
 
 </div>
 </div>
@@ -1575,7 +1609,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>nameChanged</b> (QStr
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="class_storage_character.html">StorageCharacter</a>      </li>
-      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:39 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Thu Oct 6 2011 19:42:12 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

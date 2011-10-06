@@ -122,6 +122,7 @@ function toggleVisibility(linkObj) {
   <div class="summary">
 <a href="#pub-methods">Öffentliche Methoden</a> &#124;
 <a href="#pub-slots">Öffentliche Slots</a> &#124;
+<a href="#pub-static-methods">Öffentliche, statische Methoden</a> &#124;
 <a href="#signals">Signale</a>  </div>
   <div class="headertitle">
 <h1>Creation Klassenreferenz</h1>  </div>
@@ -139,57 +140,61 @@ function toggleVisibility(linkObj) {
 Öffentliche Methoden</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f6f8ede6e373a5d1dd15502c3822f2c"></a><!-- doxytag: member="Creation::Creation" ref="a0f6f8ede6e373a5d1dd15502c3822f2c" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>Creation</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcv___creation_points.html">cv_CreationPoints</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#acba05004d03b7b682c3b7416ee5911d6">points</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcv___creation_points_list.html">cv_CreationPointsList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#a4cd153e344a24c38b4216ce9051d4104">pointsList</a> () const </td></tr>
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Öffentliche Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#a1baf468fc9aeb1d22422113076e41314">setPoints</a> (<a class="el" href="classcv___creation_points.html">cv_CreationPoints</a> points)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#a2fc5625819c4f10884e0c31b594700a4">calcPoints</a> (<a class="el" href="class_trait.html">Trait</a> *trait)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#a30d117b691402f2ba2233125b91070d8">setPoints</a> (<a class="el" href="classcv___creation_points_list.html">cv_CreationPointsList</a> pts)</td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Öffentliche, statische Methoden</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static QList<br class="typebreak"/>
+&lt; <a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#aebcfd397df69b2f690c2fc5b3ed3aff7">types</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signale</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#afc4376d9cab2b0a0083447299d1cf133">pointsChanged</a> (<a class="el" href="classcv___creation_points.html">cv_CreationPoints</a> points)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#a39e54cf85df2c019dd2646c977366021">pointsChanged</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#a6107cb2412761ea228e2dc8ba4649daf">pointsDepleted</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#ade3dac20f7a8ef1e255829a94bd1b735">pointsNegative</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_creation.html#a62b6982d55c0728561bc4dda11355f6e">pointsPositive</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type)</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Ausführliche Beschreibung</h2>
 <div class="textblock"><p>Berechnet die verbleibenden Punkte bei der Charaktererschaffung. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Noch zu erledigen:</a></b></dt><dd>Powers werden noch nicht berücksichtigt. </dd></dl>
 </div><hr/><h2>Dokumentation der Elementfunktionen</h2>
-<a class="anchor" id="acba05004d03b7b682c3b7416ee5911d6"></a><!-- doxytag: member="Creation::points" ref="acba05004d03b7b682c3b7416ee5911d6" args="() const " -->
+<a class="anchor" id="a2fc5625819c4f10884e0c31b594700a4"></a><!-- doxytag: member="Creation::calcPoints" ref="a2fc5625819c4f10884e0c31b594700a4" args="(Trait *trait)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classcv___creation_points.html">cv_CreationPoints</a> Creation::points </td>
+          <td class="memname">void Creation::calcPoints </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype"><a class="el" href="class_trait.html">Trait</a> *&#160;</td>
+          <td class="paramname"><em>trait</em></td><td>)</td>
+          <td><code> [slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Gibt die Anzahl der noch verfügbaren Punkte bei der Charaktererschaffung zurück.</p>
-<dl class="note"><dt><b>Zu beachten:</b></dt><dd>Bevor die Anzahl der freien Punkte ausgegeben wird, wird sie jedesmal berechnet. </dd></dl>
+<p>Berechnet die noch verfügbaren Punkte. </p>
 
 <p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, wo diese Funktion aufgerufen wird:</div>
+  <img id="dynsection-0-trigger" src="closed.png"/> Hier ist ein Graph der zeigt, was diese Funktion aufruft:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_creation_acba05004d03b7b682c3b7416ee5911d6_icgraph.svg" width="326" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe src="class_creation_a2fc5625819c4f10884e0c31b594700a4_cgraph.svg" width="440" height="360" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </p>
 
 </div>
 </div>
-<a class="anchor" id="afc4376d9cab2b0a0083447299d1cf133"></a><!-- doxytag: member="Creation::pointsChanged" ref="afc4376d9cab2b0a0083447299d1cf133" args="(cv_CreationPoints points)" -->
+<a class="anchor" id="a39e54cf85df2c019dd2646c977366021"></a><!-- doxytag: member="Creation::pointsChanged" ref="a39e54cf85df2c019dd2646c977366021" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Creation::pointsChanged </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcv___creation_points.html">cv_CreationPoints</a>&#160;</td>
-          <td class="paramname"><em>points</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td><code> [signal]</code></td>
         </tr>
       </table>
@@ -202,7 +207,8 @@ Signale</h2></td></tr>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_creation_afc4376d9cab2b0a0083447299d1cf133_icgraph.svg" width="384" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe src="class_creation_a39e54cf85df2c019dd2646c977366021_icgraph.svg" width="390" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </p>
 
@@ -229,6 +235,24 @@ Signale</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a4cd153e344a24c38b4216ce9051d4104"></a><!-- doxytag: member="Creation::pointsList" ref="a4cd153e344a24c38b4216ce9051d4104" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classcv___creation_points_list.html">cv_CreationPointsList</a> Creation::pointsList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt die Anzahl der noch verfügbaren Punkte bei der Charaktererschaffung zurück.</p>
+<dl class="note"><dt><b>Zu beachten:</b></dt><dd>Bevor die Anzahl der freien Punkte ausgegeben wird, wird sie jedesmal berechnet. </dd></dl>
 
 </div>
 </div>
@@ -273,22 +297,22 @@ Signale</h2></td></tr>
 <p>Dieses Signal wird ausgesandt, wann immer sich die Anzahl der noch freien Erschaffungspunkte für einen Typ ändert und das Resultat positiv ist. </p>
 <dl><dt><b>Parameter:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">type</td><td>Dies ist der Typ, dessen Punkte negativ sind. </td></tr>
+    <tr><td class="paramname">type</td><td>Dies ist der Typ, dessen Punkte positiv sind. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a1baf468fc9aeb1d22422113076e41314"></a><!-- doxytag: member="Creation::setPoints" ref="a1baf468fc9aeb1d22422113076e41314" args="(cv_CreationPoints points)" -->
+<a class="anchor" id="a30d117b691402f2ba2233125b91070d8"></a><!-- doxytag: member="Creation::setPoints" ref="a30d117b691402f2ba2233125b91070d8" args="(cv_CreationPointsList pts)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Creation::setPoints </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcv___creation_points.html">cv_CreationPoints</a>&#160;</td>
-          <td class="paramname"><em>points</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classcv___creation_points_list.html">cv_CreationPointsList</a>&#160;</td>
+          <td class="paramname"><em>pts</em></td><td>)</td>
           <td><code> [slot]</code></td>
         </tr>
       </table>
@@ -302,9 +326,27 @@ Signale</h2></td></tr>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe src="class_creation_a1baf468fc9aeb1d22422113076e41314_cgraph.svg" width="384" height="94" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe src="class_creation_a30d117b691402f2ba2233125b91070d8_cgraph.svg" width="384" height="40" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </p>
+
+</div>
+</div>
+<a class="anchor" id="aebcfd397df69b2f690c2fc5b3ed3aff7"></a><!-- doxytag: member="Creation::types" ref="aebcfd397df69b2f690c2fc5b3ed3aff7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; <a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> &gt; Creation::types </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt alle Eigenschaftstypen aus, bei denen die Berechnung der freien Erschaffungspunkte überhaupt nötig ist. </p>
 
 </div>
 </div>
@@ -313,7 +355,7 @@ Signale</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="class_creation.html">Creation</a>      </li>
-      <li class="footer">Erzeugt am Wed Oct 5 2011 21:14:38 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Thu Oct 6 2011 19:42:10 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

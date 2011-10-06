@@ -1,6 +1,5 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$classcv___trait.html#ab81924fd5e51488a35a63e246830e143" title="cv_Trait::details" alt="" coords="336,5,453,35"/>
-<area shape="rect" id="node5" href="$classcv___abstract_trait.html#a3bbbc5a0073617a70c86741d4c918576" title="cv_AbstractTrait::name" alt="" coords="311,59,479,88"/>
-<area shape="rect" id="node7" href="$class_chara_trait.html#ae6604555d60fe78d7473942e3502060b" title="CharaTrait::specialtiesClicked" alt="" coords="292,112,497,141"/>
-<area shape="rect" id="node9" href="$class_chara_trait.html#ae8854bf878fa9aab4dafc27a943d05b6" title="CharaTrait::traitPtr" alt="" coords="325,165,464,195"/>
+<area shape="rect" id="node5" href="$class_chara_trait.html#ae6604555d60fe78d7473942e3502060b" title="CharaTrait::specialtiesClicked" alt="" coords="292,59,497,88"/>
+<area shape="rect" id="node7" href="$class_chara_trait.html#ae8854bf878fa9aab4dafc27a943d05b6" title="CharaTrait::traitPtr" alt="" coords="325,112,464,141"/>
 </map>

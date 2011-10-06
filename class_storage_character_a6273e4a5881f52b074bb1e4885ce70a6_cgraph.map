@@ -1,6 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$class_trait.html#ab6460ff9f5e4837d97c857cc06e0fa21" title="Trait::addDetail" alt="" coords="319,5,436,35"/>
-<area shape="rect" id="node9" href="$class_trait.html#aa416615b30fcac6dbcfc064d7ad1d40b" title="Trait::clearDetails" alt="" coords="312,59,443,88"/>
-<area shape="rect" id="node5" href="$classcv___trait.html#ab81924fd5e51488a35a63e246830e143" title="cv_Trait::details" alt="" coords="509,5,627,35"/>
-<area shape="rect" id="node7" href="$class_trait.html#ad83afc8c75c12274528a49fe56d10271" title="Trait::detailsChanged" alt="" coords="491,59,645,88"/>
+<area shape="rect" id="node3" href="$classcv___trait.html#ab81924fd5e51488a35a63e246830e143" title="cv_Trait::details" alt="" coords="499,5,616,35"/>
+<area shape="rect" id="node5" href="$class_trait.html#a8d2ca547e2dd3189858cbd8aa1c52efd" title="Trait::setDetails" alt="" coords="312,57,432,87"/>
+<area shape="rect" id="node8" href="$class_trait.html#ad83afc8c75c12274528a49fe56d10271" title="Trait::detailsChanged" alt="" coords="480,59,635,88"/>
 </map>
