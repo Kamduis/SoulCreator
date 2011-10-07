@@ -176,6 +176,16 @@ void MainWindow::populateUi() {
 	ui->layout_specialties->addWidget( specialties );
 	ui->layout_advantages->addWidget( advantages );
 
+	/**
+	 * \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite Händisch festzulegen.
+	 **/
+	ui->frame_merits->setMinimumWidth(Config::traitListVertivalWidth);
+	ui->frame_merits->setMaximumWidth(ui->frame_merits->minimumWidth());
+	ui->frame_powers->setMinimumWidth(Config::traitListVertivalWidth);
+	ui->frame_powers->setMaximumWidth(ui->frame_powers->minimumWidth());
+	ui->frame_flaws->setMinimumWidth(Config::traitListVertivalWidth);
+	ui->frame_flaws->setMaximumWidth(ui->frame_powers->minimumWidth());
+
 	// Zu Beginn soll immer das erste Tab angezeigt werden.
 	ui->stackedWidget_traits->setCurrentIndex( 1 );
 	ui->stackedWidget_traits->setCurrentIndex( 0 );
@@ -578,25 +588,29 @@ void MainWindow::exportCharacter() {
 
 	QString filePath = QFileDialog::getSaveFileName( this, tr( "Export Character" ), savePath + "/untitled.pdf", tr( "Charactersheet (*.pdf)" ) );
 
-	QPrinter* printer = new QPrinter();
-	QPrintDialog printDialog( printer, this );
+	qDebug() << Q_FUNC_INFO << filePath;
 
-	printer->setOutputFormat( QPrinter::PdfFormat );
-	printer->setPaperSize( QPrinter::A4 );
-	printer->setFullPage( true );
-	printer->setOutputFileName( filePath );
+	// Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausruck heraus.
+	if (!filePath.isEmpty()) {
+		QPrinter* 	printer = new QPrinter();
 
-	DrawSheet drawSheet( this, printer );
+		printer->setOutputFormat( QPrinter::PdfFormat );
+		printer->setPaperSize( QPrinter::A4 );
+		printer->setFullPage( true );
+		printer->setOutputFileName( filePath );
 
-	connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait::Type ) ) );
+		DrawSheet drawSheet( this, printer );
 
-	try {
-		drawSheet.print();
-	} catch ( eSpeciesNotExisting &e ) {
-		MessageBox::exception( this, e.message(), e.description() );
+		connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait::Type ) ), this, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait::Type ) ) );
+
+		try {
+			drawSheet.print();
+		} catch ( eSpeciesNotExisting &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
+		}
+		
+		delete printer;
 	}
-
-	delete printer;
 }
 
 void MainWindow::printCharacter() {

@@ -43,6 +43,11 @@ DrawSheet::DrawSheet( QObject* parent, QPrinter* printer ) : QObject( parent ) {
 	setPrinter( printer );
 }
 
+DrawSheet::~DrawSheet(){
+	delete calcAdvantages;
+}
+
+
 void DrawSheet::construct() {
 	// Vorsicht, ist ein Zeiger.
 	v_printer = 0;
@@ -420,28 +425,24 @@ void DrawSheet::print() {
 	painter.drawImage( target, image, source );
 
 	drawInfo( &painter, offsetHInfo, offsetVInfo, distanceHInfo, distanceVInfo, textWidthInfo );
-
 	drawAttributes( &painter, offsetHAttributes, offsetVAttributes, distanceHAttributes, distanceVAttributes );
-
 	drawSkills( &painter, offsetHSkills, offsetVSkills, distanceVSkills, distanceVCat, textWidthSkills );
-
 	drawMerits( &painter, offsetHMerits, offsetVMerits, distanceVMerits, textWidthMerits, maxMerits );
-
 	drawFlaws( &painter, offsetHFlaws, offsetVFlaws, textWidthFlaws );
-
 	drawAdvantages( &painter, offsetHAdvantages, offsetVAdvantages, distanceVAdvantages, textWidthAdvantages, character->species(), distanceHAdvantages );
-
 	drawHealth( &painter, offsetHHealth, offsetVHealth, distanceHHealth, dotSizeFactor );
-
 	drawWillpower( &painter, offsetHWillpower, offsetVWillpower, distanceHWillpower, dotSizeFactor );
-
 	drawMorality( &painter, offsetHMorality, offsetVMorality, distanceVMorality, textWidthMorality );
 
 	if ( character->species() != cv_Species::Human ) {
 		drawPowers( &painter, offsetHPowers, offsetVPowers, distanceVPowers, textWidthPowers, maxPowers, character->species(), distanceHPowers );
 
-		drawSuper( &painter, offsetHSuper, offsetVSuper, distanceHSuper, dotSizeFactor );
+		// Werwölfe haben zusätzlich zu Renown auch noch Rites.
+		if ( character->species() == cv_Species::Werewolf ) {
+			drawPowers( &painter, offsetHMerits, offsetVPowers + target.height() * 0.058, distanceVPowers, textWidthPowers, maxPowers, character->species(), 0 );
+		}
 
+		drawSuper( &painter, offsetHSuper, offsetVSuper, distanceHSuper, dotSizeFactor );
 		drawFuelMax( &painter, offsetHFuel, offsetVFuel, distanceHFuel, squareSizeFuel );
 		drawFuelPerTurn( &painter, offsetHFuelPerTurn, offsetVFuelPerTurn, distanceHFuelPerTurn );
 	}
@@ -531,7 +532,7 @@ void DrawSheet::drawAttributes( QPainter* painter, qreal offsetH, qreal offsetV,
 }
 
 void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal distanceVCat, qreal textWidth ) {
-	QList< cv_AbstractTrait::Category > categories = cv_AbstractTrait::getCategoryList(cv_AbstractTrait::Skill);
+	QList< cv_AbstractTrait::Category > categories = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Skill );
 
 	QList< Trait* > list;
 
@@ -796,13 +797,21 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 		emit enforcedTraitLimits( cv_AbstractTrait::Power );
 	}
 
-	if ( species == cv_Species::Mage || species == cv_Species::Werewolf ) {
+	qDebug() << Q_FUNC_INFO << listToUse.count();
+
+	if ( species == cv_Species::Mage || ( species == cv_Species::Werewolf && distanceH != 0 ) ) {
 		// Bei Magiern und Werwölfen sind alle Kräfte schon auf dem Charakterbogen, also muß ich aufpassen, daß sie in der richtigen Reihenfolge an der richtigen Stelle auftauchen, auch wenn einige im Charkater fehlen.
 		StorageTemplate storage;
 		QList< Trait* > list = storage.traits( cv_AbstractTrait::Power, species );
+
+		// Bei den Werwölfen müssen die Rites gesondert behandelt werden.
+		if ( species == cv_Species::Werewolf ) {
+			list.removeLast();
+		}
+
 		qreal half = ceil( static_cast<qreal>( list.count() ) / 2 );
 
-// 		qDebug() << Q_FUNC_INFO << half;
+		qDebug() << Q_FUNC_INFO << "Die halbe Anzahl an Powers ist:" << half;
 
 		for ( int i = 0; i < half; i++ ) {
 			for ( int k = 0; k < listToUse.count(); k++ ) {
@@ -830,6 +839,13 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 				}
 			}
 		}
+	} else if ( species == cv_Species::Werewolf ) {
+		// Die Rites werden anders gezeichnet
+		for ( int k = 0; k < listToUse.last()->value(); k++ ) {
+			// Punkte malen.
+			QRectF dotsRect( offsetH + v_dotDiameterH*k, offsetV, v_dotDiameterH, v_dotDiameterV );
+			painter->drawEllipse( dotsRect );
+		}
 	} else {
 		for ( int j = 0; j < listToUse.count(); j++ ) {
 			for ( int k = 0; k < listToUse.at( j )->value(); k++ ) {
@@ -839,7 +855,6 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 			}
 
 			QString name = listToUse.at( j )->name();
-
 			QString customText = listToUse.at( j )->customText();
 
 			// Namen
@@ -921,12 +936,12 @@ QList< Trait* > DrawSheet::getTraits( cv_AbstractTrait::Type type, int maxNumber
 	QList< cv_AbstractTrait::Category > category;
 	category.append( cv_AbstractTrait::CategoryNo );
 
-	if ( type == cv_AbstractTrait::Merit ) {
-		category.append( cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Merit ) );
-	}
+// 	if ( type == cv_AbstractTrait::Merit ) {
+// 		category.append( cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Merit ) );
+// 	}
+	category.append( cv_AbstractTrait::getCategoryList( type ) );
 
 	QList< Trait* > list;
-
 	QList< Trait* > listToUse;
 
 	int iter = 0;
@@ -938,7 +953,7 @@ QList< Trait* > DrawSheet::getTraits( cv_AbstractTrait::Type type, int maxNumber
 			if ( list.at( j )->value() > 0 ) {
 				iter++;
 
-				listToUse.append( list.at(j) );
+				listToUse.append( list.at( j ) );
 			}
 
 			// Sobald keine Eigenschaften mehr auf den Charakterbogen passen, hören wir auf, weitere hinzuzuschreiben. Das gilt natürlich nur, wenn maxNumber größer als 0 ist.

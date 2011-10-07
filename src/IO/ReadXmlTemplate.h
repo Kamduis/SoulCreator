@@ -34,7 +34,6 @@
 #include <QObject>
 #include "ReadXml.h"
 
-
 /**
  * @brief Liest die Eigenschaften aus den beigefügten xml-Dateien.
  *

@@ -55,17 +55,13 @@ class MainWindow;
  *
  * Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
  *
- * \todo Der Text im Reiter Powers sollte je nach Spezies angepaßt werden (Disciplines, Renown, etc.)
- *
  * \todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
  *
  * \todo Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.
  *
  * \todo Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.
  *
- * \todo Bei Werwölfen nimmt "Rites" eine Sonderstellung ein. Auch die Gaben/Riten müssen berücksichtigt werden.
- *
- * \bug Manchmal wird (zeitlich deutlich versetzt) eine fast komplett schwarze Seite ausgedruckt. Ich weiß nicht, ob die Export- oder die Druckfunktion von SoulCreator die Ursache ist. Scheint aber die Exportfunktion zu sein.
+ * \todo Sonderkräfte der Spezies fehlen. Bei Werwölfen müssen z.B. noch die Gaben/Riten berücksichtigt werden.
  *
  * \todo Nutze eine qchecksum, um die Integrität der XML-DAteien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben.
  *
@@ -79,19 +75,17 @@ class MainWindow;
  *
  * \todo Charakterbeschreibung einbauen.
  *
- * \todo Alle Reiter, bei denen nicht alle Punkte vergeben wurden grün färben und jene, bei denen zu viele vergeben wurde, rot färben.
- *
  * \todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-DAtei bereitstellen, i welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
- *
- * \todo Zu verteilende Punkte für Spezialisierungen
- *
- * \todo Zu verteilende Punkte für Kräfte.
  *
  * \todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
  *
- * \todo Bei langen Liste (Powers) Wird das Stacked Widget zu groß und es wird überall ein Scrollbalken angezeigt und das Bild liegt nicht in der Mitte!
+ * \todo Kräfte alphabetisch sortieren oder in Kategorien unterteilen.
  *
  * \todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
+ *
+ * \todo Die Widgets weiter aufteilen in Main-Widgets, Tool-Widgets etc.
+ *
+ * \todo Damit die SVG-Grafiken unter Windows XP dargestellt werden ist auch QtXML4.dll erforderlich.
  */
 
 class MainWindow : public QMainWindow {

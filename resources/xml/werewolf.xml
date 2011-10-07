@@ -124,7 +124,7 @@
 				<trait name="Rites">
 				</trait>
 			</Secondary>
-			<Tertiary name="Gifts">
+<!--			<Tertiary name="Gifts">
 				<trait name="Full Moon">
 					<cheap>Rahu</cheap>
 					<only>Rahu</only>
@@ -296,7 +296,7 @@
 				</trait>
 				<trait name="Weakness">
 				</trait>
-			</Tertiary>
+			</Tertiary>-->
 		</Power>
 		<Flaw>
 			<Physical>

@@ -55,6 +55,7 @@ class DrawSheet : public QObject {
 		 * Diesem Konstruktor kann sofort der Zeiger zum QPrinter übergeben werden.
 		 **/
 		DrawSheet( QObject* parent, QPrinter* printer );
+		~DrawSheet();
 
 		/**
 		 * Jetzt wird gezeichnet und gedruckt.
@@ -215,7 +216,7 @@ class DrawSheet : public QObject {
 						 qreal offsetV = 0 /** Vertikaler Abstand zwischen Bildkante und dem ersten Punkt der ersten Eigenschaft. */,
 						 qreal distanceV = 0 /** Vertikaler Abstand zwischen den Kräften. */,
 						 qreal textWidth = 0 /** Textbreite, der für die Benamung zur Verfügung steht. */,
-						 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argumetn '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */,
+						 int maxNumber = 0 /** Maximale Anzahl an Eigenschaften, die gezeichnet werden können. Wird diesem Argument '0' übergeben, werden alle Eigenschaften auf den Bogen gezeichnet. */,
 						 cv_Species::SpeciesFlag species = cv_Species::SpeciesNo /** Welcher Spezies der Charakter angehört. */,
 						 qreal distanceH = 0 /** Horizontaler Abstand zwischen den Kräften. */
 					   );
