@@ -174,9 +174,12 @@ QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Abstrac
 QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
 	QList< Trait* > traitsPtr;
 
+// 	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
+
 	for ( int i = 0; i < v_traits.count(); i++ ) {
 		if ( v_traits.at( i )->type() == type && v_traits.at( i )->species().testFlag( species ) ) {
 			traitsPtr.append( v_traits[i] );
+// 			qDebug() << Q_FUNC_INFO << "Füge hinzu:" << v_traits.at(i)->name();
 		}
 	}
 

@@ -102,6 +102,10 @@ class Config {
 		 */
 		static const int spinBoxNoTextWidth;
 		/**
+		 * Die Breite einer einfachen Vertikalen Eigenschaftsliste.
+		 **/
+		static const int traitListVertivalWidth;
+		/**
 		 * Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 		 */
 		static const int displayTimeout;
@@ -168,43 +172,6 @@ class Config {
 		 * Alle Punkte bis einschließelich dieser Zahl kosten nur 1 Punkt pro Punkt, aber alle darüber kosten das Doppelte.
 		 **/
 		static const int creationTraitDouble;
-		/**
-		 * Die freien Attributspunkte für die primäre Kategorie.
-		 **/
-		static const int creationPointsAttA;
-		/**
-		 * Die freien Attributspunkte für die sekundäre Kategorie.
-		 **/
-		static const int creationPointsAttB;
-		/**
-		 * Die freien Attributspunkte für die tertiäre Kategorie.
-		 **/
-		static const int creationPointsAttC;
-		/**
-		 * Die freien Fertigkeitspunkte für die primäre Kategorie.
-		 **/
-		static const int creationPointsSkillA;
-		/**
-		 * Die freien Fertigkeitspunkte für die sekundäre Kategorie.
-		 **/
-		static const int creationPointsSkillB;
-		/**
-		 * Die freien Fertigkeitspunkte für die tertiäre Kategorie.
-		 **/
-		static const int creationPointsSkillC;
-		/**
-		 * Die freien Fertigkeitsspezialisierungen
-		 **/
-		static const int creationPointsSkillSpecialties;
-		/**
-		 * Die freien Meritpunkte.
-		 **/
-		static const int creationPointsMerits;
-		/**
-		 * Die freien Meritpunkte.
-		 **/
-		static const int creationPointsPowersVampire;
-
 
 		/**
 		 * Schriftgröße für den normalen Text auf dem ausdruckbaren Charakterbogen.

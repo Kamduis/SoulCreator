@@ -26,15 +26,17 @@
 #define CREATION_H
 
 // #include "Datatypes/cv_Trait.h"
-#include "Datatypes/cv_CreationPointsList.h"
 #include "Storage/StorageCharacter.h"
 
 #include <QObject>
 
+// Forward Declarations
+class cv_CreationPointsList;    // #include "Datatypes/cv_CreationPointsList.h"
+
+
 /**
  * \brief Berechnet die verbleibenden Punkte bei der Charaktererschaffung.
  */
-
 class Creation : public QObject {
 		Q_OBJECT
 

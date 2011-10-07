@@ -25,9 +25,9 @@
 #include <QDebug>
 
 // #include "StorageTemplate.h"
+#include "Config/Config.h"
 
 #include "StorageCharacter.h"
-#include "Config/Config.h"
 
 
 StorageCharacter* StorageCharacter::p_instance = 0;

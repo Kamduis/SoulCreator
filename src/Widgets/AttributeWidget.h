@@ -25,6 +25,7 @@
 #ifndef ATTRIBUTEWIDGET_H
 #define ATTRIBUTEWIDGET_H
 
+#include <QVBoxLayout>
 #include <QGridLayout>
 #include <QLabel>
 
@@ -55,9 +56,13 @@ class AttributeWidget : public QWidget {
 
 	private:
 		/**
+		 * Dies ist das oberste Layout, in welchem die anderen Layouts angeordnet werden.
+		 **/
+		QVBoxLayout *layout;
+		/**
 		 * In diesem Layout werden die Attribute angeordnet.
 		 **/
-		QGridLayout *layout;
+		QGridLayout *layoutAttributes;
 		StorageCharacter* character;
 		/**
 		 * Anzeige der Attributswerte für alle Formen eines Werwolfs.
