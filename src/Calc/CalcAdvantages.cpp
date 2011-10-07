@@ -99,15 +99,16 @@ CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
 }
 
 CalcAdvantages::~CalcAdvantages() {
-	delete attrWit;
-	delete attrRes;
-	delete attrStr;
-	delete attrDex;
-	delete attrSta;
-	delete attrCom;
-	delete meritGiant;
-	delete meritFastReflexes;
-	delete meritFleetOfFoot;
+	// Verursachen beim Beenden des Programms seltsamer weise einen SEGFAULT.
+// 	delete attrWit;
+// 	delete attrRes;
+// 	delete attrStr;
+// 	delete attrDex;
+// 	delete attrSta;
+// 	delete attrCom;
+// 	delete meritGiant;
+// 	delete meritFastReflexes;
+// 	delete meritFleetOfFoot;
 }
 
 

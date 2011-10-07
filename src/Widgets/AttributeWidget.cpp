@@ -43,8 +43,11 @@
 AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	character = StorageCharacter::getInstance();
 
-	layout = new QGridLayout( this );
+	layout = new QVBoxLayout( this );
 	setLayout( layout );
+
+	layoutAttributes = new QGridLayout();
+	layout->addLayout( layoutAttributes );
 
 // 	QFrame* frame = new QFrame( this );
 // 	layout->addWidget( frame );
@@ -64,11 +67,11 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	int actualRow = 1;
 	int actualColumn = 0;
 
-	layout->addWidget( labelPower, actualRow, actualColumn );
+	layoutAttributes->addWidget( labelPower, actualRow, actualColumn );
 	actualRow++;
-	layout->addWidget( labelFinesse, actualRow, actualColumn );
+	layoutAttributes->addWidget( labelFinesse, actualRow, actualColumn );
 	actualRow++;
-	layout->addWidget( labelResistance, actualRow, actualColumn );
+	layoutAttributes->addWidget( labelResistance, actualRow, actualColumn );
 
 	StorageTemplate storage;
 
@@ -100,10 +103,10 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 		QFrame* vLine = new QFrame( this );
 		vLine->setFrameStyle( QFrame::VLine );
-		layout->addWidget( vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter );
+		layoutAttributes->addWidget( vLine, 1, actualColumn, list.count(), 1, Qt::AlignHCenter );
 
 // 		layout->setColumnMinimumWidth(actualColumn, Config::traitCategorySpace);
-		layout->setColumnStretch( actualColumn, 1 );
+		layoutAttributes->setColumnStretch( actualColumn, 1 );
 
 		// Jetzt sind wir in der Spalte für die tatsächlchen Attribute
 		actualColumn++;
@@ -112,7 +115,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 		QLabel* header = new QLabel();
 		header->setAlignment( Qt::AlignHCenter );
 		header->setText( "<b>" + cv_AbstractTrait::toString( categoryList.at( i ) ) + "</b>" );
-		layout->addWidget( header, 0, actualColumn );
+		layoutAttributes->addWidget( header, 0, actualColumn );
 
 		// Einfügen der tatsächlichen Attribute
 
@@ -124,28 +127,28 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 			CharaTrait* trait = new CharaTrait( this, traitPtr, list[j] );
 			trait->setValue( 1 );
 
-			layout->addWidget( trait, j + 1, actualColumn );
+			layoutAttributes->addWidget( trait, j + 1, actualColumn );
 
 			if ( trait->category() == cv_AbstractTrait::Physical ) {
 				if ( trait->name() == "Strength" ) {
-					layout->addWidget( labelStr, j + 1, actualColumn + 1 );
+					layoutAttributes->addWidget( labelStr, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesStr( int ) ) );
 				} else if ( trait->name() == "Dexterity" ) {
-					layout->addWidget( labelDex, j + 1, actualColumn + 1 );
+					layoutAttributes->addWidget( labelDex, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesDex( int ) ) );
 				} else if ( trait->name() == "Stamina" ) {
-					layout->addWidget( labelSta, j + 1, actualColumn + 1 );
+					layoutAttributes->addWidget( labelSta, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesSta( int ) ) );
 				}
 			} else if ( trait->category() == cv_AbstractTrait::Social ) {
 				if ( trait->name() == "Manipulation" ) {
-					layout->addWidget( labelMan, j + 1, actualColumn + 1 );
+					layoutAttributes->addWidget( labelMan, j + 1, actualColumn + 1 );
 					connect( trait, SIGNAL( valueChanged( int ) ), this, SLOT( updateshapeValuesMan( int ) ) );
 				}
 			}
 		}
 
-		// Bei Werwölfen erscheint hier zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
+		// Bei Werwölfen erscheint hier Zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
 		actualColumn++;
 	}
 
@@ -157,7 +160,7 @@ AttributeWidget::~AttributeWidget() {
 	delete labelStr;
 	delete labelDex;
 	delete labelSta;
-	delete layout;
+	delete layoutAttributes;
 }
 
 
