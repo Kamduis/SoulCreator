@@ -41,7 +41,7 @@
 #include "IO/Settings.h"
 // #include "Storage/StorageCharacter.h"
 #include "Storage/StorageTemplate.h"
-#include "Widgets/TraitLine.h"
+#include "Widgets/Components/TraitLine.h"
 #include "Widgets/Dialogs/MessageBox.h"
 #include "Widgets/Dialogs/SettingsDialog.h"
 // #include "CMakeConfig.h"

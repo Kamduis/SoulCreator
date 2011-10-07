@@ -34,7 +34,7 @@
 #include "Storage/StorageCharacter.h"
 // #include "Datatypes/cv_Trait.h"
 // #include "Datatypes/cv_TraitDetail.h"
-#include "Dialogs/SelectMeritsDialog.h"
+#include "Widgets/Dialogs/SelectMeritsDialog.h"
 
 #include <QWidget>
 

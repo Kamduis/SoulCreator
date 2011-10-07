@@ -33,7 +33,7 @@
 
 // #include "Storage/StorageCharacter.h"
 // #include "Storage/StorageTemplate.h"
-#include "CharaSpecies.h"
+#include "Widgets/Components/CharaSpecies.h"
 
 #include <QWidget>
 

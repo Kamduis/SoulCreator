@@ -30,8 +30,8 @@
 #include <QLabel>
 #include <QSpinBox>
 
-#include "TraitDots.h"
-#include "Squares.h"
+#include "Widgets/Components/TraitDots.h"
+#include "Widgets/Components/Squares.h"
 // #include "Storage/StorageTemplate.h"
 // #include "Storage/StorageCharacter.h"
 #include "Calc/CalcAdvantages.h"

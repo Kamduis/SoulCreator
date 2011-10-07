@@ -25,7 +25,7 @@
 #include <QGridLayout>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "Widgets/Components/CharaTrait.h"
 // #include "Datatypes/cv_Trait.h"
 // #include "Exceptions/Exception.h"
 // #include "Config/Config.h"

@@ -29,7 +29,7 @@
 
 #include "Storage/StorageCharacter.h"
 
-#include "TraitSpecialties.h"
+#include "Widgets/Components/TraitSpecialties.h"
 
 
 

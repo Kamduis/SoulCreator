@@ -28,7 +28,7 @@
 // #include <QStringList>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "Widgets/Components/CharaTrait.h"
 #include "Calc/CalcAdvantages.h"
 // #include "Datatypes/cv_Trait.h"
 // #include "Datatypes/cv_Shape.h"

@@ -26,7 +26,7 @@
 #include <QGroupBox>
 #include <QDebug>
 
-#include "CheckTrait.h"
+#include "Widgets/Components/CheckTrait.h"
 // #include "Datatypes/cv_Trait.h"
 // #include "Exceptions/Exception.h"
 // #include "Config/Config.h"

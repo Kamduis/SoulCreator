@@ -26,7 +26,7 @@
 
 #include "Parser/StringBoolParser.h"
 // #include "Exceptions/Exception.h"
-#include "Dialogs/MessageBox.h"
+#include "Widgets/Dialogs/MessageBox.h"
 
 #include "CharaTrait.h"
 

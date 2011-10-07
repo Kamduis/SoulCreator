@@ -25,7 +25,7 @@
 // #include <QToolBox>
 #include <QDebug>
 
-#include "CharaTrait.h"
+#include "Widgets/Components/CharaTrait.h"
 // #include "Exceptions/Exception.h".h"
 // #include "Config/Config.h"
 #include "Widgets/Dialogs/MessageBox.h"

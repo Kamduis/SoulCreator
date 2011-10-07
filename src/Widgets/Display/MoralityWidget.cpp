@@ -25,8 +25,8 @@
 #include <QLineEdit>
 #include <QDebug>
 
-#include "DerangementComboBox.h"
-#include "TraitDots.h"
+#include "Widgets/Components/DerangementComboBox.h"
+#include "Widgets/Components/TraitDots.h"
 // #include "Storage/StorageTemplate.h"
 // #include "Datatypes/cv_Derangement.h"
 #include "Config/Config.h"
