@@ -30,7 +30,7 @@
 
 #include "Datatypes/cv_SpeciesTitle.h"
 #include "Datatypes/cv_Trait.h"	// Zum ausprobieren.
-#include "Datatypes/Trait.h"
+#include "Datatypes/TraitBonus.h"
 // #include "Datatypes/cv_IdentityList.h"
 #include "Datatypes/cv_CreationPointsList.h"
 #include "Datatypes/cv_SuperEffect.h"
@@ -45,7 +45,7 @@
  * Außerdem bietet diese Klasse angenehme Zugriffsfunktionen aus den Informationen, welche zum Programmstart aus den Template-Dateien geladen werden.
  **/
 class StorageTemplate : public QObject {
-    Q_OBJECT
+		Q_OBJECT
 // 		/**
 // 		 * Eine Liste aller Identitäten des Charakters. Hierin werden alle seine zahlreichen Namen gespeichert.
 // 		 *
@@ -55,65 +55,65 @@ class StorageTemplate : public QObject {
 // 		 **/
 // 		Q_PROPERTY( cv_IdentityList identities READ identities WRITE setIdentities NOTIFY identitiesChanged )
 
-public:
-    StorageTemplate( QObject *parent = 0 );
-    /**
-     *Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
-     **/
-    ~StorageTemplate();
+	public:
+		StorageTemplate( QObject *parent = 0 );
+		/**
+		 *Zerstört das Objekt und gibt alle zugeteilten Ressourcen wieder frei.
+		 **/
+		~StorageTemplate();
 
-    /**
-     * Gibt eine Liste aller verfügbaren Spezies aus.
-     **/
-    QList< cv_Species > species() const;
-    /**
-     * Gibt eine Liste aller verfügbaren Virtues aus.
-     **/
-    QStringList virtueNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
-    /**
-     * Gibt eine Liste aller verfügbaren Vices aus.
-     **/
-    QStringList viceNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
-    /**
-     * Gibt die Bezeichnung für die Brut der jeweiligen Spezies zurück.
-     *
-     * \todo Eine Exception werfen, falls der entsprechende Titel nicht gefunden wird.
-     **/
-    QString breedTitle( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
-    /**
-     * Gibt die Bezeichnung für die Fraktion der jeweiligen Spezies zurück.
-     *
-     * \todo Eine Exception werfen, falls der entsprechende Titel nicht gefunden wird.
-     **/
-    QString factionTitle( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
-    /**
-     *Gibt eine Liste mit den Einzelnen Überschriften der Power-Kategorien je Spezies zurück.
-     **/
-    QStringList powerHeaders( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
-    /**
-     * Gibt eine Liste aller verfügbaren Bruten aus.
-     **/
-    QStringList breedNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
-    /**
-     * Gibt eine Liste aller verfügbaren Fraktionen aus.
-     **/
-    QStringList factionNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
-    /**
-     * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
-     *
-     * \note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
-     *
-     * \todo Vielleicht kann ich die Anzahl der at()s reduzieren durch speichern des Zeigers? vor den if-Abfragen und Zuweisungen. Gilt auch für ähnliche Funktionen.
-     **/
-    QList< Trait* > traits(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
-    /**
-     * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
-     **/
-    QList< Trait* > traits(cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const;
-    /**
-     * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_AbstractTrait::Type), Kategorie (\ref cv_AbstractTrait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
-     **/
-    QStringList traitNames( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::EraAll, cv_Trait::AgeFlag age = cv_Trait::AgeAll ) const;
+		/**
+		 * Gibt eine Liste aller verfügbaren Spezies aus.
+		 **/
+		QList< cv_Species > species() const;
+		/**
+		 * Gibt eine Liste aller verfügbaren Virtues aus.
+		 **/
+		QStringList virtueNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		/**
+		 * Gibt eine Liste aller verfügbaren Vices aus.
+		 **/
+		QStringList viceNames( cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		/**
+		 * Gibt die Bezeichnung für die Brut der jeweiligen Spezies zurück.
+		 *
+		 * \todo Eine Exception werfen, falls der entsprechende Titel nicht gefunden wird.
+		 **/
+		QString breedTitle( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
+		 * Gibt die Bezeichnung für die Fraktion der jeweiligen Spezies zurück.
+		 *
+		 * \todo Eine Exception werfen, falls der entsprechende Titel nicht gefunden wird.
+		 **/
+		QString factionTitle( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
+		 *Gibt eine Liste mit den Einzelnen Überschriften der Power-Kategorien je Spezies zurück.
+		 **/
+		QStringList powerHeaders( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
+		 * Gibt eine Liste aller verfügbaren Bruten aus.
+		 **/
+		QStringList breedNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
+		 * Gibt eine Liste aller verfügbaren Fraktionen aus.
+		 **/
+		QStringList factionNames( cv_Species::SpeciesFlag spe = cv_Species::SpeciesNo ) const;
+		/**
+		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
+		 *
+		 * \note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
+		 *
+		 * \todo Vielleicht kann ich die Anzahl der at()s reduzieren durch speichern des Zeigers? vor den if-Abfragen und Zuweisungen. Gilt auch für ähnliche Funktionen.
+		 **/
+		QList< Trait* > traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::Modern, cv_Trait::AgeFlag age = cv_Trait::Adult ) const;
+		/**
+		 * Gibt eine Liste mit Zeigern auf alle Eigenschaften zurück, die den übergebenen Parametern entsprechen.
+		 **/
+		QList< Trait* > traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const;
+		/**
+		 * Gibt eine Namensliste verschiedener Eigenschaften aus, spezifiziert nach Typ (\ref cv_AbstractTrait::Type), Kategorie (\ref cv_AbstractTrait::Category), Zeitalter (\ref cv_Trait::Era) und Alter (\ref cv_Character::Age).
+		 **/
+		QStringList traitNames( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era = cv_Trait::EraAll, cv_Trait::AgeFlag age = cv_Trait::AgeAll ) const;
 // 		/**
 // 		 * Gibt die gesamte Eigenschaft zurück, welche über Typ, Kategorie und Name spezifiziert ist.
 // 		 *
@@ -122,83 +122,93 @@ public:
 // 		 * \todo Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren.
 // 		 **/
 // 		cv_Trait trait(cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name);
-    /**
-     * Sortiert die Liste.
-     **/
-    void sortTraits();
+// 		/**
+// 		 * Sortiert die Liste.
+// 		 **/
+// 		void sortTraits();
+		/**
+		 * Gibt eine Liste mit Zeigern auf alle Bonuseigenschaften zurück, die den übergebenen Parametern entsprechen.
+		 **/
+		QList< TraitBonus* > traitsBonus( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const;
 
-    /**
-     * Gibt den Maximalwert der Eigenschaften aus. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
-     **/
-    int traitMax( cv_Species::Species species, int value );
-    /**
-     * Gibt den Maximalwert der Energieeigenscahft aus. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
-     **/
-    int fuelMax( cv_Species::Species species, int value );
-    /**
-     * Gibt aus, wieviel Energie pro Runde maximal ausgegeben werden kann. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
-     **/
-    int fuelPerTurn( cv_Species::Species species, int value );
+		/**
+		 * Gibt den Maximalwert der Eigenschaften aus. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
+		 **/
+		int traitMax( cv_Species::Species species, int value );
+		/**
+		 * Gibt den Maximalwert der Energieeigenscahft aus. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
+		 **/
+		int fuelMax( cv_Species::Species species, int value );
+		/**
+		 * Gibt aus, wieviel Energie pro Runde maximal ausgegeben werden kann. Dieser Maximalwert hängt von der Spezies und der Höhe des Superattributs ab.
+		 **/
+		int fuelPerTurn( cv_Species::Species species, int value );
 
-    /**
-     * Gibt die für einen Eigenschaftstyp zur Verfügung stehenden Erschaffungspunkte zurück.
-     **/
-    cv_CreationPointsList* creationPoints();
+		/**
+		 * Gibt die für einen Eigenschaftstyp zur Verfügung stehenden Erschaffungspunkte zurück.
+		 **/
+		cv_CreationPointsList* creationPoints();
 
-private:
-    /**
-     * Eine Liste sämtlicher verfügbaren Spezies.
-     **/
-    static QList< cv_Species > v_species;
-    /**
-     * Eine Liste sämtlicher Titel der eizelnen Spezies.
-     **/
-    static QList< cv_SpeciesTitle > v_titles;
-    /**
-     * Eine Liste sämtlicher verfügbaren Eigenschaften.
-     **/
-    static QList< Trait* > v_traits;
-    /**
-     * Eine Liste über die Effekte der Supereigenschaft.
-     **/
-    static QList< cv_SuperEffect > v_superEffects;
+	private:
+		/**
+		 * Eine Liste sämtlicher verfügbaren Spezies.
+		 **/
+		static QList< cv_Species > v_species;
+		/**
+		 * Eine Liste sämtlicher Titel der eizelnen Spezies.
+		 **/
+		static QList< cv_SpeciesTitle > v_titles;
+		/**
+		 * Eine Liste sämtlicher verfügbaren Eigenschaften.
+		 **/
+		static QList< Trait* > v_traits;
+		/**
+		 * Eine Liste sämtlicher Bonuseigenschaften.
+		 **/
+		static QList< TraitBonus* > v_traitsBonus;
+		/**
+		 * Eine Liste über die Effekte der Supereigenschaft.
+		 **/
+		static QList< cv_SuperEffect > v_superEffects;
 
-    /**
-     * Eine Liste der Erschaffungspunkte. Jeder Listeneintrag steht für eine andere Spezies.
-     **/
-    static cv_CreationPointsList v_creationPointsList;
+		/**
+		 * Eine Liste der Erschaffungspunkte. Jeder Listeneintrag steht für eine andere Spezies.
+		 **/
+		static cv_CreationPointsList v_creationPointsList;
 
-public slots:
+	public slots:
 // 		/**
 // 		 * Speichert sämtliche verfügbaren Eigenschaften.
 // 		 **/
 // 		void setTraits( QList<cv_Trait> traits );
-    /**
-     * Fügt eine Spezies hinzu.
-     **/
-    void appendSpecies( cv_Species species );
-    /**
-     * Fügt einen Titel hinzu.
-     **/
-    void appendTitle( cv_SpeciesTitle title );
-    /**
-     * Fügt eine Eigenschaft hinzu.
-     *
-     * \warning Es werden nur eigenschaften hinzugefügt, die nicht schon existieren.
-     *
-     * \deprecated Nichtmehr verwenden.
-     **/
-    void appendTrait( cv_Trait trait );
-    /**
-     * Fügt einen Effekt eines Superattributs hinzu.
-     **/
-    void appendSuperEffect( cv_SuperEffect effect );
-    /**
-     * Fügt einen neuen Satz Erschaffungspunkte zu der entsprechende Liste hinzu.
-     *
-     * \sa v_creationPoints
-     **/
-    void appendCreationPoints( cv_CreationPoints points );
+		/**
+		 * Fügt eine Spezies hinzu.
+		 **/
+		void appendSpecies( cv_Species species );
+		/**
+		 * Fügt einen Titel hinzu.
+		 **/
+		void appendTitle( cv_SpeciesTitle title );
+		/**
+		 * Fügt eine Eigenschaft hinzu.
+		 *
+		 * \warning Es werden nur Eigenschaften hinzugefügt, die nicht schon existieren.
+		 **/
+		void appendTrait( cv_Trait trait );
+		/**
+		 * Fügt eine Bonuseigenschaft zu der entsprechenden Liste hinzu.
+		 **/
+		void appendTraitBonus( Trait* tr1, QString breed /** Dies ist die Brut, von der abhängt, ob dem Charkater die Bonuseigenschaft zur Verfügung steht. */ );
+		/**
+		 * Fügt einen Effekt eines Superattributs hinzu.
+		 **/
+		void appendSuperEffect( cv_SuperEffect effect );
+		/**
+		 * Fügt einen neuen Satz Erschaffungspunkte zu der entsprechende Liste hinzu.
+		 *
+		 * \sa v_creationPoints
+		 **/
+		void appendCreationPoints( cv_CreationPoints points );
 };
 
 #endif

@@ -41,8 +41,8 @@
  */
 
 class ReadXmlTemplate : public QObject, public ReadXml {
-	Q_OBJECT
-	
+		Q_OBJECT
+
 	public:
 		ReadXmlTemplate();
 		/**
@@ -130,6 +130,18 @@ class ReadXmlTemplate : public QObject, public ReadXml {
 		 **/
 		cv_Trait storeTraitData( cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b );
 // 		void readinList_prerequisites(cv_TraitPrerequisiteAnd &prerequisiteAnd);
+		/**
+		 * Mit dieser Funktion werden die Bonus-Eigenschaften ausgelesen.
+		 *
+		 * Magier erhalten je nach Pfad einen Bonus-Attributspunkt, Vampire können sich je nach Clan zwischen zwei Attributen einen Bonuspunkt auswählen etc.
+		 *
+		 * Diese Spezielle Funktion ließt den Typ aus und ruft daraufhin void readBonusTraits( cv_Species::Species sp, cv_AbstractTrait::Type tp ) auf, um tiefer in den Baum hinabzusteigen.
+		 **/
+		void readBonusTraits( cv_Species::Species sp, QString nameDependant );
+		/**
+		 * Nachdem der Typ der Bonus-Eigenschaften bereits durch void readBonusTraits( cv_Species::Species sp ) ausgelesen wurde, muß nun die Eigenschaft mittels dieser Funktion gespeichert werden.
+		 **/
+		void readBonusTraits( cv_Species::Species sp, cv_AbstractTrait::Type tp, QString nameDep );
 		/**
 		 * Mit dieser Funktion werden die daten über die besondere Eigenschaft der spezies ausgelsen: Eigenschaftsmaxima, Energiespeicher etc.
 		 **/

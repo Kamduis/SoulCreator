@@ -80,6 +80,10 @@ class Config {
 		 */
 		static const QString configFile;
 		/**
+		 * Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, abe rnicht zusammengequetscht erscheinen sollen.
+		 */
+		static const int vSpace;
+		/**
 		 * Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 		 */
 		static const int traitCategorySpace;

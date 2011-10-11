@@ -180,8 +180,8 @@ void CharaTrait::emitSpecialtiesClicked( bool sw ) {
 
 // 		qDebug() << Q_FUNC_INFO << traitPtr()->name() << ptr_traitStorage->name() << traitPtr()->details().count() << ptr_traitStorage->details().count();
 
-		for ( int i = 0; i < listStora.count(); i++ ) {
-			for ( int j = 0; j < listChara.count(); j++ ) {
+		for ( int i = 0; i < listStora.count(); ++i ) {
+			for ( int j = 0; j < listChara.count(); ++j ) {
 				if ( listStora.at( i ).name == listChara.at( j ).name ) {
 // 					qDebug() << Q_FUNC_INFO << sw << listStora.at( i ).name << listChara.at( j ).name << listChara.at( j ).value;
 					cv_TraitDetail traitDetail = listChara.at( j );

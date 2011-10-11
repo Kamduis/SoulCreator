@@ -51,7 +51,7 @@ QString cv_Name::displayNameFull( QString last, QStringList fores ) {
 	QString displayFull;
 	if ( !fores.isEmpty() ) {
 		displayFull = fores.at(0);
-		for (int i = 1; i < fores.count(); i++){
+		for (int i = 1; i < fores.count(); ++i){
 			displayFull += " " + fores.at(i);
 		}
 	}

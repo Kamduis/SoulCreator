@@ -22,35 +22,39 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DerangementComboBox.h"
+#ifndef TRAITBONUS_H
+#define TRAITBONUS_H
 
+#include "Trait.h"
 
-DerangementComboBox::DerangementComboBox( QWidget *parent ) : QComboBox( parent ) {
-	connect( this, SIGNAL( currentIndexChanged( int ) ), this, SLOT( emitCurrentIndexChanged( int ) ) );
-}
+/**
+ * @brief Speichert eine Bonuseiegnschaft des Charakters
+ *
+ * Dieser Datentyp enthält die Bonuseigenscahft, welche dem Charkater zur Verfügung stehen könnte, und die Eigenschaft, von welcher dieser Umstand abhängt.
+ */
+class TraitBonus : public Trait {
+	Q_OBJECT
+	
+	public:
+		/**
+		 * Konstruktor.
+		 **/
+		TraitBonus(Trait* tr1, QString breed, QObject* parent = 0);
 
+		/**
+		 * Zugriff auf die Voraussetzung für diese Bonuseigenschaft.
+		 **/
+		QString breedDependant() const;
+	private:
+		QString v_breedDependant;
 
-cv_Derangement DerangementComboBox::currentItem() {
-	return v_list.at( currentIndex() );
-}
+	public slots:
 
+	private slots:
 
-void DerangementComboBox::addItem( cv_Derangement item ) {
-	v_list.append( item );
-	QComboBox::addItem( item.name() );
-}
+	signals:
 
-void DerangementComboBox::addItems( QList< cv_Derangement > items ) {
-	v_list.append( items );
+};
 
-	for ( int i = 0; i < items.count(); ++i ) {
-		QComboBox::addItem( items.at( i ).name() );
-	}
-}
+#endif
 
-void DerangementComboBox::emitCurrentIndexChanged( int idx ) {
-	if ( idx >= 0 ) {
-		cv_Derangement lcl_derangement = v_list.at( idx );
-		emit currentIndexChanged( lcl_derangement );
-	}
-}

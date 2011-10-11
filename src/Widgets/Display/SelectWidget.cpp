@@ -38,7 +38,7 @@ SelectWidget::SelectWidget( QWidget *parent ) : QListWidget( parent )  {
 	new QListWidgetItem(QIcon(":types/images/svg/bolt.svg"), tr("Powers"), this);
 	new QListWidgetItem(QIcon(":types/images/svg/tail.svg"), tr("Flaws"), this);
 
-	for (int i = 0; i < count(); i++){
+	for (int i = 0; i < count(); ++i){
 		item(i)->setTextAlignment(Qt::AlignVCenter);
 		item(i)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 	}

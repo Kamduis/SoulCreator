@@ -54,7 +54,7 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 	QList< Trait* > list;
 
 	// Powers werden in einer Spalte heruntergeschrieben.
-	for ( int i = 0; i < categoryList.count(); i++ ) {
+	for ( int i = 0; i < categoryList.count(); ++i ) {
 		try {
 			list = storage->traits( type, categoryList.at( i ) );
 		} catch ( eTraitNotExisting &e ) {
@@ -71,8 +71,8 @@ PowerWidget::PowerWidget( QWidget *parent ) : QWidget( parent )  {
 
 		connect(character, SIGNAL(speciesChanged(cv_Species::SpeciesFlag)), this, SLOT(updateHeaders(cv_Species::SpeciesFlag)));
 
-		for ( int j = 0; j < list.count(); j++ ) {
-			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
+			for ( int k = 0; k < Config::traitMultipleMax; ++k ) {
 				// Anlegen der Eigenschaft im Speicher
 				Trait* traitPtr = character->addTrait( list[j] );
 
@@ -105,12 +105,12 @@ void PowerWidget::updateHeaders( cv_Species::SpeciesFlag spe )
 {
 	QStringList list = storage->powerHeaders( spe );
 
-	for (int i = 0; i < list.count(); i++){
+	for (int i = 0; i < list.count(); ++i){
 		toolBox->setItemEnabled(i, true);
 		toolBox->setItemText(i, list.at(i));
 	}
 	if (list.count() < toolBox->count()){
-		for (int i = list.count(); i < toolBox->count(); i++){
+		for (int i = list.count(); i < toolBox->count(); ++i){
 			toolBox->setItemText(i, "");
 			toolBox->setItemEnabled(i, false);
 		}

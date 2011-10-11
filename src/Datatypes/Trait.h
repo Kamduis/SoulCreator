@@ -42,13 +42,18 @@
  * Simple Eigenschaften wie Attribute haben nur Name und Wert. Bei Fertigkeiten kommen bereits die Spezialisierungen hinzu, bei  Vorzügen noch die Einschränkungen etc.
  */
 class Trait : public QObject, public cv_Trait {
-	Q_OBJECT
-	
+		Q_OBJECT
+
 	public:
 		/**
 		 * Konstruktor.
 		 **/
-		Trait(QString txt = "", int val = 0, cv_Species::Species spe = cv_Species::SpeciesNo, cv_AbstractTrait::Type ty = cv_AbstractTrait::TypeNo, cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo, QObject* parent = 0);
+		Trait( QString txt = "" /** Name */,
+			   int val = 0 /** Wert */,
+			   cv_Species::Species spe = cv_Species::SpeciesNo /** Sämtliche Spezies, welche über diese Eigenscahft verfügen sollen. */,
+			   cv_AbstractTrait::Type ty = cv_AbstractTrait::TypeNo /** Der Typ, dem diese Eigenschaft angehört. */,
+			   cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo /** Die Kategorie, welcher diese Eigenschaft angehört. */,
+			   QObject* parent = 0 );
 		/**
 		 * Konstruktor.
 		 *
@@ -94,15 +99,15 @@ class Trait : public QObject, public cv_Trait {
 		/**
 		 * Verändert den Wert der Eigenschaft.
 		 **/
-		void setValue(int val);
+		void setValue( int val );
 		/**
 		 * Legt die Zusatzeigenschaften fest.
 		 **/
-		void setDetails(QList< cv_TraitDetail > list);
+		void setDetails( QList< cv_TraitDetail > list );
 		/**
 		 * Legt die Zusatzeigenschaften fest.
 		 **/
-		void addDetail(cv_TraitDetail det);
+		void addDetail( cv_TraitDetail det );
 		/**
 		 * Löscht sämtliche Zusatzeigenschaften.
 		 **/
@@ -130,7 +135,7 @@ class Trait : public QObject, public cv_Trait {
 		/**
 		 * Überprüft, ob alle Voraussetzungen für diese Eigenschaft erfüllt werden.
 		 **/
-		void checkPrerequisites( Trait* trait /** Veränderte Eigenschaft, die möglicherweise Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */);
+		void checkPrerequisites( Trait* trait /** Veränderte Eigenschaft, die möglicherweise Auswirkungen auf die Verfügbarkeit der Eigenschaft hat, die durch die Instanz dieser Klasse repräsentiert wird. */ );
 
 	private slots:
 		/**
@@ -138,11 +143,11 @@ class Trait : public QObject, public cv_Trait {
 		 *
 		 * \sa checkPrerequisites()
 		 **/
-		void setAvailability(bool sw);
+		void setAvailability( bool sw );
 		/**
 		 * Wenn der Wert einer Fertigkeit auf 0 sinkt, werden alle ihre Spezialisierungen gelöscht.
 		 **/
-		void clearDetails(int val);
+		void clearDetails( int val );
 		/**
 		 * Sendet das Signal traitChanged() aus.
 		 **/
@@ -152,7 +157,7 @@ class Trait : public QObject, public cv_Trait {
 		/**
 		 * Der Wert der Eigenschaft hat sich verändert.
 		 **/
-		void valueChanged(int);
+		void valueChanged( int );
 		/**
 		 * Der Typ der Eigenschaft hat sich verändert.
 		 **/
@@ -170,11 +175,11 @@ class Trait : public QObject, public cv_Trait {
 		 *
 		 * \note Derzeit werden nur Veränderungen des Wertes oder der Details (Spezialisierungen) beachtet. Änderungen des Namens etc lösen kein Aussenden dieses Signals aus.
 		 **/
-		void traitChanged(Trait* trait);
+		void traitChanged( Trait* trait );
 		/**
 		 * Verfügbarkeit hat sich verändert.
 		 **/
-		void availabilityChanged(bool sw /** Dieses Argument bestimmt, ob die Eigenscahft dem Cahrakter zur Verfügung steht (true) oder nicht (false). */);
+		void availabilityChanged( bool sw /** Dieses Argument bestimmt, ob die Eigenscahft dem Cahrakter zur Verfügung steht (true) oder nicht (false). */ );
 };
 
 #endif

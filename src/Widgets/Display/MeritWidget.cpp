@@ -50,7 +50,7 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 	QList< Trait* > list;
 
 	// Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
-	for ( int i = 0; i < v_category.count(); i++ ) {
+	for ( int i = 0; i < v_category.count(); ++i ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 		QWidget* widgetMeritCategory = new QWidget();
 		QVBoxLayout* layoutMeritCategory = new QVBoxLayout();
@@ -65,8 +65,8 @@ MeritWidget::MeritWidget( QWidget *parent ) : QWidget( parent )  {
 			MessageBox::exception(this, e.message(), e.description());
 		}
 
-		for ( int j = 0; j < list.count(); j++ ) {
-			for ( int k = 0; k < Config::traitMultipleMax; k++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
+			for ( int k = 0; k < Config::traitMultipleMax; ++k ) {
 				// Anlegen der Eigenschaft im Speicher
 				Trait* traitPtr = character->addTrait( list[j] );
 
@@ -113,12 +113,12 @@ MeritWidget::~MeritWidget() {
 
 
 void MeritWidget::countMerits() {
-	for (int i = 0; i < v_category.count(); i++){
+	for (int i = 0; i < v_category.count(); ++i){
 		QList< Trait* > list = character->traits( cv_AbstractTrait::Merit, v_category.at(i) );
 
 		int numberInCategory = 0;
 
-		for ( int j = 0; j < list.count(); j++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
 			if ( list.at( j )->value() > 0 ) {
 				numberInCategory++;
 			}

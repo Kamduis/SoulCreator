@@ -62,7 +62,7 @@ void TraitSpecialties::setSpecialties( QList< cv_TraitDetail > specList ) {
 	QList< cv_TraitDetail > list = specList;
 
 	Qt::CheckState state;
-	for ( int i = 0; i < list.count(); i++ ) {
+	for ( int i = 0; i < list.count(); ++i ) {
 		if ( list.at( i ).value ) {
 			state = Qt::Checked;
 		} else {
@@ -77,7 +77,7 @@ void TraitSpecialties::setSpecialties( QList< cv_TraitDetail > specList ) {
 
 
 void TraitSpecialties::removeSpecialty( QString spec ) {
-	for ( int i = 0; i < count(); i++ ) {
+	for ( int i = 0; i < count(); ++i ) {
 		if ( item( i )->text() == spec ) {
 			removeSpecialty( i );
 			break;
@@ -94,7 +94,7 @@ void TraitSpecialties::removeSpecialty( int i ) {
 void TraitSpecialties::emitCheckedSpecialtiesChanged( ) {
 	QStringList listChecked;
 
-	for ( int i = 0; i < count(); i++ ) {
+	for ( int i = 0; i < count(); ++i ) {
 		if ( item( i )->checkState() != Qt::Unchecked ) {
 			listChecked.append( item( i )->text() );
 		}

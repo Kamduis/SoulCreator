@@ -25,6 +25,7 @@
 // #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGroupBox>
+#include <QRadioButton>
 // #include <QStringList>
 #include <QDebug>
 
@@ -73,7 +74,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	actualRow++;
 	layoutAttributes->addWidget( labelResistance, actualRow, actualColumn );
 
-	StorageTemplate storage;
+	storage = new StorageTemplate( this );
 
 	cv_AbstractTrait::Type type = cv_AbstractTrait::Attribute;
 
@@ -91,11 +92,11 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 	connect( this, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) );
 	connect( this, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) );
 
-	for ( int i = 0; i < categoryList.count(); i++ ) {
+	for ( int i = 0; i < categoryList.count(); ++i ) {
 		try {
-			list = storage.traits( type, categoryList.at( i ) );
-		} catch (eTraitNotExisting &e) {
-			MessageBox::exception(this, e.message(), e.description());
+			list = storage->traits( type, categoryList.at( i ) );
+		} catch ( eTraitNotExisting &e ) {
+			MessageBox::exception( this, e.message(), e.description() );
 		}
 
 		// Zeichnen des Separators zwischen den einzelnen Kategorien
@@ -119,7 +120,7 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 
 		// Einfügen der tatsächlichen Attribute
 
-		for ( int j = 0; j < list.count(); j++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
 			// Anlegen der Eigenschaft im Speicher
 			Trait* traitPtr = character->addTrait( list[j] );
 
@@ -152,10 +153,34 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 		actualColumn++;
 	}
 
+	layout->addSpacing( Config::vSpace );
+
+	QGridLayout* layoutBonus = new QGridLayout();
+	layout->addLayout( layoutBonus );
+
+	QLabel* labelBonus = new QLabel( this );
+	labelBonus->setText( tr( "Bonus Attribute:" ) );
+
+	layoutButtonsBonus = new QVBoxLayout();
+
+	buttonsBonus = new QButtonGroup( this );
+
+	layoutBonus->addWidget( labelBonus, 0, 0, Qt::AlignTop | Qt::AlignLeft );
+	layoutBonus->addLayout( layoutButtonsBonus, 0, 1 );
+// 	layoutBonus->addItem(new QSpacerItem(0,0), 0, 2);
+	layoutBonus->addWidget( new QWidget( this ), 0, 2 );
+	layoutBonus->setColumnStretch( 2, 1 );
+
+	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( filterBonusAttribute() ) );
+	connect( character, SIGNAL( breedChanged( QString ) ), this, SLOT( filterBonusAttribute() ) );
+	connect( buttonsBonus, SIGNAL( buttonClicked( int ) ), this, SLOT( addAttributeBonus( int ) ) );
 	connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( emitSpeciesChanged( cv_Species::SpeciesFlag ) ) );
 }
 
 AttributeWidget::~AttributeWidget() {
+	delete buttonsBonus;
+	delete layoutButtonsBonus;
+	delete storage;
 	delete labelMan;
 	delete labelStr;
 	delete labelDex;
@@ -169,7 +194,7 @@ void AttributeWidget::updateshapeValuesStr( int val ) {
 
 	// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
 
-	for ( int i = 1; i < cv_Shape::getShapeList().count(); i++ ) {
+	for ( int i = 1; i < cv_Shape::getShapeList().count(); ++i ) {
 		txt.append( QString::number( CalcAdvantages::strength( val, cv_Shape::getShapeList().at( i ) ) ) );
 	}
 
@@ -181,7 +206,7 @@ void AttributeWidget::updateshapeValuesDex( int val ) {
 
 	// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
 
-	for ( int i = 1; i < cv_Shape::getShapeList().count(); i++ ) {
+	for ( int i = 1; i < cv_Shape::getShapeList().count(); ++i ) {
 		txt.append( QString::number( CalcAdvantages::dexterity( val, cv_Shape::getShapeList().at( i ) ) ) );
 	}
 
@@ -193,7 +218,7 @@ void AttributeWidget::updateshapeValuesSta( int val ) {
 
 	// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
 
-	for ( int i = 1; i < cv_Shape::getShapeList().count(); i++ ) {
+	for ( int i = 1; i < cv_Shape::getShapeList().count(); ++i ) {
 		txt.append( QString::number( CalcAdvantages::stamina( val, cv_Shape::getShapeList().at( i ) ) ) );
 	}
 
@@ -205,7 +230,7 @@ void AttributeWidget::updateshapeValuesMan( int val ) {
 
 	// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
 
-	for ( int i = 1; i < cv_Shape::getShapeList().count(); i++ ) {
+	for ( int i = 1; i < cv_Shape::getShapeList().count(); ++i ) {
 		txt.append( QString::number( CalcAdvantages::manipulation( val, cv_Shape::getShapeList().at( i ) ) ) );
 	}
 
@@ -217,5 +242,45 @@ void AttributeWidget::emitSpeciesChanged( cv_Species::SpeciesFlag spe ) {
 		emit speciesChanged( false );
 	} else {
 		emit speciesChanged( true );
+	}
+}
+
+
+void AttributeWidget::filterBonusAttribute() {
+	cv_AbstractTrait::Type type = cv_AbstractTrait::Attribute;
+
+	QList< TraitBonus* > listBonus = storage->traitsBonus( type, character->species() );
+
+	// Bereits platzierte Knöpfe löschen, bevor wir sie wieder neu einfügen.
+	int listCount = buttonsBonus->buttons().count();
+	for ( int i = listCount; i > 0; --i ) {
+
+		delete buttonsBonus->buttons().at( i - 1 );
+	}
+
+	for ( int i = 0; i < listBonus.count(); ++i ) {
+		if ( listBonus.at( i )->breedDependant() == character->breed() ) {
+			// Füge neue Knöpfe hinzu
+			QRadioButton* button = new QRadioButton( listBonus.at( i )->name() );
+			buttonsBonus->addButton( button );
+			layoutButtonsBonus->addWidget( button );
+
+			if ( i == 0 ) {
+				button->toggle();
+			}
+		}
+	}
+}
+
+
+void AttributeWidget::addAttributeBonus( int id ) {
+	QList< Trait* > list = character->traits( cv_AbstractTrait::Attribute );
+
+	for ( int i = 0; i < list.count(); ++i ) {
+// 		qDebug() << Q_FUNC_INFO << buttonsBonus->button( id )->text();
+		if ( buttonsBonus->button( id )->text() == list.at( i )->name() ) {
+			list[i]->setValue( list[i]->value() + 1 );
+			break;
+		}
 	}
 }

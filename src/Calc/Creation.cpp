@@ -77,12 +77,12 @@ void Creation::calcPoints( Trait* trait ) {
 	// Für die Fertigkeitsspezialisierungen.
 	int dets = 0;
 	
-	for ( int i = 0; i < categories.count(); i++ ) {
+	for ( int i = 0; i < categories.count(); ++i ) {
 		int pts = 0;
 
 		list = character->traits( trait->type(), categories.at( i ) );
 
-		for ( int j = 0; j < list.count(); j++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
 			// Alle Punkte über 4 kosten 2 Erschaffungspunkte
 			int ans = list.at( j )->value() - Config::creationTraitDouble;
 
@@ -114,7 +114,7 @@ void Creation::calcPoints( Trait* trait ) {
 
 	// Bei Attributen ist der jeweils erste Punkt umsonst.
 	if ( trait->type() == cv_AbstractTrait::Attribute ) {
-		for ( int i = 0; i < pointList.count(); i++ ) {
+		for ( int i = 0; i < pointList.count(); ++i ) {
 			v_pointsList.pointList( character->species(), trait->type() )->operator[]( i ) = storage->creationPoints()->pointList( character->species(), trait->type() )->at( i ) + 3 - pointList.at( pointList.count() - 1 - i );
 
 // 			qDebug() << Q_FUNC_INFO << *v_pointsList.pointList(character->species(), trait->type());
@@ -123,7 +123,7 @@ void Creation::calcPoints( Trait* trait ) {
 		if ( trait->type() == cv_AbstractTrait::Merit || trait->type() == cv_AbstractTrait::Power ) {
 			int sum = 0;
 
-			for ( int i = 0; i < pointList.count(); i++ ) {
+			for ( int i = 0; i < pointList.count(); ++i ) {
 				sum += pointList.at( i );
 			}
 
@@ -131,7 +131,7 @@ void Creation::calcPoints( Trait* trait ) {
 
 // 			qDebug() << Q_FUNC_INFO << *v_pointsList.pointList(character->species(), trait->type()) << character->species() << trait->type();
 		} else {
-			for ( int i = 0; i < pointList.count(); i++ ) {
+			for ( int i = 0; i < pointList.count(); ++i ) {
 // 			qDebug() << Q_FUNC_INFO << pointList.count();
 
 				v_pointsList.pointList( character->species(), trait->type() )->operator[]( i ) = storage->creationPoints()->pointList( character->species(), trait->type() )->at( i ) - pointList.at( pointList.count() - 1 - i );
@@ -145,11 +145,11 @@ void Creation::calcPoints( Trait* trait ) {
 
 
 void Creation::controlPoints() {
-	for ( int i = 0; i < v_types.count(); i++ ) {
+	for ( int i = 0; i < v_types.count(); ++i ) {
 		bool isZero = true;
 		bool isNegative = false;
 
-		for ( int j = 0; j < v_pointsList.pointList( character->species(), v_types.at( i ) )->count(); j++ ) {
+		for ( int j = 0; j < v_pointsList.pointList( character->species(), v_types.at( i ) )->count(); ++j ) {
 			if ( v_pointsList.pointList( character->species(), v_types.at( i ) )->at( j ) < 0 ) {
 				// Wenn schon eine Kategorie negativ ist, muß ich nicht weiterkontrollieren.
 				isNegative = true;

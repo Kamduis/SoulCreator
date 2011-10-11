@@ -28,6 +28,8 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QLabel>
+#include <QComboBox>
+#include <QButtonGroup>
 
 #include "Storage/StorageCharacter.h"
 
@@ -39,7 +41,7 @@
  *
  * Die Attribute werden in diesem Widget angeordnet.
  *
- * \todo Die Attribute in ein Gridlayout packen, damit bei den Werwölfen die Manipulation nicht so heraussticht.
+ * \todo Das Bonusattribut kann beliebig oft vergeben und nicht mehr entfertn werden. Das muß behoben werden.
  **/
 class AttributeWidget : public QWidget {
 		Q_OBJECT
@@ -63,7 +65,9 @@ class AttributeWidget : public QWidget {
 		 * In diesem Layout werden die Attribute angeordnet.
 		 **/
 		QGridLayout *layoutAttributes;
+		QVBoxLayout *layoutButtonsBonus;
 		StorageCharacter* character;
+		StorageTemplate* storage;
 		/**
 		 * Anzeige der Attributswerte für alle Formen eines Werwolfs.
 		 **/
@@ -71,6 +75,10 @@ class AttributeWidget : public QWidget {
 		QLabel *labelDex;
 		QLabel *labelSta;
 		QLabel *labelMan;
+		/**
+		 * Eine Auswahlliste für die Bonusattribute für Magier und Vampire.
+		 **/
+		QButtonGroup *buttonsBonus;
 
 	public slots:
 
@@ -95,6 +103,14 @@ class AttributeWidget : public QWidget {
 		 * Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Manipulation.
 		 **/
 		void updateshapeValuesMan(int val);
+		/**
+		 * Ein Bonusattributs wird nur manchmal dargestellt.
+		 **/
+		void filterBonusAttribute(  );
+		/**
+		 * Der Bonusattributspunkt wird an die tatsächlichen Attribute angefügt.
+		 **/
+		void addAttributeBonus( int id );
 
 	signals:
 		/**

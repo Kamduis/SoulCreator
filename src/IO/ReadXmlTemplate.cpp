@@ -262,33 +262,9 @@ void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type
 				}
 
 				storage->appendTrait( trait );
-
-// 				qDebug() << Q_FUNC_INFO << trait.name << trait.possibleValues;;
-
-// 				// Diese Funktion benötige ich, damit er zum nächsten trait-Eintrag springt.
-// 				readNext();
-
-// 				int existsAt = -1;
-// 				cv_Trait tmp = readInList(sp, a, b);
-
-// 				for ( int i = 0; i < traitList.count(); i++ ) {
-// 										if ( traitList.at( i ).name == tmp.name ) {
-// 											existsAt = i;
-// 										}
-// 				}
-// 				if ( existsAt < 0 ) {
-// 					traitList.append( tmp );
-// 				} else {
-// 					// Die Details einer Eigenschaft.
-// 					for (int i = 0; i < tmp.details.count(); i++){
-// 						cv_TraitDetail traitDetail;
-// 						traitDetail.name = tmp.details.at(i).name;
-// 						traitDetail.species = sp;
-// 						traitList[existsAt].details.append(traitDetail);
-// 					}
-// 				}
-			} else
+			} else {
 				readUnknownElement();
+			}
 		}
 	}
 }
@@ -331,23 +307,68 @@ cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_AbstractTra
 					traitDetail.value = false;
 // 					traitDetail.species = sp;
 					trait.addDetail( traitDetail );
-				} else
-					if ( name() == "value" ) {
-						int value = readElementText().toInt();
-						trait.addPossibleValue( value );
-					} else
-						if ( name() == "prerequisite" ) {
-							QString text = readElementText();
+				} else if ( name() == "value" ) {
+					int value = readElementText().toInt();
+					trait.addPossibleValue( value );
+				} else if ( name() == "prerequisite" ) {
+					QString text = readElementText();
 // 					trait.v_prerequisites.append( text );
-							trait.setPrerequisites( text );
-						} else {
-							readUnknownElement();
-						}
+					trait.setPrerequisites( text );
+				} else if ( name() == "bonus" ) {	// Es können Bonuseigenschaften vergeben werden.
+// 					qDebug() << Q_FUNC_INFO << "Im Bonus-Zweig!";
+					readBonusTraits( sp, trait.name() );
+				} else {
+					readUnknownElement();
+				}
 			}
 		}
 	}
 
 	return trait;
+}
+
+
+void ReadXmlTemplate::readBonusTraits( cv_Species::Species sp, QString nameDependant ) {
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			// Es können Bonuseiegnschaften verschiedener Typen gewährt werden.
+			cv_AbstractTrait::Type type = cv_AbstractTrait::toType( name().toString() );
+
+			if ( type != cv_AbstractTrait::TypeNo ) {
+				readBonusTraits( sp, type, nameDependant );
+			} else {
+				readUnknownElement();
+			}
+		}
+	}
+}
+
+void ReadXmlTemplate::readBonusTraits( cv_Species::Species sp, cv_AbstractTrait::Type tp, QString nameDep ) {
+	while ( !atEnd() ) {
+		readNext();
+
+		if ( isEndElement() )
+			break;
+
+		if ( isStartElement() ) {
+			if ( name() == "trait" ) {
+				QString name = attributes().value( "name" ).toString();
+
+				Trait* lcl_trait1 = new Trait( name, 0, sp, tp );
+
+				storage->appendTraitBonus( lcl_trait1, nameDep );
+
+				readUnknownElement();
+			} else {
+				readUnknownElement();
+			}
+		}
+	}
 }
 
 
@@ -379,7 +400,7 @@ void ReadXmlTemplate::readCreationTree( cv_Species::Species sp ) {
 
 QList< int > ReadXmlTemplate::readCreationPoints() {
 	QList< int > resultList;
-	
+
 	while ( !atEnd() ) {
 		readNext();
 

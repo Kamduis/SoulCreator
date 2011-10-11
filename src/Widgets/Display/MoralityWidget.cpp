@@ -151,7 +151,7 @@ void MoralityWidget::resetValue( int value ) {
 			}
 		}
 	} else {
-		for ( int i = 1; i < layout->rowCount(); i++ ) {
+		for ( int i = 1; i < layout->rowCount(); ++i ) {
 			TraitDots* traitDots = qobject_cast<TraitDots*>( layout->itemAtPosition( i, 2 )->widget() );
 
 			if ( traitDots->value() > 0 ) {
@@ -173,7 +173,7 @@ void MoralityWidget::resetValue( int value ) {
 
 
 void MoralityWidget::renameHeader( cv_Species::SpeciesFlag species ) {
-	for ( int i = 0; i < storage->species().count(); i++ ) {
+	for ( int i = 0; i < storage->species().count(); ++i ) {
 		if ( cv_Species::toSpecies( storage->species().at( i ).name ) == species ) {
 			labelHeader->setText( "<b>" + storage->species().at( i ).morale + "</b>" );
 		}
@@ -184,10 +184,10 @@ void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 	QList< Trait* > list;
 	QList< cv_Derangement > listToUse;
 
-	for ( int j = 0; j < v_category.count(); j++ ) {
+	for ( int j = 0; j < v_category.count(); ++j ) {
 		list = storage->traits( cv_AbstractTrait::Derangement, v_category.at( j ) );
 
-		for ( int k = 0; k < list.count(); k++ ) {
+		for ( int k = 0; k < list.count(); ++k ) {
 			if ( list.at( k )->species().testFlag( species ) ) {
 				cv_Derangement lcl_derangement( list.at( k )->name(), 0, list.at( k )->species(), list.at( k )->category() );
 
@@ -198,7 +198,7 @@ void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 		}
 	}
 
-	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
+	for ( int i = 0; i < Config::derangementMoralityTraitMax; ++i ) {
 		DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
 		comboBox->clear();
 
@@ -213,18 +213,18 @@ void MoralityWidget::updateDerangements() {
 	QList< cv_Derangement* > list;
 	QList< cv_AbstractTrait::Category > category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
 
-	for ( int i = 0; i < category.count(); i++ ) {
+	for ( int i = 0; i < category.count(); ++i ) {
 		list.append( character->derangements( category.at( i ) ) );
 	}
 
-	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
+	for ( int i = 0; i < Config::derangementMoralityTraitMax; ++i ) {
 		DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
 
 		// Ist die Liste leer, werden alle Geistesstörungen auf Index 0 gesetzt.
 		if ( list.count() == 0 ) {
 			comboBox->setCurrentIndex( 0 );
 		} else {
-			for ( int k = 0; k < list.count(); k++ ) {
+			for ( int k = 0; k < list.count(); ++k ) {
 				if ( list.at( k )->morality() == i + 1 ) {
 					comboBox->setCurrentIndex( comboBox->findText( list.at( k )->name() ) );
 					break;
@@ -264,7 +264,7 @@ void MoralityWidget::disableDerangements( int value ) {
 void MoralityWidget::saveDerangements( cv_Derangement dera ) {
 	cv_Derangement derang;
 
-	for ( int i = 0; i < Config::derangementMoralityTraitMax; i++ ) {
+	for ( int i = 0; i < Config::derangementMoralityTraitMax; ++i ) {
 		DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
 
 		if ( comboBox->currentItem() == dera ) {

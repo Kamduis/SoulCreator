@@ -105,7 +105,7 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 
 	painter.save();
 
-	for ( int i = 0; i < v_value; i++ ) {
+	for ( int i = 0; i < v_value; ++i ) {
 		shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 );
 		painter.drawEllipse( shiftCenter, dotRadius, dotRadius );
 // 		if (v_forbiddenValues->contains(i+1)){
@@ -119,7 +119,7 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 
 	painter.save();
 
-	for ( int i = v_value; i < maximum(); i++ ) {
+	for ( int i = v_value; i < maximum(); ++i ) {
 		shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 );
 		painter.drawEllipse( shiftCenter, dotRadius, dotRadius );
 
@@ -130,7 +130,7 @@ void TraitDots::paintEvent( QPaintEvent * ) {
 		}
 	}
 
-// 	for (int i = 0; i < v_forbiddenValues->count(); i++) {
+// 	for (int i = 0; i < v_forbiddenValues->count(); ++i) {
 // 		shiftCenter = dotCenter + QPoint( 0 + dotDiameter * (v_forbiddenValues->at(i) - 1), 0 );
 // // 		painter.drawLine(shiftCenter.x()-dotDiameter/2, shiftCenter.y()-dotDiameter/2, shiftCenter.x()+dotDiameter/2, shiftCenter.y()+dotDiameter/2);
 // // 		painter.drawLine(shiftCenter.x()+dotDiameter/2, shiftCenter.y()-dotDiameter/2, shiftCenter.x()-dotDiameter/2, shiftCenter.y()+dotDiameter/2);
@@ -391,7 +391,7 @@ void TraitDots::setAllowedValues( QList<int> *values ) {
 	// Neue List erstellen und mit den Werten aus dem Argument fÜllen. Aber da Werte kleiner 0 nie erlaubt sind, werden diese garnicht erst Übernommen
 	QList<int> *tmpList = new QList<int>();
 
-	for ( int i = 0; i < values->size(); i++ ) {
+	for ( int i = 0; i < values->size(); ++i ) {
 		if ( values->at( i ) >= 0 )
 			tmpList->append( values->at( i ) );
 	}
@@ -409,7 +409,7 @@ void TraitDots::setAllowedValues( QList<int> *values ) {
 	// Eine Schleife beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumetn genannt werden.
 	v_forbiddenValues->clear();
 
-	for ( int i = minimum(); i <= maximum(); i++ ) {
+	for ( int i = minimum(); i <= maximum(); ++i ) {
 		if ( !tmpList->contains( i ) )
 			v_forbiddenValues->append( i );
 	}
@@ -439,7 +439,7 @@ void TraitDots::addForbiddenValue( int value ) {
 
 
 void TraitDots::forbidAll() {
-	for ( int i = minimum(); i < maximum() + 1; i++ ) {
+	for ( int i = minimum(); i < maximum() + 1; ++i ) {
 		addForbiddenValue( i );
 	}
 }

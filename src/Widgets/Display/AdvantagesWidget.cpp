@@ -311,7 +311,7 @@ void AdvantagesWidget::hideSuper( cv_Species::SpeciesFlag species ) {
 		squaresFuel->setHidden( false );
 		fuelPerTurn->setHidden( false );
 
-		for ( int i = 0; i < storage->species().count(); i++ ) {
+		for ( int i = 0; i < storage->species().count(); ++i ) {
 			if ( cv_Species::toSpecies( storage->species().at( i ).name ) == species ) {
 				labelSuper->setText( storage->species().at( i ).supertrait );
 				labelFuel->setText( storage->species().at( i ).fuel );

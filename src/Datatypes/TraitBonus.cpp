@@ -22,35 +22,18 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DerangementComboBox.h"
+#include <QDebug>
+
+#include "TraitBonus.h"
 
 
-DerangementComboBox::DerangementComboBox( QWidget *parent ) : QComboBox( parent ) {
-	connect( this, SIGNAL( currentIndexChanged( int ) ), this, SLOT( emitCurrentIndexChanged( int ) ) );
+TraitBonus::TraitBonus( Trait* tr1, QString breed, QObject* parent ) : Trait( tr1, parent ) {
+	v_breedDependant = breed;
 }
 
 
-cv_Derangement DerangementComboBox::currentItem() {
-	return v_list.at( currentIndex() );
+QString TraitBonus::breedDependant() const {
+	return v_breedDependant;
 }
 
 
-void DerangementComboBox::addItem( cv_Derangement item ) {
-	v_list.append( item );
-	QComboBox::addItem( item.name() );
-}
-
-void DerangementComboBox::addItems( QList< cv_Derangement > items ) {
-	v_list.append( items );
-
-	for ( int i = 0; i < items.count(); ++i ) {
-		QComboBox::addItem( items.at( i ).name() );
-	}
-}
-
-void DerangementComboBox::emitCurrentIndexChanged( int idx ) {
-	if ( idx >= 0 ) {
-		cv_Derangement lcl_derangement = v_list.at( idx );
-		emit currentIndexChanged( lcl_derangement );
-	}
-}

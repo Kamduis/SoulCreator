@@ -58,7 +58,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 	QList< Trait* > list;
 
 	// Fertigkeiten werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
-	for ( int i = 0; i < v_categoryList.count(); i++ ) {
+	for ( int i = 0; i < v_categoryList.count(); ++i ) {
 		// Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 		QGroupBox* widgetSkillCategory = new QGroupBox();
 		widgetSkillCategory->setTitle(cv_AbstractTrait::toString( v_categoryList.at( i ), true ));
@@ -75,7 +75,7 @@ SkillWidget::SkillWidget( QWidget *parent ) : QWidget( parent )  {
 			MessageBox::exception(this, e.message(), e.description());
 		}
 
-		for ( int j = 0; j < list.count(); j++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
 			// Anlegen der Eigenschaft im Speicher
 			Trait* traitPtr = character->addTrait( list[j] );
 			// Die Spezialisierungen werden nicht übernommen, da im Charakter nur jene gespeichert werden, die der Charakter auch tatsächlich hat.
@@ -120,7 +120,7 @@ void SkillWidget::toggleOffSpecialties( bool sw, QString skillName, QList< cv_Tr
 		QGroupBox* box = qobject_cast<QGroupBox*>( scrollLayout->itemAt( j )->widget() );
 // 		qDebug() << Q_FUNC_INFO << box->layout()->count();
 		
-		for (int k = 0; k < box->layout()->count(); k++){
+		for (int k = 0; k < box->layout()->count(); ++k){
 			CharaTrait* trait = qobject_cast<CharaTrait*>( box->layout()->itemAt( k )->widget() );
 
 			if ( trait->name() != skillName ) {
@@ -138,7 +138,7 @@ void SkillWidget::uncheckButtons() {
 		QGroupBox* box = qobject_cast<QGroupBox*>( scrollLayout->itemAt( j )->widget() );
 // 		qDebug() << Q_FUNC_INFO << box->layout()->count();
 
-		for (int k = 0; k < box->layout()->count(); k++){
+		for (int k = 0; k < box->layout()->count(); ++k){
 			CharaTrait* trait = qobject_cast<CharaTrait*>( box->layout()->itemAt( k )->widget() );
 
 			trait->setSpecialtyButtonChecked( false );

@@ -43,7 +43,7 @@ CharaSpecialties::~CharaSpecialties() {
 void CharaSpecialties::saveSpecialties( QStringList list ) {
 	QList< cv_TraitDetail > specialties;
 
-	for ( int i = 0; i < list.count(); i++ ) {
+	for ( int i = 0; i < list.count(); ++i ) {
 		cv_TraitDetail detail;
 		detail.name = list.at( i );
 		detail.value = true;

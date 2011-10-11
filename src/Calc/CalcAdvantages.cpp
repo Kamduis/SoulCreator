@@ -47,10 +47,10 @@ CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
 
 	bool stopLoop = false;
 
-	for ( int i = 0; i < types.count(); i++ ) {
+	for ( int i = 0; i < types.count(); ++i ) {
 		list = character->traits( types.at( i ) );
 
-		for ( int j = 0; j < list.count(); j++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
 			if ( types.at( i ) == cv_AbstractTrait::Attribute ) {
 				if ( list.at( j )->name() == "Wits" ) {
 					attrWit = list.at( j );

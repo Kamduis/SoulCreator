@@ -44,7 +44,7 @@ void CheckedList::insertCheckableItem( int i, QString label, Qt::CheckState stat
 }
 
 void CheckedList::setCheckableItems( QStringList labels, Qt::CheckState state ) {
-	for ( int i = 0; i < labels.count(); i++ ) {
+	for ( int i = 0; i < labels.count(); ++i ) {
 		addCheckableItem( labels.at( i ), state );
 	}
 }
@@ -63,7 +63,7 @@ void CheckedList::setItemCheckState( int i, Qt::CheckState state ) {
 // void CheckedList::emitCheckedItemsChanged(){
 // 	QStringList list;
 //
-// 	for (int i = 0; i < count(); i++){
+// 	for (int i = 0; i < count(); ++i){
 // 		if (item(i)->checkState() == Qt::Checked)
 // 			list.append(item(i)->text());
 // 	}

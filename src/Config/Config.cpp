@@ -35,6 +35,7 @@ const QString Config::organization = "Caern";
 const QString Config::configFile = "config.ini";
 const QColor Config::pointsNegative = QColor(255,0,0);
 const QColor Config::pointsPositive = QColor(0,0,255);
+const int Config::vSpace = 5;
 const int Config::traitCategorySpace = 10;
 const int Config::traitMultipleMax = 3;
 const int Config::displayTimeout = 10000;

@@ -105,7 +105,7 @@ void Squares::paintEvent( QPaintEvent * ) {
 
 	int squareColumnIter = 0;
 	int squareLineIter = 0;
-	for ( int i = 0; i < maximum(); i++ ) {
+	for ( int i = 0; i < maximum(); ++i ) {
 		QRect square = QRect(( squareSideLength + separatorWidth ) * squareColumnIter + frameWidth * ( squareColumnIter + 1 ), ( squareSideLength + separatorWidth ) * squareLineIter + frameWidth * ( squareLineIter + 1 ), squareSideLength, squareSideLength );
 // 		qDebug() << Q_FUNC_INFO << square;
 		painter.drawRect( square );

@@ -192,7 +192,7 @@ QString Trait::parsePrerequisites( QString text, QList< Trait* > list ) {
 	// Nicht vorhandene Werte verbleiben natürlich in Textform und werden vom Parser wie 0en behandelt.
 
 	if ( prerequisites.contains( QRegExp( "([a-zA-Z]+)\\s*[<>=]+" ) ) ) {
-		for ( int k = 0; k < list.count(); k++ ) {
+		for ( int k = 0; k < list.count(); ++k ) {
 			// Ersetzen der Fertigkeitsspezialisierungen von dem Format Fertigkeit.Spezialisierung mit Fertigkeitswert, wenn Spezialisierung existiert oder 0, wenn nicht.
 			if ( prerequisites.contains( '.' ) && list.at( k )->type() == cv_AbstractTrait::Skill && list.at( k )->details().count() > 0 ) {
 				QString testSkill = list.at( k )->name() + ".";

@@ -37,7 +37,7 @@ CharaSpecies::CharaSpecies( QWidget* parent ): QComboBox( parent ) {
 	character = StorageCharacter::getInstance();
 	StorageTemplate storage;
 
-	for ( int i = 0; i < storage.species().count(); i++ ) {
+	for ( int i = 0; i < storage.species().count(); ++i ) {
 		if ( cv_Species::toSpecies( storage.species().at( i ).name ) != cv_Species::SpeciesAll ) {
 			addItem( QIcon(":/icons/images/Skull-" + storage.species().at( i ).name + ".png"), storage.species().at( i ).name );
 		}
@@ -81,7 +81,7 @@ void CharaSpecies::setSpecies( cv_Species::SpeciesFlag species ) {
 void CharaSpecies::emitSpeciesChanged( int index ) {
 	StorageTemplate storage;
 
-	for ( int i = 0; i < storage.species().count(); i++ ) {
+	for ( int i = 0; i < storage.species().count(); ++i ) {
 		if ( itemText( index ) == storage.species().at( i ).name ) {
 			emit speciesChanged( cv_Species::toSpecies( storage.species().at( i ).name ) );
 			return;
