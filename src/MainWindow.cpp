@@ -474,8 +474,6 @@ void MainWindow::newCharacter() {
 void MainWindow::openCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 	if ( maybeSave() ) {
-		character->resetCharacter();
-
 		QString appPath = QApplication::applicationDirPath();
 
 		// Pfad zum Speicherverzeichnis
@@ -488,6 +486,9 @@ void MainWindow::openCharacter() {
 		QString filePath = QFileDialog::getOpenFileName( this, tr( "Select Character File" ), savePath, tr( "WoD Characters (*.chr)" ) );
 
 		if ( !filePath.isEmpty() ) {
+			// Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
+			character->resetCharacter();
+
 			QFile* file = new QFile( filePath );
 
 			// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.

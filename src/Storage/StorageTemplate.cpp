@@ -26,6 +26,8 @@
 
 // #include "Config/Config.h"
 #include "Exceptions/Exception.h"
+#include "Datatypes/Traits/AttributeTrait.h"
+#include "Datatypes/Traits/SkillTrait.h"
 
 #include "StorageTemplate.h"
 
@@ -246,7 +248,15 @@ void StorageTemplate::appendSpecies( cv_Species species ) {
 void StorageTemplate::appendTrait( cv_Trait trait ) {
 	bool exists = false;
 
-	Trait* lcl_trait = new Trait( trait );
+	// Unterschiedliche Klassen für die einzelnen Eigenschafts-Typen:
+	Trait* lcl_trait;
+	if (trait.type() == cv_AbstractTrait::Attribute) {
+		lcl_trait = new AttributeTrait( trait );
+	} else if (trait.type() == cv_AbstractTrait::Skill) {
+		lcl_trait = new SkillTrait( trait );
+	} else {
+		lcl_trait = new Trait( trait );
+	}
 
 	for ( int i = 0; i < v_traits.count(); ++i ) {
 		if ( v_traits.at( i )->type() == lcl_trait->type() && v_traits.at( i )->name() == lcl_trait->name() ) {

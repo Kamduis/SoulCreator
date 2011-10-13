@@ -29,8 +29,7 @@
 #include <QStringList>
 
 #include "Datatypes/cv_SpeciesTitle.h"
-#include "Datatypes/cv_Trait.h"	// Zum ausprobieren.
-#include "Datatypes/TraitBonus.h"
+#include "Datatypes/Traits/TraitBonus.h"
 // #include "Datatypes/cv_IdentityList.h"
 #include "Datatypes/cv_CreationPointsList.h"
 #include "Datatypes/cv_SuperEffect.h"
@@ -191,6 +190,8 @@ class StorageTemplate : public QObject {
 		void appendTitle( cv_SpeciesTitle title );
 		/**
 		 * Fügt eine Eigenschaft hinzu.
+		 *
+		 * \note Je nach Typ der Eigenschaft werden sie in eine dazu passende Klasse gesteckt, damit die ganzen typspezifischen Aktionen in virtuellen Funktionen so ablaufen, wie es für diesen ganz beosnderen Typ eben typisch ist. Beispiel: Die Auswirkung, falls diese Eigenschaft als Bonuseigenschaft ausgezeichnet ist.
 		 *
 		 * \warning Es werden nur Eigenschaften hinzugefügt, die nicht schon existieren.
 		 **/

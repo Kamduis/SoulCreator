@@ -41,7 +41,7 @@
  *
  * Die Attribute werden in diesem Widget angeordnet.
  *
- * \todo Das Bonusattribut kann beliebig oft vergeben und nicht mehr entfertn werden. Das muß behoben werden.
+ * \todo Bonusattribut als tatsächlichen Attributspunkt einfügen.
  **/
 class AttributeWidget : public QWidget {
 		Q_OBJECT

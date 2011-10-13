@@ -130,13 +130,17 @@ class cv_Trait : public cv_AbstractTrait {
 		 * Konstruktor.
 		 **/
 		cv_Trait(QString txt = "", int val = 0, cv_Species::Species spe = cv_Species::SpeciesNo, cv_AbstractTrait::Type ty = cv_AbstractTrait::TypeNo, cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo);
+		/**
+		 * Destruktor.
+		 **/
+		virtual ~cv_Trait();
 
 		/**
 		 * Gibt den Wert der Eigenschaft wieder zurück.
 		 *
 		 * \sa setValue()
 		 **/
-		int value() const;
+		virtual int value() const;
 		/**
 		 * Ändert den Wert der Eigenschaft.
 		 *
@@ -259,6 +263,20 @@ class cv_Trait : public cv_AbstractTrait {
 		 * \sa customText()
 		 **/
 		void setCustomText(QString txt);
+		/**
+		 * Liest aus, ob diese Eigenschaft als Bonuseigenschaft zählt.
+		 *
+		 * \todo Wenn ich von dieser Klasse die Speziellen Eigenschaftstypen ableite (AttributeTrait, SkillTrait etc) kann ich je nach Eigenschaft genau bestimmtn, welchen Effekt es hat, wenn eine Eigenschaft als Bonus deklariert ist.
+		 *
+		 * \sa setBonus()
+		 **/
+		bool isBonus() const;
+		/**
+		 * Legt fest, ob diese Eigenschaft eine Bonuseigenschaft ist.
+		 *
+		 * \sa custom()
+		 **/
+		virtual void setBonus(bool sw);
 
 		/**
 		 * Wandelt den Namen einer Era in den dazu passenden enum um.
@@ -323,6 +341,12 @@ class cv_Trait : public cv_AbstractTrait {
 		 * Jene Eigenschaften, die einen zusätzlichen erklärenden Text haben können (siehe \ref custom), können eben diese Text hier speichern.
 		 **/
 		QString v_customText;
+		/**
+		 * Manche Eigenschaften werden als Bonuseigenschaft deklariert. Es müssen keine Punkte (Erschaffungs- oder Erfahrungspunkte) ausgegeben werden, um sie zu erhlaten, sondern sie kommen automatisch, wenn gewisse Voraussetzungen erfüllt sind.
+		 *
+		 * Ist diese Variable "true", ist diese Eigenschaft eine solche Bonuseigenschaft. Welche Auswirkungen das hat, hängt von der tatsächlichen Eigenschaft ab.
+		 **/
+		bool v_bonus;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( cv_Trait::Age )

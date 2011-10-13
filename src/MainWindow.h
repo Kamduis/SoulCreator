@@ -86,6 +86,8 @@ class MainWindow;
  * \todo Die Widgets weiter aufteilen in Main-Widgets, Tool-Widgets etc.
  *
  * \todo Damit die SVG-Grafiken unter Windows XP dargestellt werden ist auch QtXML4.dll erforderlich.
+ *
+ * \todo Von der Klasse Trait mehrere Unterklassen ableiten, je nach Typ der Eigenschaft. TraitAttribute hat leicht andere Eigenschaften als TraitSkill etc.? Das würde mehr objektorientiert aussehen. Und natürlich kann ich durch virtuelle Funktionen immer auch auch verschiedene Erben durch ihre Basisklasse Trait vergleichen, aussuchen usw.
  */
 
 class MainWindow : public QMainWindow {

@@ -26,10 +26,10 @@
 #define STORAGECHARACTER_H
 
 // #include "Datatypes/cv_Identity.h"
-#include "Datatypes/cv_IdentityList.h"
+#include "Datatypes/Identity/cv_IdentityList.h"
 // #include "Datatypes/Trait.h"
 // #include "Datatypes/Trait.h"
-#include "Datatypes/cv_Derangement.h"
+#include "Datatypes/Traits/cv_Derangement.h"
 // #include "Datatypes/cv_CreationPoints.h"
 #include "StorageTemplate.h"
 

@@ -66,6 +66,10 @@ class Trait : public QObject, public cv_Trait {
 		 * Dieser Konstruktor erzeugt ein neues Objekt aus einem bereits existierenden Trait-Objekt.
 		 **/
 		Trait( Trait* trait, QObject* parent = 0 );
+		/**
+		 * Destruktor.
+		 **/
+		virtual ~Trait();
 
 		/**
 		 * Gibt die Liste mit voraussetzungen zurück.
@@ -116,6 +120,10 @@ class Trait : public QObject, public cv_Trait {
 		 * Legt den Typ fest und sendet ein entsprechendes Signal aus.
 		 **/
 		void setType( cv_AbstractTrait::Type typ );
+		/**
+		 * Legt fest, ob diese Eigenschaft eine Bonuseigenschaft ist.
+		 **/
+		virtual void setBonus(bool sw);
 // 		/**
 // 		 * Legt fest, welche Spezies über diese Eigenschaft verfügen und sendet bei Änderung ein entsprechendes Signal aus.
 // 		 **/
@@ -170,6 +178,10 @@ class Trait : public QObject, public cv_Trait {
 		 * Die Details der Eigenschaft haben sich verändert.
 		 **/
 		void detailsChanged( int /** Dieses Argument beinhaltet die aktuelle Anzahl an Details der Eigenschaft. */ );
+		/**
+		 * Die Eigenschaft wurde entweder in eine Bonuseigenschaft oder von einer Bonuseigenscahft in eine normele umgewandelt.
+		 **/
+		void bonusChanged( bool /** true: Eigenschaft ist nun eine Bonuseigenscahft, false: Eigenschaft ist nun eine normale Eigenschaft. */ );
 		/**
 		 * Irgendein Aspekt der Eigenschaft hat sich verändert.
 		 *

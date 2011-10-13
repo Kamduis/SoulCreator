@@ -30,6 +30,9 @@
 Exception::Exception( QString message ) {
 	setMessage( message );
 }
+Exception::~Exception() throw() {
+}
+
 
 QString Exception::message() {
 	return v_message;

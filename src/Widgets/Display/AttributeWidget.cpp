@@ -31,7 +31,7 @@
 
 #include "Widgets/Components/CharaTrait.h"
 #include "Calc/CalcAdvantages.h"
-// #include "Datatypes/cv_Trait.h"
+#include "Datatypes/Traits/AttributeTrait.h"
 // #include "Datatypes/cv_Shape.h"
 // #include "Exceptions/Exception.h"
 // #include "Config/Config.h"
@@ -119,7 +119,6 @@ AttributeWidget::AttributeWidget( QWidget *parent ) : QWidget( parent )  {
 		layoutAttributes->addWidget( header, 0, actualColumn );
 
 		// Einfügen der tatsächlichen Attribute
-
 		for ( int j = 0; j < list.count(); ++j ) {
 			// Anlegen der Eigenschaft im Speicher
 			Trait* traitPtr = character->addTrait( list[j] );
@@ -277,10 +276,11 @@ void AttributeWidget::addAttributeBonus( int id ) {
 	QList< Trait* > list = character->traits( cv_AbstractTrait::Attribute );
 
 	for ( int i = 0; i < list.count(); ++i ) {
+		list.at( i )->setBonus( false );
+
 // 		qDebug() << Q_FUNC_INFO << buttonsBonus->button( id )->text();
 		if ( buttonsBonus->button( id )->text() == list.at( i )->name() ) {
-			list[i]->setValue( list[i]->value() + 1 );
-			break;
+			list.at( i )->setBonus( true );
 		}
 	}
 }

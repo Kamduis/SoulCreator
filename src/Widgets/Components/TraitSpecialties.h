@@ -27,7 +27,7 @@
 
 #include <QString>
 
-#include "Datatypes/cv_TraitDetail.h"
+#include "Datatypes/Traits/cv_TraitDetail.h"
 
 #include "CheckedList.h"
 

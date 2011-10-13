@@ -25,6 +25,8 @@
 #include <QDebug>
 
 // #include "StorageTemplate.h"
+#include "Datatypes/Traits/AttributeTrait.h"
+#include "Datatypes/Traits/SkillTrait.h"
 #include "Config/Config.h"
 
 #include "StorageCharacter.h"
@@ -163,7 +165,15 @@ QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type, cv_Abstra
 
 
 Trait* StorageCharacter::addTrait( Trait* trait ) {
-	Trait* lcl_trait = new Trait( trait );
+	// Unterschiedliche Klassen für die einzelnen Eigenschafts-Typen:
+	Trait* lcl_trait;
+	if (trait->type() == cv_AbstractTrait::Attribute) {
+		lcl_trait = new AttributeTrait( trait );
+	} else if (trait->type() == cv_AbstractTrait::Skill) {
+		lcl_trait = new SkillTrait( trait );
+	} else {
+		lcl_trait = new Trait( trait );
+	}
 
 	v_traits2.append( lcl_trait );
 

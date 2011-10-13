@@ -28,7 +28,7 @@
 // #include <QString>
 #include <QList>
 
-#include "cv_Species.h"
+#include "Datatypes/cv_Species.h"
 
 /**
  * @brief Grundlegender Datentyp für eine Charaktereigenschaft

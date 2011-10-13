@@ -58,6 +58,10 @@ Trait::Trait( Trait* trait, QObject* parent ) : QObject( parent ), cv_Trait( tra
 	setPossibleValues( trait->possibleValues() );
 }
 
+Trait::~Trait() {
+}
+
+
 void Trait::construct() {
 	// Am Anfang stehen alle Fertigkeiten zur Verfügung, aber wenn dann die Voraussetzungen geprüft werden, kann sich das ändern.
 	v_available = true;
@@ -127,6 +131,16 @@ void Trait::setAvailability( bool sw ) {
 		emit availabilityChanged( sw );
 	}
 }
+
+void Trait::setBonus( bool sw ) {
+	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
+	if ( isBonus() == sw ) {
+		cv_Trait::setBonus( sw );
+
+		emit bonusChanged( sw );
+	}
+}
+
 
 
 

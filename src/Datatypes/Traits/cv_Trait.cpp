@@ -23,6 +23,8 @@
  */
 
 
+#include <QDebug>
+
 // #include "Exceptions/Exception.h"
 
 #include "cv_Trait.h"
@@ -36,7 +38,12 @@ cv_Trait::cv_Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTr
 	v_prerequisites = "";
 	v_custom = false;
 	v_customText = "";
+	v_bonus = false;
 }
+
+cv_Trait::~cv_Trait() {
+}
+
 
 int cv_Trait::value() const {
 	return v_value;
@@ -124,6 +131,17 @@ void cv_Trait::setCustomText( QString txt ) {
 
 	v_customText = txt;
 }
+
+bool cv_Trait::isBonus() const {
+	return v_bonus;
+}
+void cv_Trait::setBonus( bool sw ) {
+	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
+	if (v_bonus != sw){
+		v_bonus = sw;
+	}
+}
+
 
 
 

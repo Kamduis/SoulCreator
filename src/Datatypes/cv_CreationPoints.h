@@ -28,7 +28,7 @@
 #include <QList>
 
 #include "Datatypes/cv_Species.h"
-#include "Datatypes/cv_AbstractTrait.h"
+#include "Datatypes/Traits/cv_AbstractTrait.h"
 
 /**
  * @brief Datentyp für die freien Erschaffungspunkte.

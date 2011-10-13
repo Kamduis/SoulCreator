@@ -22,38 +22,36 @@
  * along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRAITBONUS_H
-#define TRAITBONUS_H
+#ifndef SKILLTRAIT_H
+#define SKILLTRAIT_H
 
 #include "Trait.h"
 
 /**
- * @brief Speichert eine Bonuseiegnschaft des Charakters
- *
- * Dieser Datentyp enthält die Bonuseigenscahft, welche dem Charkater zur Verfügung stehen könnte, und die Eigenschaft, von welcher dieser Umstand abhängt.
+ * @brief Repräsentation einer einzelnen Fertigkeit.
  */
-class TraitBonus : public Trait {
-	Q_OBJECT
-	
+class SkillTrait : public Trait {
+		Q_OBJECT
+
 	public:
 		/**
 		 * Konstruktor.
 		 **/
-		TraitBonus(Trait* tr1, QString breed, QObject* parent = 0);
-
+		SkillTrait( QString txt = "" /** Name */,
+			   int val = 0 /** Wert */,
+			   cv_Species::Species spe = cv_Species::SpeciesNo /** Sämtliche Spezies, welche über diese Eigenscahft verfügen sollen. */,
+			   cv_AbstractTrait::Category ca = cv_AbstractTrait::CategoryNo /** Die Kategorie, welcher diese Eigenschaft angehört. */,
+			   QObject* parent = 0 );
 		/**
-		 * Zugriff auf die Voraussetzung für diese Bonuseigenschaft.
+		 * Konstruktor.
+		 *
+		 * Dieser Konstruktor erzeugt ein Objekt dieser Klasse aus einem cv_Trait-Objekt.
 		 **/
-		QString breedDependant() const;
-	private:
-		QString v_breedDependant;
-
-	public slots:
-
-	private slots:
-
-	signals:
-
+		SkillTrait( cv_Trait trait, QObject* parent = 0 );
+		/**
+		 * Konstruktor.
+		 **/
+		SkillTrait( Trait* trait, QObject* parent = 0 );
 };
 
 #endif
