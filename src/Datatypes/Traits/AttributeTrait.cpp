@@ -41,8 +41,9 @@ AttributeTrait::AttributeTrait( Trait* trait, QObject* parent ) : Trait( trait, 
 
 
 int AttributeTrait::value() const {
-	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
+// 	qDebug() << Q_FUNC_INFO << "Wird aufgerufen für" << name();
 	if (isBonus()){
+		qDebug() << Q_FUNC_INFO << "Wird aufgerufen für" << name() << "und gibt +1 zurück";
 		return cv_Trait::value() + 1;
 	} else {
 		return cv_Trait::value();
@@ -51,8 +52,9 @@ int AttributeTrait::value() const {
 
 
 void AttributeTrait::setBonus( bool sw ) {
-	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
-	if ( isBonus() == sw ) {
+// 	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
+	if ( isBonus() != sw ) {
+// 		qDebug() << Q_FUNC_INFO << "Wird verändert!";
 		cv_Trait::setBonus( sw );
 
 		emit bonusChanged( sw );

@@ -57,6 +57,8 @@ class AttributeTrait : public Trait {
 		 * Gibt den Wert der Eigenschaft wieder zurück.
 		 *
 		 * Bei Attributen ist der zurückgegebene Wert um +1 höher als der intern gespeicherte Wert, \emph{wenn} isBonus() "true" zurückgibt.
+		 *
+		 * \bug Durch diese Funktion kann ich das Widget CharaTrait nichtmehr richtig verwenden, da ja immer ein Punkt mehr angezeigt wird, als ich eigentlich klicke, und ich so nicht auf 0 oder 1 kommen kann.
 		 **/
 		virtual int value() const;
 

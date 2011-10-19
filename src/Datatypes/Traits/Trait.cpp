@@ -78,7 +78,7 @@ void Trait::setValue( int val ) {
 	if ( value() != val ) {
 		cv_Trait::setValue( val );
 
-		emit valueChanged( val );
+		emit valueChanged( value() );
 	}
 }
 

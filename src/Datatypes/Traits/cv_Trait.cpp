@@ -136,7 +136,7 @@ bool cv_Trait::isBonus() const {
 	return v_bonus;
 }
 void cv_Trait::setBonus( bool sw ) {
-	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
+// 	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
 	if (v_bonus != sw){
 		v_bonus = sw;
 	}

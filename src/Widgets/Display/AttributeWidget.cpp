@@ -265,7 +265,7 @@ void AttributeWidget::filterBonusAttribute() {
 			layoutButtonsBonus->addWidget( button );
 
 			if ( i == 0 ) {
-				button->toggle();
+				button->click();
 			}
 		}
 	}
@@ -281,6 +281,7 @@ void AttributeWidget::addAttributeBonus( int id ) {
 // 		qDebug() << Q_FUNC_INFO << buttonsBonus->button( id )->text();
 		if ( buttonsBonus->button( id )->text() == list.at( i )->name() ) {
 			list.at( i )->setBonus( true );
+// 			qDebug() << Q_FUNC_INFO << "Lege Bonuseigenschaft von" << list.at(i)->name() << "auf" << list.at(i)->isBonus();
 		}
 	}
 }

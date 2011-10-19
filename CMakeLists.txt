@@ -78,15 +78,17 @@ add_executable(SoulCreator
 # 	${QM}
 )
 
-## War früher.
+# # War früher.
 # target_link_libraries(SoulCreator
 # 	${QT_QTCORE_LIBRARY}
 # 	${QT_QTGUI_LIBRARY}
 # # 	${QT_QTSQL_LIBRARY}
 # # 	${KDE4_KDEUI_LIBS}# KDE-Bibliotheken
 # )
-## Jetzt nutze ich diese Methode.
-target_link_libraries(SoulCreator ${QT_LIBRARIES})
+# Jetzt nutze ich diese Methode.
+target_link_libraries(SoulCreator
+	${QT_LIBRARIES}
+)
 # set(QT_USE_QTNETWORK TRUE)
 # set(QT_USE_QTOPENGL TRUE)
 # set(QT_USE_QTSQL TRUE)
