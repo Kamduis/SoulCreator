@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -79,6 +79,10 @@ class Config {
 		 * Name der Konfigurationsdatei für dieses Programm.
 		 */
 		static const QString configFile;
+		/**
+		 * Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, abe rnicht zusammengequetscht erscheinen sollen.
+		 */
+		static const int vSpace;
 		/**
 		 * Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 		 */

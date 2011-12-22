@@ -369,7 +369,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -504,7 +504,7 @@
   <customwidget>
    <class>SelectWidget</class>
    <extends>QListWidget</extends>
-   <header>Widgets/SelectWidget.h</header>
+   <header>Widgets/Display/SelectWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>

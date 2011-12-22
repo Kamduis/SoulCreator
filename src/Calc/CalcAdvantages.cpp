@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -47,10 +47,10 @@ CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
 
 	bool stopLoop = false;
 
-	for ( int i = 0; i < types.count(); i++ ) {
+	for ( int i = 0; i < types.count(); ++i ) {
 		list = character->traits( types.at( i ) );
 
-		for ( int j = 0; j < list.count(); j++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
 			if ( types.at( i ) == cv_AbstractTrait::Attribute ) {
 				if ( list.at( j )->name() == "Wits" ) {
 					attrWit = list.at( j );
@@ -86,10 +86,12 @@ CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
 	}
 
 	connect( attrWit, SIGNAL( valueChanged( int ) ), this, SLOT( calcInitiative() ) );
+	connect( attrWit, SIGNAL( valueChanged( int ) ), this, SLOT( calcDefense() ) );
 	connect( attrRes, SIGNAL( valueChanged( int ) ), this, SLOT( calcWillpower() ) );
 	connect( attrStr, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
 	connect( attrDex, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
 	connect( attrDex, SIGNAL( valueChanged( int ) ), this, SLOT( calcInitiative() ) );
+	connect( attrDex, SIGNAL( valueChanged( int ) ), this, SLOT( calcDefense() ) );
 	connect( attrSta, SIGNAL( valueChanged( int ) ), this, SLOT( calcHealth() ) );
 	connect( attrCom, SIGNAL( valueChanged( int ) ), this, SLOT( calcWillpower() ) );
 	connect( meritGiant, SIGNAL( valueChanged( int ) ), this, SLOT( calcSize() ) );
@@ -313,6 +315,8 @@ int CalcAdvantages::calcSpeed() {
 
 int CalcAdvantages::calcDefense() {
 	int result = qMin( attrWit->value(), attrDex->value() );
+
+	qDebug() << Q_FUNC_INFO << v_defense;
 
 	if ( v_defense != result ) {
 		v_defense = result;

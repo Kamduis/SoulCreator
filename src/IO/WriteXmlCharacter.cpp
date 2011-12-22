@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -96,7 +96,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 
 	QList< Trait* > list;
 
-	for ( int i = 0; i < types.count(); i++ ) {
+	for ( int i = 0; i < types.count(); ++i ) {
 		try {
 			writeStartElement( cv_AbstractTrait::toXmlString( types.at( i ) ) );
 		} catch ( eTraitType &e ) {
@@ -106,7 +106,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 		// Liste der Kategorien ist je nach Typ unterschiedlich
 		category = cv_AbstractTrait::getCategoryList( types.at( i ) );
 
-		for ( int j = 0; j < category.count(); j++ ) {
+		for ( int j = 0; j < category.count(); ++j ) {
 			list = character->traits( types.at( i ), category.at( j ) );
 
 // 			qDebug() << Q_FUNC_INFO << "Type" << types.at(i) << "Category" << categories.at(j) << list.count();
@@ -118,7 +118,7 @@ void WriteXmlCharacter::writeCharacterTraits() {
 				qDebug() << Q_FUNC_INFO << e.message();
 			}
 
-			for ( int k = 0; k < list.count(); k++ ) {
+			for ( int k = 0; k < list.count(); ++k ) {
 				// Eigenscahften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
 				if ( list.at( k )->value() != 0 ) {
 // 					qDebug() << Q_FUNC_INFO << list.at( k )->name;
@@ -168,7 +168,7 @@ void WriteXmlCharacter::writeCharacterDerangements() {
 
 	category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
 
-	for ( int j = 0; j < category.count(); j++ ) {
+	for ( int j = 0; j < category.count(); ++j ) {
 		list = character->derangements( category.at( j ) );
 
 		qDebug() << Q_FUNC_INFO << list.count();
@@ -179,7 +179,7 @@ void WriteXmlCharacter::writeCharacterDerangements() {
 			qDebug() << Q_FUNC_INFO << e.message();
 		}
 
-		for ( int k = 0; k < list.count(); k++ ) {
+		for ( int k = 0; k < list.count(); ++k ) {
 // 					qDebug() << Q_FUNC_INFO << list.at( k )->name;
 			writeStartElement( "derangement" );
 			writeAttribute( "name", list.at( k )->name() );

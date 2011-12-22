@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -47,9 +47,9 @@ QString cv_CreationPointsList::outputPoint( int val ) {
 QString cv_CreationPointsList::pointString(cv_Species::SpeciesFlag spe, cv_AbstractTrait::Type tp ) {
 	QStringList resultList;
 
-	for ( int i = 0; i < this->count(); i++ ) {
+	for ( int i = 0; i < this->count(); ++i ) {
 		if ( this->at(i).species.testFlag(spe) && this->at( i ).type == tp ) {
-			for ( int j = 0; j < this->at(i).points.count(); j++ ) {
+			for ( int j = 0; j < this->at(i).points.count(); ++j ) {
 				resultList.append(outputPoint(this->at(i).points.at(j)));
 			}
 		}
@@ -68,7 +68,7 @@ QString cv_CreationPointsList::pointString(cv_Species::SpeciesFlag spe, cv_Abstr
 QList< int >* cv_CreationPointsList::pointList( cv_Species::SpeciesFlag spe, cv_AbstractTrait::Type tp )
 {
 // 	qDebug() << Q_FUNC_INFO << spe << tp;
-	for ( int i = 0; i < this->count(); i++ ) {
+	for ( int i = 0; i < this->count(); ++i ) {
 // 		qDebug() << Q_FUNC_INFO << this->at(i).species << this->at(i).type << this->at(i).points;
 		if ( this->at(i).species.testFlag(spe) && this->at( i ).type == tp ) {
 			return &this->operator[](i).points;
@@ -83,7 +83,7 @@ QList< int >* cv_CreationPointsList::pointList( cv_Species::SpeciesFlag spe, cv_
 // QString cv_CreationPointsList::skillsOut() {
 // 	QStringList resultList;
 //
-// 	for ( int i = 0; i < skills.count(); i++ ) {
+// 	for ( int i = 0; i < skills.count(); ++i ) {
 // 		resultList.append( outputPoint( skills.at( i ) ) );
 // 	}
 //

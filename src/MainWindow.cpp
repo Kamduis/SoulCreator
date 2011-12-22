@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -41,7 +41,7 @@
 #include "IO/Settings.h"
 // #include "Storage/StorageCharacter.h"
 #include "Storage/StorageTemplate.h"
-#include "Widgets/TraitLine.h"
+#include "Widgets/Components/TraitLine.h"
 #include "Widgets/Dialogs/MessageBox.h"
 #include "Widgets/Dialogs/SettingsDialog.h"
 // #include "CMakeConfig.h"
@@ -58,7 +58,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 
 // 	QApplication::setStyle(new QGtkStyle(this));
 
-	setTitle("");
+	setTitle( "" );
 	this->setWindowIcon( QIcon( ":/icons/images/WoD.png" ) );
 
 	character = StorageCharacter::getInstance();
@@ -87,7 +87,7 @@ MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::M
 	connect( ui->actionPrint, SIGNAL( triggered() ), this, SLOT( printCharacter() ) );
 	connect( ui->actionAbout, SIGNAL( triggered() ), this, SLOT( aboutApp() ) );
 
-	connect( character, SIGNAL( nameChanged(QString) ), this, SLOT( setTitle(QString)) );
+	connect( character, SIGNAL( nameChanged( QString ) ), this, SLOT( setTitle( QString ) ) );
 
 	// Laden der Konfiguration
 	readSettings();
@@ -179,12 +179,12 @@ void MainWindow::populateUi() {
 	/**
 	 * \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite Händisch festzulegen.
 	 **/
-	ui->frame_merits->setMinimumWidth(Config::traitListVertivalWidth);
-	ui->frame_merits->setMaximumWidth(ui->frame_merits->minimumWidth());
-	ui->frame_powers->setMinimumWidth(Config::traitListVertivalWidth);
-	ui->frame_powers->setMaximumWidth(ui->frame_powers->minimumWidth());
-	ui->frame_flaws->setMinimumWidth(Config::traitListVertivalWidth);
-	ui->frame_flaws->setMaximumWidth(ui->frame_powers->minimumWidth());
+	ui->frame_merits->setMinimumWidth( Config::traitListVertivalWidth );
+	ui->frame_merits->setMaximumWidth( ui->frame_merits->minimumWidth() );
+	ui->frame_powers->setMinimumWidth( Config::traitListVertivalWidth );
+	ui->frame_powers->setMaximumWidth( ui->frame_powers->minimumWidth() );
+	ui->frame_flaws->setMinimumWidth( Config::traitListVertivalWidth );
+	ui->frame_flaws->setMaximumWidth( ui->frame_powers->minimumWidth() );
 
 	// Zu Beginn soll immer das erste Tab angezeigt werden.
 	ui->stackedWidget_traits->setCurrentIndex( 1 );
@@ -208,35 +208,35 @@ void MainWindow::activate() {
 	connect( creation, SIGNAL( pointsNegative( cv_AbstractTrait::Type ) ), this, SLOT( warnCreationPointsNegative( cv_AbstractTrait::Type ) ) );
 	connect( creation, SIGNAL( pointsPositive( cv_AbstractTrait::Type ) ), this, SLOT( warnCreationPointsPositive( cv_AbstractTrait::Type ) ) );
 
-	character->setSpecies(cv_Species::Human);
+	character->setSpecies( cv_Species::Human );
 
 	// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
 	QList< Trait* >* list = character->traits();
-	for ( int i = 0; i < list->count(); i++ ) {
+	for ( int i = 0; i < list->count(); ++i ) {
 		int valueOld = character->traits()->at( i )->value();
 		list->at( i )->setValue( 10 );
 		list->at( i )->clearDetails();
 
 		// Eine Änderung der Eigenschaften sorgt dafür, daß sich die verfügbaren Erschaffungspunkte verändern.
-		if (Creation::types().contains(list->at(i)->type()) ){
-			connect( list->at(i), SIGNAL( traitChanged( Trait* ) ), creation, SLOT( calcPoints( Trait* ) ) );
+		if ( Creation::types().contains( list->at( i )->type() ) ) {
+			connect( list->at( i ), SIGNAL( traitChanged( Trait* ) ), creation, SLOT( calcPoints( Trait* ) ) );
 		}
 
-		
+
 		// Löschen der Zeigerliste
 		list->at( i )->clearPrerequisitePtrs();
-		
-		for ( int j = 0; j < list->count(); j++ ) {
+
+		for ( int j = 0; j < list->count(); ++j ) {
 			// Erst müssen die Voraussetzungen übersetzt werden, so daß direkt die Adressen im String stehen.
-			list->at( i )->addPrerequisitePtrs( list->at(j) );
+			list->at( i )->addPrerequisitePtrs( list->at( j ) );
 		}
 
 		// Danach verbinden wir die Signale, aber nur, wenn sie benötigt werden.
-		if (!list->at( i )->prerequisitePtrs().isEmpty()){
+		if ( !list->at( i )->prerequisitePtrs().isEmpty() ) {
 // 			qDebug() << Q_FUNC_INFO << character->traits2()->at( i )->prerequisitPtrs();
 
-			for (int j = 0; j < list->at( i )->prerequisitePtrs().count(); j++){
-				connect (list->at(i)->prerequisitePtrs().at(j), SIGNAL(traitChanged(Trait*)), list->at(i), SLOT(checkPrerequisites(Trait*)));
+			for ( int j = 0; j < list->at( i )->prerequisitePtrs().count(); ++j ) {
+				connect( list->at( i )->prerequisitePtrs().at( j ), SIGNAL( traitChanged( Trait* ) ), list->at( i ), SLOT( checkPrerequisites( Trait* ) ) );
 			}
 		}
 
@@ -293,28 +293,28 @@ void MainWindow::showBackround( cv_Species::SpeciesFlag spec ) {
 		ui->widget_traits->setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	}
 
-// 	for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 	for ( int i = 0; i < ui->stackedWidget_traits->count(); ++i ) {
 // 		ui->stackedWidget_traits->widget( i )->setObjectName( "stackedWidget_item" + QString::number( i ) );
 // 	}
 //
 // 	if ( spec == cv_Species::Changeling ) {
-// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); ++i ) {
 // 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center }" );
 // 		}
 // 	} else if ( spec == cv_Species::Mage ) {
-// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); ++i ) {
 // 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center }" );
 // 		}
 // 	} else if ( spec == cv_Species::Vampire ) {
-// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); ++i ) {
 // 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center }" );
 // 		}
 // 	} else if ( spec == cv_Species::Werewolf ) {
-// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); ++i ) {
 // 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center }" );
 // 		}
 // 	} else {
-// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); i++ ) {
+// 		for ( int i = 0; i < ui->stackedWidget_traits->count(); ++i ) {
 // 			ui->stackedWidget_traits->widget( i )->setStyleSheet( "QWidget#stackedWidget_item" + QString::number( i ) + "{ background-image: url(:/skulls/images/Skull-Mortal-gray.png); background-repeat: no-repeat; background-position: center }" );
 // 		}
 // 	}
@@ -376,27 +376,27 @@ void MainWindow::showCreationPoints( int idx ) {
 		ui->label_pointsLeft->setHidden( false );
 
 		if ( idx == 1 ) {
-			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Attribute) );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString( character->species(), cv_AbstractTrait::Attribute ) );
 		} else if ( idx == 2 ) {
 // 			ui->frame_creationPointsSpecialties->setHidden( false );
-			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Skill) );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString( character->species(), cv_AbstractTrait::Skill ) );
 		} else if ( idx == 3 ) {
-			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Merit) );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString( character->species(), cv_AbstractTrait::Merit ) );
 		} else if ( idx == 5 ) {
-			ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Power) );
+			ui->label_pointsLeft->setText( creation->pointsList().pointString( character->species(), cv_AbstractTrait::Power ) );
 		}
 	}
 }
 
 void MainWindow::showCreationPoints() {
 	if ( ui->stackedWidget_traits->currentIndex() == 1 ) {
-		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Attribute) );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString( character->species(), cv_AbstractTrait::Attribute ) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 2 ) {
-		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Skill) );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString( character->species(), cv_AbstractTrait::Skill ) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 3 ) {
-		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Merit) );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString( character->species(), cv_AbstractTrait::Merit ) );
 	} else if ( ui->stackedWidget_traits->currentIndex() == 5 ) {
-		ui->label_pointsLeft->setText( creation->pointsList().pointString(character->species(), cv_AbstractTrait::Power) );
+		ui->label_pointsLeft->setText( creation->pointsList().pointString( character->species(), cv_AbstractTrait::Power ) );
 	}
 }
 
@@ -440,7 +440,7 @@ void MainWindow::aboutApp() {
 	QString aboutText = tr( "<h1>%1</h1>" ).arg( Config::name() ) +
 						tr( "<h2>Version: %1</h2>" ).arg( Config::version() ) +
 						tr( "<p>Copyright (C) 2011 by Victor von Rhein<br>" ) +
-						tr( "EMail: goliath@caern.de</p>" ) +
+						tr( "EMail: victor@caern.de</p>" ) +
 						tr( "<h2>GNU General Public License</h2>" ) +
 						tr( "<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>" ) +
 						tr( "<p>This program is distributed in the hope that it will be useful, but <i>without any warranty</i>; without even the implied warranty of <i>merchantability</i> or <i>fitness for a particular purpose</i>. See the GNU General Public License for more details.</p>" ) +
@@ -452,7 +452,7 @@ void MainWindow::aboutApp() {
 }
 
 void MainWindow::setTitle( QString txt ) {
-	if (txt.isEmpty()) {
+	if ( txt.isEmpty() ) {
 		this->setWindowTitle( Config::name() + " " + Config::versionDetail() );
 	} else {
 		this->setWindowTitle( Config::name() + " " + Config::versionDetail() + " (" + txt + ") " );
@@ -474,8 +474,6 @@ void MainWindow::newCharacter() {
 void MainWindow::openCharacter() {
 	// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 	if ( maybeSave() ) {
-		character->resetCharacter();
-		
 		QString appPath = QApplication::applicationDirPath();
 
 		// Pfad zum Speicherverzeichnis
@@ -488,6 +486,9 @@ void MainWindow::openCharacter() {
 		QString filePath = QFileDialog::getOpenFileName( this, tr( "Select Character File" ), savePath, tr( "WoD Characters (*.chr)" ) );
 
 		if ( !filePath.isEmpty() ) {
+			// Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
+			character->resetCharacter();
+
 			QFile* file = new QFile( filePath );
 
 			// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
@@ -566,7 +567,6 @@ void MainWindow::disablePowerItem( cv_Species::SpeciesFlag species ) {
 void MainWindow::exportCharacter() {
 // 	// Vorsicht, eine Abkürzung, die ich nur für das Testen verwenden sollte.
 // 	shortcut();
-// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled.pdf";
 
 	QString appPath = QApplication::applicationDirPath();
 
@@ -591,7 +591,7 @@ void MainWindow::exportCharacter() {
 	qDebug() << Q_FUNC_INFO << filePath;
 
 	// Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausruck heraus.
-	if (!filePath.isEmpty()) {
+	if ( !filePath.isEmpty() ) {
 		QPrinter* 	printer = new QPrinter();
 
 		printer->setOutputFormat( QPrinter::PdfFormat );
@@ -608,7 +608,7 @@ void MainWindow::exportCharacter() {
 		} catch ( eSpeciesNotExisting &e ) {
 			MessageBox::exception( this, e.message(), e.description() );
 		}
-		
+
 		delete printer;
 	}
 }
@@ -702,8 +702,6 @@ void MainWindow::messageEnforcedTraitLimits( cv_AbstractTrait::Type type ) {
 
 
 // void MainWindow::shortcut() {
-// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled1.chr";
-//
 // 	if ( !filePath.isEmpty() ) {
 // 		QFile* file = new QFile( filePath );
 //

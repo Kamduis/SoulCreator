@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -26,6 +26,8 @@
 
 // #include "Config/Config.h"
 #include "Exceptions/Exception.h"
+#include "Datatypes/Traits/AttributeTrait.h"
+#include "Datatypes/Traits/SkillTrait.h"
 
 #include "StorageTemplate.h"
 
@@ -33,6 +35,7 @@
 QList< cv_Species > StorageTemplate::v_species;
 QList< cv_SpeciesTitle > StorageTemplate::v_titles;
 QList< Trait* > StorageTemplate::v_traits;
+QList< TraitBonus* > StorageTemplate::v_traitsBonus;
 QList< cv_SuperEffect > StorageTemplate::v_superEffects;
 cv_CreationPointsList StorageTemplate::v_creationPointsList;
 
@@ -52,7 +55,7 @@ QStringList StorageTemplate::traitNames( cv_AbstractTrait::Type type, cv_Abstrac
 	QList< Trait* > traits = v_traits;
 	QStringList list;
 
-	for ( int i = 0; i < traits.count(); i++ ) {
+	for ( int i = 0; i < traits.count(); ++i ) {
 		if ( traits.at( i )->type() == type && traits.at( i )->category() == category ) {
 			if ( traits.at( i )->era().testFlag( era ) ) {
 				if ( traits.at( i )->age().testFlag( age ) ) {
@@ -78,7 +81,7 @@ QStringList StorageTemplate::viceNames( cv_Trait::AgeFlag age ) const {
 }
 
 QString StorageTemplate::breedTitle( cv_Species::SpeciesFlag spe ) const {
-	for ( int i = 0; i < v_titles.count(); i++ ) {
+	for ( int i = 0; i < v_titles.count(); ++i ) {
 		if ( v_titles.at( i ).species.testFlag( spe ) && v_titles.at( i ).title == cv_SpeciesTitle::Breed ) {
 			return v_titles.at( i ).name;
 		}
@@ -87,7 +90,7 @@ QString StorageTemplate::breedTitle( cv_Species::SpeciesFlag spe ) const {
 	return "Breed";
 }
 QString StorageTemplate::factionTitle( cv_Species::SpeciesFlag spe ) const {
-	for ( int i = 0; i < v_titles.count(); i++ ) {
+	for ( int i = 0; i < v_titles.count(); ++i ) {
 		if ( v_titles.at( i ).species.testFlag( spe ) && v_titles.at( i ).title == cv_SpeciesTitle::Faction ) {
 			return v_titles.at( i ).name;
 		}
@@ -97,10 +100,10 @@ QString StorageTemplate::factionTitle( cv_Species::SpeciesFlag spe ) const {
 }
 QStringList StorageTemplate::powerHeaders( cv_Species::SpeciesFlag spe ) const {
 	QStringList list;
-	
-	for ( int i = 0; i < v_titles.count(); i++ ) {
+
+	for ( int i = 0; i < v_titles.count(); ++i ) {
 		if ( v_titles.at( i ).species.testFlag( spe ) && v_titles.at( i ).title == cv_SpeciesTitle::Power ) {
-			list.append(v_titles.at( i ).name);
+			list.append( v_titles.at( i ).name );
 		}
 	}
 
@@ -117,7 +120,7 @@ QStringList StorageTemplate::breedNames( cv_Species::SpeciesFlag spe ) const {
 	QList< Trait* > traits = v_traits;
 	QStringList list;
 
-	for ( int i = 0; i < traits.count(); i++ ) {
+	for ( int i = 0; i < traits.count(); ++i ) {
 		if ( traits.at( i )->type() == cv_AbstractTrait::Breed && traits.at( i )->category() == cv_AbstractTrait::CategoryNo ) {
 			if ( traits.at( i )->species() == spe ) {
 				// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
@@ -134,7 +137,7 @@ QStringList StorageTemplate::factionNames( cv_Species::SpeciesFlag spe ) const {
 	QList< Trait* > traits = v_traits;
 	QStringList list;
 
-	for ( int i = 0; i < traits.count(); i++ ) {
+	for ( int i = 0; i < traits.count(); ++i ) {
 		if ( traits.at( i )->type() == cv_AbstractTrait::Faction && traits.at( i )->category() == cv_AbstractTrait::CategoryNo ) {
 			if ( traits.at( i )->species() == spe ) {
 				// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
@@ -153,7 +156,7 @@ QStringList StorageTemplate::factionNames( cv_Species::SpeciesFlag spe ) const {
 QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
 	QList< Trait* > traitsPtr;
 
-	for ( int i = 0; i < v_traits.count(); i++ ) {
+	for ( int i = 0; i < v_traits.count(); ++i ) {
 		if ( v_traits.at( i )->type() == type &&
 				v_traits.at( i )->category() == category &&
 				v_traits.at( i )->era().testFlag( era ) &&
@@ -176,7 +179,7 @@ QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species
 
 // 	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
 
-	for ( int i = 0; i < v_traits.count(); i++ ) {
+	for ( int i = 0; i < v_traits.count(); ++i ) {
 		if ( v_traits.at( i )->type() == type && v_traits.at( i )->species().testFlag( species ) ) {
 			traitsPtr.append( v_traits[i] );
 // 			qDebug() << Q_FUNC_INFO << "Füge hinzu:" << v_traits.at(i)->name();
@@ -194,26 +197,43 @@ QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species
 
 // cv_Trait StorageTemplate::trait( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name ) {
 // 	bool trait_exists = false;
-// 
+//
 // 	cv_Trait trait;
-// 
-// 	for ( int i = 0; i < v_traits.count(); i++ ) {
+//
+// 	for ( int i = 0; i < v_traits.count(); ++i ) {
 // 		if ( v_traits.at( i ).type() == type && v_traits.at( i ).category() == category && v_traits.at( i ).name() == name ) {
 // 			trait = v_traits.at( i );
 // 			trait_exists = true;
-// 
+//
 // 			break;
 // 		}
 // 	}
-// 
+//
 // 	if ( !trait_exists ) {
 // // 		qDebug() << Q_FUNC_INFO << "Trait" << type << category << name << "existiert nicht!";
 // // 		throw eTraitNotExisting();
 // 	}
-// 
+//
 // 	return trait;
 // }
 
+
+QList< TraitBonus* > StorageTemplate::traitsBonus( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
+	QList< TraitBonus* > traitsPtr;
+
+	for ( int i = 0; i < v_traitsBonus.count(); ++i ) {
+		if ( v_traitsBonus.at( i )->type() == type && v_traitsBonus.at( i )->species().testFlag( species ) ) {
+			traitsPtr.append( v_traitsBonus[i] );
+		}
+	}
+
+	// Es wird eine leere Liste ausgegeben, wenn keine entsprechende Einträge gefunden werden.
+// 	if ( traitsPtr.isEmpty() ) {
+// 		throw eTraitNotExisting();
+// 	}
+
+	return traitsPtr;
+}
 
 
 // void StorageTemplate::setTraits( QList< cv_Trait > traits ) {
@@ -228,9 +248,17 @@ void StorageTemplate::appendSpecies( cv_Species species ) {
 void StorageTemplate::appendTrait( cv_Trait trait ) {
 	bool exists = false;
 
-	Trait* lcl_trait = new Trait( trait );
+	// Unterschiedliche Klassen für die einzelnen Eigenschafts-Typen:
+	Trait* lcl_trait;
+	if (trait.type() == cv_AbstractTrait::Attribute) {
+		lcl_trait = new AttributeTrait( trait );
+	} else if (trait.type() == cv_AbstractTrait::Skill) {
+		lcl_trait = new SkillTrait( trait );
+	} else {
+		lcl_trait = new Trait( trait );
+	}
 
-	for ( int i = 0; i < v_traits.count(); i++ ) {
+	for ( int i = 0; i < v_traits.count(); ++i ) {
 		if ( v_traits.at( i )->type() == lcl_trait->type() && v_traits.at( i )->name() == lcl_trait->name() ) {
 			exists = true;
 			break;
@@ -242,6 +270,14 @@ void StorageTemplate::appendTrait( cv_Trait trait ) {
 }
 
 
+void StorageTemplate::appendTraitBonus( Trait* tr1, QString breed ) {
+	TraitBonus* lcl_traitBonus = new TraitBonus(tr1, breed);
+
+	qDebug() << Q_FUNC_INFO << "Füge Bonuseigenschaft" << tr1->name() << "hinzu, die von" << breed << "abhängt.";
+
+	v_traitsBonus.append(lcl_traitBonus);
+}
+
 
 void StorageTemplate::appendSuperEffect( cv_SuperEffect effect ) {
 	v_superEffects.append( effect );
@@ -251,7 +287,7 @@ int StorageTemplate::traitMax( cv_Species::Species species, int value ) {
 	if ( species == cv_Species::Human ) {
 		return Config::traitMax;
 	} else {
-		for ( int i = 0; i < v_superEffects.count(); i++ ) {
+		for ( int i = 0; i < v_superEffects.count(); ++i ) {
 			if ( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
 				return v_superEffects.at( i ).traitMax;
 			}
@@ -263,7 +299,7 @@ int StorageTemplate::fuelMax( cv_Species::Species species, int value ) {
 	if ( species == cv_Species::Human ) {
 		return 0;
 	} else {
-		for ( int i = 0; i < v_superEffects.count(); i++ ) {
+		for ( int i = 0; i < v_superEffects.count(); ++i ) {
 			if ( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
 				return v_superEffects.at( i ).fuelMax;
 			}
@@ -275,7 +311,7 @@ int StorageTemplate::fuelPerTurn( cv_Species::Species species, int value ) {
 	if ( species == cv_Species::Human ) {
 		return 0;
 	} else {
-		for ( int i = 0; i < v_superEffects.count(); i++ ) {
+		for ( int i = 0; i < v_superEffects.count(); ++i ) {
 			if ( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
 				return v_superEffects.at( i ).fuelPerTurn;
 			}

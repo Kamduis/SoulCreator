@@ -19,11 +19,46 @@
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
 		<Breed name="Clan">
-			<trait name="Daeva"/>
-			<trait name="Gangrel"/>
-			<trait name="Mekhet"/>
-			<trait name="Nosferatu"/>
-			<trait name="Ventrue"/>
+			<trait name="Daeva">
+				<bonus>
+					<Attribute>
+						<trait name="Dexterity"/>
+						<trait name="Manipulation"/>
+					</Attribute>
+				</bonus>
+			</trait>
+			<trait name="Gangrel">
+				<bonus>
+					<Attribute>
+						<trait name="Stamina"/>
+						<trait name="Composure"/>
+					</Attribute>
+				</bonus>
+			</trait>
+			<trait name="Mekhet">
+				<bonus>
+					<Attribute>
+						<trait name="Intelligence"/>
+						<trait name="Wits"/>
+					</Attribute>
+				</bonus>
+			</trait>
+			<trait name="Nosferatu">
+				<bonus>
+					<Attribute>
+						<trait name="Strength"/>
+						<trait name="Composure"/>
+					</Attribute>
+				</bonus>
+			</trait>
+			<trait name="Ventrue">
+				<bonus>
+					<Attribute>
+						<trait name="Prensence"/>
+						<trait name="Composure"/>
+					</Attribute>
+				</bonus>
+			</trait>
 		</Breed>
 		<Faction name="Covenant">
 			<trait name="Unbound"/>

@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -30,6 +30,9 @@
 Exception::Exception( QString message ) {
 	setMessage( message );
 }
+Exception::~Exception() throw() {
+}
+
 
 QString Exception::message() {
 	return v_message;

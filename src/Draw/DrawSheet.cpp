@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -513,7 +513,7 @@ void DrawSheet::drawAttributes( QPainter* painter, qreal offsetH, qreal offsetV,
 
 	QList< Trait* > list;
 
-	for ( int i = 0; i < category.count(); i++ ) {
+	for ( int i = 0; i < category.count(); ++i ) {
 		// Bei Werwölfen ist der Abstand zwischen den Kategorien nicht identisch.
 		if ( character->species() == cv_Species::Werewolf && i > 1 ) {
 			distanceH *= 1.164;
@@ -521,8 +521,8 @@ void DrawSheet::drawAttributes( QPainter* painter, qreal offsetH, qreal offsetV,
 
 		list = character->traits( cv_AbstractTrait::Attribute, category.at( i ) );
 
-		for ( int j = 0; j < list.count(); j++ ) {
-			for ( int k = 0; k < list.at( j )->value(); k++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
+			for ( int k = 0; k < list.at( j )->value(); ++k ) {
 				// Punkte malen.
 				QRectF dotsRect( offsetH + distanceH*i + v_dotDiameterH*k, offsetV + distanceV*j, v_dotDiameterH, v_dotDiameterV );
 				painter->drawEllipse( dotsRect );
@@ -536,11 +536,11 @@ void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qre
 
 	QList< Trait* > list;
 
-	for ( int i = 0; i < categories.count(); i++ ) {
+	for ( int i = 0; i < categories.count(); ++i ) {
 		list = character->traits( cv_AbstractTrait::Skill, categories.at( i ) );
 
-		for ( int j = 0; j < list.count(); j++ ) {
-			for ( int k = 0; k < list.at( j )->value(); k++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
+			for ( int k = 0; k < list.at( j )->value(); ++k ) {
 				// Punkte malen.
 				QRectF dotsRect( offsetH + v_dotDiameterH*k, offsetV + distanceV*j + distanceVCat*i, v_dotDiameterH, v_dotDiameterV );
 				painter->drawEllipse( dotsRect );
@@ -549,7 +549,7 @@ void DrawSheet::drawSkills( QPainter* painter, qreal offsetH, qreal offsetV, qre
 			if ( !list.at( j )->details().isEmpty() ) {
 				QString specialities;
 
-				for ( int k = 0; k < list.at( j )->details().count(); k++ ) {
+				for ( int k = 0; k < list.at( j )->details().count(); ++k ) {
 					// Spezialisierungen hinzufügen
 					specialities.append( list.at( j )->details().at( k ).name );
 
@@ -590,8 +590,8 @@ void DrawSheet::drawMerits( QPainter* painter, qreal offsetH, qreal offsetV, qre
 		emit enforcedTraitLimits( cv_AbstractTrait::Merit );
 	}
 
-	for ( int j = 0; j < listToUse.count(); j++ ) {
-		for ( int k = 0; k < listToUse.at( j )->value(); k++ ) {
+	for ( int j = 0; j < listToUse.count(); ++j ) {
+		for ( int k = 0; k < listToUse.at( j )->value(); ++k ) {
 			// Punkte malen.
 			QRectF dotsRect( offsetH + v_dotDiameterH*k, offsetV + distanceV*j, v_dotDiameterH, v_dotDiameterV );
 			painter->drawEllipse( dotsRect );
@@ -626,10 +626,10 @@ void DrawSheet::drawFlaws( QPainter* painter, qreal offsetH, qreal offsetV, qrea
 	QList< Trait* > list;
 	QStringList stringList;
 
-	for ( int i = 0; i < category.count(); i++ ) {
+	for ( int i = 0; i < category.count(); ++i ) {
 		list = character->traits( cv_AbstractTrait::Flaw, category.at( i ) );
 
-		for ( int j = 0; j < list.count(); j++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
 			if ( list.at( j )->value() > 0 ) {
 				QString lcl_text = list.at( j )->name();
 
@@ -749,7 +749,7 @@ void DrawSheet::drawAdvantages( QPainter* painter, qreal offsetH, qreal offsetV,
 void DrawSheet::drawHealth( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal dotSizeFactor ) {
 	int health = calcAdvantages->health();
 
-	for ( int i = 0; i < health; i++ ) {
+	for ( int i = 0; i < health; ++i ) {
 		QRect dotsRect = QRect( offsetH + distanceH * i, offsetV, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
 		painter->drawEllipse( dotsRect );
 	}
@@ -758,7 +758,7 @@ void DrawSheet::drawHealth( QPainter* painter, qreal offsetH, qreal offsetV, qre
 void DrawSheet::drawWillpower( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal dotSizeFactor ) {
 	int willpower = calcAdvantages->willpower();
 
-	for ( int i = 0; i < willpower; i++ ) {
+	for ( int i = 0; i < willpower; ++i ) {
 		QRect dotsRect = QRect( offsetH + distanceH * i, offsetV, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
 		painter->drawEllipse( dotsRect );
 	}
@@ -767,15 +767,15 @@ void DrawSheet::drawWillpower( QPainter* painter, qreal offsetH, qreal offsetV, 
 void DrawSheet::drawMorality( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceV, qreal textWidth, qreal dotSizeFactor ) {
 	int value = character->morality();
 
-	for ( int i = 0; i < value; i++ ) {
+	for ( int i = 0; i < value; ++i ) {
 		QRect dotsRect = QRect( offsetH, offsetV - distanceV * i, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
 		painter->drawEllipse( dotsRect );
 	}
 
 	QList< cv_Derangement >* list = character->derangements();
 
-	for ( int i = value; i < Config::derangementMoralityTraitMax; i++ ) {
-		for ( int j = 0; j < list->count(); j++ ) {
+	for ( int i = value; i < Config::derangementMoralityTraitMax; ++i ) {
+		for ( int j = 0; j < list->count(); ++j ) {
 			if ( list->at( j ).morality() == i + 1 ) {
 				QRect textRect = QRect( offsetH - textWidth, offsetV + v_dotDiameterV * dotSizeFactor + v_textDotsHeightDifference - distanceV * i - v_textHeight, textWidth, v_textHeight );
 // 				painter->drawRect( textRect );
@@ -813,10 +813,10 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 
 		qDebug() << Q_FUNC_INFO << "Die halbe Anzahl an Powers ist:" << half;
 
-		for ( int i = 0; i < half; i++ ) {
-			for ( int k = 0; k < listToUse.count(); k++ ) {
+		for ( int i = 0; i < half; ++i ) {
+			for ( int k = 0; k < listToUse.count(); ++k ) {
 				if ( listToUse.at( k )->name() == list.at( i )->name() ) {
-					for ( int j = 0; j < listToUse.at( k )->value(); j++ ) {
+					for ( int j = 0; j < listToUse.at( k )->value(); ++j ) {
 						// Punkte malen.
 						QRectF dotsRect( offsetH + v_dotDiameterH*j, offsetV + distanceV*i, v_dotDiameterH, v_dotDiameterV );
 						painter->drawEllipse( dotsRect );
@@ -827,10 +827,10 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 			}
 		}
 
-		for ( int i = half; i < list.count(); i++ ) {
-			for ( int k = 0; k < listToUse.count(); k++ ) {
+		for ( int i = half; i < list.count(); ++i ) {
+			for ( int k = 0; k < listToUse.count(); ++k ) {
 				if ( listToUse.at( k )->name() == list.at( i )->name() ) {
-					for ( int j = 0; j < listToUse.at( k )->value(); j++ ) {
+					for ( int j = 0; j < listToUse.at( k )->value(); ++j ) {
 						// Punkte malen.
 						QRectF dotsRect( offsetH + distanceH - v_dotDiameterH*j, offsetV + distanceV*( i - half ), v_dotDiameterH, v_dotDiameterV );
 						painter->drawEllipse( dotsRect );
@@ -841,14 +841,14 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 		}
 	} else if ( species == cv_Species::Werewolf ) {
 		// Die Rites werden anders gezeichnet
-		for ( int k = 0; k < listToUse.last()->value(); k++ ) {
+		for ( int k = 0; k < listToUse.last()->value(); ++k ) {
 			// Punkte malen.
 			QRectF dotsRect( offsetH + v_dotDiameterH*k, offsetV, v_dotDiameterH, v_dotDiameterV );
 			painter->drawEllipse( dotsRect );
 		}
 	} else {
-		for ( int j = 0; j < listToUse.count(); j++ ) {
-			for ( int k = 0; k < listToUse.at( j )->value(); k++ ) {
+		for ( int j = 0; j < listToUse.count(); ++j ) {
+			for ( int k = 0; k < listToUse.at( j )->value(); ++k ) {
 				// Punkte malen.
 				QRectF dotsRect( offsetH + v_dotDiameterH*k, offsetV + distanceV*j, v_dotDiameterH, v_dotDiameterV );
 				painter->drawEllipse( dotsRect );
@@ -881,7 +881,7 @@ void DrawSheet::drawPowers( QPainter* painter, qreal offsetH, qreal offsetV, qre
 void DrawSheet::drawSuper( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal dotSizeFactor ) {
 	int value = character->superTrait();
 
-	for ( int i = 0; i < value; i++ ) {
+	for ( int i = 0; i < value; ++i ) {
 		QRect dotsRect = QRect( offsetH + distanceH * i, offsetV, v_dotDiameterH * dotSizeFactor, v_dotDiameterV * dotSizeFactor );
 		painter->drawEllipse( dotsRect );
 	}
@@ -894,7 +894,7 @@ void DrawSheet::drawFuelMax( QPainter* painter, qreal offsetH, qreal offsetV, qr
 	if ( value > 20 ) {
 		QString fuel;
 
-		for ( int i = 0; i < storage.species().count(); i++ ) {
+		for ( int i = 0; i < storage.species().count(); ++i ) {
 			if ( cv_Species::toSpecies( storage.species().at( i ).name ) == character->species() ) {
 				fuel = storage.species().at( i ).fuel;
 				break;
@@ -908,7 +908,7 @@ void DrawSheet::drawFuelMax( QPainter* painter, qreal offsetH, qreal offsetV, qr
 
 	painter->setOpacity( 0.5 );
 
-	for ( int i = 0; i < 20 - value; i++ ) {
+	for ( int i = 0; i < 20 - value; ++i ) {
 		QRect fuelRect = QRect( offsetH - ( widthPerSquare + distanceH ) * i, offsetV, -widthPerSquare, widthPerSquare );
 // 		painter->drawLine( fuelRect.bottomLeft(), fuelRect.topRight() );
 // 		painter->drawLine( fuelRect.topLeft(), fuelRect.bottomRight() );
@@ -946,10 +946,10 @@ QList< Trait* > DrawSheet::getTraits( cv_AbstractTrait::Type type, int maxNumber
 
 	int iter = 0;
 
-	for ( int i = 0; i < category.count(); i++ ) {
+	for ( int i = 0; i < category.count(); ++i ) {
 		list = character->traits( type, category.at( i ) );
 
-		for ( int j = 0; j < list.count(); j++ ) {
+		for ( int j = 0; j < list.count(); ++j ) {
 			if ( list.at( j )->value() > 0 ) {
 				iter++;
 

@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -28,7 +28,7 @@
 #include "Storage/StorageCharacter.h"
 // #include "Config/Config.h"
 #include "Datatypes/cv_Shape.h"
-#include "Datatypes/Trait.h"
+#include "Datatypes/Traits/Trait.h"
 
 #include <QObject>
 

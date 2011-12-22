@@ -19,11 +19,41 @@
 			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
 		</Super>
 		<Breed name="Path">
-			<trait name="Acanthus"/>
-			<trait name="Mastigos"/>
-			<trait name="Moros"/>
-			<trait name="Obrimos"/>
-			<trait name="Thyrsus"/>
+			<trait name="Acanthus">
+				<bonus>
+					<Attribute>
+						<trait name="Composure"/>
+					</Attribute>
+				</bonus>
+			</trait>
+			<trait name="Mastigos">
+				<bonus>
+					<Attribute>
+						<trait name="Resolve"/>
+					</Attribute>
+				</bonus>
+			</trait>
+			<trait name="Moros">
+				<bonus>
+					<Attribute>
+						<trait name="Composure"/>
+					</Attribute>
+				</bonus>
+			</trait>
+			<trait name="Obrimos">
+				<bonus>
+					<Attribute>
+						<trait name="Resolve"/>
+					</Attribute>
+				</bonus>
+			</trait>
+			<trait name="Thyrsus">
+				<bonus>
+					<Attribute>
+						<trait name="Composure"/>
+					</Attribute>
+				</bonus>
+			</trait>
 		</Breed>
 		<Faction name="Order">
 			<trait name="Apostate"/>

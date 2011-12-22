@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -47,7 +47,7 @@ cv_CreationPoints::cv_CreationPoints() {
 // QString cv_CreationPoints2::attributesOut() {
 // 	QStringList resultList;
 // 
-// 	for ( int i = 0; i < attributes.count(); i++ ) {
+// 	for ( int i = 0; i < attributes.count(); ++i ) {
 // 		resultList.append( outputPoint( attributes.at( i ) ) );
 // 	}
 // 
@@ -57,7 +57,7 @@ cv_CreationPoints::cv_CreationPoints() {
 // QString cv_CreationPoints2::skillsOut() {
 // 	QStringList resultList;
 // 
-// 	for ( int i = 0; i < skills.count(); i++ ) {
+// 	for ( int i = 0; i < skills.count(); ++i ) {
 // 		resultList.append( outputPoint( skills.at( i ) ) );
 // 	}
 // 

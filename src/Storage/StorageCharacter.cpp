@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -25,6 +25,8 @@
 #include <QDebug>
 
 // #include "StorageTemplate.h"
+#include "Datatypes/Traits/AttributeTrait.h"
+#include "Datatypes/Traits/SkillTrait.h"
 #include "Config/Config.h"
 
 #include "StorageCharacter.h"
@@ -140,7 +142,7 @@ QList< Trait* >* StorageCharacter::traits() const {
 QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type ) const {
 	QList< Trait* > list;
 
-	for ( int i = 0; i < v_traits2.count(); i++ ) {
+	for ( int i = 0; i < v_traits2.count(); ++i ) {
 		if ( v_traits2.at( i )->type() == type ) {
 			list.append( v_traits2[i] );
 		}
@@ -152,7 +154,7 @@ QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type ) const {
 QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const {
 	QList< Trait* > list;
 
-	for ( int i = 0; i < v_traits2.count(); i++ ) {
+	for ( int i = 0; i < v_traits2.count(); ++i ) {
 		if ( v_traits2.at( i )->type() == type && v_traits2.at( i )->category() == category ) {
 			list.append( v_traits2[i] );
 		}
@@ -163,7 +165,15 @@ QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type, cv_Abstra
 
 
 Trait* StorageCharacter::addTrait( Trait* trait ) {
-	Trait* lcl_trait = new Trait( trait );
+	// Unterschiedliche Klassen für die einzelnen Eigenschafts-Typen:
+	Trait* lcl_trait;
+	if (trait->type() == cv_AbstractTrait::Attribute) {
+		lcl_trait = new AttributeTrait( trait );
+	} else if (trait->type() == cv_AbstractTrait::Skill) {
+		lcl_trait = new SkillTrait( trait );
+	} else {
+		lcl_trait = new Trait( trait );
+	}
 
 	v_traits2.append( lcl_trait );
 
@@ -176,7 +186,7 @@ Trait* StorageCharacter::addTrait( Trait* trait ) {
 
 
 void StorageCharacter::modifyTrait( cv_Trait trait ) {
-	for ( int i = 0; i < v_traits2.count(); i++ ) {
+	for ( int i = 0; i < v_traits2.count(); ++i ) {
 		if ( trait.type() == v_traits2.at( i )->type() && trait.category() == v_traits2.at( i )->category() && trait.name() == v_traits2.at( i )->name() ) {
 			if ( !v_traits2.at( i )->custom() || trait.customText() == v_traits2.at( i )->customText() || v_traits2.at( i )->customText().isEmpty() ) {
 				// Custom bleibt immer gleich.
@@ -202,7 +212,7 @@ QList< cv_Derangement >* StorageCharacter::derangements() const {
 QList< cv_Derangement* > StorageCharacter::derangements( cv_AbstractTrait::Category category ) const {
 	QList< cv_Derangement* > list;
 
-	for ( int i = 0; i < v_derangements.count(); i++ ) {
+	for ( int i = 0; i < v_derangements.count(); ++i ) {
 		if ( v_derangements.at( i ).category() == category ) {
 			list.append( &v_derangements[i] );
 		}
@@ -235,7 +245,7 @@ void StorageCharacter::removeDerangement( cv_Derangement derang ) {
 void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail > details ) {
 	bool trait_exists = false;
 
-	for ( int i = 0; i < v_traits2.count(); i++ ) {
+	for ( int i = 0; i < v_traits2.count(); ++i ) {
 		// Spezialisieren gibt es nur bei Fertigkeiten.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
@@ -253,7 +263,7 @@ void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail 
 
 			QList< cv_TraitDetail > list;
 
-			for ( int j = 0; j < detailsCount; j++ ) {
+			for ( int j = 0; j < detailsCount; ++j ) {
 				cv_TraitDetail specialty;
 				specialty.name = details.at( j ).name;
 				specialty.value = true;
@@ -276,7 +286,7 @@ void StorageCharacter::addSkillSpecialties( QString name, cv_TraitDetail detail 
 {
 	bool trait_exists = false;
 
-	for ( int i = 0; i < v_traits2.count(); i++ ) {
+	for ( int i = 0; i < v_traits2.count(); ++i ) {
 		// Spezialisieren gibt es nur bei Fertigkeiten.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
 		// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.

@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -25,11 +25,12 @@
 #ifndef BASEEXCEPTION_H
 #define BASEEXCEPTION_H
 
+#include <stdexcept>
 #include <QString>
 
-#include "Datatypes/cv_AbstractTrait.h"
+#include "Datatypes/Traits/cv_AbstractTrait.h"
 #include "Datatypes/cv_Shape.h"
-#include "Datatypes/cv_Identity.h"
+#include "Datatypes/Identity/cv_Identity.h"
 #include "Config/Config.h"
 
 
@@ -39,12 +40,16 @@
  * Diese Klasse liegt allen Ausnahmebehandlungen zugrunde.
  */
 
-class Exception {
+class Exception : public std::exception {
 	public:
 		/**
 		 * Dem Konstruktor kann die Standardnachricht für die Ausnahme übergeben werden.
 		 */
 		Exception( QString message = "" );
+		/**
+		 * Da ich von std::exception ableite, muß ich auch den Destruktor so definieren, daß keine Ausnahmen von diesem geworfen werden können.
+		 */
+		virtual ~Exception() throw();
 		/**
 		 * Erlaubt das Auslesen der Standardnachricht.
 		 */

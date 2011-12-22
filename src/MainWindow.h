@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -32,15 +32,15 @@
 #include "IO/WriteXmlCharacter.h"
 // #include "Storage/StorageTemplate.h"
 // #include "Storage/StorageCharacter.h"
-#include "Widgets/InfoWidget.h"
-#include "Widgets/AttributeWidget.h"
-#include "Widgets/SkillWidget.h"
-#include "Widgets/MeritWidget.h"
-#include "Widgets/MoralityWidget.h"
-#include "Widgets/PowerWidget.h"
-#include "Widgets/FlawWidget.h"
-#include "Widgets/AdvantagesWidget.h"
-#include "Widgets/CharaSpecialties.h"
+#include "Widgets/Display/InfoWidget.h"
+#include "Widgets/Display/AttributeWidget.h"
+#include "Widgets/Display/SkillWidget.h"
+#include "Widgets/Display/MeritWidget.h"
+#include "Widgets/Display/MoralityWidget.h"
+#include "Widgets/Display/PowerWidget.h"
+#include "Widgets/Display/FlawWidget.h"
+#include "Widgets/Display/AdvantagesWidget.h"
+#include "Widgets/Display/CharaSpecialties.h"
 
 #include <QMainWindow>
 
@@ -86,6 +86,8 @@ class MainWindow;
  * \todo Die Widgets weiter aufteilen in Main-Widgets, Tool-Widgets etc.
  *
  * \todo Damit die SVG-Grafiken unter Windows XP dargestellt werden ist auch QtXML4.dll erforderlich.
+ *
+ * \todo Von der Klasse Trait mehrere Unterklassen ableiten, je nach Typ der Eigenschaft. TraitAttribute hat leicht andere Eigenschaften als TraitSkill etc.? Das würde mehr objektorientiert aussehen. Und natürlich kann ich durch virtuelle Funktionen immer auch auch verschiedene Erben durch ihre Basisklasse Trait vergleichen, aussuchen usw.
  */
 
 class MainWindow : public QMainWindow {

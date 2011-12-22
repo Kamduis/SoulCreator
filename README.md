@@ -4,7 +4,7 @@ Keywords:	RPG, White Wolf, World of Darkness, Changeling, Mage, Vampire, Werewol
 
 A character generator for the Pen & Paper Roleplaying games in the World of Darkness, created by White Wolf Inc.
 
-Developed by [Victor](http://www.caern.de/).
+Developed by Victor.
 
 ## Supported game lines
 
@@ -27,5 +27,5 @@ World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requi
 ## Links
 
 * [Code-Dokumentation](http://goliathleviathan.github.com/SoulCreator/index.html)
-* [Caern](http://www.caern.de/)
 * [White Wolf Homepage](http://www.white-wolf.com/)
+* [Caern](http://www.caern.de/)
