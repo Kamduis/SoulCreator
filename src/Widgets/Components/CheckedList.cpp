@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *

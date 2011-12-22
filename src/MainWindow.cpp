@@ -1,6 +1,6 @@
 /**
  * \file
- * \author Victor von Rhein <goliath@caern.de>
+ * \author Victor von Rhein <victor@caern.de>
  *
  * \section License
  *
@@ -440,7 +440,7 @@ void MainWindow::aboutApp() {
 	QString aboutText = tr( "<h1>%1</h1>" ).arg( Config::name() ) +
 						tr( "<h2>Version: %1</h2>" ).arg( Config::version() ) +
 						tr( "<p>Copyright (C) 2011 by Victor von Rhein<br>" ) +
-						tr( "EMail: goliath@caern.de</p>" ) +
+						tr( "EMail: victor@caern.de</p>" ) +
 						tr( "<h2>GNU General Public License</h2>" ) +
 						tr( "<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>" ) +
 						tr( "<p>This program is distributed in the hope that it will be useful, but <i>without any warranty</i>; without even the implied warranty of <i>merchantability</i> or <i>fitness for a particular purpose</i>. See the GNU General Public License for more details.</p>" ) +
@@ -567,7 +567,6 @@ void MainWindow::disablePowerItem( cv_Species::SpeciesFlag species ) {
 void MainWindow::exportCharacter() {
 // 	// Vorsicht, eine Abkürzung, die ich nur für das Testen verwenden sollte.
 // 	shortcut();
-// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled.pdf";
 
 	QString appPath = QApplication::applicationDirPath();
 
@@ -703,8 +702,6 @@ void MainWindow::messageEnforcedTraitLimits( cv_AbstractTrait::Type type ) {
 
 
 // void MainWindow::shortcut() {
-// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled1.chr";
-//
 // 	if ( !filePath.isEmpty() ) {
 // 		QFile* file = new QFile( filePath );
 //
