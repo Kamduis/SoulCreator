@@ -49,7 +49,7 @@ class cv_AbstractTrait(object):
 		"Vice",
 		"Breed",
 		"Faction",
-		"ttribute",
+		"Attribute",
 		"Skill",
 		"Merit",
 		"Derangement",

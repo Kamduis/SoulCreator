@@ -26,7 +26,6 @@ from PySide.QtCore import QObject
 
 #from src.Config import Config
 #from ReadXml import ReadXml
-#from Storage.StorageTemplate import StorageTemplate
 from src.Debug import Debug
 
 
@@ -42,7 +41,12 @@ class StorageTemplate(QObject):
 	"""
 
 	# Eine Liste der Erschaffungspunkte. Jeder Listeneintrag steht für eine andere Spezies.
-	__creationPointsList = []
+	# {
+	# 	"Spezies": {
+	# 		Typ: [Primär, Sekundär, Tertiär]
+	# 	}
+	# }
+	__creationPointsList = {}
 
 	# Eine Liste sämtlicher verfügbaren Spezies.
 	__species = []
@@ -341,15 +345,15 @@ class StorageTemplate(QObject):
 #}
 
 
-	def appendCreationPoints( self, points ):
+	def appendCreationPoints( self, species, typ, points ):
 		"""
 		Fügt einen neuen Satz Erschaffungspunkte zu der entsprechende Liste hinzu.
 
-		\sa v_creationPoints
+		\sa __creationPointsList
+
+		Da ein dictionary immer nur einen Schlüssel identischen Namens haben kann, sollte automatisch ein Fehler ausgelöst werden, wenn eine Spezies zweimal drankommt.
 		"""
 		
-		#Debug.debug("Füge creationPoints hinzu!")
-		if( points in self.__creationPointsList ):
-			self.__creationPointsList.append( points )
-		else:
-			Debug.debug("Gibt es schon!")
+		self.__creationPointsList.setdefault(species,{})
+		self.__creationPointsList[species].setdefault(typ,[])
+		self.__creationPointsList[species][typ].append(points)

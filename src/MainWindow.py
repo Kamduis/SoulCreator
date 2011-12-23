@@ -37,7 +37,6 @@ from ui.ui_MainWindow import Ui_MainWindow
 
 
 
-
 class MainWindow(QMainWindow):
 	"""
 	@brief Das Hauptfenster der Anwendung.

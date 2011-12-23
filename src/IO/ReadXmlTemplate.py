@@ -31,7 +31,6 @@ from src import Error
 from ReadXml import ReadXml
 from src.Storage.StorageTemplate import StorageTemplate
 from src.Datatypes.cv_Species import cv_Species
-from src.Datatypes.cv_CreationPoints import cv_CreationPoints
 from src.Datatypes.Traits.cv_AbstractTrait import cv_AbstractTrait
 from src.Debug import Debug
 
@@ -383,14 +382,9 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				typ = self.name()
-
 				if( typ in cv_AbstractTrait.Typ ):
-					points = cv_CreationPoints()
-					points.species = sp
-					points.typ = typ
-					points.points = self.readCreationPoints()
-
-					self.storage.appendCreationPoints( points )
+					points = self.readCreationPoints()
+					self.storage.appendCreationPoints( sp, typ, points )
 				else:
 					self.readUnknownElement()
 

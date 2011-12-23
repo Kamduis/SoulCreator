@@ -74,7 +74,7 @@ class ReadXml(QXmlStreamReader):
 				break
 
 			if self.isStartElement():
-				Debug.debug("Unbekanntes Element: {}".format(self.name()))
+				#Debug.debug("Unbekanntes Element: {}".format(self.name()))
 				self.readUnknownElement()
 
 
