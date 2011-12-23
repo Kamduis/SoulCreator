@@ -94,8 +94,6 @@ class NameDialog(QDialog):
 		forenames = self.ui.lineEdit_additionalForenames.text().split( " " )
 		forenames.insert( 0, self.ui.lineEdit_firstName.text() )
 
-		print(forenames)
-
 		self.ui.label_displayFull.setText( cv_Name.displayNameFull( self.ui.lineEdit_surename.text(), forenames ) )
 		self.ui.label_displayDisplay.setText( cv_Name.displayNameDisplay( self.ui.lineEdit_surename.text(), self.ui.lineEdit_firstName.text(), self.ui.lineEdit_nickname.text() ) )
 		self.ui.label_displayHonorific.setText( cv_Name.displayNameHonor( self.ui.lineEdit_firstName.text(), self.ui.lineEdit_honorificName.text() ) )

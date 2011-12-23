@@ -30,7 +30,6 @@ from __future__ import division, print_function
 #from src import Error
 #from ReadXml import ReadXml
 #from src.Storage.StorageTemplate import StorageTemplate
-#from src.Datatypes.cv_Species import cv_Species
 #from src.Debug import Debug
 
 

@@ -42,15 +42,103 @@ class StorageTemplate(QObject):
 
 	# Eine Liste der Erschaffungspunkte. Jeder Listeneintrag steht für eine andere Spezies.
 	# {
-	# 	"Spezies": {
-	# 		Typ: [Primär, Sekundär, Tertiär]
-	# 	}
+	# 	Spezies1: {
+	# 		Typ1: [Primär, Sekundär, Tertiär],
+	# 		Typ2: [Primär, Sekundär, Tertiär],
+	# 		...
+	# 	},
+	# 	...
 	# }
 	__creationPointsList = {}
 
 	# Eine Liste sämtlicher verfügbaren Spezies.
+	# [
+	# 	[Name, Moral, Supertrait, Energie],
+	# 	...
+	# ]
 	__species = []
 
+	# Eine Liste sämtlicher verfügbaren Gruppierungsnamen der einzelnen Spezies.
+	#
+	# {
+	# 	Spezies1: {
+	# 		Breed: [Name, [Bla, Blub, ...]],
+	# 		Faction: [Name, [Bla, Blub, ...]],
+	# 		SubGroup: [Name [Bla, Blub, ...]],
+	# 		...
+	# 	},
+	# 	...
+	# }
+	#
+	# Am Beispiel der Vampire:
+	# {
+	# 	Vampire: {
+	# 		Breed: [Clan, [Daeva, Gangrel, Mekhet, Nosferatu, Ventrue]],
+	# 		Faction: [Covenant, [Cartian Movement, Circle of the Crone, Invictus, Lancea Sancta, Ordo Dracul]],
+	# 		SubGroup: [Bloodline, [Toreador, Brujah, ...]],
+	# 		...
+	# 	},
+	# 	...
+	# }
+	__speciesGroupNames = {}
+
+	# Eine Liste sämtlicher verfügbaren Eigenschaften.
+	#
+	# {
+	# 	Typ1: {
+	# 		Kategorie1: [
+	# 			{ "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 			{ "name": Name2, "species": Species2, "age": Alter2, ... },
+	# 			...
+	# 		],
+	# 		Kategorie2: [
+	# 			{ "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 			...
+	# 		],
+	# 		...
+	# 	},
+	# 	...
+	# }
+	__traits = {}
+
+	# Eine Liste der Effekte der Supereigenschaft.
+	#
+	# {
+	# 	Spezies1: [
+	# 		{ "value": Wert1, "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
+	# 		{ "value": Wert2, "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
+	# 		...
+	# 	],
+	# 	Spezies2: [
+	# 		{ "value": Wert1, "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
+	# 		{ "value": Wert2, "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
+	# 		...
+	# 	],
+	# 	...
+	# }
+	__superEffect = {}
+
+	# Eine Liste der Bonuseigenscahften je nach Spezies, Brut und Fraktion etc.
+	#
+	# {
+	# 	Spezies1: {
+	# 		"Breed": [
+	# 			{"name": Bla, "typ": Blub},
+	# 			{"name": Bla, "typ": Blub},
+	# 			...
+	# 		],
+	# 		...
+	# 	},
+	# 	Spezies2: {
+	# 		"Breed": [
+	# 			{"name": Bla, "typ": Blub},
+	# 			...
+	# 		],
+	# 		...
+	# 	},
+	# 	...
+	# }
+	__bonusTraits = {}
 
 #QList< cv_Species > StorageTemplate::v_species;
 #QList< cv_SpeciesTitle > StorageTemplate::v_titles;
@@ -130,11 +218,6 @@ class StorageTemplate(QObject):
 	#return list;
 #}
 
-#void StorageTemplate::appendTitle( cv_SpeciesTitle title ) {
-	#if( !v_titles.contains( title ) ) {
-		#v_titles.append( title );
-	#}
-#}
 
 #QStringList StorageTemplate::breedNames( cv_Species::SpeciesFlag spe ) const {
 	#QList< Trait* > traits = v_traits;
@@ -299,10 +382,6 @@ class StorageTemplate(QObject):
 #}
 
 
-#void StorageTemplate::appendSuperEffect( cv_SuperEffect effect ) {
-	#v_superEffects.append( effect );
-#}
-
 #int StorageTemplate::traitMax( cv_Species::Species species, int value ) {
 	#if( species == cv_Species::Human ) {
 		#return Config::traitMax;
@@ -343,6 +422,91 @@ class StorageTemplate(QObject):
 #cv_CreationPointsList* StorageTemplate::creationPoints() {
 	#return &v_creationPointsList;
 #}
+
+
+	def appendTrait( self, typ, category, traits):
+		"""
+		Fügt eine Eigenschaft zu der entsprechenden Liste hinzu.
+
+		Die Eigenschaft sollte im Format eines dict daherkommen.
+		"""
+		
+		if typ not in self.__traits:
+			self.__traits.setdefault(typ,{})
+
+		if category not in self.__traits[typ]:
+			self.__traits[typ].setdefault(category,[])
+
+		self.__traits[typ][category].append(traits)
+
+		## Kontrolle zu Debugzwecken:
+		#keys = self.__traits.keys()
+		#for key in self.__traits:
+			#print(key)
+			#for keyA in self.__traits[key]:
+				#print(keyA)
+				#print(self.__traits[key][keyA])
+
+
+	def appendSuperEffect( self, species, effects ):
+		"""
+		Fügt die Effekte eines neuen Wertes der Supereigenschaft einer bestimmten Spezies der entsprechenden Liste hinzu.
+
+		Die Effekte kommen als dict daher.
+		"""
+
+		if species not in self.__superEffect:
+			self.__superEffect.setdefault(species,[])
+
+		self.__superEffect[species].append(effects)
+
+		#print(self.__superEffect)
+
+
+	def appendBonusTrait( self, species, breed, traitData ):
+		"""
+		Manche Bruten erhlaten Bonuseigenschaften. Diese werden hier hinzugefügt.
+		"""
+
+		if species not in self.__bonusTraits:
+			self.__bonusTraits.setdefault(species,{})
+
+		if breed not in self.__bonusTraits[species]:
+			self.__bonusTraits[species].setdefault(breed,[])
+
+		self.__bonusTraits[species][breed].append(traitData)
+
+		#print(self.__bonusTraits)
+
+
+	def appendTitle( self, species, typ, group,  names=None):
+		"""
+		Fügt die Gruppierungsnamen der entsprechenden Spezies hinzu.
+		"""
+
+		if species not in self.__speciesGroupNames:
+			self.__speciesGroupNames.setdefault(species,{})
+		#else:
+			#Debug.debug("Spezies schon vorhanden.")
+
+		if typ not in self.__speciesGroupNames[species]:
+			self.__speciesGroupNames[species].setdefault(typ,[])
+		#else:
+			#Debug.debug("Typ schon vorhanden")
+
+		if group not in self.__speciesGroupNames[species][typ]:
+			self.__speciesGroupNames[species][typ].append(group)
+			self.__speciesGroupNames[species][typ].append([])
+		#else:
+			#Debug.debug("Gruppe schon vorhanden.")
+
+		if names != None:
+			if type(names) == list:
+				self.__speciesGroupNames[species][typ].append(names)
+			else:
+				self.__speciesGroupNames[species][typ][1].append(names)
+
+		#print(self.__speciesGroupNames)
 
 
 	def appendCreationPoints( self, species, typ, points ):

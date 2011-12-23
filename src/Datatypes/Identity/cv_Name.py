@@ -43,34 +43,49 @@ class cv_Name(object):
 	Bei Personen mit mehreren Identitäten, sollte eine Liste dieser Klasse angelegt werden, in welcher für jede Identität ein Eintrag vorgenommen wird. Auch ein Künstlername fällt unter diese Kategorie, solta also mit einem weiteren Listeneintrag realisiert werden.
 	"""
 
-	def __init__( self, surename="", firstname="" ):
+	# Liste zur Speicherung von Namen.
+	#
+	# {
+	# 	"forenames": [Name1, Name2, Name3, ...],
+	# 	"surename": Name,
+	# 	"honorname": Name,
+	# 	"nickame": Name,
+	# 	"supername": Name,
+	# }
+	# 
+	# \sa firstName
+	__name = {
 		## Vorname.
 		#
 		# Dieser Name wurde dem Charakter von seinen Eltern gegeben. Es besteht die Möglichkeit, mehr als einen Vornamen zu besitzen, wesewegen diese Variable vom Typ StringList ist. Der erste Vorname in dieser Liste ist immer auch der Rufname.
 		#
 		# \sa self.firstName
-		self.foreNames = [firstname]
+		"forenames": [],
 		## Nachname
 		#
 		# Der Familienname der Eltern.
-		self.sureName = surename
-		## Beiname.
-		#
+		"surename": "",
 		# Ein Beinahme, den der Charakter entweder durch ehrenvolle Taten, durch körperliche Besonderheiten oder durch Mißgeschick erworben hat.
 		#
 		# - der Starke
 		# - die Schöne
 		# - die Kleine
 		# - der Treue
-		self.honorificName = ""
+		"honorname": "",
 		## Spitzname.
 		#
 		# Mit diesem Namen wird der Charakter meist von Freunden (Menschen) gerufen.
-		self.nickName = ""
+		"nickame": "",
 		## Name unter den Übernatürlichen
 		#
 		# Dies ist der Name, der von den übrigen Kreaturen seiner Spezies verwendet wird.
-		self.supernaturalName = ""
+		"supername": "",
+	}
+	
+
+	def __init__( self, surename="", firstname="" ):
+		self.__name["surename"] = surename
+		self.__name["forenames"][0] = firstname
 
 
 	def __getFirstName(self):
@@ -78,16 +93,24 @@ class cv_Name(object):
 		Rufname
 		
 		Bei Personen mit nur einem Vornamen entspricht \ref firstName dem \ref foreName. Bei Personen mit mehreren Vornamen ist \ref firstName immer der allererste \ref foreName.
-		
-		\sa self.foreNames
 		"""
 		
-		return foreNames[0]
+		return self.__name["forenames"][0]
 
 	firstName = property(__getFirstName)
 
 
-	def birthName(self):
+	def __getSureName(self):
+		"""
+		Nachname
+		"""
+		
+		return self.__name["surename"]
+
+	sureName = property(__getSureName)
+
+
+	def __getRealName(self):
 		"""
 		Geburtsname.
 		
@@ -96,11 +119,13 @@ class cv_Name(object):
 		\note Die Kenntnis dieses Namens erleichtert Magiern sympathische Magie.
 		"""
 		
-		if (not firstName or not sureName):
+		if (not self.firstName or not self.sureName):
 			# In diesem Fall benötige ich keinen Abstand zwischen den Namen, da je einer leer ist.
 			return "{}{}".format(firstName, sureName)
 		else:
 			return "{} {}".format(firstName, sureName)
+
+	realName = property(__getRealName)
 
 
 	@staticmethod

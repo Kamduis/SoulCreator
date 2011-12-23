@@ -128,27 +128,6 @@ class MainWindow(QMainWindow):
 	#readSettings();
 #}
 
-#MainWindow::~MainWindow() {
-	#delete specialties;
-	#delete advantages;
-	#delete flaws;
-	#delete powers;
-	#delete morality;
-	#delete merits;
-	#delete skills;
-	#delete attributes;
-	#delete info;
-	#delete writeCharacter;
-	#delete readCharacter;
-	#delete creation;
-	#delete storage;
-
-	#// Ganz am Schluß lösche ich natürlich auch den Charakterspeicher, welcher ja als Singleton-Klasse realisiert wurde.
-	#self.__self.__character->destroy();
-
-	#delete self.ui;
-#}
-
 
 #void MainWindow::closeEvent( QCloseEvent *event ) {
 	#if ( maybeSave() ) {
@@ -183,7 +162,7 @@ class MainWindow(QMainWindow):
 
 		info = InfoWidget(self)
 		#// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
-		#attributes = new AttributeWidget( this );
+		#attributes = AttributeWidget( self )
 		#skills = new SkillWidget( this );
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 		#merits = new MeritWidget( this );
@@ -193,7 +172,7 @@ class MainWindow(QMainWindow):
 		#advantages = new AdvantagesWidget( this );
 
 		self.ui.layout_info.addWidget( info )
-		#ui->layout_attributes->addWidget( attributes );
+		#self.ui.layout_attributes.addWidget( attributes )
 		#ui->layout_skills->addWidget( skills );
 		#ui->layout_merits->addWidget( merits );
 		#ui->layout_morality->addWidget( morality );

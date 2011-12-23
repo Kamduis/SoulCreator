@@ -30,8 +30,6 @@ from src.Config import Config
 from src import Error
 from ReadXml import ReadXml
 from src.Storage.StorageTemplate import StorageTemplate
-from src.Datatypes.cv_Species import cv_Species
-from src.Datatypes.Traits.cv_AbstractTrait import cv_AbstractTrait
 from src.Debug import Debug
 
 
@@ -44,13 +42,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 	Diese Klasse dient dazu einen möglichst simplen Zugriff auf die Eigenschaften der WoD-Charaktere zu bieten. Dazu werden die Eigenschaften und all ihre Zusatzinformationen aus den xml-Dateien gelesen und in Listen gespeichert.
 	"""
 
-	# \todo Hier kann ich Listen verwenden.
-	templateFile_base = "resources/xml/base.xml"
-	templateFile_human = "resources/xml/human.xml"
-	templateFile_changeling = "resources/xml/changeling.xml"
-	templateFile_mage = "resources/xml/mage.xml"
-	templateFile_vampire = "resources/xml/vampire.xml"
-	templateFile_werewolf = "resources/xml/werewolf.xml"
+	__templateFiles = (
+		"resources/xml/base.xml",
+		"resources/xml/human.xml",
+		"resources/xml/changeling.xml",
+		"resources/xml/mage.xml",
+		"resources/xml/vampire.xml",
+		"resources/xml/werewolf.xml",
+	)
 
 #//const QString ReadXmlTemplate::templateFile = test.dat"
 
@@ -59,19 +58,22 @@ class ReadXmlTemplate(QObject, ReadXml):
 #// QList<cv_Species> ReadXmlTemplate::speciesList
 
 
+	__types = (
+		"Attribute",
+		"Skill",
+		"Merit",
+		"Derangement",
+		"Flaw",
+		"Super",
+		"Power",
+	)
+
+
 	def __init__(self, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 		
 		self.storage = StorageTemplate()
-
-		# \todo Hier kann ich Listen verwenden.
-		self.__file_base = QFile( self.templateFile_base );
-		self.__file_human = QFile( self.templateFile_human );
-		self.__file_changeling = QFile( self.templateFile_changeling );
-		self.__file_mage = QFile( self.templateFile_mage );
-		self.__file_vampire = QFile( self.templateFile_vampire );
-		self.__file_werewolf = QFile( self.templateFile_werewolf );
 
 
 	def read(self):
@@ -79,21 +81,11 @@ class ReadXmlTemplate(QObject, ReadXml):
 		Diese Methode startet den Lesevorgang.
 		"""
 		
-		self.__process( self.__file_base )
-		self.__process( self.__file_human )
-		self.__process( self.__file_changeling )
-		self.__process( self.__file_mage )
-		self.__process( self.__file_vampire )
-		self.__process( self.__file_werewolf )
-
-
-	def __process(self, device ):
-		"""
-		Arbeitet den Leseprozeß ab.
-		"""
-
-		Debug.debug("Lese aus Datei: {}".format(device.fileName()))
-		self.readXml( device )
+		for item in self.__templateFiles:
+			#Debug.debug("Lese aus Datei: {}".format(item))
+			f = QFile(item)
+			self.readXml( f )
+			self.closeFile( f )
 
 
 	def readXml(self, device ):
@@ -124,13 +116,17 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 
 		if( self.hasError() ):
-			Debug.debug("Error!")
+			#Debug.debug("Error!")
 			raise Error.ErrXmlParsing( device.fileName(), self.errorString() )
-
-		self.closeFile( self.__file_base )
 
 
 	def readSoulCreator(self):
+		"""
+		Die zweite Ebene des XML-Baumes wird einegelesen. Es wird gespeichert, für welche Spezies dieser Zweig vorgesehen ist. Daraufhin wird die Arbeit an readTree() weitergegeben.
+		
+		\exception ErrXmlError Ist das XML_Dokument fehlerhaft, wird diese Exception mit dem passenden Fehlertext geworfen.
+		"""
+		
 		while( not self.atEnd() ):
 			self.readNext()
 
@@ -138,32 +134,38 @@ class ReadXmlTemplate(QObject, ReadXml):
 				break
 
 			if( self.isStartElement() ):
-				Debug.debug("Element {} gefunden.".format(self.name()))
-				if( self.name() == "traits" ):
-					speciesFlag = self.attributes().value( "species" )
-					Debug.debug("Spezies {} gefunden.".format(speciesFlag))
-					if( speciesFlag in cv_Species.Species ):
-						species = cv_Species()
-						species.name = speciesFlag
-						species.morale = self.attributes().value( "morale" )
-						species.supertrait = self.attributes().value( "supertrait" )
-						species.fuel = self.attributes().value( "fuel" )
+				elementName = self.name()
+				#Debug.debug("Element {} gefunden.".format(elementName))
+				if( elementName == "traits" ):
+					speciesData = [
+						self.attributes().value( "species" ),
+						self.attributes().value( "morale" ),
+						self.attributes().value( "supertrait" ),
+						self.attributes().value( "fuel" ),
+					]
+					#Debug.debug("Spezies {} gefunden.".format(speciesData[0]))
 
-						# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
-						self.storage.appendSpecies( species )
+					# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
+					self.storage.appendSpecies( speciesData )
 
-						self.readTree( speciesFlag )
-				elif( self.name() == "creation" ):
+					self.readTree( speciesData[0] )
+				elif( elementName == "creation" ):
 					speciesFlag = self.attributes().value( "species" )
-					Debug.debug("Spezies {} gefunden.".format(speciesFlag))
-					if( speciesFlag in cv_Species.Species ):
-						self.readCreationTree( speciesFlag );
+					#Debug.debug("Erschaffungspunkte für Spezies {} gefunden.".format(speciesFlag))
+					self.readCreationTree( speciesFlag )
 				else:
-					Debug.debug("Finde Element {}".format(self.name()))
 					self.readUnknownElement()
 
 
-	def readTree( self, sp ):
+	def readTree( self, species ):
+		"""
+		Hier wird der cv_TRait::Type der Eigenschaftengruppe ausgelesen und danach entschieden, an welche Funktion weitergesprungen werden soll.
+		
+		- Virtues und Vices werden mit cv_AbstractTrait::CategoryNo bewertet (sie sind weder mental noch physisch oder sozial). Sie werden daraufhin mit der Funktion readTraits(cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b) weitergelesen.
+		
+		- Alle anderen Eigenschaften werden mit der Funktion readTraits(cv_Species::Species sp, cv_AbstractTrait::Type a) weitergelesen.
+		"""
+		
 		while( not self.atEnd() ):
 			self.readNext()
 
@@ -173,88 +175,208 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				typ = self.name()
 
-				if( typ in cv_AbstractTrait.Typ ):
-					#Debug.debug("Typ {} gefunden.".format(typ))
-					# Virtues und Vices haben keine Kategorie, also darf ich dort auch nicht so tief den Baum hinuntersteigen. Bei allen anderen aber muß ich erst die Kategorie einlesen.
-					if( typ == "Virtue" or
-							typ == "Vice" or
-							typ == "Breed" or
-							typ == "Faction" ):
-						#self.readTraits( sp, typ, None )
-						self.readUnknownElement()
-					elif( typ == "Super" ):
-						#self.readSuperTrait( sp )
-						self.readUnknownElement()
-					else:
-						#self.readTraits( sp, typ )
-						self.readUnknownElement()
+				if( typ == "Virtue" or typ == "Vice" ):
+					self.readCharacteristics( species, typ )
+				elif(typ == "Breed" or
+						typ == "Faction" ):
+					self.readGroups( species, typ, None )
+				elif( typ == "Super" ):
+					self.readSuperTrait( species )
+				elif( typ in self.__types):
+					#self.readUnknownElement()
+					self.readTraits( species, typ )
 				else:
 					self.readUnknownElement()
 
 
-#void ReadXmlTemplate::readSuperTrait( cv_Species::Species sp ) {
-	#while( !atEnd() ) {
-		#readNext();
+	def readCharacteristics( self, species, typ, category=None ):
+		"""
+		Liest die Charakteristiken ein.
 
-		#if( isEndElement() )
-			#break;
+		- Tugenden
+		- Laster
+		"""
 
-		#if( isStartElement() ) {
-			#if( name() == "supertrait" ) {
-				#cv_SuperEffect superEffect;
-				#superEffect.species = sp;
-				#superEffect.fuelMax = attributes().value( "fuelMax" ).toString().toInt();
-				#superEffect.fuelPerTurn = attributes().value( "fuelPerTurn" ).toString().toInt();
-				#superEffect.traitMax = attributes().value( "traitMax" ).toString().toInt();
-				#superEffect.value = readElementText().toInt();
+		while( not self.atEnd() ):
+			self.readNext()
 
-				#storage->appendSuperEffect( superEffect );
-			#} else
-				#readUnknownElement();
-		#}
-	#}
-#}
+			if self.isEndElement():
+				break
+
+			if( self.isStartElement() ):
+				elementName = self.name()
+				if( elementName == "trait" ):
+					#Debug.debug("Lese {} ein.".format(elementName))
+
+					traitData = {
+						"name": self.attributes().value( "name" ),
+						"species": species,
+						"age": self.attributes().value( "age" ),
+					}
+
+					self.storage.appendTrait( typ, category, traitData );
+					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
 
 
-#void ReadXmlTemplate::readTraits( cv_Species::Species sp, cv_AbstractTrait::Type a ) {
+	def readGroups( self, species, typ, category=None ):
+		"""
+		Liest die verschiedenen Gruppierungsnamen der einzelnen Spezies ein.
+		"""
 
-	#while( !atEnd() ) {
-		#readNext();
+		if( typ == "Breed" or
+				typ == "Faction"
+		):
+			group = self.attributes().value( "name" )
 
-		#if( isEndElement() )
-			#break;
+			self.storage.appendTitle( species, typ, group )
 
-		#if( isStartElement() ) {
-			#QString elementName = name().toString();
-			#cv_AbstractTrait::Category category = cv_AbstractTrait::toCategory( elementName );
+		while( not self.atEnd() ):
+			self.readNext()
 
-			#readTraits( sp, a, category );
-		#}
-	#}
-#}
+			if self.isEndElement():
+				break
 
-	#def readTraits( self, sp, a, b=None ):
-		#if( a == "Breed" or
-				#a == "Faction" or
-				#a == "Power"
-		#):
-			#titleName = self.attributes().value( "name" )
-			#title = cv_SpeciesTitle( cv_SpeciesTitle::toTitle( cv_AbstractTrait::toString( a ) ), titleName, sp );
+			if( self.isStartElement() ):
+				elementName = self.name()
+				if( elementName == "trait" ):
+					title = self.attributes().value( "name" )
+					self.storage.appendTitle( species, typ, group, title )
 
-			#Debug.debug(title.title)
-	#// 		qDebug() << Q_FUNC_INFO << title.title << title.name << title.species;
+					# Damit weitergesucht wird.
+					self.readGroupInfo(species, title)
+				else:
+					self.readUnknownElement()
 
-			#storage->appendTitle( title );
-		#}
 
-		#while( !atEnd() ) {
-			#readNext();
+	def readGroupInfo( self, species, breed ):
+		"""
+		Einzelne Gruppen bieten noch zusätzliche Informationen wie beispielsweise die Bonuseigenschaften der Vampir-Clans etc. Die Ermittlung dieser informationen beginnt hier.
+		"""
 
-			#if( isEndElement() )
-				#break;
+		while( not self.atEnd() ):
+			self.readNext()
 
-			#if( isStartElement() ) {
-				#if( name() == "trait" ) {
+			if self.isEndElement():
+				break
+
+			if( self.isStartElement() ):
+				name = self.name()
+				if( name == "bonus" ):
+					self.readBonusTraits(species, breed)
+				else:
+					self.readUnknownElement()
+
+		
+
+
+	def readBonusTraits( self, species, breed ):
+		"""
+		Es werden die Bonus-Eigenschaften ausgelesen.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				# Es können Bonuseiegnschaften verschiedener Typen gewährt werden.
+				traitTyp = self.name()
+				self.readBonusTraitsDetails( species, breed, traitTyp )
+
+
+
+	def readBonusTraitsDetails(self, species, breed, typ):
+		"""
+		Die tatsächlichen Eigenscahften werden in dieser Funktion ermittelt.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "trait" ):
+					traitName = self.attributes().value( "name" )
+					traitData = {
+						"name": traitName,
+						"typ": typ,
+					}
+					self.storage.appendBonusTrait( species, breed, traitData )
+					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
+
+
+	def readSuperTrait( self, species ):
+		"""
+		Lese die Informationen über die Auswirkungen der Supereigenschaft aus den Template-Dateien.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "supertrait" ):
+					superEffectData = {
+						"fuelMax": int(self.attributes().value( "fuelMax" )),
+						"fuelPerTurn": int(self.attributes().value( "fuelPerTurn" )),
+						"traitMax": int(self.attributes().value( "traitMax" )),
+						"value": int(self.readElementText()),
+					}
+					self.storage.appendSuperEffect( species, superEffectData )
+				else:
+					self.readUnknownElement()
+
+
+	def readTraits( self, species, typ ):
+		"""
+		Lese die Eigenschaften aus den Template-Dateien.
+
+		Hier wird die Kategorie bestimmt und dann an eine Funktion übergeben, die den nächsten Schritt im XML-Baum geht.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				category = self.name()
+
+				self.readTraitData( species, typ, category );
+
+
+	def readTraitData( self, species, typ, category ):
+		"""
+		Nächster Schritt beim Einlesen der Eigenschaften.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if self.isEndElement():
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "trait" ):
+					traitData = {
+						"name": self.attributes().value( "name" ),
+						"species": species,
+						"age": self.attributes().value( "age" ),
+						"era": self.attributes().value( "era" ),
+					}
+
+					#Debug.debug("Lese {} ein.".format(traitData["name"]))
 					#cv_Trait trait = storeTraitData( sp, a, b );
 					#// Alle Eigenschaften können 0 als Wert haben, auch wenn dies nicht in den XML-Dateien steht.
 
@@ -262,118 +384,45 @@ class ReadXmlTemplate(QObject, ReadXml):
 						#trait.addPossibleValue( 0 );
 					#}
 
-					#storage->appendTrait( trait );
-				#} else {
-					#readUnknownElement();
-				#}
-			#}
-		#}
-	#}
-
-#cv_Trait ReadXmlTemplate::storeTraitData( cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b ) {
-	#// Es besteht die Möglichkeit, daß einzelne Eigenschaften in mehreren XML-DAteien auftauchen. Beispiel: Fertigkeit mit Spezialisierungen speziell für eine Spezies.
-	#// Momentan löse ich das Problem nicht hier beim Einlesen, sondern bei der Ausgabe in Storage.cpp
-#// 	QString specialtyName;
-
-	#cv_Trait trait;
-	#trait.setSpecies( sp );
-	#trait.setType( a );
-	#trait.setCategory( b );
-	#// Keinefalls darf ich zulassen, daß dieser Wert uninitialisiert bleibt, sonst führt das zu Problemen.
-	#trait.setValue( 0 );
-
-	#if( isStartElement() ) {
-		#trait.setName( attributes().value( "name" ).toString() );
-#// 		qDebug() << Q_FUNC_INFO << trait.name;
-		#trait.setEra( cv_Trait::toEra( attributes().value( "era" ).toString() ) );
-		#trait.setAge( cv_Trait::toAge( attributes().value( "age" ).toString() ) );
-		#trait.setCustom( attributes().value( "custom" ).toString() == QString( "true" ) );
-
-#// 		if (trait.custom){
-#// 			qDebug() << Q_FUNC_INFO << trait.name << "ist besonders!";
-#// 		}
-
-		#while( !atEnd() ) {
-			#readNext();
-
-			#if( isEndElement() ) {
-				#break;
-			#}
-
-			#if( isStartElement() ) {
-				#if( name() == "specialty" ) {
-					#QString specialtyName = readElementText();
-					#cv_TraitDetail traitDetail;
-					#traitDetail.name = specialtyName;
-					#traitDetail.value = false;
-#// 					traitDetail.species = sp;
-					#trait.addDetail( traitDetail );
-				#} else if( name() == "value" ) {
-					#int value = readElementText().toInt();
-					#trait.addPossibleValue( value );
-				#} else if( name() == "prerequisite" ) {
-					#QString text = readElementText();
-#// 					trait.v_prerequisites.append( text );
-					#trait.setPrerequisites( text );
-				#} else if( name() == "bonus" ) {	// Es können Bonuseigenschaften vergeben werden.
-#// 					qDebug() << Q_FUNC_INFO << "Im Bonus-Zweig!";
-					#readBonusTraits( sp, trait.name() );
-				#} else {
-					#readUnknownElement();
-				#}
-			#}
-		#}
-	#}
-
-	#return trait;
-#}
+					self.readTraitInformation( species, typ, category, traitData )
+				else:
+					self.readUnknownElement()
 
 
-#void ReadXmlTemplate::readBonusTraits( cv_Species::Species sp, QString nameDependant ) {
-	#while( !atEnd() ) {
-		#readNext();
+	def readTraitInformation( self, species, typ, category, traitData ):
+		"""
+		Nun werden die zusätzlichen Informationen (Spezialisierungen, Voraussetzungen etc.) ausgelesen.
+		"""
 
-		#if( isEndElement() )
-			#break;
+		traitInfo = traitData
 
-		#if( isStartElement() ) {
-			#// Es können Bonuseiegnschaften verschiedener Typen gewährt werden.
-			#cv_AbstractTrait::Type type = cv_AbstractTrait::toType( name().toString() );
+		while( not self.atEnd() ):
+			self.readNext()
 
-			#if( type != cv_AbstractTrait::TypeNo ) {
-				#readBonusTraits( sp, type, nameDependant );
-			#} else {
-				#readUnknownElement();
-			#}
-		#}
-	#}
-#}
+			if self.isEndElement():
+				break
 
-#void ReadXmlTemplate::readBonusTraits( cv_Species::Species sp, cv_AbstractTrait::Type tp, QString nameDep ) {
-	#while( !atEnd() ) {
-		#readNext();
+			if( self.isStartElement() ):
+				name = self.name()
+				if( name == "specialty" or name == "prerequisite" ):
+					if name not in traitInfo:
+						traitInfo.setdefault(name,[])
+					traitInfo[name].append(self.readElementText())
+				elif( name == "value" ):
+					if name not in traitInfo:
+						traitInfo.setdefault(name,[])
+					traitInfo[name].append(int(self.readElementText()))
+				else:
+					self.readUnknownElement()
 
-		#if( isEndElement() )
-			#break;
-
-		#if( isStartElement() ) {
-			#if( name() == "trait" ) {
-				#QString name = attributes().value( "name" ).toString();
-
-				#Trait* lcl_trait1 = new Trait( name, 0, sp, tp );
-
-				#storage->appendTraitBonus( lcl_trait1, nameDep );
-
-				#readUnknownElement();
-			#} else {
-				#readUnknownElement();
-			#}
-		#}
-	#}
-#}
+		self.storage.appendTrait( typ, category, traitInfo )
 
 
-	def	readCreationTree( self, sp ):
+	def readCreationTree( self, sp ):
+		"""
+		Ab hier werden die Erschaffungspunkte ausgelesen.
+		"""
+		
 		while( not self.atEnd() ):
 			self.readNext()
 
@@ -382,7 +431,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				typ = self.name()
-				if( typ in cv_AbstractTrait.Typ ):
+				if( typ in self.__types ):
 					points = self.readCreationPoints()
 					self.storage.appendCreationPoints( sp, typ, points )
 				else:
@@ -390,6 +439,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 
 	def readCreationPoints(self):
+		"""
+		Diese Funktion liest die einzelnenen Erschaffungspunkte aus, hängt sie an eine Liste an und übergibt sie an die aufrufende Funktion.
+		"""
+
 		resultList = []
 
 		while( not self.atEnd() ):
