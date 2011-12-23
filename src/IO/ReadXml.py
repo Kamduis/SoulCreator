@@ -17,12 +17,6 @@ SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY W
 You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-##include <QDebug>
-
-##include "Exceptions/Exception.h"
-#// #include "Config/Config.h"
-
-##include "ReadXml.h"
 
 
 
@@ -31,13 +25,8 @@ from __future__ import division, print_function
 from PySide.QtCore import QXmlStreamReader, QIODevice
 
 from src.Config import Config
-from src.Error import ErrXmlTooOldVersion
-
-##include "CMakeConfig.h"
-
-#// #include "Exceptions/Exception.h"
-
-##include "Config.h"
+from src import Error
+from src.Debug import Debug
 
 
 
@@ -85,7 +74,7 @@ class ReadXml(QXmlStreamReader):
 				break
 
 			if self.isStartElement():
-				#qDebug() << Q_FUNC_INFO << "unbekanntes Element: " << name();
+				Debug.debug("Unbekanntes Element: {}".format(self.name()))
 				self.readUnknownElement()
 
 
@@ -98,11 +87,11 @@ class ReadXml(QXmlStreamReader):
 				splitVersion = version.split(".")
 
 				if( splitVersion[0] == Config.programVersionMajor ):
-					raise ErrXmlOldVersion( Config.version(), version )
+					raise Error.ErrXmlOldVersion( Config.version(), version )
 				else:
-					raise ErrXmlTooOldVersion( Config.version(), version )
+					raise Error.ErrXmlTooOldVersion( Config.version(), version )
 		else:
-			raise ErrXmlVersion( "{} {}".format(Config.programName, Config.version()), "{} {}".format(name, version) )
+			raise Error.ErrXmlVersion( "{} {}".format(Config.programName, Config.version()), "{} {}".format(name, version) )
 
 		return False
 

@@ -30,6 +30,7 @@ from Config import Config
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from Storage.StorageCharacter import StorageCharacter
 from Widgets.Display.InfoWidget import InfoWidget
+from Widgets.Dialogs.MessageBox import MessageBox
 
 from ui.ui_MainWindow import Ui_MainWindow
 
@@ -165,14 +166,14 @@ class MainWindow(QMainWindow):
 
 		#connect( &reader, SIGNAL( oldVersion( QString, QString ) ), this, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
-		#try:
-			#reader.read()
-		#except ErrXmlVersion as e:
-			#MessageBox.exception( this, e.message(), e.description() )
-		#except ErrXmlParsing as e:
-			#MessageBox.exception( this, e.message(), e.description() )
-		#except ErrFileNotOpened as e:
-			#MessageBox.exception( this, e.message(), e.description() )
+		try:
+			reader.read()
+		except ErrXmlVersion as e:
+			MessageBox.exception( self, e.message(), e.description() )
+		except ErrXmlParsing as e:
+			MessageBox.exception( self, e.message(), e.description() )
+		except ErrFileNotOpened as e:
+			MessageBox.exception( self, e.message(), e.description() )
 
 
 	def populateUi(self):

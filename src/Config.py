@@ -41,6 +41,7 @@ class Config():
 	Hier werden die Konfigurationseinstellungen gespeichert.
 	"""
 
+	# Programmdaten
 	programName = "SoulCreator"
 	programVersionMajor = 0
 	programVersionMinor = 6
@@ -48,10 +49,16 @@ class Config():
 	programDescription = "Charaktergenerator für die World of Darkness."
 	organization = "Caern"
 
+	# Konfigurationsdatei
+	configFile = "config.ini"
+
+	# Vordefinierte Farben
+	importantTextColorName = "darkBlue"
+
+	# Einstellungen für das Auswahl-Widget
 	selectIconSize = QSize(50,50)
 	selectWidgetWidth = 150
 	
-	configFile = "config.ini"
 	pointsNegative = QColor(255,0,0)
 	pointsPositive = QColor(0,0,255)
 	vSpace = 5
@@ -86,33 +93,34 @@ class Config():
 
 	@staticmethod
 	def version():
+		"""
+		Die aktuelle Version des Programms ausschließlich der Change-Nummer.
+		
+		Programme mit unterschieldicher Versionsnummer sind zueinander nicht notwendigerweise kompatibel.
+		"""
+		
 		return "{}.{}".format(Config.programVersionMajor, Config.programVersionMinor)
 
 
-#QString Config::versionDetail() {
-	#return QString::number( versionMajor ) +
-		   #"." +
-		   #QString::number( versionMinor ) +
-		   #"." +
-		   #QString::number( versionChange );
-#}
+	@staticmethod
+	def versionDetail():
+		"""
+		Die aktuelle Version des Programms einschließlich der Change-Nummer.
+		
+		Unterscheiden sich Programme in ihrer Change-Nummer, aber der Rest ihrer Versionsnummer ist gleich, sollten eigentlich keine Kompatibilitätsprobleme mit den Template-Dateien und den gespeicherten Charakteren auftreten.
+		"""
+		
+		return "{}.{}.{}".format(Config.programVersionMajor, Config.programVersionMinor, Config.programVersionChange)
 
-#QString Config::importantTextColorName() {
-	#return "darkBlue";
-#}
 
-#QColor Config::importantTextColor() {
-	#return QColor( "importantTextColorName" );
-#}
+	@staticmethod
+	def color(colorName):
+		"""
+		Gibt die Farbe, deren Namen bekannt ist, als QColor zurück.
+		"""
+		
+		return QColor( colorName )
 
 #QString Config::saveDir() {
 	#return "save";
 #}
-
-
-
-
-#Config::Config() {
-#}
-
-

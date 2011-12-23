@@ -27,6 +27,7 @@ from PySide.QtCore import QObject
 #from src.Config import Config
 #from ReadXml import ReadXml
 #from Storage.StorageTemplate import StorageTemplate
+from src.Debug import Debug
 
 
 
@@ -40,7 +41,11 @@ class StorageTemplate(QObject):
 	Außerdem bietet diese Klasse angenehme Zugriffsfunktionen aus den Informationen, welche zum Programmstart aus den Template-Dateien geladen werden.
 	"""
 
+	# Eine Liste der Erschaffungspunkte. Jeder Listeneintrag steht für eine andere Spezies.
+	__creationPointsList = []
 
+	# Eine Liste sämtlicher verfügbaren Spezies.
+	__species = []
 
 
 #QList< cv_Species > StorageTemplate::v_species;
@@ -48,13 +53,13 @@ class StorageTemplate(QObject):
 #QList< Trait* > StorageTemplate::v_traits;
 #QList< TraitBonus* > StorageTemplate::v_traitsBonus;
 #QList< cv_SuperEffect > StorageTemplate::v_superEffects;
-#cv_CreationPointsList StorageTemplate::v_creationPointsList;
 
-#StorageTemplate::StorageTemplate( QObject *parent ) : QObject( parent ) {
-#}
 
-#StorageTemplate::~StorageTemplate() {
-#}
+	def __init__(self, parent=None):
+		QObject.__init__(self, parent)
+
+
+
 
 
 #QList< cv_Species > StorageTemplate::species() const {
@@ -251,9 +256,9 @@ class StorageTemplate(QObject):
 #// 	v_traits = traits;
 #// }
 
-#void StorageTemplate::appendSpecies( cv_Species species ) {
-	#v_species.append( species );
-#}
+	def appendSpecies( self, species ):
+		self.__species.append( species )
+
 
 
 #void StorageTemplate::appendTrait( cv_Trait trait ) {
@@ -334,11 +339,17 @@ class StorageTemplate(QObject):
 #cv_CreationPointsList* StorageTemplate::creationPoints() {
 	#return &v_creationPointsList;
 #}
-#void StorageTemplate::appendCreationPoints( cv_CreationPoints points ) {
-#// 	qDebug() << Q_FUNC_INFO << "Füge creationPoints hinzu!";
-	#if( !v_creationPointsList.contains( points ) ) {
-		#v_creationPointsList.append( points );
-	#} else {
-		#qDebug() << Q_FUNC_INFO << "Gibt es schon!";
-	#}
-#}
+
+
+	def appendCreationPoints( self, points ):
+		"""
+		Fügt einen neuen Satz Erschaffungspunkte zu der entsprechende Liste hinzu.
+
+		\sa v_creationPoints
+		"""
+		
+		#Debug.debug("Füge creationPoints hinzu!")
+		if( points in self.__creationPointsList ):
+			self.__creationPointsList.append( points )
+		else:
+			Debug.debug("Gibt es schon!")
