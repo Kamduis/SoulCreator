@@ -65,8 +65,8 @@ class Config():
 	#const int Config::traitCategorySpace = 10;
 	#const int Config::traitMultipleMax = 3;
 	#const int Config::displayTimeout = 10000;
-	#const int Config::traitCustomTextWidthMin = 100;
-	#const int Config::inlineWidgetHeightMax = 18;
+	traitCustomTextWidthMin = 100;
+	inlineWidgetHeightMax = 18;
 	#const int Config::spinBoxNoTextWidth = 30;
 	#const int Config::traitListVertivalWidth = 300;
 	#const int Config::traitMax = 5;

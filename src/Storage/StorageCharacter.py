@@ -20,27 +20,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 
 
-##include <QDebug>
-
-#// #include "StorageTemplate.h"
-##include "Datatypes/Traits/AttributeTrait.h"
-##include "Datatypes/Traits/SkillTrait.h"
-##include "Config/Config.h"
-
-##include "StorageCharacter.h"
-
-
-
-
 from __future__ import division, print_function
 
 from PySide.QtCore import QObject
-
-##include "CMakeConfig.h"
-
-#// #include "Exceptions/Exception.h"
-
-##include "Config.h"
 
 
 
@@ -58,6 +40,27 @@ class StorageCharacter(QObject):
 	StorageCharacter* character = StorageCharacter::getInstance();
 	\endcode
 	"""
+
+
+	# Eine Liste sämtlicher verfügbaren Eigenschaften.
+	#
+	# {
+	# 	Typ1: {
+	# 		Kategorie1: [
+	# 			{ "name": Name1, "value": Wert1 },
+	# 			{ "name": Name1, "value": Wert2 },
+	# 			...
+	# 		],
+	# 		Kategorie2: [
+	# 			{ "name": Name1, "value": Wert1 },
+	# 			...
+	# 		],
+	# 		...
+	# 	},
+	# 	...
+	# }
+	__traits = {}
+	
 
 	def __new__(type, *args):
 		# Falls es noch keine Instanz dieser Klasse gibt, wird eine erstellt und in _the_instance abgelegt.
@@ -95,17 +98,7 @@ class StorageCharacter(QObject):
 #QList< cv_Derangement > StorageCharacter::v_derangements;
 
 
-#StorageCharacter* StorageCharacter::getInstance( ) {
-	#if ( !p_instance )
-		#p_instance = new StorageCharacter( );
 
-	#return p_instance;
-#}
-
-#void StorageCharacter::destroy() {
-	#if ( p_instance )
-		#delete p_instance;
-#}
 
 
 #StorageCharacter::StorageCharacter( QObject* parent ) : QObject( parent ) {
@@ -188,7 +181,7 @@ class StorageCharacter(QObject):
 	#QList< Trait* > list;
 
 	#for ( int i = 0; i < v_traits2.count(); ++i ) {
-		#if ( v_traits2.at( i )->type() == type ) {
+		#if ( v_traits2.at( i ).type() == type ) {
 			#list.append( v_traits2[i] );
 		#}
 	#}
@@ -200,7 +193,7 @@ class StorageCharacter(QObject):
 	#QList< Trait* > list;
 
 	#for ( int i = 0; i < v_traits2.count(); ++i ) {
-		#if ( v_traits2.at( i )->type() == type && v_traits2.at( i )->category() == category ) {
+		#if ( v_traits2.at( i ).type() == type && v_traits2.at( i ).category() == category ) {
 			#list.append( v_traits2[i] );
 		#}
 	#}
@@ -209,35 +202,34 @@ class StorageCharacter(QObject):
 #}
 
 
-#Trait* StorageCharacter::addTrait( Trait* trait ) {
-	#// Unterschiedliche Klassen für die einzelnen Eigenschafts-Typen:
-	#Trait* lcl_trait;
-	#if (trait->type() == cv_AbstractTrait::Attribute) {
-		#lcl_trait = new AttributeTrait( trait );
-	#} else if (trait->type() == cv_AbstractTrait::Skill) {
-		#lcl_trait = new SkillTrait( trait );
-	#} else {
-		#lcl_trait = new Trait( trait );
-	#}
+	def addTrait( self, typ, category, trait ):
+		"""
+		Fügt dem Speicher eine neue Eigenschaft hinzu.
+		 
+		\note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
+		 
+		\todo Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
+		"""
 
-	#v_traits2.append( lcl_trait );
+		if typ not in self.__traits:
+			self.__traits.setdefault(typ,{})
 
-	#// Wann immer sich eine Eigenschaft ändert, muß dies auch ein passendes Signal aussenden.
-	#// Hier gibt es Probleme, wenn Eigenschaften nach den Merits erzeugt werden.
-#// 	connect( lcl_trait, SIGNAL( traitChanged( Trait* ) ), SIGNAL( traitChanged( Trait* ) ) );
+		if category not in self.__traits[typ]:
+			self.__traits[typ].setdefault(category,[])
 
-	#return lcl_trait;
-#}
+		self.__traits[typ][category].append(trait)
+
+		return self.__traits[typ][category][:-1]
 
 
 #void StorageCharacter::modifyTrait( cv_Trait trait ) {
 	#for ( int i = 0; i < v_traits2.count(); ++i ) {
-		#if ( trait.type() == v_traits2.at( i )->type() && trait.category() == v_traits2.at( i )->category() && trait.name() == v_traits2.at( i )->name() ) {
-			#if ( !v_traits2.at( i )->custom() || trait.customText() == v_traits2.at( i )->customText() || v_traits2.at( i )->customText().isEmpty() ) {
+		#if ( trait.type() == v_traits2.at( i ).type() && trait.category() == v_traits2.at( i ).category() && trait.name() == v_traits2.at( i ).name() ) {
+			#if ( !v_traits2.at( i ).custom() || trait.customText() == v_traits2.at( i ).customText() || v_traits2.at( i ).customText().isEmpty() ) {
 				#// Custom bleibt immer gleich.
-				#v_traits2[i]->setValue( trait.value() );
-				#v_traits2[i]->setCustomText( trait.customText() );
-				#v_traits2[i]->setDetails( trait.details() );
+				#v_traits2[i].setValue( trait.value() );
+				#v_traits2[i].setCustomText( trait.customText() );
+				#v_traits2[i].setDetails( trait.details() );
 
 #// 				// Dieses Signal benötige ich wegen der Prerequisites einiger Merits. Diese müssen kontrolliert werden, wann immer sich eine Eigenschaft ändert, welche Teil dieser Voraussetzungen sein könnte.
 #// 				emit traitChanged( v_traits2[i] );
@@ -294,14 +286,14 @@ class StorageCharacter(QObject):
 		#// Spezialisieren gibt es nur bei Fertigkeiten.
 		#// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
 		#// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
-		#if ( v_traits2.at( i )->type() == cv_AbstractTrait::Skill && v_traits2.at( i )->name() == name && v_traits2.at( i )->value() > 0 ) {
+		#if ( v_traits2.at( i ).type() == cv_AbstractTrait::Skill && v_traits2.at( i ).name() == name && v_traits2.at( i ).value() > 0 ) {
 			#trait_exists = true;
 
 			#Trait* trait = v_traits2.at( i );
 			#// Erst alle Spezialisieren löschen
-#// 			trait->clearDetails();
+#// 			trait.clearDetails();
 			#// Das muß ich allerdings so machen, daß kein Signal ausgesandt wird, weswegen ich nicht die übergeordnete Funktion clearDetails() wähle.
-			#trait->details().clear();
+			#trait.details().clear();
 
 			#// Dann neu setzen.
 			#int detailsCount = details.count();
@@ -316,7 +308,7 @@ class StorageCharacter(QObject):
 				#list.append( specialty );
 			#}
 
-			#trait->setDetails(list);
+			#trait.setDetails(list);
 
 			#break;
 		#}
@@ -335,13 +327,13 @@ class StorageCharacter(QObject):
 		#// Spezialisieren gibt es nur bei Fertigkeiten.
 		#// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
 		#// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
-		#if ( v_traits2.at( i )->type() == cv_AbstractTrait::Skill
-			#&& v_traits2.at( i )->name() == name
-			#&& v_traits2.at( i )->value() > 0
+		#if ( v_traits2.at( i ).type() == cv_AbstractTrait::Skill
+			#&& v_traits2.at( i ).name() == name
+			#&& v_traits2.at( i ).value() > 0
 		#) {
 			#trait_exists = true;
 
-			#v_traits2[i]->addDetail(detail);
+			#v_traits2[i].addDetail(detail);
 
 			#break;
 		#}
@@ -447,23 +439,23 @@ class StorageCharacter(QObject):
 
 	#setSpecies( cv_Species::Human );
 
-	#setVirtue( storage->virtueNames().at( 0 ) );
-	#setVice( storage->viceNames().at( 0 ) );
+	#setVirtue( storage.virtueNames().at( 0 ) );
+	#setVice( storage.viceNames().at( 0 ) );
 
 	#// Menschen haben eine Leere liste, also kann ich auch die Indizes nicht ändern.
-#// 	setBreed(storage->breedNames(species()).at(0));
-#// 	setFaction(storage->breedNames(species()).at(0));
+#// 	setBreed(storage.breedNames(species()).at(0));
+#// 	setFaction(storage.breedNames(species()).at(0));
 
 	#for ( int i = 0; i < v_traits2.count();i++ ) {
-		#if ( v_traits2[i]->type() == cv_AbstractTrait::Attribute ) {
-			#v_traits2[i]->setValue( 1 );
+		#if ( v_traits2[i].type() == cv_AbstractTrait::Attribute ) {
+			#v_traits2[i].setValue( 1 );
 		#} else {
-			#v_traits2[i]->setValue( 0 );
+			#v_traits2[i].setValue( 0 );
 		#}
 
-		#v_traits2[i]->clearDetails();
+		#v_traits2[i].clearDetails();
 
-		#v_traits2[i]->setCustomText( "" );
+		#v_traits2[i].setCustomText( "" );
 
 #// 		emit traitChanged( v_traits2[i] );
 	#}

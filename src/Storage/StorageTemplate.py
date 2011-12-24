@@ -151,6 +151,14 @@ class StorageTemplate(QObject):
 		QObject.__init__(self, parent)
 
 
+	def __getTyps(self):
+		return self.__traits.keys()
+
+	typs = property(__getTyps)
+
+
+	def categories(self, typ):
+		return self.__traits[typ].keys()
 
 
 
@@ -256,26 +264,17 @@ class StorageTemplate(QObject):
 
 
 
-#QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
-	#QList< Trait* > traitsPtr;
+	def traits( self, typ, category, era=None, age=None ):
+		"""
+		Gibt eine Liste aller Eigenschaften zurück, die den übergebenen Parametern entsprechen.
+		
+		\note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
+		"""
 
-	#for( int i = 0; i < v_traits.count(); ++i ) {
-		#if( v_traits.at( i )->type() == type &&
-				#v_traits.at( i )->category() == category &&
-				#v_traits.at( i )->era().testFlag( era ) &&
-				#v_traits.at( i )->age().testFlag( age )
-		  #) {
-			#traitsPtr.append( v_traits[i] );
-		#}
-	#}
+		result = self.__traits[typ][category]
 
-#// 	if ( traitsPtr.isEmpty() ) {
-#// // 		qDebug() << Q_FUNC_INFO << "Trait Typ" << cv_AbstractTrait::toString( type ) << "mit Kategorie" << cv_AbstractTrait::toString( category ) << "existiert nicht!";
-#// 		throw eTraitNotExisting();
-#// 	}
+		return result
 
-	#return traitsPtr;
-#}
 
 #QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
 	#QList< Trait* > traitsPtr;

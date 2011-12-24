@@ -51,12 +51,6 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"resources/xml/werewolf.xml",
 	)
 
-#//const QString ReadXmlTemplate::templateFile = test.dat"
-
-#// QList< cv_Trait > ReadXmlTemplate::traitList
-
-#// QList<cv_Species> ReadXmlTemplate::speciesList
-
 
 	__types = (
 		"Attribute",
@@ -374,6 +368,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 						"species": species,
 						"age": self.attributes().value( "age" ),
 						"era": self.attributes().value( "era" ),
+						"value": [0],
 					}
 
 					#Debug.debug("Lese {} ein.".format(traitData["name"]))
@@ -411,7 +406,9 @@ class ReadXmlTemplate(QObject, ReadXml):
 				elif( name == "value" ):
 					if name not in traitInfo:
 						traitInfo.setdefault(name,[])
-					traitInfo[name].append(int(self.readElementText()))
+					val = int(self.readElementText())
+					if val not in traitInfo[name]:
+						traitInfo[name].append(val)
 				else:
 					self.readUnknownElement()
 

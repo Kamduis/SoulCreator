@@ -30,6 +30,7 @@ from Config import Config
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from Storage.StorageCharacter import StorageCharacter
 from Widgets.Display.InfoWidget import InfoWidget
+from Widgets.Display.AttributeWidget import AttributeWidget
 from Widgets.Dialogs.MessageBox import MessageBox
 
 from ui.ui_MainWindow import Ui_MainWindow
@@ -162,7 +163,7 @@ class MainWindow(QMainWindow):
 
 		info = InfoWidget(self)
 		#// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
-		#attributes = AttributeWidget( self )
+		attributes = AttributeWidget( self )
 		#skills = new SkillWidget( this );
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 		#merits = new MeritWidget( this );
@@ -172,7 +173,7 @@ class MainWindow(QMainWindow):
 		#advantages = new AdvantagesWidget( this );
 
 		self.ui.layout_info.addWidget( info )
-		#self.ui.layout_attributes.addWidget( attributes )
+		self.ui.layout_attributes.addWidget( attributes )
 		#ui->layout_skills->addWidget( skills );
 		#ui->layout_merits->addWidget( merits );
 		#ui->layout_morality->addWidget( morality );
