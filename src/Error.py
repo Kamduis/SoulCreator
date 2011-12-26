@@ -58,35 +58,67 @@ class Err(Exception):
 
 
 #eNumber::eNumber() : Exception() {
-	#setMessage( QObject::tr( "Unspecified Problem with a number." ) );
-	#setDescription( QObject::tr( "An unspecified error occured while handling a number or what should at least be a number." ) );
+	#setMessage( self.obj.tr( "Unspecified Problem with a number." ) );
+	#setDescription( self.obj.tr( "An unspecified error occured while handling a number or what should at least be a number." ) );
 #}
 
 #eNotANumber::eNotANumber() : eNumber() {
-	#setMessage( QObject::tr( "Not a Number." ) );
-	#setDescription( QObject::tr( "While expecting a number, somethin other than a number was given." ) );
+	#setMessage( self.obj.tr( "Not a Number." ) );
+	#setDescription( self.obj.tr( "While expecting a number, somethin other than a number was given." ) );
 #}
 
 
-#eList::eList() : Exception() {
-	#setMessage( QObject::tr( "Unspecified Problem with a List or Vector." ) );
-	#setDescription( QObject::tr( "An unspecified error occured while handling a List or Vector." ) );
-#}
 
-#eIndexExceedsRange::eIndexExceedsRange( int idx, int range ) : eList() {
-	#setMessage( QObject::tr( "Index exceeds Range of List or Vector." ) );
-	#setDescription( QObject::tr( "Index %1 exceeds List Range of %2." ).arg( idx ).arg( range ) );
-#}
+
+class ErrList(Err):
+	"""
+	@brief Ausnahme bei Listen.
+	"""
+	
+	def __init__(self):
+		Error.__init__(self)
+		
+		self.setMessage( self.obj.tr( "Unspecified Problem with a List." ) )
+		self.setDescription( self.obj.tr( "An unspecified error occured while handling a List." ) )
+
+
+class ErrIndexExceedsRange(ErrList):
+	"""
+	@brief Index überschreitet Listengröße.
+	"""
+
+	def __init__(self, idx, listLen ):
+		ErrList.__init__(self)
+		
+		self.setMessage( self.obj.tr( "Index exceeds Range of List or Vector." ) )
+		self.setDescription( self.obj.tr( "Index {} exceeds List Range of {}.".format(idx, listLen) ))
+
+
+class ErrListLength(ErrList):
+	"""
+	@brief Listenlänge stimmt nicht mit erwartetem Wert überein.
+	"""
+
+	def __init__(self, expected, got ):
+		ErrList.__init__(self)
+
+		txt = "long"
+		if got < expected:
+			txt = "short"
+		self.setMessage( self.obj.tr( "List to {}.".format(txt) ) )
+		self.setDescription( self.obj.tr( "Got a List of length {}, but got a length of {}.".format(expected, got) ) )
+
+
 
 
 #eDir::eDir( QString dirName ) : Exception() {
-	#setMessage( QObject::tr( "Unspecified Problem with a directory." ) );
-	#setDescription( QObject::tr( "An unspecified error occured while handling directory %1" ).arg( dirName ) );
+	#setMessage( self.obj.tr( "Unspecified Problem with a directory." ) );
+	#setDescription( self.obj.tr( "An unspecified error occured while handling directory %1" ).arg( dirName ) );
 #}
 
 #eDirNotCreated::eDirNotCreated( QString dirName ) : eDir() {
-	#setMessage( QObject::tr( "Cannot create Directory." ) );
-	#setDescription( QObject::tr( "Directory %1 could not be created" ).arg( dirName ) );
+	#setMessage( self.obj.tr( "Cannot create Directory." ) );
+	#setDescription( self.obj.tr( "Directory %1 could not be created" ).arg( dirName ) );
 #}
 
 
@@ -203,95 +235,95 @@ class ErrXmlTooOldVersion(ErrXmlOldVersion):
 
 
 #eSpecies::eSpecies() : Exception() {
-	#setMessage( QObject::tr( "Character Species Problem" ) );
-	#setDescription( QObject::tr( "There is a problem with a character species." ) );
+	#setMessage( self.obj.tr( "Character Species Problem" ) );
+	#setDescription( self.obj.tr( "There is a problem with a character species." ) );
 #}
 
 #eSpeciesNotExisting::eSpeciesNotExisting( cv_Species::SpeciesFlag species ) : eSpecies() {
-	#setMessage( QObject::tr( "Character Species Problem" ) );
-	#setDescription( QObject::tr( "Species %1 is missing." ).arg( species ) );
+	#setMessage( self.obj.tr( "Character Species Problem" ) );
+	#setDescription( self.obj.tr( "Species %1 is missing." ).arg( species ) );
 #}
 
 #eSpeciesNotExisting::eSpeciesNotExisting() : eSpecies() {
-	#setMessage( QObject::tr( "Character Species Problem" ) );
-	#setDescription( QObject::tr( "Species is missing." ) );
+	#setMessage( self.obj.tr( "Character Species Problem" ) );
+	#setDescription( self.obj.tr( "Species is missing." ) );
 #}
 
 
 #eGender::eGender() : Exception() {
-	#setMessage( QObject::tr( "Gender Problem" ) );
-	#setDescription( QObject::tr( "There is a problem with the gender of the character." ) );
+	#setMessage( self.obj.tr( "Gender Problem" ) );
+	#setDescription( self.obj.tr( "There is a problem with the gender of the character." ) );
 #}
 
 #eGenderNotExisting::eGenderNotExisting( cv_Identity::Gender gen ) : eGender() {
-	#setMessage( QObject::tr( "Character Gender Problem" ) );
-	#setDescription( QObject::tr( "Gender %1 does not exist." ).arg( gen ) );
+	#setMessage( self.obj.tr( "Character Gender Problem" ) );
+	#setDescription( self.obj.tr( "Gender %1 does not exist." ).arg( gen ) );
 #}
 
 
 #eTrait::eTrait() : Exception() {
-	#setMessage( QObject::tr( "Character Trait Problem" ) );
-	#setDescription( QObject::tr( "There is a problem with a character trait." ) );
+	#setMessage( self.obj.tr( "Character Trait Problem" ) );
+	#setDescription( self.obj.tr( "There is a problem with a character trait." ) );
 #}
 
 #eTraitNotExisting::eTraitNotExisting() : eTrait() {
-	#setMessage( QObject::tr( "Character Trait Problem" ) );
-	#setDescription( QObject::tr( "Trait is missing." ) );
+	#setMessage( self.obj.tr( "Character Trait Problem" ) );
+	#setDescription( self.obj.tr( "Trait is missing." ) );
 #}
 
 #eTraitCategory::eTraitCategory( cv_AbstractTrait::Category category ) : eTrait() {
-	#setMessage( QObject::tr( "Category of a Trait not valid" ) );
-	#setDescription( QObject::tr( "The Category %1 is not valid at this point." ).arg( QString::number( category ) ) );
+	#setMessage( self.obj.tr( "Category of a Trait not valid" ) );
+	#setDescription( self.obj.tr( "The Category %1 is not valid at this point." ).arg( QString::number( category ) ) );
 #}
 
 #eTraitType::eTraitType( cv_AbstractTrait::Type type ) : eTrait() {
-	#setMessage( QObject::tr( "Type of a Trait not valid" ) );
-	#setDescription( QObject::tr( "The Type %1 is not valid at this point." ).arg( QString::number( type ) ) );
+	#setMessage( self.obj.tr( "Type of a Trait not valid" ) );
+	#setDescription( self.obj.tr( "The Type %1 is not valid at this point." ).arg( QString::number( type ) ) );
 #}
 
 
 #ePrint::ePrint() : Exception() {
-	#setMessage( QObject::tr( "Printing Problem" ) );
-	#setDescription( QObject::tr( "There is a problem while trying to print the character sheet." ) );
+	#setMessage( self.obj.tr( "Printing Problem" ) );
+	#setDescription( self.obj.tr( "There is a problem while trying to print the character sheet." ) );
 #}
 
 #eTraitsExceedSheetCapacity::eTraitsExceedSheetCapacity( cv_AbstractTrait::Type type, int maxNumber ) : ePrint() {
-	#setMessage( QObject::tr( "Too many %1 to print on character sheet." ).arg( cv_AbstractTrait::toString( type, true ) ) );
-	#setDescription( QObject::tr( "Trying to print too many %1. The character sheet hat only room for %2" ).arg( cv_AbstractTrait::toString( type, true ) ).arg( maxNumber ) );
+	#setMessage( self.obj.tr( "Too many %1 to print on character sheet." ).arg( cv_AbstractTrait::toString( type, true ) ) );
+	#setDescription( self.obj.tr( "Trying to print too many %1. The character sheet hat only room for %2" ).arg( cv_AbstractTrait::toString( type, true ) ).arg( maxNumber ) );
 #}
 
 #eValueExceedsSheetCapacity::eValueExceedsSheetCapacity( int value, QString name ) : ePrint() {
-	#setMessage( QObject::tr( "A value exceeds the capacity of the Charactersheet." ) );
-	#setDescription( QObject::tr( "The character sheet has no room for %1 %2" ).arg( QString::number( value ) ).arg( name ) );
+	#setMessage( self.obj.tr( "A value exceeds the capacity of the Charactersheet." ) );
+	#setDescription( self.obj.tr( "The character sheet has no room for %1 %2" ).arg( QString::number( value ) ).arg( name ) );
 #}
 
 
 #eEntry::eEntry() : Exception() {
-	#setMessage( QObject::tr( "Entry Problem." ) );
-	#setDescription( QObject::tr( "There is a problem with an expected Input." ) );
+	#setMessage( self.obj.tr( "Entry Problem." ) );
+	#setDescription( self.obj.tr( "There is a problem with an expected Input." ) );
 #}
 
 #eUserEntry::eUserEntry() : eEntry() {
-	#setMessage( QObject::tr( "User Entry Problem." ) );
-	#setDescription( QObject::tr( "There is a problem with an expected User Input." ) );
+	#setMessage( self.obj.tr( "User Entry Problem." ) );
+	#setDescription( self.obj.tr( "There is a problem with an expected User Input." ) );
 #}
 
 #eMissingUserEntry::eMissingUserEntry() : eUserEntry() {
-	#setMessage( QObject::tr( "Missing User Entry." ) );
-	#setDescription( QObject::tr( "An expected User Input is missing." ) );
+	#setMessage( self.obj.tr( "Missing User Entry." ) );
+	#setDescription( self.obj.tr( "An expected User Input is missing." ) );
 #}
 
 
 #eWerewolfShape::eWerewolfShape() {
-	#setMessage( QObject::tr( "Problem with werewolf shape." ) );
-	#setDescription( QObject::tr( "A Probklem regarding a shape of the werewolf has occured." ) );
+	#setMessage( self.obj.tr( "Problem with werewolf shape." ) );
+	#setDescription( self.obj.tr( "A Probklem regarding a shape of the werewolf has occured." ) );
 #}
 #eWerewolfShapeNotExisting::eWerewolfShapeNotExisting( cv_Shape::WerewolfShape shape ): eWerewolfShape() {
-	#setMessage( QObject::tr( "Shape not existing." ) );
-	#setDescription( QObject::tr( "The chosen Shape %1 does not exist." ).arg( shape ) );
+	#setMessage( self.obj.tr( "Shape not existing." ) );
+	#setDescription( self.obj.tr( "The chosen Shape %1 does not exist." ).arg( shape ) );
 #}
 #eWerewolfShapeNotExisting::eWerewolfShapeNotExisting( QString shape ): eWerewolfShape() {
-	#setMessage( QObject::tr( "Shape not existing." ) );
-	#setDescription( QObject::tr( "The chosen Shape %1 does not exist." ).arg( shape ) );
+	#setMessage( self.obj.tr( "Shape not existing." ) );
+	#setDescription( self.obj.tr( "The chosen Shape %1 does not exist." ).arg( shape ) );
 #}
 

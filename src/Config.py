@@ -25,12 +25,6 @@ from __future__ import division, print_function
 from PySide.QtCore import QSize
 from PySide.QtGui import QColor
 
-##include "CMakeConfig.h"
-
-#// #include "Exceptions/Exception.h"
-
-##include "Config.h"
-
 
 
 
@@ -51,6 +45,9 @@ class Config():
 
 	# Konfigurationsdatei
 	configFile = "config.ini"
+
+	# Verzeichnisname für gespeicherte Charaktere
+	saveDir = "save"
 
 	# Vordefinierte Farben
 	importantTextColorName = "darkBlue"

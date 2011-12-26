@@ -83,7 +83,7 @@ class TraitDots(QWidget):
 		self.__colorFrame = QColor( 0, 0, 0 )
 
 		#connect( self, SIGNAL( maximumChanged( int ) ), self, SLOT( resetMinimumSize( int ) ) );
-		#self.valueChanged.connect(self.update)
+		self.maximumChanged.connect(self.resetMinimumSize)
 
 
 	# Das automatisch ausgelöste paintEvent, das das Widget bei jeder Fensterveränderung neu zeichnet.
@@ -190,29 +190,29 @@ class TraitDots(QWidget):
 		self.update()
 
 
-#bool TraitDots::readOnly() const {
-	#return v_readOnly;
-#}
+	def readOnly(self):
+		return self.__readOnly
 
-#void TraitDots::setReadOnly( bool sw ) {
-	#if ( v_readOnly != sw ) {
-		#v_readOnly = sw;
-	#}
-#}
+	def setReadOnly( self, sw ):
+		"""
+		Bestimmt, ob das Widget vom Benutzer direkt verändert werden kann.
+		"""
+		
+		if ( self.__readOnly != sw ):
+			self.__readOnly = sw
 
 
-
-### Ist anatomisch nicht sehr sinnvoll
-##### Doppelklick soll den Wert entweder auf 0 setzen, wenn er vorher nicht 0 war oder ihn auf das Maximum setzen.
-###void TraitDots::mouseDoubleClickEvent(QMouseEvent *event){
-###	if (value() == 0)
-###		setValue( maximum() );
-###	else
-###		setValue( 0 );
-###
-###	## Neu zeichnen
-###	update();
-###}
+	### Ist anatomisch nicht sehr sinnvoll
+	##### Doppelklick soll den Wert entweder auf 0 setzen, wenn er vorher nicht 0 war oder ihn auf das Maximum setzen.
+	###void TraitDots::mouseDoubleClickEvent(QMouseEvent *event){
+	###	if (value() == 0)
+	###		setValue( maximum() );
+	###	else
+	###		setValue( 0 );
+	###
+	###	## Neu zeichnen
+	###	update();
+	###}
 
 
 
@@ -229,18 +229,20 @@ class TraitDots(QWidget):
 #}
 
 
-
-
-### Ändert sich der Maximalwert, ändert sich auch die minimale Breite, die das Widget in Anspruch nicmmt
-#void TraitDots::resetMinimumSize( int sizeX ) {
-	#setMinimumWidth( sizeX * v_minimumSizeY );
-#}
-
-
 	def value(self):
 		return self.__value
 
 	def setValue( self, value ):
+		"""
+		Speichert den aktuellen Wert des Widgets.
+
+		Dieser Wert stellt die Zahl der ausgefüllten Punkte dar. Die Gesamtzahl der dargestellten Punkte ist in \ref maximum() gespeichert.
+
+		Soll value auf einen Wert gesetzt werden, der über dem Maximum liegt, wird er nur auf das Maximum gesetzt, soll er unter das Minimum gesetzt werden, wird er auf Minimum gesetzt.
+
+		Soll value auf einen verbotenen Wert gesetzt werden, wird er auf den nächstkleineren, erlaubten Wert gesetzt.
+		"""
+		
 		# Negative Werte werden nicht Übernommen
 		if ( value >= 0 ):
 			# Reduziere den zu setzenden Wert solange um 1, bis er unter dem Maximum und nicht in der v_forbiddenList liegt.
@@ -272,6 +274,7 @@ class TraitDots(QWidget):
 
 	def setMinimum( self, value ):
 		"""
+		Legt fest, wieviele Punkte mindestens ausgefüllt sein müssen.
 		"""
 		
 		# Negative Werte werden nicht Übernommen
@@ -297,6 +300,10 @@ class TraitDots(QWidget):
 		return self.__maximum
 
 	def setMaximum( self, value ):
+		"""
+		Der Maximalwert bestimmt, wieviele Punkte insgesamt angezeigt werden.
+		"""
+		
 		# Negative Werte werden nicht Übernommen
 		if ( value >= 0 ):
 			# Signal aussenden, wenn der Wert /verändert/ wurde
@@ -321,6 +328,11 @@ class TraitDots(QWidget):
 			## Ist das neue Maximum kleiner als der aktuell angezeigte Wert, muß dieser auf das Maximum gesetzt werden.
 			if ( value < self.__value ):
 				self.setValue(value)
+
+
+	# Ändert sich der Maximalwert, ändert sich auch die minimale Breite, die das Widget in Anspruch nicmmt
+	def resetMinimumSize( self, sizeX ):
+		self.setMinimumWidth( sizeX * self.__minimumSizeY)
 
 
 
@@ -364,77 +376,91 @@ class TraitDots(QWidget):
 #}
 
 
-### Setzte die verbotenen Werte
-### Beachtet noch nicht, daß ein aktueller Wert nach einer veränderung der verbotenen Werte erhalten bleibt, obwohl er inzsichen verboten ist.
-#void TraitDots::setForbiddenValues( QList<int> *values ) {
-	#v_forbiddenValues = values;
+	def setForbiddenValues( sel, values ):
+		"""
+		Über diese Funktion wird eine Liste der verbotenen Werte gesetzt.
 
-	### den aktuelle Minimum suchen und eventuell entfernen. Das Minimum muß immer erlaubt sein.
+		Beachtet noch nicht, daß ein aktueller Wert nach einer veränderung der verbotenen Werte erhalten bleibt, obwohl er inzsichen verboten ist.
+		"""
+		
+		self.__forbiddenValues = values
 
-	#while ( v_forbiddenValues.contains( minimum() ) ) {
-		#v_forbiddenValues.removeAt( v_forbiddenValues.indexOf( minimum() ) );
+		# Das aktuelle Minimum suchen und eventuell entfernen. Das Minimum muß immer erlaubt sein.
+		if self.__minimum in self.__forbiddenValues:
+			self.__forbiddenValues.remove(self.__minimum)
+
+
+	def setAllowedValues( self, values ):
+		"""
+		Über diese Funktion wird eine Liste der erlaubten Werte gesetzt.
+		
+		Da es manchmal einfacher ist, erlaubte Werte einzugeben, müssen diese entsprechend Übersetzt werden, ehe sie in die self.__forbiddenList eingesetzt werden.
+		"""
+		
+		# Neue List erstellen und mit den Werten aus dem Argument fÜllen. Aber da Werte kleiner 0 nie erlaubt sind, werden diese garnicht erst übernommen.
+		tmpList = values
+
+		for item in tmpList:
+			if item < 0:
+				tmpList.remove(item)
+
+		# Neue Liste sortieren
+		tmpList.sort()
+
+		# Das neue Minimum entspricht dem Wert an Index 0 der Liste
+		self.setMinimum( tmpList[0] )
+
+		# Das neue Maximum bleibt unverändert, wenn es größer ist als der größte erlaubte Wert. Es werden alle maximal möglichen Punkte angezeigt, aber sie können eben nicht alle ausgefÜllt werden. Ist es allersdins kleiner wird es auf den größten erlaubten Wert gesetzt.
+		if tmpList[:-1] > self.__maximum:
+			self.setMaximum( tmpList[:-1] )
+
+		# Eine Liste beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumetn genannt werden.
+		self.__forbiddenValues = range(self.__maximum)[self.__minimum:]
+
+		for item in tmpList:
+			if item in self.__forbiddenValues:
+				self.__forbiddenValues.remove(item)
+
+
+	def addAllowedValue( self, value ):
+		"""
+		Fügt einen erlaubten Wert hinzu.
+		"""
+		
+		# value aus self.__forbiddenList entfernen.
+		if ( value in self.__forbiddenValues ):
+			self.__forbiddenValues.remove( value )
+
+
+	def addForbiddenValue( self, value ):
+		"""
+		Fügt einen verbotenen Wert hinzu.
+		"""
+
+		if ( value in self.__forbiddenValues ):
+			self.__forbiddenValues.append( value )
+
+			# Liste wieder sortieren
+			self.__forbiddenValues.sort()
+
+
+	#void TraitDots::forbidAll() {
+		#"""
+		#Verbiete alle Werte.
+		
+		#\note Es werden alle Werte verboten. Und zwar jeder Einzelne Wert zwischen minimum() und maximum() (einschließlich beider).
+		
+		#\warning Gefährlich, da bei einer Veränderung von minimum() und maximum() die Verbotenen Werte nicht verändert werden.
+		#"""
+		
+		#for ( int i = minimum(); i < maximum() + 1; ++i ) {
+			#addForbiddenValue( i );
+		#}
 	#}
-#}
 
-
-### Das es manchmal einfacher ist, erlaubte Werte einzugeben, mÜssen diese entsprechend Übersetzt werden, ehe sie in die v_forbiddenList eingesetzt werden.
-#void TraitDots::setAllowedValues( QList<int> *values ) {
-	### Neue List erstellen und mit den Werten aus dem Argument fÜllen. Aber da Werte kleiner 0 nie erlaubt sind, werden diese garnicht erst Übernommen
-	#QList<int> *tmpList = new QList<int>();
-
-	#for ( int i = 0; i < values.size(); ++i ) {
-		#if ( values.at( i ) >= 0 )
-			#tmpList.append( values.at( i ) );
+	#void TraitDots::allowAll() {
+		#"""
+		#Erlaubt alle Werte zwischen und einschließlich Minimum und Maximum.
+		#"""
+		#v_forbiddenValues.clear();
 	#}
-
-	### Neue Liste sortieren
-	#qSort( tmpList.begin(), tmpList.end() );
-
-	### Das neue Minimum entspricht dem Wert an Index 0 der Liste
-	#setMinimum( tmpList.at( 0 ) );
-
-	### Das neue Maximum bleibt unverändert, wenn es größer ist als der größte erlaubte Wert. Es werden alle maximal möglichen Punkte angezeigt, aber sie können eben nicht alle ausgefÜllt werden. Ist es allersgins kleiner wird es auf den größten erlaubten wert gesetzt.
-	#if ( tmpList.at( tmpList.size() - 1 ) > maximum() )
-		#setMaximum( tmpList.at( tmpList.size() - 1 ) );
-
-	### Eine Schleife beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumetn genannt werden.
-	#v_forbiddenValues.clear();
-
-	#for ( int i = minimum(); i <= maximum(); ++i ) {
-		#if ( !tmpList.contains( i ) )
-			#v_forbiddenValues.append( i );
-	#}
-
-	#delete tmpList;
-#}
-
-
-### FÜgt einen erlaubten Wert hinzu
-#void TraitDots::addAllowedValue( int value ) {
-	### value aus v_forbiddenList entfernen.
-	#if ( v_forbiddenValues.contains( value ) ) {
-		#v_forbiddenValues.removeAll( value );
-	#}
-#}
-
-
-### FÜgt einen verbotenen Wert hinzu
-#void TraitDots::addForbiddenValue( int value ) {
-	#if ( !v_forbiddenValues.contains( value ) ) {
-		#v_forbiddenValues.append( value );
-
-		### Liste wieder sortieren
-		#qSort( v_forbiddenValues.begin(), v_forbiddenValues.end() );
-	#}
-#}
-
-
-#void TraitDots::forbidAll() {
-	#for ( int i = minimum(); i < maximum() + 1; ++i ) {
-		#addForbiddenValue( i );
-	#}
-#}
-
-#void TraitDots::forbidNone() {
-	#v_forbiddenValues.clear();
-#}

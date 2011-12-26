@@ -64,8 +64,8 @@ class TraitLine(QWidget):
 		#connect( button, SIGNAL( clicked( bool ) ), self, SIGNAL( specialtiesClicked( bool ) ) );
 		#connect( lineEdit, SIGNAL( textChanged( QString ) ), self, SIGNAL( textChanged( QString ) ) );
 
-		self.setName( name );
-		#setValue( value );
+		self.setName( name )
+		self.setValue( value )
 		#// Damit auch bei der Programminitialisierung die Spezialisierungen richtig enabled oder disabled sind.
 		#enableSpecialties( value );
 

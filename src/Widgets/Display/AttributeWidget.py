@@ -25,9 +25,9 @@ from __future__ import division, print_function
 #import traceback
 
 from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame
+from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
 
-#from src.Config import Config
+from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
 from src.Storage.StorageTemplate import StorageTemplate
@@ -58,14 +58,14 @@ class AttributeWidget(QWidget):
 		self.__layoutAttributes = QGridLayout()
 		self.__layout.addLayout( self.__layoutAttributes )
 
-		#// 	QFrame* frame = new QFrame( self );
-		#// 	layout.addWidget( frame );
+		#// 	QFrame* frame = new QFrame( self )
+		#// 	layout.addWidget( frame )
 		#//
-		#// 	QVBoxLayout* layoutHeader = new QVBoxLayout();
-		#// 	frame.setLayout( layoutHeader );
+		#// 	QVBoxLayout* layoutHeader = new QVBoxLayout()
+		#// 	frame.setLayout( layoutHeader )
 
 		self.__labelPower = QLabel( "<b>" + self.tr( "Power" ) + "</b>" )
-		self.__labelPower.setAlignment( Qt.AlignRight );
+		self.__labelPower.setAlignment( Qt.AlignRight )
 
 		self.__labelFinesse = QLabel( "<b>" + self.tr( "Finesse" ) + "</b>" )
 		self.__labelFinesse.setAlignment( Qt.AlignRight )
@@ -93,10 +93,10 @@ class AttributeWidget(QWidget):
 		self.__labelSta = QLabel( self )
 		self.__labelMan = QLabel( self )
 
-		#connect( self, SIGNAL( speciesChanged( bool ) ), labelStr, SLOT( setHidden( bool ) ) );
-		#connect( self, SIGNAL( speciesChanged( bool ) ), labelDex, SLOT( setHidden( bool ) ) );
-		#connect( self, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) );
-		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) );
+		#connect( self, SIGNAL( speciesChanged( bool ) ), labelStr, SLOT( setHidden( bool ) ) )
+		#connect( self, SIGNAL( speciesChanged( bool ) ), labelDex, SLOT( setHidden( bool ) ) )
+		#connect( self, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) )
+		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) )
 
 		for item in categoryList:
 			__list = self.storage.traits( typ, item )
@@ -107,7 +107,7 @@ class AttributeWidget(QWidget):
 			vLine.setFrameStyle( QFrame.VLine)
 			self.__layoutAttributes.addWidget( vLine, 1, actualColumn, len(__list), 1, Qt.AlignHCenter )
 
-			#// 		layout.setColumnMinimumWidth(actualColumn, Config::traitCategorySpace);
+			#// 		layout.setColumnMinimumWidth(actualColumn, Config::traitCategorySpace)
 			self.__layoutAttributes.setColumnStretch( actualColumn, 1 )
 
 			# Jetzt sind wir in der Spalte für die tatsächlchen Attribute
@@ -130,59 +130,54 @@ class AttributeWidget(QWidget):
 				trait = CharaTrait( attrib, self )
 				trait.setValue( 1 )
 
-				self.__layoutAttributes.addWidget( trait, j + 1, actualColumn );
+				self.__layoutAttributes.addWidget( trait, j + 1, actualColumn )
 
-				#if ( trait.category() == cv_AbstractTrait::Physical ) {
-					#if ( trait.name() == "Strength" ) {
-						#layoutAttributes.addWidget( labelStr, j + 1, actualColumn + 1 );
-						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesStr( int ) ) );
+				if ( item == "Physical" ):
+					if ( attrib["name"] == "Strength" ):
+						self.__layoutAttributes.addWidget( self.__labelStr, j + 1, actualColumn + 1 )
+						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesStr( int ) ) )
 					#} else if ( trait.name() == "Dexterity" ) {
-						#layoutAttributes.addWidget( labelDex, j + 1, actualColumn + 1 );
-						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesDex( int ) ) );
+						#layoutAttributes.addWidget( self.__labelDex, j + 1, actualColumn + 1 )
+						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesDex( int ) ) )
 					#} else if ( trait.name() == "Stamina" ) {
-						#layoutAttributes.addWidget( labelSta, j + 1, actualColumn + 1 );
-						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesSta( int ) ) );
-					#}
+						#layoutAttributes.addWidget( self.__labelSta, j + 1, actualColumn + 1 )
+						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesSta( int ) ) )
 				#} else if ( trait.category() == cv_AbstractTrait::Social ) {
-					#if ( trait.name() == "Manipulation" ) {
-						#layoutAttributes.addWidget( labelMan, j + 1, actualColumn + 1 );
-						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesMan( int ) ) );
-					#}
-				#}
+					#if ( self.__trait.name() == "Manipulation" ) {
+						#layoutAttributes.addWidget( labelMan, j + 1, actualColumn + 1 )
+						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesMan( int ) ) )
+
 				j += 1
-			#}
 
-			#// Bei Werwölfen erscheint hier Zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
-			#actualColumn++;
-		#}
+			# Bei Werwölfen erscheint hier Zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
+			actualColumn += 1
 
-		#layout.addSpacing( Config::vSpace );
+		self.__layout.addSpacing( Config.vSpace )
 
-		#QGridLayout* layoutBonus = new QGridLayout();
-		#layout.addLayout( layoutBonus );
+		self.__layoutBonus = QGridLayout()
+		self.__layout.addLayout( self.__layoutBonus )
 
-		#QLabel* labelBonus = new QLabel( self );
-		#labelBonus.setText( tr( "Bonus Attribute:" ) );
+		self.__labelBonus = QLabel( self )
+		self.__labelBonus.setText( self.tr( "Bonus Attribute:" ) )
 
-		#layoutButtonsBonus = new QVBoxLayout();
+		self.__layoutButtonsBonus = QVBoxLayout()
 
-		#buttonsBonus = new QButtonGroup( self );
+		self.__buttonsBonus = QButtonGroup( self )
 
-		#layoutBonus.addWidget( labelBonus, 0, 0, Qt::AlignTop | Qt::AlignLeft );
-		#layoutBonus.addLayout( layoutButtonsBonus, 0, 1 );
-	#// 	layoutBonus.addItem(new QSpacerItem(0,0), 0, 2);
-		#layoutBonus.addWidget( new QWidget( self ), 0, 2 );
-		#layoutBonus.setColumnStretch( 2, 1 );
+		self.__layoutBonus.addWidget( self.__labelBonus, 0, 0, Qt.AlignTop | Qt.AlignLeft )
+		self.__layoutBonus.addLayout( self.__layoutButtonsBonus, 0, 1 )
+	#// 	layoutBonus.addItem(new QSpacerItem(0,0), 0, 2)
+		self.__layoutBonus.addWidget( QWidget( self ), 0, 2 )
+		self.__layoutBonus.setColumnStretch( 2, 1 )
 
-		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( filterBonusAttribute() ) );
-		#connect( character, SIGNAL( breedChanged( QString ) ), self, SLOT( filterBonusAttribute() ) );
-		#connect( buttonsBonus, SIGNAL( buttonClicked( int ) ), self, SLOT( addAttributeBonus( int ) ) );
-		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( emitSpeciesChanged( cv_Species::SpeciesFlag ) ) );
-	#}
+		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( filterBonusAttribute() ) )
+		#connect( character, SIGNAL( breedChanged( QString ) ), self, SLOT( filterBonusAttribute() ) )
+		#connect( buttonsBonus, SIGNAL( buttonClicked( int ) ), self, SLOT( addAttributeBonus( int ) ) )
+		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( emitSpeciesChanged( cv_Species::SpeciesFlag ) ) )
 
 
 #void AttributeWidget::updateshapeValuesStr( int val ) {
-	#QStringList txt;
+	#QStringList txt
 
 	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
 

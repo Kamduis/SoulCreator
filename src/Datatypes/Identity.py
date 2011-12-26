@@ -34,58 +34,63 @@ from __future__ import division, print_function
 
 
 
-class cv_Name(object):
+class Identity(object):
 	"""
-	@brief Diese Klasse speichert den vollständigen Namen eines Charakters.
+	@brief Diese Klasse speichert die vollständige Identität eines Charakters.
 
 	Jede Person besitzt eine Vielzahl von Namen, die über diese Klasse leicht zu verwalten sind.
 
 	Bei Personen mit mehreren Identitäten, sollte eine Liste dieser Klasse angelegt werden, in welcher für jede Identität ein Eintrag vorgenommen wird. Auch ein Künstlername fällt unter diese Kategorie, solta also mit einem weiteren Listeneintrag realisiert werden.
 	"""
 
-	# Liste zur Speicherung von Namen.
-	#
-	# {
-	# 	"forenames": [Name1, Name2, Name3, ...],
-	# 	"surename": Name,
-	# 	"honorname": Name,
-	# 	"nickame": Name,
-	# 	"supername": Name,
-	# }
-	# 
-	# \sa firstName
-	__name = {
-		## Vorname.
-		#
-		# Dieser Name wurde dem Charakter von seinen Eltern gegeben. Es besteht die Möglichkeit, mehr als einen Vornamen zu besitzen, wesewegen diese Variable vom Typ StringList ist. Der erste Vorname in dieser Liste ist immer auch der Rufname.
-		#
-		# \sa self.firstName
-		"forenames": [],
-		## Nachname
-		#
-		# Der Familienname der Eltern.
-		"surename": "",
-		# Ein Beinahme, den der Charakter entweder durch ehrenvolle Taten, durch körperliche Besonderheiten oder durch Mißgeschick erworben hat.
-		#
-		# - der Starke
-		# - die Schöne
-		# - die Kleine
-		# - der Treue
-		"honorname": "",
-		## Spitzname.
-		#
-		# Mit diesem Namen wird der Charakter meist von Freunden (Menschen) gerufen.
-		"nickame": "",
-		## Name unter den Übernatürlichen
-		#
-		# Dies ist der Name, der von den übrigen Kreaturen seiner Spezies verwendet wird.
-		"supername": "",
-	}
-	
 
 	def __init__( self, surename="", firstname="" ):
-		self.__name["surename"] = surename
-		self.__name["forenames"][0] = firstname
+		# Liste zur Speicherung von Namen.
+		#
+		# {
+		# 	"forenames": [Name1, Name2, Name3, ...],
+		# 	"surename": Name,
+		# 	"honorname": Name,
+		# 	"nickame": Name,
+		# 	"supername": Name,
+		# }
+		#
+		# \sa firstName
+		self.__name = {
+			## Vorname.
+			#
+			# Dieser Name wurde dem Charakter von seinen Eltern gegeben. Es besteht die Möglichkeit, mehr als einen Vornamen zu besitzen, wesewegen diese Variable vom Typ StringList ist. Der erste Vorname in dieser Liste ist immer auch der Rufname.
+			#
+			# \sa self.firstName
+			"forenames": [firstname],
+			## Nachname
+			#
+			# Der Familienname der Eltern.
+			"surename": surename,
+			# Ein Beinahme, den der Charakter entweder durch ehrenvolle Taten, durch körperliche Besonderheiten oder durch Mißgeschick erworben hat.
+			#
+			# - der Starke
+			# - die Schöne
+			# - die Kleine
+			# - der Treue
+			"honorname": "",
+			## Spitzname.
+			#
+			# Mit diesem Namen wird der Charakter meist von Freunden (Menschen) gerufen.
+			"nickname": "",
+			## Name unter den Übernatürlichen
+			#
+			# Dies ist der Name, der von den übrigen Kreaturen seiner Spezies verwendet wird.
+			"supername": "",
+			## Geschlecht
+			"gender": "",
+		}
+
+
+	def __getForenames(self):
+		return self.__name["forenames"]
+
+	forenames = property(__getForenames)
 
 
 	def __getFirstName(self):
@@ -97,7 +102,7 @@ class cv_Name(object):
 		
 		return self.__name["forenames"][0]
 
-	firstName = property(__getFirstName)
+	firstname = property(__getFirstName)
 
 
 	def __getSureName(self):
@@ -107,10 +112,10 @@ class cv_Name(object):
 		
 		return self.__name["surename"]
 
-	sureName = property(__getSureName)
+	surename = property(__getSureName)
 
 
-	def __getRealName(self):
+	def __getRealname(self):
 		"""
 		Geburtsname.
 		
@@ -119,13 +124,39 @@ class cv_Name(object):
 		\note Die Kenntnis dieses Namens erleichtert Magiern sympathische Magie.
 		"""
 		
-		if (not self.firstName or not self.sureName):
+		if (not self.firstname or not self.surename):
 			# In diesem Fall benötige ich keinen Abstand zwischen den Namen, da je einer leer ist.
-			return "{}{}".format(firstName, sureName)
+			return "{}{}".format(firstname, surename)
 		else:
-			return "{} {}".format(firstName, sureName)
+			return "{} {}".format(firstname, surename)
 
-	realName = property(__getRealName)
+	realname = property(__getRealname)
+
+	
+	def __getHonorname(self):
+		return self.__name["honorname"]
+
+	honorname = property(__getHonorname)
+
+
+	def __getNickname(self):
+		return self.__name["nickname"]
+
+	nickname = property(__getNickname)
+
+
+	def __getSupername(self):
+		return self.__name["supername"]
+
+	supername = property(__getSupername)
+
+
+	def __getGender(self):
+		return self.__name["gender"]
+
+	gender = property(__getGender)
+
+
 
 
 	@staticmethod
@@ -142,7 +173,7 @@ class cv_Name(object):
 			if type(fores) == list:
 				displayFull = fores[0]
 				for item in fores[1:]:
-					displayFull += " {}".format(item)
+					displayFull += u" {}".format(item)
 			else:
 				displayFull = fores
 
@@ -164,7 +195,7 @@ class cv_Name(object):
 		
 		displayDisplay = first
 		if ( nick ):
-			displayDisplay += " \"{}\"".format(nick)
+			displayDisplay += u" \"{}\"".format(nick)
 
 		# Vor dem Nachnamen nur dann ein Leerzeichen, wenn schon etwas davor steht.
 		if ( displayDisplay ):
@@ -182,7 +213,7 @@ class cv_Name(object):
 		
 		displayHonor = first
 		if ( honor ):
-			displayHonor += " {}".format(honor)
+			displayHonor += u" {}".format(honor)
 
 		return displayHonor
 

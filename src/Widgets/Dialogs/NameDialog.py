@@ -17,12 +17,6 @@ SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY W
 You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-##include <QDebug>
-
-##include "Exceptions/Exception.h"
-#// #include "Config/Config.h"
-
-##include "ReadXml.h"
 
 
 
@@ -35,7 +29,7 @@ from PySide.QtGui import QDialog
 #from src.Storage.StorageTemplate import StorageTemplate
 from src.Storage.StorageCharacter import StorageCharacter
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
-from src.Datatypes.Identity.cv_Name import cv_Name
+from src.Datatypes.Identity import Identity
 
 from ui.ui_NameDialog import Ui_NameDialog
 
@@ -94,9 +88,9 @@ class NameDialog(QDialog):
 		forenames = self.ui.lineEdit_additionalForenames.text().split( " " )
 		forenames.insert( 0, self.ui.lineEdit_firstName.text() )
 
-		self.ui.label_displayFull.setText( cv_Name.displayNameFull( self.ui.lineEdit_surename.text(), forenames ) )
-		self.ui.label_displayDisplay.setText( cv_Name.displayNameDisplay( self.ui.lineEdit_surename.text(), self.ui.lineEdit_firstName.text(), self.ui.lineEdit_nickname.text() ) )
-		self.ui.label_displayHonorific.setText( cv_Name.displayNameHonor( self.ui.lineEdit_firstName.text(), self.ui.lineEdit_honorificName.text() ) )
+		self.ui.label_displayFull.setText( Identity.displayNameFull( self.ui.lineEdit_surename.text(), forenames ) )
+		self.ui.label_displayDisplay.setText( Identity.displayNameDisplay( self.ui.lineEdit_surename.text(), self.ui.lineEdit_firstName.text(), self.ui.lineEdit_nickname.text() ) )
+		self.ui.label_displayHonorific.setText( Identity.displayNameHonor( self.ui.lineEdit_firstName.text(), self.ui.lineEdit_honorificName.text() ) )
 		self.ui.label_displaySuper.setText( self.ui.lineEdit_specialName.text() )
 
 

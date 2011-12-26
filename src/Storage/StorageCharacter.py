@@ -22,7 +22,10 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject
+from PySide.QtCore import QObject, Signal
+
+from src.Datatypes.Identity import Identity
+from src.Error import ErrListLength
 
 
 
@@ -40,6 +43,17 @@ class StorageCharacter(QObject):
 	StorageCharacter* character = StorageCharacter::getInstance();
 	\endcode
 	"""
+
+
+	speciesChanged = Signal(str)
+	traitChanged = Signal(object)
+	virtueChanged = Signal(str)
+	viceChanged = Signal(str)
+	breedChanged = Signal(str)
+	factionChanged = Signal(str)
+	superTraitChanged = Signal(int)
+	moralityChanged = Signal(int)
+	armorChanged = Signal(object)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -77,24 +91,22 @@ class StorageCharacter(QObject):
 
 			QObject.__init__(self, parent)
 
+			self.__modified = False
+			self.__species = ""
+			self.__virtue = ""
+			self.__vice = ""
+			self.__breed = ""
+			self.__faction = ""
+			self.__superTrait = 0
+			self.__morality = 0
+			self.__armor = [0, 0]
+
+			identity = Identity()
+			self.__identities = [identity]
 
 
 
 
-
-#QString StorageCharacter::v_virtue = "";
-#QString StorageCharacter::v_vice = "";
-#QString StorageCharacter::v_breed = "";
-#QString StorageCharacter::v_faction = "";
-#int StorageCharacter::v_superTrait = 0;
-#int StorageCharacter::v_morality = 0;
-#int StorageCharacter::v_armorGeneral = 0;
-#int StorageCharacter::v_armorFirearms = 0;
-#bool StorageCharacter::v_modified = false;
-#cv_IdentityList StorageCharacter::v_identities;
-#// QList< cv_Trait > StorageCharacter::v_traits;
-#QList< Trait* > StorageCharacter::v_traits2;
-#cv_Species::SpeciesFlag StorageCharacter::v_species;
 #QList< cv_Derangement > StorageCharacter::v_derangements;
 
 
@@ -123,54 +135,62 @@ class StorageCharacter(QObject):
 	#connect (this, SIGNAL(realIdentityChanged(cv_Identity)), this, SLOT(emitNameChanged(cv_Identity)));
 #}
 
-#StorageCharacter::~StorageCharacter() {
-	#delete storage;
-#}
+	def species(self):
+		"""
+		Gibt die Spezies des Charakters aus.
+		"""
+		
+		return self.__species
 
-#cv_Species::SpeciesFlag StorageCharacter::species() const {
-	#return v_species;
-#}
+	def setSpecies( self, species ):
+		"""
+		Legt die Spezies des Charakters fest.
+		"""
+		
+		if ( self.__species != species ):
+			self.__species = species
 
-#void StorageCharacter::setSpecies( cv_Species::SpeciesFlag species ) {
-	#if ( v_species != species ) {
-		#v_species = species;
+			Debug.debug("Spezies in Speicher verändert!")
 
-#// 		qDebug() << Q_FUNC_INFO << "Spezies in Speicher verändert!";
-
-		#emit speciesChanged( species );
-	#}
-#}
-
-#cv_IdentityList StorageCharacter::identities() const {
-	#return v_identities;
-#}
-
-#void StorageCharacter::insertIdentity( int index, cv_Identity id ) {
-	#v_identities.insert( index, id );
-
-	#emit identityChanged( id );
-#}
-
-#void StorageCharacter::addIdentity( cv_Identity id ) {
-	#int index = identities().count();
-	#insertIdentity( index, id );
-
-	#emit identityChanged( id );
-#}
-
-#void StorageCharacter::setRealIdentity( cv_Identity id ) {
-	#if ( v_identities.count() > 0 ) {
-		#v_identities.replace( 0, id );
-	#} else {
-		#insertIdentity( 0, id );
-	#}
-
-	#emit identityChanged( id );
-
-	#emit realIdentityChanged( id );
-#}
+			self.speciesChanged.emit( species )
 
 
+	def __getIdentities(self):
+		"""
+		Gibt eine Liste aller Identitäten des Charkaters aus.
+		"""
+		
+		return self.__identities
+
+	identities = property(__getIdentities)
+
+	def insertIdentity( self, index, identity ):
+		"""
+		Fügt eine neue Identität an der angegebenen Stelle ein.
+		"""
+		
+		self.__identities.insert( index, identity )
+		self.identityChanged.emit( identity )
+
+	def addIdentity( self, identity ):
+		"""
+		Hängt eine neue Identität an die Liste aller Identitäten des Charkaters an.
+		"""
+		
+		self.__identities.append( identity )
+		self.identityChanged.emit( identity )
+
+	def setRealIdentity( self, identity ):
+		"""
+		Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer Index 0 in der \ref self.__identities -Liste
+		
+		\todo Momentan ist dies die einzige identität, die von diesem programm genutzt wird.
+		"""
+
+		if self.__identities[0] != identity:
+			self.__identities[0] = identity
+			self.identityChanged.emit( identity )
+			self.realIdentityChanged.emit( identity )
 
 
 #QList< Trait* >* StorageCharacter::traits() const {
@@ -222,24 +242,18 @@ class StorageCharacter(QObject):
 		return self.__traits[typ][category][:-1]
 
 
-#void StorageCharacter::modifyTrait( cv_Trait trait ) {
-	#for ( int i = 0; i < v_traits2.count(); ++i ) {
-		#if ( trait.type() == v_traits2.at( i ).type() && trait.category() == v_traits2.at( i ).category() && trait.name() == v_traits2.at( i ).name() ) {
-			#if ( !v_traits2.at( i ).custom() || trait.customText() == v_traits2.at( i ).customText() || v_traits2.at( i ).customText().isEmpty() ) {
-				#// Custom bleibt immer gleich.
-				#v_traits2[i].setValue( trait.value() );
-				#v_traits2[i].setCustomText( trait.customText() );
-				#v_traits2[i].setDetails( trait.details() );
+	def modifyTrait( self, typ, category, trait ):
+		"""
+		Ändert eine Eigenschaft im Speicher.
+		"""
 
-#// 				// Dieses Signal benötige ich wegen der Prerequisites einiger Merits. Diese müssen kontrolliert werden, wann immer sich eine Eigenschaft ändert, welche Teil dieser Voraussetzungen sein könnte.
-#// 				emit traitChanged( v_traits2[i] );
-
-				#break;
-			#}
-		#}
-	#}
-#}
-
+		for item in self.__traits[typ][category]:
+			if trait["name"] == item["name"]:
+				if item["value"] != trait["value"]:
+					item["value"] = trait["value"]
+					self.traitChanged.emit(item)
+				# Es fehlen noch "customText" und "Details"
+				break
 
 
 #QList< cv_Derangement >* StorageCharacter::derangements() const {
@@ -346,90 +360,150 @@ class StorageCharacter(QObject):
 #}
 
 
-#QString StorageCharacter::virtue() const {
-	#return v_virtue;
-#}
+	def virtue(self):
+		"""
+		Tugend des Charakters
+		"""
+		
+		return self.__virtue
 
-#void StorageCharacter::setVirtue( QString txt ) {
-	#if ( v_virtue != txt ) {
-		#v_virtue = txt;
-		#emit virtueChanged( txt );
-	#}
-#}
+	def setVirtue( self, virtue ):
+		"""
+		Verändert die Tugend.
 
-#QString StorageCharacter::vice() const {
-	#return v_vice;
-#}
+		Bei einer Veränderung wird das Signal virtueChanged() ausgesandt.
+		"""
 
-#void StorageCharacter::setVice( QString txt ) {
-	#if ( v_vice != txt ) {
-		#v_vice = txt;
-		#emit viceChanged( txt );
-	#}
-#}
-
-#QString StorageCharacter::breed() const {
-	#return v_breed;
-#}
-
-#void StorageCharacter::setBreed( QString txt ) {
-	#if ( v_breed != txt ) {
-		#v_breed = txt;
-		#emit breedChanged( txt );
-	#}
-#}
-
-#QString StorageCharacter::faction() const {
-	#return v_faction;
-#}
-
-#void StorageCharacter::setFaction( QString txt ) {
-	#if ( v_faction != txt ) {
-		#v_faction = txt;
-		#emit factionChanged( txt );
-	#}
-#}
+		if ( self.__virtue != virtue ):
+			self.__virtue = virtue
+			self.virtueChanged.emit( virtue )
 
 
-#int StorageCharacter::superTrait() const {
-	#return v_superTrait;
-#}
+	def vice(self):
+		"""
+		Laster des Charakters
+		"""
 
-#void StorageCharacter::setSuperTrait( int value ) {
-	#if ( v_superTrait != value ) {
-		#v_superTrait = value;
-		#emit superTraitChanged( value );
-	#}
-#}
+		return self.__vice
 
-#int StorageCharacter::morality() const {
-	#return v_morality;
-#}
+	def setVice( self, vice ):
+		"""
+		Verändert das Laster.
 
-#void StorageCharacter::setMorality( int value ) {
-	#if ( v_morality != value ) {
-		#v_morality = value;
+		Bei einer Veränderung wird das Signal viceChanged() ausgesandt.
+		"""
 
-		#emit moralityChanged( value );
-	#}
-#}
+		if ( self.__vice != vice ):
+			self.__vice = vice
+			self.__viceChanged.emit( vice )
 
-#int StorageCharacter::armorGeneral() const {
-	#return v_armorGeneral;
-#}
 
-#int StorageCharacter::armorFirearms() const {
-	#return v_armorFirearms;
-#}
+	def breed(self ):
+		"""
+		Brut (Seeming, Path, Clan, Auspice) des Charakters.
+		"""
 
-#void StorageCharacter::setArmor( int general, int firearms ) {
-	#if ( v_armorGeneral != general || v_armorFirearms != firearms ) {
-		#v_armorGeneral = general;
-		#v_armorFirearms = firearms;
+		self.__breed
 
-		#emit armorChanged( general, firearms );
-	#}
-#}
+	def setBreed( self, breed ):
+		"""
+		Verändert die Brut.
+
+		Bei einer Veränderung wird das Signal breedChanged() ausgesandt.
+		"""
+
+		if ( self.__breed != breed ):
+			self.__breed = breed
+			self.breedChanged.emit( breed)
+
+
+	def faction(self):
+		"""
+		Fraktion (Court, order, Covenant, Tribe) des Charakters.
+		"""
+
+		return self.__faction
+
+	def setFaction( self, faction ):
+		"""
+		Verändert die Fraktion.
+
+		Bei einer Veränderung wird das Signal factionChanged() ausgesandt.
+		"""
+
+		if ( self.__faction != faction ):
+			self.__faction = faction
+			self.factionChanged.emit( faction )
+
+
+	def superTrait(self):
+		"""
+		Gibt den Wert des Super-Attributs aus.
+		"""
+
+		return self.__superTrait
+
+	def setSuperTrait( self, value ):
+		"""
+		Verändert den Wert des Super-Attributs.
+		
+		Bei einer Veränderung wird das Signal superTraitChanged() ausgesandt.
+		"""
+
+		if ( self.__superTrait != value ):
+			self.__superTrait = value
+			self.superTraitChanged.emit( value )
+
+
+	def morality(self):
+		"""
+		Gibt den Wert der Moral aus.
+		"""
+
+		return self.__morality
+
+	def setMorality( self, value ):
+		"""
+		Verändert den Wert der Moral.
+		
+		Bei einer Veränderung wird das Signal moralityChanged() ausgesandt.
+		"""
+
+		if ( self.__morality != value ):
+			self.__morality = value
+			self.moralityChanged.emit( value )
+
+	def armor(self):
+		"""
+		Gibt den Wert der getragenen Rüstung aus. Zurückgegeben wird eine Liste mit zwei EInträgen.
+		
+		Die erste Zahl stellt den Rüstungswert gegen alle Angriffe mit Ausnahme von Schußwaffen und Bögen dar.
+
+		Die zweite Zahl stellt dagegen den Rüstungswert gegen Schußwaffen und Bögen dar.
+		"""
+
+		return self.__armor
+
+	def setArmor( self, general, firearms=0 ):
+		"""
+		Verändert den Wert der Rüstung.
+
+		Man kann entweder eine Liste mit den Rüstungswerten übergeben oder je einen Rüstungswert als eigenes Argument.
+		
+		Bei einer Veränderung wird das Signal armorChanged() ausgesandt.
+		"""
+
+		if type(general) == list:
+			if len(general) == len(self.__armor):
+				if self.__armor != general:
+					self.__armor = general
+					self.armorChanged.emit( self.__armor )
+			else:
+				raise ErrListLength(len(self.__armor), len(general))
+		elif ( self.__armor[0] != general or self.__armor[1] != firearms ):
+			self.__armor[0] = general
+			self.__armor[1] = firearms
+			self.armorChanged.emit( self.__armor )
 
 
 #void StorageCharacter::resetCharacter() {
@@ -469,15 +543,13 @@ class StorageCharacter(QObject):
 
 
 
-#bool StorageCharacter::isModifed() const {
-	#return v_modified;
-#}
+	def isModifed(self):
+		return self.__modified
 
-#void StorageCharacter::setModified( bool sw ) {
-	#if ( v_modified != sw ) {
-		#v_modified = sw;
-	#}
-#}
+	def setModified( self, sw ):
+		if ( self.__modified != sw ):
+			self.__modified = sw
+
 
 #void StorageCharacter::emitNameChanged( cv_Identity id )
 #{
