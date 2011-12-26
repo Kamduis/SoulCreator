@@ -57,27 +57,28 @@ class NameDialog(QDialog):
 		self.ui.lineEdit_honorificName.textChanged.connect(self.showNames)
 		self.ui.lineEdit_nickname.textChanged.connect(self.showNames)
 		self.ui.lineEdit_specialName.textChanged.connect(self.showNames)
-	#connect( ui.buttonBox, SIGNAL( accepted() ), this, SLOT( saveNames() ) );
-	#connect( ui.buttonBox, SIGNAL( rejected() ), this, SLOT( reject() ) );
+		self.ui.buttonBox.accepted.connect(self.saveNames)
+		self.ui.buttonBox.rejected.connect(self.reject)
 
-	#// Der Erste Name in der Liste ist der firstName() und damit schon abgehandelt.
-	#QString foreNames;
-	#for( int i = 1; i < character.identities().at( 0 ).foreNames.count(); i++ ) {
-		#foreNames.append( character.identities().at( 0 ).foreNames.at( i ) );
-		#if( i < character.identities().at( 0 ).foreNames.count() - 1 ) {
-			#foreNames.append( " " );
-		#}
-	#}
+		self.getNames()
 
-	#ui.lineEdit_firstName.setText( character.identities().at( 0 ).firstName() );
-	#ui.lineEdit_additionalForenames.setText( foreNames );
-	#ui.lineEdit_surename.setText( character.identities().at( 0 ).sureName );
-	#ui.lineEdit_honorificName.setText( character.identities().at( 0 ).honorificName );
-	#ui.lineEdit_nickname.setText( character.identities().at( 0 ).nickName );
-	#ui.lineEdit_specialName.setText( character.identities().at( 0 ).supernaturalName );
+	def getNames(self):
+		"""
+		Liest die Namen des Charakters aus und zeigt sie gleich an.
 
-	#showNames();
-#}
+		\note Momentan wird nur die echte Identität berücksichtigt, also immer nur die Identität an INdexposition 0.
+		"""
+
+		foreNames = " ".join(self.__character.identities[0].forenames[1:])
+		
+		self.ui.lineEdit_firstName.setText( self.__character.identities[0].firstname )
+		self.ui.lineEdit_additionalForenames.setText( foreNames )
+		self.ui.lineEdit_surename.setText( self.__character.identities[0].surename )
+		self.ui.lineEdit_honorificName.setText( self.__character.identities[0].honorname )
+		self.ui.lineEdit_nickname.setText( self.__character.identities[0].nickname )
+		self.ui.lineEdit_specialName.setText( self.__character.identities[0].supername )
+
+		self.showNames()
 
 
 	def showNames(self):
@@ -94,26 +95,21 @@ class NameDialog(QDialog):
 		self.ui.label_displaySuper.setText( self.ui.lineEdit_specialName.text() )
 
 
-#void NameDialog::saveNames() {
-	#character.realIdentity.foreNames.clear();
+	def saveNames(self):
+		"""
+		Speichert die eingegebenen Namen im Charakter-Speicher.
 
-	#QString foreNames = ui.lineEdit_additionalForenames.text();
-	#QStringList foreNameList;
-	#if( !foreNames.isEmpty() ) {
-		#foreNameList = foreNames.split( " " );
-	#}
+		\note Derzeit wird nur /eine/, die echte Identität unterstüzt. Also wird immer nur die Identität an Indexposition 0 überschrieben.
+		"""
+		
+		foreNames = self.ui.lineEdit_additionalForenames.text()
+		foreNames = foreNames.split(" ")
+		foreNames.insert( 0, self.ui.lineEdit_firstName.text() )
+		self.__character.identities[0].forenames = foreNames
+		self.__character.identities[0].surename = self.ui.lineEdit_surename.text()
+		self.__character.identities[0].honorname = self.ui.lineEdit_honorificName.text()
+		self.__character.identities[0].nickname = self.ui.lineEdit_nickname.text()
+		self.__character.identities[0].supername = self.ui.lineEdit_specialName.text()
 
-	#foreNameList.insert( 0, ui.lineEdit_firstName.text() );
-
-	#cv_Identity id;
-	#id.foreNames = foreNameList;
-	#id.sureName = ui.lineEdit_surename.text();
-	#id.honorificName = ui.lineEdit_honorificName.text();
-	#id.nickName = ui.lineEdit_nickname.text();
-	#id.supernaturalName = ui.lineEdit_specialName.text();
-
-	#character.setRealIdentity( id );
-
-	#accept();
-#}
+		self.accept()
 

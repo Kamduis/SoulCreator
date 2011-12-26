@@ -157,7 +157,7 @@ class StorageCharacter(QObject):
 
 	def __getIdentities(self):
 		"""
-		Gibt eine Liste aller Identitäten des Charkaters aus.
+		Gibt eine Liste aller Identitäten des Charkaters aus. Die Identität an Indexposition 0 ist die echte Identität.
 		"""
 		
 		return self.__identities
@@ -364,7 +364,7 @@ class StorageCharacter(QObject):
 		"""
 		Tugend des Charakters
 		"""
-		
+
 		return self.__virtue
 
 	def setVirtue( self, virtue ):

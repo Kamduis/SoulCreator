@@ -90,12 +90,15 @@ class Identity(object):
 	def __getForenames(self):
 		return self.__name["forenames"]
 
-	forenames = property(__getForenames)
+	def __setForenames(self, names):
+		self.__name["forenames"] = names
+
+	forenames = property(__getForenames, __setForenames)
 
 
 	def __getFirstName(self):
 		"""
-		Rufname
+		Rufname.
 		
 		Bei Personen mit nur einem Vornamen entspricht \ref firstName dem \ref foreName. Bei Personen mit mehreren Vornamen ist \ref firstName immer der allererste \ref foreName.
 		"""
@@ -105,14 +108,17 @@ class Identity(object):
 	firstname = property(__getFirstName)
 
 
-	def __getSureName(self):
+	def __getSurename(self):
 		"""
 		Nachname
 		"""
 		
 		return self.__name["surename"]
 
-	surename = property(__getSureName)
+	def __setSurename(self, name):
+		self.__name["surename"] = name
+
+	surename = property(__getSurename, __setSurename)
 
 
 	def __getRealname(self):
@@ -136,25 +142,37 @@ class Identity(object):
 	def __getHonorname(self):
 		return self.__name["honorname"]
 
-	honorname = property(__getHonorname)
+	def __setHonorname(self, name):
+		self.__name["honorname"] = name
+
+	honorname = property(__getHonorname, __setHonorname)
 
 
 	def __getNickname(self):
 		return self.__name["nickname"]
 
-	nickname = property(__getNickname)
+	def __setNickname(self, name):
+		self.__name["nickname"] = name
+
+	nickname = property(__getNickname, __setNickname)
 
 
 	def __getSupername(self):
 		return self.__name["supername"]
 
-	supername = property(__getSupername)
+	def __setSupername(self, name):
+		self.__name["supername"] = name
+
+	supername = property(__getSupername, __setSupername)
 
 
 	def __getGender(self):
 		return self.__name["gender"]
 
-	gender = property(__getGender)
+	def __setGender(self, gender):
+		self.__name["gender"] = gender
+
+	gender = property(__getGender, __setGender)
 
 
 

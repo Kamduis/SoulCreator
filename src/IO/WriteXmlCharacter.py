@@ -55,7 +55,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		Schreibt die veränderten Eigenschaften in die Datei.
 		"""
 		
-		Debug.debug("Speicherversuch")
+		#Debug.debug("Speicherversuch")
 
 		f.open( QIODevice.WriteOnly )
 		self.setDevice( f )
