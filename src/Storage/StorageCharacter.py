@@ -24,8 +24,10 @@ from __future__ import division, print_function
 
 from PySide.QtCore import QObject, Signal
 
+#from src.Storage.StorageTemplate import StorageTemplate
 from src.Datatypes.Identity import Identity
 from src.Error import ErrListLength
+from src.Debug import Debug
 
 
 
@@ -74,7 +76,7 @@ class StorageCharacter(QObject):
 	# 	...
 	# }
 	__traits = {}
-	
+
 
 	def __new__(type, *args):
 		# Falls es noch keine Instanz dieser Klasse gibt, wird eine erstellt und in _the_instance abgelegt.
@@ -91,6 +93,8 @@ class StorageCharacter(QObject):
 
 			QObject.__init__(self, parent)
 
+			#self.__storage = StorageTemplate( self )
+			
 			self.__modified = False
 			self.__species = ""
 			self.__virtue = ""
@@ -101,39 +105,27 @@ class StorageCharacter(QObject):
 			self.__morality = 0
 			self.__armor = [0, 0]
 
-			identity = Identity()
-			self.__identities = [identity]
+			self.__identity = Identity()
+			self.__identities = [self.__identity]
 
+			self.__derangements = []
 
+			# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
+			# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
+			self.__identity.identityChanged.connect(self.setModified)
+	#connect( self, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( traitChanged( cv_Trait* ) ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( derangementsChanged() ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( virtueChanged( QString ) ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( viceChanged( QString ) ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( breedChanged( QString ) ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( factionChanged( QString ) ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( superTraitChanged( int ) ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( moralityChanged( int ) ), self, SLOT( setModified() ) );
+	#connect( self, SIGNAL( armorChanged( int, int ) ), self, SLOT( setModified() ) );
 
+	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
-#QList< cv_Derangement > StorageCharacter::v_derangements;
-
-
-
-
-
-#StorageCharacter::StorageCharacter( QObject* parent ) : QObject( parent ) {
-	#realIdentity = &v_identities[0];
-
-	#storage = new StorageTemplate( this );
-
-	#// Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
-	#// Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
-	#connect( this, SIGNAL( identityChanged( cv_Identity ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( traitChanged( cv_Trait* ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( derangementsChanged() ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( virtueChanged( QString ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( viceChanged( QString ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( breedChanged( QString ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( factionChanged( QString ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( superTraitChanged( int ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( moralityChanged( int ) ), this, SLOT( setModified() ) );
-	#connect( this, SIGNAL( armorChanged( int, int ) ), this, SLOT( setModified() ) );
-
-	#connect (this, SIGNAL(realIdentityChanged(cv_Identity)), this, SLOT(emitNameChanged(cv_Identity)));
-#}
 
 	def species(self):
 		"""
@@ -150,7 +142,7 @@ class StorageCharacter(QObject):
 		if ( self.__species != species ):
 			self.__species = species
 
-			Debug.debug("Spezies in Speicher verändert!")
+			Debug.debug("Spezies in Speicher verändert zu {}!".format(species))
 
 			self.speciesChanged.emit( species )
 
@@ -221,39 +213,48 @@ class StorageCharacter(QObject):
 	#return list;
 #}
 
+	def __getTraits(self):
+		return self.__traits
 
-	def addTrait( self, typ, category, trait ):
-		"""
-		Fügt dem Speicher eine neue Eigenschaft hinzu.
+	def __setTraits(self, traits):
+		self.__traits = traits
+
+	traits = property(__getTraits, __setTraits)
+
+
+
+	#def addTrait( self, typ, category, trait ):
+		#"""
+		#Fügt dem Speicher eine neue Eigenschaft hinzu.
 		 
-		\note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
+		#\note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
 		 
-		\todo Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
-		"""
+		#\todo Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
+		#"""
 
-		if typ not in self.__traits:
-			self.__traits.setdefault(typ,{})
+		#if typ not in self.__traits:
+			#self.__traits.setdefault(typ,{})
 
-		if category not in self.__traits[typ]:
-			self.__traits[typ].setdefault(category,[])
+		#if category not in self.__traits[typ]:
+			#self.__traits[typ].setdefault(category,[])
 
-		self.__traits[typ][category].append(trait)
+		#self.__traits[typ][category].append(trait)
 
-		return self.__traits[typ][category][:-1]
+		#return self.__traits[typ][category][:-1]
 
 
-	def modifyTrait( self, typ, category, trait ):
-		"""
-		Ändert eine Eigenschaft im Speicher.
-		"""
+	#def modifyTrait( self, typ, category, trait ):
+		#"""
+		#Ändert eine Eigenschaft im Speicher.
+		#"""
 
-		for item in self.__traits[typ][category]:
-			if trait["name"] == item["name"]:
-				if item["value"] != trait["value"]:
-					item["value"] = trait["value"]
-					self.traitChanged.emit(item)
-				# Es fehlen noch "customText" und "Details"
-				break
+		#for item in self.__traits[typ][category]:
+			#if trait["name"] == item["name"]:
+				#if item["value"] != trait["value"]:
+					#item["value"] = trait["value"]
+					#self.traitChanged.emit(item)
+				## Es fehlen noch "customText" und "Details"
+				#break
 
 
 #QList< cv_Derangement >* StorageCharacter::derangements() const {
@@ -287,10 +288,6 @@ class StorageCharacter(QObject):
 		#emit derangementsChanged();
 	#}
 #}
-
-
-
-
 
 
 #void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail > details ) {
@@ -395,7 +392,7 @@ class StorageCharacter(QObject):
 
 		if ( self.__vice != vice ):
 			self.__vice = vice
-			self.__viceChanged.emit( vice )
+			self.viceChanged.emit( vice )
 
 
 	def breed(self ):
@@ -506,47 +503,52 @@ class StorageCharacter(QObject):
 			self.armorChanged.emit( self.__armor )
 
 
-#void StorageCharacter::resetCharacter() {
-	#v_identities.reset();
+	def resetCharacter(self, template):
+		# Löschen aller Identitäten.
+		self.__identity.reset()
 
-	#emit realIdentityChanged( v_identities.at( 0 ) );
+		# Standardspezies ist der Mensch.
+		self.setSpecies( template.species[1][0] )
 
-	#setSpecies( cv_Species::Human );
+		#Debug.debug(template.virtues[0])
+		#Debug.debug(template.virtues[0]["name"])
+		self.setVirtue( template.virtues[0]["name"] )
+		self.setVice( template.vices[0]["name"] )
 
-	#setVirtue( storage.virtueNames().at( 0 ) );
-	#setVice( storage.viceNames().at( 0 ) );
+		# Menschen haben eine Leere liste, also kann ich auch die Indizes nicht ändern.
+		#// setBreed(storage.breedNames(species()).at(0));
+		#// setFaction(storage.breedNames(species()).at(0));
 
-	#// Menschen haben eine Leere liste, also kann ich auch die Indizes nicht ändern.
-#// 	setBreed(storage.breedNames(species()).at(0));
-#// 	setFaction(storage.breedNames(species()).at(0));
+		# Alle Eigenschaftswerte löschen, aber Attribute auf Anfangswerte setzen.
+		self.__traits = {}
+		self.__traits.setdefault("Attribute", {})
+		for item in template.traits["Attribute"]:
+			self.__traits["Attribute"].setdefault(item, [])
+			for subitem in template.traits["Attribute"][item]:
+				data = {
+					"name": subitem["name"],
+					"value": 1,
+				}
+				self.__traits["Attribute"][item].append(data)
 
-	#for ( int i = 0; i < v_traits2.count();i++ ) {
-		#if ( v_traits2[i].type() == cv_AbstractTrait::Attribute ) {
-			#v_traits2[i].setValue( 1 );
-		#} else {
-			#v_traits2[i].setValue( 0 );
+			#v_traits2[i].clearDetails();
+
+			#v_traits2[i].setCustomText( "" );
+
+	#// 		emit traitChanged( v_traits2[i] );
 		#}
 
-		#v_traits2[i].clearDetails();
+		#v_derangements.clear();
 
-		#v_traits2[i].setCustomText( "" );
+		#setMorality( Config::derangementMoralityTraitMax );
 
-#// 		emit traitChanged( v_traits2[i] );
-	#}
-
-	#v_derangements.clear();
-
-	#setMorality( Config::derangementMoralityTraitMax );
-
-	#emit characterResetted();
-#}
-
+		#emit characterResetted();
 
 
 	def isModifed(self):
 		return self.__modified
 
-	def setModified( self, sw ):
+	def setModified( self, sw=True ):
 		if ( self.__modified != sw ):
 			self.__modified = sw
 

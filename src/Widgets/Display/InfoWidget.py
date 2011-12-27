@@ -17,12 +17,6 @@ SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY W
 You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-##include <QDebug>
-
-##include "Exceptions/Exception.h"
-#// #include "Config/Config.h"
-
-##include "ReadXml.h"
 
 
 
@@ -104,9 +98,8 @@ class InfoWidget(QWidget):
 		self.__layout.addWidget( self.__labelFaction, 6, 0 )
 		self.__layout.addWidget( self.__factionCombobox, 6, 1 )
 
-#// 	connect(nameLineEdit, SIGNAL(textChanged(QString)), self, SLOT(modifyRealIdentity()));
 		self.__namePushButton.clicked.connect(self.openNameDialog)
-	#connect( genderCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeGender( int ) ) );
+		self.__genderCombobox.currentIndexChanged[str].connect(self.changeGender)
 	#connect( virtueCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeVirtue( int ) ) );
 	#connect( viceCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeVice( int ) ) );
 	#connect( breedCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeBreed( int ) ) );
@@ -132,17 +125,13 @@ class InfoWidget(QWidget):
 		#dialog.show()
 
 
-#void InfoWidget::changeGender( int gen ) {
-	#cv_Identity id = character->identities().at( 0 );
+	def changeGender( self, gender ):
+		"""
+		Legt das Geschlecht des Charakters fest.
+		"""
 
-	#if( gen == 0 ) {
-		#id.gender = cv_Identity::Male;
-	#} else {
-		#id.gender = cv_Identity::Female;
-	#}
+		self.__character.identities[0].gender = gender
 
-	#character->setRealIdentity( id );
-#}
 
 #void InfoWidget::changeVirtue( int idx ) {
 	#character->setVirtue( virtueCombobox->currentText() );

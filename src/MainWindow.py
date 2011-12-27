@@ -33,6 +33,7 @@ from Config import Config
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from IO.WriteXmlCharacter import WriteXmlCharacter
 from Storage.StorageCharacter import StorageCharacter
+from Storage.StorageTemplate import StorageTemplate
 from Widgets.Display.InfoWidget import InfoWidget
 from Widgets.Display.AttributeWidget import AttributeWidget
 from Widgets.Dialogs.MessageBox import MessageBox
@@ -121,8 +122,8 @@ class MainWindow(QMainWindow):
 		self.setWindowTitle( "" );
 		self.setWindowIcon( QIcon( ":/icons/images/WoD.png" ) )
 
+		self.__storage = StorageTemplate( self )
 		self.__character = StorageCharacter()
-		#self.__storage = StorageTemplate( self )
 	#readCharacter = new ReadXmlCharacter();
 		self.__writeCharacter = WriteXmlCharacter()
 	#specialties = new CharaSpecialties( self );
@@ -134,6 +135,7 @@ class MainWindow(QMainWindow):
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
 		self.storeTemplateData()
+		#self.__character.traits = self.__storage.traits()
 		self.populateUi()
 	#activate();
 
@@ -142,8 +144,8 @@ class MainWindow(QMainWindow):
 	#connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
 	#connect( self.ui.actionSettings, SIGNAL( triggered() ), self, SLOT( showSettingsDialog() ) );
-	#connect( self.ui.actionNew, SIGNAL( triggered() ), self, SLOT( newCharacter() ) );
-	#connect( self.ui.actionOpen, SIGNAL( triggered() ), self, SLOT( openCharacter() ) );
+		self.ui.actionNew.triggered.connect(self.newCharacter)
+		self.ui.actionOpen.triggered.connect(self.openCharacter)
 		self.ui.actionSave.triggered.connect(self.saveCharacter)
 	#connect( self.ui.actionExport, SIGNAL( triggered() ), self, SLOT( exportCharacter() ) );
 	#connect( self.ui.actionPrint, SIGNAL( triggered() ), self, SLOT( printCharacter() ) );
@@ -494,56 +496,58 @@ class MainWindow(QMainWindow):
 
 
 
-#void MainWindow.newCharacter() {
-	#// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
-	#if ( maybeSave() ) {
-		#self.__character.resetCharacter();
+	def newCharacter(self):
+		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
+		if ( self.maybeSave() ):
+			self.__character.resetCharacter( self.__storage )
 
-		#// Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
-		#self.__character.setModified( false );
-	#}
-#}
+			# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
+			self.__character.setModified( False )
 
-#void MainWindow.openCharacter() {
-	#// Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
-	#if ( maybeSave() ) {
-		#QString appPath = QApplication.applicationDirPath();
 
-		#// Pfad zum Speicherverzeichnis
-		#QString savePath = appPath + "/" + Config.saveDir();
+	def openCharacter(self):
+		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
+		if ( self.maybeSave() ):
+			#Debug.debug("Open")
+			
+			appPath = getPath()
 
-		#if ( !QDir( savePath ).exists() ) {
-			#savePath = appPath;
-		#}
+			# Pfad zum Speicherverzeichnis
+			savePath = "{}/{}".format(appPath, Config.saveDir)
 
-		#QString filePath = QFileDialog.getOpenFileName( self, tr( "Select Character File" ), savePath, tr( "WoD Characters (*.chr)" ) );
+			# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
+			if ( not os.path.exists( savePath ) ):
+				savePath = appPath
 
-		#if ( !filePath.isEmpty() ) {
-			#// Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
-			#self.__character.resetCharacter();
+			filePath = QFileDialog.getOpenFileName(
+				self,
+				self.tr( "Select Character File" ),
+				savePath,
+				self.tr( "WoD Characters (*.chr)" )
+			)
 
-			#QFile* file = new QFile( filePath );
+			if ( filePath ):
+				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
+				self.__character.resetCharacter( self.__storage )
 
-			#// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
-			#self.__character.resetCharacter();
+				#f = QFile( filePath[0] )
 
-			#try {
-				#readCharacter.read( file );
-			#} except ( eXmlVersion &e ) {
-				#MessageBox.exception( self, e.message(), e.description() );
-			#} except ( eXmlError &e ) {
-				#MessageBox.exception( self, e.message(), e.description() );
-			#} except ( eFileNotOpened &e ) {
-				#MessageBox.exception( self, e.message(), e.description() );
-			#}
+				##try {
+					##readCharacter.read( file );
+				##} except ( eXmlVersion &e ) {
+					##MessageBox.exception( self, e.message(), e.description() );
+				##} except ( eXmlError &e ) {
+					##MessageBox.exception( self, e.message(), e.description() );
+				##} except ( eFileNotOpened &e ) {
+					##MessageBox.exception( self, e.message(), e.description() );
+				##}
 
-			#delete file;
+				##delete file;
+				#f.close()
 
-			#// Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
-			#self.__character.setModified( false );
-		#}
-	#}
-#}
+				##// Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
+				##self.__character.setModified( false );
+
 
 	def saveCharacter(self):
 		appPath = getPath()
@@ -581,7 +585,8 @@ class MainWindow(QMainWindow):
 				MessageBox.exception( self, e.message(), e.description() )
 			except ErrFileNotOpened as e:
 				MessageBox.exception( self, e.message(), e.description() )
-			
+
+			f.close()
 
 			# Unmittelbar nach dem Speichern ist der Charkter natürlich nicht mehr 'geändert'.
 			self.__character.setModified( False )
@@ -704,23 +709,19 @@ class MainWindow(QMainWindow):
 #}
 
 
-#bool MainWindow.maybeSave() {
-	#if ( self.__character.isModifed() ) {
-		#QMessageBox.StandardButton ret;
-		#ret = QMessageBox.warning( self, tr( "Application" ),
-									#tr( "The self.__character has been modified.\n"
-										#"Do you want to save your changes?" ),
-									#QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel );
+	def maybeSave(self):
+		if ( self.__character.isModifed() ):
+			ret = QMessageBox.warning(
+				self, self.tr( "Application" ),
+				self.tr( "The self.__character has been modified.\nDo you want to save your changes?" ),
+				QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel )
 
-		#if ( ret == QMessageBox.Save ) {
-			#saveCharacter();
-		#} else if ( ret == QMessageBox.Cancel ) {
-			#return false;
-		#}
-	#}
+			if ( ret == QMessageBox.Save ):
+				self.saveCharacter()
+			elif ( ret == QMessageBox.Cancel ):
+				return False
 
-	#return true;
-#}
+		return True
 
 
 #void MainWindow.raiseExceptionMessage( QString message, QString description ) {

@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import Qt
+from PySide.QtCore import QObject, Signal
 #from PySide.QtGui import QDialog
 
 ##from src.Config import Config
@@ -34,7 +34,7 @@ from __future__ import division, print_function
 
 
 
-class Identity(object):
+class Identity(QObject):
 	"""
 	@brief Diese Klasse speichert die vollständige Identität eines Charakters.
 
@@ -44,7 +44,17 @@ class Identity(object):
 	"""
 
 
-	def __init__( self, surename="", firstname="" ):
+	# Dieses Signal wird ausgesandt, wann immer sich ein Teil des Namens verändert hat.
+	nameChanged = Signal()
+	# Dieses Signal wird ausgesandt, wann immer sich das Geschlecht geändert hat.
+	genderChanged = Signal(str)
+	# Dieses Signal wird ausgesandt, wann immer sich ein Teil der Identität verändert hat.
+	identityChanged = Signal()
+
+
+	def __init__( self, surename="", firstname="", parent=None ):
+		QObject.__init__(self, parent)
+		
 		# Liste zur Speicherung von Namen.
 		#
 		# {
@@ -86,12 +96,18 @@ class Identity(object):
 			"gender": "",
 		}
 
+		self.nameChanged.connect(self.identityChanged.emit)
+		# Die Lambda-Funktion soll nur das Argument abfangen, damit keine Warnung hervorgerufen wird.
+		self.genderChanged.connect(lambda: self.identityChanged.emit())
+
 
 	def __getForenames(self):
 		return self.__name["forenames"]
 
 	def __setForenames(self, names):
-		self.__name["forenames"] = names
+		if self.__name["forenames"] != names:
+			self.__name["forenames"] = names
+			self.nameChanged.emit()
 
 	forenames = property(__getForenames, __setForenames)
 
@@ -116,7 +132,9 @@ class Identity(object):
 		return self.__name["surename"]
 
 	def __setSurename(self, name):
-		self.__name["surename"] = name
+		if self.__name["surename"] != name:
+			self.__name["surename"] = name
+			self.nameChanged.emit()
 
 	surename = property(__getSurename, __setSurename)
 
@@ -143,7 +161,9 @@ class Identity(object):
 		return self.__name["honorname"]
 
 	def __setHonorname(self, name):
-		self.__name["honorname"] = name
+		if self.__name["honorname"] != name:
+			self.__name["honorname"] = name
+			self.nameChanged.emit()
 
 	honorname = property(__getHonorname, __setHonorname)
 
@@ -152,7 +172,9 @@ class Identity(object):
 		return self.__name["nickname"]
 
 	def __setNickname(self, name):
-		self.__name["nickname"] = name
+		if self.__name["nickname"] != name:
+			self.__name["nickname"] = name
+			self.nameChanged.emit()
 
 	nickname = property(__getNickname, __setNickname)
 
@@ -161,7 +183,9 @@ class Identity(object):
 		return self.__name["supername"]
 
 	def __setSupername(self, name):
-		self.__name["supername"] = name
+		if self.__name["supername"] != name:
+			self.__name["supername"] = name
+			self.nameChanged.emit()
 
 	supername = property(__getSupername, __setSupername)
 
@@ -170,11 +194,19 @@ class Identity(object):
 		return self.__name["gender"]
 
 	def __setGender(self, gender):
-		self.__name["gender"] = gender
+		if self.__name["gender"] != gender:
+			self.__name["gender"] = gender
+			self.genderChanged.emit(gender)
 
 	gender = property(__getGender, __setGender)
 
 
+	def reset(self):
+		for item in self.__name:
+			if type(item) == list:
+				item = []
+			else:
+				item = ""
 
 
 	@staticmethod

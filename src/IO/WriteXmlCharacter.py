@@ -27,6 +27,7 @@ from PySide.QtCore import QObject, QXmlStreamWriter, QIODevice
 
 from src.Config import Config
 from src.Storage.StorageCharacter import StorageCharacter
+from src.Error import ErrTraitType
 from src.Debug import Debug
 
 
@@ -93,47 +94,24 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 
 	def writeCharacterTraits(self):
-		pass
-		#QList< cv_AbstractTrait.Type > types;
-		#types.append( cv_AbstractTrait.Attribute );
-		#types.append( cv_AbstractTrait.Skill );
-		#types.append( cv_AbstractTrait.Merit );
-		#types.append( cv_AbstractTrait.Power );
-		#types.append( cv_AbstractTrait.Flaw );
+		for item in self.__character.traits:
+			try:
+				self.writeStartElement( item )
+			except ErrTraitType as e:
+				Debug.debug(e.message())
 
-		#QList< cv_AbstractTrait.Category > category;
+			for subitem in self.__character.traits[item]:
+				try:
+					self.writeStartElement( subitem )
+				except ErrTraitCategory as e:
+					Debug.debug(e.message)
 
-		#QList< Trait* > list;
-
-		#for ( int i = 0; i < types.count(); ++i ) {
-			#try {
-				#writeStartElement( cv_AbstractTrait.toXmlString( types.at( i ) ) );
-			#} catch ( eTraitType &e ) {
-				#qDebug() << Q_FUNC_INFO << e.message();
-			#}
-
-			#// Liste der Kategorien ist je nach Typ unterschiedlich
-			#category = cv_AbstractTrait.getCategoryList( types.at( i ) );
-
-			#for ( int j = 0; j < category.count(); ++j ) {
-				#list = self.__character.traits( types.at( i ), category.at( j ) );
-
-	#// 			qDebug() << Q_FUNC_INFO << "Type" << types.at(i) << "Category" << categories.at(j) << list.count();
-	#// 			if ( !list.isEmpty() ) {
-
-				#try {
-					#writeStartElement( cv_AbstractTrait.toXmlString( category.at( j ) ) );
-				#} catch ( eTraitCategory &e ) {
-					#qDebug() << Q_FUNC_INFO << e.message();
-				#}
-
-				#for ( int k = 0; k < list.count(); ++k ) {
-					#// Eigenscahften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-					#if ( list.at( k ).value() != 0 ) {
-	#// 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
-						#writeStartElement( "trait" );
-						#writeAttribute( "name", list.at( k ).name() );
-						#writeAttribute( "value", QString.number( list.at( k ).value() ) );
+				for subsubitem in self.__character.traits[item][subitem]:
+					# Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
+					if ( subsubitem["value"] != [0] ):
+						self.writeStartElement( "trait" )
+						self.writeAttribute( "name", subsubitem["name"] )
+						self.writeAttribute( "value", unicode( subsubitem["value"] ) )
 
 	#// 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
 
@@ -150,18 +128,9 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 	#// 					}t
 
-						#writeEndElement();
-					#}
-				#}
-
-	#// 			}
-
-				#writeEndElement();
-			#}
-
-			#writeEndElement();
-		#}
-	#}
+					self.writeEndElement()
+				self.writeEndElement()
+			self.writeEndElement()
 
 
 #void WriteXmlCharacter.writeCharacterDerangements() {
@@ -169,7 +138,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 	#try {
 		#writeStartElement( cv_AbstractTrait.toXmlString( cv_AbstractTrait.Derangement ) );
-	#} catch ( eTraitType &e ) {
+	#} except ( eTraitType &e ) {
 		#qDebug() << Q_FUNC_INFO << e.message();
 	#}
 
@@ -185,7 +154,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 		#try {
 			#writeStartElement( cv_AbstractTrait.toXmlString( category.at( j ) ) );
-		#} catch ( eTraitCategory &e ) {
+		#} except ( eTraitCategory &e ) {
 			#qDebug() << Q_FUNC_INFO << e.message();
 		#}
 

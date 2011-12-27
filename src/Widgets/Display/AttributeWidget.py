@@ -99,7 +99,7 @@ class AttributeWidget(QWidget):
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) )
 
 		for item in categoryList:
-			__list = self.storage.traits( typ, item )
+			__list = self.storage.traits["Attribute"][item]
 
 			actualColumn += 1
 
@@ -124,17 +124,17 @@ class AttributeWidget(QWidget):
 			for attrib in __list:
 				#Debug.debug(id(attrib)
 				# Anlegen der Eigenschaft im Speicher
-				traitData = self.character.addTrait( typ, item, attrib )
+				#traitData = self.character.addTrait( typ, item, attrib )
 
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				trait = CharaTrait( attrib, self )
-				trait.setValue( 1 )
+				#trait = CharaTrait( attrib, self )
+				#trait.setValue( 1 )
 
-				self.__layoutAttributes.addWidget( trait, j + 1, actualColumn )
+				#self.__layoutAttributes.addWidget( trait, j + 1, actualColumn )
 
-				if ( item == "Physical" ):
-					if ( attrib["name"] == "Strength" ):
-						self.__layoutAttributes.addWidget( self.__labelStr, j + 1, actualColumn + 1 )
+				#if ( item == "Physical" ):
+					#if ( attrib["name"] == "Strength" ):
+						#self.__layoutAttributes.addWidget( self.__labelStr, j + 1, actualColumn + 1 )
 						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesStr( int ) ) )
 					#} else if ( trait.name() == "Dexterity" ) {
 						#layoutAttributes.addWidget( self.__labelDex, j + 1, actualColumn + 1 )

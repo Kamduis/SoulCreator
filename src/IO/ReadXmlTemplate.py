@@ -170,7 +170,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				typ = self.name()
 
 				if( typ == "Virtue" or typ == "Vice" ):
-					self.readCharacteristics( species, typ )
+					self.readCharacteristics( typ )
 				elif(typ == "Breed" or
 						typ == "Faction" ):
 					self.readGroups( species, typ, None )
@@ -183,7 +183,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readCharacteristics( self, species, typ, category=None ):
+	def readCharacteristics( self, typ ):
 		"""
 		Liest die Charakteristiken ein.
 
@@ -204,11 +204,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 					traitData = {
 						"name": self.attributes().value( "name" ),
-						"species": species,
 						"age": self.attributes().value( "age" ),
 					}
 
-					self.storage.appendTrait( typ, category, traitData );
+					self.storage.appendCharacteristic( typ, traitData );
 					self.readUnknownElement()
 				else:
 					self.readUnknownElement()

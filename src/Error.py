@@ -261,10 +261,17 @@ class ErrXmlTooOldVersion(ErrXmlOldVersion):
 #}
 
 
-#eTrait::eTrait() : Exception() {
-	#setMessage( self.obj.tr( "Character Trait Problem" ) );
-	#setDescription( self.obj.tr( "There is a problem with a character trait." ) );
-#}
+class ErrTrait(Err):
+	"""
+	@brief Ausnahme, falls Fehler bei den Eigenschaften auftritt.
+	"""
+
+	def __init__(self):
+		Err.__init__(self)
+		
+		self.setMessage( self.obj.tr( "Character Trait Problem" ) )
+		self.setDescription( self.obj.tr( "There is a problem with a character trait." ) )
+
 
 #eTraitNotExisting::eTraitNotExisting() : eTrait() {
 	#setMessage( self.obj.tr( "Character Trait Problem" ) );
@@ -276,10 +283,22 @@ class ErrXmlTooOldVersion(ErrXmlOldVersion):
 	#setDescription( self.obj.tr( "The Category %1 is not valid at this point." ).arg( QString::number( category ) ) );
 #}
 
-#eTraitType::eTraitType( cv_AbstractTrait::Type type ) : eTrait() {
-	#setMessage( self.obj.tr( "Type of a Trait not valid" ) );
-	#setDescription( self.obj.tr( "The Type %1 is not valid at this point." ).arg( QString::number( type ) ) );
-#}
+class ErrTraitType(ErrTrait):
+		"""
+		@brief Ausnahme, falls ein falscher Typ genutzt wird.
+		"""
+
+		def __init__(self, expected, got):
+			ErrTrait.__init__(self)
+			
+			self.setMessage( self.obj.tr( "Type of a Trait not valid" ) )
+			typ = expected
+			if type(expected) == list:
+				typ = ", ".join(expected[:-1])
+				typ += " or "
+				typ += expected[-1]
+
+			self.setDescription( self.obj.tr( "Expected Trait of type {}, but got type {}, which is not valid at this point.".format(typ, got) ) )
 
 
 #ePrint::ePrint() : Exception() {

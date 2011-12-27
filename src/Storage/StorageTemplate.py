@@ -27,6 +27,7 @@ from PySide.QtCore import QObject
 #from src.Config import Config
 #from ReadXml import ReadXml
 from src.Debug import Debug
+from src.Error import ErrTraitType
 
 
 
@@ -101,6 +102,24 @@ class StorageTemplate(QObject):
 	# }
 	__traits = {}
 
+	## Eine Liste aller Tugenden.
+	#
+	# [
+	# 	{"name": Name1, "age": Alter1}
+	# 	{"name": Name2, "age": Alter2}
+	# 	...
+	# ]
+	__virtues = []
+
+	## Eine Liste aller Laster.
+	#
+	# [
+	# 	{"name": Name1, "age": Alter1}
+	# 	{"name": Name2, "age": Alter2}
+	# 	...
+	# ]
+	__vices = []
+
 	# Eine Liste der Effekte der Supereigenschaft.
 	#
 	# {
@@ -161,10 +180,10 @@ class StorageTemplate(QObject):
 		return self.__traits[typ].keys()
 
 
+	def __getSpecies(self):
+		return self.__species
 
-#QList< cv_Species > StorageTemplate::species() const {
-	#return v_species;
-#}
+	species = property(__getSpecies)
 
 
 #QStringList StorageTemplate::traitNames( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
@@ -264,16 +283,33 @@ class StorageTemplate(QObject):
 
 
 
-	def traits( self, typ, category, era=None, age=None ):
+	def __getTraits( self, typ=None, category=None, era=None, age=None ):
 		"""
 		Gibt eine Liste aller Eigenschaften zurück, die den übergebenen Parametern entsprechen.
 		
 		\note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
+
+		\note Ohne Argumente, werden alle Eigenscahften zurückgegeben.
+
+		\note Nur mit typ, werden alle Eigenschaften dieses typs zurückgegeben etc.
 		"""
 
-		result = self.__traits[typ][category]
+		result = []
+		if typ == None:
+			result = self.__traits
+		elif category == None:
+			result = self.__traits[typ]
+		else:
+			result = self.__traits[typ][category]
+
+		## \todo era und age haben noch keinerlei Wirkung
 
 		return result
+
+	def __setTraits(self, traits):
+		self.__traits = traits
+
+	traits = property(__getTraits, __setTraits)
 
 
 #QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
@@ -295,6 +331,22 @@ class StorageTemplate(QObject):
 
 	#return traitsPtr;
 #}
+
+
+	def traitNames( self, typ, category, era=None, age=None ):
+		"""
+		Gibt eine Liste aller Eigenschaftsnamen zurück, die den übergebenen Parametern entsprechen.
+
+		\note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
+		"""
+
+		resultA = self.traits(typ, category, era, age)
+		result = []
+		for item in resultA:
+			result.append(item["name"])
+
+		return result
+
 
 
 #// cv_Trait StorageTemplate::trait( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name ) {
@@ -372,6 +424,24 @@ class StorageTemplate(QObject):
 #}
 
 
+	def __getVirtues(self):
+		return self.__virtues
+
+	def __setVirtues(self, virtues):
+		self.__virtues = virtues
+
+	virtues = property(__getVirtues, __setVirtues)
+
+
+	def __getVices(self):
+		return self.__vices
+
+	def __setVices(self, vices):
+		self.__vices = vices
+
+	vices = property(__getVices, __setVices)
+
+
 #void StorageTemplate::appendTraitBonus( Trait* tr1, QString breed ) {
 	#TraitBonus* lcl_traitBonus = new TraitBonus( tr1, breed );
 
@@ -421,6 +491,19 @@ class StorageTemplate(QObject):
 #cv_CreationPointsList* StorageTemplate::creationPoints() {
 	#return &v_creationPointsList;
 #}
+
+
+	def appendCharacteristic( self, typ, trait ):
+		"""
+		Fügt eine Charakteristik (Tugend oder Laster) zu der entsprechenden Liste hinzu.
+		"""
+
+		if (typ == "Virtue"):
+			self.__virtues.append( trait )
+		elif (typ == "Vice"):
+			self.__vices.append( trait )
+		else:
+			raise ErrTraitType( ("Virtue", "Vice"), typ )
 
 
 	def appendTrait( self, typ, category, traits):
