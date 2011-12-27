@@ -26,8 +26,6 @@ from PySide.QtCore import QObject, Signal
 #from PySide.QtGui import QDialog
 
 ##from src.Config import Config
-#from src.Storage.StorageTemplate import StorageTemplate
-#from src.Storage.StorageCharacter import StorageCharacter
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 #from src.Widgets.Dialogs.NameDialog import NameDialog
 

@@ -26,7 +26,6 @@ from PySide.QtCore import QObject, QXmlStreamWriter, QIODevice
 #from PySide.QtGui import QColor
 
 from src.Config import Config
-from src.Storage.StorageCharacter import StorageCharacter
 from src.Error import ErrTraitType
 from src.Debug import Debug
 
@@ -42,11 +41,11 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 	Es wird nur in die Datei geschrieben, was auch wirklich benötigt wird (Speicherplatz sparen).
 	"""
 
-	def __init__(self, parent=None):
+	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
 		QXmlStreamWriter.__init__(self)
 		
-		self.__character = StorageCharacter()
+		self.__character = character
 
 		self.setAutoFormatting( True )
 

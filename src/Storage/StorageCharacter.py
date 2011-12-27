@@ -24,7 +24,6 @@ from __future__ import division, print_function
 
 from PySide.QtCore import QObject, Signal
 
-#from src.Storage.StorageTemplate import StorageTemplate
 from src.Datatypes.Identity import Identity
 from src.Error import ErrListLength
 from src.Debug import Debug
@@ -39,11 +38,6 @@ class StorageCharacter(QObject):
 	Wird ein Wert durch das Programm geändert, muß der Wert tatsächlich in dieser Klasse verändert werden. Denn der Inhalt dieser Klasse wird beim Speichern in eine Datei geschrieben und beim Laden wird diese Klasse aufgefüllt. Die Anzeige nimmt all ihre Daten aus dieser Klasse.
 
 	Außerdem bietet diese Klasse angenehme Zugriffsfunktionen aus den Informationen, welche zum Programmstart aus den Template-Dateien geladen werden.
-
-	\note Bei dieser Klasse handelt es sich um eine Singleton-Klasse. Es kann stets nur eine Instanz dieser Klasse existieren. Einen zeiger auf diese instanz erzeugt man mittels folgendem Code:
-	\code
-	StorageCharacter* character = StorageCharacter::getInstance();
-	\endcode
 	"""
 
 
@@ -78,41 +72,29 @@ class StorageCharacter(QObject):
 	__traits = {}
 
 
-	def __new__(type, *args):
-		# Falls es noch keine Instanz dieser Klasse gibt, wird eine erstellt und in _the_instance abgelegt.
-		# Diese wird dann jedesmal zurückgegeben.
-		if not '_the_instance' in type.__dict__:
-			type._the_instance = QObject.__new__(type)
-		return type._the_instance
-
 	def __init__(self, parent=None):
-		if not '_ready' in dir(self):
-			# Der Konstruktor wird bei jeder Instanziierung aufgerufen.
-			# Einmalige Dinge wie zum Beispiel die Initialisierung von Klassenvariablen müssen also in diesen Block.
-			self._ready = True
+		QObject.__init__(self, parent)
 
-			QObject.__init__(self, parent)
+		#self.__storage = StorageTemplate( self )
 
-			#self.__storage = StorageTemplate( self )
-			
-			self.__modified = False
-			self.__species = ""
-			self.__virtue = ""
-			self.__vice = ""
-			self.__breed = ""
-			self.__faction = ""
-			self.__superTrait = 0
-			self.__morality = 0
-			self.__armor = [0, 0]
+		self.__modified = False
+		self.__species = ""
+		self.__virtue = ""
+		self.__vice = ""
+		self.__breed = ""
+		self.__faction = ""
+		self.__superTrait = 0
+		self.__morality = 0
+		self.__armor = [0, 0]
 
-			self.__identity = Identity()
-			self.__identities = [self.__identity]
+		self.__identity = Identity()
+		self.__identities = [self.__identity]
 
-			self.__derangements = []
+		self.__derangements = []
 
-			# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
-			# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
-			self.__identity.identityChanged.connect(self.setModified)
+		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
+		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
+		self.__identity.identityChanged.connect(self.setModified)
 	#connect( self, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( traitChanged( cv_Trait* ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( derangementsChanged() ), self, SLOT( setModified() ) );

@@ -32,8 +32,6 @@ from __future__ import division, print_function
 from PySide.QtGui import QComboBox
 
 #from src.Config import Config
-#from src.Storage.StorageTemplate import StorageTemplate
-#from src.Storage.StorageCharacter import StorageCharacter
 
 
 

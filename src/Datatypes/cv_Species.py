@@ -27,7 +27,6 @@ from __future__ import division, print_function
 #from src.Config import Config
 #from src.Error import ErrXmlParsing, ErrXmlOldVersion
 #from ReadXml import ReadXml
-#from src.Storage.StorageTemplate import StorageTemplate
 
 
 

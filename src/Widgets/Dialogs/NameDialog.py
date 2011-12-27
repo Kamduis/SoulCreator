@@ -26,8 +26,6 @@ from __future__ import division, print_function
 from PySide.QtGui import QDialog
 
 ##from src.Config import Config
-#from src.Storage.StorageTemplate import StorageTemplate
-from src.Storage.StorageCharacter import StorageCharacter
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Datatypes.Identity import Identity
 
@@ -43,13 +41,13 @@ class NameDialog(QDialog):
 	Alle Merits darzustellen ist wohl etwas viel. Über diesen Dialog kann der Benutzer auswählen, welche und im Falle von Merits mit Zusatztext, wieviele er angezeigt haben möchte.
 	"""
 
-	def __init__(self, parent=None):
+	def __init__(self, character, parent=None):
 		QDialog.__init__(self, parent)
 
 		self.ui = Ui_NameDialog()
 		self.ui.setupUi(self)
 
-		self.__character = StorageCharacter()
+		self.__character = character
 
 		self.ui.lineEdit_firstName.textChanged.connect(self.showNames)
 		self.ui.lineEdit_additionalForenames.textChanged.connect(self.showNames)

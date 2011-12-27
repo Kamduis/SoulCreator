@@ -31,6 +31,7 @@ from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion
 from Config import Config
 from IO.ReadXmlTemplate import ReadXmlTemplate
+from IO.ReadXmlCharacter import ReadXmlCharacter
 from IO.WriteXmlCharacter import WriteXmlCharacter
 from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
@@ -124,8 +125,8 @@ class MainWindow(QMainWindow):
 
 		self.__storage = StorageTemplate( self )
 		self.__character = StorageCharacter()
-	#readCharacter = new ReadXmlCharacter();
-		self.__writeCharacter = WriteXmlCharacter()
+		self.__readCharacter = ReadXmlCharacter(self.__character)
+		self.__writeCharacter = WriteXmlCharacter(self.__character)
 	#specialties = new CharaSpecialties( self );
 
 		self.ui.pushButton_next.clicked.connect(self.tabNext)
@@ -169,7 +170,7 @@ class MainWindow(QMainWindow):
 
 
 	def storeTemplateData(self):
-		reader = ReadXmlTemplate()
+		reader = ReadXmlTemplate(self.__storage)
 
 		#connect( &reader, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
@@ -189,8 +190,7 @@ class MainWindow(QMainWindow):
 		#// 	// Ich weiß nicht, ob das bei den Attributen so gut ist.
 		#// 	storage.sortTraits();
 
-		info = InfoWidget(self)
-		#// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
+		info = InfoWidget(self.__storage, self.__character, self)
 		attributes = AttributeWidget( self.__storage, self.__character, self )
 		#skills = new SkillWidget( self );
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
@@ -530,20 +530,18 @@ class MainWindow(QMainWindow):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter( self.__storage )
 
-				#f = QFile( filePath[0] )
+				f = QFile( filePath[0] )
 
-				##try {
-					##readCharacter.read( file );
-				##} except ( eXmlVersion &e ) {
-					##MessageBox.exception( self, e.message(), e.description() );
-				##} except ( eXmlError &e ) {
-					##MessageBox.exception( self, e.message(), e.description() );
-				##} except ( eFileNotOpened &e ) {
-					##MessageBox.exception( self, e.message(), e.description() );
-				##}
+				try:
+					self.__readCharacter.read( f )
+				except ErrXmlVersion as e:
+					MessageBox.exception( self, e.message(), e.description() )
+				except ErrXmlParsing as e:
+					MessageBox.exception( self, e.message(), e.description() )
+				except ErrFileNotOpened as e:
+					MessageBox.exception( self, e.message(), e.description() )
 
-				##delete file;
-				#f.close()
+				f.close()
 
 				##// Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 				##self.__character.setModified( false );

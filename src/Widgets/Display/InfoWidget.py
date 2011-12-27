@@ -26,8 +26,6 @@ from PySide.QtCore import Qt
 from PySide.QtGui import QWidget, QGridLayout, QLabel, QPushButton, QComboBox, QIcon
 
 #from src.Config import Config
-from src.Storage.StorageTemplate import StorageTemplate
-from src.Storage.StorageCharacter import StorageCharacter
 from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Widgets.Dialogs.NameDialog import NameDialog
 
@@ -43,11 +41,11 @@ class InfoWidget(QWidget):
 	\todo Bei den Virtues und Vices wird bislang nur der erwachsene behrücksichtigt.
 	"""
 
-	def __init__(self, parent=None):
+	def __init__(self, template, character, parent=None):
 		QWidget.__init__(self, parent)
 		
-		self.__storage = StorageTemplate(self)
-		self.__character = StorageCharacter()
+		self.__storage = template
+		self.__character = character
 
 		self.__layout = QGridLayout()
 		self.setLayout( self.__layout )
@@ -120,7 +118,7 @@ class InfoWidget(QWidget):
 		Ruft einen Dialog auf, in welchem die zahlreichen Namen des Charakters eingetragen werden können.
 		"""
 		
-		dialog = NameDialog( self )
+		dialog = NameDialog( self.__character, self )
 		dialog.exec_()
 		#dialog.show()
 

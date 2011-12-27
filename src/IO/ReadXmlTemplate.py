@@ -29,7 +29,6 @@ from PySide.QtCore import QObject, QFile
 from src.Config import Config
 from src import Error
 from ReadXml import ReadXml
-from src.Storage.StorageTemplate import StorageTemplate
 from src.Debug import Debug
 
 
@@ -63,11 +62,11 @@ class ReadXmlTemplate(QObject, ReadXml):
 	)
 
 
-	def __init__(self, parent=None):
+	def __init__(self, template, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 		
-		self.storage = StorageTemplate()
+		self.storage = template
 
 
 	def read(self):
