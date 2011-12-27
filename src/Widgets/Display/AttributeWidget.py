@@ -30,8 +30,8 @@ from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QBut
 from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
-from src.Storage.StorageTemplate import StorageTemplate
-from src.Storage.StorageCharacter import StorageCharacter
+#from src.Storage.StorageTemplate import StorageTemplate
+#from src.Storage.StorageCharacter import StorageCharacter
 from src.Widgets.Components. CharaTrait import CharaTrait
 from src.Debug import Debug
 
@@ -47,10 +47,11 @@ class AttributeWidget(QWidget):
 	\todo Bonusattribut als tatsächlichen Attributspunkt einfügen.
 	"""
 
-	def __init__(self, parent=None):
+	def __init__(self, template, character, parent=None):
 		QWidget.__init__(self, parent)
 		
-		self.character = StorageCharacter()
+		self.__character = character
+		self.__storage = template
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
@@ -82,11 +83,13 @@ class AttributeWidget(QWidget):
 		actualRow += 1
 		self.__layoutAttributes.addWidget( self.__labelResistance, actualRow, actualColumn )
 
-		self.storage = StorageTemplate(self)
-
 		typ = "Attribute"
 
-		categoryList = self.storage.categories( typ )
+		categoryList = (
+			"Mental",
+			"Physical",
+			"Social",
+		)
 
 		self.__labelStr = QLabel( self )
 		self.__labelDex = QLabel( self )
@@ -99,7 +102,8 @@ class AttributeWidget(QWidget):
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) )
 
 		for item in categoryList:
-			__list = self.storage.traits["Attribute"][item]
+			#Debug.debug(self.__character.traits)
+			__list = self.__character.traits[typ][item]
 
 			actualColumn += 1
 
@@ -122,15 +126,16 @@ class AttributeWidget(QWidget):
 			# Einfügen der tatsächlichen Attribute
 			j = 0
 			for attrib in __list:
-				#Debug.debug(id(attrib)
+				#Debug.debug(id(attrib))
 				# Anlegen der Eigenschaft im Speicher
 				#traitData = self.character.addTrait( typ, item, attrib )
 
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				#trait = CharaTrait( attrib, self )
-				#trait.setValue( 1 )
+				traitWidget = CharaTrait( attrib, self )
+				traitWidget.setSpecialtiesHidden( True )
+				traitWidget.setDescriptionHidden( True )
 
-				#self.__layoutAttributes.addWidget( trait, j + 1, actualColumn )
+				self.__layoutAttributes.addWidget( traitWidget, j + 1, actualColumn )
 
 				#if ( item == "Physical" ):
 					#if ( attrib["name"] == "Strength" ):

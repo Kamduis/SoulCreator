@@ -261,10 +261,11 @@ class TraitDots(QWidget):
 			if ( self.__value != value ):
 				self.__value = value
 
-				self.valueChanged.emit( value );
+				#Debug.debug("Sende Signal valueChanged")
+				self.valueChanged.emit( value )
 
 				# neu zeichnen
-				self.update();
+				self.update()
 
 			# Signal aussenden
 

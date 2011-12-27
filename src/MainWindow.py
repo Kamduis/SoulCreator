@@ -135,7 +135,7 @@ class MainWindow(QMainWindow):
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
 		self.storeTemplateData()
-		#self.__character.traits = self.__storage.traits()
+		self.__character.resetCharacter( self.__storage )
 		self.populateUi()
 	#activate();
 
@@ -191,7 +191,7 @@ class MainWindow(QMainWindow):
 
 		info = InfoWidget(self)
 		#// Diese beiden kann ich nicht im Konstruktor erstellen. Wahrscheinlich, weil dann die Template-Dateien noch nicht eingelesen sind und es folglich nichts auszufüllen gibt.
-		attributes = AttributeWidget( self )
+		attributes = AttributeWidget( self.__storage, self.__character, self )
 		#skills = new SkillWidget( self );
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 		#merits = new MeritWidget( self );

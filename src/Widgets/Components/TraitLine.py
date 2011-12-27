@@ -22,6 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+from PySide.QtCore import Signal
 from PySide.QtGui import QWidget, QHBoxLayout, QPushButton, QLineEdit, QLabel
 
 from src.Config import Config
@@ -37,6 +38,9 @@ class TraitLine(QWidget):
  
 	Die Simplen Eigenschaften (z.B. Attribute) bestehen nur aus Name und Wert. Bei kompliziertere Eigenschaften müssen noch Spezialisieren und andere Parameter beachtet werden.
 	"""
+
+
+	valueChanged = Signal(int)
 
 
 	def __init__(self, name, value, parent=None):
@@ -60,12 +64,13 @@ class TraitLine(QWidget):
 		self.__traitDots = TraitDots( self )
 
 		#connect( traitDots, SIGNAL( valueChanged( int ) ), SIGNAL( valueChanged( int ) ) );
+		self.__traitDots.valueChanged.connect(self.valueChanged)
 		#connect( traitDots, SIGNAL( valueChanged( int ) ), self, SLOT( enableSpecialties( int ) ) );
 		#connect( button, SIGNAL( clicked( bool ) ), self, SIGNAL( specialtiesClicked( bool ) ) );
 		#connect( lineEdit, SIGNAL( textChanged( QString ) ), self, SIGNAL( textChanged( QString ) ) );
 
 		self.setName( name )
-		self.setValue( value )
+		self.value = value
 		#// Damit auch bei der Programminitialisierung die Spezialisierungen richtig enabled oder disabled sind.
 		#enableSpecialties( value );
 
@@ -105,11 +110,13 @@ class TraitLine(QWidget):
 #}
 
 
-	def value(self):
+	def __getValue(self):
 		return self.__traitDots.value()
 
-	def setValue( self, value ):
+	def __setValue( self, value ):
 		self.__traitDots.setValue( value )
+
+	value = property(__getValue, __setValue)
 
 
 #void TraitLine::setPossibleValues( QList< int > valueList ) {
@@ -130,26 +137,20 @@ class TraitLine(QWidget):
 
 
 
-#void TraitLine::hideSpecialties( bool sw ) {
-	#if ( sw )
-		#button.hide();
-	#else
-		#button.show();
-#}
+	def setSpecialtiesHidden( self, sw=True ):
+		if ( sw ):
+			self.__button.hide()
+		else:
+			self.__button.show()
 
-#void TraitLine::enableSpecialties( int number ) {
-	#if ( number > 0 ) {
-		#button.setEnabled( true );
-	#} else {
-		#button.setEnabled( false );
-	#}
-#}
 
-#void TraitLine::hideDescription( bool sw ) {
-	#if ( sw ) {
-		#lineEdit.hide();
-	#} else {
-		#lineEdit.show();
-	#}
-#}
+	def setSpecialtiesEnabled( self, sw=True ):
+		self.__button.setEnabled( sw )
+
+
+	def setDescriptionHidden( self, sw ):
+		if ( sw ):
+			self.__lineEdit.hide()
+		else:
+			self.__lineEdit.show()
 

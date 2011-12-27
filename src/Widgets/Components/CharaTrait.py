@@ -48,37 +48,28 @@ class CharaTrait(TraitLine):
 	def __init__(self, trait, parent=None):
 		TraitLine.__init__(self, trait["name"], trait["value"], parent)
 
+		self.__trait = trait
 
-#CharaTrait::CharaTrait( QWidget* parent, Trait* trait, Trait* traitStorage ) : TraitLine( parent ) {
-	#// Vorsicht: Nullzeiger ist immer gefährlich!
-	#ptr_trait = 0;
-	#ptr_traitStorage = traitStorage;
+		# Falls ich mit der Maus den Wert ändere, muß er auch entsprechend verändert werden.
+		self.valueChanged.connect(self.setTraitValue)
+		#connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
+		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_AbstractTrait::Type ) ) );
+		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
+		#connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
+		#connect( traitPtr(), SIGNAL( detailsChanged(int)), this, SLOT( unclickButton( int ) ) );
 
-	#character = StorageCharacter::getInstance();
+		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
+		#connect( traitPtr(), SIGNAL( valueChanged( int ) ), this, SLOT( setValue( int ) ) );
 
-	#setTraitPtr( trait );
+		#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
+		#connect( traitPtr(), SIGNAL( availabilityChanged(bool)), this, SLOT( setEnabled(bool)) );
 
-	#// Falls ich mit der Maus den Wert ändere, muß er auch entsprechend verändert werden.
-	#connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( setTraitValue( int ) ) );
-	#connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
-	#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_AbstractTrait::Type ) ) );
-	#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
-	#connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
-	#connect( traitPtr(), SIGNAL( detailsChanged(int)), this, SLOT( unclickButton( int ) ) );
+		#if ( !traitPtr()->possibleValues().isEmpty() ) {
+			#setPossibleValues( traitPtr()->possibleValues() );
+		#}
 
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
-	#connect( traitPtr(), SIGNAL( valueChanged( int ) ), this, SLOT( setValue( int ) ) );
-
-	#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
-	#connect( traitPtr(), SIGNAL( availabilityChanged(bool)), this, SLOT( setEnabled(bool)) );
-
-	#if ( !traitPtr()->possibleValues().isEmpty() ) {
-		#setPossibleValues( traitPtr()->possibleValues() );
-	#}
-
-	#hideSpecialtyWidget( trait->type() );
-	#hideDescriptionWidget();
-#}
+		#hideSpecialtyWidget( trait->type() );
+		#hideDescriptionWidget();
 
 
 #Trait* CharaTrait::traitPtr() const {
@@ -102,12 +93,11 @@ class CharaTrait(TraitLine):
 #// 	}
 #// }
 
-#void CharaTrait::setTraitValue( int val ) {
-#// 	qDebug() << Q_FUNC_INFO << name() << val << value();
-	#if ( traitPtr()->value() != val ) {
-		#traitPtr()->setValue( val );
-	#}
-#}
+	def setTraitValue( self, value ):
+		#Debug.debug("Eigenschaft {} erhält den Wert {}".format(self.__trait["name"], value))
+		if self.__trait["value"] != value:
+			self.__trait["value"] = value
+		#Debug.debug("Eigenschaft {} hat den Wert {}".format(self.__trait["name"], self.__trait["value"]))
 
 
 #QString CharaTrait::customText() const {
@@ -172,22 +162,6 @@ class CharaTrait(TraitLine):
 		#ptr_trait->setCustom( sw );
 
 		#emit traitChanged( traitPtr() );
-	#}
-#}
-
-#void CharaTrait::hideSpecialtyWidget( cv_AbstractTrait::Type type ) {
-	#if ( type == cv_AbstractTrait::Skill ) {
-		#hideSpecialties( false );
-	#} else {
-		#hideSpecialties( true );
-	#}
-#}
-
-#void CharaTrait::hideDescriptionWidget() {
-	#if ( custom() ) {
-		#hideDescription( false );
-	#} else {
-		#hideDescription( true );
 	#}
 #}
 

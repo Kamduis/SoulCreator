@@ -141,9 +141,7 @@ class StorageCharacter(QObject):
 		
 		if ( self.__species != species ):
 			self.__species = species
-
-			Debug.debug("Spezies in Speicher verändert zu {}!".format(species))
-
+			#Debug.debug("Spezies in Speicher verändert zu {}!".format(species))
 			self.speciesChanged.emit( species )
 
 
@@ -521,15 +519,25 @@ class StorageCharacter(QObject):
 
 		# Alle Eigenschaftswerte löschen, aber Attribute auf Anfangswerte setzen.
 		self.__traits = {}
-		self.__traits.setdefault("Attribute", {})
-		for item in template.traits["Attribute"]:
-			self.__traits["Attribute"].setdefault(item, [])
-			for subitem in template.traits["Attribute"][item]:
-				data = {
-					"name": subitem["name"],
-					"value": 1,
-				}
-				self.__traits["Attribute"][item].append(data)
+		typs = (
+			"Attribute",
+			"Skill",
+		)
+		
+		# Attribute setzen.
+		for typ in typs:
+			self.__traits.setdefault(typ, {})
+			for item in template.traits[typ]:
+				self.__traits[typ].setdefault(item, [])
+				for subitem in template.traits[typ][item]:
+					val = 0
+					if typ == "Attribute":
+						val = 1
+					data = {
+						"name": subitem["name"],
+						"value": val,
+					}
+					self.__traits[typ][item].append(data)
 
 			#v_traits2[i].clearDetails();
 
