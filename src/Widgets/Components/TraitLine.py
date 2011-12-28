@@ -41,6 +41,7 @@ class TraitLine(QWidget):
 
 
 	valueChanged = Signal(int)
+	buttonClicked = Signal()
 
 
 	def __init__(self, name, value, parent=None):
@@ -67,9 +68,10 @@ class TraitLine(QWidget):
 		self.__traitDots.valueChanged.connect(self.valueChanged)
 		#connect( traitDots, SIGNAL( valueChanged( int ) ), self, SLOT( enableSpecialties( int ) ) );
 		#connect( button, SIGNAL( clicked( bool ) ), self, SIGNAL( specialtiesClicked( bool ) ) );
+		self.__button.clicked.connect(self.buttonClicked)
 		#connect( lineEdit, SIGNAL( textChanged( QString ) ), self, SIGNAL( textChanged( QString ) ) );
 
-		self.setName( name )
+		self.name = name
 		self.value = value
 		#// Damit auch bei der Programminitialisierung die Spezialisierungen richtig enabled oder disabled sind.
 		#enableSpecialties( value );
@@ -87,11 +89,13 @@ class TraitLine(QWidget):
 #}
 
 
-	def name(self):
+	def __getName(self):
 		return self.__labelName.text()
 
-	def setName( self, name ):
+	def __setName( self, name ):
 		self.__labelName.setText( name )
+
+	name = property(__getName, __setName)
 
 
 #QString TraitLine::text() const {
@@ -137,10 +141,9 @@ class TraitLine(QWidget):
 	#traitDots.setMinimum( value );
 #}
 
-#void TraitLine::setSpecialtyButtonChecked( bool sw ) {
-	#button.setChecked( sw );
-#}
 
+	def setSpecialtyButtonChecked( self, sw=True ):
+		self.__button.setChecked( sw )
 
 
 	def setSpecialtiesHidden( self, sw=True ):
@@ -160,3 +163,6 @@ class TraitLine(QWidget):
 		else:
 			self.__lineEdit.show()
 
+
+	#def emitSpecialtiesClicked(self):
+		#self.specialtiesClicked.emit(self.name)

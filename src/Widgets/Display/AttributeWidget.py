@@ -30,7 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QBut
 from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
-from src.Widgets.Components. CharaTrait import CharaTrait
+from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Debug import Debug
 
 

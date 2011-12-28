@@ -38,6 +38,7 @@ from Storage.StorageTemplate import StorageTemplate
 from Widgets.Display.InfoWidget import InfoWidget
 from Widgets.Display.AttributeWidget import AttributeWidget
 from Widgets.Display.SkillWidget import SkillWidget
+from Widgets.Display.Specialties import Specialties
 from Widgets.Dialogs.MessageBox import MessageBox
 from Debug import Debug
 
@@ -129,7 +130,6 @@ class MainWindow(QMainWindow):
 		self.__character = StorageCharacter(self.__storage)
 		self.__readCharacter = ReadXmlCharacter(self.__character)
 		self.__writeCharacter = WriteXmlCharacter(self.__character)
-	#specialties = new CharaSpecialties( self );
 
 		self.ui.pushButton_next.clicked.connect(self.tabNext)
 		self.ui.pushButton_previous.clicked.connect(self.tabPrevious)
@@ -194,6 +194,7 @@ class MainWindow(QMainWindow):
 		info = InfoWidget(self.__storage, self.__character, self)
 		attributes = AttributeWidget( self.__storage, self.__character, self )
 		skills = SkillWidget( self.__storage, self.__character, self )
+		specialties = Specialties( self.__storage.traits["Skill"], self )
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 		#merits = new MeritWidget( self );
 		#flaws = new FlawWidget( self );
@@ -204,11 +205,11 @@ class MainWindow(QMainWindow):
 		self.ui.layout_info.addWidget( info )
 		self.ui.layout_attributes.addWidget( attributes )
 		self.ui.layout_skills.addWidget( skills )
+		self.ui.layout_specialties.addWidget( specialties )
 		#ui.layout_merits.addWidget( merits );
 		#ui.layout_morality.addWidget( morality );
 		#ui.layout_powers.addWidget( powers );
 		#ui.layout_flaws.addWidget( flaws );
-		#ui.layout_specialties.addWidget( specialties );
 		#ui.layout_advantages.addWidget( advantages );
 
 		#/**
@@ -225,8 +226,9 @@ class MainWindow(QMainWindow):
 		#ui.stackedWidget_traits.setCurrentIndex( 1 );
 		#ui.stackedWidget_traits.setCurrentIndex( 0 );
 
-		#// Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
+		# Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
 		#connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), self, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
+		skills.specialtiesClicked.connect(specialties.showSpecialties)
 
 		#// Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
 		#connect( self.__self.__character, SIGNAL( speciesChanged( cv_Species.SpeciesFlag ) ), self, SLOT( disablePowerItem( cv_Species.SpeciesFlag ) ) );

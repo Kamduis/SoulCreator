@@ -111,7 +111,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 				for subsubitem in self.__character.traits[item][subitem]:
 					# Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-					if ( subsubitem.value != [0] ):
+					if ( subsubitem.value != 0 ):
 						self.writeStartElement( "trait" )
 						self.writeAttribute( "name", subsubitem.name )
 						self.writeAttribute( "value", unicode( subsubitem.value ) )
@@ -131,7 +131,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 	#// 					}t
 
-					self.writeEndElement()
+						self.writeEndElement()
 				self.writeEndElement()
 			self.writeEndElement()
 

@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import QObject
+from PySide.QtCore import Signal
 
 #from src.Config import Config
 from src.Widgets.Components.TraitLine import TraitLine
@@ -45,6 +45,9 @@ class CharaTrait(TraitLine):
 	"""
 
 
+	specialtiesClicked = Signal(object)
+
+
 	def __init__(self, trait, parent=None):
 		TraitLine.__init__(self, trait.name, trait.value, parent)
 
@@ -56,6 +59,7 @@ class CharaTrait(TraitLine):
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_AbstractTrait::Type ) ) );
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 		#connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
+		self.buttonClicked.connect(self.emitSpecialtiesClicked)
 		#connect( traitPtr(), SIGNAL( detailsChanged(int)), this, SLOT( unclickButton( int ) ) );
 
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
@@ -186,6 +190,12 @@ class CharaTrait(TraitLine):
 		#emit specialtiesClicked( sw, name(), listStora );
 	#}
 #}
+
+
+	def emitSpecialtiesClicked(self):
+		self.specialtiesClicked.emit(self.__trait)
+
+
 #void CharaTrait::unclickButton( int val )
 #{
 #// 	qDebug() << Q_FUNC_INFO << val;

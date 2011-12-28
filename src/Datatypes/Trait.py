@@ -46,6 +46,7 @@ class Trait(QObject):
 
 		self.__name = name
 		self.__value = value
+		self.__specialties = []
 
 		self.valueChanged.connect(self.test)
 
@@ -73,6 +74,16 @@ class Trait(QObject):
 			self.valueChanged.emit(value)
 
 	value = property(__getValue, setValue)
+
+
+	def __getSpecialties(self):
+		return self.__specialties
+
+	def __setSpecialties(self, specialties):
+		if self.__specialties != specialties:
+			self.__specialties = specialties
+
+	specialties = property(__getSpecialties, __setSpecialties)
 
 
 

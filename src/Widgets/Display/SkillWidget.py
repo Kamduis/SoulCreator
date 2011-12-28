@@ -22,13 +22,13 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt
+from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QScrollArea, QGroupBox
 
 from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
-from src.Widgets.Components. CharaTrait import CharaTrait
+from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Debug import Debug
 
 
@@ -40,6 +40,10 @@ class SkillWidget(QWidget):
 
 	Wird bei irgendeiner Fertigkeit der Spazialisierungen-Knopf gedrückt, werden alle anderen Spezialisierungs-Knöpfe ausgeschalten.
 	"""
+
+
+	specialtiesClicked = Signal(object)
+
 
 	def __init__(self, template, character, parent=None):
 		QWidget.__init__(self, parent)
@@ -67,6 +71,9 @@ class SkillWidget(QWidget):
 			"Social",
 		)
 
+		## Eine Liste, in der alle Eigenschafts-Widgets aufgelistet werden.
+		self.__traitWidgets = []
+
 		for item in categoryList:
 			#Debug.debug(self.__character.traits)
 			__list = self.__character.traits[typ][item]
@@ -82,16 +89,20 @@ class SkillWidget(QWidget):
 			self.__scrollLayout.addWidget( widgetSkillCategory )
 
 			for skill in __list:
-				print (skill.name)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( skill, self )
 				traitWidget.buttonText = 0
 
-				## Fertigkeiten haben Spezialisierungen.
+				# Dieses Widget auch an Liste anhängen, damit ich einfacher darauf zugreifen kann.
+				traitListItem = traitWidget
+				self.__traitWidgets.append(traitListItem)
+
+				# Fertigkeiten haben Spezialisierungen.
 				#connect( traitPtr, SIGNAL( detailsChanged( int )), charaTrait, SLOT( setButtonText(int)) );
-				#connect( character, SIGNAL( characterResetted()), this, SLOT( uncheckButtons()) );
-				#connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SLOT( toggleOffSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
+				#connect( character, SIGNAL( characterResetted()), this, SLOT( uncheckAllButtons()) );
+				traitWidget.specialtiesClicked.connect(self.uncheckOtherButtons)
 				#connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
+				traitWidget.specialtiesClicked.connect(self.specialtiesClicked.emit)
 
 				layoutSkillCategory.addWidget( traitWidget )
 
@@ -103,100 +114,33 @@ class SkillWidget(QWidget):
 		self.__scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 		self.__scrollArea.setMinimumWidth(self.__scrollArea.viewport().minimumWidth())
 
-#void AttributeWidget::updateshapeValuesStr( int val ) {
-	#QStringList txt
 
-	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
-
-	#for ( int i = 1; i < cv_Shape::getShapeList().count(); ++i ) {
-		#txt.append( QString::number( CalcAdvantages::strength( val, cv_Shape::getShapeList().at( i ) ) ) );
-	#}
-
-	#labelStr.setText( txt.join( "/" ) );
-#}
-
-#void AttributeWidget::updateshapeValuesDex( int val ) {
-	#QStringList txt;
-
-	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
-
-	#for ( int i = 1; i < cv_Shape::getShapeList().count(); ++i ) {
-		#txt.append( QString::number( CalcAdvantages::dexterity( val, cv_Shape::getShapeList().at( i ) ) ) );
-	#}
-
-	#labelDex.setText( txt.join( "/" ) );
-#}
-
-#void AttributeWidget::updateshapeValuesSta( int val ) {
-	#QStringList txt;
-
-	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
-
-	#for ( int i = 1; i < cv_Shape::getShapeList().count(); ++i ) {
-		#txt.append( QString::number( CalcAdvantages::stamina( val, cv_Shape::getShapeList().at( i ) ) ) );
-	#}
-
-	#labelSta.setText( txt.join( "/" ) );
-#}
-
-#void AttributeWidget::updateshapeValuesMan( int val ) {
-	#QStringList txt;
-
-	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
-
-	#for ( int i = 1; i < cv_Shape::getShapeList().count(); ++i ) {
-		#txt.append( QString::number( CalcAdvantages::manipulation( val, cv_Shape::getShapeList().at( i ) ) ) );
-	#}
-
-	#labelMan.setText( txt.join( "/" ) );
-#}
-
-#void AttributeWidget::emitSpeciesChanged( cv_Species::SpeciesFlag spe ) {
-	#if ( spe == cv_Species::Werewolf ) {
-		#emit speciesChanged( false );
-	#} else {
-		#emit speciesChanged( true );
-	#}
-#}
+	def uncheckOtherButtons( self, trait ):
+		"""
+		Über diese Funktion werden alle anderen Spezialisierungs-Knöpfe deaktiviert, sobald einer aktiviert wird.
+		"""
+		
+		#Debug.debug("Drücke {}".format(skillName))
+		for item in self.__traitWidgets:
+			if item.name != trait.name:
+				item.setSpecialtyButtonChecked(False)
 
 
-#void AttributeWidget::filterBonusAttribute() {
-	#cv_AbstractTrait::Type type = cv_AbstractTrait::Attribute;
+	#def uncheckAllButtons(self):
+		"""
+		Alle Spezialisierungsknöpfe werden wieder auf Standard gesetzt.
+		"""
+		
+		#// Da hinter jeder Box ein Stretch eingefügt ist, muß dieser übersprungen werden.
+		#for ( int j = 0; j < scrollLayout->count(); j=j+2 ) {
+			#QGroupBox* box = qobject_cast<QGroupBox*>( scrollLayout->itemAt( j )->widget() );
+	#// 		qDebug() << Q_FUNC_INFO << box->layout()->count();
 
-	#QList< TraitBonus* > listBonus = storage.traitsBonus( type, character.species() );
+			#for (int k = 0; k < box->layout()->count(); ++k){
+				#CharaTrait* trait = qobject_cast<CharaTrait*>( box->layout()->itemAt( k )->widget() );
 
-	#// Bereits platzierte Knöpfe löschen, bevor wir sie wieder neu einfügen.
-	#int listCount = buttonsBonus.buttons().count();
-	#for ( int i = listCount; i > 0; --i ) {
-
-		#delete buttonsBonus.buttons().at( i - 1 );
-	#}
-
-	#for ( int i = 0; i < listBonus.count(); ++i ) {
-		#if ( listBonus.at( i ).breedDependant() == character.breed() ) {
-			#// Füge neue Knöpfe hinzu
-			#QRadioButton* button = new QRadioButton( listBonus.at( i ).name() );
-			#buttonsBonus.addButton( button );
-			#layoutButtonsBonus.addWidget( button );
-
-			#if ( i == 0 ) {
-				#button.click();
+				#trait->setSpecialtyButtonChecked( false );
 			#}
 		#}
 	#}
-#}
 
-
-#void AttributeWidget::addAttributeBonus( int id ) {
-	#QList< Trait* > list = character.traits( cv_AbstractTrait::Attribute );
-
-	#for ( int i = 0; i < list.count(); ++i ) {
-		#list.at( i ).setBonus( false );
-
-#// 		qDebug() << Q_FUNC_INFO << buttonsBonus.button( id ).text();
-		#if ( buttonsBonus.button( id ).text() == list.at( i ).name() ) {
-			#list.at( i ).setBonus( true );
-#// 			qDebug() << Q_FUNC_INFO << "Lege Bonuseigenschaft von" << list.at(i).name() << "auf" << list.at(i).isBonus();
-		#}
-	#}
-#}

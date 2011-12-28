@@ -52,7 +52,7 @@ class StorageCharacter(QObject):
 	moralityChanged = Signal(int)
 	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
-	traitsChanged = Signal(object)
+	#traitsChanged = Signal(object)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -216,12 +216,12 @@ class StorageCharacter(QObject):
 	def __getTraits(self):
 		return self.__traits
 
-	def __setTraits(self, traits):
-		if self.__traits != traits:
-			self.__traits = traits
-			self.traitsChanged.emit(traits)
+	#def __setTraits(self, traits):
+		#if self.__traits != traits:
+			#self.__traits = traits
+			#self.traitsChanged.emit(traits)
 
-	traits = property(__getTraits, __setTraits)
+	traits = property(__getTraits)
 
 
 
