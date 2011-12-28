@@ -37,6 +37,7 @@ from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
 from Widgets.Display.InfoWidget import InfoWidget
 from Widgets.Display.AttributeWidget import AttributeWidget
+from Widgets.Display.SkillWidget import SkillWidget
 from Widgets.Dialogs.MessageBox import MessageBox
 from Debug import Debug
 
@@ -192,7 +193,7 @@ class MainWindow(QMainWindow):
 
 		info = InfoWidget(self.__storage, self.__character, self)
 		attributes = AttributeWidget( self.__storage, self.__character, self )
-		#skills = new SkillWidget( self );
+		skills = SkillWidget( self.__storage, self.__character, self )
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 		#merits = new MeritWidget( self );
 		#flaws = new FlawWidget( self );
@@ -202,7 +203,7 @@ class MainWindow(QMainWindow):
 
 		self.ui.layout_info.addWidget( info )
 		self.ui.layout_attributes.addWidget( attributes )
-		#ui.layout_skills.addWidget( skills );
+		self.ui.layout_skills.addWidget( skills )
 		#ui.layout_merits.addWidget( merits );
 		#ui.layout_morality.addWidget( morality );
 		#ui.layout_powers.addWidget( powers );

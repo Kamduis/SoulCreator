@@ -102,12 +102,13 @@ class TraitLine(QWidget):
 	#lineEdit.setText( text );
 #}
 
-#void TraitLine::setButtonText( QString txt ) {
-	#button.setText( txt );
-#}
-#void TraitLine::setButtonText( int val ) {
-	#button.setText( QString::number(val) );
-#}
+	def __getButtonText(self):
+		return self.__button.text()
+
+	def __setButtonText( self, text ):
+		self.__button.setText( unicode(text) )
+
+	buttonText = property(__getButtonText, __setButtonText)
 
 
 	def __getValue(self):

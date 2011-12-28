@@ -125,9 +125,6 @@ class AttributeWidget(QWidget):
 			j = 0
 			for attrib in __list:
 				#Debug.debug(id(attrib))
-				# Anlegen der Eigenschaft im Speicher
-				#traitData = self.character.addTrait( typ, item, attrib )
-
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( attrib, self )
 				traitWidget.setSpecialtiesHidden( True )
