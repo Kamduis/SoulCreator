@@ -79,9 +79,13 @@ class ReadXml(QXmlStreamReader):
 
 
 	def checkXmlVersion(self, name, version ):
+		"""
+		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.
+		"""
+		
 		if name == Config.programName:
 			if version == Config.version():
-				return True
+				return
 			else:
 				# Unterschiede in der Minor-Version sind ignorierbar, unterschiede in der Major-Version allerdings nicht.
 				splitVersion = version.split(".")
@@ -92,6 +96,4 @@ class ReadXml(QXmlStreamReader):
 					raise Error.ErrXmlTooOldVersion( Config.version(), version )
 		else:
 			raise Error.ErrXmlVersion( "{} {}".format(Config.programName, Config.version()), "{} {}".format(name, version) )
-
-		return False
 

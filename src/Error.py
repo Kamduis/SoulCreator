@@ -76,7 +76,7 @@ class ErrList(Err):
 	"""
 	
 	def __init__(self):
-		Error.__init__(self)
+		Err.__init__(self)
 		
 		self.setMessage( self.obj.tr( "Unspecified Problem with a List." ) )
 		self.setDescription( self.obj.tr( "An unspecified error occured while handling a List." ) )

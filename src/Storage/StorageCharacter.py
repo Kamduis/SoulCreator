@@ -24,6 +24,8 @@ from __future__ import division, print_function
 
 from PySide.QtCore import QObject, Signal
 
+from src.Config import Config
+from src.Datatypes.Trait import Trait
 from src.Datatypes.Identity import Identity
 from src.Error import ErrListLength
 from src.Debug import Debug
@@ -42,7 +44,6 @@ class StorageCharacter(QObject):
 
 
 	speciesChanged = Signal(str)
-	traitChanged = Signal(object)
 	virtueChanged = Signal(str)
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
@@ -50,6 +51,8 @@ class StorageCharacter(QObject):
 	superTraitChanged = Signal(int)
 	moralityChanged = Signal(int)
 	armorChanged = Signal(object)
+	#traitChanged = Signal(object)
+	traitsChanged = Signal(object)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -57,12 +60,12 @@ class StorageCharacter(QObject):
 	# {
 	# 	Typ1: {
 	# 		Kategorie1: [
-	# 			{ "name": Name1, "value": Wert1 },
-	# 			{ "name": Name1, "value": Wert2 },
+	# 			Trait1,
+	# 			Trait2,
 	# 			...
 	# 		],
 	# 		Kategorie2: [
-	# 			{ "name": Name1, "value": Wert1 },
+	# 			Trait1,
 	# 			...
 	# 		],
 	# 		...
@@ -72,10 +75,10 @@ class StorageCharacter(QObject):
 	__traits = {}
 
 
-	def __init__(self, parent=None):
+	def __init__(self, template, parent=None):
 		QObject.__init__(self, parent)
 
-		#self.__storage = StorageTemplate( self )
+		self.__storage = template
 
 		self.__modified = False
 		self.__species = ""
@@ -91,6 +94,21 @@ class StorageCharacter(QObject):
 		self.__identities = [self.__identity]
 
 		self.__derangements = []
+
+		# Die Eigenschaften in den Charakter laden.
+		self.__traits = {}
+		# Attribute setzen.
+		# \note Momentan werden nur Attribute und Fertigkeiten berücksichtigt.
+		for typ in Config.typs[:2]:
+			self.__traits.setdefault(typ, {})
+			for item in template.traits[typ]:
+				self.__traits[typ].setdefault(item, [])
+				for subitem in template.traits[typ][item]:
+					val = 0
+					if typ == "Attribute":
+						val = 1
+					trait = Trait(subitem["name"], val)
+					self.__traits[typ][item].append(trait)
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
@@ -109,14 +127,14 @@ class StorageCharacter(QObject):
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
 
-	def species(self):
+	def __getSpecies(self):
 		"""
 		Gibt die Spezies des Charakters aus.
 		"""
 		
 		return self.__species
 
-	def setSpecies( self, species ):
+	def __setSpecies( self, species ):
 		"""
 		Legt die Spezies des Charakters fest.
 		"""
@@ -125,6 +143,8 @@ class StorageCharacter(QObject):
 			self.__species = species
 			#Debug.debug("Spezies in Speicher verändert zu {}!".format(species))
 			self.speciesChanged.emit( species )
+
+	species = property(__getSpecies, __setSpecies)
 
 
 	def __getIdentities(self):
@@ -197,7 +217,9 @@ class StorageCharacter(QObject):
 		return self.__traits
 
 	def __setTraits(self, traits):
-		self.__traits = traits
+		if self.__traits != traits:
+			self.__traits = traits
+			self.traitsChanged.emit(traits)
 
 	traits = property(__getTraits, __setTraits)
 
@@ -337,14 +359,14 @@ class StorageCharacter(QObject):
 #}
 
 
-	def virtue(self):
+	def __getVirtue(self):
 		"""
 		Tugend des Charakters
 		"""
 
 		return self.__virtue
 
-	def setVirtue( self, virtue ):
+	def __setVirtue( self, virtue ):
 		"""
 		Verändert die Tugend.
 
@@ -355,15 +377,17 @@ class StorageCharacter(QObject):
 			self.__virtue = virtue
 			self.virtueChanged.emit( virtue )
 
+	virtue = property(__getVirtue, __setVirtue)
 
-	def vice(self):
+
+	def __getVice(self):
 		"""
 		Laster des Charakters
 		"""
 
 		return self.__vice
 
-	def setVice( self, vice ):
+	def __setVice( self, vice ):
 		"""
 		Verändert das Laster.
 
@@ -374,15 +398,17 @@ class StorageCharacter(QObject):
 			self.__vice = vice
 			self.viceChanged.emit( vice )
 
+	vice = property(__getVice, __setVice)
 
-	def breed(self ):
+
+	def __getBreed(self ):
 		"""
 		Brut (Seeming, Path, Clan, Auspice) des Charakters.
 		"""
 
-		self.__breed
+		return self.__breed
 
-	def setBreed( self, breed ):
+	def __setBreed( self, breed ):
 		"""
 		Verändert die Brut.
 
@@ -393,15 +419,17 @@ class StorageCharacter(QObject):
 			self.__breed = breed
 			self.breedChanged.emit( breed)
 
+	breed = property(__getBreed, __setBreed)
 
-	def faction(self):
+
+	def __getFaction(self):
 		"""
 		Fraktion (Court, order, Covenant, Tribe) des Charakters.
 		"""
 
 		return self.__faction
 
-	def setFaction( self, faction ):
+	def __setFaction( self, faction ):
 		"""
 		Verändert die Fraktion.
 
@@ -412,15 +440,17 @@ class StorageCharacter(QObject):
 			self.__faction = faction
 			self.factionChanged.emit( faction )
 
+	faction = property(__getFaction, __setFaction)
 
-	def superTrait(self):
+
+	def __getSuperTrait(self):
 		"""
 		Gibt den Wert des Super-Attributs aus.
 		"""
 
 		return self.__superTrait
 
-	def setSuperTrait( self, value ):
+	def __setSuperTrait( self, value ):
 		"""
 		Verändert den Wert des Super-Attributs.
 		
@@ -431,15 +461,17 @@ class StorageCharacter(QObject):
 			self.__superTrait = value
 			self.superTraitChanged.emit( value )
 
+	superTrait = property(__getSuperTrait, __setSuperTrait)
 
-	def morality(self):
+
+	def __getMorality(self):
 		"""
 		Gibt den Wert der Moral aus.
 		"""
 
 		return self.__morality
 
-	def setMorality( self, value ):
+	def __setMorality( self, value ):
 		"""
 		Verändert den Wert der Moral.
 		
@@ -450,7 +482,10 @@ class StorageCharacter(QObject):
 			self.__morality = value
 			self.moralityChanged.emit( value )
 
-	def armor(self):
+	morality = property(__getMorality, __setMorality)
+
+
+	def __getArmor(self):
 		"""
 		Gibt den Wert der getragenen Rüstung aus. Zurückgegeben wird eine Liste mit zwei EInträgen.
 		
@@ -461,65 +496,49 @@ class StorageCharacter(QObject):
 
 		return self.__armor
 
-	def setArmor( self, general, firearms=0 ):
+	def __setArmor( self, armor ):
 		"""
 		Verändert den Wert der Rüstung.
 
-		Man kann entweder eine Liste mit den Rüstungswerten übergeben oder je einen Rüstungswert als eigenes Argument.
+		Es muß eine Liste mit zwei Elementen übergeben werden.
 		
 		Bei einer Veränderung wird das Signal armorChanged() ausgesandt.
 		"""
 
-		if type(general) == list:
-			if len(general) == len(self.__armor):
-				if self.__armor != general:
-					self.__armor = general
-					self.armorChanged.emit( self.__armor )
-			else:
-				raise ErrListLength(len(self.__armor), len(general))
-		elif ( self.__armor[0] != general or self.__armor[1] != firearms ):
-			self.__armor[0] = general
-			self.__armor[1] = firearms
-			self.armorChanged.emit( self.__armor )
+		if len(armor) == 2:
+			if self.__armor != armor:
+				self.__armor = armor
+				self.armorChanged.emit( self.__armor )
+		else:
+			raise ErrListLength(len(self.__armor), len(armor))
+
+	armor = property(__getArmor, __setArmor)
 
 
-	def resetCharacter(self, template):
+	def resetCharacter(self):
 		# Löschen aller Identitäten.
 		self.__identity.reset()
 
 		# Standardspezies ist der Mensch.
-		self.setSpecies( template.species[1][0] )
+		self.species = self.__storage.species[1][0]
 
-		#Debug.debug(template.virtues[0])
-		#Debug.debug(template.virtues[0]["name"])
-		self.setVirtue( template.virtues[0]["name"] )
-		self.setVice( template.vices[0]["name"] )
+		#Debug.debug(self.__storage.virtues[0])
+		#Debug.debug(self.__storage.virtues[0]["name"])
+		self.virtue = self.__storage.virtues[0]["name"]
+		self.vice = self.__storage.vices[0]["name"]
 
 		# Menschen haben eine Leere liste, also kann ich auch die Indizes nicht ändern.
 		#// setBreed(storage.breedNames(species()).at(0));
 		#// setFaction(storage.breedNames(species()).at(0));
 
-		# Alle Eigenschaftswerte löschen, aber Attribute auf Anfangswerte setzen.
-		self.__traits = {}
-		typs = (
-			"Attribute",
-			"Skill",
-		)
-		
-		# Attribute setzen.
-		for typ in typs:
-			self.__traits.setdefault(typ, {})
-			for item in template.traits[typ]:
-				self.__traits[typ].setdefault(item, [])
-				for subitem in template.traits[typ][item]:
-					val = 0
-					if typ == "Attribute":
-						val = 1
-					data = {
-						"name": subitem["name"],
-						"value": val,
-					}
-					self.__traits[typ][item].append(data)
+		# Attribute und andere Eigenschaften auf Anfangswerte setzen.
+		for item in self.__traits:
+			val = 0
+			if item == "Attribute":
+				val = 1
+			for subitem in self.__traits[item]:
+				for subsubitem in self.__traits[item][subitem]:
+					subsubitem.value = val
 
 			#v_traits2[i].clearDetails();
 
@@ -533,6 +552,8 @@ class StorageCharacter(QObject):
 		#setMorality( Config::derangementMoralityTraitMax );
 
 		#emit characterResetted();
+
+		
 
 
 	def isModifed(self):

@@ -113,10 +113,15 @@ class TraitLine(QWidget):
 	def __getValue(self):
 		return self.__traitDots.value()
 
-	def __setValue( self, value ):
+	def setValue( self, value ):
+		"""
+		\note Diese Funktion ist nicht privat, da ich diese Funktion als Slot benötige.
+		"""
+		
+		#Debug.debug("Hurra! Setze Eigenschaft {} auf Wert {}".format(self.name(), value))
 		self.__traitDots.setValue( value )
 
-	value = property(__getValue, __setValue)
+	value = property(__getValue, setValue)
 
 
 #void TraitLine::setPossibleValues( QList< int > valueList ) {

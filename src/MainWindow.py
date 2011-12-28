@@ -124,7 +124,8 @@ class MainWindow(QMainWindow):
 		self.setWindowIcon( QIcon( ":/icons/images/WoD.png" ) )
 
 		self.__storage = StorageTemplate( self )
-		self.__character = StorageCharacter()
+		self.storeTemplateData()
+		self.__character = StorageCharacter(self.__storage)
 		self.__readCharacter = ReadXmlCharacter(self.__character)
 		self.__writeCharacter = WriteXmlCharacter(self.__character)
 	#specialties = new CharaSpecialties( self );
@@ -135,8 +136,7 @@ class MainWindow(QMainWindow):
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( setTabButtonState( int ) ) );
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
-		self.storeTemplateData()
-		self.__character.resetCharacter( self.__storage )
+		self.__character.resetCharacter()
 		self.populateUi()
 	#activate();
 
@@ -499,7 +499,7 @@ class MainWindow(QMainWindow):
 	def newCharacter(self):
 		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 		if ( self.maybeSave() ):
-			self.__character.resetCharacter( self.__storage )
+			self.__character.resetCharacter()
 
 			# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 			self.__character.setModified( False )
@@ -528,7 +528,7 @@ class MainWindow(QMainWindow):
 
 			if ( filePath ):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
-				self.__character.resetCharacter( self.__storage )
+				self.__character.resetCharacter()
 
 				f = QFile( filePath[0] )
 

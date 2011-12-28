@@ -52,7 +52,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 	def write( self, f ):
 		"""
-		Schreibt die veränderten Eigenschaften in die Datei.
+		Schreibt die veränderten Charakteristika in die Datei.
 		"""
 		
 		#Debug.debug("Speicherversuch")
@@ -63,7 +63,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeStartDocument()
 		self.writeStartElement( Config.programName )
 		self.writeAttribute( "version", Config.version() )
-		self.writeTextElement( "species", self.__character.species() )
+		self.writeTextElement( "species", self.__character.species )
 		self.writeStartElement( "identities" )
 		self.writeStartElement( "identity" )
 		self.writeAttribute( "forenames", " ".join(self.__character.identities[0].forenames) )
@@ -74,13 +74,13 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeAttribute( "gender", self.__character.identities[0].gender )
 		self.writeEndElement()
 		self.writeEndElement()
-		self.writeTextElement( "virtue", self.__character.virtue() )
-		self.writeTextElement( "vice", self.__character.vice() )
-		self.writeTextElement( "breed", self.__character.breed() )
-		self.writeTextElement( "faction", self.__character.faction() )
-		self.writeTextElement( "superTrait", unicode( self.__character.superTrait() ) )
-		self.writeTextElement( "morality", unicode( self.__character.morality() ) )
-		self.writeTextElement( "armor", unicode( self.__character.armor() ) )
+		self.writeTextElement( "virtue", self.__character.virtue )
+		self.writeTextElement( "vice", self.__character.vice )
+		self.writeTextElement( "breed", self.__character.breed )
+		self.writeTextElement( "faction", self.__character.faction )
+		self.writeTextElement( "superTrait", unicode( self.__character.superTrait ) )
+		self.writeTextElement( "morality", unicode( self.__character.morality ) )
+		self.writeTextElement( "armor", ",".join( unicode(n) for n in self.__character.armor ) )
 
 		self.writeCharacterTraits()
 
@@ -93,6 +93,10 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 
 	def writeCharacterTraits(self):
+		"""
+		Schreibt die veränderten Eigenschaften in die Datei.
+		"""
+		
 		for item in self.__character.traits:
 			try:
 				self.writeStartElement( item )
@@ -107,10 +111,10 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 				for subsubitem in self.__character.traits[item][subitem]:
 					# Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-					if ( subsubitem["value"] != [0] ):
+					if ( subsubitem.value != [0] ):
 						self.writeStartElement( "trait" )
-						self.writeAttribute( "name", subsubitem["name"] )
-						self.writeAttribute( "value", unicode( subsubitem["value"] ) )
+						self.writeAttribute( "name", subsubitem.name )
+						self.writeAttribute( "value", unicode( subsubitem.value ) )
 
 	#// 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
 
@@ -132,43 +136,48 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 			self.writeEndElement()
 
 
-#void WriteXmlCharacter.writeCharacterDerangements() {
-	#QList< cv_Derangement* > list;
-
-	#try {
-		#writeStartElement( cv_AbstractTrait.toXmlString( cv_AbstractTrait.Derangement ) );
-	#} except ( eTraitType &e ) {
-		#qDebug() << Q_FUNC_INFO << e.message();
-	#}
-
-	#// Liste der Kategorien ist je nach Typ unterschiedlich
-	#QList< cv_AbstractTrait.Category > category;
-
-	#category = cv_AbstractTrait.getCategoryList( cv_AbstractTrait.Derangement );
-
-	#for ( int j = 0; j < category.count(); ++j ) {
-		#list = self.__character.derangements( category.at( j ) );
-
-		#qDebug() << Q_FUNC_INFO << list.count();
+	def writeCharacterDerangements(self):
+		"""
+		Schreibt die Geistesstörungen in die Datei.
+		"""
+		
+		pass
+		#QList< cv_Derangement* > list;
 
 		#try {
-			#writeStartElement( cv_AbstractTrait.toXmlString( category.at( j ) ) );
-		#} except ( eTraitCategory &e ) {
+			#writeStartElement( cv_AbstractTrait.toXmlString( cv_AbstractTrait.Derangement ) );
+		#} except ( eTraitType &e ) {
 			#qDebug() << Q_FUNC_INFO << e.message();
 		#}
 
-		#for ( int k = 0; k < list.count(); ++k ) {
-#// 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
-			#writeStartElement( "derangement" );
-			#writeAttribute( "name", list.at( k ).name() );
-			#writeAttribute( "morality", QString.number( list.at( k ).morality() ) );
+		#// Liste der Kategorien ist je nach Typ unterschiedlich
+		#QList< cv_AbstractTrait.Category > category;
+
+		#category = cv_AbstractTrait.getCategoryList( cv_AbstractTrait.Derangement );
+
+		#for ( int j = 0; j < category.count(); ++j ) {
+			#list = self.__character.derangements( category.at( j ) );
+
+			#qDebug() << Q_FUNC_INFO << list.count();
+
+			#try {
+				#writeStartElement( cv_AbstractTrait.toXmlString( category.at( j ) ) );
+			#} except ( eTraitCategory &e ) {
+				#qDebug() << Q_FUNC_INFO << e.message();
+			#}
+
+			#for ( int k = 0; k < list.count(); ++k ) {
+	#// 					qDebug() << Q_FUNC_INFO << list.at( k ).name;
+				#writeStartElement( "derangement" );
+				#writeAttribute( "name", list.at( k ).name() );
+				#writeAttribute( "morality", QString.number( list.at( k ).morality() ) );
+
+				#writeEndElement();
+			#}
 
 			#writeEndElement();
 		#}
 
 		#writeEndElement();
 	#}
-
-	#writeEndElement();
-#}
 

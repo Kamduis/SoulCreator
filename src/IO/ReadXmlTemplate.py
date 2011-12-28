@@ -51,17 +51,6 @@ class ReadXmlTemplate(QObject, ReadXml):
 	)
 
 
-	__types = (
-		"Attribute",
-		"Skill",
-		"Merit",
-		"Derangement",
-		"Flaw",
-		"Super",
-		"Power",
-	)
-
-
 	def __init__(self, template, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
@@ -175,7 +164,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readGroups( species, typ, None )
 				elif( typ == "Super" ):
 					self.readSuperTrait( species )
-				elif( typ in self.__types):
+				elif( typ in Config.typs):
 					#self.readUnknownElement()
 					self.readTraits( species, typ )
 				else:
@@ -426,7 +415,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				typ = self.name()
-				if( typ in self.__types ):
+				if( typ in Config.typs ):
 					points = self.readCreationPoints()
 					self.storage.appendCreationPoints( sp, typ, points )
 				else:

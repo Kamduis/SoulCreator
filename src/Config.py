@@ -82,6 +82,16 @@ class Config():
 	#QFont Config::exportFont = QFont();
 	#QFont Config::windowFont = QFont();
 
+	typs = (
+		"Attribute",
+		"Skill",
+		"Merit",
+		"Derangement",
+		"Flaw",
+		"Super",
+		"Power",
+	)
+
 
 	#QString Config::name() {
 		#return PROGRAM_NAME;

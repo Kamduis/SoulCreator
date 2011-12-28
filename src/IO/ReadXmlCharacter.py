@@ -25,10 +25,10 @@ from __future__ import division, print_function
 from PySide.QtCore import QObject
 #from PySide.QtGui import QColor
 
-#from src.Config import Config
+from src.Config import Config
 from src.IO.ReadXml import ReadXml
-#from src.Error import ErrTraitType
-#from src.Debug import Debug
+from src.Error import ErrXmlOldVersion
+from src.Debug import Debug
 
 
 
@@ -40,10 +40,11 @@ class ReadXmlCharacter(QObject, ReadXml):
 	Diese Klasse dient dazu, einen auf Datenträger gespeicherten Charakter wieder in das Programm zu laden.
 	"""
 
-	def __init__(self, parent=None):
+	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 
+		self.__character = character
 
 
 #QList< cv_Trait > ReadXmlCharacter::traitList;
@@ -54,203 +55,212 @@ class ReadXmlCharacter(QObject, ReadXml):
 #}
 
 
-#bool ReadXmlCharacter::read( QFile *file ) {
-	#openFile( file );
+	def read( self, f ):
+		"""
+		Startet den Lesevorgang.
+		"""
+		
+		## Wir erzeugen eine neue Trait-Liste aus der aktuellen Trait-Liste des Charakters. Diese wird dann entsprechend des gespeicherten Datei verändert und dann in den Charakter geschrieben. Damit sende ich nur ein Signal, daß die Eigenschaften verändert würden.
+		#self.__traits = self.__character.traits
 
-	#setDevice( file );
+		self.openFile( f )
+		self.setDevice( f )
 
-	#while ( !atEnd() ) {
-		#readNext();
+		while ( not self.atEnd() ):
+			self.readNext()
 
-		#if ( isStartElement() ) {
-			#QString elementName = name().toString();
-			#QString elementVersion = attributes().value( "version" ).toString();
+			if ( self.isStartElement() ):
+				elementName = self.name()
+				#Debug.debug("Lese Element {} aus.".format(elementName))
+				elementVersion = self.attributes().value( "version" )
 
-			#try {
-				#if ( checkXmlVersion( elementName, elementVersion ) ) {
-					#readSoulCreator();
-				#}
-			#} catch ( eXmlOldVersion &e ) {
-				#emit oldVersion( e.message(), e.description() );
+				try:
+					self.checkXmlVersion( elementName, elementVersion )
+					self.readSoulCreator()
+				except ErrXmlOldVersion as e:
+					MessageBox.exception( self, e.message(), e.description() )
+					readSoulCreator()
 
-				#readSoulCreator();
-			#}
-		#}
-	#}
+		if ( self.hasError() ):
+			Debugdebug("Error!")
+			raise ErrXmlError( f.fileName(), self.errorString() )
 
-	#if ( hasError() ) {
-		#qDebug() << Q_FUNC_INFO << "Error!";
-		#throw eXmlError( file->fileName(), errorString() );
-	#}
+		## Die möglicherweise veränderten Eigenschaften müssen wieder in den Charakter-Speicher geschrieben werden.
+		#self.__character.traits = self.__traits
 
-	#closeFile( file );
-#}
-
-#void ReadXmlCharacter::readSoulCreator() {
-	#while ( !atEnd() ) {
-		#readNext();
-
-		#if ( isEndElement() )
-			#break;
-
-		#if ( isStartElement() ) {
-			#QString elementName = name().toString();
-
-			#if ( elementName == "species" ) {
-				#QString speciesName = readElementText();
-				#character->setSpecies( cv_Species::toSpecies( speciesName ) );
-			#} else if ( elementName == "identities" ) {
-				#readIdentities();
-			#} else if ( elementName == "virtue" ) {
-				#character->setVirtue( readElementText() );
-			#} else if ( elementName == "vice" ) {
-				#character->setVice( readElementText() );
-			#} else if ( elementName == "breed" ) {
-				#character->setBreed( readElementText() );
-			#} else if ( elementName == "faction" ) {
-				#character->setFaction( readElementText() );
-			#} else if ( elementName == "superTrait" ) {
-				#int superTraitValue = readElementText().toInt();
-				#character->setSuperTrait( superTraitValue );
-			#} else if ( elementName == "morality" ) {
-				#int moralityValue = readElementText().toInt();
-				#character->setMorality( moralityValue );
-			#} else if ( elementName == "armor" ) {
-				#int armorGeneral = attributes().value( "general" ).toString().toInt();
-				#int armorFirearms = attributes().value( "firearms" ).toString().toInt();
-				#character->setArmor( armorGeneral, armorFirearms );
-				#readUnknownElement();
-			#} else if ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
-#// 				qDebug() << Q_FUNC_INFO << elementName << "!";
-				#readTraits( cv_AbstractTrait::toType( elementName ) );
-			#} else {
-				#readUnknownElement();
-			#}
-		#}
-	#}
-#}
-
-#void ReadXmlCharacter::readIdentities() {
-	#while ( !atEnd() ) {
-		#readNext();
-
-		#if ( isEndElement() )
-			#break;
-
-		#if ( isStartElement() ) {
-			#QString elementName = name().toString();
-
-			#if ( elementName == "identity" ) {
-				#cv_Identity id;
-
-				#id.foreNames = attributes().value( "forenames" ).toString().split( " " );
-				#id.sureName = attributes().value( "surename" ).toString();
-				#id.honorificName = attributes().value( "honorname" ).toString();
-				#id.nickName = attributes().value( "nickname" ).toString();
-				#id.supernaturalName = attributes().value( "supername" ).toString();
-				#id.gender = cv_Identity::toGender( attributes().value( "gender" ).toString() );
-
-				#readUnknownElement();
-
-				#character->setRealIdentity( id );
-			#} else {
-				#readUnknownElement();
-			#}
-		#}
-	#}
-#}
+		self.closeFile( f )
 
 
-#void ReadXmlCharacter::readTraits( cv_AbstractTrait::Type type ) {
-	#while ( !atEnd() ) {
-		#readNext();
+	def readSoulCreator(self):
+		"""
+		Es wird zwischen den einzelnen Eigenscahften unterschieden und je nach Typ unterschiedlich eingelesen.
+		"""
+		
+		while ( not self.atEnd() ):
+			self.readNext()
 
-		#if ( isEndElement() )
-			#break;
+			if ( self.isEndElement() ):
+				break
 
-		#if ( isStartElement() ) {
-			#QString elementName = name().toString();
-			#readTraits( type, cv_AbstractTrait::toCategory( elementName ) );
-		#}
-	#}
-#}
+			if ( self.isStartElement() ):
+				elementName = self.name()
+				#Debug.debug("Lese Element {} aus.".format(elementName))
 
-#void ReadXmlCharacter::readTraits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) {
-	#while ( !atEnd() ) {
-		#readNext();
+				if ( elementName == "species" ):
+					self.__character.species = self.readElementText()
+				elif ( elementName == "identities" ):
+					self.readIdentities()
+				elif ( elementName == "virtue" ):
+					self.__character. virtue = self.readElementText()
+				elif ( elementName == "vice" ):
+					self.__character.vice = self.readElementText()
+				elif ( elementName == "breed" ):
+					self.__character.breed = self.readElementText()
+				elif ( elementName == "faction" ):
+					self.__character.faction = self.readElementText()
+				elif ( elementName == "superTrait" ):
+					self.__character.superTrait = int(self.readElementText())
+				elif ( elementName == "morality" ):
+					self.__character.morality = int(self.readElementText())
+				elif ( elementName == "armor" ):
+					txt = self.readElementText()
+					self.__character.armor = [int(n) for n in txt.split(',')]
+				elif ( elementName in Config.typs ):
+					self.readTraitCategories( elementName )
+				#elif ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
+	#// 				qDebug() << Q_FUNC_INFO << elementName << "!";
+					#readTraits( cv_AbstractTrait::toType( elementName ) );
+				else:
+					self.readUnknownElement()
 
-		#if ( isEndElement() )
-			#break;
 
-		#if ( isStartElement() ) {
-			#QString elementName = name().toString();
+	def readIdentities(self):
+		"""
+		Liest die Identitäten des Charakters.
+		
+		\todo Derzeit kann nur eine identität eingelesen werden, da das Programm nur eine Identitöät unterstüzt.
+		"""
+		
+		while ( not self.atEnd() ):
+			self.readNext()
 
-			#if ( type == cv_AbstractTrait::Derangement && elementName == "derangement" ) {
-				#cv_Derangement derangement;
-				#derangement.setName(attributes().value( "name" ).toString());
-				#derangement.setType(type);
-				#derangement.setCategory(category);
-				#derangement.setMorality(attributes().value( "morality" ).toString().toInt());
+			if ( self.isEndElement() ):
+				break
 
-				#character->addDerangement( derangement );
+			if ( self.isStartElement() ):
+				elementName = self.name()
 
-				#while ( !atEnd() ) {
-					#readNext();
+				if ( elementName == "identity" ):
+					self.__character.identities[0].forenames = self.attributes().value( "forenames" ).split(" ")
+					self.__character.identities[0].surename = self.attributes().value( "surename" )
+					self.__character.identities[0].honorname = self.attributes().value( "honorname" )
+					self.__character.identities[0].nickname = self.attributes().value( "nickname" )
+					self.__character.identities[0].supername = self.attributes().value( "supername" )
+					self.__character.identities[0].gender = self.attributes().value( "gender" )
 
-					#if ( isEndElement() )
-						#break;
+					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
 
-					#if ( isStartElement() ) {
-						#readUnknownElement();
-					#}
-				#}
-			#} else if ( elementName == "trait" ) {
-				#cv_Trait trait;
-				#trait.setName(attributes().value( "name" ).toString());
-				#trait.setType(type);
-				#trait.setCategory(category);
-				#trait.setValue( attributes().value( "value" ).toString().toInt() );
-				#QString customText = attributes().value( "custom" ).toString();
 
-				#if ( customText.isEmpty() ) {
-#// 					trait.custom = false;
-					#trait.setCustomText( "" );
-				#} else {
-#// 					qDebug() << Q_FUNC_INFO << customText;
-#// 					trait.custom = true;
-					#trait.setCustomText( customText );
-				#}
+	def readTraitCategories( self, typ ):
+		"""
+		Liest die Kategorie der Eigenschaft aus und ruft die Funktion auf, welche die tatsächliche Eigenschaftsdaten ausliest.
+		"""
+		
+		while ( not self.atEnd() ):
+			self.readNext()
 
-				#QList< cv_TraitDetail > list;
+			if ( self.isEndElement() ):
+				break
 
-				#while ( !atEnd() ) {
-					#readNext();
+			if ( self.isStartElement() ):
+				elementName = self.name()
+				#Debug.debug("Lese Element {} aus.".format(elementName))
+				self.readTraits( typ, elementName )
 
-					#if ( isEndElement() )
-						#break;
 
-					#if ( isStartElement() ) {
-						#QString elementName = name().toString();
+	def readTraits( self, typ, category ):
+		"""
+		Liest die Daten der einzelnen Eigenschaften aus dem gespeicherten Charakter aus.
+		"""
+		
+		while ( not self.atEnd() ):
+			self.readNext()
 
-						#if ( elementName == "specialty" ) {
-							#QString specialty = readElementText();
-							#cv_TraitDetail detail;
-							#detail.name = specialty;
-							#detail.value = true;
-							#// An Liste anfügen.
-							#list.append( detail );
-						#} else
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+				#Debug.debug("Lese Element {} aus.".format(elementName))
+
+				#if ( typ == cv_AbstractTrait::Derangement && elementName == "derangement" ) {
+					#cv_Derangement derangement;
+					#derangement.setName(attributes().value( "name" ).toString());
+					#derangement.setType(type);
+					#derangement.setCategory(category);
+					#derangement.setMorality(attributes().value( "morality" ).toString().toInt());
+
+					#character.addDerangement( derangement );
+
+					#while ( !atEnd() ) {
+						#readNext();
+
+						#if ( self.isEndElement() )
+							#break;
+
+						#if ( self.isStartElement() ):
 							#readUnknownElement();
+						#}
 					#}
-				#}
+				if ( elementName == "trait" ):
+					for item in self.__character.traits[typ][category]:
+						if item.name == self.attributes().value( "name" ):
+							item.value = int(self.attributes().value( "value" ))
+							#Debug.debug("Ändere Eigenschaft {} zu {}".format(item.name, item.value))
+							## \todo custom fehlt noch.
+							#QString customText = attributes().value( "custom" ).toString();
+							break
 
-				#trait.setDetails( list );
+					self.readUnknownElement()
 
-				#character->modifyTrait( trait );
-			#} else
-				#readUnknownElement();
-		#}
-	#}
-#}
+					#if ( customText.isEmpty() ) {
+	#// 					trait.custom = false;
+						#trait.setCustomText( "" );
+					#} else {
+	#// 					qDebug() << Q_FUNC_INFO << customText;
+	#// 					trait.custom = true;
+						#trait.setCustomText( customText );
+					#}
+
+					#QList< cv_TraitDetail > list;
+
+					#while ( not self.atEnd() ):
+						#self.readNext()
+
+						#if ( self.isEndElement() )
+							#break;
+
+						#if ( self.isStartElement() ):
+							#QString elementName = name().toString();
+
+							#if ( elementName == "specialty" ) {
+								#QString specialty = readElementText();
+								#cv_TraitDetail detail;
+								#detail.name = specialty;
+								#detail.value = true;
+								#// An Liste anfügen.
+								#list.append( detail );
+							#} else
+								#readUnknownElement();
+						#}
+					#}
+
+					#trait.setDetails( list );
+
+					#character.modifyTrait( trait );
+				else:
+					self.readUnknownElement()
 
 

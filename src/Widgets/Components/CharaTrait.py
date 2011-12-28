@@ -46,7 +46,7 @@ class CharaTrait(TraitLine):
 
 
 	def __init__(self, trait, parent=None):
-		TraitLine.__init__(self, trait["name"], trait["value"], parent)
+		TraitLine.__init__(self, trait.name, trait.value, parent)
 
 		self.__trait = trait
 
@@ -60,6 +60,7 @@ class CharaTrait(TraitLine):
 
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 		#connect( traitPtr(), SIGNAL( valueChanged( int ) ), this, SLOT( setValue( int ) ) );
+		self.__trait.valueChanged.connect(self.setValue)
 
 		#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
 		#connect( traitPtr(), SIGNAL( availabilityChanged(bool)), this, SLOT( setEnabled(bool)) );
@@ -95,8 +96,8 @@ class CharaTrait(TraitLine):
 
 	def setTraitValue( self, value ):
 		#Debug.debug("Eigenschaft {} erhält den Wert {}".format(self.__trait["name"], value))
-		if self.__trait["value"] != value:
-			self.__trait["value"] = value
+		if self.__trait.value != value:
+			self.__trait.value = value
 		#Debug.debug("Eigenschaft {} hat den Wert {}".format(self.__trait["name"], self.__trait["value"]))
 
 

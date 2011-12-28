@@ -96,7 +96,7 @@ class Identity(QObject):
 
 		self.nameChanged.connect(self.identityChanged.emit)
 		# Die Lambda-Funktion soll nur das Argument abfangen, damit keine Warnung hervorgerufen wird.
-		self.genderChanged.connect(lambda: self.identityChanged.emit())
+		self.genderChanged.connect(self.identityChanged.emit)
 
 
 	def __getForenames(self):
