@@ -29,6 +29,7 @@ from PySide.QtCore import QObject, QFile
 from src.Config import Config
 from src import Error
 from ReadXml import ReadXml
+from src.Support import SupportList
 from src.Debug import Debug
 
 
@@ -55,7 +56,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 		
-		self.storage = template
+		self.__storage = template
 
 
 	def read(self):
@@ -128,7 +129,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					#Debug.debug("Spezies {} gefunden.".format(speciesData[0]))
 
 					# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
-					self.storage.appendSpecies( speciesData )
+					self.__storage.appendSpecies( speciesData )
 
 					self.readTree( speciesData[0] )
 				elif( elementName == "creation" ):
@@ -195,7 +196,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 						"age": self.attributes().value( "age" ),
 					}
 
-					self.storage.appendCharacteristic( typ, traitData );
+					self.__storage.appendCharacteristic( typ, traitData );
 					self.readUnknownElement()
 				else:
 					self.readUnknownElement()
@@ -211,7 +212,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		):
 			group = self.attributes().value( "name" )
 
-			self.storage.appendTitle( species, typ, group )
+			self.__storage.appendTitle( species, typ, group )
 
 		while( not self.atEnd() ):
 			self.readNext()
@@ -223,7 +224,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				elementName = self.name()
 				if( elementName == "trait" ):
 					title = self.attributes().value( "name" )
-					self.storage.appendTitle( species, typ, group, title )
+					self.__storage.appendTitle( species, typ, group, title )
 
 					# Damit weitergesucht wird.
 					self.readGroupInfo(species, title)
@@ -288,7 +289,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 						"name": traitName,
 						"typ": typ,
 					}
-					self.storage.appendBonusTrait( species, breed, traitData )
+					self.__storage.appendBonusTrait( species, breed, traitData )
 					self.readUnknownElement()
 				else:
 					self.readUnknownElement()
@@ -313,7 +314,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 						"traitMax": int(self.attributes().value( "traitMax" )),
 						"value": int(self.readElementText()),
 					}
-					self.storage.appendSuperEffect( species, superEffectData )
+					self.__storage.appendSuperEffect( species, superEffectData )
 				else:
 					self.readUnknownElement()
 
@@ -399,7 +400,22 @@ class ReadXmlTemplate(QObject, ReadXml):
 				else:
 					self.readUnknownElement()
 
-		self.storage.appendTrait( typ, category, traitInfo )
+		# Eine Eigenschaft kann mehrfach vorkommen, da andere Spezies andere Spezialisierungen mitbringen mögen.
+		traitExists = False
+		if typ in self.__storage.traits and category in self.__storage.traits[typ]:
+			for item in self.__storage.traits[typ][category]:
+				if item["name"] == traitInfo["name"]:
+					#Debug.debug("{} existiert schon".format(traitInfo["name"]))
+					for traitItem in traitInfo:
+						# Wir erweitern nur Listen (Spezialisierungen, Merit-Werte, Voraussetzungen)
+						if type(item[traitItem]) == list:
+							item[traitItem].extend(traitInfo[traitItem])
+							item[traitItem] = SupportList.uniqify(item[traitItem])
+					traitExists = True
+					break
+
+		if not traitExists:
+			self.__storage.appendTrait( typ, category, traitInfo )
 
 
 	def readCreationTree( self, sp ):
@@ -417,7 +433,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				typ = self.name()
 				if( typ in Config.typs ):
 					points = self.readCreationPoints()
-					self.storage.appendCreationPoints( sp, typ, points )
+					self.__storage.appendCreationPoints( sp, typ, points )
 				else:
 					self.readUnknownElement()
 

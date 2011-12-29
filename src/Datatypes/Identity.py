@@ -25,7 +25,7 @@ from __future__ import division, print_function
 from PySide.QtCore import QObject, Signal
 #from PySide.QtGui import QDialog
 
-##from src.Config import Config
+from src.Config import Config
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 #from src.Widgets.Dialogs.NameDialog import NameDialog
 
@@ -90,12 +90,12 @@ class Identity(QObject):
 			#
 			# Dies ist der Name, der von den übrigen Kreaturen seiner Spezies verwendet wird.
 			"supername": "",
-			## Geschlecht
-			"gender": "",
 		}
+		
+		## Geschlecht
+		self.__gender = ""
 
 		self.nameChanged.connect(self.identityChanged.emit)
-		# Die Lambda-Funktion soll nur das Argument abfangen, damit keine Warnung hervorgerufen wird.
 		self.genderChanged.connect(self.identityChanged.emit)
 
 
@@ -189,11 +189,11 @@ class Identity(QObject):
 
 
 	def __getGender(self):
-		return self.__name["gender"]
+		return self.__gender
 
 	def __setGender(self, gender):
-		if self.__name["gender"] != gender:
-			self.__name["gender"] = gender
+		if self.__gender != gender:
+			self.__gender = gender
 			self.genderChanged.emit(gender)
 
 	gender = property(__getGender, __setGender)
@@ -205,6 +205,8 @@ class Identity(QObject):
 				item = []
 			else:
 				item = ""
+
+		self.gender = Config.genders[0][0]
 
 
 	@staticmethod

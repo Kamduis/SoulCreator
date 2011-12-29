@@ -50,6 +50,8 @@ class Trait(QObject):
 		self.__name = name
 		self.__value = value
 		self.__specialties = []
+		self.__age = ""
+		self.__era = ""
 
 
 	def __getName(self):
@@ -106,6 +108,24 @@ class Trait(QObject):
 
 		self.__specialties.remove(name)
 		self.specialtiesChanged.emit(self.specialties)
+
+
+	def __getEra(self):
+		return self.__era
+
+	def __setEra(self, era):
+		self.__era = era
+
+	era = property(__getEra, __setEra)
+
+
+	def __getAge(self):
+		return self.__age
+
+	def __setAge(self, age):
+		self.__age = age
+
+	age = property(__getAge, __setAge)
 
 
 #Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject( parent ), cv_Trait( txt, val, spe, ty, ca ) {

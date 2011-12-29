@@ -100,6 +100,8 @@ class SkillWidget(QWidget):
 				# Fertigkeiten haben Spezialisierungen.
 				#connect( traitPtr, SIGNAL( detailsChanged( int )), charaTrait, SLOT( setButtonText(int)) );
 				#connect( character, SIGNAL( characterResetted()), this, SLOT( uncheckAllButtons()) );
+				self.__character.eraChanged.connect(traitWidget.hideOrShowTrait)
+				self.__character.ageChanged.connect(traitWidget.hideOrShowTrait)
 				traitWidget.specialtiesClicked.connect(self.uncheckOtherButtons)
 				#connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 				traitWidget.specialtiesClicked.connect(self.specialtiesClicked.emit)

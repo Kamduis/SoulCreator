@@ -180,7 +180,7 @@
 					<specialty>State</specialty>
 					<specialty>Scandals</specialty>
 				</trait>
-				<trait name="Religion" era="Antique">
+				<trait name="Religion" era="Ancient">
 					<specialty>Dogma (Christian)</specialty>
 					<specialty>Dogma (Islamic)</specialty>
 					<specialty>Dogma (Jewish)</specialty>
@@ -210,7 +210,7 @@
 					<specialty>Physics</specialty>
 					<specialty>Research</specialty>
 				</trait>
-				<trait name="Warfare" era="Antique">
+				<trait name="Warfare" era="Ancient">
 					<specialty>Ambushes</specialty>
 					<specialty>Barbarians</specialty>
 					<specialty>Fields of Fire</specialty>
@@ -221,7 +221,7 @@
 				</trait>
 			</Mental>
 			<Physical>
-				<trait name="Archery" era="Antique">
+				<trait name="Archery" era="Ancient">
 					<specialty>Long Bow</specialty>
 					<specialty>Long Shot</specialty>
 					<specialty>Short Bow</specialty>
@@ -285,7 +285,7 @@
 					<specialty>Shoplifting</specialty>
 					<specialty>Sleight of Hand</specialty>
 				</trait>
-				<trait name="Ride" era="Antique">
+				<trait name="Ride" era="Ancient">
 					<specialty>Chariot</specialty>
 					<specialty>Dangerous Conditions</specialty>
 					<specialty>Pursuit</specialty>
@@ -944,7 +944,7 @@
 					<value>5</value>
 					<prerequisite>Presence > 2 AND Expression > 0</prerequisite>
 				</trait>
-				<trait name="Theology" source="Vampire Requiem for Rome" era="Antique">
+				<trait name="Theology" source="Vampire Requiem for Rome" era="Ancient">
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>

@@ -24,7 +24,7 @@ from __future__ import division, print_function
 
 from PySide.QtCore import Signal
 
-#from src.Config import Config
+from src.Config import Config
 from src.Widgets.Components.TraitLine import TraitLine
 from src.Debug import Debug
 
@@ -171,4 +171,33 @@ class CharaTrait(TraitLine):
 		#setHidden( true );
 	#}
 #}
+
+
+	def hideOrShowTrait(self, reason):
+		"""
+		Versteckt oder zeigt diese Eigenschaft, weil reason eingetreten ist.
+		"""
+
+		#Debug.debug("Eigenschaft {} wegen {}".format(self.name, reason))
+		#Debug.debug(self.__trait.age)
+		if type(reason) == int:
+			if self.__trait.age == Config.ages[0]:
+				if reason < Config.adultAge:
+					self.setHidden(False)
+				else:
+					self.setHidden(True)
+					Debug.debug("Verstecke {}, da Alter {}".format(self.name, reason))
+			elif self.__trait.age == Config.ages[1]:
+				if reason < Config.adultAge:
+					self.setHidden(True)
+					Debug.debug("Verstecke {}, da Alter {}".format(self.name, reason))
+				else:
+					self.setHidden(False)
+		if type(reason) in [str, unicode]:
+			Debug.debug(self.__trait.era)
+			if self.__trait.era and self.__trait.era != reason:
+				self.setHidden(True)
+				Debug.debug("Verstecke {}, da Ära {}".format(self.name, reason))
+			else:
+				self.setHidden(False)
 

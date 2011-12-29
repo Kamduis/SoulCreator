@@ -23,9 +23,9 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QGridLayout, QLabel, QPushButton, QComboBox, QIcon
+from PySide.QtGui import QWidget, QGridLayout, QLabel, QPushButton, QComboBox, QIcon, QSpinBox
 
-#from src.Config import Config
+from src.Config import Config
 from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Widgets.Dialogs.NameDialog import NameDialog
 
@@ -57,13 +57,19 @@ class InfoWidget(QWidget):
 		#// 	QLabel* labelNameHonorific = new QLabel()
 		#// 	QLabel* labelNameSuper = new QLabel()
 
-		self.__labelSpecies = QLabel( self.tr( "Species:" ) )
-		self.__speciesComboBox = CharaSpecies( self)
-
 		self.__labelGender = QLabel( self.tr( "Gender:" ) )
 		self.__genderCombobox = QComboBox( self )
-		self.__genderCombobox.addItem( QIcon( ":/icons/images/male.png" ), self.tr( "Male" ) )
-		self.__genderCombobox.addItem( QIcon( ":/icons/images/female.png" ), self.tr( "Female" ) )
+		for item in Config.genders:
+			self.__genderCombobox.addItem( u"{} ({})".format(item[0], item[1]) )
+
+		self.__labelAge = QLabel( self.tr( "Age:" ) )
+		self.__spinBoxAge = QSpinBox( self )
+		self.__spinBoxAge.setMinimum(6)
+		self.__spinBoxAge.setMaximum(999)
+		self.__spinBoxAge.setValue(Config.initialAge)
+
+		self.__labelSpecies = QLabel( self.tr( "Species:" ) )
+		self.__speciesComboBox = CharaSpecies( self)
 
 		self.__labelVirtue = QLabel( self.tr( "Virtue:" ) )
 		self.__virtueCombobox = QComboBox( self )
@@ -81,23 +87,32 @@ class InfoWidget(QWidget):
 		self.__factionCombobox = QComboBox( self )
 		#self.__factionCombobox.addItems( storage.factionNames() )
 
+		self.__labelEra = QLabel( self.tr( "Era:" ) )
+		self.__comboBoxEra = QComboBox( self )
+		self.__comboBoxEra.addItems( Config.eras )
+
 		self.__layout.addWidget( self.__namePushButton, 0, 0, Qt.AlignTop )
 		self.__layout.addWidget( self.__labelName, 0, 1, 1, 2 )
 		self.__layout.addWidget( self.__labelGender, 1, 0 )
 		self.__layout.addWidget( self.__genderCombobox, 1, 1 )
-		self.__layout.addWidget( self.__labelSpecies, 2, 0 )
-		self.__layout.addWidget( self.__speciesComboBox, 2, 1 )
-		self.__layout.addWidget( self.__labelVirtue, 3, 0 )
-		self.__layout.addWidget( self.__virtueCombobox, 3, 1 )
-		self.__layout.addWidget( self.__labelVice, 4, 0 )
-		self.__layout.addWidget( self.__viceCombobox, 4, 1 )
-		self.__layout.addWidget( self.__labelBreed, 5, 0 )
-		self.__layout.addWidget( self.__breedCombobox, 5, 1 )
-		self.__layout.addWidget( self.__labelFaction, 6, 0 )
-		self.__layout.addWidget( self.__factionCombobox, 6, 1 )
+		self.__layout.addWidget( self.__labelAge, 2, 0 )
+		self.__layout.addWidget( self.__spinBoxAge, 2, 1 )
+		self.__layout.addWidget( self.__labelSpecies, 3, 0 )
+		self.__layout.addWidget( self.__speciesComboBox, 3, 1 )
+		self.__layout.addWidget( self.__labelVirtue, 4, 0 )
+		self.__layout.addWidget( self.__virtueCombobox, 4, 1 )
+		self.__layout.addWidget( self.__labelVice, 5, 0 )
+		self.__layout.addWidget( self.__viceCombobox, 5, 1 )
+		self.__layout.addWidget( self.__labelBreed, 6, 0 )
+		self.__layout.addWidget( self.__breedCombobox, 6, 1 )
+		self.__layout.addWidget( self.__labelFaction, 7, 0 )
+		self.__layout.addWidget( self.__factionCombobox, 7, 1 )
+		self.__layout.addWidget( self.__labelEra, 0, 3 )
+		self.__layout.addWidget( self.__comboBoxEra, 0, 4 )
 
 		self.__namePushButton.clicked.connect(self.openNameDialog)
 		self.__genderCombobox.currentIndexChanged[str].connect(self.changeGender)
+		self.__spinBoxAge.valueChanged[int].connect(self.changeAge)
 	#connect( virtueCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeVirtue( int ) ) );
 	#connect( viceCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeVice( int ) ) );
 	#connect( breedCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeBreed( int ) ) );
@@ -111,6 +126,7 @@ class InfoWidget(QWidget):
 	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( updateFactionBox( cv_Species::SpeciesFlag ) ) );
 	#connect( character, SIGNAL( breedChanged( QString ) ), self, SLOT( updateBreed( QString ) ) );
 	#connect( character, SIGNAL( factionChanged( QString ) ), self, SLOT( updateFaction( QString ) ) );
+		self.__comboBoxEra.currentIndexChanged[str].connect(self.changeEra)
 #}
 
 	def openNameDialog(self):
@@ -120,7 +136,6 @@ class InfoWidget(QWidget):
 		
 		dialog = NameDialog( self.__character, self )
 		dialog.exec_()
-		#dialog.show()
 
 
 	def changeGender( self, gender ):
@@ -131,24 +146,62 @@ class InfoWidget(QWidget):
 		self.__character.identities[0].gender = gender
 
 
+	def changeAge( self, age ):
+		"""
+		Legt das Alter des Charakters fest.
+		"""
+
+		self.__character.age = age
+
+
 #void InfoWidget::changeVirtue( int idx ) {
+	#"""
+	#Verändert die Tugend des Charakters.
+	#"""
+	
 	#character->setVirtue( virtueCombobox->currentText() );
 #}
 
 #void InfoWidget::changeVice( int idx ) {
+	#"""
+	#Verändert das Laster des Charakters.
+	#"""
+
 	#character->setVice( viceCombobox->currentText() );
 #}
 
 #void InfoWidget::changeBreed( int idx ) {
+	#"""
+	#Verändert die Brut des Charakters.
+	#"""
+
 	#character->setBreed( breedCombobox->currentText() );
 #}
 
 #void InfoWidget::changeFaction( int idx ) {
+	#"""
+	#Verändert die Fraktion des Charakters.
+	#"""
+
 	#character->setFaction( factionCombobox->currentText() );
 #}
 
 
+	def changeEra( self, era ):
+		"""
+		Legt die zeitliche Ära fest, in welcher der Charakter zuhause ist.
+		"""
+
+		self.__character.era = era
+
+
 #void InfoWidget::updateIdentity( cv_Identity id ) {
+	#"""
+	#Aktualisiert die Anzeige des Namens.
+	
+	#\bug Mit jedem Speichern und Laden wächst die Anzahl der unnötigen Leerzeichen am Ende an. Symptome sind zwar behoben, die ursache aber noch nicht.
+	#"""
+
 #// 	namePushButton->setText( cv_Name::displayNameDisplay( id.sureName, id.firstName(), id.nickName ) );
 
 	#QString nameText = "";
@@ -191,35 +244,69 @@ class InfoWidget(QWidget):
 #}
 
 #void InfoWidget::updateVirtue( QString txt ) {
+	#"""
+	#Aktualisiert die Anzeige der Tugend.
+	#"""
+
 	#virtueCombobox->setCurrentIndex( virtueCombobox->findText( txt ) );
 #}
 
 #void InfoWidget::updateVice( QString txt ) {
+	#"""
+	#Aktualisiert die Anzeige des Lasters.
+	#"""
+
 	#viceCombobox->setCurrentIndex( viceCombobox->findText( txt ) );
 #}
 
 #void InfoWidget::updateBreed( QString txt ) {
+	#"""
+	#Aktualisiert die Anzeige der Brut.
+	#"""
+
 	#breedCombobox->setCurrentIndex( breedCombobox->findText( txt ) );
 #}
 
 #void InfoWidget::updateFaction( QString txt ) {
+	#"""
+	#Aktualisiert die Anzeige der Fraktion.
+	#"""
+
 	#factionCombobox->setCurrentIndex( factionCombobox->findText( txt ) );
 #}
 
 #void InfoWidget::updateBreedTitle( cv_Species::SpeciesFlag spe ) {
+	#"""
+	#Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Bruten.
+	#"""
+
 	#labelBreed->setText( storage->breedTitle( spe )  + ":" );
 #}
 
 #void InfoWidget::updateFactionTitle( cv_Species::SpeciesFlag spe ) {
+	#"""
+	#Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Fraktionen
+	#"""
+
 	#labelFaction->setText( storage->factionTitle( spe )  + ":" );
 #}
 
 #void InfoWidget::updateBreedBox( cv_Species::SpeciesFlag spe ) {
+	#"""
+	#Wenn die Spezies sich ändert, muß die Auswahl der möglichen Bruten verändert werden.
+	#"""
+
 	#breedCombobox->clear();
 	#breedCombobox->addItems( storage->breedNames( spe ) );
 #}
 
 #void InfoWidget::updateFactionBox( cv_Species::SpeciesFlag spe ) {
+	#"""
+	#Wenn die Spezies sich ändert, muß die Auswahl der möglichen Fraktionen verändert werden.
+	#"""
+
 	#factionCombobox->clear();
 	#factionCombobox->addItems( storage->factionNames( spe ) );
 #}
+
+
