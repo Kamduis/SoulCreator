@@ -80,7 +80,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeTextElement( "faction", self.__character.faction )
 		self.writeTextElement( "superTrait", unicode( self.__character.superTrait ) )
 		self.writeTextElement( "morality", unicode( self.__character.morality ) )
-		self.writeTextElement( "armor", ",".join( unicode(n) for n in self.__character.armor ) )
+		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
 
 		self.writeCharacterTraits()
 
@@ -115,21 +115,15 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 						self.writeStartElement( "trait" )
 						self.writeAttribute( "name", subsubitem.name )
 						self.writeAttribute( "value", unicode( subsubitem.value ) )
+						# Spezialisierungen
+						if subsubitem.specialties:
+							self.writeTextElement( "specialties", Config.sepChar.join( unicode(n) for n in subsubitem.specialties ) )
 
 	#// 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
 
 						#if ( list.at( k ).custom() ) {
 							#writeAttribute( "custom", list.at( k ).customText() );
 						#}
-
-	#// 					qDebug() << Q_FUNC_INFO << list.at( k ).details.count();
-	#// 					if ( types.at( i ) == cv_AbstractTrait.Skill ) {
-						#for ( int l = 0; l < list.at( k ).details().count(); l++ ) {
-	#// 						qDebug() << Q_FUNC_INFO << list.at( k ).details.at( l ).name;
-							#writeTextElement( "specialty",  list.at( k ).details().at( l ).name );
-						#}
-
-	#// 					}t
 
 						self.writeEndElement()
 				self.writeEndElement()

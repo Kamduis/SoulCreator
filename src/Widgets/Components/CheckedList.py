@@ -24,7 +24,7 @@ from __future__ import division, print_function
 
 #import traceback
 
-#from PySide.QtCore import Qt
+from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QListWidget, QListWidgetItem
 
 #from src.Config import Config
@@ -42,15 +42,24 @@ class CheckedList(QListWidget):
 	In dieser Liste kann der Nutzer sämtliche Einträge abhaken.
 	"""
 
+
+	itemStateChanged = Signal(str, object)
+
+
 	def __init__(self, parent=None):
 		QListWidget.__init__(self, parent)
 
-		
+		self.itemChanged.connect(self.emitItemStateChanged)
+		#self.itemStateChanged.connect(self.test)
 
 
 #CheckedList::CheckedList( QWidget *parent ) : QListWidget( parent ) {
 #// 	connect(this, SIGNAL(itemChanged ( QListWidgetItem * )), this, SLOT(emitCheckedItemsChanged()) );
 #}
+
+
+	#def test(self, name, state):
+		#Debug.debug("Verändere Status von {} zu {}".format(name, state))
 
 
 	def addCheckableItem( self, label, state ):
@@ -84,10 +93,18 @@ class CheckedList(QListWidget):
 
 
 #void CheckedList::removeCheckableItem( int i ) {
+	#"""
+	#Entfernt den Eintrag an der angegebenen Position.
+	#"""
+	
 	#delete item( i );
 #}
 
 #void CheckedList::setItemCheckState( int i, Qt::CheckState state ) {
+	#"""
+	#Abhaken des Eintrags (oder den Haken wieder entfernen).
+	#"""
+	
 	#item(i)->setCheckState(state);
 #}
 
@@ -103,3 +120,7 @@ class CheckedList(QListWidget):
 #//
 #// 	emit checkedItemsChanged(list);
 #// }
+
+
+	def emitItemStateChanged(self, item):
+		self.itemStateChanged.emit(item.text(), item.checkState())

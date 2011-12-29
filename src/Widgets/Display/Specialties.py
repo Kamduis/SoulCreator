@@ -49,7 +49,9 @@ class Specialties(CheckedList):
 		#self.__character = character
 		self.__storage = templateTraits
 
-		self.___skill = ""
+		self.__trait = 0
+
+		self.itemStateChanged.connect(self.modifyTrait)
 
 
 	## Wird vielleicht garnicht gebraucht
@@ -65,11 +67,9 @@ class Specialties(CheckedList):
 
 	def setSpecialties( self, specialties ):
 		for item in specialties:
-			#if ( list.at( i ).value ) {
-				#state = Qt.Checked;
-			#} else {
-			state = Qt.Unchecked;
-			#}
+			state = Qt.Unchecked
+			if ( item in self.__trait.specialties ):
+				state = Qt.Checked
 
 			self.addCheckableItem( item, state )
 
@@ -88,6 +88,10 @@ class Specialties(CheckedList):
 
 
 #void CharaSpecialties::saveSpecialties( QStringList list ) {
+	"""
+	Speichert die mit Haken versehenen Spezialisierungen bei den Charakterwerten im Speicher.
+	"""
+	
 	#QList< cv_TraitDetail > specialties;
 
 	#for ( int i = 0; i < list.count(); ++i ) {
@@ -105,12 +109,24 @@ class Specialties(CheckedList):
 #}
 
 
-	def showSpecialties(self, trait):
-		#Debug.debug("Zeige Spezialisierungen von {}".format(trait.name))
+	def showSpecialties(self, sw, trait):
 		self.clear()
-		for item in self.__storage:
-			for subitem in self.__storage[item]:
-				if subitem["name"] == trait.name:
-					self.setSpecialties(subitem["specialty"])
-					return
+		if sw:
+			#Debug.debug("Zeige Spezialisierungen von {}".format(trait.name))
+			if self.__trait != trait:
+				self.__trait = trait
+			#Debug.debug(self.__trait)
+			for item in self.__storage:
+				for subitem in self.__storage[item]:
+					if subitem["name"] == trait.name:
+						self.setSpecialties(subitem["specialty"])
+						return
+
+
+	def modifyTrait(self, name, state):
+		if state == Qt.Checked:
+			if name not in self.__trait.specialties:
+				self.__trait.appendSpecialty(name)
+		elif name in self.__trait.specialties:
+			self.__trait.removeSpecialty(name)
 

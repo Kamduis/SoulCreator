@@ -41,7 +41,7 @@ class TraitLine(QWidget):
 
 
 	valueChanged = Signal(int)
-	buttonClicked = Signal()
+	buttonClicked = Signal(bool)
 
 
 	def __init__(self, name, value, parent=None):
@@ -95,9 +95,11 @@ class TraitLine(QWidget):
 	def __setName( self, name ):
 		self.__labelName.setText( name )
 
+	## Der Name, der hier dargestellten Eigenschaft.
 	name = property(__getName, __setName)
 
 
+## Der beschreibende Text dieser Eigenschaft.
 #QString TraitLine::text() const {
 	#return lineEdit.text();
 #}
@@ -110,8 +112,13 @@ class TraitLine(QWidget):
 		return self.__button.text()
 
 	def __setButtonText( self, text ):
+		"""
+		Legt die Beschriftung des Buttons fest.
+		"""
+		
 		self.__button.setText( unicode(text) )
 
+	## Legt die Beschriftung des Buttons fest.
 	buttonText = property(__getButtonText, __setButtonText)
 
 
@@ -126,10 +133,15 @@ class TraitLine(QWidget):
 		#Debug.debug("Hurra! Setze Eigenschaft {} auf Wert {}".format(self.name(), value))
 		self.__traitDots.setValue( value )
 
+	## Der Wert, die hier dargestellten Eigenschaft.
 	value = property(__getValue, setValue)
 
 
 #void TraitLine::setPossibleValues( QList< int > valueList ) {
+	#"""
+	#Gibt alle Werte zurück, welche diese Zeile annehmen darf.
+	#"""
+	
 	#traitDots.setAllowedValues( &valueList );
 #}
 
@@ -143,10 +155,18 @@ class TraitLine(QWidget):
 
 
 	def setSpecialtyButtonChecked( self, sw=True ):
+		"""
+		Aktiviere oder Deaktiviere den Spezialisierungs-Knopf.
+		"""
+		
 		self.__button.setChecked( sw )
 
 
 	def setSpecialtiesHidden( self, sw=True ):
+		"""
+		Mit dieser Methode verstecke ich die Liste der Spezialisierungen. Schließlich haben nur Fertigkeiten eine Notwendigkeit dafür.
+		"""
+		
 		if ( sw ):
 			self.__button.hide()
 		else:
@@ -158,6 +178,10 @@ class TraitLine(QWidget):
 
 
 	def setDescriptionHidden( self, sw ):
+		"""
+		Mit dieser Methode verstecke ich die Textzeile, in welcher zusätzlicher Beschreibungstext eingegeben werden kann.
+		"""
+		
 		if ( sw ):
 			self.__lineEdit.hide()
 		else:

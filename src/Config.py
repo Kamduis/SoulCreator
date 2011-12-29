@@ -49,6 +49,9 @@ class Config():
 	# Verzeichnisname für gespeicherte Charaktere
 	saveDir = "save"
 
+	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
+	sepChar = ";"
+
 	# Vordefinierte Farben
 	importantTextColorName = "darkBlue"
 

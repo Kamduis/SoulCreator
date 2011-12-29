@@ -42,7 +42,7 @@ class SkillWidget(QWidget):
 	"""
 
 
-	specialtiesClicked = Signal(object)
+	specialtiesClicked = Signal(bool, object)
 
 
 	def __init__(self, template, character, parent=None):
@@ -115,15 +115,16 @@ class SkillWidget(QWidget):
 		self.__scrollArea.setMinimumWidth(self.__scrollArea.viewport().minimumWidth())
 
 
-	def uncheckOtherButtons( self, trait ):
+	def uncheckOtherButtons( self, sw, trait ):
 		"""
 		Über diese Funktion werden alle anderen Spezialisierungs-Knöpfe deaktiviert, sobald einer aktiviert wird.
 		"""
 		
 		#Debug.debug("Drücke {}".format(skillName))
-		for item in self.__traitWidgets:
-			if item.name != trait.name:
-				item.setSpecialtyButtonChecked(False)
+		if sw:
+			for item in self.__traitWidgets:
+				if item.name != trait.name:
+					item.setSpecialtyButtonChecked(False)
 
 
 	#def uncheckAllButtons(self):

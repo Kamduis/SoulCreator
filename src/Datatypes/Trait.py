@@ -39,7 +39,10 @@ class Trait(QObject):
 	Simple Eigenschaften wie Attribute haben nur Name und Wert. Bei Fertigkeiten kommen bereits die Spezialisierungen hinzu, bei  Vorzügen noch die Einschränkungen etc.
 	"""
 
+
 	valueChanged = Signal(int)
+	specialtiesChanged = Signal(object)
+
 
 	def __init__(self, name, value=0, parent=None):
 		QObject.__init__(self, parent)
@@ -47,12 +50,6 @@ class Trait(QObject):
 		self.__name = name
 		self.__value = value
 		self.__specialties = []
-
-		self.valueChanged.connect(self.test)
-
-
-	def test(self, val):
-		Debug.debug("Test: {}".format(val))
 
 
 	def __getName(self):
@@ -68,6 +65,10 @@ class Trait(QObject):
 		return self.__value
 
 	def setValue(self, value):
+		"""
+		Verändert den Wert der Eigenschaft.
+		"""
+		
 		if self.__value != value:
 			self.__value = value
 			#Debug.debug("Ändere Eigenschaft {} zu {}".format(self.name, self.value))
@@ -82,9 +83,29 @@ class Trait(QObject):
 	def __setSpecialties(self, specialties):
 		if self.__specialties != specialties:
 			self.__specialties = specialties
+			self.specialtiesChanged.emit(specialties)
 
 	specialties = property(__getSpecialties, __setSpecialties)
 
+	def appendSpecialty(self, name):
+		"""
+		Fügt der Liste von SPezialisierungen eine hinzu.
+
+		\note Diese Methode muß verwendet werden, wenn man das Signal \ref specialtyChanged nutzen möchte.
+		"""
+
+		self.__specialties.append(name)
+		self.specialtiesChanged.emit(self.specialties)
+
+	def removeSpecialty(self, name):
+		"""
+		Fügt der Liste von SPezialisierungen eine hinzu.
+
+		\note Diese Methode muß verwendet werden, wenn man das Signal \ref specialtyChanged nutzen möchte.
+		"""
+
+		self.__specialties.remove(name)
+		self.specialtiesChanged.emit(self.specialties)
 
 
 #Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject( parent ), cv_Trait( txt, val, spe, ty, ca ) {
@@ -115,9 +136,6 @@ class Trait(QObject):
 	#setPossibleValues( trait->possibleValues() );
 #}
 
-#Trait::~Trait() {
-#}
-
 
 #void Trait::construct() {
 	#// Am Anfang stehen alle Fertigkeiten zur Verfügung, aber wenn dann die Voraussetzungen geprüft werden, kann sich das ändern.
@@ -129,17 +147,11 @@ class Trait(QObject):
 #}
 
 
-
-#void Trait::setValue( int val ) {
-#// 	qDebug() << Q_FUNC_INFO << name() << val << value();
-	#if ( value() != val ) {
-		#cv_Trait::setValue( val );
-
-		#emit valueChanged( value() );
-	#}
-#}
-
 #void Trait::setDetails( QList< cv_TraitDetail > list ) {
+	#"""
+	#Legt die Zusatzeigenschaften fest.
+	#"""
+	
 	#if ( details() != list ) {
 		#cv_Trait::setDetails( list );
 
@@ -147,6 +159,10 @@ class Trait(QObject):
 	#}
 #}
 #void Trait::addDetail( cv_TraitDetail det ) {
+	#"""
+	#Fügt eine Zusatzeigenscahft hinzu.
+	#"""
+	
 	#if ( !details().contains( det ) ) {
 		#cv_Trait::addDetail( det );
 
@@ -156,6 +172,12 @@ class Trait(QObject):
 	#}
 #}
 #void Trait::clearDetails() {
+	#"""
+	#Löscht sämtliche Zusatzeigenschaften.
+	#
+	#Wenn der Wert einer Fertigkeit auf 0 sinkt, werden alle ihre Spezialisierungen gelöscht.
+	#"""
+	
 #// 	qDebug() << Q_FUNC_INFO << "Hallo?";
 	#if ( !details().isEmpty() ) {
 		#cv_Trait::clearDetails();
@@ -171,6 +193,10 @@ class Trait(QObject):
 
 
 #void Trait::setType( cv_AbstractTrait::Type typ ) {
+	#"""
+	#Legt den Typ fest und sendet ein entsprechendes Signal aus.
+	#"""
+	
 	#if ( type() != typ ) {
 		#cv_AbstractTrait::setType( typ );
 
@@ -179,9 +205,19 @@ class Trait(QObject):
 #}
 
 #bool Trait::isAvailable() const {
+	#"""
+	#Gibt zurück, ob die Voraussetzungen der Eigenschaft erfüllt sind, ode rnicht.
+	#"""
+	
 	#return v_available;
 #}
 #void Trait::setAvailability( bool sw ) {
+	#"""
+	#Legt fest, ob die Eigenschaft zur Verfügung steht oder nicht.
+	
+	#\sa checkPrerequisites()
+	#"""
+	
 	#if ( v_available != sw ) {
 		#v_available = sw;
 
@@ -190,6 +226,10 @@ class Trait(QObject):
 #}
 
 #void Trait::setBonus( bool sw ) {
+	#"""
+	#Legt fest, ob diese Eigenschaft eine Bonuseigenschaft ist.
+	#"""
+	
 	#qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
 	#if ( isBonus() == sw ) {
 		#cv_Trait::setBonus( sw );
@@ -216,6 +256,10 @@ class Trait(QObject):
 
 
 #void Trait::checkPrerequisites( Trait* trait ) {
+	"""
+	Überprüft, ob alle Voraussetzungen für diese Eigenschaft erfüllt werden.
+	"""
+	
 	#if ( !prerequisitePtrs().isEmpty() ) {
 #// 		qDebug() << Q_FUNC_INFO << "Wird für" << this->name() << "ausgeführt, weil sich Fertigkeit" << trait->name() << "geändert hat";
 
@@ -257,6 +301,10 @@ class Trait(QObject):
 
 
 #QString Trait::parsePrerequisites( QString text, QList< Trait* > list ) {
+	#"""
+	#Hilfsfunktion für checkTraitPrerequisites().
+	#"""
+	
 	#QString prerequisites = text;
 
 	#// Ersetze alle Atrtribute, Fertigkeiten etc. in dem Textstring mit den entsprechenden Zahlen, damit diese später über den Parser ausgewertet werden können.

@@ -63,16 +63,17 @@ class CharaSpecies(QComboBox):
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( setSpecies( cv_Species::SpeciesFlag ) ) );
 
 
-#CharaSpecies::~CharaSpecies() {
-	#// Da es sich um eine Singleton-Klasse handelt kann ich sie nicht zerstören.
-#// 	delete character;
-#}
-
 
 #cv_Species::SpeciesFlag CharaSpecies::species() const {
 	#return v_species;
 #}
 #void CharaSpecies::setSpecies( cv_Species::SpeciesFlag species ) {
+	#"""
+	#Legt die Spezies fest. Die ComboBox wird auf den Index gelegt, der der Spezies zugeordnet ist.
+
+	#\exception eSpeciesNotExisting Da setSpecies aber auch über eine SLOT-Funktion aufgerufen wird, existiert in dieser Klasse keine try-Block!
+	#"""
+	
 #// 	qDebug() << Q_FUNC_INFO << "Funktion zum Ändern der Spezies wird aufgerufen!";
 
 	#if( v_species != species ) {
