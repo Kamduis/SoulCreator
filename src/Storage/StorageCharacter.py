@@ -101,9 +101,8 @@ class StorageCharacter(QObject):
 
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
-		# Attribute setzen.
-		# \note Momentan werden nur Attribute und Fertigkeiten berücksichtigt.
-		for typ in Config.typs[:2]:
+		# Eigenscahften setzen.
+		for typ in Config.typs:
 			self.__traits.setdefault(typ, {})
 			for item in template.traits[typ]:
 				self.__traits[typ].setdefault(item, [])

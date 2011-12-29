@@ -153,7 +153,7 @@ class Config():
 		"Merit",
 		"Derangement",
 		"Flaw",
-		"Super",
+		#"Super",
 		"Power",
 	)
 
