@@ -30,7 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QBut
 from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
-from src.Widgets.Components. CharaTrait import CharaTrait
+from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Debug import Debug
 
 
@@ -125,9 +125,6 @@ class AttributeWidget(QWidget):
 			j = 0
 			for attrib in __list:
 				#Debug.debug(id(attrib))
-				# Anlegen der Eigenschaft im Speicher
-				#traitData = self.character.addTrait( typ, item, attrib )
-
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( attrib, self )
 				traitWidget.setSpecialtiesHidden( True )
@@ -180,6 +177,10 @@ class AttributeWidget(QWidget):
 
 
 #void AttributeWidget::updateshapeValuesStr( int val ) {
+	#"""
+	#Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Stärke.
+	#"""
+
 	#QStringList txt
 
 	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
@@ -192,6 +193,10 @@ class AttributeWidget(QWidget):
 #}
 
 #void AttributeWidget::updateshapeValuesDex( int val ) {
+	#"""
+	#Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Geschicklichkeit.
+	#"""
+
 	#QStringList txt;
 
 	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
@@ -204,6 +209,10 @@ class AttributeWidget(QWidget):
 #}
 
 #void AttributeWidget::updateshapeValuesSta( int val ) {
+	#"""
+	#Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Widerstandsfähigkeit.
+	#"""
+
 	#QStringList txt;
 
 	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
@@ -216,6 +225,10 @@ class AttributeWidget(QWidget):
 #}
 
 #void AttributeWidget::updateshapeValuesMan( int val ) {
+	#"""
+	#Aktualisiert die Anzeige der unterschiedlichen Gestalten eines Werwolfs für die Manipulation.
+	#"""
+
 	#QStringList txt;
 
 	#// Die Hishu-Gestalt interessiert nicht, da diese ja direkt eingegeben wird.
@@ -228,6 +241,14 @@ class AttributeWidget(QWidget):
 #}
 
 #void AttributeWidget::emitSpeciesChanged( cv_Species::SpeciesFlag spe ) {
+	#"""
+	#Sorgt dafür, daß das Signal speciesChanged() mit dem richtigen Argument ausgesandt wird.
+	#"""
+
+	#"""
+	#
+	#"""
+	
 	#if ( spe == cv_Species::Werewolf ) {
 		#emit speciesChanged( false );
 	#} else {
@@ -237,6 +258,10 @@ class AttributeWidget(QWidget):
 
 
 #void AttributeWidget::filterBonusAttribute() {
+	#"""
+	#Ein Bonusattributs wird nur manchmal dargestellt.
+	#"""
+
 	#cv_AbstractTrait::Type type = cv_AbstractTrait::Attribute;
 
 	#QList< TraitBonus* > listBonus = storage.traitsBonus( type, character.species() );
@@ -264,6 +289,10 @@ class AttributeWidget(QWidget):
 
 
 #void AttributeWidget::addAttributeBonus( int id ) {
+	#"""
+	#Der Bonusattributspunkt wird an die tatsächlichen Attribute angefügt.
+	#"""
+
 	#QList< Trait* > list = character.traits( cv_AbstractTrait::Attribute );
 
 	#for ( int i = 0; i < list.count(); ++i ) {

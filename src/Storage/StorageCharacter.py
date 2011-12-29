@@ -43,6 +43,7 @@ class StorageCharacter(QObject):
 	"""
 
 
+	ageChanged = Signal(int)
 	speciesChanged = Signal(str)
 	virtueChanged = Signal(str)
 	viceChanged = Signal(str)
@@ -52,7 +53,8 @@ class StorageCharacter(QObject):
 	moralityChanged = Signal(int)
 	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
-	traitsChanged = Signal(object)
+	#traitsChanged = Signal(object)
+	eraChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -81,6 +83,7 @@ class StorageCharacter(QObject):
 		self.__storage = template
 
 		self.__modified = False
+		self.__age = 0
 		self.__species = ""
 		self.__virtue = ""
 		self.__vice = ""
@@ -89,6 +92,7 @@ class StorageCharacter(QObject):
 		self.__superTrait = 0
 		self.__morality = 0
 		self.__armor = [0, 0]
+		self.__era = ""
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -104,10 +108,10 @@ class StorageCharacter(QObject):
 			for item in template.traits[typ]:
 				self.__traits[typ].setdefault(item, [])
 				for subitem in template.traits[typ][item]:
-					val = 0
-					if typ == "Attribute":
-						val = 1
+					val = 2
 					trait = Trait(subitem["name"], val)
+					trait.age = subitem["age"]
+					trait.era = subitem["era"]
 					self.__traits[typ][item].append(trait)
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
@@ -125,6 +129,46 @@ class StorageCharacter(QObject):
 	#connect( self, SIGNAL( armorChanged( int, int ) ), self, SLOT( setModified() ) );
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
+
+
+	def __getEra(self):
+		"""
+		Gibt die Ära aus, in welcher der Charakter zuhause ist.
+		"""
+
+		return self.__era
+
+	def __setEra( self, era ):
+		"""
+		Legt die Ära fest, in welcher der Charakter zuhause ist.
+		"""
+
+		if ( self.__era != era ):
+			self.__era = era
+			#Debug.debug("Ära verändert zu {}".format(era) )
+			self.eraChanged.emit( era )
+
+	era = property(__getEra, __setEra)
+
+
+	def __getAge(self):
+		"""
+		Gibt das Alter des Charakters aus.
+		"""
+
+		return self.__age
+
+	def __setAge( self, age ):
+		"""
+		Legt das Alter des Charakters fest.
+		"""
+
+		if ( self.__age != age ):
+			self.__age = age
+			#Debug.debug("Alter verändert zu {}".format(age) )
+			self.ageChanged.emit( age )
+
+	age = property(__getAge, __setAge)
 
 
 	def __getSpecies(self):
@@ -216,12 +260,12 @@ class StorageCharacter(QObject):
 	def __getTraits(self):
 		return self.__traits
 
-	def __setTraits(self, traits):
-		if self.__traits != traits:
-			self.__traits = traits
-			self.traitsChanged.emit(traits)
+	#def __setTraits(self, traits):
+		#if self.__traits != traits:
+			#self.__traits = traits
+			#self.traitsChanged.emit(traits)
 
-	traits = property(__getTraits, __setTraits)
+	traits = property(__getTraits)
 
 
 
@@ -516,6 +560,12 @@ class StorageCharacter(QObject):
 
 
 	def resetCharacter(self):
+		# Zeitalter festlegen.
+		self.era = Config.eras[0]
+
+		# Standardalter festlegen.
+		self.age = Config.initialAge
+
 		# Löschen aller Identitäten.
 		self.__identity.reset()
 
@@ -539,6 +589,7 @@ class StorageCharacter(QObject):
 			for subitem in self.__traits[item]:
 				for subsubitem in self.__traits[item][subitem]:
 					subsubitem.value = val
+					subsubitem.specialties = []
 
 			#v_traits2[i].clearDetails();
 

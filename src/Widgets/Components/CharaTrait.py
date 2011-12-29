@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import QObject
+from PySide.QtCore import Signal
 
-#from src.Config import Config
+from src.Config import Config
 from src.Widgets.Components.TraitLine import TraitLine
 from src.Debug import Debug
 
@@ -45,6 +45,9 @@ class CharaTrait(TraitLine):
 	"""
 
 
+	specialtiesClicked = Signal(bool, object)
+
+
 	def __init__(self, trait, parent=None):
 		TraitLine.__init__(self, trait.name, trait.value, parent)
 
@@ -56,11 +59,14 @@ class CharaTrait(TraitLine):
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_AbstractTrait::Type ) ) );
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 		#connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
-		#connect( traitPtr(), SIGNAL( detailsChanged(int)), this, SLOT( unclickButton( int ) ) );
+		self.buttonClicked.connect(self.emitSpecialtiesClicked)
+
+		## \bug Wenn ich irgendeinbe Spezialisierung abhake, wird der Knop sofort deaktiviert.
+		#self.__trait.specialtiesChanged.connect(self.uncheckButton)
 
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
-		#connect( traitPtr(), SIGNAL( valueChanged( int ) ), this, SLOT( setValue( int ) ) );
 		self.__trait.valueChanged.connect(self.setValue)
+		self.__trait.specialtiesChanged.connect(self.setSpecialtiesButtonText)
 
 		#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
 		#connect( traitPtr(), SIGNAL( availabilityChanged(bool)), this, SLOT( setEnabled(bool)) );
@@ -95,6 +101,10 @@ class CharaTrait(TraitLine):
 #// }
 
 	def setTraitValue( self, value ):
+		"""
+		Wenn der Wert dieses Widgets verändert wird, muß auch der dadurch repräsentierte Wert im Speicher verändert werden. Dies geschieht über diesen Slot.
+		"""
+		
 		#Debug.debug("Eigenschaft {} erhält den Wert {}".format(self.__trait["name"], value))
 		if self.__trait.value != value:
 			self.__trait.value = value
@@ -105,6 +115,12 @@ class CharaTrait(TraitLine):
 	#return traitPtr()->customText();
 #}
 #void CharaTrait::setCustomText( QString txt ) {
+	"""
+	Legt den Zusatztext fest.
+	
+	Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
+	"""
+	
 	#if ( traitPtr()->customText() != txt ) {
 		#traitPtr()->setCustomText( txt );
 
@@ -115,43 +131,6 @@ class CharaTrait(TraitLine):
 #}
 
 
-#cv_AbstractTrait::Type CharaTrait::type() const {
-	#return ptr_trait->type();
-#}
-
-#void CharaTrait::setType( cv_AbstractTrait::Type type ) {
-	#if ( ptr_trait->type() != type ) {
-		#ptr_trait->setType( type );
-
-		#emit typeChanged( type );
-		#emit traitChanged( traitPtr() );
-	#}
-#}
-
-#cv_AbstractTrait::Category CharaTrait::category() const {
-	#return ptr_trait->category();
-#}
-
-#void CharaTrait::setCategory( cv_AbstractTrait::Category category ) {
-	#if ( ptr_trait->category() != category ) {
-		#ptr_trait->setCategory( category );
-
-		#emit traitChanged( traitPtr() );
-	#}
-#}
-
-#cv_Species::Species CharaTrait::species() const {
-	#return ptr_trait->species();
-#}
-
-#void CharaTrait::setSpecies( cv_Species::Species species ) {
-	#if ( ptr_trait->species() != species ) {
-		#ptr_trait->setSpecies( species );
-#// 		emit speciesChanged(species);
-
-		#emit traitChanged( traitPtr() );
-	#}
-#}
 
 
 #bool CharaTrait::custom() const {
@@ -159,6 +138,10 @@ class CharaTrait(TraitLine):
 #}
 
 #void CharaTrait::setCustom( bool sw ) {
+	#"""
+	#Legt fest, ob es sich um eine Eigenschaft mit einem erklärenden Text handelt.
+	#"""
+	
 	#if ( ptr_trait->custom() != sw ) {
 		#ptr_trait->setCustom( sw );
 
@@ -166,38 +149,24 @@ class CharaTrait(TraitLine):
 	#}
 #}
 
-#void CharaTrait::emitSpecialtiesClicked( bool sw ) {
-	#if ( ptr_traitStorage != 0 ) {
-		#QList< cv_TraitDetail > listStora = ptr_traitStorage->details();
-		#QList< cv_TraitDetail > listChara = traitPtr()->details();
 
-#// 		qDebug() << Q_FUNC_INFO << traitPtr()->name() << ptr_traitStorage->name() << traitPtr()->details().count() << ptr_traitStorage->details().count();
+	def emitSpecialtiesClicked(self, sw):
+		self.specialtiesClicked.emit(sw, self.__trait)
 
-		#for ( int i = 0; i < listStora.count(); ++i ) {
-			#for ( int j = 0; j < listChara.count(); ++j ) {
-				#if ( listStora.at( i ).name == listChara.at( j ).name ) {
-#// 					qDebug() << Q_FUNC_INFO << sw << listStora.at( i ).name << listChara.at( j ).name << listChara.at( j ).value;
-					#cv_TraitDetail traitDetail = listChara.at( j );
-					#listStora.replace( i, traitDetail );
-				#}
-			#}
-		#}
 
-		#emit specialtiesClicked( sw, name(), listStora );
-	#}
-#}
-#void CharaTrait::unclickButton( int val )
-#{
-#// 	qDebug() << Q_FUNC_INFO << val;
-	#if (val < 1){
-		#setSpecialtyButtonChecked(false);
-		#emit specialtiesClicked( false, name(), ptr_traitStorage->details());
-	#}
-#}
+	#def uncheckButton( self ):
+		##Debug.debug("Alle Spezialisierungsknöpfe werden wieder deaktiviert")
+		#self.setSpecialtyButtonChecked(False)
 
 
 
 #void CharaTrait::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {
+	#"""
+	#Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.
+	
+	#Wenn nicht, werde sie versteckt und auf 0 gesetzt.
+	#"""
+	
 	#if ( species().testFlag( sp ) ) {
 		#setHidden( false );
 	#} else {
@@ -205,4 +174,25 @@ class CharaTrait(TraitLine):
 		#setHidden( true );
 	#}
 #}
+
+
+	def hideOrShowTrait(self, age, era):
+		"""
+		Versteckt oder zeigt diese Eigenschaft.
+		"""
+
+		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
+		if (self.__trait.age and self.__trait.age != age) or (self.__trait.era and self.__trait.era != era):
+			self.setHidden(True)
+			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
+		elif (self.__trait.age and self.__trait.age == age) or (self.__trait.era and self.__trait.era == era):
+			self.setHidden(False)
+
+
+	def setSpecialtiesButtonText(self, specialties):
+		#count = len(self.__trait.specialties)
+		count = len(specialties)
+		self.buttonText = count
+
+
 

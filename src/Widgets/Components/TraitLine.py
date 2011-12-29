@@ -41,6 +41,7 @@ class TraitLine(QWidget):
 
 
 	valueChanged = Signal(int)
+	buttonClicked = Signal(bool)
 
 
 	def __init__(self, name, value, parent=None):
@@ -67,9 +68,10 @@ class TraitLine(QWidget):
 		self.__traitDots.valueChanged.connect(self.valueChanged)
 		#connect( traitDots, SIGNAL( valueChanged( int ) ), self, SLOT( enableSpecialties( int ) ) );
 		#connect( button, SIGNAL( clicked( bool ) ), self, SIGNAL( specialtiesClicked( bool ) ) );
+		self.__button.clicked.connect(self.buttonClicked)
 		#connect( lineEdit, SIGNAL( textChanged( QString ) ), self, SIGNAL( textChanged( QString ) ) );
 
-		self.setName( name )
+		self.name = name
 		self.value = value
 		#// Damit auch bei der Programminitialisierung die Spezialisierungen richtig enabled oder disabled sind.
 		#enableSpecialties( value );
@@ -87,13 +89,17 @@ class TraitLine(QWidget):
 #}
 
 
-	def name(self):
+	def __getName(self):
 		return self.__labelName.text()
 
-	def setName( self, name ):
+	def __setName( self, name ):
 		self.__labelName.setText( name )
 
+	## Der Name, der hier dargestellten Eigenschaft.
+	name = property(__getName, __setName)
 
+
+## Der beschreibende Text dieser Eigenschaft.
 #QString TraitLine::text() const {
 	#return lineEdit.text();
 #}
@@ -102,12 +108,18 @@ class TraitLine(QWidget):
 	#lineEdit.setText( text );
 #}
 
-#void TraitLine::setButtonText( QString txt ) {
-	#button.setText( txt );
-#}
-#void TraitLine::setButtonText( int val ) {
-	#button.setText( QString::number(val) );
-#}
+	def __getButtonText(self):
+		return self.__button.text()
+
+	def __setButtonText( self, text ):
+		"""
+		Legt die Beschriftung des Buttons fest.
+		"""
+		
+		self.__button.setText( unicode(text) )
+
+	## Legt die Beschriftung des Buttons fest.
+	buttonText = property(__getButtonText, __setButtonText)
 
 
 	def __getValue(self):
@@ -121,10 +133,15 @@ class TraitLine(QWidget):
 		#Debug.debug("Hurra! Setze Eigenschaft {} auf Wert {}".format(self.name(), value))
 		self.__traitDots.setValue( value )
 
+	## Der Wert, die hier dargestellten Eigenschaft.
 	value = property(__getValue, setValue)
 
 
 #void TraitLine::setPossibleValues( QList< int > valueList ) {
+	#"""
+	#Gibt alle Werte zurück, welche diese Zeile annehmen darf.
+	#"""
+	
 	#traitDots.setAllowedValues( &valueList );
 #}
 
@@ -136,13 +153,20 @@ class TraitLine(QWidget):
 	#traitDots.setMinimum( value );
 #}
 
-#void TraitLine::setSpecialtyButtonChecked( bool sw ) {
-	#button.setChecked( sw );
-#}
 
+	def setSpecialtyButtonChecked( self, sw=True ):
+		"""
+		Aktiviere oder Deaktiviere den Spezialisierungs-Knopf.
+		"""
+		
+		self.__button.setChecked( sw )
 
 
 	def setSpecialtiesHidden( self, sw=True ):
+		"""
+		Mit dieser Methode verstecke ich die Liste der Spezialisierungen. Schließlich haben nur Fertigkeiten eine Notwendigkeit dafür.
+		"""
+		
 		if ( sw ):
 			self.__button.hide()
 		else:
@@ -154,8 +178,15 @@ class TraitLine(QWidget):
 
 
 	def setDescriptionHidden( self, sw ):
+		"""
+		Mit dieser Methode verstecke ich die Textzeile, in welcher zusätzlicher Beschreibungstext eingegeben werden kann.
+		"""
+		
 		if ( sw ):
 			self.__lineEdit.hide()
 		else:
 			self.__lineEdit.show()
 
+
+	#def emitSpecialtiesClicked(self):
+		#self.specialtiesClicked.emit(self.name)

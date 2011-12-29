@@ -82,7 +82,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 					readSoulCreator()
 
 		if ( self.hasError() ):
-			Debugdebug("Error!")
+			Debug.debug("Error!")
 			raise ErrXmlError( f.fileName(), self.errorString() )
 
 		## Die möglicherweise veränderten Eigenschaften müssen wieder in den Charakter-Speicher geschrieben werden.
@@ -110,8 +110,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.species = self.readElementText()
 				elif ( elementName == "identities" ):
 					self.readIdentities()
+				elif ( elementName == "age" ):
+					self.__character.age = int(self.readElementText())
 				elif ( elementName == "virtue" ):
-					self.__character. virtue = self.readElementText()
+					self.__character.virtue = self.readElementText()
 				elif ( elementName == "vice" ):
 					self.__character.vice = self.readElementText()
 				elif ( elementName == "breed" ):
@@ -124,7 +126,9 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.morality = int(self.readElementText())
 				elif ( elementName == "armor" ):
 					txt = self.readElementText()
-					self.__character.armor = [int(n) for n in txt.split(',')]
+					self.__character.armor = [int(n) for n in txt.split(Config.sepChar)]
+				elif ( elementName == "era" ):
+					self.__character.era = self.readElementText()
 				elif ( elementName in Config.typs ):
 					self.readTraitCategories( elementName )
 				#elif ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
@@ -215,15 +219,19 @@ class ReadXmlCharacter(QObject, ReadXml):
 						#}
 					#}
 				if ( elementName == "trait" ):
+					itemExists = False
 					for item in self.__character.traits[typ][category]:
 						if item.name == self.attributes().value( "name" ):
 							item.value = int(self.attributes().value( "value" ))
 							#Debug.debug("Ändere Eigenschaft {} zu {}".format(item.name, item.value))
 							## \todo custom fehlt noch.
 							#QString customText = attributes().value( "custom" ).toString();
+							self.readSpecialties(item)
+							itemExists = True
 							break
 
-					self.readUnknownElement()
+					if not itemExists:
+						self.readUnknownElement()
 
 					#if ( customText.isEmpty() ) {
 	#// 					trait.custom = false;
@@ -234,32 +242,29 @@ class ReadXmlCharacter(QObject, ReadXml):
 						#trait.setCustomText( customText );
 					#}
 
-					#QList< cv_TraitDetail > list;
-
-					#while ( not self.atEnd() ):
-						#self.readNext()
-
-						#if ( self.isEndElement() )
-							#break;
-
-						#if ( self.isStartElement() ):
-							#QString elementName = name().toString();
-
-							#if ( elementName == "specialty" ) {
-								#QString specialty = readElementText();
-								#cv_TraitDetail detail;
-								#detail.name = specialty;
-								#detail.value = true;
-								#// An Liste anfügen.
-								#list.append( detail );
-							#} else
-								#readUnknownElement();
-						#}
-					#}
-
-					#trait.setDetails( list );
-
 					#character.modifyTrait( trait );
+				else:
+					self.readUnknownElement()
+
+
+	def readSpecialties( self, trait ):
+		"""
+		Liest die Spezialisierungen der auszulesenen Eigenscahft aus.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+				#Debug.debug("Lese Element {} aus.".format(elementName))
+
+				if ( elementName == "specialties" ):
+					txt = self.readElementText()
+					trait.specialties = [n for n in txt.split(Config.sepChar)]
 				else:
 					self.readUnknownElement()
 

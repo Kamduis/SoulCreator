@@ -74,13 +74,15 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeAttribute( "gender", self.__character.identities[0].gender )
 		self.writeEndElement()
 		self.writeEndElement()
+		self.writeTextElement( "age", unicode(self.__character.age) )
 		self.writeTextElement( "virtue", self.__character.virtue )
 		self.writeTextElement( "vice", self.__character.vice )
 		self.writeTextElement( "breed", self.__character.breed )
 		self.writeTextElement( "faction", self.__character.faction )
 		self.writeTextElement( "superTrait", unicode( self.__character.superTrait ) )
 		self.writeTextElement( "morality", unicode( self.__character.morality ) )
-		self.writeTextElement( "armor", ",".join( unicode(n) for n in self.__character.armor ) )
+		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
+		self.writeTextElement( "era", self.__character.era )
 
 		self.writeCharacterTraits()
 
@@ -111,10 +113,13 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 
 				for subsubitem in self.__character.traits[item][subitem]:
 					# Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-					if ( subsubitem.value != [0] ):
+					if ( subsubitem.value != 0 ):
 						self.writeStartElement( "trait" )
 						self.writeAttribute( "name", subsubitem.name )
 						self.writeAttribute( "value", unicode( subsubitem.value ) )
+						# Spezialisierungen
+						if subsubitem.specialties:
+							self.writeTextElement( "specialties", Config.sepChar.join( unicode(n) for n in subsubitem.specialties ) )
 
 	#// 					qDebug() << Q_FUNC_INFO << list.at( k ).name << list.at( k ).custom;
 
@@ -122,16 +127,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 							#writeAttribute( "custom", list.at( k ).customText() );
 						#}
 
-	#// 					qDebug() << Q_FUNC_INFO << list.at( k ).details.count();
-	#// 					if ( types.at( i ) == cv_AbstractTrait.Skill ) {
-						#for ( int l = 0; l < list.at( k ).details().count(); l++ ) {
-	#// 						qDebug() << Q_FUNC_INFO << list.at( k ).details.at( l ).name;
-							#writeTextElement( "specialty",  list.at( k ).details().at( l ).name );
-						#}
-
-	#// 					}t
-
-					self.writeEndElement()
+						self.writeEndElement()
 				self.writeEndElement()
 			self.writeEndElement()
 
