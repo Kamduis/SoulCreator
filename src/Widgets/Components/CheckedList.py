@@ -50,16 +50,6 @@ class CheckedList(QListWidget):
 		QListWidget.__init__(self, parent)
 
 		self.itemChanged.connect(self.emitItemStateChanged)
-		#self.itemStateChanged.connect(self.test)
-
-
-#CheckedList::CheckedList( QWidget *parent ) : QListWidget( parent ) {
-#// 	connect(this, SIGNAL(itemChanged ( QListWidgetItem * )), this, SLOT(emitCheckedItemsChanged()) );
-#}
-
-
-	#def test(self, name, state):
-		#Debug.debug("Verändere Status von {} zu {}".format(name, state))
 
 
 	def addCheckableItem( self, label, state ):

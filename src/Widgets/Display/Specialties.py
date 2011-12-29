@@ -49,7 +49,7 @@ class Specialties(CheckedList):
 		#self.__character = character
 		self.__storage = templateTraits
 
-		self.__trait = 0
+		self.__trait = None
 
 		self.itemStateChanged.connect(self.modifyTrait)
 
@@ -114,13 +114,28 @@ class Specialties(CheckedList):
 		if sw:
 			#Debug.debug("Zeige Spezialisierungen von {}".format(trait.name))
 			if self.__trait != trait:
+				# Vorherige Verbindung lösen.
+				if self.__trait:
+					self.__trait.specialtiesChanged.disconnect(self.reshowSpecialties)
 				self.__trait = trait
+				# Neue Verbindung aufbauen, damit beim Laden des Charakters die angezeigten Spezialisierungen automatisch richtig abgehakt werden.
+				self.__trait.specialtiesChanged.connect(self.reshowSpecialties)
 			#Debug.debug(self.__trait)
 			for item in self.__storage:
 				for subitem in self.__storage[item]:
 					if subitem["name"] == trait.name:
 						self.setSpecialties(subitem["specialty"])
 						return
+
+
+	def reshowSpecialties(self, specialties):
+		self.clear()
+		for item in self.__storage:
+			for subitem in self.__storage[item]:
+				if subitem["name"] == self.__trait.name:
+					self.setSpecialties(subitem["specialty"])
+					return
+
 
 
 	def modifyTrait(self, name, state):

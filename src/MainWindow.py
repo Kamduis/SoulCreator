@@ -228,7 +228,7 @@ class MainWindow(QMainWindow):
 
 		# Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
 		#connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), self, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
-		skills.specialtiesClicked.connect(specialties.showSpecialties)
+		skills.specialtiesActivated.connect(specialties.showSpecialties)
 
 		#// Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
 		#connect( self.__self.__character, SIGNAL( speciesChanged( cv_Species.SpeciesFlag ) ), self, SLOT( disablePowerItem( cv_Species.SpeciesFlag ) ) );

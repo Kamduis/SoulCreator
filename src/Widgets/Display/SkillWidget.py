@@ -42,7 +42,7 @@ class SkillWidget(QWidget):
 	"""
 
 
-	specialtiesClicked = Signal(bool, object)
+	specialtiesActivated = Signal(bool, object)
 	hideReasonChanged = Signal(str, str)
 
 
@@ -106,8 +106,10 @@ class SkillWidget(QWidget):
 				self.__character.ageChanged.connect(self.emitHideReasonChanged)
 				self.hideReasonChanged.connect(traitWidget.hideOrShowTrait)
 				traitWidget.specialtiesClicked.connect(self.uncheckOtherButtons)
-				#connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
-				traitWidget.specialtiesClicked.connect(self.specialtiesClicked.emit)
+				#connect( charaTrait, SIGNAL( specialtiesActivated( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesActivated( bool, QString, QList< cv_TraitDetail > ) ) );
+				traitWidget.specialtiesClicked.connect(self.specialtiesActivated.emit)
+				## Wenn sich die Spezialisierungen ändern, sollen die veränderten Spezialisierungen auch angezeigt werden. Das wird so gelöst, als wäre der Knopf für die Spezialisierungen erneut gedrückt worden.
+				#skill.specialtiesChanged.connect(self.emitSpecialtiesActivated)
 
 				layoutSkillCategory.addWidget( traitWidget )
 
@@ -157,3 +159,7 @@ class SkillWidget(QWidget):
 			ageStr = Config.ages[1]
 		eraStr = self.__character.era
 		self.hideReasonChanged.emit(ageStr, eraStr)
+
+
+	#def emitSpecialtiesActivated(self, specialties):
+		#self.specialtiesActivated.emit(True, specialties)

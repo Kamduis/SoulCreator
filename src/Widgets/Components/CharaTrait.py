@@ -60,10 +60,13 @@ class CharaTrait(TraitLine):
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 		#connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
 		self.buttonClicked.connect(self.emitSpecialtiesClicked)
+
+		## \bug Wenn ich irgendeinbe Spezialisierung abhake, wird der Knop sofort deaktiviert.
 		#self.__trait.specialtiesChanged.connect(self.uncheckButton)
 
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 		self.__trait.valueChanged.connect(self.setValue)
+		self.__trait.specialtiesChanged.connect(self.setSpecialtiesButtonText)
 
 		#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
 		#connect( traitPtr(), SIGNAL( availabilityChanged(bool)), this, SLOT( setEnabled(bool)) );
@@ -175,7 +178,7 @@ class CharaTrait(TraitLine):
 
 	def hideOrShowTrait(self, age, era):
 		"""
-		Versteckt oder zeigt diese Eigenschaft, weil reason eingetreten ist.
+		Versteckt oder zeigt diese Eigenschaft.
 		"""
 
 		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
@@ -184,5 +187,12 @@ class CharaTrait(TraitLine):
 			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
 		elif (self.__trait.age and self.__trait.age == age) or (self.__trait.era and self.__trait.era == era):
 			self.setHidden(False)
+
+
+	def setSpecialtiesButtonText(self, specialties):
+		#count = len(self.__trait.specialties)
+		count = len(specialties)
+		self.buttonText = count
+
 
 
