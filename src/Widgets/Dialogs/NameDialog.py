@@ -64,11 +64,13 @@ class NameDialog(QDialog):
 		"""
 		Liest die Namen des Charakters aus und zeigt sie gleich an.
 
+		Besteht ein Namen nur aus Whitespace, wird er nicht beachtet. Leer darf er allerdings sein.
+
 		\note Momentan wird nur die echte Identität berücksichtigt, also immer nur die Identität an INdexposition 0.
 		"""
 
 		foreNames = " ".join(self.__character.identities[0].forenames[1:])
-		
+
 		self.ui.lineEdit_firstName.setText( self.__character.identities[0].firstname )
 		self.ui.lineEdit_additionalForenames.setText( foreNames )
 		self.ui.lineEdit_surename.setText( self.__character.identities[0].surename )
@@ -98,16 +100,37 @@ class NameDialog(QDialog):
 		Speichert die eingegebenen Namen im Charakter-Speicher.
 
 		\note Derzeit wird nur /eine/, die echte Identität unterstüzt. Also wird immer nur die Identität an Indexposition 0 überschrieben.
+
+		Ein Textfeld, das nur aus Whitespace besteht, wird als leer betrachtet.
 		"""
-		
-		foreNames = self.ui.lineEdit_additionalForenames.text()
-		foreNames = foreNames.split(" ")
-		foreNames.insert( 0, self.ui.lineEdit_firstName.text() )
-		self.__character.identities[0].forenames = foreNames
-		self.__character.identities[0].surename = self.ui.lineEdit_surename.text()
-		self.__character.identities[0].honorname = self.ui.lineEdit_honorificName.text()
-		self.__character.identities[0].nickname = self.ui.lineEdit_nickname.text()
-		self.__character.identities[0].supername = self.ui.lineEdit_specialName.text()
+
+		if not (self.ui.lineEdit_additionalForenames.text() + self.ui.lineEdit_firstName.text()).isspace():
+			foreNames = self.ui.lineEdit_additionalForenames.text()
+			foreNames = foreNames.split(" ")
+			foreNames.insert(0, self.ui.lineEdit_firstName.text())
+			self.__character.identities[0].forenames = foreNames
+		else:
+			self.__character.identities[0].forenames = [""]
+
+		if not self.ui.lineEdit_surename.text().isspace():
+			self.__character.identities[0].surename = self.ui.lineEdit_surename.text()
+		else:
+			self.__character.identities[0].surename = ""
+
+		if not self.ui.lineEdit_honorificName.text().isspace():
+			self.__character.identities[0].honorname = self.ui.lineEdit_honorificName.text()
+		else:
+			self.__character.identities[0].honorname = ""
+
+		if not self.ui.lineEdit_nickname.text().isspace():
+			self.__character.identities[0].nickname = self.ui.lineEdit_nickname.text()
+		else:
+			self.__character.identities[0].nickname = ""
+
+		if not self.ui.lineEdit_specialName.text().isspace():
+			self.__character.identities[0].supername = self.ui.lineEdit_specialName.text()
+		else:
+			self.__character.identities[0].supername = ""
 
 		self.accept()
 

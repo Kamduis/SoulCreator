@@ -54,7 +54,8 @@ class StorageTemplate(QObject):
 
 	# Eine Liste sämtlicher verfügbaren Spezies.
 	# [
-	# 	[Name, Moral, Supertrait, Energie],
+	# 	{"name": Name1, "morale": Moral1, "super": Supertrait1, "fuel": Energie1},
+	# 	{"name": Name2, "morale": Moral2, "super": Supertrait2, "fuel": Energie2},
 	# 	...
 	# ]
 	__species = []
@@ -440,6 +441,22 @@ class StorageTemplate(QObject):
 		self.__vices = vices
 
 	vices = property(__getVices, __setVices)
+
+
+	def breedTitle(self, species):
+		return self.__speciesGroupNames[species]["Breed"][0]
+
+
+	def breeds(self, species):
+		return self.__speciesGroupNames[species]["Breed"][1]
+
+
+	def factionTitle(self, species):
+		return self.__speciesGroupNames[species]["Faction"][0]
+
+
+	def factions(self, species):
+		return self.__speciesGroupNames[species]["Faction"][1]
 
 
 #void StorageTemplate::appendTraitBonus( Trait* tr1, QString breed ) {

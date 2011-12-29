@@ -120,18 +120,18 @@ class ReadXmlTemplate(QObject, ReadXml):
 				elementName = self.name()
 				#Debug.debug("Element {} gefunden.".format(elementName))
 				if( elementName == "traits" ):
-					speciesData = [
-						self.attributes().value( "species" ),
-						self.attributes().value( "morale" ),
-						self.attributes().value( "supertrait" ),
-						self.attributes().value( "fuel" ),
-					]
-					#Debug.debug("Spezies {} gefunden.".format(speciesData[0]))
+					speciesData = {
+						"name": self.attributes().value( "species" ),
+						"morale": self.attributes().value( "morale" ),
+						"supertrait": self.attributes().value( "supertrait" ),
+						"fuel": self.attributes().value( "fuel" ),
+					}
+					#Debug.debug("Spezies {} gefunden.".format(speciesData["name"]))
 
 					# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
 					self.__storage.appendSpecies( speciesData )
 
-					self.readTree( speciesData[0] )
+					self.readTree( speciesData["name"] )
 				elif( elementName == "creation" ):
 					speciesFlag = self.attributes().value( "species" )
 					#Debug.debug("Erschaffungspunkte für Spezies {} gefunden.".format(speciesFlag))

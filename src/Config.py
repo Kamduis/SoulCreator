@@ -142,8 +142,8 @@ class Config():
 
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (
-		("Male", u"♂"),	#QIcon( ":/icons/images/male.png" )
-		("Female", u"♀"),	#QIcon( ":/icons/images/female.png" )
+		("Male", ":/icons/images/male.png"),
+		("Female", ":/icons/images/female.png"),
 	)
 
 	## Sämtliche Eigenschaftstypen.

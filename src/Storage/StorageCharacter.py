@@ -118,6 +118,7 @@ class StorageCharacter(QObject):
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
 		self.__identity.identityChanged.connect(self.setModified)
 	#connect( self, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( setModified() ) );
+		self.speciesChanged.connect(self.setModified)
 	#connect( self, SIGNAL( traitChanged( cv_Trait* ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( derangementsChanged() ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( virtueChanged( QString ) ), self, SLOT( setModified() ) );
@@ -570,7 +571,7 @@ class StorageCharacter(QObject):
 		self.__identity.reset()
 
 		# Standardspezies ist der Mensch.
-		self.species = self.__storage.species[1][0]
+		self.species = self.__storage.species[1]["name"]
 
 		#Debug.debug(self.__storage.virtues[0])
 		#Debug.debug(self.__storage.virtues[0]["name"])

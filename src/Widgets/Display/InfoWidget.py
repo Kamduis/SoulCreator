@@ -22,10 +22,11 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt
+from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QWidget, QGridLayout, QLabel, QPushButton, QComboBox, QIcon, QSpinBox
 
 from src.Config import Config
+from src.Datatypes.Identity import Identity
 from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Widgets.Dialogs.NameDialog import NameDialog
 from src.Debug import Debug
@@ -38,9 +39,11 @@ class InfoWidget(QWidget):
 	@brief Das Widget, in welchem wichtige Informationen dargestellt werden.
 
 	Spezies, Namen etc. des Charakters werden hier dargestellt.
-
-	\todo Bei den Virtues und Vices wird bislang nur der erwachsene behrücksichtigt.
 	"""
+
+
+	nameChanged = Signal(str)
+
 
 	def __init__(self, template, character, parent=None):
 		QWidget.__init__(self, parent)
@@ -51,17 +54,12 @@ class InfoWidget(QWidget):
 		self.__layout = QGridLayout()
 		self.setLayout( self.__layout )
 
-		self.__labelName = QLabel( "" )
-		self.__namePushButton = QPushButton( self.tr( "Name:" ) )
-		#// 	QLabel* labelNameFull = new QLabel()
-		#// 	QLabel* labelNameDisplay = new QLabel()
-		#// 	QLabel* labelNameHonorific = new QLabel()
-		#// 	QLabel* labelNameSuper = new QLabel()
+		self.__namePushButton = QPushButton( self.tr( "Name" ) )
 
 		self.__labelGender = QLabel( self.tr( "Gender:" ) )
 		self.__genderCombobox = QComboBox( self )
 		for item in Config.genders:
-			self.__genderCombobox.addItem( u"{} ({})".format(item[0], item[1]) )
+			self.__genderCombobox.addItem( QIcon(item[1]), item[0] )
 
 		self.__labelAge = QLabel( self.tr( "Age:" ) )
 		self.__spinBoxAge = QSpinBox( self )
@@ -70,29 +68,26 @@ class InfoWidget(QWidget):
 
 		self.__labelSpecies = QLabel( self.tr( "Species:" ) )
 		self.__speciesComboBox = CharaSpecies( self)
+		for item in self.__storage.species:
+			self.__speciesComboBox.addItem(item["name"])
 
 		self.__labelVirtue = QLabel( self.tr( "Virtue:" ) )
 		self.__virtueCombobox = QComboBox( self )
-		#self.__virtueCombobox.addItems( storage.virtueNames() )
 
 		self.__labelVice = QLabel( self.tr( "Vice:" ) )
 		self.__viceCombobox = QComboBox( self )
-		#self.__viceCombobox.addItems( storage.viceNames() )
 
 		self.__labelBreed = QLabel( self.tr( "Breed:" ) )
 		self.__breedCombobox = QComboBox( self )
-		#self.__breedCombobox.addItems( storage.breedNames() )
 
 		self.__labelFaction = QLabel( self.tr( "Faction:" ) )
 		self.__factionCombobox = QComboBox( self )
-		#self.__factionCombobox.addItems( storage.factionNames() )
 
 		self.__labelEra = QLabel( self.tr( "Era:" ) )
 		self.__comboBoxEra = QComboBox( self )
 		self.__comboBoxEra.addItems( Config.eras )
 
-		self.__layout.addWidget( self.__namePushButton, 0, 0, Qt.AlignTop )
-		self.__layout.addWidget( self.__labelName, 0, 1, 1, 2 )
+		self.__layout.addWidget( self.__namePushButton, 0, 0, 1, 2, Qt.AlignTop )
 		self.__layout.addWidget( self.__labelGender, 1, 0 )
 		self.__layout.addWidget( self.__genderCombobox, 1, 1 )
 		self.__layout.addWidget( self.__labelAge, 2, 0 )
@@ -113,23 +108,25 @@ class InfoWidget(QWidget):
 		self.__namePushButton.clicked.connect(self.openNameDialog)
 		self.__genderCombobox.currentIndexChanged[str].connect(self.changeGender)
 		self.__spinBoxAge.valueChanged[int].connect(self.changeAge)
+		self.__speciesComboBox.currentIndexChanged[str].connect(self.changeSpecies)
+		self.__virtueCombobox.currentIndexChanged[str].connect(self.changeVirtue)
+		self.__viceCombobox.currentIndexChanged[str].connect(self.changeVice)
+		self.__breedCombobox.currentIndexChanged[str].connect(self.changeBreed)
+		self.__factionCombobox.currentIndexChanged[str].connect(self.changeFaction)
 		self.__comboBoxEra.currentIndexChanged[str].connect(self.changeEra)
-	#connect( virtueCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeVirtue( int ) ) );
-	#connect( viceCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeVice( int ) ) );
-	#connect( breedCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeBreed( int ) ) );
-	#connect( factionCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeFaction( int ) ) );
+		self.__character.identities[0].nameChanged.connect(self.updateName)
+		self.__character.identities[0].genderChanged.connect(self.updateGender)
 		self.__character.ageChanged.connect(self.updateAge)
-	#connect( character, SIGNAL( realIdentityChanged( cv_Identity ) ), self, SLOT( updateIdentity( cv_Identity ) ) );
-	#connect( character, SIGNAL( virtueChanged( QString ) ), self, SLOT( updateVirtue( QString ) ) );
-	#connect( character, SIGNAL( viceChanged( QString ) ), self, SLOT( updateVice( QString ) ) );
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( updateBreedTitle( cv_Species::SpeciesFlag ) ) );
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( updateFactionTitle( cv_Species::SpeciesFlag ) ) );
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( updateBreedBox( cv_Species::SpeciesFlag ) ) );
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( updateFactionBox( cv_Species::SpeciesFlag ) ) );
-	#connect( character, SIGNAL( breedChanged( QString ) ), self, SLOT( updateBreed( QString ) ) );
-	#connect( character, SIGNAL( factionChanged( QString ) ), self, SLOT( updateFaction( QString ) ) );
+		self.__character.speciesChanged.connect(self.updateSpecies)
+		self.__character.virtueChanged.connect(self.updateVirtue)
+		self.__character.ageChanged.connect(self.repopulateVirtues)
+		self.__character.viceChanged.connect(self.updateVice)
+		self.__character.ageChanged.connect(self.repopulateVices)
+		self.__character.speciesChanged.connect(self.updateBreedTitle)
+		self.__character.speciesChanged.connect(self.repopulateBreeds)
+		self.__character.speciesChanged.connect(self.updateFactionTitle)
+		self.__character.speciesChanged.connect(self.repopulateFactions)
 		self.__character.eraChanged.connect(self.updateEra)
-#}
 
 
 	def openNameDialog(self):
@@ -157,37 +154,44 @@ class InfoWidget(QWidget):
 		self.__character.age = age
 
 
-#void InfoWidget::changeVirtue( int idx ) {
-	#"""
-	#Verändert die Tugend des Charakters.
-	#"""
-	
-	#character->setVirtue( virtueCombobox->currentText() );
-#}
+	def changeSpecies( self, species ):
+		"""
+		Verändert die Spezies des Charakters.
+		"""
 
-#void InfoWidget::changeVice( int idx ) {
-	#"""
-	#Verändert das Laster des Charakters.
-	#"""
+		self.__character.species = species
 
-	#character->setVice( viceCombobox->currentText() );
-#}
 
-#void InfoWidget::changeBreed( int idx ) {
-	#"""
-	#Verändert die Brut des Charakters.
-	#"""
+	def changeVirtue( self, virtue ):
+		"""
+		Verändert die Tugend des Charakters.
+		"""
 
-	#character->setBreed( breedCombobox->currentText() );
-#}
+		self.__character.virtue = virtue
 
-#void InfoWidget::changeFaction( int idx ) {
-	#"""
-	#Verändert die Fraktion des Charakters.
-	#"""
 
-	#character->setFaction( factionCombobox->currentText() );
-#}
+	def changeVice( self, vice ):
+		"""
+		Verändert das Laster des Charakters.
+		"""
+
+		self.__character.vice = vice
+
+
+	def changeBreed( self, breed ):
+		"""
+		Verändert die Brut des Charakters.
+		"""
+
+		self.__character.breed = breed
+
+
+	def changeFaction( self, faction ):
+		"""
+		Verändert die Fraktion des Charakters.
+		"""
+
+		self.__character.faction = faction
 
 
 	def changeEra( self, era ):
@@ -198,53 +202,25 @@ class InfoWidget(QWidget):
 		self.__character.era = era
 
 
-#void InfoWidget::updateIdentity( cv_Identity id ) {
-	#"""
-	#Aktualisiert die Anzeige des Namens.
-	
-	#\bug Mit jedem Speichern und Laden wächst die Anzahl der unnötigen Leerzeichen am Ende an. Symptome sind zwar behoben, die ursache aber noch nicht.
-	#"""
+	def updateName( self ):
+		"""
+		Aktualisiert die Anzeige des Namens.
+		"""
 
-#// 	namePushButton->setText( cv_Name::displayNameDisplay( id.sureName, id.firstName(), id.nickName ) );
+		nameStr = Identity.displayNameDisplay(self.__character.identities[0].surename, self.__character.identities[0].firstname, self.__character.identities[0].nickname)
+		nameDisplay = nameStr
+		if not nameStr:
+			nameStr = self.tr("Name")
+		self.__namePushButton.setText( nameStr )
+		self.nameChanged.emit(nameDisplay)
 
-	#QString nameText = "";
 
-	#if( !id.sureName.isEmpty() || !id.foreNames.isEmpty() ) {
-		#nameText += cv_Name::displayNameFull( id.sureName, id.foreNames );
-	#}
+	def updateGender( self, gender ):
+		"""
+		Aktualisiert die Anzeige des Geschlechts.
+		"""
 
-	#if( !id.nickName.isEmpty() ) {
-		#if( !nameText.isEmpty() ) {
-			#nameText += "\n";
-		#}
-
-		#nameText += cv_Name::displayNameDisplay( id.sureName, id.firstName(), id.nickName );
-	#}
-
-	#if( !id.honorificName.isEmpty() ) {
-		#if( !nameText.isEmpty() ) {
-			#nameText += "\n";
-		#}
-
-		#nameText += cv_Name::displayNameHonor( id.firstName(), id.honorificName );
-	#}
-
-	#if( !id.supernaturalName.isEmpty() ) {
-		#if( !nameText.isEmpty() ) {
-			#nameText += "\n";
-		#}
-
-		#nameText += id.supernaturalName;
-	#}
-
-	#labelName->setText( nameText );
-
-	#if( id.gender == cv_Identity::Male ) {
-		#genderCombobox->setCurrentIndex( 0 );
-	#} else {
-		#genderCombobox->setCurrentIndex( 1 );
-	#}
-#}
+		self.__genderCombobox.setCurrentIndex( self.__genderCombobox.findText(gender))
 
 
 	def updateAge(self, age):
@@ -256,71 +232,60 @@ class InfoWidget(QWidget):
 		self.__spinBoxAge.setValue(age)
 
 
-#void InfoWidget::updateVirtue( QString txt ) {
-	#"""
-	#Aktualisiert die Anzeige der Tugend.
-	#"""
+	def updateSpecies( self, species ):
+		"""
+		Aktualisiert die Anzeige der Spezies.
+		"""
 
-	#virtueCombobox->setCurrentIndex( virtueCombobox->findText( txt ) );
-#}
+		self.__speciesComboBox.setCurrentIndex( self.__speciesComboBox.findText( species ) )
 
-#void InfoWidget::updateVice( QString txt ) {
-	#"""
-	#Aktualisiert die Anzeige des Lasters.
-	#"""
 
-	#viceCombobox->setCurrentIndex( viceCombobox->findText( txt ) );
-#}
+	def updateVirtue( self, virtue ):
+		"""
+		Aktualisiert die Anzeige der Tugend.
+		"""
 
-#void InfoWidget::updateBreed( QString txt ) {
-	#"""
-	#Aktualisiert die Anzeige der Brut.
-	#"""
+		self.__virtueCombobox.setCurrentIndex( self.__virtueCombobox.findText( virtue ) )
 
-	#breedCombobox->setCurrentIndex( breedCombobox->findText( txt ) );
-#}
 
-#void InfoWidget::updateFaction( QString txt ) {
-	#"""
-	#Aktualisiert die Anzeige der Fraktion.
-	#"""
+	def updateVice( self, vice ):
+		"""
+		Aktualisiert die Anzeige des Lasters.
+		"""
 
-	#factionCombobox->setCurrentIndex( factionCombobox->findText( txt ) );
-#}
+		self.__viceCombobox.setCurrentIndex( self.__viceCombobox.findText( vice ) )
 
-#void InfoWidget::updateBreedTitle( cv_Species::SpeciesFlag spe ) {
-	#"""
-	#Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Bruten.
-	#"""
 
-	#labelBreed->setText( storage->breedTitle( spe )  + ":" );
-#}
+	def updateBreed( self, breed ):
+		"""
+		Aktualisiert die Anzeige der Brut.
+		"""
 
-#void InfoWidget::updateFactionTitle( cv_Species::SpeciesFlag spe ) {
-	#"""
-	#Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Fraktionen
-	#"""
+		self.__breedCombobox.setCurrentIndex( self.__breedCombobox.findText( breed ) )
 
-	#labelFaction->setText( storage->factionTitle( spe )  + ":" );
-#}
 
-#void InfoWidget::updateBreedBox( cv_Species::SpeciesFlag spe ) {
-	#"""
-	#Wenn die Spezies sich ändert, muß die Auswahl der möglichen Bruten verändert werden.
-	#"""
+	def updateBreedTitle( self, species ):
+		"""
+		Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Bruten.
+		"""
 
-	#breedCombobox->clear();
-	#breedCombobox->addItems( storage->breedNames( spe ) );
-#}
+		self.__labelBreed.setText( "{}:".format(self.__storage.breedTitle(species)) )
 
-#void InfoWidget::updateFactionBox( cv_Species::SpeciesFlag spe ) {
-	#"""
-	#Wenn die Spezies sich ändert, muß die Auswahl der möglichen Fraktionen verändert werden.
-	#"""
 
-	#factionCombobox->clear();
-	#factionCombobox->addItems( storage->factionNames( spe ) );
-#}
+	def updateFaction( self, faction ):
+		"""
+		Aktualisiert die Anzeige der Fraktion.
+		"""
+
+		self.__factionCombobox.setCurrentIndex( self.__factionCombobox.findText( faction ) )
+
+
+	def updateFactionTitle( self, species ):
+		"""
+		Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Fraktionen
+		"""
+
+		self.__labelFaction.setText( "{}:".format(self.__storage.factionTitle(species)) )
 
 
 	def updateEra(self, era):
@@ -332,3 +297,41 @@ class InfoWidget(QWidget):
 		self.__comboBoxEra.setCurrentIndex(self.__comboBoxEra.findText(era))
 
 
+	def repopulateVirtues(self, age):
+		ageStr = Config.ages[0]
+		if age < Config.adultAge:
+			ageStr = Config.ages[1]
+
+		virtueList = []
+		for item in self.__storage.virtues:
+			if item["age"] == ageStr:
+				virtueList.append(item["name"])
+
+		self.__virtueCombobox.clear()
+		self.__virtueCombobox.addItems(virtueList)
+
+
+	def repopulateVices(self, age):
+		ageStr = Config.ages[0]
+		if age < Config.adultAge:
+			ageStr = Config.ages[1]
+
+		viceList = []
+		for item in self.__storage.vices:
+			if item["age"] == ageStr:
+				viceList.append(item["name"])
+
+		self.__viceCombobox.clear()
+		self.__viceCombobox.addItems(viceList)
+
+
+	def repopulateBreeds(self, species):
+
+		self.__breedCombobox.clear()
+		self.__breedCombobox.addItems(self.__storage.breeds(species))
+
+
+	def repopulateFactions(self, species):
+
+		self.__factionCombobox.clear()
+		self.__factionCombobox.addItems(self.__storage.factions(species))

@@ -140,6 +140,8 @@ class MainWindow(QMainWindow):
 
 		self.populateUi()
 		self.__character.resetCharacter()
+		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.
+		self.__character.setModified(False)
 	#activate();
 
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( showCreationPoints( int ) ) );
@@ -153,8 +155,6 @@ class MainWindow(QMainWindow):
 	#connect( self.ui.actionExport, SIGNAL( triggered() ), self, SLOT( exportCharacter() ) );
 	#connect( self.ui.actionPrint, SIGNAL( triggered() ), self, SLOT( printCharacter() ) );
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
-
-	#connect( self.__self.__character, SIGNAL( nameChanged( QString ) ), self, SLOT( setTitle( QString ) ) );
 
 		# Laden der Konfiguration
 		self.readSettings()
@@ -209,6 +209,9 @@ class MainWindow(QMainWindow):
 		#ui.layout_powers.addWidget( powers );
 		#ui.layout_flaws.addWidget( flaws );
 		#ui.layout_advantages.addWidget( advantages );
+
+		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
+		info.nameChanged.connect(self.setTitle)
 
 		#/**
 		#* \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite Händisch festzulegen.
@@ -487,14 +490,12 @@ class MainWindow(QMainWindow):
 
 		QMessageBox.about(self, self.tr("About {}".format(Config.programName)), aboutText)
 
-#void MainWindow.setTitle( QString txt ) {
-	#if ( txt.isEmpty() ) {
-		#self.setWindowTitle( Config.name() + " " + Config.versionDetail() );
-	#} else {
-		#self.setWindowTitle( Config.name() + " " + Config.versionDetail() + " (" + txt + ") " );
-	#}
-#}
 
+	def setTitle( self, name ):
+		titleStr = u"{} {} ({})".format(Config.programName, Config.versionDetail(), name )
+		if not name:
+			titleStr = u"{} {}".format(Config.programName, Config.versionDetail() )
+		self.setWindowTitle( titleStr )
 
 
 	def newCharacter(self):
@@ -720,7 +721,7 @@ class MainWindow(QMainWindow):
 		if ( self.__character.isModifed() ):
 			ret = QMessageBox.warning(
 				self, self.tr( "Application" ),
-				self.tr( "The self.__character has been modified.\nDo you want to save your changes?" ),
+				self.tr( "The character has been modified.\nDo you want to save your changes?" ),
 				QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel )
 
 			if ( ret == QMessageBox.Save ):

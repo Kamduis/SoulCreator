@@ -6,6 +6,10 @@
 		</Power>
 	</creation>
 	<traits species="Human" morale="Morality" supertrait="None" fuel="None">
+		<Breed name="Breed">
+		</Breed>
+		<Faction name="Faction">
+		</Faction>
 		<Merit>
 			<Extraordinary>
 				<trait name="Enchanted Mortal" source="Changeling The Equinox Road">

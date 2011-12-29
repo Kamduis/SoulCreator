@@ -103,6 +103,12 @@ class Identity(QObject):
 		return self.__name["forenames"]
 
 	def __setForenames(self, names):
+		"""
+		\brief Legt die Formnamen fest.
+
+		Das Argument wird nur dann übernommen, wenn wenigstens ein Vorname in der Liste nicht aus Whitespace besteht. Leer darf die Liste allerdings sein.
+		"""
+		
 		if self.__name["forenames"] != names:
 			self.__name["forenames"] = names
 			self.nameChanged.emit()
@@ -207,6 +213,7 @@ class Identity(QObject):
 				item = ""
 
 		self.gender = Config.genders[0][0]
+		self.nameChanged.emit()
 
 
 	@staticmethod
