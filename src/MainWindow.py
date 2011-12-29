@@ -25,11 +25,12 @@ from __future__ import division, print_function
 import sys
 import os
 
-from PySide.QtCore import Qt, QCoreApplication, QFile
+from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray
 from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog
 
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion
 from Config import Config
+from IO.Settings import Settings
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from IO.ReadXmlCharacter import ReadXmlCharacter
 from IO.WriteXmlCharacter import WriteXmlCharacter
@@ -154,19 +155,16 @@ class MainWindow(QMainWindow):
 
 	#connect( self.__self.__character, SIGNAL( nameChanged( QString ) ), self, SLOT( setTitle( QString ) ) );
 
-	#// Laden der Konfiguration
-	#readSettings();
-#}
+		# Laden der Konfiguration
+		self.readSettings()
 
 
-#void MainWindow.closeEvent( QCloseEvent *event ) {
-	#if ( maybeSave() ) {
-		#writeSettings();
-		#event.accept();
-	#} else {
-		#event.ignore();
-	#}
-#}
+	def closeEvent( self, event ):
+		if ( self.maybeSave() ):
+			self.writeSettings()
+			event.accept()
+		else:
+			event.ignore()
 
 
 	def storeTemplateData(self):
@@ -673,38 +671,46 @@ class MainWindow(QMainWindow):
 #}
 
 
-#void MainWindow.writeSettings() {
-	#Settings settings( QApplication.applicationDirPath() + "/" + Config.configFile );
+	def writeSettings(self):
+		"""
+		Speichert Größe und Position des Fensters in der Konfigurationsdatei.
+		"""
 
-	#settings.beginGroup( "MainWindow" );
-	#settings.setValue( "size", size() );
-	#settings.setValue( "pos", pos() );
-	#settings.setValue( "state", saveState() );
-	#settings.endGroup();
+		settings = Settings( "{}/{}".format(getPath(), Config.configFile ))
 
-	#settings.beginGroup( "Config" );
-#// 	settings.setValue( "windowFont", Config.windowFont.family() );
-	#settings.setValue( "exportFont", Config.exportFont.family() );
-	#settings.endGroup();
-#}
+		settings.beginGroup( "MainWindow" )
+		settings.setValue( "size", self.size() )
+		settings.setValue( "pos", self.pos() )
+		settings.setValue( "state", self.saveState() )
+		settings.endGroup()
 
-#void MainWindow.readSettings() {
-	#Settings settings( QApplication.applicationDirPath() + "/" + Config.configFile );
+		#settings.beginGroup( "Config" );
+		#// 	settings.setValue( "windowFont", Config.windowFont.family() );
+		#settings.setValue( "exportFont", Config.exportFont.family() );
+		#settings.endGroup();
 
-	#settings.beginGroup( "MainWindow" );
-	#resize( settings.value( "size", QSize( 900, 600 ) ).toSize() );
-	#move( settings.value( "pos", QPoint( 200, 200 ) ).toPoint() );
-	#restoreState( settings.value( "state" ).toByteArray() );
-	#settings.endGroup();
 
-	#settings.beginGroup( "Config" );
-#// 	Config.windowFont = QFont( settings.value( "windowFont" ).toString() );
-	#Config.exportFont = QFont( settings.value( "exportFont" ).toString() );
-	#settings.endGroup();
+	def readSettings(self):
+		"""
+		Liest die Einstellungen für das Programm aus der Konfigurationsdatei.
+		"""
 
-#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.
-#// 	setFont(Config.windowFont);
-#}
+		appPath = getPath()
+		settings = Settings( "{}/{}".format(appPath, Config.configFile))
+
+		settings.beginGroup( "MainWindow" );
+		self.resize( settings.value( "size", QSize( 900, 600 ) ) )
+		self.move( settings.value( "pos", QPoint( 200, 200 ) ) )
+		self.restoreState( QByteArray(settings.value( "state" )) )
+		settings.endGroup()
+
+		#settings.beginGroup( "Config" );
+		#// 	Config.windowFont = QFont( settings.value( "windowFont" ).toString() );
+		#Config.exportFont = QFont( settings.value( "exportFont" ).toString() );
+		#settings.endGroup();
+
+		#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.
+		#// 	setFont(Config.windowFont);
 
 
 	def maybeSave(self):
