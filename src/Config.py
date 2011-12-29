@@ -165,8 +165,8 @@ class Config():
 
 	## Sämtliche Eras, welcher ein Charakter angehören kann.
 	ages = (
-		"Kid",
 		"Adult",
+		"Kid",
 	)
 
 

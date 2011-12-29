@@ -173,31 +173,16 @@ class CharaTrait(TraitLine):
 #}
 
 
-	def hideOrShowTrait(self, reason):
+	def hideOrShowTrait(self, age, era):
 		"""
 		Versteckt oder zeigt diese Eigenschaft, weil reason eingetreten ist.
 		"""
 
-		#Debug.debug("Eigenschaft {} wegen {}".format(self.name, reason))
-		#Debug.debug(self.__trait.age)
-		if type(reason) == int:
-			if self.__trait.age == Config.ages[0]:
-				if reason < Config.adultAge:
-					self.setHidden(False)
-				else:
-					self.setHidden(True)
-					Debug.debug("Verstecke {}, da Alter {}".format(self.name, reason))
-			elif self.__trait.age == Config.ages[1]:
-				if reason < Config.adultAge:
-					self.setHidden(True)
-					Debug.debug("Verstecke {}, da Alter {}".format(self.name, reason))
-				else:
-					self.setHidden(False)
-		if type(reason) in [str, unicode]:
-			Debug.debug(self.__trait.era)
-			if self.__trait.era and self.__trait.era != reason:
-				self.setHidden(True)
-				Debug.debug("Verstecke {}, da Ära {}".format(self.name, reason))
-			else:
-				self.setHidden(False)
+		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
+		if (self.__trait.age and self.__trait.age != age) or (self.__trait.era and self.__trait.era != era):
+			self.setHidden(True)
+			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
+		elif (self.__trait.age and self.__trait.age == age) or (self.__trait.era and self.__trait.era == era):
+			self.setHidden(False)
+
 

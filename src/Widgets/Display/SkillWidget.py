@@ -43,6 +43,7 @@ class SkillWidget(QWidget):
 
 
 	specialtiesClicked = Signal(bool, object)
+	hideReasonChanged = Signal(str, str)
 
 
 	def __init__(self, template, character, parent=None):
@@ -92,6 +93,7 @@ class SkillWidget(QWidget):
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( skill, self )
 				traitWidget.buttonText = 0
+				traitWidget.setDescriptionHidden( True )
 
 				# Dieses Widget auch an Liste anhängen, damit ich einfacher darauf zugreifen kann.
 				traitListItem = traitWidget
@@ -100,8 +102,9 @@ class SkillWidget(QWidget):
 				# Fertigkeiten haben Spezialisierungen.
 				#connect( traitPtr, SIGNAL( detailsChanged( int )), charaTrait, SLOT( setButtonText(int)) );
 				#connect( character, SIGNAL( characterResetted()), this, SLOT( uncheckAllButtons()) );
-				self.__character.eraChanged.connect(traitWidget.hideOrShowTrait)
-				self.__character.ageChanged.connect(traitWidget.hideOrShowTrait)
+				self.__character.eraChanged.connect(self.emitHideReasonChanged)
+				self.__character.ageChanged.connect(self.emitHideReasonChanged)
+				self.hideReasonChanged.connect(traitWidget.hideOrShowTrait)
 				traitWidget.specialtiesClicked.connect(self.uncheckOtherButtons)
 				#connect( charaTrait, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ) );
 				traitWidget.specialtiesClicked.connect(self.specialtiesClicked.emit)
@@ -147,3 +150,10 @@ class SkillWidget(QWidget):
 		#}
 	#}
 
+
+	def emitHideReasonChanged(self, reason):
+		ageStr = Config.ages[0]
+		if self.__character.age < Config.adultAge:
+			ageStr = Config.ages[1]
+		eraStr = self.__character.era
+		self.hideReasonChanged.emit(ageStr, eraStr)

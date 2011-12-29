@@ -137,8 +137,8 @@ class MainWindow(QMainWindow):
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( setTabButtonState( int ) ) );
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
-		self.__character.resetCharacter()
 		self.populateUi()
+		self.__character.resetCharacter()
 	#activate();
 
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( showCreationPoints( int ) ) );

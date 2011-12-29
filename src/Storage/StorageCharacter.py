@@ -83,7 +83,7 @@ class StorageCharacter(QObject):
 		self.__storage = template
 
 		self.__modified = False
-		self.__age = Config.initialAge
+		self.__age = 0
 		self.__species = ""
 		self.__virtue = ""
 		self.__vice = ""
@@ -108,9 +108,7 @@ class StorageCharacter(QObject):
 			for item in template.traits[typ]:
 				self.__traits[typ].setdefault(item, [])
 				for subitem in template.traits[typ][item]:
-					val = 0
-					if typ == "Attribute":
-						val = 1
+					val = 2
 					trait = Trait(subitem["name"], val)
 					trait.age = subitem["age"]
 					trait.era = subitem["era"]
@@ -564,7 +562,10 @@ class StorageCharacter(QObject):
 	def resetCharacter(self):
 		# Zeitalter festlegen.
 		self.era = Config.eras[0]
-		
+
+		# Standardalter festlegen.
+		self.age = Config.initialAge
+
 		# Löschen aller Identitäten.
 		self.__identity.reset()
 
@@ -588,6 +589,7 @@ class StorageCharacter(QObject):
 			for subitem in self.__traits[item]:
 				for subsubitem in self.__traits[item][subitem]:
 					subsubitem.value = val
+					subsubitem.specialties = []
 
 			#v_traits2[i].clearDetails();
 

@@ -33,14 +33,48 @@ class SupportList():
 	def __init__(self):
 		pass
 
+
 	@staticmethod
 	def uniqify(seq):
 		"""
-		Garantiert nicht das Beibnehalten der Reihenfolge der Original-Liste.
+		\brief Löscht alle Duplukate aus einer Liste.
+		
+		Garantiert /nicht/ das Beibnehalten der Reihenfolge der Original-Liste.
+
+		\note Diese Methode kann etwas schneller sein, als \ref uniqifyOrdered
 		"""
 		
 		keys = {}
 		for e in seq:
 			keys[e] = 1
 		return keys.keys()
+
+
+	@staticmethod
+	def uniqifyOrdered(seq, idfun=None):
+		"""
+		\brief Löscht alle Duplukate aus einer Liste.
+
+		Garantiert das Beibehalten der Reihenfolge der Original-Liste.
+
+		\note Diese Methode kann etwas langsamer sein, als \ref uniqify
+
+		>>> a=list('ABeeE')
+		>>> f5(a)
+		['A','B','e','E']
+		>>> f5(a, lambda x: x.lower())
+		['A','B','e']
+		"""
+
+		if idfun is None:
+			def idfun(x): return x
+		seen = {}
+		result = []
+		for item in seq:
+			marker = idfun(item)
+			if marker in seen:
+				continue
+			seen[marker] = 1
+			result.append(item)
+		return result
 

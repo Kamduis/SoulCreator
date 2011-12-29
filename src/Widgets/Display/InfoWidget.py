@@ -28,6 +28,7 @@ from PySide.QtGui import QWidget, QGridLayout, QLabel, QPushButton, QComboBox, Q
 from src.Config import Config
 from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Widgets.Dialogs.NameDialog import NameDialog
+from src.Debug import Debug
 
 
 
@@ -66,7 +67,6 @@ class InfoWidget(QWidget):
 		self.__spinBoxAge = QSpinBox( self )
 		self.__spinBoxAge.setMinimum(6)
 		self.__spinBoxAge.setMaximum(999)
-		self.__spinBoxAge.setValue(Config.initialAge)
 
 		self.__labelSpecies = QLabel( self.tr( "Species:" ) )
 		self.__speciesComboBox = CharaSpecies( self)
@@ -113,10 +113,12 @@ class InfoWidget(QWidget):
 		self.__namePushButton.clicked.connect(self.openNameDialog)
 		self.__genderCombobox.currentIndexChanged[str].connect(self.changeGender)
 		self.__spinBoxAge.valueChanged[int].connect(self.changeAge)
+		self.__comboBoxEra.currentIndexChanged[str].connect(self.changeEra)
 	#connect( virtueCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeVirtue( int ) ) );
 	#connect( viceCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeVice( int ) ) );
 	#connect( breedCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeBreed( int ) ) );
 	#connect( factionCombobox, SIGNAL( currentIndexChanged( int ) ), self, SLOT( changeFaction( int ) ) );
+		self.__character.ageChanged.connect(self.updateAge)
 	#connect( character, SIGNAL( realIdentityChanged( cv_Identity ) ), self, SLOT( updateIdentity( cv_Identity ) ) );
 	#connect( character, SIGNAL( virtueChanged( QString ) ), self, SLOT( updateVirtue( QString ) ) );
 	#connect( character, SIGNAL( viceChanged( QString ) ), self, SLOT( updateVice( QString ) ) );
@@ -126,8 +128,9 @@ class InfoWidget(QWidget):
 	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( updateFactionBox( cv_Species::SpeciesFlag ) ) );
 	#connect( character, SIGNAL( breedChanged( QString ) ), self, SLOT( updateBreed( QString ) ) );
 	#connect( character, SIGNAL( factionChanged( QString ) ), self, SLOT( updateFaction( QString ) ) );
-		self.__comboBoxEra.currentIndexChanged[str].connect(self.changeEra)
+		self.__character.eraChanged.connect(self.updateEra)
 #}
+
 
 	def openNameDialog(self):
 		"""
@@ -243,6 +246,16 @@ class InfoWidget(QWidget):
 	#}
 #}
 
+
+	def updateAge(self, age):
+		"""
+		Aktualisiert die Anzeige des Alters.
+		"""
+
+		#Debug.debug("Verändere Anzeige des Alters auf {}".format(age))
+		self.__spinBoxAge.setValue(age)
+
+
 #void InfoWidget::updateVirtue( QString txt ) {
 	#"""
 	#Aktualisiert die Anzeige der Tugend.
@@ -308,5 +321,14 @@ class InfoWidget(QWidget):
 	#factionCombobox->clear();
 	#factionCombobox->addItems( storage->factionNames( spe ) );
 #}
+
+
+	def updateEra(self, era):
+		"""
+		Aktualisiert die Anzeige der Ära
+		"""
+
+		#Debug.debug("Verändere Anzeige der Ära auf {}".format(era))
+		self.__comboBoxEra.setCurrentIndex(self.__comboBoxEra.findText(era))
 
 

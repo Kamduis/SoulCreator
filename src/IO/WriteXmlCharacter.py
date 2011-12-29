@@ -74,6 +74,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeAttribute( "gender", self.__character.identities[0].gender )
 		self.writeEndElement()
 		self.writeEndElement()
+		self.writeTextElement( "age", unicode(self.__character.age) )
 		self.writeTextElement( "virtue", self.__character.virtue )
 		self.writeTextElement( "vice", self.__character.vice )
 		self.writeTextElement( "breed", self.__character.breed )
@@ -81,6 +82,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeTextElement( "superTrait", unicode( self.__character.superTrait ) )
 		self.writeTextElement( "morality", unicode( self.__character.morality ) )
 		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
+		self.writeTextElement( "era", self.__character.era )
 
 		self.writeCharacterTraits()
 

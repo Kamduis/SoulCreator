@@ -82,7 +82,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 					readSoulCreator()
 
 		if ( self.hasError() ):
-			Debugdebug("Error!")
+			Debug.debug("Error!")
 			raise ErrXmlError( f.fileName(), self.errorString() )
 
 		## Die möglicherweise veränderten Eigenschaften müssen wieder in den Charakter-Speicher geschrieben werden.
@@ -110,8 +110,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.species = self.readElementText()
 				elif ( elementName == "identities" ):
 					self.readIdentities()
+				elif ( elementName == "age" ):
+					self.__character.age = int(self.readElementText())
 				elif ( elementName == "virtue" ):
-					self.__character. virtue = self.readElementText()
+					self.__character.virtue = self.readElementText()
 				elif ( elementName == "vice" ):
 					self.__character.vice = self.readElementText()
 				elif ( elementName == "breed" ):
@@ -125,6 +127,8 @@ class ReadXmlCharacter(QObject, ReadXml):
 				elif ( elementName == "armor" ):
 					txt = self.readElementText()
 					self.__character.armor = [int(n) for n in txt.split(Config.sepChar)]
+				elif ( elementName == "era" ):
+					self.__character.era = self.readElementText()
 				elif ( elementName in Config.typs ):
 					self.readTraitCategories( elementName )
 				#elif ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
