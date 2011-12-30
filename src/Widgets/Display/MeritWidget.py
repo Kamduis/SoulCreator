@@ -61,8 +61,11 @@ class MeritWidget(QWidget):
 
 		self.__layout.addWidget(self.__toolBox)
 
-		typ = "Merit"
-		categories = self.__storage.categories(typ)
+		self.__typ = "Merit"
+		categories = self.__storage.categories(self.__typ)
+
+		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
+		self.__categoryIndex = {}
 
 		# Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
 		for item in categories:
@@ -73,17 +76,13 @@ class MeritWidget(QWidget):
 			widgetMeritCategory.setLayout( layoutMeritCategory )
 
 			self.__toolBox.addItem( widgetMeritCategory, item )
+			self.__categoryIndex[item] = self.__toolBox.count() - 1
+			Debug.debug(self.__categoryIndex)
 
-			__list = self.__character.traits[typ][item]
-
-			#try {
-				#list = storage.traits( type, v_category.at( i ) );
-			#} catch (eTraitNotExisting &e) {
-				#MessageBox::exception(this, e.message(), e.description());
-			#}
+			__list = self.__character.traits[self.__typ][item]
 
 			for merit in __list:
-				Debug.debug(merit)
+				#Debug.debug(merit)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( merit, self )
 				traitWidget.setSpecialtiesHidden(True)
@@ -98,7 +97,8 @@ class MeritWidget(QWidget):
 					#charaTrait.setValue( 0 );
 				layoutMeritCategory.addWidget( traitWidget )
 
-					#connect( charaTrait, SIGNAL( valueChanged( int ) ), this, SLOT( countMerits() ) );
+				#connect( charaTrait, SIGNAL( valueChanged( int ) ), this, SLOT( countMerits() ) );
+				merit.valueChanged.connect(self.countMerits)
 
 					#// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
 
@@ -110,7 +110,6 @@ class MeritWidget(QWidget):
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutMeritCategory.addStretch()
-		#}
 
 	#// 	dialog = new SelectMeritsDialog( this );
 	#//
@@ -124,39 +123,25 @@ class MeritWidget(QWidget):
 	#// 	layout_button.addWidget( button );
 	#//
 	#// 	connect( button, SIGNAL( clicked( bool ) ), dialog, SLOT( exec() ) );
-	#}
 
 
-#void MeritWidget::countMerits() {
-	#"""
-	#Zält die Merits in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
-	
-	#Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
-	
-	#\bug Merits mit Zusatztext werden nicht gezählt. Kann sein, daß das nur auftritt wenn nichts in der Textbox steht. Ist dann kein Problem, da es ohnehin nicht möglich sein dürfte, Werte einzugeben, wenn Zusatext nicht angegeben ist.
-	
-	#\todo Momentan wird eine Liste mit allen Merits des Charakters erstellt und dann alle gezählt, deren Wert größer 0 ist. Das muß doch besser gehen.
-	#"""
-	
-	#for (int i = 0; i < v_category.count(); ++i){
-		#QList< Trait* > list = character.traits( cv_AbstractTrait::Merit, v_category.at(i) );
+	def countMerits(self):
+		"""
+		Zält die Merits in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
 
-		#int numberInCategory = 0;
+		Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
+		"""
 
-		#for ( int j = 0; j < list.count(); ++j ) {
-			#if ( list.at( j ).value() > 0 ) {
-				#numberInCategory++;
-			#}
-		#}
+		for item in self.__character.traits[self.__typ]:
+			numberInCategory = 0
+			for subitem in self.__character.traits[self.__typ][item]:
+				if subitem.value > 0:
+					numberInCategory += 1
 
-		#// Index der veränderten Kategorie in Liste suchen und dann die toolBox-Seite mit der identischen Indexzahl anpassen.
-		#int categoryIndex = v_category.indexOf( v_category.at(i) );
+			# ToolBox-Seite des entsprechenden Kategorie mit der Anzahl gewählter Merits beschriften.
+			if numberInCategory > 0:
+				self.__toolBox.setItemText( self.__categoryIndex[item], "{} ({})".format(item, numberInCategory) )
+			else:
+				self.__toolBox.setItemText( self.__categoryIndex[item], item )
 
-		#if ( numberInCategory > 0 ) {
-			#toolBox.setItemText( categoryIndex, cv_AbstractTrait::toString( v_category.at( categoryIndex ), true ) + " (" + QString::number( numberInCategory ) + ")" );
-		#} else {
-			#toolBox.setItemText( categoryIndex, cv_AbstractTrait::toString( v_category.at( categoryIndex ), true ) );
-		#}
-	#}
-#}
 
