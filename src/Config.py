@@ -73,7 +73,7 @@ class Config():
 	#const int Config::traitCategorySpace = 10
 	
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
-	#const int Config::traitMultipleMax = 3
+	traitMultipleMax = 3
 	
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 	#const int Config::displayTimeout = 10000

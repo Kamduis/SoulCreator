@@ -354,9 +354,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 					traitData = {
 						"name": self.attributes().value( "name" ),
 						"species": species,
+						"value": [0],
 						"age": self.attributes().value( "age" ),
 						"era": self.attributes().value( "era" ),
-						"value": [0],
+						"custom": self.attributes().value( "custom" ),
 					}
 
 					#Debug.debug("Lese {} ein.".format(traitData["name"]))

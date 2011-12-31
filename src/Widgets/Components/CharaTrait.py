@@ -55,17 +55,18 @@ class CharaTrait(TraitLine):
 
 		# Falls ich mit der Maus den Wert ändere, muß er auch entsprechend verändert werden.
 		self.valueChanged.connect(self.setTraitValue)
-		#connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
+		self.textChanged.connect(self.setTraitCustomText)
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_AbstractTrait::Type ) ) );
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 		#connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
-		self.buttonClicked.connect(self.emitSpecialtiesClicked)
+		self.buttonToggled.connect(self.emitSpecialtiesClicked)
 
 		## \bug Wenn ich irgendeinbe Spezialisierung abhake, wird der Knop sofort deaktiviert.
 		#self.__trait.specialtiesChanged.connect(self.uncheckButton)
 
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 		self.__trait.valueChanged.connect(self.setValue)
+		self.__trait.customTextChanged.connect(self.setText)
 		self.__trait.specialtiesChanged.connect(self.setSpecialtiesButtonText)
 
 		#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
@@ -111,24 +112,20 @@ class CharaTrait(TraitLine):
 		#Debug.debug("Eigenschaft {} hat den Wert {}".format(self.__trait["name"], self.__trait["value"]))
 
 
-#QString CharaTrait::customText() const {
-	#return traitPtr()->customText();
-#}
-#void CharaTrait::setCustomText( QString txt ) {
-	"""
-	Legt den Zusatztext fest.
-	
-	Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
-	"""
-	
-	#if ( traitPtr()->customText() != txt ) {
-		#traitPtr()->setCustomText( txt );
-
-		#TraitLine::setText( txt );
-
-		#emit traitChanged( traitPtr() );
+	#def __getCustomText() const {
+		#return traitPtr()->customText();
 	#}
-#}
+	def setTraitCustomText( self, text ):
+		"""
+		Legt den Zusatztext fest.
+
+		Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
+		"""
+
+		if self.__trait.customText != text:
+			self.__trait.customText = text
+
+			#emit traitChanged( traitPtr() );
 
 
 

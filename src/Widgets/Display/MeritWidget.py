@@ -77,7 +77,7 @@ class MeritWidget(QWidget):
 
 			self.__toolBox.addItem( widgetMeritCategory, item )
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
-			Debug.debug(self.__categoryIndex)
+			#Debug.debug(self.__categoryIndex)
 
 			__list = self.__character.traits[self.__typ][item]
 
@@ -86,7 +86,8 @@ class MeritWidget(QWidget):
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( merit, self )
 				traitWidget.setSpecialtiesHidden(True)
-				traitWidget.setDescriptionHidden( True )
+				if not merit.custom:
+					traitWidget.setDescriptionHidden(True)
 
 				#for ( int k = 0; k < Config::traitMultipleMax; ++k ) {
 					#// Anlegen der Eigenschaft im Speicher

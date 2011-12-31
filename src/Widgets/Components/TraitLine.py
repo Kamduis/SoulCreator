@@ -41,7 +41,8 @@ class TraitLine(QWidget):
 
 
 	valueChanged = Signal(int)
-	buttonClicked = Signal(bool)
+	textChanged = Signal(str)
+	buttonToggled = Signal(bool)
 
 
 	def __init__(self, name, value, parent=None):
@@ -64,12 +65,10 @@ class TraitLine(QWidget):
 
 		self.__traitDots = TraitDots( self )
 
-		#connect( traitDots, SIGNAL( valueChanged( int ) ), SIGNAL( valueChanged( int ) ) );
 		self.__traitDots.valueChanged.connect(self.valueChanged)
-		#connect( traitDots, SIGNAL( valueChanged( int ) ), self, SLOT( enableSpecialties( int ) ) );
-		#connect( button, SIGNAL( clicked( bool ) ), self, SIGNAL( specialtiesClicked( bool ) ) );
-		self.__button.clicked.connect(self.buttonClicked)
-		#connect( lineEdit, SIGNAL( textChanged( QString ) ), self, SIGNAL( textChanged( QString ) ) );
+		self.__traitDots.valueChanged.connect(self.enableButton)
+		self.__button.toggled.connect(self.buttonToggled)
+		self.__lineEdit.textChanged.connect(self.textChanged)
 
 		self.name = name
 		self.value = value
@@ -104,9 +103,9 @@ class TraitLine(QWidget):
 	#return lineEdit.text();
 #}
 
-#void TraitLine::setText( QString text ) {
-	#lineEdit.setText( text );
-#}
+	def setText( self, text ):
+		self.__lineEdit.setText( text )
+
 
 	def __getButtonText(self):
 		return self.__button.text()
@@ -186,6 +185,14 @@ class TraitLine(QWidget):
 			self.__lineEdit.hide()
 		else:
 			self.__lineEdit.show()
+
+
+	def enableButton( self, value):
+		if value > 0:
+			self.__button.setEnabled(True)
+		else:
+			self.__button.setChecked(False)
+			self.__button.setEnabled(False)
 
 
 	#def emitSpecialtiesClicked(self):

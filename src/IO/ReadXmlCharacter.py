@@ -221,15 +221,22 @@ class ReadXmlCharacter(QObject, ReadXml):
 				if ( elementName == "trait" ):
 					itemExists = False
 					for item in self.__character.traits[typ][category]:
-						if item.name == self.attributes().value( "name" ):
+						traitName = self.attributes().value( "name" )
+						traitCustomText = self.attributes().value( "customText" )
+						if item.name == traitName:
+							# Wenn eine Eigenschaft mit Zusatztext bereits im Speicher existiert, muß weitergesucht werden, bis eine Eigenscahft gleichen namens mit identischem oder ohne Zusatztext gefunden wurde.
+							if item.customText and item.customText != traitCustomText:
+								continue
+
 							item.value = int(self.attributes().value( "value" ))
 							#Debug.debug("Ändere Eigenschaft {} zu {}".format(item.name, item.value))
-							## \todo custom fehlt noch.
-							#QString customText = attributes().value( "custom" ).toString();
+							# Zusatztext
+							item.customText = traitCustomText
 							self.readSpecialties(item)
 							itemExists = True
 							break
 
+					# Wenn die Eigenscahft ncht schon im Charakter-Speicher existiert (also in den Template-Dateien vorkam), wird sie ignoriert.
 					if not itemExists:
 						self.readUnknownElement()
 

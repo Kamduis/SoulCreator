@@ -41,6 +41,7 @@ class Trait(QObject):
 
 
 	valueChanged = Signal(int)
+	customTextChanged = Signal(str)
 	specialtiesChanged = Signal(object)
 
 
@@ -52,6 +53,8 @@ class Trait(QObject):
 		self.__specialties = []
 		self.__age = ""
 		self.__era = ""
+		self.__custom = False
+		self.__customText = ""
 
 
 	def __getName(self):
@@ -126,6 +129,24 @@ class Trait(QObject):
 		self.__age = age
 
 	age = property(__getAge, __setAge)
+
+
+	def isCustom(self):
+		return self.__custom
+
+	def setCustom(self, custom):
+		self.__custom = custom
+
+
+	def __getCustomText(self):
+		return self.__customText
+
+	def __setCustomText(self, text):
+		if self.__customText != text:
+			self.__customText = text
+			self.customTextChanged.emit(text)
+
+	customText = property(__getCustomText, __setCustomText)
 
 
 #Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject( parent ), cv_Trait( txt, val, spe, ty, ca ) {

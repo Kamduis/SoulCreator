@@ -108,10 +108,23 @@ class StorageCharacter(QObject):
 				self.__traits[typ].setdefault(item, [])
 				for subitem in template.traits[typ][item]:
 					val = 2
-					trait = Trait(subitem["name"], val)
-					trait.age = subitem["age"]
-					trait.era = subitem["era"]
-					self.__traits[typ][item].append(trait)
+					# Eigenschaften, die Zusaztest erhalten können (bspw. Language), werden mehrfach an die Liste angefügt.
+					loop = 1
+					custom = False
+					customText = None
+					if subitem["custom"]:
+						loop = Config.traitMultipleMax
+						custom = True
+
+					for i in xrange(loop):
+						trait = Trait(subitem["name"], val)
+						trait.age = subitem["age"]
+						trait.era = subitem["era"]
+						trait.custom = custom
+						trait.customText = customText
+						self.__traits[typ][item].append(trait)
+
+					
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.

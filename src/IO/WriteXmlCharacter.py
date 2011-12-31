@@ -117,6 +117,9 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 						self.writeStartElement( "trait" )
 						self.writeAttribute( "name", subsubitem.name )
 						self.writeAttribute( "value", unicode( subsubitem.value ) )
+						# Zusatztext
+						if subsubitem.custom:
+							self.writeAttribute( "customText", unicode( subsubitem.customText ) )
 						# Spezialisierungen
 						if subsubitem.specialties:
 							self.writeTextElement( "specialties", Config.sepChar.join( unicode(n) for n in subsubitem.specialties ) )
