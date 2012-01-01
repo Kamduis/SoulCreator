@@ -41,13 +41,23 @@ class Trait(QObject):
 
 
 	valueChanged = Signal(int)
+	#valueChanged = Signal(object)
 	customTextChanged = Signal(str)
 	specialtiesChanged = Signal(object)
 	availableChanged = Signal(bool)
+	traitChanged = Signal(object)
 
 
-	def __init__(self, name, value=0, parent=None):
+	def __init__(self, character, name="", value=0, parent=None):
+		"""
+		Die Referenz auf character benötige ich nur, damit ich bei Eigenschaften mit Voraussetzungen diese auch überprüfen kann.
+
+		\ref checkPrerequisites
+		"""
+		
 		QObject.__init__(self, parent)
+
+		self.__character = character
 
 		self.__name = name
 		self.__value = value
@@ -82,6 +92,7 @@ class Trait(QObject):
 			self.__value = value
 			#Debug.debug("Ändere Eigenschaft {} zu {}".format(self.name, self.value))
 			self.valueChanged.emit(value)
+			self.traitChanged.emit(self)
 
 	value = property(__getValue, setValue)
 
@@ -300,6 +311,8 @@ class Trait(QObject):
 #}
 
 
+	def checkPrerequisites(self, trait):
+		self.__character.checkPrerequisites(self)
 
 
 #QList< Trait* > Trait::prerequisitePtrs() const {

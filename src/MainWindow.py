@@ -30,7 +30,6 @@ from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog
 
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion
 from Config import Config
-from Parser.Parser import *
 from IO.Settings import Settings
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from IO.ReadXmlCharacter import ReadXmlCharacter
@@ -141,9 +140,6 @@ class MainWindow(QMainWindow):
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
 		self.populateUi()
-		self.__character.resetCharacter()
-		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.
-		self.__character.setModified(False)
 		self.activate()
 
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( showCreationPoints( int ) ) );
@@ -241,6 +237,10 @@ class MainWindow(QMainWindow):
 
 
 	def activate(self):
+		"""
+		Diese Funktion "aktiviert" SoulCreator. Hier werden beispielsweise Merits mit allen anderen Eigenschaften verknüpft, die in ihren Voraussetzungen vorkommen. und bei einem ändern dieser Eigenschaft, wird neu geprüft, ob der Merit verfügbar ist, oder nicht.
+		"""
+
 		# Merits müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
 		typ = "Merit"
 		categoriesMerits = self.__storage.categories(typ)
@@ -254,20 +254,14 @@ class MainWindow(QMainWindow):
 							for subsubitem in self.__character.traits[item][subitem]:
 								# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
 								if subsubitem.name in meritPrerequisites:
-									meritPrerequisites = meritPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
+									# \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
+									# Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
+									#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, merit.name))
+									subsubitem.traitChanged.connect(merit.checkPrerequisites)
 
-					# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
-					try:
-						result = eval(meritPrerequisites)
-						print("{} = {}".format(meritPrerequisites, result))
-					except (NameError, SyntaxError) as e:
-						Debug.debug("Error: {}".format(meritPrerequisites))
-						result = False
-
-					merit.setAvailable(result)
-
-		parser = Parser()
-		print(parser.parse("True and False"))
+		self.__character.resetCharacter()
+		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.
+		self.__character.setModified(False)
 
 		#creation = new Creation( self );
 		#// Schreibe die übrigen Erschaffungspunkte

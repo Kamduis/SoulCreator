@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Signal
+from PySide.QtCore import QObject, Signal, Slot
 
 from src.Config import Config
 from src.Datatypes.Trait import Trait
@@ -117,7 +117,7 @@ class StorageCharacter(QObject):
 						custom = True
 
 					for i in xrange(loop):
-						trait = Trait(subitem["name"], val)
+						trait = Trait(self, subitem["name"], val)
 						trait.age = subitem["age"]
 						trait.era = subitem["era"]
 						trait.custom = custom
@@ -636,3 +636,30 @@ class StorageCharacter(QObject):
 #}
 
 
+	def checkPrerequisites(self, trait):
+		"""
+		Diese Funktion überprüft, ob die Voraussetzungen der Eigenscahft "trait" erfüllt sind ode rnicht.
+		"""
+
+		if type(trait) != Trait:
+			Debug.debug("Error!")
+		else:
+			if trait.hasPrerequisites:
+				traitPrerequisites = trait.prerequisitesText[0]
+				for item in Config.typs:
+					categories = self.__storage.categories(item)
+					for subitem in categories:
+						for subsubitem in self.traits[item][subitem]:
+							# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
+							if subsubitem.name in traitPrerequisites:
+								traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
+
+				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
+				try:
+					result = eval(traitPrerequisites)
+					#print("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
+				except (NameError, SyntaxError) as e:
+					Debug.debug("Error: {}".format(traitPrerequisites))
+					result = False
+
+				trait.setAvailable(result)
