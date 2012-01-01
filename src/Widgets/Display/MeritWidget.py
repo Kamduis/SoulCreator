@@ -89,25 +89,10 @@ class MeritWidget(QWidget):
 				if not merit.custom:
 					traitWidget.setDescriptionHidden(True)
 
-				#for ( int k = 0; k < Config::traitMultipleMax; ++k ) {
-					#// Anlegen der Eigenschaft im Speicher
-					#Trait* traitPtr = character.addTrait( list[j] );
-
-					#// Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-					#CharaTrait* charaTrait = new CharaTrait( this, traitPtr, list[j] );
-					#charaTrait.setValue( 0 );
 				layoutMeritCategory.addWidget( traitWidget )
 
-				#connect( charaTrait, SIGNAL( valueChanged( int ) ), this, SLOT( countMerits() ) );
 				merit.valueChanged.connect(self.countMerits)
 
-					#// Eigenschaften mit Beschreibungstext werden mehrfach dargestellt, da man sie ja auch mehrfach erwerben kann. Alle anderen aber immer nur einmal.
-
-					#if ( !list.at( j ).custom() ) {
-						#break;
-					#}
-				#}
-			#}
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutMeritCategory.addStretch()
@@ -124,7 +109,6 @@ class MeritWidget(QWidget):
 	#// 	layout_button.addWidget( button );
 	#//
 	#// 	connect( button, SIGNAL( clicked( bool ) ), dialog, SLOT( exec() ) );
-
 
 	def countMerits(self):
 		"""

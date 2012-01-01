@@ -72,7 +72,7 @@
 			<Mental>
 				<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
 					<value>1</value>
-					<prerequisite>Politics > 0 OR Occult > 0 OR Streetwise > 0</prerequisite>
+					<prerequisite>Politics > 0 or Occult > 0 or Streetwise > 0</prerequisite>
 				</trait>
 			</Mental>
 			<Social>
@@ -142,7 +142,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Haven: Size > 0 OR Haven: Security > 0</prerequisite>
+					<prerequisite>Haven: Size > 0 or Haven: Security > 0</prerequisite>
 				</trait>
 				<trait name="Herd" source="Vampire Core">
 					<value>1</value>
@@ -157,7 +157,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Status.Camarilla > 2 OR Status.Wing > 2</prerequisite>
+					<prerequisite>Status.Camarilla > 2 or Status.Wing > 2</prerequisite>
 				</trait>
 			</Social>
 			<Extraordinary>
@@ -172,7 +172,7 @@
 				</trait>
 				<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
 					<value>2</value>
-					<prerequisite><![CDATA[superTrait > 2 AND morality < 6 AND AGE > 99]]></prerequisite>
+					<prerequisite><![CDATA[superTrait > 2 and morality < 6 and AGE > 99]]></prerequisite>
 				</trait>
 				<trait name="Swarm Mind" source="Vampire Gangrel">
 					<value>2</value>

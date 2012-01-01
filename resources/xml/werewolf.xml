@@ -43,7 +43,7 @@
 			<Social>
 				<trait name="Predator's Gaze" source="Werewolf The Rage">
 					<value>3</value>
-					<prerequisite>Presence > 1 AND Intimidation > 1</prerequisite>
+					<prerequisite>Presence > 1 and Intimidation > 1</prerequisite>
 				</trait>
 				<trait name="Pack Affinity" source="Werewolf The Rage">
 					<value>1</value>
@@ -86,14 +86,14 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Strength > 1 AND Dexterity > 2 AND Stamina > 2 AND Brawl > 1</prerequisite>
+					<prerequisite>Strength > 1 and Dexterity > 2 and Stamina > 2 and Brawl > 1</prerequisite>
 				</trait>
 				<trait name="Wolfpack" source="Werewolf War against the Pure">
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>
 					<value>4</value>
-					<prerequisite>superTrait > 0 AND Dexterity > 2 AND Stamina > 1 AND Brawl > 2</prerequisite>
+					<prerequisite>superTrait > 0 and Dexterity > 2 and Stamina > 1 and Brawl > 2</prerequisite>
 				</trait>
 			</FightingStyle>
 		</Merit>

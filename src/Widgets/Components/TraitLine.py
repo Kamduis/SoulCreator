@@ -153,6 +153,13 @@ class TraitLine(QWidget):
 #}
 
 
+	def setEnabled( self, sw=True):
+		self.__labelName.setEnabled(sw)
+		self.__button.setEnabled(sw)
+		self.__lineEdit.setEnabled(sw)
+		self.__traitDots.setEnabled(sw)
+
+
 	def setSpecialtyButtonChecked( self, sw=True ):
 		"""
 		Aktiviere oder Deaktiviere den Spezialisierungs-Knopf.

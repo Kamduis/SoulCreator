@@ -122,6 +122,9 @@ class StorageCharacter(QObject):
 						trait.era = subitem["era"]
 						trait.custom = custom
 						trait.customText = customText
+						if "prerequisite" in subitem:
+							trait.hasPrerequisites = True
+							trait.prerequisitesText = subitem["prerequisite"]
 						self.__traits[typ][item].append(trait)
 
 					
@@ -129,7 +132,6 @@ class StorageCharacter(QObject):
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
 		self.__identity.identityChanged.connect(self.setModified)
-	#connect( self, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( setModified() ) );
 		self.speciesChanged.connect(self.setModified)
 	#connect( self, SIGNAL( traitChanged( cv_Trait* ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( derangementsChanged() ), self, SLOT( setModified() ) );

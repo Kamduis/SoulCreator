@@ -77,7 +77,7 @@
 					<value>2</value>
 					<value>3</value>
 					<value>4</value>
-					<prerequisite>High Speech > 0 AND Intelligence > 2 AND Occult > 2</prerequisite>
+					<prerequisite>High Speech > 0 and Intelligence > 2 and Occult > 2</prerequisite>
 				</trait>
 			</Mental>
 			<Social>
@@ -110,7 +110,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Dexterity > 2 AND Occult > 2</prerequisite>
+					<prerequisite>Dexterity > 2 and Occult > 2</prerequisite>
 				</trait>
 				<trait name="Ghost Familiar" source="Mage Summoners">
 					<value>3</value>
@@ -128,7 +128,7 @@
 				<trait name="Ritual Synergy" source="Mage Tome of the Mysteries">
 					<value>3</value>
 					<value>5</value>
-					<prerequisite>Gnosis > 2 OR Gnosis > 4</prerequisite>
+					<prerequisite>Gnosis > 2 or Gnosis > 4</prerequisite>
 				</trait>
 				<trait name="Sanctum: Size" source="Mage Core">
 					<value>1</value>
@@ -150,21 +150,21 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
 				</trait>
 				<trait name="Guardian Ghost" source="Mage Sanctum and Sigil">
 					<value>2</value>
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
 				</trait>
 				<trait name="Guardian Spirit" source="Mage Sanctum and Sigil">
 					<value>2</value>
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
 				</trait>
 				<trait name="Hallow" source="Mage Core">
 					<value>1</value>
@@ -172,7 +172,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
 				</trait>
 				<trait name="Library" source="Mage Core">
 					<value>1</value>
@@ -180,7 +180,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
 				</trait>
 				<trait name="Sanctum Gauntlet" source="Mage Sanctum and Sigil">
 					<value>1</value>
@@ -188,13 +188,13 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
 				</trait>
 				<trait name="Summoning Circle" source="Mage Summoners">
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>
-					<prerequisite>Sanctum: Size > 0 OR Sanctum: Security > 0</prerequisite>
+					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
 				</trait>
 			</Extraordinary>
 		</Merit>

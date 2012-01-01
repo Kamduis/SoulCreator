@@ -43,6 +43,7 @@ class Trait(QObject):
 	valueChanged = Signal(int)
 	customTextChanged = Signal(str)
 	specialtiesChanged = Signal(object)
+	availableChanged = Signal(bool)
 
 
 	def __init__(self, name, value=0, parent=None):
@@ -55,6 +56,9 @@ class Trait(QObject):
 		self.__era = ""
 		self.__custom = False
 		self.__customText = ""
+		self.__prerequisites = False
+		self.__prerequisitesText = ""
+		self.__available = True
 
 
 	def __getName(self):
@@ -147,6 +151,26 @@ class Trait(QObject):
 			self.customTextChanged.emit(text)
 
 	customText = property(__getCustomText, __setCustomText)
+
+
+	def __getPrerequisites(self):
+		return self.__prerequisites
+
+	def __setPrerequisites(self, prerequisites):
+		self.__prerequisites = prerequisites
+
+	hasPrerequisites = property(__getPrerequisites, __setPrerequisites)
+
+
+	def __getPrerequisitesText(self):
+		return self.__prerequisitesText
+
+	def __setPrerequisitesText(self, text):
+		if self.__prerequisitesText != text:
+			self.__prerequisitesText = text
+			#self.prerequisitesTextChanged.emit(text)
+
+	prerequisitesText = property(__getPrerequisitesText, __setPrerequisitesText)
 
 
 #Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject( parent ), cv_Trait( txt, val, spe, ty, ca ) {
@@ -245,27 +269,23 @@ class Trait(QObject):
 	#}
 #}
 
-#bool Trait::isAvailable() const {
-	#"""
-	#Gibt zurück, ob die Voraussetzungen der Eigenschaft erfüllt sind, ode rnicht.
-	#"""
-	
-	#return v_available;
-#}
-#void Trait::setAvailability( bool sw ) {
-	#"""
-	#Legt fest, ob die Eigenschaft zur Verfügung steht oder nicht.
-	
-	#\sa checkPrerequisites()
-	#"""
-	
-	#if ( v_available != sw ) {
-		#v_available = sw;
+	def isAvailable(self):
+		"""
+		Gibt zurück, ob die Voraussetzungen der Eigenschaft erfüllt sind, ode rnicht.
+		"""
 
-		#emit availabilityChanged( sw );
-	#}
-#}
+		return self.__available
 
+	def setAvailable( self, sw ):
+		"""
+		Legt fest, ob die Eigenschaft zur Verfügung steht oder nicht.
+		"""
+
+		if ( self.__available != sw ):
+			self.__available = sw
+			self.availableChanged.emit( sw )
+
+		
 #void Trait::setBonus( bool sw ) {
 	#"""
 	#Legt fest, ob diese Eigenschaft eine Bonuseigenschaft ist.

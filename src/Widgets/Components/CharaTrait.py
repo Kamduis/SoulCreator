@@ -71,6 +71,7 @@ class CharaTrait(TraitLine):
 
 		#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
 		#connect( traitPtr(), SIGNAL( availabilityChanged(bool)), this, SLOT( setEnabled(bool)) );
+		self.__trait.availableChanged.connect(self.setEnabled)
 
 		#if ( !traitPtr()->possibleValues().isEmpty() ) {
 			#setPossibleValues( traitPtr()->possibleValues() );
