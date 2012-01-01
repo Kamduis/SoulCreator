@@ -64,7 +64,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Wyrd > 6</prerequisite>
+					<prerequisite>Supertrait > 6</prerequisite>
 				</trait>
 				<trait name="Prophet Circle" source="Changeling Rites of Spring">
 					<value>1</value>
@@ -115,7 +115,7 @@
 				</trait>
 				<trait name="Gentriefied Bearing" source="Changeling Rites of Spring">
 					<value>4</value>
-					<prerequisite>Wyrd > 2</prerequisite>
+					<prerequisite>Supertrait > 2</prerequisite>
 				</trait>
 				<trait name="Goblin Vow" source="Changeling Rites of Spring">
 					<value>1</value>
@@ -143,7 +143,7 @@
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>
-					<prerequisite><![CDATA[Fame < 1 and Wyrd > 0]]></prerequisite>
+					<prerequisite><![CDATA[Fame < 1 and Supertrait > 0]]></prerequisite>
 				</trait>
 				<trait name="Hobgoblin Trainer" source="Changeling Rites of Spring">
 					<value>2</value>
@@ -206,7 +206,7 @@
 				</trait>
 				<trait name="Lethal Mien" source="Changeling Rites of Spring">
 					<value>2</value>
-					<prerequisite>Wyrd > 2</prerequisite>
+					<prerequisite>Supertrait > 2</prerequisite>
 					<!--<effect>You deal lethal damage when brawling instead of bashing. If you already have an innate lethal attack thanks to your kith, the damage rating of that attack is increased by 1.</effect>-->
 				</trait>
 				<trait name="Long of Days" source="Changeling Rites of Spring">
@@ -248,15 +248,15 @@
 				</trait>
 				<trait name="Visionary Dreams" source="Changeling Rites of Spring">
 					<value>2</value>
-					<prerequisite>Wyrd > 2</prerequisite>
+					<prerequisite>Supertrait > 2</prerequisite>
 				</trait>
 				<trait name="Wisdom of Dreams" source="Changeling Rites of Spring">
 					<value>3</value>
-					<prerequisite>Wyrd > 1</prerequisite>
+					<prerequisite>Supertrait > 1</prerequisite>
 				</trait>
 				<trait name="Wyrdskill" source="Changeling The Equinox Road">
 					<value>1</value>
-					<prerequisite>Wyrd > 5</prerequisite>
+					<prerequisite>Supertrait > 5</prerequisite>
 					<!--<effect>You bind another Skill to your Mien and seeming, and at every \Trait{Wyrd} dot gained starting at \Trait[6]{Wyrd}, you receives another free Specialty for the Skill chosen to be bound to one's \Trait{Wyrd}.</effect>
 					<effect>The experience cost to buy Skill dots in other Skills in the same area as your Wyrdskill increase to new dots $\times$4, and Specialties cost 4~XP.</effect>-->
 				</trait>
@@ -266,15 +266,15 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Wyrd > 6</prerequisite>
+					<prerequisite>Supertrait > 6</prerequisite>
 				</trait>
 				<trait name="Tokenmaster" source="Changeling The Equinox Road">
 					<value>3</value>
-					<prerequisite>Wyrd > 6</prerequisite>
+					<prerequisite>Supertrait > 6</prerequisite>
 				</trait>
 				<trait name="Sublime" source="Changeling The Equinox Road">
 					<value>5</value>
-					<prerequisite>Wyrd > 8</prerequisite>
+					<prerequisite>Supertrait > 8</prerequisite>
 				</trait>
 			</Extraordinary>
 			<FightingStyle>
@@ -284,7 +284,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Empathy > 2 and Wyrd > 2</prerequisite>
+					<prerequisite>Empathy > 2 and Supertrait > 2</prerequisite>
 				</trait>
 				<trait name="Hedge Duelist" source="Changeling Rites of Spring">
 					<value>1</value>
@@ -292,7 +292,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Wyrd > 2</prerequisite>
+					<prerequisite>Supertrait > 2</prerequisite>
 				</trait>
 			</FightingStyle>
 		</Merit>

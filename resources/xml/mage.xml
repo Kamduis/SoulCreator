@@ -128,7 +128,7 @@
 				<trait name="Ritual Synergy" source="Mage Tome of the Mysteries">
 					<value>3</value>
 					<value>5</value>
-					<prerequisite>Gnosis > 2 or Gnosis > 4</prerequisite>
+					<prerequisite>Supertrait > 2 or Supertrait > 4</prerequisite>
 				</trait>
 				<trait name="Sanctum: Size" source="Mage Core">
 					<value>1</value>

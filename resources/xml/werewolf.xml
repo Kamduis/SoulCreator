@@ -93,7 +93,7 @@
 					<value>2</value>
 					<value>3</value>
 					<value>4</value>
-					<prerequisite>superTrait > 0 and Dexterity > 2 and Stamina > 1 and Brawl > 2</prerequisite>
+					<prerequisite>Supertrait > 0 and Dexterity > 2 and Stamina > 1 and Brawl > 2</prerequisite>
 				</trait>
 			</FightingStyle>
 		</Merit>

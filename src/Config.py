@@ -114,7 +114,10 @@ class Config():
 	#const int Config::superTraitMax = 10
 
 	## Startwert der besonderen übernatürlichen Eigenschaft.
-	#const int Config::superTraitDefaultValue = 1
+	superTraitDefaultValue = 1
+
+	## Bezeichnung der Übernatürlichen Grundeigenschaft für alle Spezies
+	superTraitIdentifier = "Supertrait"
 
 	## Über wievielen Punkten die Eigenschaften 2 Erschaffungspunkte kosten.
 	#

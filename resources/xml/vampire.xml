@@ -163,7 +163,7 @@
 			<Extraordinary>
 				<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
 					<value>2</value>
-					<prerequisite>superTrait > 5</prerequisite>
+					<prerequisite>Supertrait > 5</prerequisite>
 				</trait>
 				<trait name="Lordly Palette" source="Vampire Ventrue">
 					<value>1</value>
@@ -172,7 +172,7 @@
 				</trait>
 				<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
 					<value>2</value>
-					<prerequisite><![CDATA[superTrait > 2 and morality < 6 and AGE > 99]]></prerequisite>
+					<prerequisite><![CDATA[Supertrait > 2 and morality < 6 and AGE > 99]]></prerequisite>
 				</trait>
 				<trait name="Swarm Mind" source="Vampire Gangrel">
 					<value>2</value>

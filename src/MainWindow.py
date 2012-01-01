@@ -254,10 +254,19 @@ class MainWindow(QMainWindow):
 							for subsubitem in self.__character.traits[item][subitem]:
 								# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
 								if subsubitem.name in meritPrerequisites:
-									# \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
-									# Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
-									#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, merit.name))
-									subsubitem.traitChanged.connect(merit.checkPrerequisites)
+									# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
+									idxA = meritPrerequisites.index(subsubitem.name)
+									strBefore = meritPrerequisites[:idxA]
+									strBefore = strBefore.rstrip()
+									strBeforeList = strBefore.split(" ")
+									if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
+										# \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
+										# Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
+										#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, merit.name))
+										subsubitem.traitChanged.connect(merit.checkPrerequisites)
+					# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
+					if Config.superTraitIdentifier in meritPrerequisites:
+						self.__character.superTraitChanged.connect(merit.checkPrerequisites)
 
 		self.__character.resetCharacter()
 		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.

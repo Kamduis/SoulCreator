@@ -606,20 +606,8 @@ class StorageCharacter(QObject):
 					subsubitem.value = val
 					subsubitem.specialties = []
 
-			#v_traits2[i].clearDetails();
-
-			#v_traits2[i].setCustomText( "" );
-
-	#// 		emit traitChanged( v_traits2[i] );
-		#}
-
-		#v_derangements.clear();
-
-		#setMorality( Config::derangementMoralityTraitMax );
-
-		#emit characterResetted();
-
-		
+		# Übernatürliche Eigenschaft festlegen.
+		self.superTrait = Config.superTraitDefaultValue
 
 
 	def isModifed(self):
@@ -652,15 +640,26 @@ class StorageCharacter(QObject):
 						for subsubitem in self.traits[item][subitem]:
 							# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
 							if subsubitem.name in traitPrerequisites:
-								# Wenn Spezialisierungen vorausgesetzt werden.
-								if "." in traitPrerequisites and "{}.".format(subsubitem.name) in traitPrerequisites:
-									idx =[0,0]
-									idx[0] = traitPrerequisites.index("{}.".format(subsubitem.name))
-									idx[1] = traitPrerequisites.index(" ", idx[0])
-									specialty = traitPrerequisites[idx[0]:idx[1]].replace("{}.".format(subsubitem.name), "")
-									if specialty in subsubitem.specialties:
-										traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
-								traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
+								# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
+								idxA = traitPrerequisites.index(subsubitem.name)
+								strBefore = traitPrerequisites[:idxA]
+								strBefore = strBefore.rstrip()
+								strBeforeList = strBefore.split(" ")
+								if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
+									# Wenn Spezialisierungen vorausgesetzt werden.
+									if "." in traitPrerequisites and "{}.".format(subsubitem.name) in traitPrerequisites:
+										idx =[0,0]
+										idx[0] = traitPrerequisites.index("{}.".format(subsubitem.name))
+										idx[1] = traitPrerequisites.index(" ", idx[0])
+										specialty = traitPrerequisites[idx[0]:idx[1]].replace("{}.".format(subsubitem.name), "")
+										if specialty in subsubitem.specialties:
+											traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
+										else:
+											traitPrerequisites = traitPrerequisites.replace("{}.{}".format(subsubitem.name, specialty), "0")
+									traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
+				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
+				if Config.superTraitIdentifier in traitPrerequisites:
+					traitPrerequisites = traitPrerequisites.replace(Config.superTraitIdentifier, unicode(self.__superTrait))
 
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
 				try:
@@ -671,3 +670,4 @@ class StorageCharacter(QObject):
 					result = False
 
 				trait.setAvailable(result)
+
