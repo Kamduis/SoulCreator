@@ -652,6 +652,14 @@ class StorageCharacter(QObject):
 						for subsubitem in self.traits[item][subitem]:
 							# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
 							if subsubitem.name in traitPrerequisites:
+								# Wenn Spezialisierungen vorausgesetzt werden.
+								if "." in traitPrerequisites and "{}.".format(subsubitem.name) in traitPrerequisites:
+									idx =[0,0]
+									idx[0] = traitPrerequisites.index("{}.".format(subsubitem.name))
+									idx[1] = traitPrerequisites.index(" ", idx[0])
+									specialty = traitPrerequisites[idx[0]:idx[1]].replace("{}.".format(subsubitem.name), "")
+									if specialty in subsubitem.specialties:
+										traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
 								traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
 
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.

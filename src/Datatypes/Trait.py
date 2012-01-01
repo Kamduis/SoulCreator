@@ -104,6 +104,7 @@ class Trait(QObject):
 		if self.__specialties != specialties:
 			self.__specialties = specialties
 			self.specialtiesChanged.emit(specialties)
+			self.traitChanged.emit(self)
 
 	specialties = property(__getSpecialties, __setSpecialties)
 
@@ -116,6 +117,7 @@ class Trait(QObject):
 
 		self.__specialties.append(name)
 		self.specialtiesChanged.emit(self.specialties)
+		self.traitChanged.emit(self)
 
 	def removeSpecialty(self, name):
 		"""
@@ -126,6 +128,7 @@ class Trait(QObject):
 
 		self.__specialties.remove(name)
 		self.specialtiesChanged.emit(self.specialties)
+		self.traitChanged.emit(self)
 
 
 	def __getEra(self):
