@@ -174,6 +174,19 @@ class CharaTrait(TraitLine):
 #}
 
 
+	def hideOrShowTrait_species(self, species):
+		"""
+		Versteckt oder zeigt diese Eigenschaft, je nach gewählter Spezies.
+		"""
+
+		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
+		if (not self.__trait.species or self.__trait.species == species):
+			self.setHidden(False)
+			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
+		else:
+			self.setHidden(True)
+
+
 	def hideOrShowTrait(self, age, era):
 		"""
 		Versteckt oder zeigt diese Eigenschaft.

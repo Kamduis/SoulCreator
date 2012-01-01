@@ -5,18 +5,18 @@
 			<points value="9"/>
 		</Power>
 	</creation>
-	<traits species="Mage" morale="Wisdom" supertrait="Gnosis" fuel="Mana">
+	<traits species="Mage" morale="Wisdom" powerstat="Gnosis" fuel="Mana">
 		<Super>
-			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
-			<supertrait fuelMax="11" fuelPerTurn="2" traitMax="5">2</supertrait>
-			<supertrait fuelMax="12" fuelPerTurn="3" traitMax="5">3</supertrait>
-			<supertrait fuelMax="13" fuelPerTurn="4" traitMax="5">4</supertrait>
-			<supertrait fuelMax="14" fuelPerTurn="5" traitMax="5">5</supertrait>
-			<supertrait fuelMax="15" fuelPerTurn="6" traitMax="6">6</supertrait>
-			<supertrait fuelMax="20" fuelPerTurn="7" traitMax="7">7</supertrait>
-			<supertrait fuelMax="30" fuelPerTurn="8" traitMax="8">8</supertrait>
-			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
-			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
+			<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
+			<powerstat fuelMax="11" fuelPerTurn="2" traitMax="5">2</powerstat>
+			<powerstat fuelMax="12" fuelPerTurn="3" traitMax="5">3</powerstat>
+			<powerstat fuelMax="13" fuelPerTurn="4" traitMax="5">4</powerstat>
+			<powerstat fuelMax="14" fuelPerTurn="5" traitMax="5">5</powerstat>
+			<powerstat fuelMax="15" fuelPerTurn="6" traitMax="6">6</powerstat>
+			<powerstat fuelMax="20" fuelPerTurn="7" traitMax="7">7</powerstat>
+			<powerstat fuelMax="30" fuelPerTurn="8" traitMax="8">8</powerstat>
+			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
+			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
 		<Breed name="Path">
 			<trait name="Acanthus">
@@ -128,7 +128,7 @@
 				<trait name="Ritual Synergy" source="Mage Tome of the Mysteries">
 					<value>3</value>
 					<value>5</value>
-					<prerequisite>Supertrait > 2 or Supertrait > 4</prerequisite>
+					<prerequisite>Powerstat > 2 or Powerstat > 4</prerequisite>
 				</trait>
 				<trait name="Sanctum: Size" source="Mage Core">
 					<value>1</value>

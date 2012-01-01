@@ -5,18 +5,18 @@
 			<points value="3"/>
 		</Power>
 	</creation>
-	<traits species="Werewolf" morale="Harmony" supertrait="Primal Urge" fuel="Essence">
+	<traits species="Werewolf" morale="Harmony" powerstat="Primal Urge" fuel="Essence">
 		<Super>
-			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
-			<supertrait fuelMax="11" fuelPerTurn="1" traitMax="5">2</supertrait>
-			<supertrait fuelMax="12" fuelPerTurn="2" traitMax="5">3</supertrait>
-			<supertrait fuelMax="13" fuelPerTurn="2" traitMax="5">4</supertrait>
-			<supertrait fuelMax="14" fuelPerTurn="3" traitMax="5">5</supertrait>
-			<supertrait fuelMax="15" fuelPerTurn="4" traitMax="6">6</supertrait>
-			<supertrait fuelMax="20" fuelPerTurn="5" traitMax="7">7</supertrait>
-			<supertrait fuelMax="30" fuelPerTurn="7" traitMax="8">8</supertrait>
-			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
-			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
+			<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
+			<powerstat fuelMax="11" fuelPerTurn="1" traitMax="5">2</powerstat>
+			<powerstat fuelMax="12" fuelPerTurn="2" traitMax="5">3</powerstat>
+			<powerstat fuelMax="13" fuelPerTurn="2" traitMax="5">4</powerstat>
+			<powerstat fuelMax="14" fuelPerTurn="3" traitMax="5">5</powerstat>
+			<powerstat fuelMax="15" fuelPerTurn="4" traitMax="6">6</powerstat>
+			<powerstat fuelMax="20" fuelPerTurn="5" traitMax="7">7</powerstat>
+			<powerstat fuelMax="30" fuelPerTurn="7" traitMax="8">8</powerstat>
+			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
+			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
 		<Breed name="Auspice">
 			<trait name="Rahu"/>
@@ -93,7 +93,7 @@
 					<value>2</value>
 					<value>3</value>
 					<value>4</value>
-					<prerequisite>Supertrait > 0 and Dexterity > 2 and Stamina > 1 and Brawl > 2</prerequisite>
+					<prerequisite>Powerstat > 0 and Dexterity > 2 and Stamina > 1 and Brawl > 2</prerequisite>
 				</trait>
 			</FightingStyle>
 		</Merit>

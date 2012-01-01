@@ -49,7 +49,7 @@ class StorageCharacter(QObject):
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
 	factionChanged = Signal(str)
-	superTraitChanged = Signal(int)
+	powerstatChanged = Signal(int)
 	moralityChanged = Signal(int)
 	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
@@ -89,7 +89,7 @@ class StorageCharacter(QObject):
 		self.__vice = ""
 		self.__breed = ""
 		self.__faction = ""
-		self.__superTrait = 0
+		self.__powerstat = 0
 		self.__morality = 0
 		self.__armor = [0, 0]
 		self.__era = ""
@@ -120,6 +120,7 @@ class StorageCharacter(QObject):
 						trait = Trait(self, subitem["name"], val)
 						trait.age = subitem["age"]
 						trait.era = subitem["era"]
+						trait.species = subitem["species"]
 						trait.custom = custom
 						trait.customText = customText
 						if "prerequisite" in subitem:
@@ -139,7 +140,7 @@ class StorageCharacter(QObject):
 	#connect( self, SIGNAL( viceChanged( QString ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( breedChanged( QString ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( factionChanged( QString ) ), self, SLOT( setModified() ) );
-	#connect( self, SIGNAL( superTraitChanged( int ) ), self, SLOT( setModified() ) );
+		self.powerstatChanged.connect(self.setModified)
 	#connect( self, SIGNAL( moralityChanged( int ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( armorChanged( int, int ) ), self, SLOT( setModified() ) );
 
@@ -502,25 +503,25 @@ class StorageCharacter(QObject):
 	faction = property(__getFaction, __setFaction)
 
 
-	def __getSuperTrait(self):
+	def __getPowerstat(self):
 		"""
 		Gibt den Wert des Super-Attributs aus.
 		"""
 
-		return self.__superTrait
+		return self.__powerstat
 
-	def __setSuperTrait( self, value ):
+	def __setPowerstat( self, value ):
 		"""
 		Verändert den Wert des Super-Attributs.
 		
-		Bei einer Veränderung wird das Signal superTraitChanged() ausgesandt.
+		Bei einer Veränderung wird das Signal powerstatChanged() ausgesandt.
 		"""
 
-		if ( self.__superTrait != value ):
-			self.__superTrait = value
-			self.superTraitChanged.emit( value )
+		if ( self.__powerstat != value ):
+			self.__powerstat = value
+			self.powerstatChanged.emit( value )
 
-	superTrait = property(__getSuperTrait, __setSuperTrait)
+	powerstat = property(__getPowerstat, __setPowerstat)
 
 
 	def __getMorality(self):
@@ -585,7 +586,7 @@ class StorageCharacter(QObject):
 		self.__identity.reset()
 
 		# Standardspezies ist der Mensch.
-		self.species = self.__storage.species[1]["name"]
+		self.species = self.__storage.species[0]["name"]
 
 		#Debug.debug(self.__storage.virtues[0])
 		#Debug.debug(self.__storage.virtues[0]["name"])
@@ -607,7 +608,7 @@ class StorageCharacter(QObject):
 					subsubitem.specialties = []
 
 		# Übernatürliche Eigenschaft festlegen.
-		self.superTrait = Config.superTraitDefaultValue
+		self.powerstat = Config.powerstatDefaultValue
 
 
 	def isModifed(self):
@@ -658,8 +659,8 @@ class StorageCharacter(QObject):
 											traitPrerequisites = traitPrerequisites.replace("{}.{}".format(subsubitem.name, specialty), "0")
 									traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
 				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
-				if Config.superTraitIdentifier in traitPrerequisites:
-					traitPrerequisites = traitPrerequisites.replace(Config.superTraitIdentifier, unicode(self.__superTrait))
+				if Config.powerstatIdentifier in traitPrerequisites:
+					traitPrerequisites = traitPrerequisites.replace(Config.powerstatIdentifier, unicode(self.__powerstat))
 
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
 				try:

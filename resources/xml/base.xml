@@ -16,7 +16,7 @@
 			<points value="7"/>
 		</Merit>
 	</creation>
-	<traits species="All">
+	<traits>
 		<Virtue>
 			<trait name="Charity" age="Adult"/>
 			<trait name="Faith" age="Adult"/>

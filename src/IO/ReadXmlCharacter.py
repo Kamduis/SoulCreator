@@ -120,8 +120,8 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.breed = self.readElementText()
 				elif ( elementName == "faction" ):
 					self.__character.faction = self.readElementText()
-				elif ( elementName == "superTrait" ):
-					self.__character.superTrait = int(self.readElementText())
+				elif ( elementName == "powerstat" ):
+					self.__character.powerstat = int(self.readElementText())
 				elif ( elementName == "morality" ):
 					self.__character.morality = int(self.readElementText())
 				elif ( elementName == "armor" ):

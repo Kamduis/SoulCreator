@@ -265,8 +265,8 @@ class MainWindow(QMainWindow):
 										#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, merit.name))
 										subsubitem.traitChanged.connect(merit.checkPrerequisites)
 					# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
-					if Config.superTraitIdentifier in meritPrerequisites:
-						self.__character.superTraitChanged.connect(merit.checkPrerequisites)
+					if Config.powerstatIdentifier in meritPrerequisites:
+						self.__character.powerstatChanged.connect(merit.checkPrerequisites)
 
 		self.__character.resetCharacter()
 		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.

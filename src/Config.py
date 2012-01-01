@@ -108,16 +108,16 @@ class Config():
 	#const int Config::willpowerMax = 10
 
 	## Mindestwert der besonderen übernatürlichen Eigenschaft.
-	#const int Config::superTraitMin = 1
+	#const int Config::powerstatMin = 1
 
 	## Höchstwert der besonderen übernatürlichen Eigenschaft.
-	#const int Config::superTraitMax = 10
+	#const int Config::powerstatMax = 10
 
 	## Startwert der besonderen übernatürlichen Eigenschaft.
-	superTraitDefaultValue = 1
+	powerstatDefaultValue = 1
 
 	## Bezeichnung der Übernatürlichen Grundeigenschaft für alle Spezies
-	superTraitIdentifier = "Supertrait"
+	powerstatIdentifier = "Powerstat"
 
 	## Über wievielen Punkten die Eigenschaften 2 Erschaffungspunkte kosten.
 	#

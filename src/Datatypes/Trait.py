@@ -64,6 +64,7 @@ class Trait(QObject):
 		self.__specialties = []
 		self.__age = ""
 		self.__era = ""
+		self.__species = ""
 		self.__custom = False
 		self.__customText = ""
 		self.__prerequisites = False
@@ -147,6 +148,15 @@ class Trait(QObject):
 		self.__age = age
 
 	age = property(__getAge, __setAge)
+
+
+	def __getSpecies(self):
+		return self.__species
+
+	def __setSpecies(self, species):
+		self.__species = species
+
+	species = property(__getSpecies, __setSpecies)
 
 
 	def isCustom(self):

@@ -44,10 +44,6 @@ class MeritWidget(QWidget):
 	"""
 
 
-	#specialtiesActivated = Signal(bool, object)
-	#hideReasonChanged = Signal(str, str)
-
-
 	def __init__(self, template, character, parent=None):
 		QWidget.__init__(self, parent)
 
@@ -92,6 +88,7 @@ class MeritWidget(QWidget):
 				layoutMeritCategory.addWidget( traitWidget )
 
 				merit.valueChanged.connect(self.countMerits)
+				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
 
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
@@ -128,5 +125,4 @@ class MeritWidget(QWidget):
 				self.__toolBox.setItemText( self.__categoryIndex[item], "{} ({})".format(item, numberInCategory) )
 			else:
 				self.__toolBox.setItemText( self.__categoryIndex[item], item )
-
 
