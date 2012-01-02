@@ -6,7 +6,7 @@
 
 \section License
 
-Copyright (C) 2011 by Victor von Rhein
+Copyright (C) Victor von Rhein, 2011, 2012
 
 This file is part of SoulCreator.
 
@@ -89,9 +89,10 @@ class MoralityWidget(QWidget):
 				box = QComboBox()
 				self.__layoutTab.addWidget(box, i, 1)
 
-			dot.valueChanged.connect(self.__calcValue)
+			dot.clicked.connect(self.__calcValue)
 
 		self.__character.moralityChanged.connect(self.setValue)
+		self.valueChanged.connect(self.__character.setMorality)
 
 
 #MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
@@ -166,27 +167,29 @@ class MoralityWidget(QWidget):
 		# Ist der Wert False, suche ich nach dem niedrigesten False punkt, und mache die höheren alle False.
 		if value:
 			dotsTrue = []
-			for i in range(1, self.__layoutTab.rowCount()+1):
+			for i in xrange(1, self.__layoutTab.rowCount()+1):
 				if self.__dotList[i].value:
 					dotsTrue.append(i)
 			maxValue = max(dotsTrue)
-			for i in range(1, maxValue):
+			#Debug.debug(dotsTrue)
+			for i in xrange(1, maxValue):
 				self.__dotList[i].value = True
 				#Debug.debug("{}: {} (Maximalwert {})".format(i, self.__dotList[i].value, maxValue))
 			self.value = maxValue
 		else:
 			dotsFalse = []
-			for i in range(1, self.__layoutTab.rowCount()+1):
+			for i in xrange(1, self.__layoutTab.rowCount()+1):
 				if not self.__dotList[i].value:
 					dotsFalse.append(i)
 			minValue = min(dotsFalse)
-			for i in range(minValue+1, self.__layoutTab.rowCount()+1):
+			#Debug.debug(dotsFalse)
+			for i in xrange(minValue+1, self.__layoutTab.rowCount()+1):
 				self.__dotList[i].value = False
 				#Debug.debug("{}: {} (Maximalwert {})".format(i, self.__dotList[i].value, minValue))
 			# Intuitiverweise will man die Moral auf den Wert setzen, auf den man klickt. Aber das gilt nicht, wenn man auf den untersten Punkt klickt.
-			if minValue > 1:
-				self.__dotList[minValue].value = True
-				self.value = 1
+			if minValue == 1:
+				self.__dotList[minValue].value = False
+				self.value = 0
 			else:
 				self.value = minValue
 
@@ -197,7 +200,14 @@ class MoralityWidget(QWidget):
 		Ändert sich der Wert des Widgets, wird hierüber die passende Anzahl an Punkten schwarz ausgemalt.
 		"""
 
-		self.__dotList[value].value = True
+		if value > 0:
+			for i in xrange(value, len(self.__dotList)+1):
+				self.__dotList[i].value = False
+			for i in xrange(1, value+1):
+				self.__dotList[i].value = True
+		else:
+			for i in xrange(1, len(self.__dotList)+1):
+				self.__dotList[i].value = False
 
 
 #void MoralityWidget::resetValue( int value ) {

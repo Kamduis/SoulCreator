@@ -6,7 +6,7 @@
 
 \section License
 
-Copyright (C) 2011 by Victor von Rhein
+Copyright (C) Victor von Rhein, 2011, 2012
 
 This file is part of SoulCreator.
 
@@ -38,7 +38,8 @@ class Dot(QWidget):
 	"""
 
 
-	valueChanged = Signal(bool)
+	changed = Signal(bool)
+	clicked = Signal(bool)
 
 
 	def __init__(self, parent=None):
@@ -58,7 +59,7 @@ class Dot(QWidget):
 		self.__colorFull = QColor( 0, 0, 0 )
 		self.__colorFrame = QColor( 0, 0, 0 )
 
-		self.valueChanged.connect(self.update)
+		self.changed.connect(self.update)
 
 
 	# Das automatisch ausgelöste paintEvent, das das Widget bei jeder Fensterveränderung neu zeichnet.
@@ -106,6 +107,7 @@ class Dot(QWidget):
 	def mousePressEvent( self, event ):
 		self.value = not self.__value
 		self.update()
+		self.clicked.emit(self.value)
 
 			## Die Position des Mauszeigers beim Klicken wird errechnet. Dabei soll die Mitte der linken Seite der Position (0, 0) entsprechen.
 			#mousePoint = event.pos() - self.rect().bottomLeft() - QPoint( 0, self.rect().height() / 2 )
@@ -146,7 +148,7 @@ class Dot(QWidget):
 		if self.__value != value:
 			self.__value = value
 			#Debug.debug("Ändere Wert auf {}".format(value))
-			self.valueChanged.emit(value)
+			self.changed.emit(value)
 
 	value = property(__getValue, __setValue)
 

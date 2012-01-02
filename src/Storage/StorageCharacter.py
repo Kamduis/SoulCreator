@@ -6,7 +6,7 @@
 
 \section License
 
-Copyright (C) 2011 by Victor von Rhein
+Copyright (C) Victor von Rhein, 2011, 2012
 
 This file is part of SoulCreator.
 
@@ -531,7 +531,7 @@ class StorageCharacter(QObject):
 
 		return self.__morality
 
-	def __setMorality( self, value ):
+	def setMorality( self, value ):
 		"""
 		Verändert den Wert der Moral.
 		
@@ -540,9 +540,10 @@ class StorageCharacter(QObject):
 
 		if ( self.__morality != value ):
 			self.__morality = value
+			#Debug.debug("Moral verändert auf {}".format(value))
 			self.moralityChanged.emit( value )
 
-	morality = property(__getMorality, __setMorality)
+	morality = property(__getMorality, setMorality)
 
 
 	def __getArmor(self):

@@ -6,7 +6,7 @@
 
 \section License
 
-Copyright (C) 2011 by Victor von Rhein
+Copyright (C) Victor von Rhein, 2011, 2012
 
 This file is part of SoulCreator.
 
@@ -42,29 +42,57 @@ class Err(Exception):
 		self.__message = msg
 		self.__description = desc
 
-	def message(self):
+	def __getMessage(self):
+		"""
+		Erlaubt das Auslesen der Standardnachricht.
+		"""
+		
 		return self.__message
 
-	def setMessage(self, txt):
+	def __setMessage(self, txt):
+		"""
+		Setzt die Kurznachricht über die Ausnahme.
+		"""
+		
 		self.__message = txt
 
+	message = property(__getMessage, __setMessage)
+
 		
-	def description(self):
+	def __getDescription(self):
+		"""
+		Erlaubt das Auslesen einer ausfühlrichen Beschreibung der ausgelösten Ausnahme.
+		"""
+		
 		return self.__description
 
-	def setDescription(self, txt):
+	def __setDescription(self, txt):
+		"""
+		Setzt die ausfühlriche Beschreibung der Ausnahme.
+		"""
+		
 		self.__description = txt
 
 
 
 #eNumber::eNumber() : Exception() {
-	#setMessage( self.obj.tr( "Unspecified Problem with a number." ) );
-	#setDescription( self.obj.tr( "An unspecified error occured while handling a number or what should at least be a number." ) );
+	#"""
+	#@brief Ausnahme bei Zahlen.
+	#"""
+	
+	#message = self.obj.tr( "Unspecified Problem with a number." )
+	#description = self.obj.tr( "An unspecified error occured while handling a number or what should at least be a number." )
 #}
 
 #eNotANumber::eNotANumber() : eNumber() {
-	#setMessage( self.obj.tr( "Not a Number." ) );
-	#setDescription( self.obj.tr( "While expecting a number, somethin other than a number was given." ) );
+	#"""
+	#@brief Ausnahme beim Fehlen einer Zahl.
+
+	#Es wird eine Zahl erwartet, abe rkeine Zahl übergeben.
+	#"""
+
+	#message = self.obj.tr( "Not a Number." )
+	#description = self.obj.tr( "While expecting a number, somethin other than a number was given." )
 #}
 
 
@@ -78,8 +106,8 @@ class ErrList(Err):
 	def __init__(self):
 		Err.__init__(self)
 		
-		self.setMessage( self.obj.tr( "Unspecified Problem with a List." ) )
-		self.setDescription( self.obj.tr( "An unspecified error occured while handling a List." ) )
+		self.message = self.obj.tr( "Unspecified Problem with a List." ) 
+		self.description = self.obj.tr( "An unspecified error occured while handling a List." ) 
 
 
 class ErrIndexExceedsRange(ErrList):
@@ -90,8 +118,8 @@ class ErrIndexExceedsRange(ErrList):
 	def __init__(self, idx, listLen ):
 		ErrList.__init__(self)
 		
-		self.setMessage( self.obj.tr( "Index exceeds Range of List or Vector." ) )
-		self.setDescription( self.obj.tr( "Index {} exceeds List Range of {}.".format(idx, listLen) ))
+		self.message = self.obj.tr( "Index exceeds Range of List or Vector." ) 
+		self.description = self.obj.tr( "Index {} exceeds List Range of {}.".format(idx, listLen) )
 
 
 class ErrListLength(ErrList):
@@ -105,20 +133,30 @@ class ErrListLength(ErrList):
 		txt = "long"
 		if got < expected:
 			txt = "short"
-		self.setMessage( self.obj.tr( "List to {}.".format(txt) ) )
-		self.setDescription( self.obj.tr( "Got a List of length {}, but got a length of {}.".format(expected, got) ) )
+		self.message = self.obj.tr( "List to {}.".format(txt) ) 
+		self.description = self.obj.tr( "Got a List of length {}, but got a length of {}.".format(expected, got) ) 
 
 
 
 
 #eDir::eDir( QString dirName ) : Exception() {
-	#setMessage( self.obj.tr( "Unspecified Problem with a directory." ) );
-	#setDescription( self.obj.tr( "An unspecified error occured while handling directory %1" ).arg( dirName ) );
+	#"""
+	#@brief Ausnahme im Verzeichnis-Management.
+
+	#Allgemeine Fehler im Umgang mit Verzeichnissen werfen diese Ausnahme.
+	#"""
+
+	#message = self.obj.tr( "Unspecified Problem with a directory." )
+	#description = self.obj.tr( "An unspecified error occured while handling directory %1" ).arg( dirName )
 #}
 
 #eDirNotCreated::eDirNotCreated( QString dirName ) : eDir() {
-	#setMessage( self.obj.tr( "Cannot create Directory." ) );
-	#setDescription( self.obj.tr( "Directory %1 could not be created" ).arg( dirName ) );
+	#"""
+	#@brief Verzeichnis kann nicht angelegt werden.
+	#"""
+
+	#message = self.obj.tr( "Cannot create Directory." )
+	#description = self.obj.tr( "Directory %1 could not be created" ).arg( dirName )
 #}
 
 
@@ -134,8 +172,8 @@ class ErrFile(Err):
 	def __init__(self, filename = "unknown" ):
 		Err.__init__(self)
 
-		self.setMessage(self.obj.tr( "Unspecified Problem with a file." ))
-		self.setDescription(self.obj.tr( "An unspecified error occured while handling file %1".format(filename) ))
+		self.message =self.obj.tr( "Unspecified Problem with a file." )
+		self.description =self.obj.tr( "An unspecified error occured while handling file %1".format(filename) )
 
 
 class ErrFileNotOpened(ErrFile):
@@ -148,8 +186,8 @@ class ErrFileNotOpened(ErrFile):
 	def __init__(self, filename = "unknown", lastError = "unknown" ):
 		ErrFile.__init__(self)
 		
-		self.setMessage( self.obj.tr( "Cannot open File." ) )
-		self.setDescription( self.obj.tr( "File {} could not be opened: {}".format(filename,  lastError ) ))
+		self.message = self.obj.tr( "Cannot open File." ) 
+		self.description = self.obj.tr( "File {} could not be opened: {}".format(filename,  lastError ) )
 
 
 class ErrFileNotDeleted(ErrFile):
@@ -162,8 +200,8 @@ class ErrFileNotDeleted(ErrFile):
 	def __init__(self, filename = "unknown" ):
 		ErrFile.__init__(self)
 
-		self.setMessage( self.obj.tr( "Deletion not successful." ) )
-		self.setDescription( self.obj.tr( "File {} could not be deleted.".format(filename ) ))
+		self.message = self.obj.tr( "Deletion not successful." ) 
+		self.description = self.obj.tr( "File {} could not be deleted.".format(filename ) )
 
 
 
@@ -178,8 +216,8 @@ class ErrXml(Err):
 	def __init__(self, error = "unknown" ):
 		Err.__init__(self)
 
-		self.setMessage( self.obj.tr( "XML-Problem." ) )
-		self.setDescription( self.obj.tr( "{}".format(error ) ))
+		self.message = self.obj.tr( "XML-Problem." ) 
+		self.description = self.obj.tr( "{}".format(error ) )
 
 
 class ErrXmlParsing(ErrXml):
@@ -192,8 +230,8 @@ class ErrXmlParsing(ErrXml):
 	def __init__(self, fileName = "unknown", error = "unknown" ):
 		ErrXml.__init__(self)
 
-		self.setMessage( self.obj.tr( "XML-Parsing raised error." ) )
-		self.setDescription( self.obj.tr( "While trying to parse the XML-File, the following error was raised: \"{error}\" in file \"{filename}\"".format(filename=fileName, error=error)))
+		self.message = self.obj.tr( "XML-Parsing raised error." ) 
+		self.description = self.obj.tr( "While trying to parse the XML-File, the following error was raised: \"{error}\" in file \"{filename}\"".format(filename=fileName, error=error))
 
 
 class ErrXmlVersion(ErrXml):
@@ -204,8 +242,8 @@ class ErrXmlVersion(ErrXml):
 	def __init__(self, expected = "unknown", got = "unknown" ):
 		ErrXml.__init__(self)
 
-		self.setMessage( self.obj.tr( "Wrong XML-Version." ) )
-		self.setDescription( self.obj.tr( "Got {} but expected was {}".format(got, expected)))
+		self.message = self.obj.tr( "Wrong XML-Version." ) 
+		self.description = self.obj.tr( "Got {} but expected was {}".format(got, expected))
 
 
 class ErrXmlOldVersion(ErrXmlVersion):
@@ -216,8 +254,8 @@ class ErrXmlOldVersion(ErrXmlVersion):
 	def __init__(self, expected = "unknown", got = "unknown" ):
 		ErrXmlVersion.__init__(self)
 
-		self.setMessage( self.obj.tr( "Old Version." ) )
-		self.setDescription( self.obj.tr( "Got {} but expected was {}".format(got, expected)))
+		self.message = self.obj.tr( "Old Version." ) 
+		self.description = self.obj.tr( "Got {} but expected was {}".format(got, expected))
 
 
 class ErrXmlTooOldVersion(ErrXmlOldVersion):
@@ -230,34 +268,56 @@ class ErrXmlTooOldVersion(ErrXmlOldVersion):
 	def __init__(self, expected = "unknown", got = "unknown" ):
 		ErrXmlOldVersion.__init__(self)
 
-		self.setMessage( self.obj.tr( "Too old Version." ) )
-		self.setDescription( self.obj.tr( "Got {} but expected was {}".format(got, expected)))
+		self.message = self.obj.tr( "Too old Version." ) 
+		self.description = self.obj.tr( "Got {} but expected was {}".format(got, expected))
 
 
 #eSpecies::eSpecies() : Exception() {
-	#setMessage( self.obj.tr( "Character Species Problem" ) );
-	#setDescription( self.obj.tr( "There is a problem with a character species." ) );
+	#"""
+	#@brief Ausnahme, falls Fehler bei den Spezies auftritt.
+	#"""
+
+	#message = self.obj.tr( "Character Species Problem" )
+	#description = self.obj.tr( "There is a problem with a character species." )
 #}
 
 #eSpeciesNotExisting::eSpeciesNotExisting( cv_Species::SpeciesFlag species ) : eSpecies() {
-	#setMessage( self.obj.tr( "Character Species Problem" ) );
-	#setDescription( self.obj.tr( "Species %1 is missing." ).arg( species ) );
+	#"""
+	#@brief Ausnahme, falls eine spezifizierte Spezies nicht existiert.
+
+	#Die erwartete Spezies wurde nicht gefunden.
+	#"""
+
+	#message = self.obj.tr( "Character Species Problem" )
+	#description = self.obj.tr( "Species %1 is missing." ).arg( species )
 #}
 
 #eSpeciesNotExisting::eSpeciesNotExisting() : eSpecies() {
-	#setMessage( self.obj.tr( "Character Species Problem" ) );
-	#setDescription( self.obj.tr( "Species is missing." ) );
+	#"""
+	#
+	#"""
+
+	#message = self.obj.tr( "Character Species Problem" )
+	#description = self.obj.tr( "Species is missing." )
 #}
 
 
 #eGender::eGender() : Exception() {
-	#setMessage( self.obj.tr( "Gender Problem" ) );
-	#setDescription( self.obj.tr( "There is a problem with the gender of the character." ) );
+	#"""
+	#@brief Ausnahme, falls Fehler bei den Geschlechtern auftritt.
+	#"""
+
+	#message = self.obj.tr( "Gender Problem" )
+	#description = self.obj.tr( "There is a problem with the gender of the character." )
 #}
 
 #eGenderNotExisting::eGenderNotExisting( cv_Identity::Gender gen ) : eGender() {
-	#setMessage( self.obj.tr( "Character Gender Problem" ) );
-	#setDescription( self.obj.tr( "Gender %1 does not exist." ).arg( gen ) );
+	#"""
+	#@brief Ausnahme, falls das spezifizierte Geschlecht nicht existiert.
+	#"""
+
+	#message = self.obj.tr( "Character Gender Problem" )
+	#description = self.obj.tr( "Gender %1 does not exist." ).arg( gen )
 #}
 
 
@@ -269,18 +329,30 @@ class ErrTrait(Err):
 	def __init__(self):
 		Err.__init__(self)
 		
-		self.setMessage( self.obj.tr( "Character Trait Problem" ) )
-		self.setDescription( self.obj.tr( "There is a problem with a character trait." ) )
+		self.message = self.obj.tr( "Character Trait Problem" )
+		self.description = self.obj.tr( "There is a problem with a character trait." )
 
 
 #eTraitNotExisting::eTraitNotExisting() : eTrait() {
-	#setMessage( self.obj.tr( "Character Trait Problem" ) );
-	#setDescription( self.obj.tr( "Trait is missing." ) );
+	#"""
+	#@brief Ausnahme, falls eine spezifizierte Eigenscahft nicht existiert.
+
+	#Die erwartete Charaktereigenschaft wurde nicht gefunden.
+	#"""
+
+	#message = self.obj.tr( "Character Trait Problem" )
+	#description = self.obj.tr( "Trait is missing." )
 #}
 
 #eTraitCategory::eTraitCategory( cv_AbstractTrait::Category category ) : eTrait() {
-	#setMessage( self.obj.tr( "Category of a Trait not valid" ) );
-	#setDescription( self.obj.tr( "The Category %1 is not valid at this point." ).arg( QString::number( category ) ) );
+	#"""
+	#@brief Ausnahme, falls eine falsche Kategorie genutzt wird.
+
+	#Die Kategorie exitiert nicht oder hat an dieser Stelle keine Gültigkeit.
+	#"""
+
+	#message = self.obj.tr( "Category of a Trait not valid" )
+	#description = self.obj.tr( "The Category %1 is not valid at this point." ).arg( QString::number( category ) )
 #}
 
 class ErrTraitType(ErrTrait):
@@ -291,58 +363,104 @@ class ErrTraitType(ErrTrait):
 		def __init__(self, expected, got):
 			ErrTrait.__init__(self)
 			
-			self.setMessage( self.obj.tr( "Type of a Trait not valid" ) )
+			self.message = self.obj.tr( "Type of a Trait not valid" )
 			typ = expected
 			if type(expected) == list:
 				typ = ", ".join(expected[:-1])
 				typ += " or "
 				typ += expected[-1]
 
-			self.setDescription( self.obj.tr( "Expected Trait of type {}, but got type {}, which is not valid at this point.".format(typ, got) ) )
+			self.description = self.obj.tr( "Expected Trait of type {}, but got type {}, which is not valid at this point.".format(typ, got) ) 
 
 
 #ePrint::ePrint() : Exception() {
-	#setMessage( self.obj.tr( "Printing Problem" ) );
-	#setDescription( self.obj.tr( "There is a problem while trying to print the character sheet." ) );
+	#"""
+	#@brief Ausnahme, falls beim Audrucken ein Fehler entsteht.
+
+	#Ein unspezifizierter Fehler beim Ausdruck ist aufgetreten.
+	#"""
+
+	#message = self.obj.tr( "Printing Problem" )
+	#description = self.obj.tr( "There is a problem while trying to print the character sheet." )
 #}
 
 #eTraitsExceedSheetCapacity::eTraitsExceedSheetCapacity( cv_AbstractTrait::Type type, int maxNumber ) : ePrint() {
-	#setMessage( self.obj.tr( "Too many %1 to print on character sheet." ).arg( cv_AbstractTrait::toString( type, true ) ) );
-	#setDescription( self.obj.tr( "Trying to print too many %1. The character sheet hat only room for %2" ).arg( cv_AbstractTrait::toString( type, true ) ).arg( maxNumber ) );
+	#"""
+	#@brief Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.
+
+	#Aufgrund vorgefertigter Charakterbögen können je nach Typ nur eine gewissen Anzahl der entsprechenden Eigenschaften darauf aufgebracht werden. Stehen im Generator mehr dieser Eigenschaften, als gedruckt werden können, tritt diese Ausnahme auf.
+	#"""
+
+	#message = self.obj.tr( "Too many %1 to print on character sheet." ).arg( cv_AbstractTrait::toString( type, true ) )
+	#description = self.obj.tr( "Trying to print too many %1. The character sheet hat only room for %2" ).arg( cv_AbstractTrait::toString( type, true ) ).arg( maxNumber )
 #}
 
 #eValueExceedsSheetCapacity::eValueExceedsSheetCapacity( int value, QString name ) : ePrint() {
-	#setMessage( self.obj.tr( "A value exceeds the capacity of the Charactersheet." ) );
-	#setDescription( self.obj.tr( "The character sheet has no room for %1 %2" ).arg( QString::number( value ) ).arg( name ) );
+	#"""
+	#@brief Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll.
+
+	#Aufgrund vorgefertigter Charakterbögen können gewisse Teiel des charkaters nicht in beliebiger Höhe dargestellt werden.
+	#"""
+
+	#message = self.obj.tr( "A value exceeds the capacity of the Charactersheet." )
+	#description = self.obj.tr( "The character sheet has no room for %1 %2" ).arg( QString::number( value ) ).arg( name )
 #}
 
 
 #eEntry::eEntry() : Exception() {
-	#setMessage( self.obj.tr( "Entry Problem." ) );
-	#setDescription( self.obj.tr( "There is a problem with an expected Input." ) );
+	#"""
+	#@brief Ausnahme, falls Fehler bei einer Eingabe auftreten.
+
+	#Falsche oder Fehlende Eingabe führt zu dieser Ausnahme.
+	#"""
+
+	#message = self.obj.tr( "Entry Problem." )
+	#description = self.obj.tr( "There is a problem with an expected Input." )
 #}
 
 #eUserEntry::eUserEntry() : eEntry() {
-	#setMessage( self.obj.tr( "User Entry Problem." ) );
-	#setDescription( self.obj.tr( "There is a problem with an expected User Input." ) );
+	#"""
+	#@brief Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.
+	#"""
+
+	#message = self.obj.tr( "User Entry Problem." )
+	#description = self.obj.tr( "There is a problem with an expected User Input." )
 #}
 
 #eMissingUserEntry::eMissingUserEntry() : eUserEntry() {
-	#setMessage( self.obj.tr( "Missing User Entry." ) );
-	#setDescription( self.obj.tr( "An expected User Input is missing." ) );
+	#"""
+	#@brief Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.
+	
+	#Fehlende Benutzereingabe führt zu dieser Ausnahme.
+	#"""
+
+	#message = self.obj.tr( "Missing User Entry." )
+	#description = self.obj.tr( "An expected User Input is missing." )
 #}
 
 
 #eWerewolfShape::eWerewolfShape() {
-	#setMessage( self.obj.tr( "Problem with werewolf shape." ) );
-	#setDescription( self.obj.tr( "A Probklem regarding a shape of the werewolf has occured." ) );
+	#"""
+	#@brief Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.
+	#"""
+
+	#message = self.obj.tr( "Problem with werewolf shape." )
+	#description = self.obj.tr( "A Probklem regarding a shape of the werewolf has occured." )
 #}
 #eWerewolfShapeNotExisting::eWerewolfShapeNotExisting( cv_Shape::WerewolfShape shape ): eWerewolfShape() {
-	#setMessage( self.obj.tr( "Shape not existing." ) );
-	#setDescription( self.obj.tr( "The chosen Shape %1 does not exist." ).arg( shape ) );
+	#"""
+	#@brief Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.
+	#"""
+
+	#message = self.obj.tr( "Shape not existing." )
+	#description = self.obj.tr( "The chosen Shape %1 does not exist." ).arg( shape )
 #}
 #eWerewolfShapeNotExisting::eWerewolfShapeNotExisting( QString shape ): eWerewolfShape() {
-	#setMessage( self.obj.tr( "Shape not existing." ) );
-	#setDescription( self.obj.tr( "The chosen Shape %1 does not exist." ).arg( shape ) );
+	#"""
+	#
+	#"""
+
+	#message = self.obj.tr( "Shape not existing." )
+	#description = self.obj.tr( "The chosen Shape %1 does not exist." ).arg( shape )
 #}
 
