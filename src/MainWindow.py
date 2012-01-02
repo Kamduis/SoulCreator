@@ -133,14 +133,15 @@ class MainWindow(QMainWindow):
 		self.__readCharacter = ReadXmlCharacter(self.__character)
 		self.__writeCharacter = WriteXmlCharacter(self.__character)
 
-		self.ui.pushButton_next.clicked.connect(self.tabNext)
-		self.ui.pushButton_previous.clicked.connect(self.tabPrevious)
+		self.ui.pushButton_next.clicked.connect(self.ui.selectWidget_select.selectNext)
+		self.ui.pushButton_previous.clicked.connect(self.ui.selectWidget_select.selectPrevious)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.ui.stackedWidget_traits.setCurrentIndex)
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( setTabButtonState( int ) ) );
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
 		self.populateUi()
 		self.activate()
+		self.reset()
 
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( showCreationPoints( int ) ) );
 
@@ -268,10 +269,6 @@ class MainWindow(QMainWindow):
 					if Config.powerstatIdentifier in meritPrerequisites:
 						self.__character.powerstatChanged.connect(merit.checkPrerequisites)
 
-		self.__character.resetCharacter()
-		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.
-		self.__character.setModified(False)
-
 		#creation = new Creation( self );
 		#// Schreibe die übrigen Erschaffungspunkte
 		#connect( creation, SIGNAL( pointsChanged() ), self, SLOT( showCreationPoints() ) );
@@ -279,53 +276,16 @@ class MainWindow(QMainWindow):
 		#connect( creation, SIGNAL( pointsNegative( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsNegative( cv_AbstractTrait.Type ) ) );
 		#connect( creation, SIGNAL( pointsPositive( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsPositive( cv_AbstractTrait.Type ) ) );
 
-		#self.__character.setSpecies( cv_Species.Human );
 
-		#// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
-		#QList< Trait* >* list = self.__character.traits();
-		#for ( int i = 0; i < list.count(); ++i ) {
-			#int valueOld = self.__character.traits().at( i ).value();
-			#list.at( i ).setValue( 10 );
-			#list.at( i ).clearDetails();
+	def reset(self):
+		self.__character.resetCharacter()
+		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.
+		self.__character.setModified(False)
 
-			#// Eine Änderung der Eigenschaften sorgt dafür, daß sich die verfügbaren Erschaffungspunkte verändern.
-			#if ( Creation.types().contains( list.at( i ).type() ) ) {
-				#connect( list.at( i ), SIGNAL( traitChanged( Trait* ) ), creation, SLOT( calcPoints( Trait* ) ) );
-			#}
+		# Wir wollen zu Beginn immer die Informationen sehen.
+		self.ui.selectWidget_select.setCurrentRow(0)
 
 
-			#// Löschen der Zeigerliste
-			#list.at( i ).clearPrerequisitePtrs();
-
-			#for ( int j = 0; j < list.count(); ++j ) {
-				#// Erst müssen die Voraussetzungen übersetzt werden, so daß direkt die Adressen im String stehen.
-				#list.at( i ).addPrerequisitePtrs( list.at( j ) );
-			#}
-
-			#// Danach verbinden wir die Signale, aber nur, wenn sie benötigt werden.
-			#if ( !list.at( i ).prerequisitePtrs().isEmpty() ) {
-	#// 			qDebug() << Q_FUNC_INFO << self.__character.traits2().at( i ).prerequisitPtrs();
-
-				#for ( int j = 0; j < list.at( i ).prerequisitePtrs().count(); ++j ) {
-					#connect( list.at( i ).prerequisitePtrs().at( j ), SIGNAL( traitChanged( Trait* ) ), list.at( i ), SLOT( checkPrerequisites( Trait* ) ) );
-				#}
-			#}
-
-			#// Alten Wert wiederherstellen.
-			#list.at( i ).setValue( valueOld );
-		#}
-
-		#// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
-		#self.__character.setSpecies( cv_Species.Human );
-
-		#// Virtue und Vice müssen auch initial einmal festgelegt werden.
-		#self.__character.setVirtue( storage.virtueNames( cv_Trait.Adult ).at( 0 ) );
-
-		#self.__character.setVice( storage.viceNames( cv_Trait.Adult ).at( 0 ) );
-
-		#// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
-		#self.__character.setModified( false );
-	#}
 
 
 #void MainWindow.showSettingsDialog() {
@@ -390,31 +350,6 @@ class MainWindow(QMainWindow):
 #// 		}
 #// 	}
 #}
-
-
-	def tabPrevious(self):
-		if ( self.ui.stackedWidget_traits.currentIndex() > 0 ):
-			self.ui.stackedWidget_traits.setCurrentIndex( self.ui.stackedWidget_traits.currentIndex() - 1 )
-
-			#if ( not self.ui.selectWidget_select.item( self.ui.stackedWidget_traits.currentIndex() ).flags().testFlag(Qt.ItemIsEnabled) ):
-			if ( not self.ui.selectWidget_select.item( self.ui.stackedWidget_traits.currentIndex() ).flags() & Qt.ItemIsEnabled ):
-				if ( self.ui.stackedWidget_traits.currentIndex() > 0 ):
-					tabPrevious()
-				else:
-					tabNext()
-
-
-	def tabNext(self):
-		if ( self.ui.stackedWidget_traits.currentIndex() < self.ui.stackedWidget_traits.count() - 1 ):
-			self.ui.stackedWidget_traits.setCurrentIndex( self.ui.stackedWidget_traits.currentIndex() + 1 )
-
-			# Ist die neue Seite disabled, müssen wir noch eine Seite weiter springen.
-			#if ( not self.ui.selectWidget_select.item( self.ui.stackedWidget_traits.currentIndex() ).flags().testFlag( Qt.ItemIsEnabled ) ):
-			if ( not self.ui.selectWidget_select.item( self.ui.stackedWidget_traits.currentIndex() ).flags() & Qt.ItemIsEnabled ):
-				if ( self.ui.stackedWidget_traits.currentIndex() < self.ui.stackedWidget_traits.count() - 1 ):
-					tabNext()
-				else:
-					tabPrevious()
 
 
 #void MainWindow.selectSelectorItem( int idx ) {

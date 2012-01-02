@@ -128,7 +128,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 							"powerstat": self.attributes().value( "powerstat" ),
 							"fuel": self.attributes().value( "fuel" ),
 						}
-						Debug.debug("Spezies {} gefunden.".format(speciesData["name"]))
+						#Debug.debug("Spezies {} gefunden.".format(speciesData["name"]))
 
 						# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
 						self.__storage.appendSpecies( speciesData )

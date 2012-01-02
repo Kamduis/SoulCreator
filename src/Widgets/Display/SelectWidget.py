@@ -26,6 +26,7 @@ from PySide.QtCore import Qt, QSize
 from PySide.QtGui import QListWidget, QListWidgetItem, QIcon
 
 from src.Config import Config
+from src.Debug import Debug
 
 from resources import rc_resource
 
@@ -57,3 +58,28 @@ class SelectWidget(QListWidget):
 		self.setIconSize(Config.selectIconSize)
 
 		self.setMaximumWidth(Config.selectWidgetWidth)
+
+
+	def selectPrevious(self):
+		if ( self.currentRow() > 0 ):
+			self.setCurrentRow( self.currentRow() - 1 )
+
+			#if ( not self.item( self.currentRow() ).flags().testFlag(Qt.ItemIsEnabled) ):
+			if ( not self.item( self.currentRow() ).flags() & Qt.ItemIsEnabled ):
+				if ( self.currentRow() > 0 ):
+					self.selectPrevious()
+				else:
+					self.selectNext()
+
+
+	def selectNext(self):
+		if ( self.currentRow() < self.count() - 1 ):
+			self.setCurrentRow( self.currentRow() + 1 )
+
+			# Ist die neue Seite disabled, müssen wir noch eine Seite weiter springen.
+			#if ( not self.item( self.currentRow() ).flags().testFlag( Qt.ItemIsEnabled ) ):
+			if ( not self.item( self.currentRow() ).flags() & Qt.ItemIsEnabled ):
+				if ( self.currentRow() < self.count() - 1 ):
+					self.selectNext()
+				else:
+					self.selectPrevious()
