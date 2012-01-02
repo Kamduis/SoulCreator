@@ -510,7 +510,7 @@ class StorageCharacter(QObject):
 
 		return self.__powerstat
 
-	def __setPowerstat( self, value ):
+	def setPowerstat( self, value ):
 		"""
 		Verändert den Wert des Super-Attributs.
 		
@@ -521,7 +521,7 @@ class StorageCharacter(QObject):
 			self.__powerstat = value
 			self.powerstatChanged.emit( value )
 
-	powerstat = property(__getPowerstat, __setPowerstat)
+	powerstat = property(__getPowerstat, setPowerstat)
 
 
 	def __getMorality(self):
@@ -587,7 +587,7 @@ class StorageCharacter(QObject):
 		self.__identity.reset()
 
 		# Standardspezies ist der Mensch.
-		self.species = self.__storage.species[0]["name"]
+		self.species = Config.initialSpecies
 
 		#Debug.debug(self.__storage.virtues[0])
 		#Debug.debug(self.__storage.virtues[0]["name"])

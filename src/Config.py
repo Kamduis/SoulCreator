@@ -136,6 +136,9 @@ class Config():
 	## Die Schriftart, welche für das Programm verwendet wird.
 	#QFont Config::windowFont = QFont()
 
+	## Standardspezies eines neuen Charakters
+	initialSpecies = "Human"
+
 	## Das Standardalter eines neuen Charakters
 	initialAge = 21
 

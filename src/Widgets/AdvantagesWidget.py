@@ -31,6 +31,7 @@ from src.Config import Config
 #from src import Error
 from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Widgets.Components.TraitDots import TraitDots
+from src.Widgets.Components.Squares import Squares
 from src.Debug import Debug
 
 
@@ -158,28 +159,29 @@ class AdvantagesWidget(QWidget):
 		self.__layout.addLayout( self.__layoutSuperDots )
 
 
-	#labelFuel = QLabel( self.tr( "Fuel" ) );
-	#labelFuel.setAlignment( Qt::AlignHCenter );
+		self.__labelFuel = QLabel( self.tr( "Fuel" ) )
+		self.__labelFuel.setAlignment( Qt.AlignHCenter )
 
-	#QHBoxLayout* layoutFuelSquares = QHBoxLayout();
+		self.__layoutFuelSquares = QHBoxLayout()
 
-	#squaresFuel = Squares();
-	#squaresFuel.setColumnMax( 10 );
-	#squaresFuel.setMaximum( storage.fuelMax( character.species(), character.superTrait() ) );
+		self.__squaresFuel = Squares()
+		self.__squaresFuel.columnMax = 10
+		#self.__squaresFuel.maximum = self.__storage.fuelMax( self.__character.species, self.__character.powerstat )
+		self.__squaresFuel.maximum = 0
 
-	#fuelPerTurn = QLabel( self.tr( "1" ) );
-	#fuelPerTurn.setAlignment( Qt::AlignCenter );
+		self.__fuelPerTurn = QLabel( self.tr( "1" ) )
+		self.__fuelPerTurn.setAlignment( Qt.AlignCenter )
 
-	#layoutFuelSquares.addWidget( squaresFuel );
-	#layoutFuelSquares.addStretch();
-	#layoutFuelSquares.addWidget( fuelPerTurn );
+		self.__layoutFuelSquares.addWidget( self.__squaresFuel )
+		self.__layoutFuelSquares.addStretch()
+		self.__layoutFuelSquares.addWidget( self.__fuelPerTurn )
 
-	#layout.addSpacing( Config::traitCategorySpace );
+		self.__layout.addSpacing( Config.traitCategorySpace )
 
-	#layout.addWidget( labelFuel );
-	#layout.addLayout( layoutFuelSquares );
+		self.__layout.addWidget( self.__labelFuel )
+		self.__layout.addLayout( self.__layoutFuelSquares )
 
-	#layout.addStretch();
+		self.__layout.addStretch()
 
 	#connect( calcAdvantages, SIGNAL( sizeChanged( int ) ), self, SLOT( writeSize( int ) ) );
 	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( writeSize( cv_Species::SpeciesFlag ) ) );
@@ -196,14 +198,12 @@ class AdvantagesWidget(QWidget):
 #// 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), self, SLOT( changeSuper( cv_Trait ) ) );
 #// 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), self, SLOT( emitSuperChanged( int ) ) );
 #// 	connect( self, SIGNAL( superChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
-	#connect( dotsSuper, SIGNAL( valueChanged( int ) ), character, SLOT( setSuperTrait( int ) ) );
-	#connect( character, SIGNAL( superTraitChanged( int ) ), dotsSuper, SLOT( setValue( int ) ) );
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( hideSuper( cv_Species::SpeciesFlag ) ) );
-	#connect( character, SIGNAL( superTraitChanged( int ) ), self, SLOT( setFuelMaximum( int ) ) );
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( setFuelMaximum( cv_Species::SpeciesFlag ) ) );
-
-	#dotsSuper.setValue( Config::superTraitDefaultValue );
-#}
+		self.__dotsSuper.valueChanged.connect(self.__character.setPowerstat)
+		self.__character.powerstatChanged.connect(self.__dotsSuper.setValue)
+		self.__character.powerstatChanged.connect(self.setFuel)
+		self.__character.speciesChanged.connect(self.setFuel)
+		self.__character.speciesChanged.connect(self.renamePowerstatHeading)
+		self.__character.speciesChanged.connect(self.hideSuper)
 
 
 #void AdvantagesWidget::writeSize( int size ) {
@@ -317,59 +317,42 @@ class AdvantagesWidget(QWidget):
 	#dotsHealth.setValue( value );
 #}
 
-#void AdvantagesWidget::hideSuper( cv_Species::SpeciesFlag species ) {
-	"""
+	def hideSuper( self, species ):
+		"""
 
-	"""
+		"""
 
-	#if ( species == cv_Species::Human ) {
-		#labelSuper.setHidden( true );
-		#dotsSuper.setHidden( true );
+		if ( species == Config.initialSpecies ):
+			self.__labelSuper.setHidden( True )
+			self.__dotsSuper.setHidden( True )
 
-		#labelFuel.setHidden( true );
-		#squaresFuel.setHidden( true );
-		#fuelPerTurn.setHidden( true );
-	#} else {
-		#labelSuper.setHidden( false );
-		#dotsSuper.setHidden( false );
+			self.__labelFuel.setHidden( True )
+			self.__squaresFuel.setHidden( True )
+			self.__fuelPerTurn.setHidden( True )
+		else:
+			self.__labelSuper.setHidden( False )
+			self.__dotsSuper.setHidden( False )
 
-		#labelFuel.setHidden( false );
-		#squaresFuel.setHidden( false );
-		#fuelPerTurn.setHidden( false );
+			self.__labelFuel.setHidden( False )
+			self.__squaresFuel.setHidden( False )
+			self.__fuelPerTurn.setHidden( False )
 
-		#for ( int i = 0; i < storage.species().count(); ++i ) {
-			#if ( cv_Species::toSpecies( storage.species().at( i ).name ) == species ) {
-				#labelSuper.setText( storage.species().at( i ).supertrait );
-				#labelFuel.setText( storage.species().at( i ).fuel );
-			#}
-		#}
 
-	#}
-#}
+	def renamePowerstatHeading(self, species):
+		self.__labelSuper.setText( self.__storage.powerstatName(species) )
+		self.__labelFuel.setText( self.__storage.fuelName(species) )
 
-#void AdvantagesWidget::setFuelMaximum( cv_Species::SpeciesFlag species ) {
-	"""
 
-	"""
+	def setFuel( self ):
+		"""
+		Diese Funktion paßt das Maximum der Charakterenergie an, wenn sich die Spezies oder der Powerstat-Wert des Charakters ändert.
+		"""
 
-	#int maximum = storage.fuelMax( species, character.superTrait() );
-	#squaresFuel.setMaximum( maximum );
+		maximum = self.__storage.fuelMax( self.__character.species, self.__character.powerstat )
+		self.__squaresFuel.maximum = maximum
 
-	#int perTurn = storage.fuelPerTurn( species, character.superTrait() );
-	#fuelPerTurn.setText( self.tr( "%1/Turn" ).arg( perTurn ) );
-#}
-
-#void AdvantagesWidget::setFuelMaximum( int value ) {
-	"""
-
-	"""
-
-	#int maximum = storage.fuelMax( character.species(), value );
-	#squaresFuel.setMaximum( maximum );
-
-	#int perTurn = storage.fuelPerTurn( character.species(), value );
-	#fuelPerTurn.setText( self.tr( "%1/Turn" ).arg( perTurn ) );
-#}
+		perTurn = self.__storage.fuelPerTurn( self.__character.species, self.__character.powerstat )
+		self.__fuelPerTurn.setText( self.tr( "{}/Turn".format( perTurn ) ))
 
 
 #void AdvantagesWidget::setArmor(){
