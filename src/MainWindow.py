@@ -42,6 +42,7 @@ from Widgets.SkillWidget import SkillWidget
 from Widgets.Specialties import Specialties
 from Widgets.MeritWidget import MeritWidget
 from Widgets.MoralityWidget import MoralityWidget
+from Widgets.AdvantagesWidget import AdvantagesWidget
 from Widgets.Dialogs.MessageBox import MessageBox
 from Debug import Debug
 
@@ -206,7 +207,7 @@ class MainWindow(QMainWindow):
 		morality = MoralityWidget( self.__storage, self.__character, self )
 		#powers = new PowerWidget( self );
 		#flaws = new FlawWidget( self );
-		#advantages = new AdvantagesWidget( self );
+		advantages = AdvantagesWidget( self.__storage, self.__character, self )
 
 		self.ui.layout_info.addWidget( info )
 		self.ui.layout_attributes.addWidget( attributes )
@@ -216,7 +217,7 @@ class MainWindow(QMainWindow):
 		self.ui.layout_morality.addWidget( morality )
 		#ui.layout_powers.addWidget( powers );
 		#ui.layout_flaws.addWidget( flaws );
-		#ui.layout_advantages.addWidget( advantages );
+		self.ui.layout_advantages.addWidget( advantages )
 
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
 		info.nameChanged.connect(self.setTitle)

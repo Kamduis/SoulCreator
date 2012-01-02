@@ -70,7 +70,7 @@ class Config():
 	vSpace = 5
 	
 	## Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
-	#const int Config::traitCategorySpace = 10
+	traitCategorySpace = 10
 	
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
 	traitMultipleMax = 3
@@ -87,7 +87,7 @@ class Config():
 	inlineWidgetHeightMax = 18
 
 	## Die Breite der Armor-Spinboxes.
-	#const int Config::spinBoxNoTextWidth = 30
+	spinBoxNoTextWidth = 30
 
 	## Die Breite einer einfachen vertikalen Eigenschaftsliste.
 	#const int Config::traitVerticalListWidth = 300
@@ -105,13 +105,13 @@ class Config():
 	moralityTraitDefaultValue = 7
 
 	## Höchstwert der Willenskraft.
-	#const int Config::willpowerMax = 10
+	willpowerMax = 10
 
 	## Mindestwert der besonderen übernatürlichen Eigenschaft.
-	#const int Config::powerstatMin = 1
+	powerstatMin = 1
 
 	## Höchstwert der besonderen übernatürlichen Eigenschaft.
-	#const int Config::powerstatMax = 10
+	powerstatMax = 10
 
 	## Startwert der besonderen übernatürlichen Eigenschaft.
 	powerstatDefaultValue = 1
