@@ -6,7 +6,7 @@
 
 \section License
 
-Copyright (C) 2011 by Victor von Rhein
+Copyright (C) Victor von Rhein, 2011, 2012
 
 This file is part of SoulCreator.
 
@@ -39,8 +39,9 @@ from Storage.StorageTemplate import StorageTemplate
 from Widgets.InfoWidget import InfoWidget
 from Widgets.AttributeWidget import AttributeWidget
 from Widgets.SkillWidget import SkillWidget
-from Widgets.MeritWidget import MeritWidget
 from Widgets.Specialties import Specialties
+from Widgets.MeritWidget import MeritWidget
+from Widgets.MoralityWidget import MoralityWidget
 from Widgets.Dialogs.MessageBox import MessageBox
 from Debug import Debug
 
@@ -136,7 +137,7 @@ class MainWindow(QMainWindow):
 		self.ui.pushButton_next.clicked.connect(self.ui.selectWidget_select.selectNext)
 		self.ui.pushButton_previous.clicked.connect(self.ui.selectWidget_select.selectPrevious)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.ui.stackedWidget_traits.setCurrentIndex)
-	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( setTabButtonState( int ) ) );
+		self.ui.selectWidget_select.currentRowChanged.connect(self.setTabButtonState)
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
 		self.populateUi()
@@ -168,6 +169,10 @@ class MainWindow(QMainWindow):
 
 
 	def storeTemplateData(self):
+		"""
+		In dieser Funktion werden die Template-Daten aus den XML-Dateien ausgelesen und gespeichert, um damit zu einem späteren Zeitpunkt die GUI füllen zu können.
+		"""
+		
 		reader = ReadXmlTemplate(self.__storage)
 
 		#connect( &reader, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
@@ -183,6 +188,10 @@ class MainWindow(QMainWindow):
 
 
 	def populateUi(self):
+		"""
+		Die Graphische Oberfläche wird bevölkert.
+		"""
+		
 		#// Funktioniert nicht richtig.
 		#// 	// Bevor wir alles in der GUI anzeigen, wollen wir ersteinmal eine alphabetische Reihefolge garantieren.
 		#// 	// Ich weiß nicht, ob das bei den Attributen so gut ist.
@@ -194,9 +203,9 @@ class MainWindow(QMainWindow):
 		specialties = Specialties( self.__storage.traits["Skill"], self )
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 		merits = MeritWidget( self.__storage, self.__character, self )
-		#flaws = new FlawWidget( self );
-		#morality = new MoralityWidget( self );
+		morality = MoralityWidget( self.__storage, self.__character, self )
 		#powers = new PowerWidget( self );
+		#flaws = new FlawWidget( self );
 		#advantages = new AdvantagesWidget( self );
 
 		self.ui.layout_info.addWidget( info )
@@ -204,7 +213,7 @@ class MainWindow(QMainWindow):
 		self.ui.layout_skills.addWidget( skills )
 		self.ui.layout_specialties.addWidget( specialties )
 		self.ui.layout_merits.addWidget( merits )
-		#ui.layout_morality.addWidget( morality );
+		self.ui.layout_morality.addWidget( morality )
 		#ui.layout_powers.addWidget( powers );
 		#ui.layout_flaws.addWidget( flaws );
 		#ui.layout_advantages.addWidget( advantages );
@@ -213,7 +222,7 @@ class MainWindow(QMainWindow):
 		info.nameChanged.connect(self.setTitle)
 
 		#/**
-		#* \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite Händisch festzulegen.
+		#* \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite händisch festzulegen.
 		#**/
 		#ui.frame_merits.setMinimumWidth( Config.traitListVertivalWidth );
 		#ui.frame_merits.setMaximumWidth( self.ui.frame_merits.minimumWidth() );
@@ -289,6 +298,10 @@ class MainWindow(QMainWindow):
 
 
 #void MainWindow.showSettingsDialog() {
+	"""
+	Diese Funktion ruft den Konfigurationsdialog auf und sorgt dafür, daß die änderungen gespeichert oder verworfen werden.
+	"""
+	
 	#SettingsDialog dialog;
 	#if ( dialog.exec() ) {
 		#// Ausführen der veränderten Einstellungen.
@@ -297,9 +310,17 @@ class MainWindow(QMainWindow):
 #}
 
 #void MainWindow.showCharacterTraits() {
+	"""
+	Werte des Charakters auf der Oberfläche anzeigen.
+	"""
+	
 #}
 
 #void MainWindow.showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
+	"""
+	Spezialisierungen einer Fertigkeit anzeigen.
+	"""
+	
 #// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
 
 	#specialties.clear();
@@ -312,6 +333,10 @@ class MainWindow(QMainWindow):
 #}
 
 #void MainWindow.showBackround( cv_Species.SpeciesFlag spec ) {
+	"""
+	Für jede Spezies wird das passende Hintergrundbild angezeigt.
+	"""
+	
 	#if ( spec == cv_Species.Changeling ) {
 		#ui.widget_traits.setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
 	#} else if ( spec == cv_Species.Mage ) {
@@ -353,24 +378,34 @@ class MainWindow(QMainWindow):
 
 
 #void MainWindow.selectSelectorItem( int idx ) {
+	"""
+	Selektiert das zur aktuellen Seite der Eigenschaften zugehörige Symbol in der Auswahlleiste.
+	"""
+	
 	#ui.selectWidget_select.setCurrentItem( self.ui.selectWidget_select.item( idx ) );
 #}
 
-#void MainWindow.setTabButtonState( int index ) {
-	#if ( index < self.ui.stackedWidget_traits.count() - 1 ) {
-		#ui.pushButton_next.setEnabled( true );
-	#} else {
-		#ui.pushButton_next.setEnabled( false );
-	#}
+	def setTabButtonState( self, index ):
+		"""
+		Enabled oder Disabled die Knöpfe, mit denen die Eigenschaften durchgeblättert werden können, je nachdem, ob es noch eine weitere Seite zu Blättern gibt.
+		"""
+		
+		if ( index < self.ui.selectWidget_select.count() - 1 ):
+			self.ui.pushButton_next.setEnabled( True )
+		else:
+			self.ui.pushButton_next.setEnabled( False )
 
-	#if ( index > 0 ) {
-		#ui.pushButton_previous.setEnabled( true );
-	#} else {
-		#ui.pushButton_previous.setEnabled( false );
-	#}
-#}
+		if ( index > 0 ):
+			self.ui.pushButton_previous.setEnabled( True )
+		else:
+			self.ui.pushButton_previous.setEnabled( False )
+
 
 #void MainWindow.showCreationPoints( int idx ) {
+	"""
+	Je nachdem, welches Tab gerade gezeigt wird, müssen die Erschaffungspunkte dargestellt oder versteckt werden.
+	"""
+
 	#ui.label_pointsLeft.setHidden( true );
 #// 	ui.frame_creationPointsSpecialties.setHidden( true );
 
@@ -391,6 +426,12 @@ class MainWindow(QMainWindow):
 #}
 
 #void MainWindow.showCreationPoints() {
+	"""
+	Zeigt die Anzahl der übrigen Punkte bei der Charaktererschaffung an.
+
+	\todo Mit Wirkung versehen.
+	"""
+
 	#if ( self.ui.stackedWidget_traits.currentIndex() == 1 ) {
 		#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Attribute ) );
 	#} else if ( self.ui.stackedWidget_traits.currentIndex() == 2 ) {
@@ -403,6 +444,12 @@ class MainWindow(QMainWindow):
 #}
 
 #void MainWindow.warnCreationPointsDepleted( cv_AbstractTrait.Type type ) {
+	"""
+	Zeigt eine Warnung an, wenn alle Erschafungspunkte vergeben wurden.
+	
+	\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite wieder zur Standardfarbe verändert.
+	"""
+	
 	#if ( type == cv_AbstractTrait.Attribute ) {
 		#ui.selectWidget_select.item( 1 ).setForeground( QColor() );
 	#} else if ( type == cv_AbstractTrait.Skill ) {
@@ -414,6 +461,12 @@ class MainWindow(QMainWindow):
 	#}
 #}
 #void MainWindow.warnCreationPointsPositive( cv_AbstractTrait.Type type ) {
+	"""
+	Zeigt eine Warnung an, wenn nicht alle Erschafungspunkte vergeben wurden.
+	
+	\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite blau eingefärbt.
+	"""
+	
 	#if ( type == cv_AbstractTrait.Attribute ) {
 		#ui.selectWidget_select.item( 1 ).setForeground( Config.pointsPositive );
 	#} else if ( type == cv_AbstractTrait.Skill ) {
@@ -425,6 +478,12 @@ class MainWindow(QMainWindow):
 	#}
 #}
 #void MainWindow.warnCreationPointsNegative( cv_AbstractTrait.Type type ) {
+	"""
+	Zeigt eine Warnung an, wenn zuviele Erschafungspunkte vergeben wurden.
+	
+	\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite rot eingefärbt.
+	"""
+	
 	#if ( type == cv_AbstractTrait.Attribute ) {
 		#ui.selectWidget_select.item( 1 ).setForeground( Config.pointsNegative );
 	#} else if ( type == cv_AbstractTrait.Skill ) {
@@ -438,11 +497,15 @@ class MainWindow(QMainWindow):
 
 
 	def aboutApp(self):
+		"""
+		Zeigt den Informationsdialog für dieses Programm an.
+		"""
+		
 		aboutText = self.tr(
 			"""
 			<h1>{name}</h1>
 			<h2>Version: {version}</h2>
-			<p>Copyright (C) 2011 by Victor von Rhein<br>
+			<p>Copyright (C) Victor von Rhein, 2011, 2012<br>
 			EMail: victor@caern.de</p>
 			<h2>GNU General Public License</h2>
 			<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
@@ -460,6 +523,10 @@ class MainWindow(QMainWindow):
 
 
 	def setTitle( self, name ):
+		"""
+		Fügt den Inhalt des Arguments zum Fenstertitel hinzu.
+		"""
+		
 		titleStr = u"{} {} ({})".format(Config.programName, Config.versionDetail(), name )
 		if not name:
 			titleStr = u"{} {}".format(Config.programName, Config.versionDetail() )
@@ -467,6 +534,10 @@ class MainWindow(QMainWindow):
 
 
 	def newCharacter(self):
+		"""
+		Über diese Funktion wird der Dialog aufgerufen, um einen ganz neuen Charakter zu erstellen.
+		"""
+		
 		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 		if ( self.maybeSave() ):
 			self.__character.resetCharacter()
@@ -476,6 +547,10 @@ class MainWindow(QMainWindow):
 
 
 	def openCharacter(self):
+		"""
+		Über diese Funktion wird der Dialog aufgerufen, um einen gespeicherten Charakter in das Programm laden zu können.
+		"""
+		
 		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 		if ( self.maybeSave() ):
 			#Debug.debug("Open")
@@ -518,6 +593,10 @@ class MainWindow(QMainWindow):
 
 
 	def saveCharacter(self):
+		"""
+		Über diese Funktion wird erst der Dialog aufgerufen zum Aussuchen des Speicherortes und danach dann das Schreiben des Charakters in eine XML-Datei eingeletiet.
+		"""
+		
 		appPath = getPath()
 
 		# Pfad zum Speicherverzeichnis
@@ -561,6 +640,10 @@ class MainWindow(QMainWindow):
 
 
 #void MainWindow.disablePowerItem( cv_Species.SpeciesFlag species ) {
+	"""
+	Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
+	"""
+	
 	#if ( species == cv_Species.Human ) {
 		#ui.selectWidget_select.item( 5 ).setFlags( Qt.NoItemFlags );;
 	#} else {
@@ -570,6 +653,10 @@ class MainWindow(QMainWindow):
 
 
 #void MainWindow.exportCharacter() {
+	"""
+	Diese Funktion druckt den Charakter in ein PDF-Dokument.
+	"""
+	
 #// 	// Vorsicht, eine Abkürzung, die ich nur für das Testen verwenden sollte.
 #// 	shortcut();
 #// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled.pdf";
@@ -620,6 +707,10 @@ class MainWindow(QMainWindow):
 #}
 
 #void MainWindow.printCharacter() {
+	"""
+	Druckt den angezeigten Charakter aus.
+	"""
+	
 	#QPrinter* printer = new QPrinter();
 	#QPrintDialog printDialog( printer, self );
 
@@ -645,7 +736,7 @@ class MainWindow(QMainWindow):
 
 	def writeSettings(self):
 		"""
-		Speichert Größe und Position des Fensters in der Konfigurationsdatei.
+		Speichert die Konfiguration dieses Programms für den nächsten Aufruf.
 		"""
 
 		settings = Settings( "{}/{}".format(getPath(), Config.configFile ))
@@ -686,6 +777,13 @@ class MainWindow(QMainWindow):
 
 
 	def maybeSave(self):
+		"""
+		Fragt nach, ob die Änderungen am Charakter gespeichert werden sollen, ehe sie möglicherweise verloren gehen.
+		
+		Diese Frage tritt auf, wenn der dargestellte Charakter nicht gespeichert ist und ehe das Programm geschlossen werden oder einen neuen Charakter anlegen soll.
+		"""
+		
+		
 		if ( self.__character.isModifed() ):
 			ret = QMessageBox.warning(
 				self, self.tr( "Application" ),
@@ -701,10 +799,18 @@ class MainWindow(QMainWindow):
 
 
 #void MainWindow.raiseExceptionMessage( QString message, QString description ) {
+	"""
+	Ausgabe einer Fehlernachricht.
+	"""
+	
 	#MessageBox.warning( self, tr( "Warning" ), tr( "While opening the file the following problem arised:\n%1\n%2\nIt appears, that the self.__character will be importable, so the process will be continued." ).arg( message ).arg( description ) );
 #}
 
 #void MainWindow.messageEnforcedTraitLimits( cv_AbstractTrait.Type type ) {
+	"""
+	Zeigt eine Nachricht an, daß die Eigenschaftsanzahl das für den Charakterbogen gesetzte Limit übertrifft, und daß alle überzähligen Eigenschaften des mitgegebenen Typs ignoriert werden.
+	"""
+	
 	#MessageBox.warning( self, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_AbstractTrait.toString( type, true ) ) );
 #}
 
