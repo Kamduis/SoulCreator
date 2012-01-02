@@ -607,6 +607,8 @@ class StorageCharacter(QObject):
 					subsubitem.value = val
 					subsubitem.specialties = []
 
+		self.morality = Config.moralityTraitDefaultValue
+
 		# Übernatürliche Eigenschaft festlegen.
 		self.powerstat = Config.powerstatDefaultValue
 

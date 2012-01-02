@@ -74,7 +74,6 @@ class TraitDots(QWidget):
 		self.__minimumSizeY = 8
 		minimumSizeX = self.__minimumSizeY * self.__maximum
 		self.setMinimumSize( minimumSizeX, self.__minimumSizeY)
-		#setMinimumSize(50, 10);
 		self.setSizePolicy( QSizePolicy.Minimum, QSizePolicy.Fixed )
 
 		# Setze Standardfarbe weiß
@@ -82,7 +81,6 @@ class TraitDots(QWidget):
 		self.__colorFull = QColor( 0, 0, 0 )
 		self.__colorFrame = QColor( 0, 0, 0 )
 
-		#connect( self, SIGNAL( maximumChanged( int ) ), self, SLOT( resetMinimumSize( int ) ) );
 		self.maximumChanged.connect(self.resetMinimumSize)
 
 
@@ -118,9 +116,6 @@ class TraitDots(QWidget):
 		painter.setPen( framePen )
 		painter.setBrush( self.__colorFull )
 
-		painter.setPen( framePen )
-		painter.setBrush( self.__colorFull )
-
 		painter.save()
 
 		for i in xrange(self.__value):
@@ -129,11 +124,11 @@ class TraitDots(QWidget):
 	## 		if (v_forbiddenValues.contains(i+1)){
 	## 			painter.drawEllipse(shiftCenter, dotRadius/2, dotRadius/2);
 
-		painter.restore();
+		painter.restore()
 
 		painter.setBrush( self.__colorEmpty )
 
-		painter.save();
+		painter.save()
 
 		for i in range(self.__maximum)[self.__value:]:
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )

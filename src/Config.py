@@ -96,13 +96,13 @@ class Config():
 	#const int Config::traitMax = 5
 
 	## Höchstwert der Moral.
-	#const int Config::moralityTraitMax = 10
+	moralityTraitMax = 10
 
 	## Höchstwert der Moral bei der ein Charakter eine Geistesstörung haben kann.
-	#const int Config::derangementMoralityTraitMax = 7
+	derangementMoralityTraitMax = 7
 
 	## Startwert der Moral.
-	#const int Config::moralityTraitDefaultValue = 7
+	moralityTraitDefaultValue = 7
 
 	## Höchstwert der Willenskraft.
 	#const int Config::willpowerMax = 10
