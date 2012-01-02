@@ -29,7 +29,6 @@ from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QFontMe
 
 from src.Config import Config
 #from src import Error
-from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Widgets.Components.TraitDots import TraitDots
 from src.Widgets.Components.Squares import Squares
 from src.Debug import Debug
@@ -47,8 +46,6 @@ class AdvantagesWidget(QWidget):
 
 		self.__character = character
 		self.__storage = template
-
-		self.__calc = CalcAdvantages( self )
 
 		self.__layout = QVBoxLayout()
 		self.setLayout(self.__layout)
@@ -183,15 +180,9 @@ class AdvantagesWidget(QWidget):
 
 		self.__layout.addStretch()
 
-	#connect( calcAdvantages, SIGNAL( sizeChanged( int ) ), self, SLOT( writeSize( int ) ) );
 	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( writeSize( cv_Species::SpeciesFlag ) ) );
-	#connect( calcAdvantages, SIGNAL( initiativeChanged( int ) ), self, SLOT( writeInitiative( int ) ) );
 	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( writeInitiative(cv_Species::SpeciesFlag)) );
-	#connect( calcAdvantages, SIGNAL( speedChanged( int ) ), self, SLOT( writeSpeed( int ) ) );
 	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( writeSpeed(cv_Species::SpeciesFlag)) );
-	#connect( calcAdvantages, SIGNAL( defenseChanged( int ) ), labelDefenseValue, SLOT( setNum( int ) ) );
-	#connect( calcAdvantages, SIGNAL( healthChanged( int ) ), self, SLOT( printHealth( int ) ) );
-	#connect( calcAdvantages, SIGNAL( willpowerChanged( int ) ), dotsWill, SLOT( setValue( int ) ) );
 	#connect( spinBoxArmorGeneral, SIGNAL(valueChanged(int)), self, SLOT(setArmor()));
 	#connect( spinBoxArmorFirearms, SIGNAL(valueChanged(int)), self, SLOT(setArmor()));
 	#connect( character, SIGNAL( armorChanged(int,int)), self, SLOT( updateArmor( int, int ) ) );
@@ -204,6 +195,31 @@ class AdvantagesWidget(QWidget):
 		self.__character.speciesChanged.connect(self.setFuel)
 		self.__character.speciesChanged.connect(self.renamePowerstatHeading)
 		self.__character.speciesChanged.connect(self.hideSuper)
+
+
+	def setSize(self, value):
+		self.__labelSizeValue.setNum(value)
+
+
+	def setInitiative(self, value):
+		self.__labelInitiativeValue.setNum(value)
+
+
+	def setSpeed(self, value):
+		self.__labelSpeedValue.setNum(value)
+
+
+	def setDefense(self, value):
+		self.__labelDefenseValue.setNum(value)
+
+
+	def setHealth(self, value):
+		self.__dotsHealth.setMaximum(value)
+		self.__dotsHealth.setValue(value)
+
+
+	def setWillpower(self, value):
+		self.__dotsWill.setValue(value)
 
 
 #void AdvantagesWidget::writeSize( int size ) {

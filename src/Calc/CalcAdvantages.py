@@ -24,10 +24,10 @@ from __future__ import division, print_function
 
 #import traceback
 
-from PySide.QtCore import QObject
-#from PySide.QtGui import QWidget#, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
+from PySide.QtCore import QObject, Signal
+#from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
 
-#from src.Config import Config
+from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
 #from src.Widgets.Components.CharaTrait import CharaTrait
@@ -43,23 +43,38 @@ class CalcAdvantages(QObject):
  * Die hier deklarierten Berechnungsfunktionen werden zwar bei der Änderung jeder Eigenschaft aufgerufen, aber berechnen die Werte nur, wenn eine Eigenschaft verändert wurde, welche Einfluß auf das Ergebnis nimmt. Sie geben allerdings immer das Ergebnis der berechnung aus. Entweder den neuen Wert, oder den alten Wert, der in dieser Klasse gespeichert wird.
 	"""
 
-	def __init__(self, parent=None):
+
+	sizeChanged = Signal(int)
+	initiativeChanged = Signal(int)
+	speedChanged = Signal(int)
+	defenseChanged = Signal(int)
+	healthChanged = Signal(int)
+	willpowerChanged = Signal(int)
+
+
+	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
 
-		#self.__character = character
-		#self.__storage = template
+		self.__character = character
 
+		self.__size = 0
+		self.__initiative = 0
+		self.__speed = 0;
+		self.__defense = 0
+		self.__health = 0
+		self.__willpower = 0
 
-#int CalcAdvantages::v_size = 0;
-#int CalcAdvantages::v_initiative = 0;
-#int CalcAdvantages::v_speed = 0;
-#int CalcAdvantages::v_defense = 0;
-#int CalcAdvantages::v_health = 0;
-#int CalcAdvantages::v_willpower = 0;
+		self.__attrWit = self.__character.traits["Attribute"]["Mental"]["Wits"]
+		self.__attrRes = self.__character.traits["Attribute"]["Mental"]["Resolve"]
+		self.__attrStr = self.__character.traits["Attribute"]["Physical"]["Strength"]
+		self.__attrDex = self.__character.traits["Attribute"]["Physical"]["Dexterity"]
+		self.__attrSta = self.__character.traits["Attribute"]["Physical"]["Stamina"]
+		self.__attrCom = self.__character.traits["Attribute"]["Social"]["Composure"]
+		self.__meritGiant = self.__character.traits["Merit"]["Physical"]["Giant"]
+		self.__meritFleetOfFoot = self.__character.traits["Merit"]["Physical"]["Fleet of Foot"]
+		self.__meritFastReflexes = self.__character.traits["Merit"]["Physical"]["Fast Reflexes"]
 
-
-#CalcAdvantages::CalcAdvantages( QObject* parent ) : QObject( parent ) {
-	#construct();
+		self.sizeChanged.connect(self.calcHealth)
 
 	#QList< cv_AbstractTrait::Type > types;
 	#types.append( cv_AbstractTrait::Attribute );
@@ -70,21 +85,21 @@ class CalcAdvantages(QObject):
 	#bool stopLoop = false;
 
 	#for ( int i = 0; i < types.count(); ++i ) {
-		#list = character->traits( types.at( i ) );
+		#list = character.traits( types.at( i ) );
 
 		#for ( int j = 0; j < list.count(); ++j ) {
 			#if ( types.at( i ) == cv_AbstractTrait::Attribute ) {
-				#if ( list.at( j )->name() == "Wits" ) {
+				#if ( list.at( j ).name() == "Wits" ) {
 					#attrWit = list.at( j );
-				#} else if ( list.at( j )->name() == "Resolve" ) {
+				#} else if ( list.at( j ).name() == "Resolve" ) {
 					#attrRes = list.at( j );
-				#} else if ( list.at( j )->name() == "Strength" ) {
+				#} else if ( list.at( j ).name() == "Strength" ) {
 					#attrStr = list.at( j );
-				#} else if ( list.at( j )->name() == "Dexterity" ) {
+				#} else if ( list.at( j ).name() == "Dexterity" ) {
 					#attrDex = list.at( j );
-				#} else if ( list.at( j )->name() == "Stamina" ) {
+				#} else if ( list.at( j ).name() == "Stamina" ) {
 					#attrSta = list.at( j );
-				#} else if ( list.at( j )->name() == "Composure" ) {
+				#} else if ( list.at( j ).name() == "Composure" ) {
 					#attrCom = list.at( j );
 				#}
 
@@ -92,11 +107,11 @@ class CalcAdvantages(QObject):
 					#break;
 				#}
 			#} else if ( types.at( i ) == cv_AbstractTrait::Merit ) {
-				#if ( list.at( j )->name() == "Giant" ) {
+				#if ( list.at( j ).name() == "Giant" ) {
 					#meritGiant = list.at( j );
-				#} else if ( list.at( j )->name() == "Fast Reflexes" ) {
+				#} else if ( list.at( j ).name() == "Fast Reflexes" ) {
 					#meritFastReflexes = list.at( j );
-				#} else if ( list.at( j )->name() == "Fleet of Foot" ) {
+				#} else if ( list.at( j ).name() == "Fleet of Foot" ) {
 					#meritFleetOfFoot = list.at( j );
 				#}
 
@@ -121,21 +136,6 @@ class CalcAdvantages(QObject):
 	#connect( meritFleetOfFoot, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
 	#connect( this, SIGNAL( sizeChanged( int ) ), this, SLOT( calcHealth() ) );
 #}
-
-
-#void CalcAdvantages::construct() {
-	#character = StorageCharacter::getInstance();
-
-	#attrRes = 0;
-	#attrStr = 0;
-	#attrDex = 0;
-	#attrSta = 0;
-	#attrCom = 0;
-	#meritGiant = 0;
-	#meritFleetOfFoot = 0;
-	#meritFastReflexes = 0;
-#}
-
 
 
 #int CalcAdvantages::strength( int str, cv_Shape::WerewolfShape shape ) {
@@ -327,108 +327,88 @@ class CalcAdvantages(QObject):
 #}
 
 
-#int CalcAdvantages::calcSize() {
-	"""
-	Berechnung der Größe des Charakters.
-	
-	\todo Bislang nur vom Merit Size abhängig. Nicht von anderen Merits oder dem Alter (Kinder haben Size = 4).
-	"""
+	def calcSize(self):
+		"""
+		Berechnung der Größe des Charakters.
+		"""
 
-	#int result = 5;
+		result = 5
+		if self.__character.age < Config.adultAge:
+			result -= 1
 
-	#if ( meritGiant->value() > 0 ) {
-		#result += 1;
-	#}
+		if ( self.__meritGiant.value > 0 ):
+			result += 1
 
-	#if ( v_size != result ) {
-		#v_size = result;
-		#emit sizeChanged( result );
-	#}
+		if ( self.__size != result ):
+			self.__size = result
+			self.sizeChanged.emit( result )
 
-	#return v_size;
-#}
 
-#int CalcAdvantages::calcInitiative() {
-	"""
-	Berechnung der Initiative des Charakters.
-	
-	\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig.
-	"""
+	def calcInitiative(self):
+		"""
+		Berechnung der Initiative des Charakters.
 
-	#int result = attrDex->value() + attrCom->value() + meritFastReflexes->value();
+		\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig.
+		"""
 
-	#if ( v_initiative != result ) {
-		#v_initiative = result;
-		#emit initiativeChanged( result );
-	#}
+		result = self.__attrDex.value + self.__attrCom.value + self.__meritFastReflexes.value
 
-	#return v_initiative;
-#}
+		if ( self.__initiative != result ):
+			self.__initiative = result
+			self.initiativeChanged.emit( result )
 
-#int CalcAdvantages::calcSpeed() {
-	"""
-	Berechnung der Geschwindigkeit des Charakters.
-	
-	\todo Bislang nur von Strength und Dexterity abhängig.
-	"""
 
-	#int result = attrStr->value() + attrDex->value() + 5 + meritFleetOfFoot->value();
+	def calcSpeed(self):
+		"""
+		Berechnung der Geschwindigkeit des Charakters.
 
-	#if ( v_speed != result ) {
-		#v_speed = result;
-		#emit speedChanged( result );
-	#}
+		\todo Bislang nur von Strength und Dexterity abhängig.
+		"""
 
-	#return v_speed;
-#}
+		result = self.__attrStr.value + self.__attrDex.value + 5 + self.__meritFleetOfFoot.value;
 
-#int CalcAdvantages::calcDefense() {
-	"""
-	Berechnung der Defense
-	
-	\todo Bislang nicht von der Spezies abhängig. Tiere haben stets das größere von Dex und Wits als Defense.
-	"""
+		if ( self.__speed != result ):
+			self.__speed = result
+			self.speedChanged.emit( result )
 
-	#int result = qMin( attrWit->value(), attrDex->value() );
 
-	#qDebug() << Q_FUNC_INFO << v_defense;
+	def calcDefense(self):
+		"""
+		Berechnung der Defense
 
-	#if ( v_defense != result ) {
-		#v_defense = result;
-		#emit defenseChanged( result );
-	#}
+		\todo Bislang nicht von der Spezies abhängig. Tiere haben stets das größere von Dex und Wits als Defense.
+		"""
 
-	#return v_defense;
-#}
+		result = min( self.__attrWit.value, self.__attrDex.value )
 
-#int CalcAdvantages::calcHealth() {
-	"""
-	Berechnung der Gesundheit.
-	"""
+		if ( self.__defense != result ):
+			self.__defense = result
+			self.defenseChanged.emit( result )
 
-	#int result = attrSta->value() + v_size;
 
-	#if ( v_health != result ) {
-		#v_health = result;
-		#emit healthChanged( result );
-	#}
+	def calcHealth(self):
+		"""
+		Berechnung der Gesundheit.
+		"""
 
-	#return v_health;
-#}
+		result = self.__attrSta.value + self.__size
 
-#int CalcAdvantages::calcWillpower() {
-	"""
-	Berechnung der Willenskraft.
-	"""
+		if ( self.__health != result ):
+			self.__health = result
+			self.healthChanged.emit( result )
 
-	#int result = attrRes->value() + attrCom->value();
 
-	#if ( v_willpower != result ) {
-		#v_willpower = result;
-		#emit willpowerChanged( result );
-	#}
+	def calcWillpower(self):
+		"""
+		Berechnung der Willenskraft.
 
-	#return v_willpower;
-#}
+		\note der Übergebene Wert wird ignoriert. Stattdessen wird alles was man braucht direkt aus dem Charakterspeicher genommen.
+		"""
+
+		result = self.__attrRes.value + self.__attrCom.value
+
+		if ( self.__willpower != result ):
+			self.__willpower = result
+			self.willpowerChanged.emit( result )
 
 

@@ -111,7 +111,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 				except ErrTraitCategory as e:
 					Debug.debug(e.message)
 
-				for subsubitem in self.__character.traits[item][subitem]:
+				for subsubitem in self.__character.traits[item][subitem].values():
 					# Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
 					if ( subsubitem.value != 0 ):
 						self.writeStartElement( "trait" )

@@ -61,15 +61,16 @@ class StorageCharacter(QObject):
 	#
 	# {
 	# 	Typ1: {
-	# 		Kategorie1: [
-	# 			Trait1,
-	# 			Trait2,
+	# 		Kategorie1: {
+	# 			Name1: { "bla": blub, ... }
+	# 			Name2: { "bla": blub, ... }
+	# 			Name3: { "bla": blub, ... }
 	# 			...
-	# 		],
-	# 		Kategorie2: [
-	# 			Trait1,
+	# 		},
+	# 		Kategorie2: {
+	# 			Name1: { "bla": blub, ... }
 	# 			...
-	# 		],
+	# 		},
 	# 		...
 	# 	},
 	# 	...
@@ -105,7 +106,7 @@ class StorageCharacter(QObject):
 		for typ in Config.typs:
 			self.__traits.setdefault(typ, {})
 			for item in template.traits[typ]:
-				self.__traits[typ].setdefault(item, [])
+				self.__traits[typ].setdefault(item, {})
 				for subitem in template.traits[typ][item]:
 					val = 2
 					# Eigenschaften, die Zusaztest erhalten können (bspw. Language), werden mehrfach an die Liste angefügt.
@@ -126,7 +127,7 @@ class StorageCharacter(QObject):
 						if "prerequisite" in subitem:
 							trait.hasPrerequisites = True
 							trait.prerequisitesText = subitem["prerequisite"]
-						self.__traits[typ][item].append(trait)
+						self.__traits[typ][item].setdefault(subitem["name"], trait)
 
 					
 
@@ -604,7 +605,7 @@ class StorageCharacter(QObject):
 			if item == "Attribute":
 				val = 1
 			for subitem in self.__traits[item]:
-				for subsubitem in self.__traits[item][subitem]:
+				for subsubitem in self.__traits[item][subitem].values():
 					subsubitem.value = val
 					subsubitem.specialties = []
 
@@ -641,7 +642,7 @@ class StorageCharacter(QObject):
 				for item in Config.typs:
 					categories = self.__storage.categories(item)
 					for subitem in categories:
-						for subsubitem in self.traits[item][subitem]:
+						for subsubitem in self.traits[item][subitem].values():
 							# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
 							if subsubitem.name in traitPrerequisites:
 								# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.

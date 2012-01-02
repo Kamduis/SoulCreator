@@ -89,7 +89,7 @@ class SkillWidget(QWidget):
 
 			self.__scrollLayout.addWidget( widgetSkillCategory )
 
-			for skill in __list:
+			for skill in __list.values():
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( skill, self )
 				traitWidget.buttonText = 0
