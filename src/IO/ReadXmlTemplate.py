@@ -119,19 +119,21 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				elementName = self.name()
 				#Debug.debug("Element {} gefunden.".format(elementName))
-				if( elementName == "traits" ):
-					speciesData = {
-						"name": self.attributes().value( "species" ),
-						"morale": self.attributes().value( "morale" ),
-						"supertrait": self.attributes().value( "supertrait" ),
-						"fuel": self.attributes().value( "fuel" ),
-					}
-					#Debug.debug("Spezies {} gefunden.".format(speciesData["name"]))
+				if ( elementName == "traits" ):
+					species = self.attributes().value( "species" )
+					if species:
+						speciesData = {
+							"name": species,
+							"morale": self.attributes().value( "morale" ),
+							"powerstat": self.attributes().value( "powerstat" ),
+							"fuel": self.attributes().value( "fuel" ),
+						}
+						Debug.debug("Spezies {} gefunden.".format(speciesData["name"]))
 
-					# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
-					self.__storage.appendSpecies( speciesData )
+						# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
+						self.__storage.appendSpecies( speciesData )
 
-					self.readTree( speciesData["name"] )
+					self.readTree( species )
 				elif( elementName == "creation" ):
 					speciesFlag = self.attributes().value( "species" )
 					#Debug.debug("Erschaffungspunkte für Spezies {} gefunden.".format(speciesFlag))
@@ -164,7 +166,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 						typ == "Faction" ):
 					self.readGroups( species, typ, None )
 				elif( typ == "Super" ):
-					self.readSuperTrait( species )
+					self.readPowerstat( species )
 				elif( typ in Config.typs):
 					#self.readUnknownElement()
 					self.readTraits( species, typ )
@@ -295,7 +297,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readSuperTrait( self, species ):
+	def readPowerstat( self, species ):
 		"""
 		Lese die Informationen über die Auswirkungen der Supereigenschaft aus den Template-Dateien.
 		"""
@@ -307,7 +309,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				break
 
 			if( self.isStartElement() ):
-				if( self.name() == "supertrait" ):
+				if( self.name() == "powerstat" ):
 					superEffectData = {
 						"fuelMax": int(self.attributes().value( "fuelMax" )),
 						"fuelPerTurn": int(self.attributes().value( "fuelPerTurn" )),
@@ -354,9 +356,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 					traitData = {
 						"name": self.attributes().value( "name" ),
 						"species": species,
+						"value": [0],
 						"age": self.attributes().value( "age" ),
 						"era": self.attributes().value( "era" ),
-						"value": [0],
+						"custom": self.attributes().value( "custom" ),
 					}
 
 					#Debug.debug("Lese {} ein.".format(traitData["name"]))

@@ -39,6 +39,7 @@ from Storage.StorageTemplate import StorageTemplate
 from Widgets.Display.InfoWidget import InfoWidget
 from Widgets.Display.AttributeWidget import AttributeWidget
 from Widgets.Display.SkillWidget import SkillWidget
+from Widgets.Display.MeritWidget import MeritWidget
 from Widgets.Display.Specialties import Specialties
 from Widgets.Dialogs.MessageBox import MessageBox
 from Debug import Debug
@@ -139,10 +140,7 @@ class MainWindow(QMainWindow):
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
 		self.populateUi()
-		self.__character.resetCharacter()
-		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.
-		self.__character.setModified(False)
-	#activate();
+		self.activate()
 
 	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( showCreationPoints( int ) ) );
 
@@ -194,7 +192,7 @@ class MainWindow(QMainWindow):
 		skills = SkillWidget( self.__storage, self.__character, self )
 		specialties = Specialties( self.__storage.traits["Skill"], self )
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
-		#merits = new MeritWidget( self );
+		merits = MeritWidget( self.__storage, self.__character, self )
 		#flaws = new FlawWidget( self );
 		#morality = new MoralityWidget( self );
 		#powers = new PowerWidget( self );
@@ -204,7 +202,7 @@ class MainWindow(QMainWindow):
 		self.ui.layout_attributes.addWidget( attributes )
 		self.ui.layout_skills.addWidget( skills )
 		self.ui.layout_specialties.addWidget( specialties )
-		#ui.layout_merits.addWidget( merits );
+		self.ui.layout_merits.addWidget( merits )
 		#ui.layout_morality.addWidget( morality );
 		#ui.layout_powers.addWidget( powers );
 		#ui.layout_flaws.addWidget( flaws );
@@ -238,61 +236,96 @@ class MainWindow(QMainWindow):
 	#}
 
 
-#void MainWindow.activate() {
-	#creation = new Creation( self );
-	#// Schreibe die übrigen Erschaffungspunkte
-	#connect( creation, SIGNAL( pointsChanged() ), self, SLOT( showCreationPoints() ) );
-	#connect( creation, SIGNAL( pointsDepleted( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsDepleted( cv_AbstractTrait.Type ) ) );
-	#connect( creation, SIGNAL( pointsNegative( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsNegative( cv_AbstractTrait.Type ) ) );
-	#connect( creation, SIGNAL( pointsPositive( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsPositive( cv_AbstractTrait.Type ) ) );
+	def activate(self):
+		"""
+		Diese Funktion "aktiviert" SoulCreator. Hier werden beispielsweise Merits mit allen anderen Eigenschaften verknüpft, die in ihren Voraussetzungen vorkommen. und bei einem ändern dieser Eigenschaft, wird neu geprüft, ob der Merit verfügbar ist, oder nicht.
+		"""
 
-	#self.__character.setSpecies( cv_Species.Human );
+		# Merits müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
+		typ = "Merit"
+		categoriesMerits = self.__storage.categories(typ)
+		for category in categoriesMerits:
+			for merit in self.__character.traits[typ][category]:
+				if merit.hasPrerequisites:
+					meritPrerequisites = merit.prerequisitesText[0]
+					for item in Config.typs:
+						categories = self.__storage.categories(item)
+						for subitem in categories:
+							for subsubitem in self.__character.traits[item][subitem]:
+								# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
+								if subsubitem.name in meritPrerequisites:
+									# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
+									idxA = meritPrerequisites.index(subsubitem.name)
+									strBefore = meritPrerequisites[:idxA]
+									strBefore = strBefore.rstrip()
+									strBeforeList = strBefore.split(" ")
+									if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
+										# \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
+										# Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
+										#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, merit.name))
+										subsubitem.traitChanged.connect(merit.checkPrerequisites)
+					# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
+					if Config.powerstatIdentifier in meritPrerequisites:
+						self.__character.powerstatChanged.connect(merit.checkPrerequisites)
 
-	#// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
-	#QList< Trait* >* list = self.__character.traits();
-	#for ( int i = 0; i < list.count(); ++i ) {
-		#int valueOld = self.__character.traits().at( i ).value();
-		#list.at( i ).setValue( 10 );
-		#list.at( i ).clearDetails();
+		self.__character.resetCharacter()
+		# Direkt nach dem Start ist der Charkater natürlich nicht modifiziert.
+		self.__character.setModified(False)
 
-		#// Eine Änderung der Eigenschaften sorgt dafür, daß sich die verfügbaren Erschaffungspunkte verändern.
-		#if ( Creation.types().contains( list.at( i ).type() ) ) {
-			#connect( list.at( i ), SIGNAL( traitChanged( Trait* ) ), creation, SLOT( calcPoints( Trait* ) ) );
-		#}
+		#creation = new Creation( self );
+		#// Schreibe die übrigen Erschaffungspunkte
+		#connect( creation, SIGNAL( pointsChanged() ), self, SLOT( showCreationPoints() ) );
+		#connect( creation, SIGNAL( pointsDepleted( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsDepleted( cv_AbstractTrait.Type ) ) );
+		#connect( creation, SIGNAL( pointsNegative( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsNegative( cv_AbstractTrait.Type ) ) );
+		#connect( creation, SIGNAL( pointsPositive( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsPositive( cv_AbstractTrait.Type ) ) );
 
+		#self.__character.setSpecies( cv_Species.Human );
 
-		#// Löschen der Zeigerliste
-		#list.at( i ).clearPrerequisitePtrs();
+		#// Um dafür zu sorgen, daß Merits ohne gültige Voraussetzungen disabled werden, muß ich einmal alle Werte ändern.
+		#QList< Trait* >* list = self.__character.traits();
+		#for ( int i = 0; i < list.count(); ++i ) {
+			#int valueOld = self.__character.traits().at( i ).value();
+			#list.at( i ).setValue( 10 );
+			#list.at( i ).clearDetails();
 
-		#for ( int j = 0; j < list.count(); ++j ) {
-			#// Erst müssen die Voraussetzungen übersetzt werden, so daß direkt die Adressen im String stehen.
-			#list.at( i ).addPrerequisitePtrs( list.at( j ) );
-		#}
-
-		#// Danach verbinden wir die Signale, aber nur, wenn sie benötigt werden.
-		#if ( !list.at( i ).prerequisitePtrs().isEmpty() ) {
-#// 			qDebug() << Q_FUNC_INFO << self.__character.traits2().at( i ).prerequisitPtrs();
-
-			#for ( int j = 0; j < list.at( i ).prerequisitePtrs().count(); ++j ) {
-				#connect( list.at( i ).prerequisitePtrs().at( j ), SIGNAL( traitChanged( Trait* ) ), list.at( i ), SLOT( checkPrerequisites( Trait* ) ) );
+			#// Eine Änderung der Eigenschaften sorgt dafür, daß sich die verfügbaren Erschaffungspunkte verändern.
+			#if ( Creation.types().contains( list.at( i ).type() ) ) {
+				#connect( list.at( i ), SIGNAL( traitChanged( Trait* ) ), creation, SLOT( calcPoints( Trait* ) ) );
 			#}
+
+
+			#// Löschen der Zeigerliste
+			#list.at( i ).clearPrerequisitePtrs();
+
+			#for ( int j = 0; j < list.count(); ++j ) {
+				#// Erst müssen die Voraussetzungen übersetzt werden, so daß direkt die Adressen im String stehen.
+				#list.at( i ).addPrerequisitePtrs( list.at( j ) );
+			#}
+
+			#// Danach verbinden wir die Signale, aber nur, wenn sie benötigt werden.
+			#if ( !list.at( i ).prerequisitePtrs().isEmpty() ) {
+	#// 			qDebug() << Q_FUNC_INFO << self.__character.traits2().at( i ).prerequisitPtrs();
+
+				#for ( int j = 0; j < list.at( i ).prerequisitePtrs().count(); ++j ) {
+					#connect( list.at( i ).prerequisitePtrs().at( j ), SIGNAL( traitChanged( Trait* ) ), list.at( i ), SLOT( checkPrerequisites( Trait* ) ) );
+				#}
+			#}
+
+			#// Alten Wert wiederherstellen.
+			#list.at( i ).setValue( valueOld );
 		#}
 
-		#// Alten Wert wiederherstellen.
-		#list.at( i ).setValue( valueOld );
+		#// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
+		#self.__character.setSpecies( cv_Species.Human );
+
+		#// Virtue und Vice müssen auch initial einmal festgelegt werden.
+		#self.__character.setVirtue( storage.virtueNames( cv_Trait.Adult ).at( 0 ) );
+
+		#self.__character.setVice( storage.viceNames( cv_Trait.Adult ).at( 0 ) );
+
+		#// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
+		#self.__character.setModified( false );
 	#}
-
-	#// Nun wird einmal die Spezies umgestellt, damit ich nur die Merits angezeigt bekomme, die auch erlaubt sind.
-	#self.__character.setSpecies( cv_Species.Human );
-
-	#// Virtue und Vice müssen auch initial einmal festgelegt werden.
-	#self.__character.setVirtue( storage.virtueNames( cv_Trait.Adult ).at( 0 ) );
-
-	#self.__character.setVice( storage.viceNames( cv_Trait.Adult ).at( 0 ) );
-
-	#// Das alles wurde nur getan, um die Berechnungen etc. zu initialisieren. Das stellt noch keinen Charakter dar, also muß auch nicht bedacht werden,d aß selbiger eigentlich schon geändert wurde.
-	#self.__character.setModified( false );
-#}
 
 
 #void MainWindow.showSettingsDialog() {
@@ -545,8 +578,8 @@ class MainWindow(QMainWindow):
 
 				f.close()
 
-				##// Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
-				##self.__character.setModified( false );
+				# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
+				self.__character.setModified( False )
 
 
 	def saveCharacter(self):

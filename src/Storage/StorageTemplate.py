@@ -54,8 +54,8 @@ class StorageTemplate(QObject):
 
 	# Eine Liste sämtlicher verfügbaren Spezies.
 	# [
-	# 	{"name": Name1, "morale": Moral1, "super": Supertrait1, "fuel": Energie1},
-	# 	{"name": Name2, "morale": Moral2, "super": Supertrait2, "fuel": Energie2},
+	# 	{"name": Name1, "morale": Moral1, "powerstat": Powerstat1, "fuel": Energie1},
+	# 	{"name": Name2, "morale": Moral2, "powerstat": Powerstat2, "fuel": Energie2},
 	# 	...
 	# ]
 	__species = []

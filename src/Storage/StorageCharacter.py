@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Signal
+from PySide.QtCore import QObject, Signal, Slot
 
 from src.Config import Config
 from src.Datatypes.Trait import Trait
@@ -49,7 +49,7 @@ class StorageCharacter(QObject):
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
 	factionChanged = Signal(str)
-	superTraitChanged = Signal(int)
+	powerstatChanged = Signal(int)
 	moralityChanged = Signal(int)
 	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
@@ -89,7 +89,7 @@ class StorageCharacter(QObject):
 		self.__vice = ""
 		self.__breed = ""
 		self.__faction = ""
-		self.__superTrait = 0
+		self.__powerstat = 0
 		self.__morality = 0
 		self.__armor = [0, 0]
 		self.__era = ""
@@ -101,23 +101,38 @@ class StorageCharacter(QObject):
 
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
-		# Attribute setzen.
-		# \note Momentan werden nur Attribute und Fertigkeiten berücksichtigt.
-		for typ in Config.typs[:2]:
+		# Eigenscahften setzen.
+		for typ in Config.typs:
 			self.__traits.setdefault(typ, {})
 			for item in template.traits[typ]:
 				self.__traits[typ].setdefault(item, [])
 				for subitem in template.traits[typ][item]:
 					val = 2
-					trait = Trait(subitem["name"], val)
-					trait.age = subitem["age"]
-					trait.era = subitem["era"]
-					self.__traits[typ][item].append(trait)
+					# Eigenschaften, die Zusaztest erhalten können (bspw. Language), werden mehrfach an die Liste angefügt.
+					loop = 1
+					custom = False
+					customText = None
+					if subitem["custom"]:
+						loop = Config.traitMultipleMax
+						custom = True
+
+					for i in xrange(loop):
+						trait = Trait(self, subitem["name"], val)
+						trait.age = subitem["age"]
+						trait.era = subitem["era"]
+						trait.species = subitem["species"]
+						trait.custom = custom
+						trait.customText = customText
+						if "prerequisite" in subitem:
+							trait.hasPrerequisites = True
+							trait.prerequisitesText = subitem["prerequisite"]
+						self.__traits[typ][item].append(trait)
+
+					
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
 		self.__identity.identityChanged.connect(self.setModified)
-	#connect( self, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( setModified() ) );
 		self.speciesChanged.connect(self.setModified)
 	#connect( self, SIGNAL( traitChanged( cv_Trait* ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( derangementsChanged() ), self, SLOT( setModified() ) );
@@ -125,7 +140,7 @@ class StorageCharacter(QObject):
 	#connect( self, SIGNAL( viceChanged( QString ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( breedChanged( QString ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( factionChanged( QString ) ), self, SLOT( setModified() ) );
-	#connect( self, SIGNAL( superTraitChanged( int ) ), self, SLOT( setModified() ) );
+		self.powerstatChanged.connect(self.setModified)
 	#connect( self, SIGNAL( moralityChanged( int ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( armorChanged( int, int ) ), self, SLOT( setModified() ) );
 
@@ -488,25 +503,25 @@ class StorageCharacter(QObject):
 	faction = property(__getFaction, __setFaction)
 
 
-	def __getSuperTrait(self):
+	def __getPowerstat(self):
 		"""
 		Gibt den Wert des Super-Attributs aus.
 		"""
 
-		return self.__superTrait
+		return self.__powerstat
 
-	def __setSuperTrait( self, value ):
+	def __setPowerstat( self, value ):
 		"""
 		Verändert den Wert des Super-Attributs.
 		
-		Bei einer Veränderung wird das Signal superTraitChanged() ausgesandt.
+		Bei einer Veränderung wird das Signal powerstatChanged() ausgesandt.
 		"""
 
-		if ( self.__superTrait != value ):
-			self.__superTrait = value
-			self.superTraitChanged.emit( value )
+		if ( self.__powerstat != value ):
+			self.__powerstat = value
+			self.powerstatChanged.emit( value )
 
-	superTrait = property(__getSuperTrait, __setSuperTrait)
+	powerstat = property(__getPowerstat, __setPowerstat)
 
 
 	def __getMorality(self):
@@ -571,7 +586,7 @@ class StorageCharacter(QObject):
 		self.__identity.reset()
 
 		# Standardspezies ist der Mensch.
-		self.species = self.__storage.species[1]["name"]
+		self.species = self.__storage.species[0]["name"]
 
 		#Debug.debug(self.__storage.virtues[0])
 		#Debug.debug(self.__storage.virtues[0]["name"])
@@ -592,20 +607,8 @@ class StorageCharacter(QObject):
 					subsubitem.value = val
 					subsubitem.specialties = []
 
-			#v_traits2[i].clearDetails();
-
-			#v_traits2[i].setCustomText( "" );
-
-	#// 		emit traitChanged( v_traits2[i] );
-		#}
-
-		#v_derangements.clear();
-
-		#setMorality( Config::derangementMoralityTraitMax );
-
-		#emit characterResetted();
-
-		
+		# Übernatürliche Eigenschaft festlegen.
+		self.powerstat = Config.powerstatDefaultValue
 
 
 	def isModifed(self):
@@ -621,4 +624,51 @@ class StorageCharacter(QObject):
 	#emit nameChanged(id.birthName());
 #}
 
+
+	def checkPrerequisites(self, trait):
+		"""
+		Diese Funktion überprüft, ob die Voraussetzungen der Eigenscahft "trait" erfüllt sind ode rnicht.
+		"""
+
+		if type(trait) != Trait:
+			Debug.debug("Error!")
+		else:
+			if trait.hasPrerequisites:
+				traitPrerequisites = trait.prerequisitesText[0]
+				for item in Config.typs:
+					categories = self.__storage.categories(item)
+					for subitem in categories:
+						for subsubitem in self.traits[item][subitem]:
+							# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
+							if subsubitem.name in traitPrerequisites:
+								# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
+								idxA = traitPrerequisites.index(subsubitem.name)
+								strBefore = traitPrerequisites[:idxA]
+								strBefore = strBefore.rstrip()
+								strBeforeList = strBefore.split(" ")
+								if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
+									# Wenn Spezialisierungen vorausgesetzt werden.
+									if "." in traitPrerequisites and "{}.".format(subsubitem.name) in traitPrerequisites:
+										idx =[0,0]
+										idx[0] = traitPrerequisites.index("{}.".format(subsubitem.name))
+										idx[1] = traitPrerequisites.index(" ", idx[0])
+										specialty = traitPrerequisites[idx[0]:idx[1]].replace("{}.".format(subsubitem.name), "")
+										if specialty in subsubitem.specialties:
+											traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
+										else:
+											traitPrerequisites = traitPrerequisites.replace("{}.{}".format(subsubitem.name, specialty), "0")
+									traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
+				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
+				if Config.powerstatIdentifier in traitPrerequisites:
+					traitPrerequisites = traitPrerequisites.replace(Config.powerstatIdentifier, unicode(self.__powerstat))
+
+				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
+				try:
+					result = eval(traitPrerequisites)
+					#print("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
+				except (NameError, SyntaxError) as e:
+					Debug.debug("Error: {}".format(traitPrerequisites))
+					result = False
+
+				trait.setAvailable(result)
 

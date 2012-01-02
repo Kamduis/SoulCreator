@@ -73,7 +73,7 @@ class Config():
 	#const int Config::traitCategorySpace = 10
 	
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
-	#const int Config::traitMultipleMax = 3
+	traitMultipleMax = 3
 	
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 	#const int Config::displayTimeout = 10000
@@ -108,13 +108,16 @@ class Config():
 	#const int Config::willpowerMax = 10
 
 	## Mindestwert der besonderen übernatürlichen Eigenschaft.
-	#const int Config::superTraitMin = 1
+	#const int Config::powerstatMin = 1
 
 	## Höchstwert der besonderen übernatürlichen Eigenschaft.
-	#const int Config::superTraitMax = 10
+	#const int Config::powerstatMax = 10
 
 	## Startwert der besonderen übernatürlichen Eigenschaft.
-	#const int Config::superTraitDefaultValue = 1
+	powerstatDefaultValue = 1
+
+	## Bezeichnung der Übernatürlichen Grundeigenschaft für alle Spezies
+	powerstatIdentifier = "Powerstat"
 
 	## Über wievielen Punkten die Eigenschaften 2 Erschaffungspunkte kosten.
 	#
@@ -153,7 +156,7 @@ class Config():
 		"Merit",
 		"Derangement",
 		"Flaw",
-		"Super",
+		#"Super",
 		"Power",
 	)
 

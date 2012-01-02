@@ -41,17 +41,35 @@ class Trait(QObject):
 
 
 	valueChanged = Signal(int)
+	#valueChanged = Signal(object)
+	customTextChanged = Signal(str)
 	specialtiesChanged = Signal(object)
+	availableChanged = Signal(bool)
+	traitChanged = Signal(object)
 
 
-	def __init__(self, name, value=0, parent=None):
+	def __init__(self, character, name="", value=0, parent=None):
+		"""
+		Die Referenz auf character benötige ich nur, damit ich bei Eigenschaften mit Voraussetzungen diese auch überprüfen kann.
+
+		\ref checkPrerequisites
+		"""
+		
 		QObject.__init__(self, parent)
+
+		self.__character = character
 
 		self.__name = name
 		self.__value = value
 		self.__specialties = []
 		self.__age = ""
 		self.__era = ""
+		self.__species = ""
+		self.__custom = False
+		self.__customText = ""
+		self.__prerequisites = False
+		self.__prerequisitesText = ""
+		self.__available = True
 
 
 	def __getName(self):
@@ -75,6 +93,7 @@ class Trait(QObject):
 			self.__value = value
 			#Debug.debug("Ändere Eigenschaft {} zu {}".format(self.name, self.value))
 			self.valueChanged.emit(value)
+			self.traitChanged.emit(self)
 
 	value = property(__getValue, setValue)
 
@@ -86,6 +105,7 @@ class Trait(QObject):
 		if self.__specialties != specialties:
 			self.__specialties = specialties
 			self.specialtiesChanged.emit(specialties)
+			self.traitChanged.emit(self)
 
 	specialties = property(__getSpecialties, __setSpecialties)
 
@@ -98,6 +118,7 @@ class Trait(QObject):
 
 		self.__specialties.append(name)
 		self.specialtiesChanged.emit(self.specialties)
+		self.traitChanged.emit(self)
 
 	def removeSpecialty(self, name):
 		"""
@@ -108,6 +129,7 @@ class Trait(QObject):
 
 		self.__specialties.remove(name)
 		self.specialtiesChanged.emit(self.specialties)
+		self.traitChanged.emit(self)
 
 
 	def __getEra(self):
@@ -126,6 +148,53 @@ class Trait(QObject):
 		self.__age = age
 
 	age = property(__getAge, __setAge)
+
+
+	def __getSpecies(self):
+		return self.__species
+
+	def __setSpecies(self, species):
+		self.__species = species
+
+	species = property(__getSpecies, __setSpecies)
+
+
+	def isCustom(self):
+		return self.__custom
+
+	def setCustom(self, custom):
+		self.__custom = custom
+
+
+	def __getCustomText(self):
+		return self.__customText
+
+	def __setCustomText(self, text):
+		if self.__customText != text:
+			self.__customText = text
+			self.customTextChanged.emit(text)
+
+	customText = property(__getCustomText, __setCustomText)
+
+
+	def __getPrerequisites(self):
+		return self.__prerequisites
+
+	def __setPrerequisites(self, prerequisites):
+		self.__prerequisites = prerequisites
+
+	hasPrerequisites = property(__getPrerequisites, __setPrerequisites)
+
+
+	def __getPrerequisitesText(self):
+		return self.__prerequisitesText
+
+	def __setPrerequisitesText(self, text):
+		if self.__prerequisitesText != text:
+			self.__prerequisitesText = text
+			#self.prerequisitesTextChanged.emit(text)
+
+	prerequisitesText = property(__getPrerequisitesText, __setPrerequisitesText)
 
 
 #Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject( parent ), cv_Trait( txt, val, spe, ty, ca ) {
@@ -224,27 +293,23 @@ class Trait(QObject):
 	#}
 #}
 
-#bool Trait::isAvailable() const {
-	#"""
-	#Gibt zurück, ob die Voraussetzungen der Eigenschaft erfüllt sind, ode rnicht.
-	#"""
-	
-	#return v_available;
-#}
-#void Trait::setAvailability( bool sw ) {
-	#"""
-	#Legt fest, ob die Eigenschaft zur Verfügung steht oder nicht.
-	
-	#\sa checkPrerequisites()
-	#"""
-	
-	#if ( v_available != sw ) {
-		#v_available = sw;
+	def isAvailable(self):
+		"""
+		Gibt zurück, ob die Voraussetzungen der Eigenschaft erfüllt sind, ode rnicht.
+		"""
 
-		#emit availabilityChanged( sw );
-	#}
-#}
+		return self.__available
 
+	def setAvailable( self, sw ):
+		"""
+		Legt fest, ob die Eigenschaft zur Verfügung steht oder nicht.
+		"""
+
+		if ( self.__available != sw ):
+			self.__available = sw
+			self.availableChanged.emit( sw )
+
+		
 #void Trait::setBonus( bool sw ) {
 	#"""
 	#Legt fest, ob diese Eigenschaft eine Bonuseigenschaft ist.
@@ -259,6 +324,8 @@ class Trait(QObject):
 #}
 
 
+	def checkPrerequisites(self, trait):
+		self.__character.checkPrerequisites(self)
 
 
 #QList< Trait* > Trait::prerequisitePtrs() const {

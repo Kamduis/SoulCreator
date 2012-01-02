@@ -55,21 +55,23 @@ class CharaTrait(TraitLine):
 
 		# Falls ich mit der Maus den Wert ändere, muß er auch entsprechend verändert werden.
 		self.valueChanged.connect(self.setTraitValue)
-		#connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( setCustomText( QString ) ) );
+		self.textChanged.connect(self.setTraitCustomText)
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideSpecialtyWidget( cv_AbstractTrait::Type ) ) );
 		#connect( this, SIGNAL( typeChanged( cv_AbstractTrait::Type ) ), this, SLOT( hideDescriptionWidget() ) );
 		#connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
-		self.buttonClicked.connect(self.emitSpecialtiesClicked)
+		self.buttonToggled.connect(self.emitSpecialtiesClicked)
 
 		## \bug Wenn ich irgendeinbe Spezialisierung abhake, wird der Knop sofort deaktiviert.
 		#self.__trait.specialtiesChanged.connect(self.uncheckButton)
 
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 		self.__trait.valueChanged.connect(self.setValue)
+		self.__trait.customTextChanged.connect(self.setText)
 		self.__trait.specialtiesChanged.connect(self.setSpecialtiesButtonText)
 
 		#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
 		#connect( traitPtr(), SIGNAL( availabilityChanged(bool)), this, SLOT( setEnabled(bool)) );
+		self.__trait.availableChanged.connect(self.setEnabled)
 
 		#if ( !traitPtr()->possibleValues().isEmpty() ) {
 			#setPossibleValues( traitPtr()->possibleValues() );
@@ -111,24 +113,20 @@ class CharaTrait(TraitLine):
 		#Debug.debug("Eigenschaft {} hat den Wert {}".format(self.__trait["name"], self.__trait["value"]))
 
 
-#QString CharaTrait::customText() const {
-	#return traitPtr()->customText();
-#}
-#void CharaTrait::setCustomText( QString txt ) {
-	"""
-	Legt den Zusatztext fest.
-	
-	Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
-	"""
-	
-	#if ( traitPtr()->customText() != txt ) {
-		#traitPtr()->setCustomText( txt );
-
-		#TraitLine::setText( txt );
-
-		#emit traitChanged( traitPtr() );
+	#def __getCustomText() const {
+		#return traitPtr()->customText();
 	#}
-#}
+	def setTraitCustomText( self, text ):
+		"""
+		Legt den Zusatztext fest.
+
+		Dabei wird automatisch der Wert im Speicher aktualisiert und natürlich auch die Anzeige des Widget.
+		"""
+
+		if self.__trait.customText != text:
+			self.__trait.customText = text
+
+			#emit traitChanged( traitPtr() );
 
 
 
@@ -174,6 +172,19 @@ class CharaTrait(TraitLine):
 		#setHidden( true );
 	#}
 #}
+
+
+	def hideOrShowTrait_species(self, species):
+		"""
+		Versteckt oder zeigt diese Eigenschaft, je nach gewählter Spezies.
+		"""
+
+		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
+		if (not self.__trait.species or self.__trait.species == species):
+			self.setHidden(False)
+			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
+		else:
+			self.setHidden(True)
 
 
 	def hideOrShowTrait(self, age, era):
