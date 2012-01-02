@@ -295,5 +295,5 @@ class Ui_MainWindow(object):
 		self.actionSettings.setText(QtGui.QApplication.translate("MainWindow", "&Settings...", None, QtGui.QApplication.UnicodeUTF8))
 		self.actionQuit.setText(QtGui.QApplication.translate("MainWindow", "Quit", None, QtGui.QApplication.UnicodeUTF8))
 
-from src.Widgets.Display.SelectWidget import SelectWidget
+from src.Widgets.SelectWidget import SelectWidget
 from resources import rc_resource

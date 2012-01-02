@@ -36,11 +36,11 @@ from IO.ReadXmlCharacter import ReadXmlCharacter
 from IO.WriteXmlCharacter import WriteXmlCharacter
 from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
-from Widgets.Display.InfoWidget import InfoWidget
-from Widgets.Display.AttributeWidget import AttributeWidget
-from Widgets.Display.SkillWidget import SkillWidget
-from Widgets.Display.MeritWidget import MeritWidget
-from Widgets.Display.Specialties import Specialties
+from Widgets.InfoWidget import InfoWidget
+from Widgets.AttributeWidget import AttributeWidget
+from Widgets.SkillWidget import SkillWidget
+from Widgets.MeritWidget import MeritWidget
+from Widgets.Specialties import Specialties
 from Widgets.Dialogs.MessageBox import MessageBox
 from Debug import Debug
 
