@@ -293,3 +293,19 @@ class CalcAdvantages(QObject):
 			return speed
 
 
+	@staticmethod
+	def health( value, shape ):
+		"""
+		Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		if shape == Config.shapesWerewolf[1]:
+			return value + 2
+		elif shape == Config.shapesWerewolf[2]:
+			return value + 4
+		elif shape == Config.shapesWerewolf[3]:
+			return value + 3
+		else:
+			return value
+
+
