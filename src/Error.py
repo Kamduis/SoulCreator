@@ -272,34 +272,34 @@ class ErrXmlTooOldVersion(ErrXmlOldVersion):
 		self.description = self.obj.tr( "Got {} but expected was {}".format(got, expected))
 
 
-#eSpecies::eSpecies() : Exception() {
+
+
+class ErrSpecies(Err):
 	#"""
 	#@brief Ausnahme, falls Fehler bei den Spezies auftritt.
 	#"""
 
-	#message = self.obj.tr( "Character Species Problem" )
-	#description = self.obj.tr( "There is a problem with a character species." )
-#}
+	def __init__(self ):
+		Err.__init__(self)
 
-#eSpeciesNotExisting::eSpeciesNotExisting( cv_Species::SpeciesFlag species ) : eSpecies() {
+		self.message = self.obj.tr( "Problem with species occured." )
+		self.description = self.obj.tr( "There is a problem with a character species.")
+
+
+class ErrSpeciesNotExisting(ErrSpecies):
 	#"""
 	#@brief Ausnahme, falls eine spezifizierte Spezies nicht existiert.
 
 	#Die erwartete Spezies wurde nicht gefunden.
 	#"""
 
-	#message = self.obj.tr( "Character Species Problem" )
-	#description = self.obj.tr( "Species %1 is missing." ).arg( species )
-#}
+	def __init__(self, species = "unknown" ):
+		ErrSpecies.__init__(self)
 
-#eSpeciesNotExisting::eSpeciesNotExisting() : eSpecies() {
-	#"""
-	#
-	#"""
+		self.message = self.obj.tr( "Problem with species occured." )
+		self.description = self.obj.tr( "Species {} is missing.".format(species))
 
-	#message = self.obj.tr( "Character Species Problem" )
-	#description = self.obj.tr( "Species is missing." )
-#}
+
 
 
 #eGender::eGender() : Exception() {

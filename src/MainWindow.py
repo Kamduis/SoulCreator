@@ -26,9 +26,9 @@ import sys
 import os
 
 from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray
-from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog
+from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QPrinter
 
-from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion
+from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from Config import Config
 from IO.Settings import Settings
 from IO.ReadXmlTemplate import ReadXmlTemplate
@@ -43,6 +43,7 @@ from Widgets.Specialties import Specialties
 from Widgets.MeritWidget import MeritWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.Dialogs.MessageBox import MessageBox
+from Draw.DrawSheet import DrawSheet
 from Debug import Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
@@ -152,8 +153,8 @@ class MainWindow(QMainWindow):
 		self.ui.actionNew.triggered.connect(self.newCharacter)
 		self.ui.actionOpen.triggered.connect(self.openCharacter)
 		self.ui.actionSave.triggered.connect(self.saveCharacter)
-	#connect( self.ui.actionExport, SIGNAL( triggered() ), self, SLOT( exportCharacter() ) );
-	#connect( self.ui.actionPrint, SIGNAL( triggered() ), self, SLOT( printCharacter() ) );
+		self.ui.actionExport.triggered.connect(self.exportCharacter)
+		self.ui.actionPrint.triggered.connect(self.printCharacter)
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
 
 		# Laden der Konfiguration
@@ -606,16 +607,6 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		#try {
-			#if ( !dir.mkdir( savePath ) ) {
-				#if ( !QDir( savePath ).exists() ) {
-					#throw eDirNotCreated( dir.absolutePath() );
-				#}
-			#}
-		#} except ( eDirNotCreated &e ) {
-			#MessageBox.exception( self, e.description(), e.message() );
-		#}
-
 		filePath = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.chr".format(savePath), self.tr( "WoD Characters (*.chr)" ) )
 
 		#Debug.debug(filePath)
@@ -652,86 +643,67 @@ class MainWindow(QMainWindow):
 #}
 
 
-#void MainWindow.exportCharacter() {
-	"""
-	Diese Funktion druckt den Charakter in ein PDF-Dokument.
-	"""
-	
-#// 	// Vorsicht, eine Abkürzung, die ich nur für das Testen verwenden sollte.
-#// 	shortcut();
-#// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled.pdf";
+	def exportCharacter(self):
+		"""
+		Diese Funktion druckt den Charakter in ein PDF-Dokument.
+		"""
 
-	#QString appPath = QApplication.applicationDirPath();
+		Debug.debug("Jetzt würde ich exportieren.")
 
-	#// Pfad zum Speicherverzeichnis
-	#QString savePath = appPath + "/" + Config.saveDir();
+		appPath = getPath()
 
-	#// Wenn Unterverzeichnis nicht existiert, erstelle es
-	#QDir dir( appPath );
+		# Pfad zum Speicherverzeichnis
+		savePath = "{}/{}".format(appPath, Config.saveDir)
 
-	#try {
-		#if ( !dir.mkdir( savePath ) ) {
-			#if ( !QDir( savePath ).exists() ) {
-				#throw eDirNotCreated( dir.absolutePath() );
-			#}
-		#}
-	#} except ( eDirNotCreated &e ) {
-		#MessageBox.exception( self, e.description(), e.message() );
-	#}
+		# Wenn Unterverzeichnis nicht existiert, erstelle es
+		if not os.path.exists(savePath):
+			os.makedirs(savePath)
 
-	#QString filePath = QFileDialog.getSaveFileName( self, tr( "Export Character" ), savePath + "/untitled.pdf", tr( "Charactersheet (*.pdf)" ) );
+		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
 
-	#qDebug() << Q_FUNC_INFO << filePath;
+		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausruck heraus. War zumindest zu C++-Zeiten so.
+		if ( filePath[0] ):
+			printer = QPrinter()
 
-	#// Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausruck heraus.
-	#if ( !filePath.isEmpty() ) {
-		#QPrinter* 	printer = new QPrinter();
+			printer.setOutputFormat( QPrinter.PdfFormat )
+			printer.setPaperSize( QPrinter.A4 )
+			printer.setFullPage( True )
+			printer.setOutputFileName( filePath[0] )
 
-		#printer.setOutputFormat( QPrinter.PdfFormat );
-		#printer.setPaperSize( QPrinter.A4 );
-		#printer.setFullPage( true );
-		#printer.setOutputFileName( filePath );
+			drawSheet = DrawSheet( self.__character, printer, self )
 
-		#DrawSheet drawSheet( self, printer );
+			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
 
-		#connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
+			try:
+				drawSheet.print()
+			except ErrSpeciesNotExisting as e:
+				MessageBox.exception( self, e.message, e.description )
 
-		#try {
-			#drawSheet.print();
-		#} except ( eSpeciesNotExisting &e ) {
-			#MessageBox.exception( self, e.message(), e.description() );
-		#}
 
-		#delete printer;
-	#}
-#}
+	def printCharacter(self):
+		"""
+		Druckt den angezeigten Charakter aus.
+		"""
 
-#void MainWindow.printCharacter() {
-	"""
-	Druckt den angezeigten Charakter aus.
-	"""
-	
-	#QPrinter* printer = new QPrinter();
-	#QPrintDialog printDialog( printer, self );
+		Debug.debug("Jetzt würde ich drucken.")
+		#printer = QPrinter()
+		#printDialog = QPrintDialog( printer, self )
 
-#// 	printer.setOutputFormat( QPrinter.PdfFormat );
-	#printer.setPaperSize( QPrinter.A4 );
-#// 	printer.setOutputFileName( "print.pdf" );
+		##// 	printer.setOutputFormat( QPrinter.PdfFormat );
+		#printer.setPaperSize( QPrinter.A4 )
+		##// 	printer.setOutputFileName( "print.pdf" );
 
-	#if ( printDialog.exec() == QDialog.Accepted ) {
-		#DrawSheet drawSheet( self, printer );
+		#if ( printDialog.exec_() == QDialog.Accepted ):
+			#drawSheet = DrawSheet( self, printer )
 
-		#connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
+			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
 
-		#try {
-			#drawSheet.print();
-		#} except ( eSpeciesNotExisting &e ) {
-			#MessageBox.exception( self, e.message(), e.description() );
-		#}
-	#}
-
-	#delete printer;
-#}
+			##try {
+				##drawSheet.print();
+			##} except ( eSpeciesNotExisting &e ) {
+				##MessageBox.exception( self, e.message(), e.description() );
+			##}
+		##}
 
 
 	def writeSettings(self):
