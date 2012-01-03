@@ -24,6 +24,7 @@ from __future__ import division, print_function
 
 from PySide.QtCore import QXmlStreamReader, QIODevice
 
+from src.Error import ErrFileNotOpened
 from src.Config import Config
 from src import Error
 from src.Debug import Debug
@@ -51,7 +52,7 @@ class ReadXml(QXmlStreamReader):
 		"""
 
 		if not f.open( QIODevice.ReadOnly | QIODevice.Text ) :
-			raise eFileNotOpened( f.fileName(), f.errorString() )
+			raise ErrFileNotOpened( f.fileName(), f.errorString() )
 
 
 	def closeFile(self, f ):

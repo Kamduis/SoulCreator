@@ -50,29 +50,41 @@ class DrawSheet(QObject):
 		self.__painter = QPainter()
 		self.__printer = printer
 
+		self.__borderFrame = 15
+		self.__pageWidth = self.__printer.width() - 2 * self.__borderFrame
+		self.__pageHeight = self.__printer.height() - 2 * self.__borderFrame
+		self.__lineWidth = .75
 		self.__dotDiameterH = 9
 		self.__dotDiameterV = self.__dotDiameterH
-	#v_textHeight = 0;
-	#v_textDotsHeightDifference = 0;
+		self.__dotLineWidth = .5
+		self.__textDotSep = 4
+		self.__dotsWidth = 0
+
 		## Die Farbe, mit welcher die Punkte auf dem Charakterbogen ausgefüllt werden.
 		self.__colorFill = QColor( 0, 0, 0 )
 		self.__colorEmpty = QColor( 255, 255, 255 )
 		self.__colorText = QColor( 255, 0, 0 )
 
 		## Schriften sind Abhängig von der Spezies.
-		self.__fontMain = QFont("TeX Gyre Pagella")
+		self.__fontMain = QFont("TeX Gyre Pagella", 10)
 		self.__fontSans = QFont("TeX Gyre Heros" )
-		self.__fontHeading = QFont("TeX Gyre Heros", 13 )
+		self.__fontHeading = QFont("TeX Gyre Heros", 15 )
+		self.__fontSubHeading = QFont("TeX Gyre Heros", 13 )
 		if self.__character.species == "Human":
-			self.__fontHeading = QFont("ArchitectsDaughter", 11 )
+			self.__fontHeading = QFont("ArchitectsDaughter", 13 )
+			self.__fontSubHeading = QFont("ArchitectsDaughter", 11 )
 		elif self.__character.species == "Changeling":
-			self.__fontHeading = QFont("Mutlu", 13 )
+			self.__fontHeading = QFont("Mutlu", 15 )
+			self.__fontSubHeading = QFont("Mutlu", 13 )
 		elif self.__character.species == "Mage":
-			self.__fontHeading = QFont("Tangerine", 15 )
+			self.__fontHeading = QFont("Tangerine", 17 )
+			self.__fontSubHeading = QFont("Tangerine", 15 )
 		elif self.__character.species == "Vampire":
-			self.__fontHeading = QFont("Cloister Black", 13 )
+			self.__fontHeading = QFont("Cloister Black", 15 )
+			self.__fontSubHeading = QFont("Cloister Black", 13 )
 		elif self.__character.species == "Werewolf":
-			self.__fontHeading = QFont("Note this", 13 )
+			self.__fontHeading = QFont("Note this", 15 )
+			self.__fontSubHeading = QFont("Note this", 13 )
 		else:
 			#self.__fontHeading = QFont("HVD Edding 780", 14 )	# Tiere
 			raise ErrSpeciesNotExisting( character.species )
@@ -103,7 +115,7 @@ class DrawSheet(QObject):
 		elif ( self.__character.species == "Werewolf" ):
 			image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
 		else:
-			raise ErrSpeciesNotExisting( character.species )
+			raise ErrSpeciesNotExisting( self.__character.species )
 
 		## Grundeinstellungen des Painters sind abgeschlossen. Dies ist der Zusatnd, zu dem wir zurückkehren, wenn wir painter.restore() aufrufen.
 		self.__painter.save()
@@ -113,24 +125,33 @@ class DrawSheet(QObject):
 		target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
 		self.__painter.drawImage(target, image, source)
 
-		self.drawGrid()
+		## Hiermit wird der Seitenrahmen eingehalten.
+		self.__painter.translate(self.__borderFrame, self.__borderFrame)
 
-		self.drawInfo(offsetH=23, offsetV=118, distanceH=255, distanceV=19)
+		## Die Breite der Punktwerte hängt vom Eigenschaftshöchstwert für den Charakter ab.
+		self.__dotsWidth = 5 * (self.__dotDiameterH + self.__dotLineWidth)
+		
+		self.__painter.save()
 
-		self.drawAttributes(offsetH=23, offsetV=180, distanceV=18)
+		self.__drawGrid()
+
+		self._drawInfo(offsetV=103, distanceV=19)
+
+		self._drawAttributes(offsetV=165, distanceV=18)
+
+		self._drawSkills(offsetV=240, distanceV=18, width=300)
+
+		self.__painter.restore()
 
 		self.__painter.restore()
 
 		self.__painter.end()
 
 
-	def drawGrid(self):
+	def __drawGrid(self):
 		"""
 		Diese Funktion zeichnet ein Gitter, damit man weiß, an welcher Position man die Einträge platzieren muß.
 		"""
-
-		pageWidth = self.__printer.width()
-		pageHeight = self.__printer.height()
 
 		self.__painter.save()
 
@@ -144,21 +165,21 @@ class DrawSheet(QObject):
 		pen.setColor(QColor(0,0,255))
 		self.__painter.setPen(pen)
 		
-		for i in range(pageWidth)[::10]:
-			self.__painter.drawLine(i, 0, i, pageHeight)
-		for i in range(pageHeight)[::10]:
-			self.__painter.drawLine(0, i, pageWidth, i)
+		for i in range(self.__pageWidth)[::10]:
+			self.__painter.drawLine(i, 0, i, self.__pageHeight)
+		for i in range(self.__pageHeight)[::10]:
+			self.__painter.drawLine(0, i, self.__pageWidth, i)
 
 		self.__painter.restore()
 
 		self.__painter.save()
 
 		self.__painter.setPen(QColor(0,127,127))
-		for i in range(pageWidth)[::100]:
-			self.__painter.drawLine(i, 0, i, pageHeight)
+		for i in range(self.__pageWidth)[::100]:
+			self.__painter.drawLine(i, 0, i, self.__pageHeight)
 			self.__painter.drawText(i+1, 0, 10, 10, Qt.AlignLeft, unicode(i))
-		for i in range(pageHeight)[::100]:
-			self.__painter.drawLine(0, i, pageWidth, i)
+		for i in range(self.__pageHeight)[::100]:
+			self.__painter.drawLine(0, i, self.__pageWidth, i)
 			self.__painter.drawText(1, i, 10, 10, Qt.AlignLeft, unicode(i))
 
 		self.__painter.restore()
@@ -166,13 +187,11 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def drawInfo(self, offsetH=0, offsetV=0, distanceH=0, distanceV=0):
+	def _drawInfo(self, offsetV=0, distanceV=0):
 		"""
 		Diese Funktion Schreibt Namen, Virtue/Vice etc. in den Kopf des Charakterbogens.
 
-		\param offsetH Horizontaler Abstand zwischen Bildkante und der rechten Kante des Platzes für den Namen.
 		\param offsetV Vertikaler Abstand zwischen Bildkante und dem Platz für den Namen.
-		\param distanceH Horizontaler Abstand zwischen den Zeilen.
 		\param distanceV Vertikaler Abstand zwischen den Spalten.
 		"""
 
@@ -183,15 +202,17 @@ class DrawSheet(QObject):
 		]
 		
 		self.__painter.save()
-		self.__painter.setFont(self.__fontHeading)
+		self.__painter.setFont(self.__fontSubHeading)
 
 		fontMetrics = QFontMetrics(self.__painter.font())
+
+		distanceH = self.__pageWidth // 3
 
 		width = []
 		for i in xrange(len(text)):
 			subWidth = []
 			for j in xrange(len(text[i])):
-				self.__painter.drawText(offsetH + i * distanceH, offsetV + j * distanceV, text[i][j])
+				self.__painter.drawText(i * distanceH, offsetV + j * distanceV, text[i][j])
 				subWidth.append(fontMetrics.boundingRect(text[i][j]).width())
 			width.append(max(subWidth))
 
@@ -210,69 +231,154 @@ class DrawSheet(QObject):
 		for i in xrange(len(text)):
 			for j in xrange(len(text[i])):
 				var = self.__character
-				self.__painter.drawText(offsetH + i * distanceH + width[i], offsetV + j * distanceV, text[i][j])
+				self.__painter.drawText(i * distanceH + width[i], offsetV + j * distanceV, text[i][j])
 
 		self.__painter.restore()
 
 
-	def drawAttributes(self, offsetH=0, offsetV=0, distanceV=0):
+	def _drawAttributes(self, offsetV=0, distanceV=0):
 		"""
 		Diese Funktion Zeichnet die Attribute
 
-		\param offsetH Horizontaler Abstand zwischen Bildkante und der rechten Kante des Platzes für den Namen.
 		\param offsetV Vertikaler Abstand zwischen Bildkante und dem Platz für den Namen.
 		\param distanceV Vertikaler Abstand zwischen den Spalten.
 		"""
 
 		self.__painter.save()
-		self.__painter.setFont(self.__fontHeading)
+		self.__painter.setFont(self.__fontSubHeading)
 
 		text = [ u"Power", u"Finesse", u"Resistance", ]
 
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textwidthArray = []
 		for item in text:
-			textwidthArray.append(fontMetrics.boundingRect("Resistance").width())
+			textwidthArray.append(fontMetrics.boundingRect(item).width())
 		textwidth = max(textwidthArray)
 		height = fontMetrics.height()
 		baseline = offsetV - fontMetrics.ascent()
 
 		for i in xrange(len(text)):
 			for j in xrange(len(text[i])):
-				self.__painter.drawText(offsetH, baseline + i * distanceV, textwidth, height, Qt.AlignRight, text[i])
+				self.__painter.drawText(0, baseline + i * distanceV, textwidth, height, Qt.AlignRight, text[i])
 
 		self.__painter.restore()
 
 		self.__painter.save()
-		self.__painter.setFont(self.__fontMain)
-		fontMetrics = QFontMetrics(self.__painter.font())
-		height = fontMetrics.height()
-		baseline = offsetV - fontMetrics.ascent()
 
-		widthLeft = self.__printer.width() - offsetH - textwidth
-
+		widthLeft = self.__pageWidth - textwidth
 		distanceH = widthLeft // 3
-
-		sep = 4
 
 		i = 0
 		for item in self.__character.traits["Attribute"]:
 			j = 0
 			for subitem in self.__character.traits["Attribute"][item]:
-				# Schreibe Attributsname
-				self.__painter.drawText(offsetH + i * distanceH, baseline + j * distanceV, distanceH, height, Qt.AlignRight, subitem.name)
-				# Male Punkte aus
-				for k in xrange(subitem.value):
-					self.__painter.drawEllipse(offsetH + (i+1) * distanceH + sep + k * self.__dotDiameterH, offsetV - self.__dotDiameterV + j * distanceV, self.__dotDiameterH, self.__dotDiameterV)
-				## \todo die "5" muß mit dem Maximalen für den Charakter möglichen Wert ersetzt werden.
-				self.__painter.save()
-				self.__painter.setBrush(self.__colorEmpty)
-				self.__painter.setOpacity(.5)
-				for k in range(subitem.value, 5):
-					self.__painter.drawEllipse(offsetH + (i+1) * distanceH + sep + k * self.__dotDiameterH, offsetV - self.__dotDiameterV + j * distanceV, self.__dotDiameterH, self.__dotDiameterV)
-				self.__painter.restore()
+				self.__drawTrait(textwidth + i * distanceH, offsetV + j * distanceV, width=distanceH, name=subitem.name, value=subitem.value, align=Qt.AlignRight, fontWeight=QFont.Bold)
 				j += 1
 			i += 1
+
+		self.__painter.restore()
+
+
+	def _drawSkills(self, offsetV=0, distanceV=0, width=None):
+		"""
+		Bannt die Fertigkeiten auf den Charakterbogen.
+
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
+		\param distanceV Der vertikale Zwischenraum zwischen den einzelnen Fertigkeitskategorien.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth // 3
+		
+		fontMetrics = QFontMetrics(self.__fontMain)
+		textHeight = fontMetrics.height() - 3
+
+		i = 0
+		j = 0
+		for item in self.__character.traits["Skill"]:
+			self.__painter.save()
+			self.__painter.setFont(self.__fontHeading)
+			fontMetrics_heading = QFontMetrics(self.__painter.font())
+			headingHeight = fontMetrics.boundingRect(item).height()
+			self.__painter.drawText(0, offsetV - headingHeight + i * distanceV + j * textHeight, width, headingHeight, Qt.AlignCenter, item)
+			self.__painter.restore()
+			for subitem in self.__character.traits["Skill"][item]:
+				self.__drawTrait(0, offsetV + i * distanceV + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value)
+				j += 1
+			i += 1
+			j += 1
+
+
+		self.__painter.restore()
+
+
+	def __drawValueDots(self, posX, posY, value=0, maxValue=5):
+		"""
+		Zeichnet die Punkte für den Eigenschaftswert. Übersteigt value den Wert von maxValue, werden nur maxValue Punkte dargestellt.
+		"""
+
+		if value > maxValue:
+			value = maxValue
+
+		self.__painter.save()
+
+		pen = self.__painter.pen()
+		pen.setWidthF(self.__dotLineWidth)
+		self.__painter.setPen(pen)
+
+		self.__painter.save()
+
+		self.__painter.setBrush(self.__colorFill)
+
+		for i in xrange(value):
+			self.__painter.drawEllipse(posX + i * self.__dotDiameterH, posY - self.__dotDiameterV, self.__dotDiameterH, self.__dotDiameterV)
+
+		self.__painter.restore()
+
+		self.__painter.save()
+
+		self.__painter.setBrush(self.__colorEmpty)
+
+		for i in range(value, maxValue):
+			self.__painter.drawEllipse(posX + i * self.__dotDiameterH, posY - self.__dotDiameterV, self.__dotDiameterH, self.__dotDiameterV)
+
+		self.__painter.restore()
+
+		self.__painter.restore()
+
+
+	def __drawTrait(self, posX, posY, width, fontWeight=QFont.Normal, align=Qt.AlignLeft, name="", value=0, maxValue=5):
+		"""
+		Schreibt eine Eigenschaft mit den Punktwerten.
+
+		posX und posY bestimmen den Punkt der Auflagelinie des Textes.
+		"""
+
+		self.__painter.save()
+
+		font = self.__fontMain
+		font.setWeight(fontWeight)
+		self.__painter.setFont(font)
+		
+		fontMetrics = QFontMetrics(self.__painter.font())
+		textHeight = fontMetrics.height()
+		dotsWidth = maxValue * (self.__dotDiameterH + self.__dotLineWidth / 2)
+		textWidth = width - dotsWidth - self.__textDotSep
+
+		self.__painter.drawText(posX, posY - fontMetrics.ascent(), textWidth, textHeight, align, name)
+
+		## Bei linksbündigen Eigenschaften muß eine Linie gezogen werden,d amit man weiß, welche Punkte zu welcher Eigenschaft gehören.
+		if align == Qt.AlignLeft:
+			self.__painter.save()
+			pen = self.__painter.pen()
+			pen.setWidthF(self.__lineWidth)
+			self.__painter.setPen(pen)
+			self.__painter.drawLine(posX + fontMetrics.boundingRect(name).width(), posY, posX + textWidth, posY)
+			self.__painter.restore()
+		
+		self.__drawValueDots(posX + textWidth + self.__textDotSep, posY, value, maxValue)
 
 		self.__painter.restore()
 

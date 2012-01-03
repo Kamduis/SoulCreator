@@ -691,7 +691,7 @@ class MainWindow(QMainWindow):
 		Druckt den angezeigten Charakter aus.
 		"""
 
-		Debug.debug("Jetzt würde ich drucken.")
+		Debug.debug("Jetzt würde ich drucken, wenn diese Funktion schon implementiert wäre.")
 		#printer = QPrinter()
 		#printDialog = QPrintDialog( printer, self )
 
