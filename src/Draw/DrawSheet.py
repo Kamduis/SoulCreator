@@ -22,12 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, QRectF
-from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage
+from PySide.QtCore import Qt, QObject, QRectF
+from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage, QFont, QFontDatabase, QFontMetrics
 
 #from src.Config import Config
 from src.Error import ErrSpeciesNotExisting
-#from src.Widgets.TraitLine import TraitLine
+from src.Datatypes.Identity import Identity
 from src.Debug import Debug
 
 
@@ -47,16 +47,38 @@ class DrawSheet(QObject):
 
 		self.__character = character
 
+		self.__painter = QPainter()
 		self.__printer = printer
 
-
-	#v_dotDiameterH = 1;
-	#v_dotDiameterV = 1;
+		self.__dotDiameterH = 9
+		self.__dotDiameterV = self.__dotDiameterH
 	#v_textHeight = 0;
 	#v_textDotsHeightDifference = 0;
+		## Die Farbe, mit welcher die Punkte auf dem Charakterbogen ausgefüllt werden.
 		self.__colorFill = QColor( 0, 0, 0 )
+		self.__colorEmpty = QColor( 255, 255, 255 )
+		self.__colorText = QColor( 255, 0, 0 )
 
-	#calcAdvantages = new CalcAdvantages( this );
+		## Schriften sind Abhängig von der Spezies.
+		self.__fontMain = QFont("TeX Gyre Pagella")
+		self.__fontSans = QFont("TeX Gyre Heros" )
+		self.__fontHeading = QFont("TeX Gyre Heros", 13 )
+		if self.__character.species == "Human":
+			self.__fontHeading = QFont("ArchitectsDaughter", 11 )
+		elif self.__character.species == "Changeling":
+			self.__fontHeading = QFont("Mutlu", 13 )
+		elif self.__character.species == "Mage":
+			self.__fontHeading = QFont("Tangerine", 15 )
+		elif self.__character.species == "Vampire":
+			self.__fontHeading = QFont("Cloister Black", 13 )
+		elif self.__character.species == "Werewolf":
+			self.__fontHeading = QFont("Note this", 13 )
+		else:
+			#self.__fontHeading = QFont("HVD Edding 780", 14 )	# Tiere
+			raise ErrSpeciesNotExisting( character.species )
+		self.__fontScript = QFont("Blokletters Balpen", 6 )
+
+		#calcAdvantages = new CalcAdvantages( this );
 
 
 	def print(self):
@@ -64,34 +86,204 @@ class DrawSheet(QObject):
 		Hier wird gezeichnet und gedruckt.
 		"""
 		
-		painter = QPainter()
+		self.__painter.begin( self.__printer )
 
-		painter.begin( self.__printer )
-
-		painter.setBrush( self.__colorFill )
+		self.__painter.setPen( self.__colorText )
+		self.__painter.setBrush( self.__colorFill )
 
 		image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
 		if ( self.__character.species == "Human" ):
 			pass
-		elif ( character.species == "Changeling" ):
+		elif ( self.__character.species == "Changeling" ):
 			image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" )
-		elif ( character.species == "Mage" ):
+		elif ( self.__character.species == "Mage" ):
 			image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
-		elif ( character.species == "Vampire" ):
+		elif ( self.__character.species == "Vampire" ):
 			image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
-		elif ( character.species == "Werewolf" ):
+		elif ( self.__character.species == "Werewolf" ):
 			image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
 		else:
 			raise ErrSpeciesNotExisting( character.species )
 
+		## Grundeinstellungen des Painters sind abgeschlossen. Dies ist der Zusatnd, zu dem wir zurückkehren, wenn wir painter.restore() aufrufen.
+		self.__painter.save()
 
+		## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
 		source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
 		target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
+		self.__painter.drawImage(target, image, source)
 
+		self.drawGrid()
+
+		self.drawInfo(offsetH=23, offsetV=118, distanceH=255, distanceV=19)
+
+		self.drawAttributes(offsetH=23, offsetV=180, distanceV=18)
+
+		self.__painter.restore()
+
+		self.__painter.end()
+
+
+	def drawGrid(self):
+		"""
+		Diese Funktion zeichnet ein Gitter, damit man weiß, an welcher Position man die Einträge platzieren muß.
+		"""
+
+		pageWidth = self.__printer.width()
+		pageHeight = self.__printer.height()
+
+		self.__painter.save()
+
+		fontLcl = self.__fontSans
+		fontLcl.setPointSize(4)
+		self.__painter.setFont(fontLcl)
+		self.__painter.setRenderHint(QPainter.TextAntialiasing)
+		self.__painter.save()
+		
+		pen = QPen(Qt.DashLine)
+		pen.setColor(QColor(0,0,255))
+		self.__painter.setPen(pen)
+		
+		for i in range(pageWidth)[::10]:
+			self.__painter.drawLine(i, 0, i, pageHeight)
+		for i in range(pageHeight)[::10]:
+			self.__painter.drawLine(0, i, pageWidth, i)
+
+		self.__painter.restore()
+
+		self.__painter.save()
+
+		self.__painter.setPen(QColor(0,127,127))
+		for i in range(pageWidth)[::100]:
+			self.__painter.drawLine(i, 0, i, pageHeight)
+			self.__painter.drawText(i+1, 0, 10, 10, Qt.AlignLeft, unicode(i))
+		for i in range(pageHeight)[::100]:
+			self.__painter.drawLine(0, i, pageWidth, i)
+			self.__painter.drawText(1, i, 10, 10, Qt.AlignLeft, unicode(i))
+
+		self.__painter.restore()
+
+		self.__painter.restore()
+
+
+	def drawInfo(self, offsetH=0, offsetV=0, distanceH=0, distanceV=0):
+		"""
+		Diese Funktion Schreibt Namen, Virtue/Vice etc. in den Kopf des Charakterbogens.
+
+		\param offsetH Horizontaler Abstand zwischen Bildkante und der rechten Kante des Platzes für den Namen.
+		\param offsetV Vertikaler Abstand zwischen Bildkante und dem Platz für den Namen.
+		\param distanceH Horizontaler Abstand zwischen den Zeilen.
+		\param distanceV Vertikaler Abstand zwischen den Spalten.
+		"""
+
+		text = [
+			[ u"Name:", u"Concept:", ],
+			[ u"Virute:", u"Vice:", ],
+			[ u"Chronicle:", u"Faction:", ],
+		]
+		
+		self.__painter.save()
+		self.__painter.setFont(self.__fontHeading)
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+
+		width = []
+		for i in xrange(len(text)):
+			subWidth = []
+			for j in xrange(len(text[i])):
+				self.__painter.drawText(offsetH + i * distanceH, offsetV + j * distanceV, text[i][j])
+				subWidth.append(fontMetrics.boundingRect(text[i][j]).width())
+			width.append(max(subWidth))
+
+		self.__painter.restore()
+		
+		self.__painter.save()
+		
+		self.__painter.setFont(self.__fontScript)
+
+		text = [
+			[ Identity.displayNameDisplay(self.__character.identities[0].surename, self.__character.identities[0].firstname, self.__character.identities[0].nickname), u"", ],
+			[ self.__character.virtue, self.__character.vice, ],
+			[ u"", u"", ],
+		]
+
+		for i in xrange(len(text)):
+			for j in xrange(len(text[i])):
+				var = self.__character
+				self.__painter.drawText(offsetH + i * distanceH + width[i], offsetV + j * distanceV, text[i][j])
+
+		self.__painter.restore()
+
+
+	def drawAttributes(self, offsetH=0, offsetV=0, distanceV=0):
+		"""
+		Diese Funktion Zeichnet die Attribute
+
+		\param offsetH Horizontaler Abstand zwischen Bildkante und der rechten Kante des Platzes für den Namen.
+		\param offsetV Vertikaler Abstand zwischen Bildkante und dem Platz für den Namen.
+		\param distanceV Vertikaler Abstand zwischen den Spalten.
+		"""
+
+		self.__painter.save()
+		self.__painter.setFont(self.__fontHeading)
+
+		text = [ u"Power", u"Finesse", u"Resistance", ]
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		textwidthArray = []
+		for item in text:
+			textwidthArray.append(fontMetrics.boundingRect("Resistance").width())
+		textwidth = max(textwidthArray)
+		height = fontMetrics.height()
+		baseline = offsetV - fontMetrics.ascent()
+
+		for i in xrange(len(text)):
+			for j in xrange(len(text[i])):
+				self.__painter.drawText(offsetH, baseline + i * distanceV, textwidth, height, Qt.AlignRight, text[i])
+
+		self.__painter.restore()
+
+		self.__painter.save()
+		self.__painter.setFont(self.__fontMain)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		height = fontMetrics.height()
+		baseline = offsetV - fontMetrics.ascent()
+
+		widthLeft = self.__printer.width() - offsetH - textwidth
+
+		distanceH = widthLeft // 3
+
+		sep = 4
+
+		i = 0
+		for item in self.__character.traits["Attribute"]:
+			j = 0
+			for subitem in self.__character.traits["Attribute"][item]:
+				# Schreibe Attributsname
+				self.__painter.drawText(offsetH + i * distanceH, baseline + j * distanceV, distanceH, height, Qt.AlignRight, subitem.name)
+				# Male Punkte aus
+				for k in xrange(subitem.value):
+					self.__painter.drawEllipse(offsetH + (i+1) * distanceH + sep + k * self.__dotDiameterH, offsetV - self.__dotDiameterV + j * distanceV, self.__dotDiameterH, self.__dotDiameterV)
+				## \todo die "5" muß mit dem Maximalen für den Charakter möglichen Wert ersetzt werden.
+				self.__painter.save()
+				self.__painter.setBrush(self.__colorEmpty)
+				self.__painter.setOpacity(.5)
+				for k in range(subitem.value, 5):
+					self.__painter.drawEllipse(offsetH + (i+1) * distanceH + sep + k * self.__dotDiameterH, offsetV - self.__dotDiameterV + j * distanceV, self.__dotDiameterH, self.__dotDiameterV)
+				self.__painter.restore()
+				j += 1
+			i += 1
+
+		self.__painter.restore()
+
+	## Der horizontale Radius eines Punkts auf dem Charakterbogen.
 	#v_dotDiameterH = target.width() * 0.01156;
+	## Der vertikale Radius eines Punkts auf dem Charakterbogen.
 	#v_dotDiameterV = target.height() * 0.0082;
 
+	## Die Schrifthöhe auf dem Charakterbogen.
 	#v_textHeight = target.height() * 0.0182;
+	## Die Differenz in der Ausgangshöhe zwischen dem Schrifttext und den Punkten.
 	#v_textDotsHeightDifference = target.height() * 0.002;
 
 	#qreal dotSizeFactor = 1.27;
@@ -406,13 +598,23 @@ class DrawSheet(QObject):
 
 	#characterFont.setPointSize( v_textHeight*Config::textSizeFactorPrintNormal );
 
-	#painter.setFont( characterFont );
+		##painter.setFont( characterFont )
+		#painter.setFont( QFont("ArchitectsDaughter" ))
+		#Debug.debug(painter.font())
 
-#// 	qDebug() << Q_FUNC_INFO << "Punktradius" << v_dotDiameterH << v_dotDiameterV;
+##// 	qDebug() << Q_FUNC_INFO << "Punktradius" << v_dotDiameterH << v_dotDiameterV;
 
-		painter.save()
+		#painter.save()
 
-		painter.drawImage( target, image, source )
+		#painter.drawImage( target, image, source )
+		#text = u"Dies ist ein ganz normaler Testsatz, in dem ich auch ein paar Umlaute wie beispielsweise ÄÖÜßäöü é unterbringen will."
+		#painter.drawText(10, 10, text)
+
+		#painter.restore()
+
+		#painter.setFont( QFont("HVD Edding 780" ))
+		#painter.save()
+		#painter.drawText(10, 20, text)
 
 	#drawInfo( &painter, offsetHInfo, offsetVInfo, distanceHInfo, distanceVInfo, textWidthInfo );
 	#drawAttributes( &painter, offsetHAttributes, offsetVAttributes, distanceHAttributes, distanceVAttributes );
@@ -437,9 +639,6 @@ class DrawSheet(QObject):
 		#drawFuelPerTurn( &painter, offsetHFuelPerTurn, offsetVFuelPerTurn, distanceHFuelPerTurn );
 	#}
 
-		painter.restore()
-
-		painter.end()
 
 
 #void DrawSheet::drawInfo( QPainter* painter, qreal offsetH, qreal offsetV, qreal distanceH, qreal distanceV, qreal textWidth ) {
@@ -921,6 +1120,14 @@ class DrawSheet(QObject):
 
 
 #QList< Trait* > DrawSheet::getTraits( cv_AbstractTrait::Type type, int maxNumber, bool enforceTraitLimits ) {
+	"""
+	Mit dieser Hilfsfunktion für drawMerits() werden die passenden Merits aus dem Charakter geholt.
+	
+	Diese globale Variable legt fest, ob bei einer Überschreitung der Eigenschaftshöchstwerte eine Ausnahme geworfen wird (false/Standardverhalten), oder die Grenzen einfach fest durchgesetzt werden.
+
+	\param enforceTraitLimits Wird dieser Schalter auf true gesetzt (standardmäßig ist er false), werden die Grenzen für die maximale Anzahl durchgesetzt, auch wenn dadurch nicht alle Eigenschaften des Charakters auf Papier gebannt werden.
+	"""
+	
 	#QList< cv_AbstractTrait::Category > category;
 	#category.append( cv_AbstractTrait::CategoryNo );
 

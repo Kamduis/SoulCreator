@@ -18,6 +18,24 @@
     <file>images/actions/filenew.png</file>
     <file>images/WoD.png</file>
   </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/texgyreheros-bold.otf</file>
+    <file>fonts/texgyreheros-bolditalic.otf</file>
+    <file>fonts/texgyreheros-italic.otf</file>
+    <file>fonts/texgyreheros-regular.otf</file>
+    <file>fonts/texgyrepagella-bold.otf</file>
+    <file>fonts/texgyrepagella-bolditalic.otf</file>
+    <file>fonts/texgyrepagella-italic.otf</file>
+    <file>fonts/texgyrepagella-regular.otf</file>
+    <file>fonts/ArchitectsDaughter.ttf</file>
+    <file>fonts/CloisterBlack.ttf</file>
+    <file>fonts/HVD_Edding.otf</file>
+    <file>fonts/Note_this.ttf</file>
+    <file>fonts/Tangerine_Bold.ttf</file>
+    <file>fonts/Mutlu__Ornamental.ttf</file>
+    <file>fonts/Tangerine_Regular.ttf</file>
+    <file>fonts/Blokletters-Balpen.ttf</file>
+  </qresource>
   <qresource prefix="background">
     <file>images/Skull-Changeling-gray.png</file>
     <file>images/Skull-Human-gray.png</file>

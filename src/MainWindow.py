@@ -26,7 +26,7 @@ import sys
 import os
 
 from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray
-from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QPrinter
+from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QPrinter, QFont, QFontDatabase
 
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from Config import Config
@@ -245,6 +245,14 @@ class MainWindow(QMainWindow):
 
 		#connect( self.__self.__character, SIGNAL( speciesChanged( cv_Species.SpeciesFlag ) ), self, SLOT( showBackround( cv_Species.SpeciesFlag ) ) );
 	#}
+		QFontDatabase.addApplicationFont(":fonts/fonts/ArchitectsDaughter.ttf")
+		QFontDatabase.addApplicationFont(":fonts/fonts/CloisterBlack.ttf")
+		QFontDatabase.addApplicationFont(":fonts/fonts/HVD_Edding.otf")
+		QFontDatabase.addApplicationFont(":fonts/fonts/Note_this.ttf")
+		QFontDatabase.addApplicationFont(":fonts/fonts/Tangerine_Regular.ttf")
+		QFontDatabase.addApplicationFont(":fonts/fonts/Tangerine_Bold.ttf")
+		QFontDatabase.addApplicationFont(":fonts/fonts/Mutlu__Ornamental.ttf")
+		QFontDatabase.addApplicationFont(":fonts/fonts/Blokletters-Balpen.ttf")
 
 
 	def activate(self):
@@ -294,7 +302,6 @@ class MainWindow(QMainWindow):
 
 		# Wir wollen zu Beginn immer die Informationen sehen.
 		self.ui.selectWidget_select.setCurrentRow(0)
-
 
 
 
@@ -648,8 +655,6 @@ class MainWindow(QMainWindow):
 		Diese Funktion druckt den Charakter in ein PDF-Dokument.
 		"""
 
-		Debug.debug("Jetzt würde ich exportieren.")
-
 		appPath = getPath()
 
 		# Pfad zum Speicherverzeichnis
@@ -659,7 +664,8 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
+		#filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
+		filePath = ["{}/untitled.pdf".format(savePath), ""]
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
