@@ -4,4 +4,5 @@ save
 *.kdev4
 *~
 *.pyc
+*.ini
 *.kate-swp

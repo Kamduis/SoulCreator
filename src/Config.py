@@ -175,6 +175,15 @@ class Config():
 		"Kid",
 	)
 
+	## Die unterschieldichen Gestalten der Werwölfe.
+	shapesWerewolf = (
+		"Hishu",
+		"Dalu",
+		"Gauru",
+		"Urshul",
+		"Urhan",
+	)
+
 
 
 	@staticmethod

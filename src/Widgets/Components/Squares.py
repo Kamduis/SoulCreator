@@ -25,7 +25,7 @@ from __future__ import division, print_function
 import math
 
 from PySide.QtCore import Qt, QRect, Signal
-from PySide.QtGui import QWidget, QPainter, QPen, QBrush, QColor
+from PySide.QtGui import QWidget, QSizePolicy, QPainter, QPen, QBrush, QColor
 
 #from src.Config import Config
 #from src import Error
@@ -74,15 +74,15 @@ class Squares(QWidget):
 		# Minimalgröße festlegen
 		self.__minimumSizeY = 10
 		self.resetMinimumSize()
-		#setMinimumSize(50, 10);
-		#setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Preferred );
+		#self.setMinimumSize(50, 10);
+		#self.setSizePolicy( QSizePolicy.MinimumExpanding, QSizePolicy.Preferred )
 
 		# Setze Standardfarbe weiß
 		self.__colorEmpty = QColor( 255, 255, 255 )
 		self.__colorFrame = QColor( 0, 0, 0 )
 
-	#connect( self, SIGNAL( maximumChanged( int ) ), self, SLOT( resetMinimumSize() ) );
-	#connect( self, SIGNAL( columnMaxChanged( int ) ), self, SLOT( resetMinimumSize() ) );
+		self.maximumChanged.connect(self.resetMinimumSize)
+		self.columnMaxChanged.connect(self.resetMinimumSize)
 
 
 	def paintEvent( self, event ):
@@ -115,7 +115,7 @@ class Squares(QWidget):
 			if ( not self.isEnabled() ):
 				painter.setOpacity( .5 )
 
-			#painter.translate( double( windowWidth ), double( windowHeight ) );
+			#painter.translate( float( windowWidth ), float( windowHeight ) )
 
 			painter.scale( side / squareSideLengthPlus, side / squareSideLengthPlus )
 			painter.setPen( framePen )

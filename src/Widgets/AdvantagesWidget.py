@@ -24,11 +24,12 @@ from __future__ import division, print_function
 
 #import traceback
 
-from PySide.QtCore import Qt
+from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QFontMetrics, QLabel, QSpinBox
 
 from src.Config import Config
 #from src import Error
+from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Widgets.Components.TraitDots import TraitDots
 from src.Widgets.Components.Squares import Squares
 from src.Debug import Debug
@@ -40,6 +41,12 @@ class AdvantagesWidget(QWidget):
 	"""
 	@brief Dieses Widget zeit die Advantages (Size, Speed, Health etc.) an.
 	"""
+
+
+	sizeChanged = Signal(int)
+	initiativeChanged = Signal(int)
+	speedChanged = Signal(int)
+
 
 	def __init__(self, template, character, parent=None):
 		QWidget.__init__(self, parent)
@@ -56,14 +63,17 @@ class AdvantagesWidget(QWidget):
 		self.__labelSize = QLabel( self.tr( "Size:" ) )
 		self.__labelSizeValue = QLabel()
 		self.__labelSizeValue.setNum( 0 )
+		self.__labelSizeValueShapes = QLabel()
 
 		self.__labelInitiative = QLabel( self.tr( "Initiative:" ) )
 		self.__labelInitiativeValue = QLabel()
 		self.__labelInitiativeValue.setNum( 0 )
+		self.__labelInitiativeValueShapes = QLabel()
 
 		self.__labelSpeed = QLabel( self.tr( "Speed:" ) )
 		self.__labelSpeedValue = QLabel()
 		self.__labelSpeedValue.setNum( 0 )
+		self.__labelSpeedValueShapes = QLabel()
 
 		self.__labelDefense = QLabel( self.tr( "Defense:" ) )
 		self.__labelDefenseValue = QLabel()
@@ -86,10 +96,13 @@ class AdvantagesWidget(QWidget):
 
 		self.__layoutAdvantages.addWidget( self.__labelSize, 0, 0 )
 		self.__layoutAdvantages.addWidget( self.__labelSizeValue, 0, 1 )
+		self.__layoutAdvantages.addWidget( self.__labelSizeValueShapes, 0, 2 )
 		self.__layoutAdvantages.addWidget( self.__labelInitiative, 1, 0 )
 		self.__layoutAdvantages.addWidget( self.__labelInitiativeValue, 1, 1 )
+		self.__layoutAdvantages.addWidget( self.__labelInitiativeValueShapes, 1, 2 )
 		self.__layoutAdvantages.addWidget( self.__labelSpeed, 2, 0 )
 		self.__layoutAdvantages.addWidget( self.__labelSpeedValue, 2, 1 )
+		self.__layoutAdvantages.addWidget( self.__labelSpeedValueShapes, 2, 2 )
 		self.__layoutAdvantages.addWidget( self.__labelDefense, 3, 0 )
 		self.__layoutAdvantages.addWidget( self.__labelDefenseValue, 3, 1 )
 		self.__layoutAdvantages.addWidget( self.__labelArmor, 4, 0 )
@@ -163,14 +176,13 @@ class AdvantagesWidget(QWidget):
 
 		self.__squaresFuel = Squares()
 		self.__squaresFuel.columnMax = 10
-		#self.__squaresFuel.maximum = self.__storage.fuelMax( self.__character.species, self.__character.powerstat )
 		self.__squaresFuel.maximum = 0
 
 		self.__fuelPerTurn = QLabel( self.tr( "1" ) )
 		self.__fuelPerTurn.setAlignment( Qt.AlignCenter )
 
 		self.__layoutFuelSquares.addWidget( self.__squaresFuel )
-		self.__layoutFuelSquares.addStretch()
+		#self.__layoutFuelSquares.addStretch()
 		self.__layoutFuelSquares.addWidget( self.__fuelPerTurn )
 
 		self.__layout.addSpacing( Config.traitCategorySpace )
@@ -180,12 +192,15 @@ class AdvantagesWidget(QWidget):
 
 		self.__layout.addStretch()
 
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( writeSize( cv_Species::SpeciesFlag ) ) );
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( writeInitiative(cv_Species::SpeciesFlag)) );
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), self, SLOT( writeSpeed(cv_Species::SpeciesFlag)) );
-	#connect( spinBoxArmorGeneral, SIGNAL(valueChanged(int)), self, SLOT(setArmor()));
-	#connect( spinBoxArmorFirearms, SIGNAL(valueChanged(int)), self, SLOT(setArmor()));
-	#connect( character, SIGNAL( armorChanged(int,int)), self, SLOT( updateArmor( int, int ) ) );
+		self.__character.speciesChanged.connect(self.setShapeSize)
+		self.sizeChanged.connect(self.setShapeSize)
+		self.__character.speciesChanged.connect(self.setShapeInitiaitve)
+		self.initiativeChanged.connect(self.setShapeInitiaitve)
+		self.__character.speciesChanged.connect(self.setShapeSpeed)
+		self.speedChanged.connect(self.setShapeSpeed)
+		self.__spinBoxArmorGeneral.valueChanged.connect(self.saveArmor)
+		self.__spinBoxArmorFirearms.valueChanged.connect(self.saveArmor)
+		self.__character.armorChanged.connect(self.updateArmor)
 #// 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), self, SLOT( changeSuper( cv_Trait ) ) );
 #// 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), self, SLOT( emitSuperChanged( int ) ) );
 #// 	connect( self, SIGNAL( superChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
@@ -198,15 +213,21 @@ class AdvantagesWidget(QWidget):
 
 
 	def setSize(self, value):
-		self.__labelSizeValue.setNum(value)
+		if self.__labelSizeValue.text() != unicode(value):
+			self.__labelSizeValue.setText(unicode(value))
+			self.sizeChanged.emit(value)
 
 
 	def setInitiative(self, value):
-		self.__labelInitiativeValue.setNum(value)
+		if self.__labelInitiativeValue.text() != unicode(value):
+			self.__labelInitiativeValue.setText(unicode(value))
+			self.initiativeChanged.emit(value)
 
 
 	def setSpeed(self, value):
-		self.__labelSpeedValue.setNum(value)
+		if self.__labelSpeedValue.text() != unicode(value):
+			self.__labelSpeedValue.setText(unicode(value))
+			self.speedChanged.emit(value)
 
 
 	def setDefense(self, value):
@@ -222,116 +243,44 @@ class AdvantagesWidget(QWidget):
 		self.__dotsWill.setValue(value)
 
 
-#void AdvantagesWidget::writeSize( int size ) {
-	"""
-	Schreibe die Größe in das Widget.
-	"""
-	
-	#if ( character.species() == cv_Species::Werewolf ) {
-		#QString text = QString::number( calcAdvantages.size( cv_Shape::Hishu ) ) + "/" +
-					   #QString::number( calcAdvantages.size( cv_Shape::Dalu ) ) + "/" +
-					   #QString::number( calcAdvantages.size( cv_Shape::Gauru ) ) + "/" +
-					   #QString::number( calcAdvantages.size( cv_Shape::Urshul ) ) + "/" +
-					   #QString::number( calcAdvantages.size( cv_Shape::Urhan ) );
-		#labelSizeValue.setText( text );
-	#} else {
-		#labelSizeValue.setNum( size );
-	#}
-#}
+	def setShapeSize(self):
+		if self.__character.species == "Werewolf":
+			size = int(self.__labelSizeValue.text())
+			self.__labelSizeValueShapes.setText("{}, {}, {}, {}".format(
+				CalcAdvantages.size(size, Config.shapesWerewolf[1]),
+				CalcAdvantages.size(size, Config.shapesWerewolf[2]),
+				CalcAdvantages.size(size, Config.shapesWerewolf[3]),
+				CalcAdvantages.size(size, Config.shapesWerewolf[4]),
+			))
+		else:
+			self.__labelSizeValueShapes.setText("")
 
-#void AdvantagesWidget::writeSize( cv_Species::SpeciesFlag species ) {
-	"""
-	
-	"""
 
-	#if ( species == cv_Species::Werewolf ) {
-		#QString text = QString::number( calcAdvantages.size( cv_Shape::Hishu ) ) + "/" +
-					   #QString::number( calcAdvantages.size( cv_Shape::Dalu ) ) + "/" +
-					   #QString::number( calcAdvantages.size( cv_Shape::Gauru ) ) + "/" +
-					   #QString::number( calcAdvantages.size( cv_Shape::Urshul ) ) + "/" +
-					   #QString::number( calcAdvantages.size( cv_Shape::Urhan ) );
-		#labelSizeValue.setText( text );
-	#} else {
-		#labelSizeValue.setNum( calcAdvantages.size() );
-	#}
-#}
+	def setShapeInitiaitve(self):
+		if self.__character.species == "Werewolf":
+			value = int(self.__labelInitiativeValue.text())
+			self.__labelInitiativeValueShapes.setText("{}, {}, {}, {}".format(
+				CalcAdvantages.initiative(value, Config.shapesWerewolf[1]),
+				CalcAdvantages.initiative(value, Config.shapesWerewolf[2]),
+				CalcAdvantages.initiative(value, Config.shapesWerewolf[3]),
+				CalcAdvantages.initiative(value, Config.shapesWerewolf[4]),
+			))
+		else:
+			self.__labelSizeValueShapes.setText("")
 
-#void AdvantagesWidget::writeInitiative( int initiative ) {
-	"""
-	Schreibe die Initiative in das Widget.
-	"""
 
-	#if ( character.species() == cv_Species::Werewolf ) {
-		#QString text = QString::number( calcAdvantages.initiative( cv_Shape::Hishu ) ) + "/" +
-					   #QString::number( calcAdvantages.initiative( cv_Shape::Dalu ) ) + "/" +
-					   #QString::number( calcAdvantages.initiative( cv_Shape::Gauru ) ) + "/" +
-					   #QString::number( calcAdvantages.initiative( cv_Shape::Urshul ) ) + "/" +
-					   #QString::number( calcAdvantages.initiative( cv_Shape::Urhan ) );
-		#labelInitiativeValue.setText( text );
-	#} else {
-		#labelInitiativeValue.setNum( initiative );
-	#}
-#}
+	def setShapeSpeed(self):
+		if self.__character.species == "Werewolf":
+			value = int(self.__labelSpeedValue.text())
+			self.__labelSpeedValueShapes.setText("{}, {}, {}, {}".format(
+				CalcAdvantages.speed(value, Config.shapesWerewolf[1]),
+				CalcAdvantages.speed(value, Config.shapesWerewolf[2]),
+				CalcAdvantages.speed(value, Config.shapesWerewolf[3]),
+				CalcAdvantages.speed(value, Config.shapesWerewolf[4]),
+			))
+		else:
+			self.__labelSizeValueShapes.setText("")
 
-#void AdvantagesWidget::writeInitiative( cv_Species::SpeciesFlag species ) {
-	"""
-
-	"""
-
-	#if ( species == cv_Species::Werewolf ) {
-		#QString text = QString::number( calcAdvantages.initiative( cv_Shape::Hishu ) ) + "/" +
-					   #QString::number( calcAdvantages.initiative( cv_Shape::Dalu ) ) + "/" +
-					   #QString::number( calcAdvantages.initiative( cv_Shape::Gauru ) ) + "/" +
-					   #QString::number( calcAdvantages.initiative( cv_Shape::Urshul ) ) + "/" +
-					   #QString::number( calcAdvantages.initiative( cv_Shape::Urhan ) );
-		#labelInitiativeValue.setText( text );
-	#} else {
-		#labelInitiativeValue.setNum( calcAdvantages.initiative() );
-	#}
-#}
-
-#void AdvantagesWidget::writeSpeed( int speed ) {
-	"""
-	Schreibe den Speed in das Widget.
-	"""
-
-	#if ( character.species() == cv_Species::Werewolf ) {
-		#QString text = QString::number( calcAdvantages.speed( cv_Shape::Hishu ) ) + "/" +
-					   #QString::number( calcAdvantages.speed( cv_Shape::Dalu ) ) + "/" +
-					   #QString::number( calcAdvantages.speed( cv_Shape::Gauru ) ) + "/" +
-					   #QString::number( calcAdvantages.speed( cv_Shape::Urshul ) ) + "/" +
-					   #QString::number( calcAdvantages.speed( cv_Shape::Urhan ) );
-		#labelSpeedValue.setText( text );
-	#} else {
-		#labelSpeedValue.setNum( speed );
-	#}
-#}
-
-#void AdvantagesWidget::writeSpeed( cv_Species::SpeciesFlag species ) {
-	"""
-
-	"""
-
-	#if ( species == cv_Species::Werewolf ) {
-		#QString text = QString::number( calcAdvantages.speed( cv_Shape::Hishu ) ) + "/" +
-					   #QString::number( calcAdvantages.speed( cv_Shape::Dalu ) ) + "/" +
-					   #QString::number( calcAdvantages.speed( cv_Shape::Gauru ) ) + "/" +
-					   #QString::number( calcAdvantages.speed( cv_Shape::Urshul ) ) + "/" +
-					   #QString::number( calcAdvantages.speed( cv_Shape::Urhan ) );
-		#labelSpeedValue.setText( text );
-	#} else {
-		#labelSpeedValue.setNum( calcAdvantages.speed() );
-	#}
-#}
-
-#void AdvantagesWidget::printHealth( int value ) {
-	"""
-
-	"""
-
-	#dotsHealth.setMaximum( value );
-	#dotsHealth.setValue( value );
-#}
 
 	def hideSuper( self, species ):
 		"""
@@ -371,21 +320,24 @@ class AdvantagesWidget(QWidget):
 		self.__fuelPerTurn.setText( self.tr( "{}/Turn".format( perTurn ) ))
 
 
-#void AdvantagesWidget::setArmor(){
-	"""
-	Schreibe die veränderte Rüstung in den Charkater.
-	"""
-	
-	#character.setArmor(spinBoxArmorGeneral.value(), spinBoxArmorFirearms.value());
-#}
-#void AdvantagesWidget::updateArmor( int general, int firearms ){
-	"""
-	Schreibe die veränderte Rüstung in das Widget.
-	"""
-	
-	#spinBoxArmorGeneral.setValue(general);
-	#spinBoxArmorFirearms.setValue(firearms);
-#}
+	def saveArmor(self):
+		"""
+		Schreibe die veränderte Rüstung in den Charkater.
+		"""
+
+		armor = [
+			self.__spinBoxArmorGeneral.value(),
+			self.__spinBoxArmorFirearms.value(),
+		]
+		self.__character.armor = armor
+
+	def updateArmor( self, armor ):
+		"""
+		Schreibe die veränderte Rüstung in das Widget.
+		"""
+
+		self.__spinBoxArmorGeneral.setValue(armor[0])
+		self.__spinBoxArmorFirearms.setValue(armor[1])
 
 
 

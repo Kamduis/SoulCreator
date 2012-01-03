@@ -76,231 +76,6 @@ class CalcAdvantages(QObject):
 
 		self.sizeChanged.connect(self.calcHealth)
 
-	#QList< cv_AbstractTrait::Type > types;
-	#types.append( cv_AbstractTrait::Attribute );
-	#types.append( cv_AbstractTrait::Merit );
-
-	#QList< Trait* > list;
-
-	#bool stopLoop = false;
-
-	#for ( int i = 0; i < types.count(); ++i ) {
-		#list = character.traits( types.at( i ) );
-
-		#for ( int j = 0; j < list.count(); ++j ) {
-			#if ( types.at( i ) == cv_AbstractTrait::Attribute ) {
-				#if ( list.at( j ).name() == "Wits" ) {
-					#attrWit = list.at( j );
-				#} else if ( list.at( j ).name() == "Resolve" ) {
-					#attrRes = list.at( j );
-				#} else if ( list.at( j ).name() == "Strength" ) {
-					#attrStr = list.at( j );
-				#} else if ( list.at( j ).name() == "Dexterity" ) {
-					#attrDex = list.at( j );
-				#} else if ( list.at( j ).name() == "Stamina" ) {
-					#attrSta = list.at( j );
-				#} else if ( list.at( j ).name() == "Composure" ) {
-					#attrCom = list.at( j );
-				#}
-
-				#if ( attrWit != 0 && attrRes != 0 && attrStr != 0 && attrDex != 0 && attrSta != 0 && attrCom != 0 ) {
-					#break;
-				#}
-			#} else if ( types.at( i ) == cv_AbstractTrait::Merit ) {
-				#if ( list.at( j ).name() == "Giant" ) {
-					#meritGiant = list.at( j );
-				#} else if ( list.at( j ).name() == "Fast Reflexes" ) {
-					#meritFastReflexes = list.at( j );
-				#} else if ( list.at( j ).name() == "Fleet of Foot" ) {
-					#meritFleetOfFoot = list.at( j );
-				#}
-
-				#if ( meritGiant != 0 && meritFleetOfFoot != 0 && meritFastReflexes != 0 ) {
-					#break;
-				#}
-			#}
-		#}
-	#}
-
-	#connect( attrWit, SIGNAL( valueChanged( int ) ), this, SLOT( calcInitiative() ) );
-	#connect( attrWit, SIGNAL( valueChanged( int ) ), this, SLOT( calcDefense() ) );
-	#connect( attrRes, SIGNAL( valueChanged( int ) ), this, SLOT( calcWillpower() ) );
-	#connect( attrStr, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
-	#connect( attrDex, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
-	#connect( attrDex, SIGNAL( valueChanged( int ) ), this, SLOT( calcInitiative() ) );
-	#connect( attrDex, SIGNAL( valueChanged( int ) ), this, SLOT( calcDefense() ) );
-	#connect( attrSta, SIGNAL( valueChanged( int ) ), this, SLOT( calcHealth() ) );
-	#connect( attrCom, SIGNAL( valueChanged( int ) ), this, SLOT( calcWillpower() ) );
-	#connect( meritGiant, SIGNAL( valueChanged( int ) ), this, SLOT( calcSize() ) );
-	#connect( meritFastReflexes, SIGNAL( valueChanged( int ) ), this, SLOT( calcInitiative() ) );
-	#connect( meritFleetOfFoot, SIGNAL( valueChanged( int ) ), this, SLOT( calcSpeed() ) );
-	#connect( this, SIGNAL( sizeChanged( int ) ), this, SLOT( calcHealth() ) );
-#}
-
-
-#int CalcAdvantages::strength( int str, cv_Shape::WerewolfShape shape ) {
-	"""
-	"""
-	
-	#switch ( shape ) {
-		#case cv_Shape::ShapeNo:
-			#return str;
-		#case cv_Shape::Hishu:
-			#return str;
-		#case cv_Shape::Dalu:
-			#return str + 1;
-		#case cv_Shape::Gauru:
-			#return str + 3;
-		#case cv_Shape::Urshul:
-			#return str + 2;
-		#case cv_Shape::Urhan:
-			#return str;
-		#default:
-			#throw eWerewolfShapeNotExisting( shape );
-	#}
-#}
-
-#int CalcAdvantages::dexterity( int dex, cv_Shape::WerewolfShape shape ) {
-	"""
-	"""
-
-	#switch ( shape ) {
-		#case cv_Shape::ShapeNo:
-			#return dex;
-		#case cv_Shape::Hishu:
-			#return dex;
-		#case cv_Shape::Dalu:
-			#return dex;
-		#case cv_Shape::Gauru:
-			#return dex + 1;
-		#case cv_Shape::Urshul:
-			#return dex + 2;
-		#case cv_Shape::Urhan:
-			#return dex + 2;
-		#default:
-			#throw eWerewolfShapeNotExisting( shape );
-	#}
-#}
-
-#int CalcAdvantages::stamina( int sta, cv_Shape::WerewolfShape shape ) {
-	"""
-	"""
-
-	#switch ( shape ) {
-		#case cv_Shape::ShapeNo:
-			#return sta;
-		#case cv_Shape::Hishu:
-			#return sta;
-		#case cv_Shape::Dalu:
-			#return sta + 1;
-		#case cv_Shape::Gauru:
-			#return sta + 2;
-		#case cv_Shape::Urshul:
-			#return sta + 2;
-		#case cv_Shape::Urhan:
-			#return sta + 1;
-		#default:
-			#throw eWerewolfShapeNotExisting( shape );
-	#}
-#}
-
-#int CalcAdvantages::manipulation( int man, cv_Shape::WerewolfShape shape ) {
-	"""
-	"""
-
-	#switch ( shape ) {
-		#case cv_Shape::ShapeNo:
-			#return man;
-		#case cv_Shape::Hishu:
-			#return man;
-		#case cv_Shape::Dalu:
-			#return man - 1;
-		#case cv_Shape::Gauru:
-			#return man;
-		#case cv_Shape::Urshul:
-			#return man - 3;
-		#case cv_Shape::Urhan:
-			#return man;
-		#default:
-			#throw eWerewolfShapeNotExisting( shape );
-	#}
-#}
-
-
-#int CalcAdvantages::size( cv_Shape::WerewolfShape shape ) const {
-	"""
-	Berechnet die Größe des Charakters abhängig von den unterschiedlichen Gestalten.
-	
-	\note Es wird auf das Ergebnis der Funktion calcSize() zurückgegriffen, welche bei jeder Veränderung einer Eigenschaft, die Auswirkung auf die Size haben kann, aufgerufen wird.
-	"""
-
-	#switch ( shape ) {
-		#case cv_Shape::ShapeNo:
-			#return v_size;
-		#case cv_Shape::Hishu:
-			#return v_size;
-		#case cv_Shape::Dalu:
-			#return v_size + 1;
-		#case cv_Shape::Gauru:
-			#return v_size + 2;
-		#case cv_Shape::Urshul:
-			#return v_size + 1;
-		#case cv_Shape::Urhan:
-			#return v_size - 1;
-		#default:
-			#throw eWerewolfShapeNotExisting( shape );
-	#}
-#}
-
-#int CalcAdvantages::initiative( cv_Shape::WerewolfShape shape ) const {
-	"""
-	Berechnet die Initiative des Charakters abhängig von den unterschiedlichen Gestalten.
-	
-	\note Es wird auf das Ergebnis der Funktion calcInitiativa() zurückgegriffen, welche bei jeder Veränderung einer Eigenschaft, die Auswirkung auf die Initiative haben kann, aufgerufen wird.
-	"""
-
-	#switch ( shape ) {
-		#case cv_Shape::ShapeNo:
-			#return v_initiative;
-		#case cv_Shape::Hishu:
-			#return v_initiative;
-		#case cv_Shape::Dalu:
-			#return v_initiative;
-		#case cv_Shape::Gauru:
-			#return v_initiative + 1;
-		#case cv_Shape::Urshul:
-			#return v_initiative + 2;
-		#case cv_Shape::Urhan:
-			#return v_initiative + 2;
-		#default:
-			#throw eWerewolfShapeNotExisting( shape );
-	#}
-#}
-
-#int CalcAdvantages::speed( cv_Shape::WerewolfShape shape ) const {
-	"""
-	Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
-	
-	\note Es wird auf das Ergebnis der Funktion calcSpeed() zurückgegriffen, welche bei jeder Veränderung einer Eigenschaft, die Auswirkung auf diee Eigenschaft haben kann, aufgerufen wird.
-	"""
-
-	#switch ( shape ) {
-		#case cv_Shape::ShapeNo:
-			#return v_speed;
-		#case cv_Shape::Hishu:
-			#return v_speed;
-		#case cv_Shape::Dalu:
-			#return v_speed + 1;
-		#case cv_Shape::Gauru:
-			#return v_speed + 4;
-		#case cv_Shape::Urshul:
-			#return v_speed + 7;
-		#case cv_Shape::Urhan:
-			#return v_speed + 5;
-		#default:
-			#throw eWerewolfShapeNotExisting( shape );
-	#}
-#}
 
 #int CalcAdvantages::defense() const {
 	"""
@@ -410,5 +185,111 @@ class CalcAdvantages(QObject):
 		if ( self.__willpower != result ):
 			self.__willpower = result
 			self.willpowerChanged.emit( result )
+
+
+	@staticmethod
+	def strength( strength, shape ):
+		"""
+		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		if shape == Config.shapesWerewolf[1]:
+			return strength + 1
+		elif shape == Config.shapesWerewolf[2]:
+			return strength + 3
+		elif shape == Config.shapesWerewolf[3]:
+			return strength + 2
+		else:
+			return strength
+
+
+	@staticmethod
+	def dexterity( dexterity, shape ):
+		"""
+		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		if shape == Config.shapesWerewolf[2]:
+			return dexterity + 1
+		elif shape == Config.shapesWerewolf[3] or shape == Config.shapesWerewolf[4]:
+			return dexterity + 2
+		else:
+			return dexterity
+
+
+	@staticmethod
+	def stamina( stamina, shape ):
+		"""
+		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		if shape == Config.shapesWerewolf[1] or shape == Config.shapesWerewolf[4]:
+			return stamina + 1
+		elif shape == Config.shapesWerewolf[2] or shape == Config.shapesWerewolf[3]:
+			return stamina + 2
+		else:
+			return stamina
+
+
+	@staticmethod
+	def manipulation( manipulation, shape ):
+		"""
+		Berechnet die Manipulation des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		if shape == Config.shapesWerewolf[1]:
+			return manipulation - 1
+		elif shape == Config.shapesWerewolf[3]:
+			return manipulation - 3
+		else:
+			return manipulation
+
+
+	@staticmethod
+	def size( size, shape ):
+		"""
+		Berechnet die Größe des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		if shape == Config.shapesWerewolf[1] or shape == Config.shapesWerewolf[3]:
+			return size + 1
+		elif shape == Config.shapesWerewolf[2]:
+			return size + 2
+		elif shape == Config.shapesWerewolf[4]:
+			return size - 1
+		else:
+			return size
+
+
+	@staticmethod
+	def initiative( initiative, shape ):
+		"""
+		Berechnet die Initiative des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		if shape == Config.shapesWerewolf[2]:
+			return initiative + 1
+		elif shape == Config.shapesWerewolf[3] or shape == Config.shapesWerewolf[4]:
+			return initiative + 2
+		else:
+			return initiative
+
+
+	@staticmethod
+	def speed( speed, shape ):
+		"""
+		Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		if shape == Config.shapesWerewolf[1]:
+			return speed + 1
+		elif shape == Config.shapesWerewolf[2]:
+			return speed + 4
+		elif shape == Config.shapesWerewolf[3]:
+			return speed + 7
+		elif shape == Config.shapesWerewolf[4]:
+			return speed + 5
+		else:
+			return speed
 
 
