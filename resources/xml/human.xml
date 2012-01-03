@@ -6,6 +6,18 @@
 		</Power>
 	</creation>
 	<traits species="Human" morale="Morality" supertrait="None" fuel="None">
+		<Super>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">1</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">2</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">3</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">4</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">5</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">6</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">7</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">8</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">9</powerstat>
+			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">10</powerstat>
+		</Super>
 		<Breed name="Breed">
 		</Breed>
 		<Faction name="Faction">

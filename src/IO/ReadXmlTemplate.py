@@ -123,15 +123,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 					species = self.attributes().value( "species" )
 					if species:
 						speciesData = {
-							"name": species,
 							"morale": self.attributes().value( "morale" ),
 							"powerstat": self.attributes().value( "powerstat" ),
 							"fuel": self.attributes().value( "fuel" ),
 						}
-						#Debug.debug("Spezies {} gefunden.".format(speciesData["name"]))
+						#Debug.debug("Spezies {} gefunden.".format(species))
 
 						# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
-						self.__storage.appendSpecies( speciesData )
+						self.__storage.appendSpecies( species, speciesData )
 
 					self.readTree( species )
 				elif( elementName == "creation" ):
@@ -314,9 +313,9 @@ class ReadXmlTemplate(QObject, ReadXml):
 						"fuelMax": int(self.attributes().value( "fuelMax" )),
 						"fuelPerTurn": int(self.attributes().value( "fuelPerTurn" )),
 						"traitMax": int(self.attributes().value( "traitMax" )),
-						"value": int(self.readElementText()),
 					}
-					self.__storage.appendSuperEffect( species, superEffectData )
+					powerstatValue = int(self.readElementText())
+					self.__storage.appendPowerstat( species, powerstatValue, superEffectData )
 				else:
 					self.readUnknownElement()
 

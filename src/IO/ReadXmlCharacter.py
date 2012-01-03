@@ -220,7 +220,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 					#}
 				if ( elementName == "trait" ):
 					itemExists = False
-					for item in self.__character.traits[typ][category]:
+					for item in self.__character.traits[typ][category].values():
 						traitName = self.attributes().value( "name" )
 						traitCustomText = self.attributes().value( "customText" )
 						if item.name == traitName:

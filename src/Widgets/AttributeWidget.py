@@ -103,6 +103,8 @@ class AttributeWidget(QWidget):
 			#Debug.debug(self.__character.traits)
 			__list = self.__character.traits[typ][item]
 
+			#Debug.debug(__list)
+
 			actualColumn += 1
 
 			vLine = QFrame( self )
@@ -123,8 +125,8 @@ class AttributeWidget(QWidget):
 
 			# Einfügen der tatsächlichen Attribute
 			j = 0
-			for attrib in __list:
-				#Debug.debug(id(attrib))
+			for attrib in __list.values():
+				#Debug.debug(attrib)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( attrib, self )
 				traitWidget.setSpecialtiesHidden( True )

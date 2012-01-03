@@ -77,7 +77,7 @@ class MeritWidget(QWidget):
 
 			__list = self.__character.traits[self.__typ][item]
 
-			for merit in __list:
+			for merit in __list.values():
 				#Debug.debug(merit)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( merit, self )
@@ -116,7 +116,7 @@ class MeritWidget(QWidget):
 
 		for item in self.__character.traits[self.__typ]:
 			numberInCategory = 0
-			for subitem in self.__character.traits[self.__typ][item]:
+			for subitem in self.__character.traits[self.__typ][item].values():
 				if subitem.value > 0:
 					numberInCategory += 1
 

@@ -53,12 +53,12 @@ class StorageTemplate(QObject):
 	__creationPointsList = {}
 
 	# Eine Liste sämtlicher verfügbaren Spezies.
-	# [
-	# 	{"name": Name1, "morale": Moral1, "powerstat": Powerstat1, "fuel": Energie1},
-	# 	{"name": Name2, "morale": Moral2, "powerstat": Powerstat2, "fuel": Energie2},
+	# {
+	# 	"Name1": { "morale": Moral1, "powerstat": Powerstat1, "fuel": Energie1 },
+	# 	"Name2": { "morale": Moral2, "powerstat": Powerstat2, "fuel": Energie2 },
 	# 	...
-	# ]
-	__species = []
+	# }
+	__species = {}
 
 	# Eine Liste sämtlicher verfügbaren Gruppierungsnamen der einzelnen Spezies.
 	#
@@ -124,19 +124,19 @@ class StorageTemplate(QObject):
 	# Eine Liste der Effekte der Supereigenschaft.
 	#
 	# {
-	# 	Spezies1: [
-	# 		{ "value": Wert1, "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
-	# 		{ "value": Wert2, "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
+	# 	Spezies1: {
+	# 		1: { "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
+	# 		2: { "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
 	# 		...
-	# 	],
-	# 	Spezies2: [
-	# 		{ "value": Wert1, "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
-	# 		{ "value": Wert2, "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
+	# 	},
+	# 	Spezies2: {
+	# 		1: { "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
+	# 		1: { "fuelMax": maximale Energie, "fuelPerTurn": Energie pro Runde, "traitMax": maximale Eigenschaftswerte },
 	# 		...
-	# 	],
+	# 	},
 	# 	...
 	# }
-	__superEffect = {}
+	__powerstat = {}
 
 	# Eine Liste der Bonuseigenscahften je nach Spezies, Brut und Fraktion etc.
 	#
@@ -395,8 +395,9 @@ class StorageTemplate(QObject):
 #// 	v_traits = traits;
 #// }
 
-	def appendSpecies( self, species ):
-		self.__species.append( species )
+	def appendSpecies( self, species, speciesData ):
+		if species not in self.__species:
+			self.__species.setdefault(species, speciesData )
 
 
 
@@ -457,6 +458,29 @@ class StorageTemplate(QObject):
 
 	def factions(self, species):
 		return self.__speciesGroupNames[species]["Faction"][1]
+
+
+	def powerstatName(self, species):
+		return self.__species[species]["powerstat"]
+
+
+	def fuelName(self, species):
+		return self.__species[species]["fuel"]
+
+
+	def fuelMax(self, species, powerstat):
+		if powerstat > 0:
+			#Debug.debug("{} -> {}".format(powerstat, self.__powerstat[species][powerstat]))
+			return self.__powerstat[species][powerstat]["fuelMax"]
+		else:
+			return 0
+
+
+	def fuelPerTurn(self, species, powerstat):
+		if powerstat > 0:
+			return self.__powerstat[species][powerstat]["fuelPerTurn"]
+		else:
+			return 0
 
 
 #void StorageTemplate::appendTraitBonus( Trait* tr1, QString breed ) {
@@ -547,19 +571,21 @@ class StorageTemplate(QObject):
 				#print(self.__traits[key][keyA])
 
 
-	def appendSuperEffect( self, species, effects ):
+	def appendPowerstat( self, species, value, effects ):
 		"""
 		Fügt die Effekte eines neuen Wertes der Supereigenschaft einer bestimmten Spezies der entsprechenden Liste hinzu.
 
 		Die Effekte kommen als dict daher.
 		"""
 
-		if species not in self.__superEffect:
-			self.__superEffect.setdefault(species,[])
+		if species not in self.__powerstat:
+			self.__powerstat.setdefault(species,{})
 
-		self.__superEffect[species].append(effects)
+		## \warnung, hier kann es vorkommen, daß ein Wert nicht geschrieben wird, wenn ein powerstat-Wert mehrfach in der xml-Datei vorkommt.
+		if value not in self.__powerstat:
+			self.__powerstat[species].setdefault(value,effects)
 
-		#print(self.__superEffect)
+		#Debug.debug(self.__powerstat)
 
 
 	def appendBonusTrait( self, species, breed, traitData ):

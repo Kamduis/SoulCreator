@@ -36,12 +36,14 @@ from IO.ReadXmlCharacter import ReadXmlCharacter
 from IO.WriteXmlCharacter import WriteXmlCharacter
 from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
+from Calc.CalcAdvantages import CalcAdvantages
 from Widgets.InfoWidget import InfoWidget
 from Widgets.AttributeWidget import AttributeWidget
 from Widgets.SkillWidget import SkillWidget
 from Widgets.Specialties import Specialties
 from Widgets.MeritWidget import MeritWidget
 from Widgets.MoralityWidget import MoralityWidget
+from Widgets.AdvantagesWidget import AdvantagesWidget
 from Widgets.Dialogs.MessageBox import MessageBox
 from Draw.DrawSheet import DrawSheet
 from Debug import Debug
@@ -207,7 +209,7 @@ class MainWindow(QMainWindow):
 		morality = MoralityWidget( self.__storage, self.__character, self )
 		#powers = new PowerWidget( self );
 		#flaws = new FlawWidget( self );
-		#advantages = new AdvantagesWidget( self );
+		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
 
 		self.ui.layout_info.addWidget( info )
 		self.ui.layout_attributes.addWidget( attributes )
@@ -217,7 +219,7 @@ class MainWindow(QMainWindow):
 		self.ui.layout_morality.addWidget( morality )
 		#ui.layout_powers.addWidget( powers );
 		#ui.layout_flaws.addWidget( flaws );
-		#ui.layout_advantages.addWidget( advantages );
+		self.ui.layout_advantages.addWidget( self.__advantages )
 
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
 		info.nameChanged.connect(self.setTitle)
@@ -264,13 +266,13 @@ class MainWindow(QMainWindow):
 		typ = "Merit"
 		categoriesMerits = self.__storage.categories(typ)
 		for category in categoriesMerits:
-			for merit in self.__character.traits[typ][category]:
+			for merit in self.__character.traits[typ][category].values():
 				if merit.hasPrerequisites:
 					meritPrerequisites = merit.prerequisitesText[0]
 					for item in Config.typs:
 						categories = self.__storage.categories(item)
 						for subitem in categories:
-							for subsubitem in self.__character.traits[item][subitem]:
+							for subsubitem in self.__character.traits[item][subitem].values():
 								# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
 								if subsubitem.name in meritPrerequisites:
 									# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
@@ -286,6 +288,30 @@ class MainWindow(QMainWindow):
 					# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
 					if Config.powerstatIdentifier in meritPrerequisites:
 						self.__character.powerstatChanged.connect(merit.checkPrerequisites)
+
+		# Bei der Änderung gewisser Eigenschaften müssen die Advantages neu berechnet werden. Die Verknüpfung dazu werden hier festgelegt.
+		calc = CalcAdvantages( self.__character, self )
+		#Debug.debug(self.__character.traits[typ]["Mental"]["Resolve"].name)
+		self.__character.ageChanged.connect(calc.calcSize)
+		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(calc.calcSize)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Attribute"]["Social"]["Composure"].valueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Merit"]["Physical"]["Fast Reflexes"].valueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Attribute"]["Physical"]["Strength"].valueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Merit"]["Physical"]["Fleet of Foot"].valueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Attribute"]["Mental"]["Wits"].valueChanged.connect(calc.calcDefense)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcDefense)
+		self.__character.traits["Attribute"]["Physical"]["Stamina"].valueChanged.connect(calc.calcHealth)
+		self.__character.traits["Attribute"]["Mental"]["Resolve"].valueChanged.connect(calc.calcWillpower)
+		self.__character.traits["Attribute"]["Social"]["Composure"].valueChanged.connect(calc.calcWillpower)
+		
+		calc.sizeChanged.connect(self.__advantages.setSize)
+		calc.initiativeChanged.connect(self.__advantages.setInitiative)
+		calc.speedChanged.connect(self.__advantages.setSpeed)
+		calc.defenseChanged.connect(self.__advantages.setDefense)
+		calc.healthChanged.connect(self.__advantages.setHealth)
+		calc.willpowerChanged.connect(self.__advantages.setWillpower)
 
 		#creation = new Creation( self );
 		#// Schreibe die übrigen Erschaffungspunkte

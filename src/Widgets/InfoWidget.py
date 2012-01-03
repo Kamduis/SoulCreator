@@ -67,9 +67,10 @@ class InfoWidget(QWidget):
 		self.__spinBoxAge.setMaximum(999)
 
 		self.__labelSpecies = QLabel( self.tr( "Species:" ) )
-		self.__speciesComboBox = CharaSpecies( self)
-		for item in self.__storage.species:
-			self.__speciesComboBox.addItem(item["name"])
+		self.__speciesComboBox = CharaSpecies(self)
+		speciesList = self.__storage.species.keys()
+		speciesList.sort()
+		self.__speciesComboBox.addItems(speciesList)
 
 		self.__labelVirtue = QLabel( self.tr( "Virtue:" ) )
 		self.__virtueCombobox = QComboBox( self )
