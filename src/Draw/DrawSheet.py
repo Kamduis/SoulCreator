@@ -271,7 +271,7 @@ class DrawSheet(QObject):
 		i = 0
 		for item in self.__character.traits["Attribute"]:
 			j = 0
-			for subitem in self.__character.traits["Attribute"][item]:
+			for subitem in self.__character.traits["Attribute"][item].values():
 				self.__drawTrait(textwidth + i * distanceH, offsetV + j * distanceV, width=distanceH, name=subitem.name, value=subitem.value, align=Qt.AlignRight, fontWeight=QFont.Bold)
 				j += 1
 			i += 1
@@ -304,7 +304,7 @@ class DrawSheet(QObject):
 			headingHeight = fontMetrics.boundingRect(item).height()
 			self.__painter.drawText(0, offsetV - headingHeight + i * distanceV + j * textHeight, width, headingHeight, Qt.AlignCenter, item)
 			self.__painter.restore()
-			for subitem in self.__character.traits["Skill"][item]:
+			for subitem in self.__character.traits["Skill"][item].values():
 				self.__drawTrait(0, offsetV + i * distanceV + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value)
 				j += 1
 			i += 1
