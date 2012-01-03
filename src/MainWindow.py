@@ -605,7 +605,7 @@ class MainWindow(QMainWindow):
 				self.tr( "WoD Characters (*.chr)" )
 			)
 
-			if ( filePath ):
+			if ( filePath[0] ):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
@@ -614,11 +614,11 @@ class MainWindow(QMainWindow):
 				try:
 					self.__readCharacter.read( f )
 				except ErrXmlVersion as e:
-					MessageBox.exception( self, e.message(), e.description() )
+					MessageBox.exception( self, e.message, e.description )
 				except ErrXmlParsing as e:
-					MessageBox.exception( self, e.message(), e.description() )
+					MessageBox.exception( self, e.message, e.description )
 				except ErrFileNotOpened as e:
-					MessageBox.exception( self, e.message(), e.description() )
+					MessageBox.exception( self, e.message, e.description )
 
 				f.close()
 

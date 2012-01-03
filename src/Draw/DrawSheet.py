@@ -25,7 +25,7 @@ from __future__ import division, print_function
 from PySide.QtCore import Qt, QObject, QRectF
 from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage, QFont, QFontDatabase, QFontMetrics
 
-#from src.Config import Config
+from src.Config import Config
 from src.Error import ErrSpeciesNotExisting
 from src.Datatypes.Identity import Identity
 from src.Debug import Debug
@@ -230,7 +230,6 @@ class DrawSheet(QObject):
 
 		for i in xrange(len(text)):
 			for j in xrange(len(text[i])):
-				var = self.__character
 				self.__painter.drawText(i * distanceH + width[i], offsetV + j * distanceV, text[i][j])
 
 		self.__painter.restore()
@@ -301,12 +300,18 @@ class DrawSheet(QObject):
 			self.__painter.save()
 			self.__painter.setFont(self.__fontHeading)
 			fontMetrics_heading = QFontMetrics(self.__painter.font())
-			headingHeight = fontMetrics.boundingRect(item).height()
+			headingHeight = fontMetrics_heading.boundingRect(item).height()
 			self.__painter.drawText(0, offsetV - headingHeight + i * distanceV + j * textHeight, width, headingHeight, Qt.AlignCenter, item)
 			self.__painter.restore()
-			for subitem in self.__character.traits["Skill"][item].values():
-				self.__drawTrait(0, offsetV + i * distanceV + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value)
-				j += 1
+			traits = self.__character.traits["Skill"][item].values()
+			traits.sort()
+			for subitem in traits:
+				if (
+					(not subitem.era or subitem.era == self.__character.era) and
+					(not subitem.age or subitem.age == Config.getAge(self.__character.age))
+				):
+					self.__drawTrait(0, offsetV + i * distanceV + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value)
+					j += 1
 			i += 1
 			j += 1
 

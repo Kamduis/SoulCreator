@@ -26,7 +26,7 @@ from PySide.QtCore import QObject, QXmlStreamWriter, QIODevice
 #from PySide.QtGui import QColor
 
 from src.Config import Config
-from src.Error import ErrTraitType
+from src.Error import ErrTraitType, ErrTraitCategory
 from src.Debug import Debug
 
 

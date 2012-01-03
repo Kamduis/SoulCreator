@@ -153,7 +153,7 @@ class SkillWidget(QWidget):
 	#}
 
 
-	def emitHideReasonChanged(self, reason):
+	def emitHideReasonChanged(self):
 		ageStr = Config.ages[0]
 		if self.__character.age < Config.adultAge:
 			ageStr = Config.ages[1]

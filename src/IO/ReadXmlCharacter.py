@@ -27,7 +27,7 @@ from PySide.QtCore import QObject
 
 from src.Config import Config
 from src.IO.ReadXml import ReadXml
-from src.Error import ErrXmlOldVersion
+from src.Error import ErrXmlParsing, ErrXmlOldVersion
 from src.Debug import Debug
 
 
@@ -79,11 +79,11 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.readSoulCreator()
 				except ErrXmlOldVersion as e:
 					MessageBox.exception( self, e.message(), e.description() )
-					readSoulCreator()
+					self.readSoulCreator()
 
 		if ( self.hasError() ):
 			Debug.debug("Error!")
-			raise ErrXmlError( f.fileName(), self.errorString() )
+			raise ErrXmlParsing( f.fileName(), self.errorString() )
 
 		## Die möglicherweise veränderten Eigenschaften müssen wieder in den Charakter-Speicher geschrieben werden.
 		#self.__character.traits = self.__traits

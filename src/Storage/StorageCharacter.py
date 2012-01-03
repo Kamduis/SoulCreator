@@ -129,6 +129,9 @@ class StorageCharacter(QObject):
 							trait.prerequisitesText = subitem["prerequisite"]
 						self.__traits[typ][item].setdefault(subitem["name"], trait)
 
+						# Wenn sich eine Eigenschaft ändert, gilt der Charakter als modifiziert.
+						trait.traitChanged.connect(self.setModified)
+
 					
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
@@ -217,62 +220,35 @@ class StorageCharacter(QObject):
 
 	identities = property(__getIdentities)
 
-	def insertIdentity( self, index, identity ):
-		"""
-		Fügt eine neue Identität an der angegebenen Stelle ein.
-		"""
+
+	#def insertIdentity( self, index, identity ):
+		#"""
+		#Fügt eine neue Identität an der angegebenen Stelle ein.
+		#"""
 		
-		self.__identities.insert( index, identity )
-		self.identityChanged.emit( identity )
+		#self.__identities.insert( index, identity )
+		#self.identityChanged.emit( identity )
 
-	def addIdentity( self, identity ):
-		"""
-		Hängt eine neue Identität an die Liste aller Identitäten des Charkaters an.
-		"""
+	#def addIdentity( self, identity ):
+		#"""
+		#Hängt eine neue Identität an die Liste aller Identitäten des Charkaters an.
+		#"""
 		
-		self.__identities.append( identity )
-		self.identityChanged.emit( identity )
+		#self.__identities.append( identity )
+		#self.identityChanged.emit( identity )
 
-	def setRealIdentity( self, identity ):
-		"""
-		Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer Index 0 in der \ref self.__identities -Liste
+	#def setRealIdentity( self, identity ):
+		#"""
+		#Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer Index 0 in der \ref self.__identities -Liste
 		
-		\todo Momentan ist dies die einzige identität, die von diesem programm genutzt wird.
-		"""
+		#\todo Momentan ist dies die einzige identität, die von diesem programm genutzt wird.
+		#"""
 
-		if self.__identities[0] != identity:
-			self.__identities[0] = identity
-			self.identityChanged.emit( identity )
-			self.realIdentityChanged.emit( identity )
+		#if self.__identities[0] != identity:
+			#self.__identities[0] = identity
+			#self.identityChanged.emit( identity )
+			#self.realIdentityChanged.emit( identity )
 
-
-#QList< Trait* >* StorageCharacter::traits() const {
-	#return &v_traits2;
-#}
-
-#QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type ) const {
-	#QList< Trait* > list;
-
-	#for ( int i = 0; i < v_traits2.count(); ++i ) {
-		#if ( v_traits2.at( i ).type() == type ) {
-			#list.append( v_traits2[i] );
-		#}
-	#}
-
-	#return list;
-#}
-
-#QList< Trait* > StorageCharacter::traits( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category ) const {
-	#QList< Trait* > list;
-
-	#for ( int i = 0; i < v_traits2.count(); ++i ) {
-		#if ( v_traits2.at( i ).type() == type && v_traits2.at( i ).category() == category ) {
-			#list.append( v_traits2[i] );
-		#}
-	#}
-
-	#return list;
-#}
 
 	def __getTraits(self):
 		return self.__traits
@@ -349,73 +325,6 @@ class StorageCharacter(QObject):
 	#if ( v_derangements.contains( derang ) ) {
 		#v_derangements.removeAll( derang );
 		#emit derangementsChanged();
-	#}
-#}
-
-
-#void StorageCharacter::setSkillSpecialties( QString name, QList< cv_TraitDetail > details ) {
-	#bool trait_exists = false;
-
-	#for ( int i = 0; i < v_traits2.count(); ++i ) {
-		#// Spezialisieren gibt es nur bei Fertigkeiten.
-		#// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
-		#// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
-		#if ( v_traits2.at( i ).type() == cv_AbstractTrait::Skill && v_traits2.at( i ).name() == name && v_traits2.at( i ).value() > 0 ) {
-			#trait_exists = true;
-
-			#Trait* trait = v_traits2.at( i );
-			#// Erst alle Spezialisieren löschen
-#// 			trait.clearDetails();
-			#// Das muß ich allerdings so machen, daß kein Signal ausgesandt wird, weswegen ich nicht die übergeordnete Funktion clearDetails() wähle.
-			#trait.details().clear();
-
-			#// Dann neu setzen.
-			#int detailsCount = details.count();
-
-			#QList< cv_TraitDetail > list;
-
-			#for ( int j = 0; j < detailsCount; ++j ) {
-				#cv_TraitDetail specialty;
-				#specialty.name = details.at( j ).name;
-				#specialty.value = true;
-#// 				qDebug() << Q_FUNC_INFO << "Füge Spezialisierung" << specialty.name << "zu Fertigkeit" << name << "hinzu";
-				#list.append( specialty );
-			#}
-
-			#trait.setDetails(list);
-
-			#break;
-		#}
-	#}
-
-	#// Existiert die Fertigkeit nicht, für die eine Spezialisierung eingetragen werden soll, muß etwas getan werden. Anlegen ist aber nicht dier richtige Lösung (welcher Wert denn?).
-	#if ( !trait_exists ) {
-		#qDebug() << Q_FUNC_INFO << "Spezialisierungen nicht angelegt, da Fertigkeit" << name << "nicht existiert.";
-	#}
-#}
-#void StorageCharacter::addSkillSpecialties( QString name, cv_TraitDetail detail )
-#{
-	#bool trait_exists = false;
-
-	#for ( int i = 0; i < v_traits2.count(); ++i ) {
-		#// Spezialisieren gibt es nur bei Fertigkeiten.
-		#// Spezialisierungen gibt es nur bei Fertigkeiten, die hier schon existieren.
-		#// Spezialisierungen gibt es nur bei Fertigkeiten, die einen Wert größer 0 haben.
-		#if ( v_traits2.at( i ).type() == cv_AbstractTrait::Skill
-			#&& v_traits2.at( i ).name() == name
-			#&& v_traits2.at( i ).value() > 0
-		#) {
-			#trait_exists = true;
-
-			#v_traits2[i].addDetail(detail);
-
-			#break;
-		#}
-	#}
-
-	#// Existiert die Fertigkeit nicht, für die eine Spezialisierung eingetragen werden soll, muß etwas getan werden. Anlegen ist aber nicht dier richtige Lösung (welcher Wert denn?).
-	#if ( !trait_exists ) {
-		#qDebug() << Q_FUNC_INFO << "Spezialisierung nicht hinzugefügt, da Fertigkeit" << name << "nicht existiert.";
 	#}
 #}
 
@@ -621,12 +530,6 @@ class StorageCharacter(QObject):
 	def setModified( self, sw=True ):
 		if ( self.__modified != sw ):
 			self.__modified = sw
-
-
-#void StorageCharacter::emitNameChanged( cv_Identity id )
-#{
-	#emit nameChanged(id.birthName());
-#}
 
 
 	def checkPrerequisites(self, trait):

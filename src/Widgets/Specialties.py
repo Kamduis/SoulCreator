@@ -83,9 +83,6 @@ class Specialties(CheckedList):
 	#setMinimumWidth(150);
 #}
 
-#CharaSpecialties::~CharaSpecialties() {
-#}
-
 
 #void CharaSpecialties::saveSpecialties( QStringList list ) {
 	"""
@@ -128,7 +125,7 @@ class Specialties(CheckedList):
 						return
 
 
-	def reshowSpecialties(self, specialties):
+	def reshowSpecialties(self):
 		self.clear()
 		for item in self.__storage:
 			for subitem in self.__storage[item]:

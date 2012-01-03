@@ -344,33 +344,34 @@ class ErrTrait(Err):
 	#description = self.obj.tr( "Trait is missing." )
 #}
 
-#eTraitCategory::eTraitCategory( cv_AbstractTrait::Category category ) : eTrait() {
-	#"""
-	#@brief Ausnahme, falls eine falsche Kategorie genutzt wird.
+class ErrTraitCategory(ErrTrait):
+	"""
+	@brief Ausnahme, falls eine falsche Kategorie genutzt wird.
 
-	#Die Kategorie exitiert nicht oder hat an dieser Stelle keine Gültigkeit.
-	#"""
+	Die Kategorie exitiert nicht oder hat an dieser Stelle keine Gültigkeit.
+	"""
 
-	#message = self.obj.tr( "Category of a Trait not valid" )
-	#description = self.obj.tr( "The Category %1 is not valid at this point." ).arg( QString::number( category ) )
-#}
+	def __init__(self, category):
+		self.message = self.obj.tr( "Category of a Trait not valid" )
+		self.description = self.obj.tr( "The Category {} is not valid at this point.".format( category ))
+
 
 class ErrTraitType(ErrTrait):
-		"""
-		@brief Ausnahme, falls ein falscher Typ genutzt wird.
-		"""
+	"""
+	@brief Ausnahme, falls ein falscher Typ genutzt wird.
+	"""
 
-		def __init__(self, expected, got):
-			ErrTrait.__init__(self)
-			
-			self.message = self.obj.tr( "Type of a Trait not valid" )
-			typ = expected
-			if type(expected) == list:
-				typ = ", ".join(expected[:-1])
-				typ += " or "
-				typ += expected[-1]
+	def __init__(self, expected, got):
+		ErrTrait.__init__(self)
 
-			self.description = self.obj.tr( "Expected Trait of type {}, but got type {}, which is not valid at this point.".format(typ, got) ) 
+		self.message = self.obj.tr( "Type of a Trait not valid" )
+		typ = expected
+		if type(expected) == list:
+			typ = ", ".join(expected[:-1])
+			typ += " or "
+			typ += expected[-1]
+
+		self.description = self.obj.tr( "Expected Trait of type {}, but got type {}, which is not valid at this point.".format(typ, got) )
 
 
 #ePrint::ePrint() : Exception() {

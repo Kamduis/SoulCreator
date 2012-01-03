@@ -101,6 +101,8 @@ class AttributeWidget(QWidget):
 
 		for item in categoryList:
 			#Debug.debug(self.__character.traits)
+
+			## Die Ordnung der Attribute ist essentiell, so daß ich sie nicht automatisch bestimmen kann.
 			__list = self.__character.traits[typ][item]
 
 			#Debug.debug(__list)

@@ -163,7 +163,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readCharacteristics( typ )
 				elif(typ == "Breed" or
 						typ == "Faction" ):
-					self.readGroups( species, typ, None )
+					self.readGroups( species, typ )
 				elif( typ == "Super" ):
 					self.readPowerstat( species )
 				elif( typ in Config.typs):
@@ -203,7 +203,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readGroups( self, species, typ, category=None ):
+	def readGroups( self, species, typ ):
 		"""
 		Liest die verschiedenen Gruppierungsnamen der einzelnen Spezies ein.
 		"""
@@ -369,12 +369,12 @@ class ReadXmlTemplate(QObject, ReadXml):
 						#trait.addPossibleValue( 0 );
 					#}
 
-					self.readTraitInformation( species, typ, category, traitData )
+					self.readTraitInformation( typ, category, traitData )
 				else:
 					self.readUnknownElement()
 
 
-	def readTraitInformation( self, species, typ, category, traitData ):
+	def readTraitInformation( self, typ, category, traitData ):
 		"""
 		Nun werden die zusätzlichen Informationen (Spezialisierungen, Voraussetzungen etc.) ausgelesen.
 		"""

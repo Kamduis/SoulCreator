@@ -284,28 +284,12 @@ class StorageTemplate(QObject):
 
 
 
-	def __getTraits( self, typ=None, category=None, era=None, age=None ):
+	def __getTraits( self ):
 		"""
-		Gibt eine Liste aller Eigenschaften zurück, die den übergebenen Parametern entsprechen.
-		
-		\note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
-
-		\note Ohne Argumente, werden alle Eigenscahften zurückgegeben.
-
-		\note Nur mit typ, werden alle Eigenschaften dieses typs zurückgegeben etc.
+		Gibt eine Liste aller Eigenschaften zurück.
 		"""
 
-		result = []
-		if typ == None:
-			result = self.__traits
-		elif category == None:
-			result = self.__traits[typ]
-		else:
-			result = self.__traits[typ][category]
-
-		## \todo era und age haben noch keinerlei Wirkung
-
-		return result
+		return self.__traits
 
 	def __setTraits(self, traits):
 		self.__traits = traits

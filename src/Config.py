@@ -216,6 +216,17 @@ class Config():
 		
 		return QColor( colorName )
 
-#QString Config::saveDir() {
-	#return "save";
-#}
+
+	@staticmethod
+	def getAge(age):
+		"""
+		Gibt die Alterskategorie zurück.
+		"""
+
+		if age < Config.adultAge:
+			return Config.ages[0]
+		else:
+			return Config.ages[1]
+
+
+		
