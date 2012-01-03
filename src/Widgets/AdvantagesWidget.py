@@ -34,6 +34,8 @@ from src.Widgets.Components.TraitDots import TraitDots
 from src.Widgets.Components.Squares import Squares
 from src.Debug import Debug
 
+from ui.ui_AdvantagesWidget import Ui_AdvantagesWidget
+
 
 
 
@@ -52,148 +54,29 @@ class AdvantagesWidget(QWidget):
 	def __init__(self, template, character, parent=None):
 		QWidget.__init__(self, parent)
 
+		self.ui = Ui_AdvantagesWidget()
+		self.ui.setupUi(self)
+
 		self.__character = character
 		self.__storage = template
-
-		self.__layout = QVBoxLayout()
-		self.setLayout(self.__layout)
-
-		self.__layoutAdvantages = QGridLayout()
-		self.__layout.addLayout(self.__layoutAdvantages)
-
-		self.__labelSize = QLabel( self.tr( "Size:" ) )
-		self.__labelSizeValue = QLabel()
-		self.__labelSizeValue.setNum( 0 )
-		self.__labelSizeValueShapes = QLabel()
-
-		self.__labelInitiative = QLabel( self.tr( "Initiative:" ) )
-		self.__labelInitiativeValue = QLabel()
-		self.__labelInitiativeValue.setNum( 0 )
-		self.__labelInitiativeValueShapes = QLabel()
-
-		self.__labelSpeed = QLabel( self.tr( "Speed:" ) )
-		self.__labelSpeedValue = QLabel()
-		self.__labelSpeedValue.setNum( 0 )
-		self.__labelSpeedValueShapes = QLabel()
-
-		self.__labelDefense = QLabel( self.tr( "Defense:" ) )
-		self.__labelDefenseValue = QLabel()
-		self.__labelDefenseValue.setNum( 0 )
 
 		fontMetrics = QFontMetrics(self.font())
 		textRect = fontMetrics.boundingRect("0")
 
-		self.__labelArmor = QLabel( self.tr( "Armor:" ) )
-		self.__labelArmorGeneral = QLabel( self.tr( "General" ) )
-		self.__labelArmorFirearms = QLabel( self.tr( "Firearms" ) )
-		self.__spinBoxArmorGeneral = QSpinBox()
-		self.__spinBoxArmorGeneral.setMinimum( 0 )
-		self.__spinBoxArmorGeneral.setMaximum( 9 )
-		self.__spinBoxArmorGeneral.setMaximumWidth(textRect.width() + Config.spinBoxNoTextWidth);
-		self.__spinBoxArmorFirearms = QSpinBox()
-		self.__spinBoxArmorFirearms.setMinimum( 0 )
-		self.__spinBoxArmorFirearms.setMaximum( 9 )
-		self.__spinBoxArmorFirearms.setMaximumWidth(textRect.width() + Config.spinBoxNoTextWidth);
+		self.ui.spinBox_armorGeneral.setMaximumWidth(textRect.width() + Config.spinBoxNoTextWidth)
+		self.ui.spinBox_armorFirearms.setMaximumWidth(self.ui.spinBox_armorGeneral.maximumWidth())
 
-		self.__layoutAdvantages.addWidget( self.__labelSize, 0, 0 )
-		self.__layoutAdvantages.addWidget( self.__labelSizeValue, 0, 1 )
-		self.__layoutAdvantages.addWidget( self.__labelSizeValueShapes, 0, 2 )
-		self.__layoutAdvantages.addWidget( self.__labelInitiative, 1, 0 )
-		self.__layoutAdvantages.addWidget( self.__labelInitiativeValue, 1, 1 )
-		self.__layoutAdvantages.addWidget( self.__labelInitiativeValueShapes, 1, 2 )
-		self.__layoutAdvantages.addWidget( self.__labelSpeed, 2, 0 )
-		self.__layoutAdvantages.addWidget( self.__labelSpeedValue, 2, 1 )
-		self.__layoutAdvantages.addWidget( self.__labelSpeedValueShapes, 2, 2 )
-		self.__layoutAdvantages.addWidget( self.__labelDefense, 3, 0 )
-		self.__layoutAdvantages.addWidget( self.__labelDefenseValue, 3, 1 )
-		self.__layoutAdvantages.addWidget( self.__labelArmor, 4, 0 )
-		self.__layoutAdvantages.addWidget( self.__spinBoxArmorGeneral, 4, 1 )
-		self.__layoutAdvantages.addWidget( self.__labelArmorGeneral, 4, 2 )
-		self.__layoutAdvantages.addWidget( self.__spinBoxArmorFirearms, 5, 1 )
-		self.__layoutAdvantages.addWidget( self.__labelArmorFirearms, 5, 2 )
+		self.ui.dots_health.setReadOnly( True )
 
-		self.__labelHealth = QLabel( self.tr( "Health" ) )
-		self.__labelHealth.setAlignment( Qt.AlignHCenter )
-		self.__labelHealthShapes = QLabel()
+		self.ui.dots_willpower.setMaximum( Config.willpowerMax )
+		self.ui.dots_willpower.setReadOnly( True )
 
-		self.__layoutHealthDots = QHBoxLayout()
-
-		self.__dotsHealth = TraitDots()
-		self.__dotsHealth.setReadOnly( True )
-
-		self.__layoutHealthDots.addStretch()
-		self.__layoutHealthDots.addWidget( self.__dotsHealth )
-		self.__layoutHealthDots.addStretch()
-		self.__layoutHealthDots.addWidget( self.__labelHealthShapes )
-
-		self.__layout.addSpacing( Config.traitCategorySpace )
-
-		self.__layout.addWidget( self.__labelHealth )
-		self.__layout.addLayout( self.__layoutHealthDots )
-
-
-		self.__labelWill = QLabel( self.tr( "Willpower" ) )
-		self.__labelWill.setAlignment( Qt.AlignHCenter )
-
-		self.__layoutWillDots = QHBoxLayout()
-
-		self.__dotsWill = TraitDots()
-		self.__dotsWill.setMaximum( Config.willpowerMax )
-		self.__dotsWill.setReadOnly( True )
-
-		self.__layoutWillDots.addStretch()
-		self.__layoutWillDots.addWidget( self.__dotsWill )
-		self.__layoutWillDots.addStretch()
-
-		self.__layout.addSpacing( Config.traitCategorySpace )
-
-		self.__layout.addWidget( self.__labelWill )
-		self.__layout.addLayout( self.__layoutWillDots )
-
-
-		self.__labelSuper = QLabel( self.tr( "Powerstat" ) )
-		self.__labelSuper.setAlignment( Qt.AlignHCenter )
-
-		self.__layoutSuperDots = QHBoxLayout();
-
-		self.__dotsSuper = TraitDots()
-		self.__dotsSuper.setMaximum( Config.powerstatMax )
-		self.__dotsSuper.setMinimum( Config.powerstatMin )
+		self.ui.dots_powerstat.setMaximum( Config.powerstatMax )
+		self.ui.dots_powerstat.setMinimum( Config.powerstatMin )
 		# Damit später der Wert stimmt muß ich irgendeinen Wert != 1 geben, sonst wird kein Signal gesandt.
-		self.__dotsSuper.setValue( 9 )
+		self.ui.dots_powerstat.setValue( 9 )
 
-		self.__layoutSuperDots.addStretch()
-		self.__layoutSuperDots.addWidget( self.__dotsSuper )
-		self.__layoutSuperDots.addStretch()
-
-		self.__layout.addSpacing( Config.traitCategorySpace )
-
-		self.__layout.addWidget( self.__labelSuper )
-		self.__layout.addLayout( self.__layoutSuperDots )
-
-
-		self.__labelFuel = QLabel( self.tr( "Fuel" ) )
-		self.__labelFuel.setAlignment( Qt.AlignHCenter )
-
-		self.__layoutFuelSquares = QHBoxLayout()
-
-		self.__squaresFuel = Squares()
-		self.__squaresFuel.columnMax = 10
-		self.__squaresFuel.maximum = 0
-
-		self.__fuelPerTurn = QLabel( self.tr( "1" ) )
-		self.__fuelPerTurn.setAlignment( Qt.AlignCenter )
-
-		self.__layoutFuelSquares.addWidget( self.__squaresFuel )
-		#self.__layoutFuelSquares.addStretch()
-		self.__layoutFuelSquares.addWidget( self.__fuelPerTurn )
-
-		self.__layout.addSpacing( Config.traitCategorySpace )
-
-		self.__layout.addWidget( self.__labelFuel )
-		self.__layout.addLayout( self.__layoutFuelSquares )
-
-		self.__layout.addStretch()
+		self.ui.squares_fuel.columnMax = 10
 
 		self.__character.speciesChanged.connect(self.setShapeSize)
 		self.sizeChanged.connect(self.setShapeSize)
@@ -203,14 +86,14 @@ class AdvantagesWidget(QWidget):
 		self.speedChanged.connect(self.setShapeSpeed)
 		self.__character.speciesChanged.connect(self.setShapeHealth)
 		self.healthChanged.connect(self.setShapeHealth)
-		self.__spinBoxArmorGeneral.valueChanged.connect(self.saveArmor)
-		self.__spinBoxArmorFirearms.valueChanged.connect(self.saveArmor)
+		self.ui.spinBox_armorGeneral.valueChanged.connect(self.saveArmor)
+		self.ui.spinBox_armorFirearms.valueChanged.connect(self.saveArmor)
 		self.__character.armorChanged.connect(self.updateArmor)
-#// 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), self, SLOT( changeSuper( cv_Trait ) ) );
-#// 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), self, SLOT( emitSuperChanged( int ) ) );
-#// 	connect( self, SIGNAL( superChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
-		self.__dotsSuper.valueChanged.connect(self.__character.setPowerstat)
-		self.__character.powerstatChanged.connect(self.__dotsSuper.setValue)
+##// 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), self, SLOT( changeSuper( cv_Trait ) ) );
+##// 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), self, SLOT( emitSuperChanged( int ) ) );
+##// 	connect( self, SIGNAL( superChanged( cv_Trait ) ), character, SLOT( addTrait( cv_Trait ) ) );
+		self.ui.dots_powerstat.valueChanged.connect(self.__character.setPowerstat)
+		self.__character.powerstatChanged.connect(self.ui.dots_powerstat.setValue)
 		self.__character.powerstatChanged.connect(self.setFuel)
 		self.__character.speciesChanged.connect(self.setFuel)
 		self.__character.speciesChanged.connect(self.renamePowerstatHeading)
@@ -218,116 +101,120 @@ class AdvantagesWidget(QWidget):
 
 
 	def setSize(self, value):
-		if self.__labelSizeValue.text() != unicode(value):
-			self.__labelSizeValue.setText(unicode(value))
+		if self.ui.label_size.text() != unicode(value):
+			self.ui.label_size.setText(unicode(value))
 			self.sizeChanged.emit(value)
 
 
 	def setInitiative(self, value):
-		if self.__labelInitiativeValue.text() != unicode(value):
-			self.__labelInitiativeValue.setText(unicode(value))
+		if self.ui.label_initiative.text() != unicode(value):
+			self.ui.label_initiative.setText(unicode(value))
 			self.initiativeChanged.emit(value)
 
 
 	def setSpeed(self, value):
-		if self.__labelSpeedValue.text() != unicode(value):
-			self.__labelSpeedValue.setText(unicode(value))
+		if self.ui.label_speed.text() != unicode(value):
+			self.ui.label_speed.setText(unicode(value))
 			self.speedChanged.emit(value)
 
 
 	def setDefense(self, value):
-		self.__labelDefenseValue.setNum(value)
+		self.ui.label_defense.setNum(value)
 
 
 	def setHealth(self, value):
-		self.__dotsHealth.setMaximum(value)
-		self.__dotsHealth.setValue(value)
+		self.ui.dots_health.setMaximum(value)
+		self.ui.dots_health.setValue(value)
 
 
 	def setWillpower(self, value):
-		self.__dotsWill.setValue(value)
+		self.ui.dots_willpower.setValue(value)
 
 
 	def setShapeSize(self):
 		if self.__character.species == "Werewolf":
-			size = int(self.__labelSizeValue.text())
-			self.__labelSizeValueShapes.setHidden(False)
-			self.__labelSizeValueShapes.setText("{}, {}, {}, {}".format(
+			size = int(self.ui.label_size.text())
+			self.ui.label_sizeShapes.setHidden(False)
+			self.ui.label_sizeShapes.setText(", {}, {}, {}, {}".format(
 				CalcAdvantages.size(size, Config.shapesWerewolf[1]),
 				CalcAdvantages.size(size, Config.shapesWerewolf[2]),
 				CalcAdvantages.size(size, Config.shapesWerewolf[3]),
 				CalcAdvantages.size(size, Config.shapesWerewolf[4]),
 			))
 		else:
-			self.__labelSizeValueShapes.setHidden(True)
+			self.ui.label_sizeShapes.setHidden(True)
 
 
 	def setShapeInitiaitve(self):
 		if self.__character.species == "Werewolf":
-			value = int(self.__labelInitiativeValue.text())
-			self.__labelSizeValueShapes.setHidden(False)
-			self.__labelInitiativeValueShapes.setText("{}, {}, {}, {}".format(
+			value = int(self.ui.label_initiative.text())
+			self.ui.label_initiativeShapes.setHidden(False)
+			self.ui.label_initiativeShapes.setText(", {}, {}, {}, {}".format(
 				CalcAdvantages.initiative(value, Config.shapesWerewolf[1]),
 				CalcAdvantages.initiative(value, Config.shapesWerewolf[2]),
 				CalcAdvantages.initiative(value, Config.shapesWerewolf[3]),
 				CalcAdvantages.initiative(value, Config.shapesWerewolf[4]),
 			))
 		else:
-			self.__labelSizeValueShapes.setHidden(True)
+			self.ui.label_initiativeShapes.setHidden(True)
 
 
 	def setShapeSpeed(self):
 		if self.__character.species == "Werewolf":
-			value = int(self.__labelSpeedValue.text())
-			self.__labelSizeValueShapes.setHidden(False)
-			self.__labelSpeedValueShapes.setText("{}, {}, {}, {}".format(
+			value = int(self.ui.label_speed.text())
+			self.ui.label_speedShapes.setHidden(False)
+			self.ui.label_speedShapes.setText(", {}, {}, {}, {}".format(
 				CalcAdvantages.speed(value, Config.shapesWerewolf[1]),
 				CalcAdvantages.speed(value, Config.shapesWerewolf[2]),
 				CalcAdvantages.speed(value, Config.shapesWerewolf[3]),
 				CalcAdvantages.speed(value, Config.shapesWerewolf[4]),
 			))
 		else:
-			self.__labelSizeValueShapes.setHidden(True)
+			self.ui.label_speedShapes.setHidden(True)
 
 
 	def setShapeHealth(self):
 		if self.__character.species == "Werewolf":
-			value = self.__dotsHealth.value()
-			self.__labelHealthShapes.setHidden(False)
-			self.__labelHealthShapes.setText("{}, {}, {}, {}".format(
+			value = self.ui.dots_health.value()
+			self.ui.label_healthShapes.setHidden(False)
+			self.ui.label_healthShapes.setText("{}, {}, {}, {}".format(
 				CalcAdvantages.health(value, Config.shapesWerewolf[1]),
 				CalcAdvantages.health(value, Config.shapesWerewolf[2]),
 				CalcAdvantages.health(value, Config.shapesWerewolf[3]),
 				CalcAdvantages.health(value, Config.shapesWerewolf[4]),
 			))
 		else:
-			self.__labelHealthShapes.setHidden(True)
+			self.ui.label_healthShapes.setHidden(True)
 
 
 	def hideSuper( self, species ):
 		"""
-
+		Verbirgt die übernatürlichen Eigenschaften, falls ein Mensch gewählt wird.
 		"""
 
 		if ( species == Config.initialSpecies ):
-			self.__labelSuper.setHidden( True )
-			self.__dotsSuper.setHidden( True )
+			self.ui.label_powerstat.setHidden( True )
+			self.ui.dots_powerstat.setHidden( True )
 
-			self.__labelFuel.setHidden( True )
-			self.__squaresFuel.setHidden( True )
-			self.__fuelPerTurn.setHidden( True )
+			self.ui.label_fuel.setHidden( True )
+			self.ui.squares_fuel.setHidden( True )
+			self.ui.label_fuelPerTurn.setHidden( True )
 		else:
-			self.__labelSuper.setHidden( False )
-			self.__dotsSuper.setHidden( False )
+			self.ui.label_powerstat.setHidden( False )
+			self.ui.dots_powerstat.setHidden( False )
 
-			self.__labelFuel.setHidden( False )
-			self.__squaresFuel.setHidden( False )
-			self.__fuelPerTurn.setHidden( False )
+			self.ui.label_fuel.setHidden( False )
+			self.ui.squares_fuel.setHidden( False )
+			self.ui.label_fuelPerTurn.setHidden( False )
 
 
 	def renamePowerstatHeading(self, species):
-		self.__labelSuper.setText( self.__storage.powerstatName(species) )
-		self.__labelFuel.setText( self.__storage.fuelName(species) )
+		"""
+		Benennt die Übernatürlichen Eigenschaften je nach Spezies um.
+		"""
+		
+		self.ui.label_powerstat.setText( self.__storage.powerstatName(species) )
+		self.ui.label_fuel.setText( self.__storage.fuelName(species) )
 
 
 	def setFuel( self ):
@@ -336,10 +223,10 @@ class AdvantagesWidget(QWidget):
 		"""
 
 		maximum = self.__storage.fuelMax( self.__character.species, self.__character.powerstat )
-		self.__squaresFuel.maximum = maximum
+		self.ui.squares_fuel.maximum = maximum
 
 		perTurn = self.__storage.fuelPerTurn( self.__character.species, self.__character.powerstat )
-		self.__fuelPerTurn.setText( self.tr( "{}/Turn".format( perTurn ) ))
+		self.ui.label_fuelPerTurn.setText( self.tr( "{}/Turn".format( perTurn ) ))
 
 
 	def saveArmor(self):
@@ -348,8 +235,8 @@ class AdvantagesWidget(QWidget):
 		"""
 
 		armor = [
-			self.__spinBoxArmorGeneral.value(),
-			self.__spinBoxArmorFirearms.value(),
+			self.ui.spinBox_armorGeneral.value(),
+			self.ui.spinBox_armorFirearms.value(),
 		]
 		self.__character.armor = armor
 
@@ -358,27 +245,6 @@ class AdvantagesWidget(QWidget):
 		Schreibe die veränderte Rüstung in das Widget.
 		"""
 
-		self.__spinBoxArmorGeneral.setValue(armor[0])
-		self.__spinBoxArmorFirearms.setValue(armor[1])
-
-
-
-
-
-#// void AdvantagesWidget::changeSuper( cv_Trait trait ) {
-#// 	if ( trait.type == cv_AbstractTrait::Super ) {
-#// 		dotsSuper.setValue( trait.value );
-#// 	}
-#// }
-
-
-#// void AdvantagesWidget::emitSuperChanged( int value ) {
-#// 	cv_Trait trait;
-#// 	trait.name = "Super";
-#// 	trait.value = value;trait.type = cv_AbstractTrait::Super;
-#// 	trait.category = cv_AbstractTrait::CategoryNo;
-#//
-#// 	emit superChanged(trait);
-#// }
-
+		self.ui.spinBox_armorGeneral.setValue(armor[0])
+		self.ui.spinBox_armorFirearms.setValue(armor[1])
 
