@@ -40,6 +40,12 @@ class MessageBox(QMessageBox):
 
 	@staticmethod
 	def exception(parent, message, description):
+		"""
+		Standardisierte Dialogbox für die Mitteilung einer Ausnahme an den Benutzer. Dient bislang Debug-Zwecken und sind noch keine normierten Fehlermeldungen.
+
+		\todo Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann und nicht nur als Debug-Hilfe dienen kann. Dies wird auch Änderungen in der \ref Exception -Klasse erfordern.
+		"""
+		
 		obj = QObject()
 
 		text = MessageBox.formatText(message, description)
@@ -47,12 +53,24 @@ class MessageBox(QMessageBox):
 
 
 #QMessageBox::StandardButton MessageBox::exception ( QWidget* parent, Exception error ) {
+	"""
+	Standardisierte Dialogbox für die Mitteilung einer Ausnahme an den Benutzer. Dient bislang Debug-Zwecken und sind noch keine normierten Fehlermeldungen.
+
+	Dies ist eine überladene Methode der Funktion \ref MessageBox::exception( QWidget *parent, QString message, QString description ).
+	"""
+	
 	#QString text = formatText(error.message(),  error.description());
 
 	#critical ( parent, tr ( "Exception" ), text );
 #}
 
 #QMessageBox::StandardButton MessageBox::exception ( QWidget* parent ) {
+	"""
+	Standardisierte Dialogbox für die Mitteilung einer Ausnahme an den Benutzer. Dient bislang Debug-Zwecken und sind noch keine normierten Fehlermeldungen.
+	
+	Dies ist eine überladene Methode der Funktion \ref MessageBox::exception( QWidget *parent, QString message, QString description ).
+	"""
+	
 	#QString text = formatText(tr ( "A problem occured." ),  tr ( "Cause or consequences of this problem are not known. Proceed on your own risk." ));
 
 	#critical ( parent, tr ( "Exception" ), text );
@@ -60,12 +78,20 @@ class MessageBox(QMessageBox):
 
 	@staticmethod
 	def formatText ( message, description ):
+		"""
+		Formatiert Nachricht und Beschreibung für den Dialog.
+		"""
+		
 		return MessageBox.formatMessage(message) + MessageBox.formatDescription(description)
 
 
 
 	@staticmethod
 	def formatMessage ( message ):
+		"""
+		Formatiert die wichtigen Nachrichten für den Dialog.
+		"""
+		
 		importantText = "<p><span style='color:" + Config.importantTextColorName + "; font-size:large'>{}</span></p>".format(message)
 
 		return importantText
@@ -73,6 +99,10 @@ class MessageBox(QMessageBox):
 
 	@staticmethod
 	def formatDescription ( description ):
+		"""
+		Formatiert die ausfürhlichere Beschreibung für den Dialog.
+		"""
+		
 		descriptionText = "<p>{}</p>".format(description)
 
 		return descriptionText
