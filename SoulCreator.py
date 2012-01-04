@@ -55,7 +55,7 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description=Config.programDescription)
 
 	parser.add_argument("--debug", action="store_true", help="Give debug information. Not recommended for printing or exporting character sheets.")
-	parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
+	#parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
 	parser.add_argument("-V", "--version", action="version", version="{name}: {version}".format( name=sys.argv[0], version=Config.version()) )
 
 	args = parser.parse_args()
