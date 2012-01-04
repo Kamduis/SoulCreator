@@ -38,6 +38,7 @@ import argparse
 
 from PySide.QtGui import QApplication
 
+from src.GlobalState import GlobalState
 from src.Config import Config
 from src.MainWindow import MainWindow
 
@@ -60,8 +61,10 @@ if __name__ == "__main__":
 
 	args = parser.parse_args()
 
+	GlobalState.isDebug = args.debug
+
 	app = QApplication(sys.argv)
-	w = MainWindow(debug=args.debug)
+	w = MainWindow()
 	w.show()
 	retcode = app.exec_()
 	del w	# Ohne dies kann es beim Einfügen von QMenuBar in der ui-Datei zu einem Segfault kommen.

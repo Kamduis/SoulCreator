@@ -28,6 +28,7 @@ import os
 from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray
 from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QPrinter, QFont, QFontDatabase
 
+from src.GlobalState import GlobalState
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from Config import Config
 from IO.Settings import Settings
@@ -116,15 +117,13 @@ class MainWindow(QMainWindow):
 	"""
 
 
-	def __init__(self, debug=False, parent=None):
+	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
 
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
 
-		global isDebug
-		isDebug = debug
-		if isDebug:
+		if GlobalState.isDebug:
 			print("{} wurde im Debug-Modus aufgerufen.".format(Config.programName))
 
 		QCoreApplication.setOrganizationName( Config.organization )
@@ -707,9 +706,7 @@ class MainWindow(QMainWindow):
 			printer.setFullPage( True )
 			printer.setOutputFileName( filePath[0] )
 
-			global isDebug
-
-			drawSheet = DrawSheet( self.__character, printer, isDebug, self )
+			drawSheet = DrawSheet( self.__character, printer, self )
 
 			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
 

@@ -25,6 +25,7 @@ from __future__ import division, print_function
 from PySide.QtCore import Qt, QObject, QRectF
 from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage, QFont, QFontDatabase, QFontMetrics
 
+from src.GlobalState import GlobalState
 from src.Config import Config
 from src.Error import ErrSpeciesNotExisting
 from src.Datatypes.Identity import Identity
@@ -42,11 +43,8 @@ class DrawSheet(QObject):
 	\todo Bei Werwölfen wird die Rites-Kraft noch nicht beim Zeichnen der Kräfte unter Renown berücksichtigt.
 	"""
 
-	def __init__(self, character, printer, debug=False, parent=None):
+	def __init__(self, character, printer, parent=None):
 		QObject.__init__(self, parent)
-
-		global isDebug
-		isDebug = debug
 
 		self.__character = character
 
@@ -136,8 +134,7 @@ class DrawSheet(QObject):
 		
 		self.__painter.save()
 
-		global isDebug
-		if isDebug:
+		if GlobalState.isDebug:
 			self.__drawGrid()
 
 		self._drawInfo(offsetV=103, distanceV=19)
