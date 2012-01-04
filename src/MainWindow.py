@@ -28,6 +28,7 @@ import os
 from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray
 from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QPrinter, QFont, QFontDatabase
 
+from src.GlobalState import GlobalState
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from Config import Config
 from IO.Settings import Settings
@@ -121,6 +122,9 @@ class MainWindow(QMainWindow):
 
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
+
+		if GlobalState.isDebug:
+			print("{} wurde im Debug-Modus aufgerufen.".format(Config.programName))
 
 		QCoreApplication.setOrganizationName( Config.organization )
 		QCoreApplication.setApplicationName( Config.programName )

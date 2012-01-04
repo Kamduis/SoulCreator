@@ -34,22 +34,35 @@ Dieses Programm dient dazu, Charaktere für das Rollenspiel "World of Darkness" 
 
 
 import sys
+import argparse
 
 from PySide.QtGui import QApplication
 
+from src.GlobalState import GlobalState
+from src.Config import Config
 from src.MainWindow import MainWindow
 
 
 
-
-"""
-Das Hauptprogramm
-
-@param argc Anzahl der Kommandozeilenparameter
-@param argv Inhalt der Kommandozeilenparameter (argv[0] = Name des Programms)
-@return int
-"""
 if __name__ == "__main__":
+	"""
+	Das Hauptprogramm
+
+	@param argc Anzahl der Kommandozeilenparameter
+	@param argv Inhalt der Kommandozeilenparameter (argv[0] = Name des Programms)
+	@return int
+	"""
+
+	parser = argparse.ArgumentParser(description=Config.programDescription)
+
+	parser.add_argument("--debug", action="store_true", help="Give debug information. Not recommended for printing or exporting character sheets.")
+	#parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
+	parser.add_argument("-V", "--version", action="version", version="{name}: {version}".format( name=sys.argv[0], version=Config.version()) )
+
+	args = parser.parse_args()
+
+	GlobalState.isDebug = args.debug
+
 	app = QApplication(sys.argv)
 	w = MainWindow()
 	w.show()
