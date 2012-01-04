@@ -116,11 +116,16 @@ class MainWindow(QMainWindow):
 	"""
 
 
-	def __init__(self, parent=None):
+	def __init__(self, debug=False, parent=None):
 		QMainWindow.__init__(self, parent)
 
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
+
+		global isDebug
+		isDebug = debug
+		if isDebug:
+			print("{} wurde im Debug-Modus aufgerufen.".format(Config.programName))
 
 		QCoreApplication.setOrganizationName( Config.organization )
 		QCoreApplication.setApplicationName( Config.programName )
@@ -702,7 +707,9 @@ class MainWindow(QMainWindow):
 			printer.setFullPage( True )
 			printer.setOutputFileName( filePath[0] )
 
-			drawSheet = DrawSheet( self.__character, printer, self )
+			global isDebug
+
+			drawSheet = DrawSheet( self.__character, printer, isDebug, self )
 
 			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
 

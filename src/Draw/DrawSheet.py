@@ -42,8 +42,11 @@ class DrawSheet(QObject):
 	\todo Bei Werwölfen wird die Rites-Kraft noch nicht beim Zeichnen der Kräfte unter Renown berücksichtigt.
 	"""
 
-	def __init__(self, character, printer, parent=None):
+	def __init__(self, character, printer, debug=False, parent=None):
 		QObject.__init__(self, parent)
+
+		global isDebug
+		isDebug = debug
 
 		self.__character = character
 
@@ -133,7 +136,9 @@ class DrawSheet(QObject):
 		
 		self.__painter.save()
 
-		self.__drawGrid()
+		global isDebug
+		if isDebug:
+			self.__drawGrid()
 
 		self._drawInfo(offsetV=103, distanceV=19)
 
