@@ -28,6 +28,7 @@ from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage, QFont, QFontDat
 from src.Config import Config
 from src.Error import ErrSpeciesNotExisting
 from src.Datatypes.Identity import Identity
+from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Debug import Debug
 
 
@@ -142,6 +143,8 @@ class DrawSheet(QObject):
 		self._drawSkills(offsetV=240, distanceV=18, width=300)
 
 		self._drawMerits(offsetH=310, offsetV=240, width=250)
+
+		self._drawAdvantages(offsetH=560, offsetV=240, width=200)
 
 		self.__painter.restore()
 
@@ -344,7 +347,6 @@ class DrawSheet(QObject):
 		self.__painter.drawText(offsetH, offsetV - headingHeight, width, headingHeight, Qt.AlignCenter, self.tr("Merits"))
 		self.__painter.restore()
 
-		i = 0
 		j = 0
 		for item in self.__character.traits["Merit"]:
 			traits = self.__character.traits["Merit"][item].values()
@@ -354,6 +356,66 @@ class DrawSheet(QObject):
 					self.__drawTrait(offsetH, offsetV + j * textHeight, width=width, name=subitem.name, value=subitem.value)
 					j += 1
 			j += 1
+
+		self.__painter.restore()
+
+
+	def _drawAdvantages(self, offsetH=0, offsetV=0, distanceV=0, width=None):
+		"""
+		Bannt die Berechneten Werte, Moral und Powerstat sowie die Energie auf den Charakterbogen.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox aller Fertigkeiten.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
+		\param distanceV Der vertikale Zwischenraum zwischen den einzelnen Fertigkeitskategorien.
+		\param width Die Breite der Fertigkeits-Spalte.
+		"""
+
+		calc = CalcAdvantages(self.__character)
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth // 3
+
+		advantages = [
+			[ self.tr("Size"), calc.calcSize(), ],
+			[ self.tr("Initiative"), calc.calcInitiative(), ],
+			[ self.tr("Speed"), calc.calcSpeed(), ],
+			[ self.tr("Defense"), calc.calcDefense(), ],
+			#[ self.tr("Health"), calc.calcHealth(), ],
+			#[ self.tr("Willpower"), calc.calcWillpower(), ],
+		]
+
+		self.__painter.save()
+
+		font = self.__fontMain
+		self.__painter.setFont(font)
+
+		fontMetrics = QFontMetrics(self.__fontMain)
+		textHeight = fontMetrics.height() - 3
+
+		verticalPos = offsetV
+		for item in advantages:
+			self.__drawTextWithValue(offsetH, verticalPos, width, item[0], item[1])
+			verticalPos += textHeight
+		self.__drawTextWithValue(offsetH, verticalPos, width, self.tr("Armor"), "{general}/{firearms}".format(general=self.__character.armor[0], firearms=self.__character.armor[0]))
+		verticalPos += textHeight
+
+		self.__painter.restore()
+
+		## Gesundheitspunkte
+		self.__painter.save()
+		
+		self.__painter.setFont(self.__fontHeading)
+		fontMetrics_heading = QFontMetrics(self.__painter.font())
+		headingHeight = fontMetrics_heading.boundingRect(self.tr("Health")).height()
+		
+		self.__painter.drawText(offsetH, verticalPos, width, headingHeight, Qt.AlignCenter, self.tr("Health"))
+		verticalPos += headingHeight
+
+		self.__drawValueDots(offsetH, verticalPos, value=calc.calcHealth(), maxValue=calc.calcHealth())
+		
+		self.__painter.restore()
 
 		self.__painter.restore()
 
@@ -425,6 +487,36 @@ class DrawSheet(QObject):
 		self.__drawValueDots(posX + textWidth + self.__textDotSep, posY, value, maxValue)
 
 		self.__painter.restore()
+
+
+	def __drawTextWithValue(self, posX, posY, width, text="", value=0):
+		"""
+		Schreibt einen Text und hinter einer Abstandslinie den zugehörigen Wert.
+
+		posX und posY bestimmen den Punkt der Auflagelinie des Textes.
+		"""
+
+		self.__painter.save()
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		textHeight = fontMetrics.height()
+		textWidth = fontMetrics.boundingRect(text).width()
+		valueWidth = fontMetrics.boundingRect(unicode(value)).width()
+
+		self.__painter.drawText(posX, posY - fontMetrics.ascent(), textWidth, textHeight, Qt.AlignLeft, text)
+
+		self.__painter.save()
+		pen = self.__painter.pen()
+		pen.setWidthF(self.__lineWidth)
+		self.__painter.setPen(pen)
+		self.__painter.drawLine(posX + textWidth, posY, posX + width - valueWidth, posY)
+		self.__painter.restore()
+
+		self.__painter.drawText(posX + width - valueWidth, posY, unicode(value))
+
+		self.__painter.restore()
+
+		
 
 	## Der horizontale Radius eines Punkts auf dem Charakterbogen.
 	#v_dotDiameterH = target.width() * 0.01156;

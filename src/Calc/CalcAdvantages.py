@@ -59,7 +59,7 @@ class CalcAdvantages(QObject):
 
 		self.__size = 0
 		self.__initiative = 0
-		self.__speed = 0;
+		self.__speed = 0
 		self.__defense = 0
 		self.__health = 0
 		self.__willpower = 0
@@ -77,29 +77,46 @@ class CalcAdvantages(QObject):
 		self.sizeChanged.connect(self.calcHealth)
 
 
-#int CalcAdvantages::defense() const {
-	"""
-	Gibt die berechnete Defense des Charakters aus.
-	"""
+	#@property
+	#def size(self):
+		#return self.__size
 
-	#return v_defense;
-#}
 
-#int CalcAdvantages::health() const {
-	"""
-	Gibt die berechnete Gesundheit des Charakters aus.
-	"""
+	#@property
+	#def initiative(self):
+		#return self.__initiative
 
-	#return v_health;
-#}
 
-#int CalcAdvantages::willpower() const {
-	"""
-	Gibt die berechnete Willenskraft des Charakters aus.
-	"""
+	#@property
+	#def speed(self):
+		#return self.__speed
 
-	#return v_willpower;
-#}
+
+	#@property
+	#def defense(self):
+		#"""
+		#Gibt die berechnete Defense des Charakters aus.
+		#"""
+
+		#return self.__defense
+
+
+	#@property
+	#def health(self):
+		#"""
+		#Gibt die berechnete Gesundheit des Charakters aus.
+		#"""
+
+		#return self.__health
+
+
+	#@property
+	#def willpower(self):
+		#"""
+		#Gibt die berechnete Willenskraft des Charakters aus.
+		#"""
+
+		#return self.__willpower
 
 
 	def calcSize(self):
@@ -118,6 +135,8 @@ class CalcAdvantages(QObject):
 			self.__size = result
 			self.sizeChanged.emit( result )
 
+		return self.__size
+
 
 	def calcInitiative(self):
 		"""
@@ -131,6 +150,8 @@ class CalcAdvantages(QObject):
 		if ( self.__initiative != result ):
 			self.__initiative = result
 			self.initiativeChanged.emit( result )
+
+		return self.__initiative
 
 
 	def calcSpeed(self):
@@ -146,6 +167,8 @@ class CalcAdvantages(QObject):
 			self.__speed = result
 			self.speedChanged.emit( result )
 
+		return self.__speed
+
 
 	def calcDefense(self):
 		"""
@@ -160,6 +183,8 @@ class CalcAdvantages(QObject):
 			self.__defense = result
 			self.defenseChanged.emit( result )
 
+		return self.__defense
+
 
 	def calcHealth(self):
 		"""
@@ -171,6 +196,8 @@ class CalcAdvantages(QObject):
 		if ( self.__health != result ):
 			self.__health = result
 			self.healthChanged.emit( result )
+
+		return self.__health
 
 
 	def calcWillpower(self):
@@ -185,6 +212,8 @@ class CalcAdvantages(QObject):
 		if ( self.__willpower != result ):
 			self.__willpower = result
 			self.willpowerChanged.emit( result )
+
+		return self.__willpower
 
 
 	@staticmethod
