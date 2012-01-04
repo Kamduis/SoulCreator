@@ -141,6 +141,8 @@ class DrawSheet(QObject):
 
 		self._drawSkills(offsetV=240, distanceV=18, width=300)
 
+		self._drawMerits(offsetH=310, offsetV=240, width=250)
+
 		self.__painter.restore()
 
 		self.__painter.restore()
@@ -278,12 +280,13 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawSkills(self, offsetV=0, distanceV=0, width=None):
+	def _drawSkills(self, offsetH=0, offsetV=0, distanceV=0, width=None):
 		"""
 		Bannt die Fertigkeiten auf den Charakterbogen.
 
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
 		\param distanceV Der vertikale Zwischenraum zwischen den einzelnen Fertigkeitskategorien.
+		\param width Die Breite der Fertigkeits-Spalte.
 		"""
 
 		self.__painter.save()
@@ -301,7 +304,7 @@ class DrawSheet(QObject):
 			self.__painter.setFont(self.__fontHeading)
 			fontMetrics_heading = QFontMetrics(self.__painter.font())
 			headingHeight = fontMetrics_heading.boundingRect(item).height()
-			self.__painter.drawText(0, offsetV - headingHeight + i * distanceV + j * textHeight, width, headingHeight, Qt.AlignCenter, item)
+			self.__painter.drawText(offsetH, offsetV - headingHeight + i * distanceV + j * textHeight, width, headingHeight, Qt.AlignCenter, item)
 			self.__painter.restore()
 			traits = self.__character.traits["Skill"][item].values()
 			traits.sort()
@@ -310,11 +313,47 @@ class DrawSheet(QObject):
 					(not subitem.era or subitem.era == self.__character.era) and
 					(not subitem.age or subitem.age == Config.getAge(self.__character.age))
 				):
-					self.__drawTrait(0, offsetV + i * distanceV + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value)
+					self.__drawTrait(offsetH, offsetV + i * distanceV + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value)
 					j += 1
 			i += 1
 			j += 1
 
+		self.__painter.restore()
+
+
+	def _drawMerits(self, offsetH=0, offsetV=0, width=None):
+		"""
+		Bannt die Merits auf den Charakterbogen.
+
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
+		\param width Die Breite der Merit-Spalte.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth // 3
+
+		fontMetrics = QFontMetrics(self.__fontMain)
+		textHeight = fontMetrics.height() - 3
+
+		self.__painter.save()
+		self.__painter.setFont(self.__fontHeading)
+		fontMetrics_heading = QFontMetrics(self.__painter.font())
+		headingHeight = fontMetrics_heading.boundingRect(self.tr("Merits")).height()
+		self.__painter.drawText(offsetH, offsetV - headingHeight, width, headingHeight, Qt.AlignCenter, self.tr("Merits"))
+		self.__painter.restore()
+
+		i = 0
+		j = 0
+		for item in self.__character.traits["Merit"]:
+			traits = self.__character.traits["Merit"][item].values()
+			traits.sort()
+			for subitem in traits:
+				if (subitem.isAvailable and subitem.value > 0):
+					self.__drawTrait(offsetH, offsetV + j * textHeight, width=width, name=subitem.name, value=subitem.value)
+					j += 1
+			j += 1
 
 		self.__painter.restore()
 
