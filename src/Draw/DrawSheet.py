@@ -157,6 +157,8 @@ class DrawSheet(QObject):
 
 		self._drawWillpower(offsetH=560, offsetV=370, width=200)
 
+		self._drawMorality(offsetH=560, offsetV=430, width=200)
+
 		self.__painter.restore()
 
 		self.__painter.restore()
@@ -461,6 +463,51 @@ class DrawSheet(QObject):
 		headingHeight = fontMetrics_heading.boundingRect(self.tr("Willpower")).height()
 		self.__painter.drawText(offsetH, offsetV, width, headingHeight, Qt.AlignCenter, self.tr("Willpower"))
 		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcWillpower(), squares=True)
+		self.__painter.restore()
+
+		self.__painter.restore()
+
+
+	def _drawMorality(self, offsetH=0, offsetV=0, width=None):
+		"""
+		Bannt die Moral auf den Charakterbogen.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox aller Fertigkeiten.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
+		\param width Die Breite der Fertigkeits-Spalte.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth // 3
+
+		self.__painter.save()
+		self.__painter.setFont(self.__fontHeading)
+		fontMetrics_heading = QFontMetrics(self.__painter.font())
+		headingHeight = fontMetrics_heading.boundingRect(self.tr("Morality")).height()
+		self.__painter.drawText(offsetH, offsetV, width, headingHeight, Qt.AlignCenter, self.tr("Morality"))
+		self.__painter.restore()
+
+		font = self.__fontMain
+		self.__painter.setFont(font)
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		textHeight = fontMetrics.height() - 3
+
+		self.__painter.save()
+		for i in xrange(Config.moralityTraitMax):
+			textWidth = fontMetrics.boundingRect(unicode(Config.moralityTraitMax-i)).width()
+			self.__painter.drawText(offsetH, offsetV + headingHeight + i * textHeight, unicode(Config.moralityTraitMax-i))
+			if (Config.moralityTraitMax - i) <= Config.moralityTraitDefaultValue:
+				self.__painter.drawLine(offsetH + textWidth, offsetV + headingHeight + i * textHeight, offsetH + width - self.__dotDiameterH, offsetV + headingHeight + i * textHeight)
+			self.__painter.save()
+			if (Config.moralityTraitMax - i) <= self.__character.morality:
+				self.__painter.setBrush(self.__colorFill)
+			else:
+				self.__painter.setBrush(self.__colorEmpty)
+			self.__painter.drawEllipse(offsetH + width - self.__dotDiameterH, offsetV - self.__dotDiameterV + headingHeight + i * textHeight, self.__dotDiameterH, self.__dotDiameterV)
+			self.__painter.restore()
 		self.__painter.restore()
 
 		self.__painter.restore()
