@@ -100,20 +100,26 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		"""
 		
 		for item in self.__character.traits:
-			try:
-				self.writeStartElement( item )
-			except ErrTraitType as e:
-				Debug.debug(e.message())
-
+			startElementWritten_item = False
 			for subitem in self.__character.traits[item]:
-				try:
-					self.writeStartElement( subitem )
-				except ErrTraitCategory as e:
-					Debug.debug(e.message)
-
+				startElementWritten_subitem = False
 				for subsubitem in self.__character.traits[item][subitem].values():
 					# Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
 					if ( subsubitem.value != 0 ):
+						# Soabld die erste Eigenschaft mit einem Wert != 0 auftaucht, muß das Startelement geschrieben werden.
+						if not startElementWritten_item:
+							try:
+								self.writeStartElement( item )
+							except ErrTraitType as e:
+								Debug.debug(e.message())
+							startElementWritten_item = True
+						if not startElementWritten_subitem:
+							try:
+								self.writeStartElement( subitem )
+							except ErrTraitCategory as e:
+								Debug.debug(e.message)
+							startElementWritten_subitem = True
+
 						self.writeStartElement( "trait" )
 						self.writeAttribute( "name", subsubitem.name )
 						self.writeAttribute( "value", unicode( subsubitem.value ) )
@@ -131,8 +137,12 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 						#}
 
 						self.writeEndElement()
+				# Das Endelement taucht natürlich nur auf, wenn auch ein Startelement existiert.
+				if startElementWritten_subitem:
+					self.writeEndElement()
+			# Das Endelement taucht natürlich nur auf, wenn auch ein Startelement existiert.
+			if startElementWritten_item:
 				self.writeEndElement()
-			self.writeEndElement()
 
 
 	def writeCharacterDerangements(self):
