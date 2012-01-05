@@ -163,6 +163,18 @@ class Config():
 		"Power",
 	)
 
+	## Die Kategorien von Merits sollen in einer gewissen Reihenfolge dargestellt werden.
+	# Alle Kategorien die nicht in dieser Liste stehen, werden nach den hier aufgeführten Kategorien dargestellt.
+	meritCategories = (
+		"Mental",
+		"Physical",
+		"Social",
+		"FightingStyle",
+		"DebateStyle",
+		"Extraordinary",
+		"Item",
+	)
+
 	## Sämtliche Eras, welcher ein Charakter angehören kann.
 	eras = (
 		"Modern",

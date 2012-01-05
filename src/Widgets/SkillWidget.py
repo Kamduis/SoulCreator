@@ -84,11 +84,11 @@ class SkillWidget(TraitWidget):
 
 			self.__scrollLayout.addWidget( widgetSkillCategory )
 
-			__list = self._character.traits[typ][item].values()
+			__list = self._character.traits[typ][item].items()
 			__list.sort()
 			for skill in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				traitWidget = CharaTrait( skill, self )
+				traitWidget = CharaTrait( skill[1], self )
 				traitWidget.buttonText = 0
 				traitWidget.setDescriptionHidden( True )
 

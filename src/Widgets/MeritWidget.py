@@ -25,9 +25,9 @@ from __future__ import division, print_function
 #from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QToolBox#, QScrollArea, QGroupBox
 
-#from src.Config import Config
+from src.Config import Config
 #from src import Error
-#from ReadXml import ReadXml
+from src.Support import SupportList
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Debug import Debug
 
@@ -58,7 +58,11 @@ class MeritWidget(QWidget):
 		self.__layout.addWidget(self.__toolBox)
 
 		self.__typ = "Merit"
-		categories = self.__storage.categories(self.__typ)
+		categories = []
+		categories.extend(Config.meritCategories)
+		categories.extend(self.__storage.categories(self.__typ))
+		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
+		categories = SupportList.uniqifyOrdered(categories)
 
 		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
 		self.__categoryIndex = {}
@@ -75,20 +79,23 @@ class MeritWidget(QWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self.__character.traits[self.__typ][item].values()
+			__list = self.__character.traits[self.__typ][item].items()
 			__list.sort()
-
 			for merit in __list:
 				#Debug.debug(merit)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				traitWidget = CharaTrait( merit, self )
+				traitWidget = CharaTrait( merit[1], self )
 				traitWidget.setSpecialtiesHidden(True)
-				if not merit.custom:
+				if not merit[1].custom:
 					traitWidget.setDescriptionHidden(True)
+
+				# Bei Merits sind nur bestimmte Werte erlaubt.
+				#Debug.debug(self.__storage.traits[self.__typ][item][merit[0]])
+				traitWidget.setPossibleValues(self.__storage.traits[self.__typ][item][merit[0]]["value"])
 
 				layoutMeritCategory.addWidget( traitWidget )
 
-				merit.valueChanged.connect(self.countMerits)
+				merit[1].valueChanged.connect(self.countMerits)
 				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
 
 

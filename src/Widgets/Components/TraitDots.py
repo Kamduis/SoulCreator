@@ -407,11 +407,11 @@ class TraitDots(QWidget):
 		self.setMinimum( tmpList[0] )
 
 		# Das neue Maximum bleibt unverändert, wenn es größer ist als der größte erlaubte Wert. Es werden alle maximal möglichen Punkte angezeigt, aber sie können eben nicht alle ausgefÜllt werden. Ist es allersdins kleiner wird es auf den größten erlaubten Wert gesetzt.
-		if tmpList[:-1] > self.__maximum:
-			self.setMaximum( tmpList[:-1] )
+		if tmpList[-1] > self.__maximum:
+			self.setMaximum( tmpList[-1] )
 
 		# Eine Liste beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumetn genannt werden.
-		self.__forbiddenValues = range(self.__maximum)[self.__minimum:]
+		self.__forbiddenValues = range(self.__minimum, self.__maximum + 1)
 
 		for item in tmpList:
 			if item in self.__forbiddenValues:

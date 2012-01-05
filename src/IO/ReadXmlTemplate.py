@@ -352,8 +352,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				if( self.name() == "trait" ):
+					traitName = self.attributes().value( "name" )
 					traitData = {
-						"name": self.attributes().value( "name" ),
 						"species": species,
 						"value": [0],
 						"age": self.attributes().value( "age" ),
@@ -369,12 +369,12 @@ class ReadXmlTemplate(QObject, ReadXml):
 						#trait.addPossibleValue( 0 );
 					#}
 
-					self.readTraitInformation( typ, category, traitData )
+					self.readTraitInformation( typ, category, traitName, traitData )
 				else:
 					self.readUnknownElement()
 
 
-	def readTraitInformation( self, typ, category, traitData ):
+	def readTraitInformation( self, typ, category, traitName, traitData ):
 		"""
 		Nun werden die zusätzlichen Informationen (Spezialisierungen, Voraussetzungen etc.) ausgelesen.
 		"""
@@ -405,19 +405,26 @@ class ReadXmlTemplate(QObject, ReadXml):
 		# Eine Eigenschaft kann mehrfach vorkommen, da andere Spezies andere Spezialisierungen mitbringen mögen.
 		traitExists = False
 		if typ in self.__storage.traits and category in self.__storage.traits[typ]:
-			for item in self.__storage.traits[typ][category]:
-				if item["name"] == traitInfo["name"]:
-					#Debug.debug("{} existiert schon".format(traitInfo["name"]))
-					for traitItem in traitInfo:
-						# Wir erweitern nur Listen (Spezialisierungen, Merit-Werte, Voraussetzungen)
-						if type(item[traitItem]) == list:
-							item[traitItem].extend(traitInfo[traitItem])
-							item[traitItem] = SupportList.uniqify(item[traitItem])
-					traitExists = True
-					break
+			if traitName in self.__storage.traits[typ][category]:
+				for traitItem in traitInfo:
+					# Wir erweitern nur Listen (Spezialisierungen, Merit-Werte, Voraussetzungen)
+					if type(self.__storage.traits[typ][category][traitName][traitItem]) == list:
+						self.__storage.traits[typ][category][traitName][traitItem].extend(traitInfo[traitItem])
+						self.__storage.traits[typ][category][traitName][traitItem] = SupportList.uniqify(self.__storage.traits[typ][category][traitName][traitItem])
+				traitExists = True
+			#for item in self.__storage.traits[typ][category]:
+				#if item["name"] == traitInfo["name"]:
+					##Debug.debug("{} existiert schon".format(traitInfo["name"]))
+					#for traitItem in traitInfo:
+						## Wir erweitern nur Listen (Spezialisierungen, Merit-Werte, Voraussetzungen)
+						#if type(item[traitItem]) == list:
+							#item[traitItem].extend(traitInfo[traitItem])
+							#item[traitItem] = SupportList.uniqify(item[traitItem])
+					#traitExists = True
+					#break
 
 		if not traitExists:
-			self.__storage.appendTrait( typ, category, traitInfo )
+			self.__storage.appendTrait( typ, category, traitName, traitInfo )
 
 
 	def readCreationTree( self, sp ):

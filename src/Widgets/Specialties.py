@@ -43,11 +43,11 @@ class Specialties(CheckedList):
 	\todo Es wäre toll, wenn der Benutzer eigene Spezialisierungen eintragen könnte, zusätzlich zu denen, die schon angeboten werden.
 	"""
 
-	def __init__(self, templateTraits, parent=None):
+	def __init__(self, template, parent=None):
 		CheckedList.__init__(self, parent)
 
 		#self.__character = character
-		self.__storage = templateTraits
+		self.__storage = template
 
 		self.__trait = None
 
@@ -119,18 +119,19 @@ class Specialties(CheckedList):
 				self.__trait.specialtiesChanged.connect(self.reshowSpecialties)
 			#Debug.debug(self.__trait)
 			for item in self.__storage:
-				for subitem in self.__storage[item]:
-					if subitem["name"] == trait.name:
-						self.setSpecialties(subitem["specialty"])
+				for subitem in self.__storage[item].items():
+					#Debug.debug(subitem)
+					if subitem[0] == trait.name:
+						self.setSpecialties(subitem[1]["specialty"])
 						return
 
 
 	def reshowSpecialties(self):
 		self.clear()
 		for item in self.__storage:
-			for subitem in self.__storage[item]:
-				if subitem["name"] == self.__trait.name:
-					self.setSpecialties(subitem["specialty"])
+			for subitem in self.__storage[item].items():
+				if subitem[0] == self.__trait.name:
+					self.setSpecialties(subitem[1]["specialty"])
 					return
 
 
