@@ -88,14 +88,13 @@ class TraitLine(QWidget):
 #}
 
 
-	def __getName(self):
+	@property
+	def name(self):
 		return self.__labelName.text()
 
-	def __setName( self, name ):
+	@name.setter
+	def name( self, name ):
 		self.__labelName.setText( name )
-
-	## Der Name, der hier dargestellten Eigenschaft.
-	name = property(__getName, __setName)
 
 
 ## Der beschreibende Text dieser Eigenschaft.
@@ -107,18 +106,17 @@ class TraitLine(QWidget):
 		self.__lineEdit.setText( text )
 
 
-	def __getButtonText(self):
-		return self.__button.text()
-
-	def __setButtonText( self, text ):
+	@property
+	def buttonText(self):
 		"""
-		Legt die Beschriftung des Buttons fest.
+		Beschriftung des Knopfes.
 		"""
 		
-		self.__button.setText( unicode(text) )
+		return self.__button.text()
 
-	## Legt die Beschriftung des Buttons fest.
-	buttonText = property(__getButtonText, __setButtonText)
+	@buttonText.setter
+	def buttonText( self, text ):
+		self.__button.setText( unicode(text) )
 
 
 	def __getValue(self):
@@ -151,6 +149,19 @@ class TraitLine(QWidget):
 #void TraitLine::setMinimum( int value ) {
 	#traitDots.setMinimum( value );
 #}
+
+
+	def __getMaximum(self):
+		"""
+		Der Maximalwert für die Dargestellten Punkte.
+		"""
+		
+		return self.__traitDots.maximum()
+
+	def setMaximum(self, maximum):
+		self.__traitDots.setMaximum(maximum)
+
+	maximum = property(__getMaximum, setMaximum)
 
 
 	def setEnabled( self, sw=True):

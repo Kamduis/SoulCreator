@@ -22,21 +22,18 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#import traceback
-
-from PySide.QtCore import Qt
+from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
 
 from src.Config import Config
-#from src import Error
-#from ReadXml import ReadXml
+from src.Widgets.TraitWidget import TraitWidget
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Debug import Debug
 
 
 
 
-class AttributeWidget(QWidget):
+class AttributeWidget(TraitWidget):
 	"""
 	@brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
 
@@ -46,10 +43,7 @@ class AttributeWidget(QWidget):
 	"""
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
-		
-		self.__character = character
-		self.__storage = template
+		TraitWidget.__init__(self, template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
@@ -100,7 +94,7 @@ class AttributeWidget(QWidget):
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) )
 
 		for item in Config.attributes:
-			#Debug.debug(self.__character.traits)
+			#Debug.debug(self._character.traits)
 
 			actualColumn += 1
 
@@ -123,7 +117,7 @@ class AttributeWidget(QWidget):
 			# Einfügen der tatsächlichen Attribute
 			i = 0
 			for subitem in item[1]:
-				attrib = self.__character.traits["Attribute"][item[0]][subitem]
+				attrib = self._character.traits["Attribute"][item[0]][subitem]
 				#Debug.debug(attrib)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( attrib, self )
@@ -133,6 +127,8 @@ class AttributeWidget(QWidget):
 				# An welcher Position sitzt dieses Attribut in der Config.attributes-Liste?
 
 				self.__layoutAttributes.addWidget( traitWidget, i + 1, actualColumn )
+
+				self.maxTraitChanged.connect(traitWidget.setMaximum)
 
 				#if ( item == "Physical" ):
 					#if ( attrib["name"] == "Strength" ):
@@ -307,3 +303,4 @@ class AttributeWidget(QWidget):
 		#}
 	#}
 #}
+

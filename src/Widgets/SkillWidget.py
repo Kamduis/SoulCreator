@@ -26,15 +26,14 @@ from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QScrollArea, QGroupBox
 
 from src.Config import Config
-#from src import Error
-#from ReadXml import ReadXml
+from src.Widgets.TraitWidget import TraitWidget
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Debug import Debug
 
 
 
 
-class SkillWidget(QWidget):
+class SkillWidget(TraitWidget):
 	"""
 	@brief Das Widget, in welchem sämtliche Fertigkeiten angeordnet sind.
 
@@ -47,10 +46,7 @@ class SkillWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
-		
-		self.__character = character
-		self.__storage = template
+		TraitWidget.__init__(self, template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
@@ -76,7 +72,7 @@ class SkillWidget(QWidget):
 		self.__traitWidgets = []
 
 		for item in categoryList:
-			#Debug.debug(self.__character.traits)
+			#Debug.debug(self._character.traits)
 
 			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 			widgetSkillCategory = QGroupBox()
@@ -88,7 +84,7 @@ class SkillWidget(QWidget):
 
 			self.__scrollLayout.addWidget( widgetSkillCategory )
 
-			__list = self.__character.traits[typ][item].values()
+			__list = self._character.traits[typ][item].values()
 			__list.sort()
 			for skill in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
@@ -103,8 +99,8 @@ class SkillWidget(QWidget):
 				# Fertigkeiten haben Spezialisierungen.
 				#connect( traitPtr, SIGNAL( detailsChanged( int )), charaTrait, SLOT( setButtonText(int)) );
 				#connect( character, SIGNAL( characterResetted()), this, SLOT( uncheckAllButtons()) );
-				self.__character.eraChanged.connect(self.emitHideReasonChanged)
-				self.__character.ageChanged.connect(self.emitHideReasonChanged)
+				self._character.eraChanged.connect(self.emitHideReasonChanged)
+				self._character.ageChanged.connect(self.emitHideReasonChanged)
 				self.hideReasonChanged.connect(traitWidget.hideOrShowTrait)
 				traitWidget.specialtiesClicked.connect(self.uncheckOtherButtons)
 				#connect( charaTrait, SIGNAL( specialtiesActivated( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesActivated( bool, QString, QList< cv_TraitDetail > ) ) );
@@ -113,6 +109,8 @@ class SkillWidget(QWidget):
 				#skill.specialtiesChanged.connect(self.emitSpecialtiesActivated)
 
 				layoutSkillCategory.addWidget( traitWidget )
+
+				self.maxTraitChanged.connect(traitWidget.setMaximum)
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			self.__scrollLayout.addStretch()
@@ -156,9 +154,9 @@ class SkillWidget(QWidget):
 
 	def emitHideReasonChanged(self):
 		ageStr = Config.ages[0]
-		if self.__character.age < Config.adultAge:
+		if self._character.age < Config.adultAge:
 			ageStr = Config.ages[1]
-		eraStr = self.__character.era
+		eraStr = self._character.era
 		self.hideReasonChanged.emit(ageStr, eraStr)
 
 

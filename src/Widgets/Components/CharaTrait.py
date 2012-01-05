@@ -102,6 +102,15 @@ class CharaTrait(TraitLine):
 #// 	}
 #// }
 
+
+	#def setMaximum(self, powerstat):
+		#"""
+		#Anders als \ref TraitLine.setMaximum legt diese Funktion die maximale Punktanzahl nicht auf den übergebenen wert fest, sondern auf den Wert, der entsprechend des Powerstats erlaubt ist.
+		#"""
+
+		#pass
+
+
 	def setTraitValue( self, value ):
 		"""
 		Wenn der Wert dieses Widgets verändert wird, muß auch der dadurch repräsentierte Wert im Speicher verändert werden. Dies geschieht über diesen Slot.
