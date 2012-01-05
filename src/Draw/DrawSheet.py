@@ -48,6 +48,7 @@ class DrawSheet(QObject):
 		QObject.__init__(self, parent)
 
 		self.__character = character
+		self.__calc = CalcAdvantages(self.__character)
 
 		self.__painter = QPainter()
 		self.__printer = printer
@@ -59,6 +60,7 @@ class DrawSheet(QObject):
 		self.__dotDiameterH = 9
 		self.__dotDiameterV = self.__dotDiameterH
 		self.__dotLineWidth = .5
+		self.__dotSep = 2
 		self.__textDotSep = 4
 		self.__dotsWidth = 0
 
@@ -147,6 +149,10 @@ class DrawSheet(QObject):
 		self._drawMerits(offsetH=310, offsetV=240, width=250)
 
 		self._drawAdvantages(offsetH=560, offsetV=240, width=200)
+
+		self._drawHealth(offsetH=560, offsetV=310, width=200)
+
+		self._drawWillpower(offsetH=560, offsetV=370, width=200)
 
 		self.__painter.restore()
 
@@ -362,17 +368,14 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawAdvantages(self, offsetH=0, offsetV=0, distanceV=0, width=None):
+	def _drawAdvantages(self, offsetH=0, offsetV=0, width=None):
 		"""
 		Bannt die Berechneten Werte, Moral und Powerstat sowie die Energie auf den Charakterbogen.
 
 		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox aller Fertigkeiten.
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
-		\param distanceV Der vertikale Zwischenraum zwischen den einzelnen Fertigkeitskategorien.
 		\param width Die Breite der Fertigkeits-Spalte.
 		"""
-
-		calc = CalcAdvantages(self.__character)
 
 		self.__painter.save()
 
@@ -380,12 +383,12 @@ class DrawSheet(QObject):
 			width = self.__pageWidth // 3
 
 		advantages = [
-			[ self.tr("Size"), calc.calcSize(), ],
-			[ self.tr("Initiative"), calc.calcInitiative(), ],
-			[ self.tr("Speed"), calc.calcSpeed(), ],
-			[ self.tr("Defense"), calc.calcDefense(), ],
-			#[ self.tr("Health"), calc.calcHealth(), ],
-			#[ self.tr("Willpower"), calc.calcWillpower(), ],
+			[ self.tr("Size"), self.__calc.calcSize(), ],
+			[ self.tr("Initiative"), self.__calc.calcInitiative(), ],
+			[ self.tr("Speed"), self.__calc.calcSpeed(), ],
+			[ self.tr("Defense"), self.__calc.calcDefense(), ],
+			#[ self.tr("Health"), self.__calc.calcHealth(), ],
+			#[ self.tr("Willpower"), self.__calc.calcWillpower(), ],
 		]
 
 		self.__painter.save()
@@ -405,18 +408,55 @@ class DrawSheet(QObject):
 
 		self.__painter.restore()
 
-		## Gesundheitspunkte
+		self.__painter.restore()
+
+
+	def _drawHealth(self, offsetH=0, offsetV=0, width=None):
+		"""
+		Bannt die Gesundheit auf den Charakterbogen.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox aller Fertigkeiten.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
+		\param width Die Breite der Fertigkeits-Spalte.
+		"""
+
 		self.__painter.save()
-		
+
+		if width == None:
+			width = self.__pageWidth // 3
+
+		self.__painter.save()
 		self.__painter.setFont(self.__fontHeading)
 		fontMetrics_heading = QFontMetrics(self.__painter.font())
 		headingHeight = fontMetrics_heading.boundingRect(self.tr("Health")).height()
-		
-		self.__painter.drawText(offsetH, verticalPos, width, headingHeight, Qt.AlignCenter, self.tr("Health"))
-		verticalPos += headingHeight
+		self.__painter.drawText(offsetH, offsetV, width, headingHeight, Qt.AlignCenter, self.tr("Health"))
+		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcHealth())
+		self.__painter.restore()
 
-		self.__drawValueDots(offsetH, verticalPos, value=calc.calcHealth(), maxValue=calc.calcHealth())
-		
+		self.__painter.restore()
+
+
+	def _drawWillpower(self, offsetH=0, offsetV=0, width=None):
+		"""
+		Bannt die Willenskraft auf den Charakterbogen.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox aller Fertigkeiten.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
+		\param width Die Breite der Fertigkeits-Spalte.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth // 3
+
+		## Willenskraftpunkte
+		self.__painter.save()
+		self.__painter.setFont(self.__fontHeading)
+		fontMetrics_heading = QFontMetrics(self.__painter.font())
+		headingHeight = fontMetrics_heading.boundingRect(self.tr("Willpower")).height()
+		self.__painter.drawText(offsetH, offsetV, width, headingHeight, Qt.AlignCenter, self.tr("Willpower"))
+		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcWillpower(), squares=True)
 		self.__painter.restore()
 
 		self.__painter.restore()
@@ -518,7 +558,42 @@ class DrawSheet(QObject):
 
 		self.__painter.restore()
 
-		
+
+	def __drawCenterDots(self, posX, posY, width, number=0, squares=False):
+		"""
+		Zeichnet Punkte über Kästchen. Diese werden Mittig in der angegebenen Breite ausgerichtet.
+		"""
+
+		self.__painter.save()
+
+		pen = self.__painter.pen()
+		pen.setWidthF(self.__dotLineWidth)
+		self.__painter.setPen(pen)
+
+		self.__painter.save()
+
+		widthDots = number * (self.__dotDiameterH + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
+
+		self.__painter.setBrush(self.__colorFill)
+
+		for i in xrange(number):
+			self.__painter.drawEllipse(posX + i * (self.__dotDiameterH + self.__dotSep) + (width - widthDots) // 2, posY, self.__dotDiameterH, self.__dotDiameterV)
+
+		self.__painter.restore()
+
+		if squares:
+			self.__painter.save()
+
+			self.__painter.setBrush(self.__colorEmpty)
+
+			for i in xrange(number):
+				self.__painter.drawRect(posX + i * (self.__dotDiameterH + self.__dotSep) + (width - widthDots) // 2, posY + self.__dotDiameterH + self.__dotSep, self.__dotDiameterH, self.__dotDiameterV)
+
+			self.__painter.restore()
+
+		self.__painter.restore()
+
+
 
 	## Der horizontale Radius eines Punkts auf dem Charakterbogen.
 	#v_dotDiameterH = target.width() * 0.01156;
