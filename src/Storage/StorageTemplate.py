@@ -88,15 +88,15 @@ class StorageTemplate(QObject):
 	#
 	# {
 	# 	Typ1: {
-	# 		Kategorie1: [
-	# 			{ "name": Name1, "species": Species1, "age": Alter1, ... },
-	# 			{ "name": Name2, "species": Species2, "age": Alter2, ... },
+	# 		Kategorie1: {
+	# 			Name1: { "species": Species1, "age": Alter1, ... },
+	# 			Name2: { "species": Species2, "age": Alter2, ... },
 	# 			...
-	# 		],
-	# 		Kategorie2: [
-	# 			{ "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 		},
+	# 		Kategorie2: {
+	# 			Name1: { "species": Species1, "age": Alter1, ... },
 	# 			...
-	# 		],
+	# 		},
 	# 		...
 	# 	},
 	# 	...
@@ -538,7 +538,7 @@ class StorageTemplate(QObject):
 			raise ErrTraitType( ("Virtue", "Vice"), typ )
 
 
-	def appendTrait( self, typ, category, traits):
+	def appendTrait( self, typ, category, name, data):
 		"""
 		Fügt eine Eigenschaft zu der entsprechenden Liste hinzu.
 
@@ -549,17 +549,18 @@ class StorageTemplate(QObject):
 			self.__traits.setdefault(typ,{})
 
 		if category not in self.__traits[typ]:
-			self.__traits[typ].setdefault(category,[])
+			self.__traits[typ].setdefault(category,{})
 
-		self.__traits[typ][category].append(traits)
+		if name not in self.__traits[typ][category]:
+			self.__traits[typ][category].setdefault(name, data)
 
 		## Kontrolle zu Debugzwecken:
 		#keys = self.__traits.keys()
 		#for key in self.__traits:
-			#print(key)
+			#Debug.debug(key)
 			#for keyA in self.__traits[key]:
-				#print(keyA)
-				#print(self.__traits[key][keyA])
+				#Debug.debug(keyA)
+				#Debug.debug(self.__traits[key][keyA])
 
 
 	def appendPowerstat( self, species, value, effects ):

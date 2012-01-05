@@ -134,13 +134,13 @@ class TraitLine(QWidget):
 	value = property(__getValue, setValue)
 
 
-#void TraitLine::setPossibleValues( QList< int > valueList ) {
-	#"""
-	#Gibt alle Werte zurück, welche diese Zeile annehmen darf.
-	#"""
-	
-	#traitDots.setAllowedValues( &valueList );
-#}
+	def setPossibleValues( self, values ):
+		"""
+		Legt fest, welche Werte diese Zeile annehmen darf.
+		"""
+
+		self.__traitDots.setAllowedValues( values )
+
 
 #int TraitLine::minimum() const {
 	#return traitDots.minimum();

@@ -107,27 +107,28 @@ class StorageCharacter(QObject):
 			self.__traits.setdefault(typ, {})
 			for item in template.traits[typ]:
 				self.__traits[typ].setdefault(item, {})
-				for subitem in template.traits[typ][item]:
+				for subitem in template.traits[typ][item].items():
+					#Debug.debug(subitem)
 					val = 2
 					# Eigenschaften, die Zusaztest erhalten können (bspw. Language), werden mehrfach an die Liste angefügt.
 					loop = 1
 					custom = False
 					customText = None
-					if subitem["custom"]:
+					if subitem[1]["custom"]:
 						loop = Config.traitMultipleMax
 						custom = True
 
 					for i in xrange(loop):
-						trait = Trait(self, subitem["name"], val)
-						trait.age = subitem["age"]
-						trait.era = subitem["era"]
-						trait.species = subitem["species"]
+						trait = Trait(self, subitem[0], val)
+						trait.age = subitem[1]["age"]
+						trait.era = subitem[1]["era"]
+						trait.species = subitem[1]["species"]
 						trait.custom = custom
 						trait.customText = customText
-						if "prerequisite" in subitem:
+						if "prerequisite" in subitem[1]:
 							trait.hasPrerequisites = True
-							trait.prerequisitesText = subitem["prerequisite"]
-						self.__traits[typ][item].setdefault(subitem["name"], trait)
+							trait.prerequisitesText = subitem[1]["prerequisite"]
+						self.__traits[typ][item].setdefault(subitem[0], trait)
 
 						# Wenn sich eine Eigenschaft ändert, gilt der Charakter als modifiziert.
 						trait.traitChanged.connect(self.setModified)

@@ -75,20 +75,23 @@ class MeritWidget(QWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self.__character.traits[self.__typ][item].values()
+			__list = self.__character.traits[self.__typ][item].items()
 			__list.sort()
-
 			for merit in __list:
 				#Debug.debug(merit)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				traitWidget = CharaTrait( merit, self )
+				traitWidget = CharaTrait( merit[1], self )
 				traitWidget.setSpecialtiesHidden(True)
-				if not merit.custom:
+				if not merit[1].custom:
 					traitWidget.setDescriptionHidden(True)
+
+				# Bei Merits sind nur bestimmte Werte erlaubt.
+				#Debug.debug(self.__storage.traits[self.__typ][item][merit[0]])
+				traitWidget.setPossibleValues(self.__storage.traits[self.__typ][item][merit[0]]["value"])
 
 				layoutMeritCategory.addWidget( traitWidget )
 
-				merit.valueChanged.connect(self.countMerits)
+				merit[1].valueChanged.connect(self.countMerits)
 				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
 
 
