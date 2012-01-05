@@ -175,6 +175,15 @@ class Config():
 		"Item",
 	)
 
+	## Die Kategorien von Flaws sollen in einer gewissen Reihenfolge dargestellt werden.
+	# Alle Kategorien die nicht in dieser Liste stehen, werden nach den hier aufgeführten Kategorien dargestellt.
+	flawCategories = (
+		"Mental",
+		"Physical",
+		"Social",
+		"Extraordinary",
+	)
+
 	## Sämtliche Eras, welcher ein Charakter angehören kann.
 	eras = (
 		"Modern",

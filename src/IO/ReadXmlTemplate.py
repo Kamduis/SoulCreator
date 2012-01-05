@@ -29,7 +29,7 @@ from PySide.QtCore import QObject, QFile
 from src.Config import Config
 from src import Error
 from ReadXml import ReadXml
-from src.Support import SupportList
+from src.Tools import ListTools
 from src.Debug import Debug
 
 
@@ -410,19 +410,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 					# Wir erweitern nur Listen (Spezialisierungen, Merit-Werte, Voraussetzungen)
 					if type(self.__storage.traits[typ][category][traitName][traitItem]) == list:
 						self.__storage.traits[typ][category][traitName][traitItem].extend(traitInfo[traitItem])
-						self.__storage.traits[typ][category][traitName][traitItem] = SupportList.uniqify(self.__storage.traits[typ][category][traitName][traitItem])
+						self.__storage.traits[typ][category][traitName][traitItem] = ListTools.uniqify(self.__storage.traits[typ][category][traitName][traitItem])
 				traitExists = True
-			#for item in self.__storage.traits[typ][category]:
-				#if item["name"] == traitInfo["name"]:
-					##Debug.debug("{} existiert schon".format(traitInfo["name"]))
-					#for traitItem in traitInfo:
-						## Wir erweitern nur Listen (Spezialisierungen, Merit-Werte, Voraussetzungen)
-						#if type(item[traitItem]) == list:
-							#item[traitItem].extend(traitInfo[traitItem])
-							#item[traitItem] = SupportList.uniqify(item[traitItem])
-					#traitExists = True
-					#break
-
 		if not traitExists:
 			self.__storage.appendTrait( typ, category, traitName, traitInfo )
 

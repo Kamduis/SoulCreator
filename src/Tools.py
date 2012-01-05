@@ -25,7 +25,7 @@ from __future__ import division, print_function
 
 
 
-class SupportList():
+class ListTools():
 	"""
 	@brief Hilfsfunktionen für den Umgang mit Listen.
 	"""

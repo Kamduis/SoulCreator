@@ -27,7 +27,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox#, QScrollArea, QGroupBox
 
 from src.Config import Config
 #from src import Error
-from src.Support import SupportList
+from src.Tools import ListTools
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Debug import Debug
 
@@ -62,7 +62,7 @@ class MeritWidget(QWidget):
 		categories.extend(Config.meritCategories)
 		categories.extend(self.__storage.categories(self.__typ))
 		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
-		categories = SupportList.uniqifyOrdered(categories)
+		categories = ListTools.uniqifyOrdered(categories)
 
 		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
 		self.__categoryIndex = {}
@@ -114,6 +114,7 @@ class MeritWidget(QWidget):
 	#// 	layout_button.addWidget( button );
 	#//
 	#// 	connect( button, SIGNAL( clicked( bool ) ), dialog, SLOT( exec() ) );
+
 
 	def countMerits(self):
 		"""
