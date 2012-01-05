@@ -44,9 +44,10 @@ class DrawSheet(QObject):
 	\todo Bei Werwölfen wird die Rites-Kraft noch nicht beim Zeichnen der Kräfte unter Renown berücksichtigt.
 	"""
 
-	def __init__(self, character, printer, parent=None):
+	def __init__(self, template, character, printer, parent=None):
 		QObject.__init__(self, parent)
 
+		self.__storage = template
 		self.__character = character
 		self.__calc = CalcAdvantages(self.__character)
 
@@ -94,7 +95,8 @@ class DrawSheet(QObject):
 			raise ErrSpeciesNotExisting( character.species )
 		self.__fontScript = QFont("Blokletters Balpen", 6 )
 
-		#calcAdvantages = new CalcAdvantages( this );
+		self.__traitMax = self.__storage.maxTrait(self.__character.species, self.__character.powerstat)
+		self.__traitMaxStandard = 5
 
 
 	def print(self):
@@ -133,7 +135,8 @@ class DrawSheet(QObject):
 		self.__painter.translate(self.__borderFrame, self.__borderFrame)
 
 		## Die Breite der Punktwerte hängt vom Eigenschaftshöchstwert für den Charakter ab.
-		self.__dotsWidth = 5 * (self.__dotDiameterH + self.__dotLineWidth)
+		self.__dotsWidth = self.__traitMax * (self.__dotDiameterH + self.__dotLineWidth)
+		self.__dotsWidthStandard = self.__traitMaxStandard * (self.__dotDiameterH + self.__dotLineWidth)
 		
 		self.__painter.save()
 
@@ -259,7 +262,7 @@ class DrawSheet(QObject):
 		self.__painter.save()
 		self.__painter.setFont(self.__fontSubHeading)
 
-		text = [ u"Power", u"Finesse", u"Resistance", ]
+		text = ( u"Power", u"Finesse", u"Resistance", )
 
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textwidthArray = []
@@ -281,10 +284,11 @@ class DrawSheet(QObject):
 		distanceH = widthLeft // 3
 
 		i = 0
-		for item in self.__character.traits["Attribute"]:
+		for item in Config.attributes:
 			j = 0
-			for subitem in self.__character.traits["Attribute"][item].values():
-				self.__drawTrait(textwidth + i * distanceH, offsetV + j * distanceV, width=distanceH, name=subitem.name, value=subitem.value, align=Qt.AlignRight, fontWeight=QFont.Bold)
+			for subitem in item[1]:#self.__character.traits["Attribute"][item].values()
+				attrib = self.__character.traits["Attribute"][item[0]][subitem]
+				self.__drawTrait(textwidth + i * distanceH, offsetV + j * distanceV, width=distanceH, name=attrib.name, value=attrib.value, maxValue=self.__traitMax, align=Qt.AlignRight, fontWeight=QFont.Bold)
 				j += 1
 			i += 1
 
@@ -324,7 +328,7 @@ class DrawSheet(QObject):
 					(not subitem.era or subitem.era == self.__character.era) and
 					(not subitem.age or subitem.age == Config.getAge(self.__character.age))
 				):
-					self.__drawTrait(offsetH, offsetV + i * distanceV + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value)
+					self.__drawTrait(offsetH, offsetV + i * distanceV + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value, maxValue=self.__traitMax)
 					j += 1
 			i += 1
 			j += 1

@@ -75,9 +75,10 @@ class MeritWidget(QWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self.__character.traits[self.__typ][item]
+			__list = self.__character.traits[self.__typ][item].values()
+			__list.sort()
 
-			for merit in __list.values():
+			for merit in __list:
 				#Debug.debug(merit)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( merit, self )

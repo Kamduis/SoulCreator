@@ -706,7 +706,7 @@ class MainWindow(QMainWindow):
 			printer.setFullPage( True )
 			printer.setOutputFileName( filePath[0] )
 
-			drawSheet = DrawSheet( self.__character, printer, self )
+			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
 			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
 

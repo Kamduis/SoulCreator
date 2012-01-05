@@ -467,6 +467,13 @@ class StorageTemplate(QObject):
 			return 0
 
 
+	def maxTrait(self, species, powerstat):
+		if powerstat > 0:
+			return self.__powerstat[species][powerstat]["traitMax"]
+		else:
+			return 5
+
+
 #void StorageTemplate::appendTraitBonus( Trait* tr1, QString breed ) {
 	#TraitBonus* lcl_traitBonus = new TraitBonus( tr1, breed );
 

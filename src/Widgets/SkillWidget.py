@@ -77,7 +77,6 @@ class SkillWidget(QWidget):
 
 		for item in categoryList:
 			#Debug.debug(self.__character.traits)
-			__list = self.__character.traits[typ][item]
 
 			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 			widgetSkillCategory = QGroupBox()
@@ -89,7 +88,9 @@ class SkillWidget(QWidget):
 
 			self.__scrollLayout.addWidget( widgetSkillCategory )
 
-			for skill in __list.values():
+			__list = self.__character.traits[typ][item].values()
+			__list.sort()
+			for skill in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( skill, self )
 				traitWidget.buttonText = 0

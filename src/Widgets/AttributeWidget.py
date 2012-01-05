@@ -99,19 +99,14 @@ class AttributeWidget(QWidget):
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) )
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) )
 
-		for item in categoryList:
+		for item in Config.attributes:
 			#Debug.debug(self.__character.traits)
-
-			## Die Ordnung der Attribute ist essentiell, so daß ich sie nicht automatisch bestimmen kann.
-			__list = self.__character.traits[typ][item]
-
-			#Debug.debug(__list)
 
 			actualColumn += 1
 
 			vLine = QFrame( self )
 			vLine.setFrameStyle( QFrame.VLine)
-			self.__layoutAttributes.addWidget( vLine, 1, actualColumn, len(__list), 1, Qt.AlignHCenter )
+			self.__layoutAttributes.addWidget( vLine, 1, actualColumn, len(item[1]), 1, Qt.AlignHCenter )
 
 			#// 		layout.setColumnMinimumWidth(actualColumn, Config::traitCategorySpace)
 			self.__layoutAttributes.setColumnStretch( actualColumn, 1 )
@@ -122,19 +117,22 @@ class AttributeWidget(QWidget):
 			# Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
 			header = QLabel()
 			header.setAlignment( Qt.AlignHCenter )
-			header.setText( "<b>" + item + "</b>" )
+			header.setText( "<b>" + item[0] + "</b>" )
 			self.__layoutAttributes.addWidget( header, 0, actualColumn )
 
 			# Einfügen der tatsächlichen Attribute
-			j = 0
-			for attrib in __list.values():
+			i = 0
+			for subitem in item[1]:
+				attrib = self.__character.traits["Attribute"][item[0]][subitem]
 				#Debug.debug(attrib)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( attrib, self )
 				traitWidget.setSpecialtiesHidden( True )
 				traitWidget.setDescriptionHidden( True )
 
-				self.__layoutAttributes.addWidget( traitWidget, j + 1, actualColumn )
+				# An welcher Position sitzt dieses Attribut in der Config.attributes-Liste?
+
+				self.__layoutAttributes.addWidget( traitWidget, i + 1, actualColumn )
 
 				#if ( item == "Physical" ):
 					#if ( attrib["name"] == "Strength" ):
@@ -151,7 +149,7 @@ class AttributeWidget(QWidget):
 						#layoutAttributes.addWidget( labelMan, j + 1, actualColumn + 1 )
 						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesMan( int ) ) )
 
-				j += 1
+				i += 1
 
 			# Bei Werwölfen erscheint hier Zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
 			actualColumn += 1

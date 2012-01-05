@@ -175,6 +175,13 @@ class Config():
 		"Kid",
 	)
 
+	## Die Reihenfolge der Attribute ist derart wichtig, daß ich sie nicht automatisch bestimmen kann.
+	attributes = (
+		( "Mental", ( "Intelligence", "Wits", "Resolve", ), ),
+		( "Physical", ( "Strength", "Dexterity", "Stamina", ), ),
+		( "Social", ( "Presence", "Manipulation", "Composure", ), ),
+	)
+
 	## Die unterschieldichen Gestalten der Werwölfe.
 	shapesWerewolf = (
 		"Hishu",
