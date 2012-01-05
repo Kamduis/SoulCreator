@@ -24,6 +24,8 @@ from __future__ import division, print_function
 
 import inspect
 
+from src.GlobalState import GlobalState
+
 
 
 
@@ -38,5 +40,5 @@ class Debug():
 		"""
 		Gibt einen Text aus, wobei der Ort des Aufrufs dieser Funktion vorangestellt ist.
 		"""
-
-		print("{:<78}\tl. {:<4}\t{:<18}\n\t{}".format(inspect.stack()[1][1], inspect.stack()[1][2], inspect.stack()[1][3], text))
+		if GlobalState.isDebug:
+			print("{:<78}\tl. {:<4}\t{:<18}\n\t{}".format(inspect.stack()[1][1], inspect.stack()[1][2], inspect.stack()[1][3], text))
