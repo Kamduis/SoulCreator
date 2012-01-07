@@ -517,6 +517,7 @@ class StorageCharacter(QObject):
 			for subitem in self.__traits[item]:
 				for subsubitem in self.__traits[item][subitem].values():
 					subsubitem.value = val
+					subsubitem.customText = ""
 					subsubitem.specialties = []
 
 		self.morality = Config.moralityTraitDefaultValue

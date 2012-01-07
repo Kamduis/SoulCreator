@@ -102,6 +102,8 @@ class MeritWidget(QWidget):
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutMeritCategory.addStretch()
 
+		self.setMinimumWidth(Config.traitLineWidthMin)
+
 	#// 	dialog = new SelectMeritsDialog( this );
 	#//
 	#// 	QHBoxLayout* layout_button = new QHBoxLayout();

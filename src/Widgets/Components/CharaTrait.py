@@ -81,17 +81,6 @@ class CharaTrait(TraitLine):
 		#hideDescriptionWidget();
 
 
-#Trait* CharaTrait::traitPtr() const {
-	#return ptr_trait;
-#}
-
-#void CharaTrait::setTraitPtr( Trait* trait ) {
-	#if ( ptr_trait != trait ) {
-		#ptr_trait = trait;
-	#}
-#}
-
-
 #// int CharaTrait2::value() const {
 #// 	return traitPtr()->value();
 #// }
@@ -188,7 +177,6 @@ class CharaTrait(TraitLine):
 		Versteckt oder zeigt diese Eigenschaft, je nach gewählter Spezies.
 		"""
 
-		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
 		if (not self.__trait.species or self.__trait.species == species):
 			self.setHidden(False)
 			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))

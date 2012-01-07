@@ -27,7 +27,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 
 from src.Config import Config
 from src.Tools import ListTools
-from src.Widgets.Components.CharaTrait import CharaTrait
+from src.Widgets.Components.CheckTrait import CheckTrait
 from src.Debug import Debug
 
 
@@ -76,23 +76,42 @@ class FlawWidget(QWidget):
 			__list = self.__character.traits[self.__typ][item].items()
 			__list.sort()
 			for flaw in __list:
-				#Debug.debug(flaw)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				traitWidget = CharaTrait( flaw[1], self )
-				traitWidget.setSpecialtiesHidden(True)
+				traitWidget = CheckTrait( flaw[1], self )
 				if not flaw[1].custom:
 					traitWidget.setDescriptionHidden(True)
 
 				layoutFlawCategory.addWidget( traitWidget )
 
-				#flaw[1].valueChanged.connect(self.countMerits)
+				flaw[1].valueChanged.connect(self.countItems)
 				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
 
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutFlawCategory.addStretch()
 
+		self.setMinimumWidth(Config.traitLineWidthMin)
 
+
+
+	def countItems(self):
+		"""
+		Zält die Nachteile in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
+
+		Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
+		"""
+
+		for item in self.__character.traits[self.__typ]:
+			numberInCategory = 0
+			for subitem in self.__character.traits[self.__typ][item].values():
+				if subitem.value > 0:
+					numberInCategory += 1
+
+			# ToolBox-Seite des entsprechenden Kategorie mit der Anzahl gewählter Merits beschriften.
+			if numberInCategory > 0:
+				self.__toolBox.setItemText( self.__categoryIndex[item], "{} ({})".format(item, numberInCategory) )
+			else:
+				self.__toolBox.setItemText( self.__categoryIndex[item], item )
 
 
 	#void FlawWidget::countItems() {

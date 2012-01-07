@@ -78,6 +78,9 @@ class Config():
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 	#const int Config::displayTimeout = 10000
 
+	## Die minimale Breite für Widgets wie Fertigkeiten, Merits, Flaws etc.
+	traitLineWidthMin = 320
+
 	## Die Minimale Breite für Textfelder für zusätzlichen Text von Eigenschaften.
 	traitCustomTextWidthMin = 100
 
