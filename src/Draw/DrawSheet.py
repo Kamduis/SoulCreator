@@ -61,6 +61,8 @@ class DrawSheet(QObject):
 		self.__lineWidth = .75
 		self.__dotDiameterH = 9
 		self.__dotDiameterV = self.__dotDiameterH
+		self.__dotBigDiameterH = 12
+		self.__dotBigDiameterV = self.__dotBigDiameterH
 		self.__dotLineWidth = .5
 		self.__dotSep = 2
 		self.__textDotSep = 4
@@ -69,7 +71,7 @@ class DrawSheet(QObject):
 		## Die Farbe, mit welcher die Punkte auf dem Charakterbogen ausgefüllt werden.
 		self.__colorFill = QColor( 0, 0, 0 )
 		self.__colorEmpty = QColor( 255, 255, 255 )
-		self.__colorText = QColor( 255, 0, 0 )
+		self.__colorText = QColor( 0, 0, 0 )
 
 		## Schriften sind Abhängig von der Spezies.
 		self.__fontMain = QFont("TeX Gyre Pagella", 10)
@@ -129,11 +131,11 @@ class DrawSheet(QObject):
 		## Grundeinstellungen des Painters sind abgeschlossen. Dies ist der Zusatnd, zu dem wir zurückkehren, wenn wir painter.restore() aufrufen.
 		self.__painter.save()
 
-		if GlobalState.isDebug:
-			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
-			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
-			self.__painter.drawImage(target, image, source)
+		#if GlobalState.isDebug:
+			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
+			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
+			#target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
+			#self.__painter.drawImage(target, image, source)
 
 		## Hiermit wird der Seitenrahmen eingehalten.
 		self.__painter.translate(self.__borderFrame, self.__borderFrame)
@@ -161,13 +163,13 @@ class DrawSheet(QObject):
 
 		self._drawFlaws(offsetH=310, offsetV=620, width=250, height=60)
 
-		self._drawAdvantages(offsetH=570, offsetV=240, width=195)
+		self._drawAdvantages(offsetH=570, offsetV=210, width=195)
 
-		self._drawHealth(offsetH=570, offsetV=350, width=195)
+		self._drawHealth(offsetH=570, offsetV=320, width=195)
 
-		self._drawWillpower(offsetH=570, offsetV=420, width=195)
+		self._drawWillpower(offsetH=570, offsetV=400, width=195)
 
-		self._drawMorality(offsetH=570, offsetV=500, width=195, species=self.__character.species)
+		self._drawMorality(offsetH=570, offsetV=490, width=195, species=self.__character.species)
 
 		self.__painter.restore()
 
@@ -440,7 +442,7 @@ class DrawSheet(QObject):
 		for item in Config.mainCategories:
 			self.__drawHeading(offsetH, offsetV + i * (headingHeight + self.__headingSep) + j * textHeight, width, item)
 			for subitem in traitsToDisplay[item]:
-				self.__drawTrait(offsetH, offsetV + headingHeight + i * (headingHeight + self.__headingSep) + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value, maxValue=self.__traitMax)
+				self.__drawTrait(offsetH, offsetV + headingHeight + i * (headingHeight + self.__headingSep) + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value, maxValue=self.__traitMax, text=", ".join(subitem.specialties))
 				j += 1
 			i += 1
 
@@ -584,6 +586,9 @@ class DrawSheet(QObject):
 
 		self.__painter.restore()
 
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, verticalPos - offsetV)
+
 		self.__painter.restore()
 
 
@@ -602,7 +607,7 @@ class DrawSheet(QObject):
 			width = self.__pageWidth // 3
 
 		headingHeight = self.__drawHeading(offsetH, offsetV, width, self.tr("Health"))
-		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcHealth(), squares=True)
+		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcHealth(), squares=True, big=True)
 
 		self.__painter.restore()
 
@@ -622,7 +627,7 @@ class DrawSheet(QObject):
 			width = self.__pageWidth // 3
 
 		headingHeight = self.__drawHeading(offsetH, offsetV, width, self.tr("Willpower"))
-		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcWillpower(), squares=True)
+		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcWillpower(), squares=True, big=True)
 
 		self.__painter.restore()
 
@@ -734,7 +739,7 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def __drawTrait(self, posX, posY, width, align=Qt.AlignLeft, name="", value=0, maxValue=5):
+	def __drawTrait(self, posX, posY, width, align=Qt.AlignLeft, name="", text="", value=0, maxValue=5):
 		"""
 		Schreibt eine Eigenschaft mit den Punktwerten.
 
@@ -746,20 +751,40 @@ class DrawSheet(QObject):
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height()
 		dotsWidth = maxValue * (self.__dotDiameterH + self.__dotLineWidth / 2)
-		textWidth = width - dotsWidth - self.__textDotSep
+		textWidth = fontMetrics.boundingRect(name).width()
 
-		self.__painter.drawText(posX, posY - fontMetrics.ascent(), textWidth, textHeight, align, name)
+		self.__painter.drawText(posX, posY - fontMetrics.ascent(), width - dotsWidth - self.__dotSep, textHeight, align, name)
 
-		## Bei linksbündigen Eigenschaften muß eine Linie gezogen werden,d amit man weiß, welche Punkte zu welcher Eigenschaft gehören.
+		## Bei linksbündigen Eigenschaften muß eine Linie gezogen werden, damit man weiß, welche Punkte zu welcher Eigenschaft gehören.
 		if align == Qt.AlignLeft:
-			self.__painter.save()
-			pen = self.__painter.pen()
-			pen.setWidthF(self.__lineWidth)
-			self.__painter.setPen(pen)
-			self.__painter.drawLine(posX + fontMetrics.boundingRect(name).width(), posY, posX + textWidth, posY)
-			self.__painter.restore()
+			## Wenn text angegeben wird, wird dieser auf die Linie geschrieben.
+			smallWidth = 0
+			if text:
+				self.__painter.save()
+				font = self.__painter.font()
+				font.setPointSize(font.pointSize() - 4)
+				self.__painter.setFont(font)
+
+				fontMetricsSmall = QFontMetrics(self.__painter.font())
+				textWidthSmall = fontMetricsSmall.boundingRect(text).width()
+
+				smallAlign = align
+				smallWidth = textWidthSmall
+				if textWidthSmall > width - textWidth - dotsWidth - self.__dotSep:
+					smallAlign = align | Qt.TextWordWrap
+					smallWidth = width - textWidth - dotsWidth - self.__dotSep
+				self.__painter.drawText(posX + textWidth, posY - fontMetricsSmall.ascent(), smallWidth, 2 * fontMetricsSmall.height(), smallAlign, text)
+				self.__painter.restore()
+
+			if smallWidth < width - textWidth - dotsWidth - self.__dotSep:
+				self.__painter.save()
+				pen = self.__painter.pen()
+				pen.setWidthF(self.__lineWidth)
+				self.__painter.setPen(pen)
+				self.__painter.drawLine(posX + textWidth + smallWidth, posY, posX + width - dotsWidth - self.__textDotSep, posY)
+				self.__painter.restore()
 		
-		self.__drawValueDots(posX + textWidth + self.__textDotSep, posY, value, maxValue)
+		self.__drawValueDots(posX + width - dotsWidth, posY, value, maxValue)
 
 		self.__painter.restore()
 
@@ -768,7 +793,8 @@ class DrawSheet(QObject):
 		"""
 		Schreibt einen Text und hinter einer Abstandslinie den zugehörigen Wert.
 
-		posX und posY bestimmen den Punkt der Auflagelinie des Textes.
+		\param posX Linke Kante der Zeile.
+		\param posY Oberkante des Textes.
 		"""
 
 		self.__painter.save()
@@ -778,24 +804,29 @@ class DrawSheet(QObject):
 		textWidth = fontMetrics.boundingRect(text).width()
 		valueWidth = fontMetrics.boundingRect(unicode(value)).width()
 
-		self.__painter.drawText(posX, posY - fontMetrics.ascent(), textWidth, textHeight, Qt.AlignLeft, text)
+		self.__painter.drawText(posX, posY, textWidth, textHeight, Qt.AlignLeft, text)
 
 		self.__painter.save()
 		pen = self.__painter.pen()
 		pen.setWidthF(self.__lineWidth)
 		self.__painter.setPen(pen)
-		self.__painter.drawLine(posX + textWidth, posY, posX + width - valueWidth, posY)
+		self.__painter.drawLine(posX + textWidth, posY + fontMetrics.ascent(), posX + width - valueWidth, posY + fontMetrics.ascent())
 		self.__painter.restore()
 
-		self.__painter.drawText(posX + width - valueWidth, posY, unicode(value))
+		self.__painter.drawText(posX + width - valueWidth, posY, valueWidth, textHeight, Qt.AlignRight, unicode(value))
 
 		self.__painter.restore()
 
 
-	def __drawCenterDots(self, posX, posY, width, number=0, squares=False):
+	def __drawCenterDots(self, posX, posY, width, number=0, squares=False, big=False):
 		"""
 		Zeichnet Punkte über Kästchen. Diese werden Mittig in der angegebenen Breite ausgerichtet.
 		"""
+
+		if big:
+			dotDiameter = self.__dotBigDiameterH
+		else:
+			dotDiameter = self.__dotDiameterH
 
 		self.__painter.save()
 
@@ -805,12 +836,12 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		widthDots = number * (self.__dotDiameterH + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
+		widthDots = number * (dotDiameter + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
 
 		self.__painter.setBrush(self.__colorFill)
 
 		for i in xrange(number):
-			self.__painter.drawEllipse(posX + i * (self.__dotDiameterH + self.__dotSep) + (width - widthDots) // 2, posY, self.__dotDiameterH, self.__dotDiameterV)
+			self.__painter.drawEllipse(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) // 2, posY, dotDiameter, dotDiameter)
 
 		self.__painter.restore()
 
@@ -820,7 +851,7 @@ class DrawSheet(QObject):
 			self.__painter.setBrush(self.__colorEmpty)
 
 			for i in xrange(number):
-				self.__painter.drawRect(posX + i * (self.__dotDiameterH + self.__dotSep) + (width - widthDots) // 2, posY + self.__dotDiameterH + self.__dotSep, self.__dotDiameterH, self.__dotDiameterV)
+				self.__painter.drawRect(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) // 2, posY + dotDiameter + self.__dotSep, dotDiameter, dotDiameter)
 
 			self.__painter.restore()
 
