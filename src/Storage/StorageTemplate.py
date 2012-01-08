@@ -444,6 +444,10 @@ class StorageTemplate(QObject):
 		return self.__speciesGroupNames[species]["Faction"][1]
 
 
+	def moralityName(self, species):
+		return self.__species[species]["morale"]
+
+
 	def powerstatName(self, species):
 		return self.__species[species]["powerstat"]
 

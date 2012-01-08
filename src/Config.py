@@ -166,6 +166,13 @@ class Config():
 		"Power",
 	)
 
+	## Die Kategorien von Attributen und Fertigkeiten sollen in einer gewissen Reihenfolge dargestellt werden.
+	mainCategories = (
+		"Mental",
+		"Physical",
+		"Social",
+	)
+
 	## Die Kategorien von Merits sollen in einer gewissen Reihenfolge dargestellt werden.
 	# Alle Kategorien die nicht in dieser Liste stehen, werden nach den hier aufgeführten Kategorien dargestellt.
 	meritCategories = (
@@ -205,6 +212,7 @@ class Config():
 		( "Physical", ( "Strength", "Dexterity", "Stamina", ), ),
 		( "Social", ( "Presence", "Manipulation", "Composure", ), ),
 	)
+	attributeSorts = ( u"Power", u"Finesse", u"Resistance", )
 
 	## Die unterschieldichen Gestalten der Werwölfe.
 	shapesWerewolf = (
@@ -255,9 +263,9 @@ class Config():
 		"""
 
 		if age < Config.adultAge:
-			return Config.ages[0]
-		else:
 			return Config.ages[1]
+		else:
+			return Config.ages[0]
 
 
 		

@@ -62,16 +62,10 @@ class SkillWidget(TraitWidget):
 
 		typ = "Skill"
 
-		categoryList = (
-			"Mental",
-			"Physical",
-			"Social",
-		)
-
 		## Eine Liste, in der alle Eigenschafts-Widgets aufgelistet werden.
 		self.__traitWidgets = []
 
-		for item in categoryList:
+		for item in Config.mainCategories:
 			#Debug.debug(self._character.traits)
 
 			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.

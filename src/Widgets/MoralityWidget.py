@@ -91,6 +91,7 @@ class MoralityWidget(QWidget):
 
 			dot.clicked.connect(self.__calcValue)
 
+		self.__character.speciesChanged.connect(self.setMoralityName)
 		self.__character.moralityChanged.connect(self.setValue)
 		self.valueChanged.connect(self.__character.setMorality)
 
@@ -264,17 +265,13 @@ class MoralityWidget(QWidget):
 #}
 
 
-#void MoralityWidget::renameHeader( cv_Species::SpeciesFlag species ) {
-	#"""
-	#Setzt die Überschrift dieses Widgets auf einen neuen Namen. Der name hängt von der Spezies ab.
-	#"""
+	def setMoralityName( self, species ):
+		"""
+		Setzt die Überschrift dieses Widgets auf einen neuen Namen. Der name hängt von der Spezies ab.
+		"""
 
-	#for ( int i = 0; i < storage->species().count(); ++i ) {
-		#if ( cv_Species::toSpecies( storage->species().at( i ).name ) == species ) {
-			#labelHeader->setText( "<b>" + storage->species().at( i ).morale + "</b>" );
-		#}
-	#}
-#}
+		self.__labelHeading.setText("<b>{}</b>".format(self.__storage.moralityName(species)))
+
 
 #void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
 	#"""
