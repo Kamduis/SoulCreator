@@ -52,8 +52,10 @@
     <file>images/sheet/Changeling-Balken-h.svg</file>
     <file>images/sheet/Changeling-Balken-v.svg</file>
     <file>images/sheet/Changeling-Rahmen.jpg</file>
+    <file>images/sheet/Mage.png</file>
     <file>images/sheet/Vampire.png</file>
     <file>images/sheet/Vampire-Rahmen.jpg</file>
+    <file>images/sheet/Werewolf.png</file>
   </qresource>
   <qresource prefix="types">
     <file>images/svg/karate.svg</file>

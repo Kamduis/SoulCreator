@@ -40,5 +40,6 @@ class Debug():
 		"""
 		Gibt einen Text aus, wobei der Ort des Aufrufs dieser Funktion vorangestellt ist.
 		"""
+
 		if GlobalState.isDebug:
 			print("{:<78}\tl. {:<4}\t{:<18}\n\t{}".format(inspect.stack()[1][1], inspect.stack()[1][2], inspect.stack()[1][3], text))

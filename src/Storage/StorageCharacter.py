@@ -138,6 +138,7 @@ class StorageCharacter(QObject):
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
 		self.__identity.identityChanged.connect(self.setModified)
+		self.speciesChanged.connect(self.clearUnusableTraits)
 		self.speciesChanged.connect(self.setModified)
 	#connect( self, SIGNAL( traitChanged( cv_Trait* ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( derangementsChanged() ), self, SLOT( setModified() ) );
@@ -532,6 +533,21 @@ class StorageCharacter(QObject):
 	def setModified( self, sw=True ):
 		if ( self.__modified != sw ):
 			self.__modified = sw
+
+
+	def clearUnusableTraits(self, species):
+		"""
+		Beim Wechsel der Spezies werden zahlreiche Eigenschaften für den Charakter unnutzbar. Diese werden auf den Wert 0 gesetzt.
+		"""
+
+		## Es müssen nur bei ein paar Typen die Eigenschaft durchsucht werden.
+		typesToClear = ( "Merit", "Flaw", "Power", )
+		for typ in typesToClear:
+			for item in self.__traits[typ]:
+				for subitem in self.__traits[typ][item].values():
+					if subitem.species and subitem.species != species and subitem.value != 0:
+						#Debug.debug("Setze {} auf 0.".format(subitem.name))
+						subitem.value = 0
 
 
 	def checkPrerequisites(self, trait):

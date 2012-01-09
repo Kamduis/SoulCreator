@@ -97,8 +97,8 @@ class DrawSheet(QObject):
 			self.__borderFrameX = 55
 			self.__borderFrameY = self.__borderFrameX
 		elif self.__character.species == "Mage":
-			self.__fontHeading = QFont("Tangerine", 17 )
-			self.__fontSubHeading = QFont("Tangerine", 15 )
+			self.__fontHeading = QFont("Tangerine", 21 )
+			self.__fontSubHeading = QFont("Tangerine", 18 )
 		elif self.__character.species == "Vampire":
 			self.__fontHeading = QFont("Cloister Black", 15 )
 			self.__fontSubHeading = QFont("Cloister Black", 13 )
@@ -155,11 +155,11 @@ class DrawSheet(QObject):
 		## Grundeinstellungen des Painters sind abgeschlossen. Dies ist der Zusatnd, zu dem wir zurückkehren, wenn wir painter.restore() aufrufen.
 		self.__painter.save()
 
-		if GlobalState.isDebug:
-			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
-			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
-			self.__painter.drawImage(target, image, source)
+		#if GlobalState.isDebug:
+			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
+			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
+			#target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
+			#self.__painter.drawImage(target, image, source)
 
 		## Hiermit wird der Seitenrahmen eingehalten.
 		self.__painter.translate(self.__borderFrameX, self.__borderFrameY)
@@ -178,6 +178,8 @@ class DrawSheet(QObject):
 		lengthX = 220
 		if self.__character.species == "Changeling":
 			lengthX = 300
+		elif self.__character.species == "Mage":
+			lengthX = 250
 		elif self.__character.species == "Vampire":
 			lengthX = 160
 		self._drawLogo(offsetV=0, width=lengthX, height=80)
@@ -194,29 +196,38 @@ class DrawSheet(QObject):
 		if self.__character.species == "Changeling":
 			lengthX = 230
 			lengthY = 550
+		elif self.__character.species == "Mage":
+			lengthX = 270
+			lengthY = 580
 		elif self.__character.species == "Vampire":
 			lengthX = 230
 			lengthY = 580
 		self._drawSkills(offsetH=0, offsetV=210, width=lengthX, height=lengthY)
 
+		posY = 210
 		posX = 310
 		lengthX = 300
+		lengthY = 180
 		if self.__character.species == "Changeling":
 			posX = 240
-			posY = 210
 			lengthX = 240
+		elif self.__character.species == "Mage":
+			posX = 280
+			lengthX = 260
+			lengthY = 120
 		elif self.__character.species == "Vampire":
 			posX = 240
-			posY = 210
 			lengthX = 240
 		if self.__character.species != "Human":
-			self._drawPowers(offsetH=posX, offsetV=posY, width=lengthX, height=180)
+			self._drawPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
-		posY = 210
 		lengthY = 400
 		if self.__character.species == "Changeling":
 			posY = 400
 			lengthY = 290
+		elif self.__character.species == "Mage":
+			posY = 340
+			lengthY = 380
 		elif self.__character.species == "Vampire":
 			posY = 400
 			lengthY = 320
@@ -225,6 +236,8 @@ class DrawSheet(QObject):
 		posY = 620
 		if self.__character.species == "Changeling":
 			posY = 700
+		elif self.__character.species == "Mage":
+			posY = 730
 		elif self.__character.species == "Vampire":
 			posY = 730
 		self._drawFlaws(offsetH=posX, offsetV=posY, width=lengthX, height=60)
@@ -234,6 +247,9 @@ class DrawSheet(QObject):
 		if self.__character.species == "Changeling":
 			posX = 490
 			lengthX = 193
+		elif self.__character.species == "Mage":
+			posX = 550
+			lengthX = 213
 		elif self.__character.species == "Vampire":
 			posX = 490
 			lengthX = 210
@@ -253,13 +269,15 @@ class DrawSheet(QObject):
 			posY = 360
 		self._drawWillpower(offsetH=posX, offsetV=posY, width=lengthX)
 
-		if self.__character.species == "Changeling" or self.__character.species == "Vampire":
+		if self.__character.species != "Human":
 			self._drawPowerstat(offsetH=posX, offsetV=420, width=lengthX)
 			self._drawFuel(offsetH=posX, offsetV=470, width=lengthX)
 
 		posY = 490
 		if self.__character.species == "Changeling":
 			posY = 570
+		elif self.__character.species == "Mage":
+			posY = 610
 		elif self.__character.species == "Vampire":
 			posY = 610
 		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX, species=self.__character.species)
@@ -322,9 +340,8 @@ class DrawSheet(QObject):
 			image = QImage(":sheet/images/sheet/Changeling-Rahmen.jpg")
 			self.__painter.drawImage(rect, image)
 		elif self.__character.species == "Mage":
-			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
 			pass
-		if self.__character.species == "Vampire":
+		elif self.__character.species == "Vampire":
 			image = QImage(":sheet/images/sheet/Vampire-Rahmen.jpg")
 			self.__painter.drawImage(rect, image)
 		else:
@@ -362,7 +379,7 @@ class DrawSheet(QObject):
 			image = QImage(":sheet/images/sheet/Changeling.png")
 			pass
 		elif self.__character.species == "Mage":
-			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
+			image = QImage(":sheet/images/sheet/Mage.png")
 			pass
 		if self.__character.species == "Vampire":
 			image = QImage(":sheet/images/sheet/Vampire.png")
@@ -407,6 +424,17 @@ class DrawSheet(QObject):
 				[ textCharacter[0][0], textCharacter[0][1], u"", ],
 				[ textCharacter[1][0], textCharacter[1][1], u"", ],
 				[ self.__character.breed, u"", self.__character.faction, ],
+			]
+		elif self.__character.species == "Mage":
+			text = [
+				[ text[0][0], u"Shadow Name:", text[0][1], ],
+				[ text[1][0], text[1][1], u"Cabal:", ],
+				[ self.__storage.breedTitle(self.__character.species), self.__storage.factionTitle(self.__character.species), u"Legacy:", ],
+			]
+			textCharacter = [
+				[ textCharacter[0][0], self.__character.identities[0].supername, textCharacter[0][1], ],
+				[ textCharacter[1][0], textCharacter[1][1], u"", ],
+				[ self.__character.breed, self.__character.faction, u"", ],
 			]
 		elif self.__character.species == "Vampire":
 			text = [
