@@ -56,8 +56,7 @@ class DrawSheet(QObject):
 		self.__printer = printer
 
 		self.__borderFrame = 15
-		self.__pageWidth = self.__printer.width() - 2 * self.__borderFrame
-		self.__pageHeight = self.__printer.height() - 2 * self.__borderFrame
+
 		self.__lineWidth = .75
 		self.__dotDiameterH = 9
 		self.__dotDiameterV = self.__dotDiameterH
@@ -76,14 +75,25 @@ class DrawSheet(QObject):
 		## Schriften sind Abhängig von der Spezies.
 		self.__fontMain = QFont("TeX Gyre Pagella", 10)
 		self.__fontSans = QFont("TeX Gyre Heros" )
-		self.__fontHeading = QFont("TeX Gyre Heros", 15 )
-		self.__fontSubHeading = QFont("TeX Gyre Heros", 13 )
+		self.__headingSep = 4
+
+		self.__traitMax = self.__storage.maxTrait(self.__character.species, self.__character.powerstat)
+		self.__traitMaxStandard = 5
+
+
+	def print(self):
+		"""
+		Hier wird gezeichnet und gedruckt.
+		"""
+		
 		if self.__character.species == "Human":
 			self.__fontHeading = QFont("ArchitectsDaughter", 13 )
 			self.__fontSubHeading = QFont("ArchitectsDaughter", 11 )
 		elif self.__character.species == "Changeling":
 			self.__fontHeading = QFont("Mutlu", 15 )
 			self.__fontSubHeading = QFont("Mutlu", 13 )
+			# Der Rahmen macht es notwendig, daß Wechselbälger einen breiteren Rahmen haben, der für die Charakterwerte nicht zur Verfügung steht.
+			self.__borderFrame = 55
 		elif self.__character.species == "Mage":
 			self.__fontHeading = QFont("Tangerine", 17 )
 			self.__fontSubHeading = QFont("Tangerine", 15 )
@@ -98,17 +108,27 @@ class DrawSheet(QObject):
 			raise ErrSpeciesNotExisting( character.species )
 		self.__fontScript = QFont("Blokletters Balpen", 6 )
 
-		self.__headingSep = 4
+		## Die Schrifthöhe muß bei einigen Schriftarten Manuell festgelegt werden, damit Überschneidungen möglich sind.
+		fontHeadingMetrics = QFontMetrics(self.__fontHeading)
+		self.__fontHeadingHeight = fontHeadingMetrics.height()
+		self.__fontHeadingHeightAscent = fontHeadingMetrics.ascent()
+		fontSubHeadingMetrics = QFontMetrics(self.__fontHeading)
+		self.__fontSubHeadingHeight = fontSubHeadingMetrics.height()
+		self.__fontSubHeadingHeightAscent = fontHeadingMetrics.ascent()
+		if self.__character.species == "Changeling":
+			self.__fontHeadingHeight *= .5
+			self.__fontHeadingHeightAscent *= .5
+			self.__fontSubHeadingHeight *= .5
+			self.__fontSubHeadingHeightAscent *= .5
+		else:
+			self.__fontHeadingHeight *= .7
+			self.__fontHeadingHeightAscent *= .7
+			self.__fontSubHeadingHeight *= .7
+			self.__fontSubHeadingHeightAscent *= .7
 
-		self.__traitMax = self.__storage.maxTrait(self.__character.species, self.__character.powerstat)
-		self.__traitMaxStandard = 5
+		self.__pageWidth = self.__printer.width() - 2 * self.__borderFrame
+		self.__pageHeight = self.__printer.height() - 2 * self.__borderFrame
 
-
-	def print(self):
-		"""
-		Hier wird gezeichnet und gedruckt.
-		"""
-		
 		self.__painter.begin( self.__printer )
 
 		self.__painter.setPen( self.__colorText )
@@ -131,11 +151,11 @@ class DrawSheet(QObject):
 		## Grundeinstellungen des Painters sind abgeschlossen. Dies ist der Zusatnd, zu dem wir zurückkehren, wenn wir painter.restore() aufrufen.
 		self.__painter.save()
 
-		#if GlobalState.isDebug:
-			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
-			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			#target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
-			#self.__painter.drawImage(target, image, source)
+		if GlobalState.isDebug:
+			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
+			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
+			target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
+			self.__painter.drawImage(target, image, source)
 
 		## Hiermit wird der Seitenrahmen eingehalten.
 		self.__painter.translate(self.__borderFrame, self.__borderFrame)
@@ -146,30 +166,71 @@ class DrawSheet(QObject):
 		
 		self.__painter.save()
 
-		self._drawBackground(species=self.__character.species)
+		#self._drawBackground(species=self.__character.species)
 
 		if GlobalState.isDebug:
 			self.__drawGrid()
 
-		self._drawLogo(offsetV=0, width=220, height=80, species=self.__character.species)
+		lengthX = 220
+		if self.__character.species == "Changeling":
+			lengthX = 300
+		self._drawLogo(offsetV=0, width=lengthX, height=80, species=self.__character.species)
 
-		self._drawInfo(offsetV=80)
+		posY = 80
+		if self.__character.species == "Changeling":
+			posY = 75
+		self._drawInfo(offsetV=posY, species=self.__character.species)
 
 		self._drawAttributes(offsetV=140)
 
-		self._drawSkills(offsetH=0, offsetV=210, width=300, height=580)
+		lengthX = 300
+		lengthY = 580
+		if self.__character.species == "Changeling":
+			lengthX = 230
+			lengthY = 550
+		self._drawSkills(offsetH=0, offsetV=210, width=lengthX, height=lengthY)
 
-		self._drawMerits(offsetH=310, offsetV=210, width=250, height=400)
+		posX = 310
+		posY = 210
+		lengthX = 300
+		lengthY = 400
+		if self.__character.species == "Changeling":
+			posX = 240
+			posY = 400
+			lengthX = 240
+			lengthY = 290
+		self._drawMerits(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
-		self._drawFlaws(offsetH=310, offsetV=620, width=250, height=60)
+		posY = 620
+		if self.__character.species == "Changeling":
+			posY = 700
+		self._drawFlaws(offsetH=posX, offsetV=posY, width=lengthX, height=60)
 
-		self._drawAdvantages(offsetH=570, offsetV=210, width=195)
+		posX = 570
+		lengthX = 193
+		if self.__character.species == "Changeling":
+			posX = 490
+			lengthX = 193
+		self._drawAdvantages(offsetH=posX, offsetV=210, width=lengthX)
 
-		self._drawHealth(offsetH=570, offsetV=320, width=195)
+		posY = 320
+		if self.__character.species == "Changeling":
+			posY = 300
+		self._drawHealth(offsetH=posX, offsetV=posY, width=lengthX)
 
-		self._drawWillpower(offsetH=570, offsetV=400, width=195)
+		posY = 400
+		if self.__character.species == "Changeling":
+			posY = 360
+		self._drawWillpower(offsetH=posX, offsetV=posY, width=lengthX)
 
-		self._drawMorality(offsetH=570, offsetV=490, width=195, species=self.__character.species)
+		if self.__character.species == "Changeling":
+			self._drawPowerstat(offsetH=posX, offsetV=420, width=lengthX)
+			self._drawFuel(offsetH=posX, offsetV=470, width=lengthX)
+
+		posY = 490
+		if self.__character.species == "Changeling":
+			posY = 570
+		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX, species=self.__character.species)
 
 		self.__painter.restore()
 
@@ -226,8 +287,8 @@ class DrawSheet(QObject):
 
 		rect = QRect(0 - self.__borderFrame, 0 - self.__borderFrame, self.__pageWidth + 2 * self.__borderFrame, self.__pageHeight + 2 * self.__borderFrame)
 		if species == "Changeling":
-			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
-			pass
+			image = QImage(":sheet/images/sheet/Changeling-Rahmen.jpg")
+			self.__painter.drawImage(rect, image)
 		elif species == "Mage":
 			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
 			pass
@@ -235,13 +296,13 @@ class DrawSheet(QObject):
 			pass
 			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
 		else:
-			rect = QRect(0 - self.__borderFrame, 0 - self.__borderFrame, (self.__pageWidth + 2 * self.__borderFrame) // 7, self.__pageHeight + 2 * self.__borderFrame)
+			rect = QRect(0 - self.__borderFrame, 0 - self.__borderFrame, (self.__pageWidth + 2 * self.__borderFrame) / 7, self.__pageHeight + 2 * self.__borderFrame)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-SeitenrandL-gray.png")
 			self.__painter.drawImage(rect, image)
 			#if GlobalState.isDebug:
 				#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())
 
-			rect = QRect(self.__pageWidth + self.__borderFrame - (self.__pageWidth + 2 * self.__borderFrame) // 7, 0 - self.__borderFrame, (self.__pageWidth + 2 * self.__borderFrame) // 7, self.__pageHeight + 2 * self.__borderFrame)
+			rect = QRect(self.__pageWidth + self.__borderFrame - (self.__pageWidth + 2 * self.__borderFrame) / 7, 0 - self.__borderFrame, (self.__pageWidth + 2 * self.__borderFrame) / 7, self.__pageHeight + 2 * self.__borderFrame)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-SeitenrandR-gray.png")
 			self.__painter.drawImage(rect, image)
 			#if GlobalState.isDebug:
@@ -261,12 +322,12 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		offsetH = (self.__pageWidth - width) // 2
+		offsetH = (self.__pageWidth - width) / 2
 
 		rect = QRect(offsetH, offsetV, width, height)
 		image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
 		if species == "Changeling":
-			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
+			image = QImage(":sheet/images/sheet/Changeling.png")
 			pass
 		elif species == "Mage":
 			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
@@ -287,7 +348,7 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawInfo(self, offsetV, distanceV=0):
+	def _drawInfo(self, offsetV, distanceV=0, species=Config.initialSpecies):
 		"""
 		Diese Funktion Schreibt Namen, Virtue/Vice etc. in den Kopf des Charakterbogens.
 
@@ -300,22 +361,39 @@ class DrawSheet(QObject):
 			[ u"Virute:", u"Vice:", ],
 			[ u"Chronicle:", u"Faction:", ],
 		]
-		
+		textCharacter = [
+			[ Identity.displayNameDisplay(self.__character.identities[0].surename, self.__character.identities[0].firstname, self.__character.identities[0].nickname), u"", ],
+			[ self.__character.virtue, self.__character.vice, ],
+			[ u"", u"", ],
+		]
+		if species == "Changeling":
+			text = [
+				[ text[0][0], text[0][1], u"", ],
+				[ text[1][0], text[1][1], u"Motley:", ],
+				[ self.__storage.breedTitle(species), u"Kith", self.__storage.factionTitle(species), ],
+			]
+			textCharacter = [
+				[ textCharacter[0][0], textCharacter[0][1], u"", ],
+				[ textCharacter[1][0], textCharacter[1][1], u"", ],
+				[ self.__character.breed, u"", self.__character.faction, ],
+			]
+
 		self.__painter.save()
 
 		self.__painter.setFont(self.__fontSubHeading)
 
-		fontMetrics = QFontMetrics(self.__painter.font())
-		textHeight = fontMetrics.height()
+		fontSubHeadingMetrics = QFontMetrics(self.__painter.font())
+		fontSubHeadingHeight = fontSubHeadingMetrics.height()
+		fontSubHeadingHeightDiff = (fontSubHeadingMetrics.ascent() - self.__fontSubHeadingHeightAscent)
 
-		distanceH = self.__pageWidth // 3
+		distanceH = self.__pageWidth / 3
 
 		width = []
 		for i in xrange(len(text)):
 			subWidth = []
 			for j in xrange(len(text[i])):
-				textWidth = fontMetrics.boundingRect(text[i][j]).width()
-				self.__painter.drawText(i * distanceH, offsetV + j * (textHeight + distanceV), textWidth, textHeight, Qt.AlignLeft, text[i][j])
+				textWidth = fontSubHeadingMetrics.boundingRect(text[i][j]).width()
+				self.__painter.drawText(i * distanceH, offsetV - fontSubHeadingHeightDiff + j * (self.__fontSubHeadingHeight + distanceV), textWidth, fontSubHeadingHeight, Qt.AlignLeft, text[i][j])
 				subWidth.append(textWidth)
 			width.append(max(subWidth))
 
@@ -324,23 +402,17 @@ class DrawSheet(QObject):
 		self.__painter.save()
 		
 		self.__painter.setFont(self.__fontScript)
-		fontMetricsScript = QFontMetrics(self.__painter.font())
-		textHeightScript = fontMetrics.height()
-		textHeightDiff = fontMetrics.ascent() - fontMetricsScript.ascent()
-
-		textCharacter = [
-			[ Identity.displayNameDisplay(self.__character.identities[0].surename, self.__character.identities[0].firstname, self.__character.identities[0].nickname), u"", ],
-			[ self.__character.virtue, self.__character.vice, ],
-			[ u"", u"", ],
-		]
+		fontScriptMetrics = QFontMetrics(self.__painter.font())
+		fontScriptHeight = fontScriptMetrics.height()
+		fontScriptHeightDiff = fontSubHeadingMetrics.ascent() - fontScriptMetrics.ascent()
 
 		for i in xrange(len(textCharacter)):
 			for j in xrange(len(textCharacter[i])):
-				textWidth = fontMetrics.boundingRect(textCharacter[i][j]).width()
-				self.__painter.drawText(i * distanceH + width[i], offsetV + textHeightDiff + j * (textHeight + distanceV), textWidth, textHeight, Qt.AlignLeft, textCharacter[i][j])
+				textWidth = fontScriptMetrics.boundingRect(textCharacter[i][j]).width()
+				self.__painter.drawText(i * distanceH + width[i], offsetV - fontSubHeadingHeightDiff + fontScriptHeightDiff + j * (self.__fontSubHeadingHeight + distanceV), textWidth, fontScriptHeight, Qt.AlignLeft, textCharacter[i][j])
 
 		if GlobalState.isDebug:
-			self.__drawBB(0, offsetV, self.__pageWidth, len(text[0]) * textHeight + (len(text[0]) - 1) * distanceV)
+			self.__drawBB(0, offsetV, self.__pageWidth, len(text[0]) * self.__fontSubHeadingHeight + (len(text[0]) - 1) * distanceV)
 
 		self.__painter.restore()
 
@@ -355,16 +427,17 @@ class DrawSheet(QObject):
 		self.__painter.save()
 		
 		self.__painter.setFont(self.__fontSubHeading)
-		fontMetricsHeading = QFontMetrics(self.__painter.font())
-		headingHeight = fontMetricsHeading.height() - 7# Korrekturfaktor, sonst ist der Zeilenabstand so groß.
+		fontSubHeadingMetrics = QFontMetrics(self.__painter.font())
+		fontSubHeadingHeight = fontSubHeadingMetrics.height()
+		fontSubHeadingHeightDiff = (fontSubHeadingMetrics.ascent() - self.__fontSubHeadingHeightAscent)
 		
 		textwidthArray = []
 		for item in Config.attributeSorts:
-			textwidthArray.append(fontMetricsHeading.boundingRect(item).width())
+			textwidthArray.append(fontSubHeadingMetrics.boundingRect(item).width())
 		headingWidth = max(textwidthArray)
 
 		for i in xrange(len(Config.attributeSorts)):
-			self.__painter.drawText(0, offsetV + i * headingHeight, headingWidth, headingHeight, Qt.AlignRight, Config.attributeSorts[i])
+			self.__painter.drawText(0, offsetV - fontSubHeadingHeightDiff + i * self.__fontSubHeadingHeight, headingWidth, fontSubHeadingHeight, Qt.AlignRight, Config.attributeSorts[i])
 
 		self.__painter.restore()
 
@@ -373,20 +446,23 @@ class DrawSheet(QObject):
 		mainFont = self.__fontMain
 		mainFont.setWeight(QFont.Bold)
 		self.__painter.setFont(mainFont)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+		fontHeightDiff = fontSubHeadingMetrics.ascent() - fontMetrics.ascent()
 
-		distanceH = (self.__pageWidth - headingWidth) // 3
+		distanceH = (self.__pageWidth - headingWidth) / 3
 
 		i = 0
 		for item in Config.attributes:
 			j = 0
 			for subitem in item[1]:
 				attrib = self.__character.traits["Attribute"][item[0]][subitem]
-				self.__drawTrait(headingWidth + i * distanceH, offsetV + fontMetricsHeading.ascent() + j * headingHeight, width=distanceH, name=attrib.name, value=attrib.value, maxValue=self.__traitMax, align=Qt.AlignRight)
+				self.__drawTrait(headingWidth + i * distanceH, offsetV - fontSubHeadingHeightDiff + fontHeightDiff + j * self.__fontSubHeadingHeight, width=distanceH, name=attrib.name, value=attrib.value, maxValue=self.__traitMax, align=Qt.AlignRight)
 				j += 1
 			i += 1
 
 		if GlobalState.isDebug:
-			self.__drawBB(0, offsetV, self.__pageWidth, len(Config.attributeSorts) * headingHeight)
+			self.__drawBB(0, offsetV, self.__pageWidth, len(Config.attributeSorts) * self.__fontHeadingHeight)
 
 		self.__painter.restore()
 
@@ -404,7 +480,7 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		if width == None:
-			width = self.__pageWidth // 3
+			width = self.__pageWidth / 3
 
 		mainFont = self.__fontMain
 		mainFont.setWeight(QFont.Normal)
@@ -426,23 +502,23 @@ class DrawSheet(QObject):
 					traitCount += 1
 
 		fontMetrics = QFontMetrics(self.__fontMain)
-		# Warnung, hier muß darauf geachtet werden, daß dies auch die Schrieftart/-größe der Überschrift ist.
-		fontMetrics_heading = QFontMetrics(self.__fontHeading)
-		headingHeight = fontMetrics_heading.height()
-
 		if height:
-			textHeight = height - len(Config.mainCategories) * headingHeight - (len(Config.mainCategories) - 1) * self.__headingSep
+			textHeight = height - len(Config.mainCategories) * self.__fontHeadingHeight - (len(Config.mainCategories) - 1) * self.__headingSep
 			textHeight /= traitCount
 		else:
-			textHeight = fontMetrics.height() - 3
+			textHeight = fontMetrics.height() * .7
+
+		# Warnung, hier muß darauf geachtet werden, daß dies auch die Schriftart/-größe der Überschrift ist.
+		fontHeadingMetrics = QFontMetrics(self.__fontHeading)
+		fontHeadingHeight = fontHeadingMetrics.height()
 
 		i = 0
 		j = 0
 		## Die Verwendung von Config.mainCategories garantiert die richtige Reihenfolge der Kategorien.
 		for item in Config.mainCategories:
-			self.__drawHeading(offsetH, offsetV + i * (headingHeight + self.__headingSep) + j * textHeight, width, item)
+			self.__drawHeading(offsetH, offsetV + i * (self.__fontHeadingHeight + self.__headingSep) + j * textHeight, width, item)
 			for subitem in traitsToDisplay[item]:
-				self.__drawTrait(offsetH, offsetV + headingHeight + i * (headingHeight + self.__headingSep) + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value, maxValue=self.__traitMax, text=", ".join(subitem.specialties))
+				self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + i * (self.__fontHeadingHeight + self.__headingSep) + j * textHeight, width=width, name=subitem.name, value=subitem.value, maxValue=self.__traitMax, text=", ".join(subitem.specialties))
 				j += 1
 			i += 1
 
@@ -463,13 +539,13 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		if width == None:
-			width = self.__pageWidth // 3
+			width = self.__pageWidth / 3
 
 		mainFont = self.__fontMain
 		mainFont.setWeight(QFont.Normal)
 		self.__painter.setFont(mainFont)
 
-		headingHeight = self.__drawHeading(offsetH, offsetV, width, self.tr("Merits"))
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Merits"))
 
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
@@ -481,7 +557,7 @@ class DrawSheet(QObject):
 						numOfTraits += 1
 			if numOfTraits < 1:
 				numOfTraits = 1
-			textHeightCalculated = (height - headingHeight) // numOfTraits
+			textHeightCalculated = (height - self.__fontHeadingHeight) / numOfTraits
 			if textHeightCalculated < textHeight:
 				textHeight = textHeightCalculated
 
@@ -491,14 +567,14 @@ class DrawSheet(QObject):
 			traits.sort()
 			for subitem in traits:
 				if (subitem.isAvailable and subitem.value > 0):
-					self.__drawTrait(offsetH, offsetV + headingHeight + (j+1) * textHeight, width=width, name=subitem.name, value=subitem.value)
+					self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=width, name=subitem.name, value=subitem.value)
 					j += 1
 			if numOfTraits < 1:
 				numOfTraits = j
 
 		if GlobalState.isDebug:
 			if not height:
-				height = headingHeight + numOfTraits * textHeight
+				height = self.__fontHeadingHeight + numOfTraits * textHeight
 			self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
@@ -515,7 +591,7 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		if width == None:
-			width = self.__pageWidth // 3
+			width = self.__pageWidth / 3
 
 		mainFont = self.__fontMain
 		mainFont.setWeight(QFont.Normal)
@@ -524,7 +600,7 @@ class DrawSheet(QObject):
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
 
-		headingHeight = self.__drawHeading(offsetH, offsetV, width, self.tr("Flaws"))
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Flaws"))
 
 		flaws = []
 		for item in self.__character.traits["Flaw"]:
@@ -537,7 +613,7 @@ class DrawSheet(QObject):
 						text += " ({})".format(subitem.customText)
 					flaws.append(text)
 		flawsLine = ", ".join(flaws)
-		rect = QRect(offsetH, offsetV + headingHeight, width, height)
+		rect = QRect(offsetH, offsetV + self.__fontHeadingHeight, width, height)
 		self.__painter.drawText(rect, Qt.AlignLeft | Qt.TextWordWrap, flawsLine)
 
 		if GlobalState.isDebug:
@@ -558,7 +634,7 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		if width == None:
-			width = self.__pageWidth // 3
+			width = self.__pageWidth / 3
 
 		advantages = [
 			[ self.tr("Size"), self.__calc.calcSize(), ],
@@ -604,10 +680,10 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		if width == None:
-			width = self.__pageWidth // 3
+			width = self.__pageWidth / 3
 
-		headingHeight = self.__drawHeading(offsetH, offsetV, width, self.tr("Health"))
-		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcHealth(), squares=True, big=True)
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Health"))
+		self.__drawCenterDots(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, width=width, number=self.__calc.calcHealth(), squares=True, big=True)
 
 		self.__painter.restore()
 
@@ -624,10 +700,59 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		if width == None:
-			width = self.__pageWidth // 3
+			width = self.__pageWidth / 3
 
-		headingHeight = self.__drawHeading(offsetH, offsetV, width, self.tr("Willpower"))
-		self.__drawCenterDots(offsetH, offsetV + headingHeight + self.__textDotSep, width=width, number=self.__calc.calcWillpower(), squares=True, big=True)
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Willpower"))
+		self.__drawCenterDots(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, width=width, number=self.__calc.calcWillpower(), squares=True, big=True)
+
+		self.__painter.restore()
+
+
+	def _drawPowerstat(self, offsetH=0, offsetV=0, width=None):
+		"""
+		Bannt den Powerstat (Wyrd, Gnosis etc.) auf den Charakterbogen.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__drawHeading(offsetH, offsetV, width, self.__storage.powerstatName(self.__character.species))
+		self.__drawCenterDots(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, width=width, number=self.__calc.calcHealth(), big=True)
+
+		self.__painter.restore()
+
+
+	def _drawFuel(self, offsetH=0, offsetV=0, width=None):
+		"""
+		Bannt den Energievorrat (Glamour, Mana etc.) auf den Charakterbogen.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		"""
+
+		self.__painter.save()
+
+		self.__painter.setFont(self.__fontMain)
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__drawHeading(offsetH, offsetV, width, self.__storage.fuelName(self.__character.species))
+
+		self.__drawSquares(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, number=self.__storage.fuelMax(species=self.__character.species, powerstat=self.__character.powerstat), perRow=10, big=True)
+
+		text = "per Turn"
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontWidth = fontMetrics.boundingRect(text).width()
+
+		self.__painter.drawText(offsetH + width - fontWidth, offsetV + self.__fontHeadingHeight, fontWidth, 2 * fontMetrics.height(), Qt.AlignCenter, "{}\n{}".format(self.__storage.fuelPerTurn(species=self.__character.species, powerstat=self.__character.powerstat), text))
 
 		self.__painter.restore()
 
@@ -644,9 +769,9 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		if width == None:
-			width = self.__pageWidth // 3
+			width = self.__pageWidth / 3
 
-		headingHeight = self.__drawHeading(offsetH, offsetV, width, self.__storage.moralityName(species))
+		self.__drawHeading(offsetH, offsetV, width, self.__storage.moralityName(species))
 
 		font = self.__fontMain
 		self.__painter.setFont(font)
@@ -657,7 +782,7 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 		for i in xrange(Config.moralityTraitMax):
-			lcl_height = offsetV + headingHeight + (i+1) * textHeight
+			lcl_height = offsetV + self.__fontHeadingHeight + (i+1) * textHeight
 			self.__painter.drawText(offsetH, lcl_height - textHeight, textWidth, textHeight, Qt.AlignRight, unicode(Config.moralityTraitMax-i))
 			if (Config.moralityTraitMax - i) <= Config.moralityTraitDefaultValue:
 				self.__painter.drawLine(offsetH + textWidth, lcl_height, offsetH + width - self.__dotDiameterH - self.__dotSep, lcl_height)
@@ -673,7 +798,7 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def __drawHeading(self, posX, posY, width, text, species=Config.initialSpecies):
+	def __drawHeading(self, posX, posY, width, text):
 		"""
 		Zeichnet eine Überschrift in der für die Spezies vorgesehenen Schriftart.
 
@@ -687,21 +812,23 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		self.__painter.setFont(self.__fontHeading)
-		fontMetrics_heading = QFontMetrics(self.__painter.font())
-		headingHeight = fontMetrics_heading.height()
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()# Tatsächliche Höhe der Schrift
 
-		imageRect = QRect(posX, posY, width, headingHeight)
-		image = QImage(":sheet/images/sheet/WorldOfDarkness-BalkenOben.png")
-		rnd = Random.random(1)
-		if rnd == 0:
-			image = image.mirrored(True, False)
-		self.__painter.drawImage(imageRect, image)
+		## Differenz der tatsächlichen Höhe der Schrift, und der Höhe für die Platz reserviert werden soll.
+		heightDiff = (fontHeight - self.__fontHeadingHeight)
 
-		self.__painter.drawText(posX, posY, width, headingHeight, Qt.AlignCenter, text)
+		if self.__character.species == "Human":
+			imageRect = QRect(posX, posY, width, self.__fontHeadingHeight)
+			image = QImage(":sheet/images/sheet/WorldOfDarkness-BalkenOben.png")
+			rnd = Random.random(1)
+			if rnd == 0:
+				image = image.mirrored(True, False)
+			self.__painter.drawImage(imageRect, image)
+
+		self.__painter.drawText(posX, posY - heightDiff / 2, width, fontHeight, Qt.AlignCenter, text)
 
 		self.__painter.restore()
-
-		return headingHeight
 
 
 	def __drawValueDots(self, posX, posY, value=0, maxValue=5):
@@ -753,7 +880,7 @@ class DrawSheet(QObject):
 		dotsWidth = maxValue * (self.__dotDiameterH + self.__dotLineWidth / 2)
 		textWidth = fontMetrics.boundingRect(name).width()
 
-		self.__painter.drawText(posX, posY - fontMetrics.ascent(), width - dotsWidth - self.__dotSep, textHeight, align, name)
+		self.__painter.drawText(posX, posY, width - dotsWidth - self.__dotSep, textHeight, align, name)
 
 		## Bei linksbündigen Eigenschaften muß eine Linie gezogen werden, damit man weiß, welche Punkte zu welcher Eigenschaft gehören.
 		if align == Qt.AlignLeft:
@@ -773,7 +900,7 @@ class DrawSheet(QObject):
 				if textWidthSmall > width - textWidth - dotsWidth - self.__dotSep:
 					smallAlign = align | Qt.TextWordWrap
 					smallWidth = width - textWidth - dotsWidth - self.__dotSep
-				self.__painter.drawText(posX + textWidth, posY - fontMetricsSmall.ascent(), smallWidth, 2 * fontMetricsSmall.height(), smallAlign, text)
+				self.__painter.drawText(posX + textWidth, posY +  fontMetrics.ascent() - fontMetricsSmall.ascent(), smallWidth, 2 * fontMetricsSmall.height(), smallAlign, text)
 				self.__painter.restore()
 
 			if smallWidth < width - textWidth - dotsWidth - self.__dotSep:
@@ -781,10 +908,10 @@ class DrawSheet(QObject):
 				pen = self.__painter.pen()
 				pen.setWidthF(self.__lineWidth)
 				self.__painter.setPen(pen)
-				self.__painter.drawLine(posX + textWidth + smallWidth, posY, posX + width - dotsWidth - self.__textDotSep, posY)
+				self.__painter.drawLine(posX + textWidth + smallWidth, posY +  fontMetrics.ascent(), posX + width - dotsWidth - self.__textDotSep, posY +  fontMetrics.ascent())
 				self.__painter.restore()
 		
-		self.__drawValueDots(posX + width - dotsWidth, posY, value, maxValue)
+		self.__drawValueDots(posX + width - dotsWidth, posY + fontMetrics.ascent(), value, maxValue)
 
 		self.__painter.restore()
 
@@ -841,7 +968,7 @@ class DrawSheet(QObject):
 		self.__painter.setBrush(self.__colorFill)
 
 		for i in xrange(number):
-			self.__painter.drawEllipse(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) // 2, posY, dotDiameter, dotDiameter)
+			self.__painter.drawEllipse(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) / 2, posY, dotDiameter, dotDiameter)
 
 		self.__painter.restore()
 
@@ -851,9 +978,48 @@ class DrawSheet(QObject):
 			self.__painter.setBrush(self.__colorEmpty)
 
 			for i in xrange(number):
-				self.__painter.drawRect(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) // 2, posY + dotDiameter + self.__dotSep, dotDiameter, dotDiameter)
+				self.__painter.drawRect(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) / 2, posY + dotDiameter + self.__dotSep, dotDiameter, dotDiameter)
 
 			self.__painter.restore()
+
+		self.__painter.restore()
+
+
+	def __drawSquares(self, posX, posY, number=0, perRow=1, squares=False, big=False):
+		"""
+		Kästchen. Die Kästchen werden in mehreren Reihen angeordnet.
+
+		\param perRow Wieviele Kästchen pro Reihe gezeichnet werden.
+		"""
+
+		if big:
+			squareSide = self.__dotBigDiameterH
+		else:
+			squareSide = self.__dotDiameterH
+
+		self.__painter.save()
+
+		pen = self.__painter.pen()
+		pen.setWidthF(self.__dotLineWidth)
+		self.__painter.setPen(pen)
+
+		widthSquares = number * (squareSide + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
+
+		self.__painter.setBrush(self.__colorEmpty)
+
+		i = 0
+		numOfSquares = 0
+		stopLoop = False
+		while True:
+			for j in xrange(perRow):
+				self.__painter.drawRect(posX + j * (squareSide + self.__dotSep), posY + self.__dotSep + i * (squareSide + self.__dotSep), squareSide, squareSide)
+				numOfSquares += 1
+				if numOfSquares >= number:
+					stopLoop = True
+					break
+			if stopLoop:
+				break
+			i += 1
 
 		self.__painter.restore()
 

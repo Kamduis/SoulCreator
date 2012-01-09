@@ -636,10 +636,6 @@ class MainWindow(QMainWindow):
 		Über diese Funktion wird erst der Dialog aufgerufen zum Aussuchen des Speicherortes und danach dann das Schreiben des Charakters in eine XML-Datei eingeletiet.
 		"""
 		
-		for item in self.__character.traits["Flaw"]:
-			for subitem in self.__character.traits["Flaw"][item].items():
-				if subitem[1].value != 0:
-					Debug.debug("{}: {}".format(subitem[0], subitem[1].value))
 		appPath = getPath()
 
 		# Pfad zum Speicherverzeichnis
@@ -695,6 +691,17 @@ class MainWindow(QMainWindow):
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
 
+
+
+		if GlobalState.isDebug:
+			# Lädt automatisch den Charakter aus testExport.chr
+			self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
+			#self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
+			self.__character.setModified( False )
+
+
+
+		
 		# Wenn Unterverzeichnis nicht existiert, erstelle es
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
