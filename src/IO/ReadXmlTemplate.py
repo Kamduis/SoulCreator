@@ -158,6 +158,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				typ = self.name()
+				typDescriptor = self.attributes().value("name")
 
 				if( typ == "Virtue" or typ == "Vice" ):
 					self.readCharacteristics( typ )
@@ -168,7 +169,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readPowerstat( species )
 				elif( typ in Config.typs):
 					#self.readUnknownElement()
-					self.readTraits( species, typ )
+					self.readTraits( species, typ, typDescriptor )
 				else:
 					self.readUnknownElement()
 
@@ -320,7 +321,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readTraits( self, species, typ ):
+	def readTraits( self, species, typ, descriptor=None ):
 		"""
 		Lese die Eigenschaften aus den Template-Dateien.
 
@@ -335,6 +336,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				category = self.name()
+				categoryName = self.attributes().value( "name" )
+				if categoryName:
+					category = categoryName
+
+				## Die Bezeichnung für die Kräfte wird hier in den Speicher geschrieben.
+				if descriptor and typ == "Power":
+					#Debug.debug(descriptor)
+					self.__storage.setPowerName(species, "power", descriptor)
 
 				self.readTraitData( species, typ, category );
 

@@ -84,6 +84,24 @@ class StorageTemplate(QObject):
 	# }
 	__speciesGroupNames = {}
 
+
+	# Die Bezeichner der Kräfte.
+	#
+	# {
+	# 	species1: {
+	# 		"power": powerName,		## bspw. Disciplines oder Renown
+	# 		"spell": spellName,		## bspw. Gifts oder Goblin Contracts
+	# 		"ritual": powerName,	## bspw. Rituals oder Pledges
+	# 	}
+	# 	species2: {
+	# 		"power": powerName,		## bspw. Disciplines oder Renown
+	# 		"spell": spellName,		## bspw. Gifts oder Goblin Contracts
+	# 		"ritual": powerName,	## bspw. Rituals oder Pledges
+	# 	}
+	# }
+	__powerNames = {}
+
+
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
 	#
 	# {
@@ -332,6 +350,15 @@ class StorageTemplate(QObject):
 
 		return result
 
+
+	def powerName(self, species, power):
+		return self.__powerNames[species][power]
+
+	def setPowerName(self, species, power, name):
+		if species not in self.__powerNames:
+			self.__powerNames.setdefault(species,{})
+
+			self.__powerNames[species][power] = name
 
 
 #// cv_Trait StorageTemplate::trait( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name ) {

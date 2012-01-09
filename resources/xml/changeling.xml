@@ -50,7 +50,7 @@
 			</Physical>
 		</Skill>
 		<Merit>
-			<Social>
+			<Category name="Social">
 				<trait name="Court Goodwill" custom="true" source="Changeling Core">
 					<value>1</value>
 					<value>2</value>
@@ -73,8 +73,8 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
-			</Social>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Arcadian Body" creationOnly="true" source="Changeling Rites of Spring">
 					<value>4</value>
 					<prerequisite>Intelligence > 2 or Wits > 2 or Resolve > 2 or Strength > 2 or Dexterity > 2 or Stamina > 2 or Presence > 2 or Manipulation > 2 or Composure > 2</prerequisite>
@@ -276,8 +276,8 @@
 					<value>5</value>
 					<prerequisite>Powerstat > 8</prerequisite>
 				</trait>
-			</Extraordinary>
-			<FightingStyle>
+			</Category>
+			<Category name="Fighting Style">
 				<trait name="Dream Combat" source="Changeling Rites of Spring">
 					<value>1</value>
 					<value>2</value>
@@ -294,10 +294,10 @@
 					<value>5</value>
 					<prerequisite>Powerstat > 2</prerequisite>
 				</trait>
-			</FightingStyle>
+			</Category>
 		</Merit>
 		<Power name="Contracts">
-			<Primary name="Universal Contracts">
+			<Category name="Universal Contracts">
 				<trait name="Board">
 					<cheap>Beast</cheap>
 					<cheap>Darkling</cheap>
@@ -498,8 +498,8 @@
 					<cheap>South</cheap>
 					<cheap>West</cheap>
 				</trait>
-			</Primary>
-			<Secondary name="Seeming Contracts">
+			</Category>
+			<Category name="Seeming Contracts">
 				<trait name="Den">
 					<cheap>Beast</cheap>
 				</trait>
@@ -548,8 +548,8 @@
 				<trait name="Artifice">
 					<cheap>Wizened</cheap>
 				</trait>
-			</Secondary>
-			<Tertiary name="Court Contracts">
+			</Category>
+			<Category name="Court Contracts">
 				<trait name="Fleeting Spring">
 					<cheap>Spring</cheap>
 				</trait>
@@ -616,7 +616,7 @@
 				<trait name="Imminent West">
 					<cheap>West</cheap>
 				</trait>
-			</Tertiary>
+			</Category>
 		</Power>
 		<Derangement>
 			<Mild>

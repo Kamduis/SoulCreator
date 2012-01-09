@@ -179,8 +179,8 @@ class Config():
 		"Mental",
 		"Physical",
 		"Social",
-		"FightingStyle",
-		"DebateStyle",
+		"Fighting Style",
+		"Debate Style",
 		"Extraordinary",
 		"Item",
 	)

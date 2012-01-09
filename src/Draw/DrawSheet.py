@@ -55,7 +55,8 @@ class DrawSheet(QObject):
 		self.__painter = QPainter()
 		self.__printer = printer
 
-		self.__borderFrame = 15
+		self.__borderFrameX = 15
+		self.__borderFrameY = self.__borderFrameX
 
 		self.__lineWidth = .75
 		self.__dotDiameterH = 9
@@ -93,13 +94,16 @@ class DrawSheet(QObject):
 			self.__fontHeading = QFont("Mutlu", 15 )
 			self.__fontSubHeading = QFont("Mutlu", 13 )
 			# Der Rahmen macht es notwendig, daß Wechselbälger einen breiteren Rahmen haben, der für die Charakterwerte nicht zur Verfügung steht.
-			self.__borderFrame = 55
+			self.__borderFrameX = 55
+			self.__borderFrameY = self.__borderFrameX
 		elif self.__character.species == "Mage":
 			self.__fontHeading = QFont("Tangerine", 17 )
 			self.__fontSubHeading = QFont("Tangerine", 15 )
 		elif self.__character.species == "Vampire":
 			self.__fontHeading = QFont("Cloister Black", 15 )
 			self.__fontSubHeading = QFont("Cloister Black", 13 )
+			self.__borderFrameX = 44
+			self.__borderFrameY = 53
 		elif self.__character.species == "Werewolf":
 			self.__fontHeading = QFont("Note this", 15 )
 			self.__fontSubHeading = QFont("Note this", 13 )
@@ -126,8 +130,8 @@ class DrawSheet(QObject):
 			self.__fontSubHeadingHeight *= .7
 			self.__fontSubHeadingHeightAscent *= .7
 
-		self.__pageWidth = self.__printer.width() - 2 * self.__borderFrame
-		self.__pageHeight = self.__printer.height() - 2 * self.__borderFrame
+		self.__pageWidth = self.__printer.width() - 2 * self.__borderFrameX
+		self.__pageHeight = self.__printer.height() - 2 * self.__borderFrameY
 
 		self.__painter.begin( self.__printer )
 
@@ -158,7 +162,7 @@ class DrawSheet(QObject):
 			self.__painter.drawImage(target, image, source)
 
 		## Hiermit wird der Seitenrahmen eingehalten.
-		self.__painter.translate(self.__borderFrame, self.__borderFrame)
+		self.__painter.translate(self.__borderFrameX, self.__borderFrameY)
 
 		## Die Breite der Punktwerte hängt vom Eigenschaftshöchstwert für den Charakter ab.
 		self.__dotsWidth = self.__traitMax * (self.__dotDiameterH + self.__dotLineWidth)
@@ -166,7 +170,7 @@ class DrawSheet(QObject):
 		
 		self.__painter.save()
 
-		#self._drawBackground(species=self.__character.species)
+		self._drawBackground()
 
 		if GlobalState.isDebug:
 			self.__drawGrid()
@@ -174,12 +178,14 @@ class DrawSheet(QObject):
 		lengthX = 220
 		if self.__character.species == "Changeling":
 			lengthX = 300
-		self._drawLogo(offsetV=0, width=lengthX, height=80, species=self.__character.species)
+		elif self.__character.species == "Vampire":
+			lengthX = 160
+		self._drawLogo(offsetV=0, width=lengthX, height=80)
 
 		posY = 80
 		if self.__character.species == "Changeling":
 			posY = 75
-		self._drawInfo(offsetV=posY, species=self.__character.species)
+		self._drawInfo(offsetV=posY)
 
 		self._drawAttributes(offsetV=140)
 
@@ -188,22 +194,39 @@ class DrawSheet(QObject):
 		if self.__character.species == "Changeling":
 			lengthX = 230
 			lengthY = 550
+		elif self.__character.species == "Vampire":
+			lengthX = 230
+			lengthY = 580
 		self._drawSkills(offsetH=0, offsetV=210, width=lengthX, height=lengthY)
 
 		posX = 310
-		posY = 210
 		lengthX = 300
-		lengthY = 400
 		if self.__character.species == "Changeling":
 			posX = 240
-			posY = 400
+			posY = 210
 			lengthX = 240
+		elif self.__character.species == "Vampire":
+			posX = 240
+			posY = 210
+			lengthX = 240
+		if self.__character.species != "Human":
+			self._drawPowers(offsetH=posX, offsetV=posY, width=lengthX, height=180)
+
+		posY = 210
+		lengthY = 400
+		if self.__character.species == "Changeling":
+			posY = 400
 			lengthY = 290
+		elif self.__character.species == "Vampire":
+			posY = 400
+			lengthY = 320
 		self._drawMerits(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posY = 620
 		if self.__character.species == "Changeling":
 			posY = 700
+		elif self.__character.species == "Vampire":
+			posY = 730
 		self._drawFlaws(offsetH=posX, offsetV=posY, width=lengthX, height=60)
 
 		posX = 570
@@ -211,25 +234,34 @@ class DrawSheet(QObject):
 		if self.__character.species == "Changeling":
 			posX = 490
 			lengthX = 193
+		elif self.__character.species == "Vampire":
+			posX = 490
+			lengthX = 210
 		self._drawAdvantages(offsetH=posX, offsetV=210, width=lengthX)
 
 		posY = 320
 		if self.__character.species == "Changeling":
+			posY = 300
+		elif self.__character.species == "Vampire":
 			posY = 300
 		self._drawHealth(offsetH=posX, offsetV=posY, width=lengthX)
 
 		posY = 400
 		if self.__character.species == "Changeling":
 			posY = 360
+		elif self.__character.species == "Vampire":
+			posY = 360
 		self._drawWillpower(offsetH=posX, offsetV=posY, width=lengthX)
 
-		if self.__character.species == "Changeling":
+		if self.__character.species == "Changeling" or self.__character.species == "Vampire":
 			self._drawPowerstat(offsetH=posX, offsetV=420, width=lengthX)
 			self._drawFuel(offsetH=posX, offsetV=470, width=lengthX)
 
 		posY = 490
 		if self.__character.species == "Changeling":
 			posY = 570
+		elif self.__character.species == "Vampire":
+			posY = 610
 		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX, species=self.__character.species)
 
 		self.__painter.restore()
@@ -278,31 +310,31 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawBackground(self, species=Config.initialSpecies):
+	def _drawBackground(self):
 		"""
 		Der Hintergrund für den Charakterbogen wird dargestellt.
 		"""
 
 		self.__painter.save()
 
-		rect = QRect(0 - self.__borderFrame, 0 - self.__borderFrame, self.__pageWidth + 2 * self.__borderFrame, self.__pageHeight + 2 * self.__borderFrame)
-		if species == "Changeling":
+		rect = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY, self.__pageWidth + 2 * self.__borderFrameX, self.__pageHeight + 2 * self.__borderFrameY)
+		if self.__character.species == "Changeling":
 			image = QImage(":sheet/images/sheet/Changeling-Rahmen.jpg")
 			self.__painter.drawImage(rect, image)
-		elif species == "Mage":
+		elif self.__character.species == "Mage":
 			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
 			pass
-		if species == "Vampire":
-			pass
-			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
+		if self.__character.species == "Vampire":
+			image = QImage(":sheet/images/sheet/Vampire-Rahmen.jpg")
+			self.__painter.drawImage(rect, image)
 		else:
-			rect = QRect(0 - self.__borderFrame, 0 - self.__borderFrame, (self.__pageWidth + 2 * self.__borderFrame) / 7, self.__pageHeight + 2 * self.__borderFrame)
+			rect = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY, (self.__pageWidth + 2 * self.__borderFrameX) / 7, self.__pageHeight + 2 * self.__borderFrameY)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-SeitenrandL-gray.png")
 			self.__painter.drawImage(rect, image)
 			#if GlobalState.isDebug:
 				#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())
 
-			rect = QRect(self.__pageWidth + self.__borderFrame - (self.__pageWidth + 2 * self.__borderFrame) / 7, 0 - self.__borderFrame, (self.__pageWidth + 2 * self.__borderFrame) / 7, self.__pageHeight + 2 * self.__borderFrame)
+			rect = QRect(self.__pageWidth + self.__borderFrameX - (self.__pageWidth + 2 * self.__borderFrameX) / 7, 0 - self.__borderFrameY, (self.__pageWidth + 2 * self.__borderFrameX) / 7, self.__pageHeight + 2 * self.__borderFrameY)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-SeitenrandR-gray.png")
 			self.__painter.drawImage(rect, image)
 			#if GlobalState.isDebug:
@@ -311,7 +343,7 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawLogo(self, offsetV, width, height, species=Config.initialSpecies):
+	def _drawLogo(self, offsetV, width, height):
 		"""
 		Zeichnet das Logo auf den Charakterbogen. Das Logo wird auf der Seite immer horizontal zentriert dargestellt.
 
@@ -326,16 +358,15 @@ class DrawSheet(QObject):
 
 		rect = QRect(offsetH, offsetV, width, height)
 		image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
-		if species == "Changeling":
+		if self.__character.species == "Changeling":
 			image = QImage(":sheet/images/sheet/Changeling.png")
 			pass
-		elif species == "Mage":
+		elif self.__character.species == "Mage":
 			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
 			pass
-		if species == "Vampire":
-			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
-			pass
-		if species == "Werewolf":
+		if self.__character.species == "Vampire":
+			image = QImage(":sheet/images/sheet/Vampire.png")
+		if self.__character.species == "Werewolf":
 			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
 			pass
 		else:
@@ -348,7 +379,7 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawInfo(self, offsetV, distanceV=0, species=Config.initialSpecies):
+	def _drawInfo(self, offsetV, distanceV=0):
 		"""
 		Diese Funktion Schreibt Namen, Virtue/Vice etc. in den Kopf des Charakterbogens.
 
@@ -366,11 +397,22 @@ class DrawSheet(QObject):
 			[ self.__character.virtue, self.__character.vice, ],
 			[ u"", u"", ],
 		]
-		if species == "Changeling":
+		if self.__character.species == "Changeling":
 			text = [
 				[ text[0][0], text[0][1], u"", ],
 				[ text[1][0], text[1][1], u"Motley:", ],
-				[ self.__storage.breedTitle(species), u"Kith", self.__storage.factionTitle(species), ],
+				[ self.__storage.breedTitle(self.__character.species), u"Kith:", self.__storage.factionTitle(self.__character.species), ],
+			]
+			textCharacter = [
+				[ textCharacter[0][0], textCharacter[0][1], u"", ],
+				[ textCharacter[1][0], textCharacter[1][1], u"", ],
+				[ self.__character.breed, u"", self.__character.faction, ],
+			]
+		elif self.__character.species == "Vampire":
+			text = [
+				[ text[0][0], text[0][1], u"Sire:", ],
+				[ text[1][0], text[1][1], u"Coterie:", ],
+				[ self.__storage.breedTitle(self.__character.species), u"Bloodline:", self.__storage.factionTitle(self.__character.species), ],
 			]
 			textCharacter = [
 				[ textCharacter[0][0], textCharacter[0][1], u"", ],
@@ -523,6 +565,58 @@ class DrawSheet(QObject):
 			i += 1
 
 		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
+	def _drawPowers(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Bannt die übernatürlichen Kräfte auf den Charakterbogen.
+
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
+		\param width Die Breite der Spalte.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		mainFont = self.__fontMain
+		mainFont.setWeight(QFont.Normal)
+		self.__painter.setFont(mainFont)
+
+		self.__drawHeading(offsetH, offsetV, width, self.__storage.powerName(self.__character.species, "power"))
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		textHeight = fontMetrics.height() - 3
+		numOfTraits = 0
+		if height:
+			for item in self.__character.traits["Power"].values():
+				for subitem in item.values():
+					if subitem.value > 0:
+						numOfTraits += 1
+			if numOfTraits < 1:
+				numOfTraits = 1
+			textHeightCalculated = (height - self.__fontHeadingHeight) / numOfTraits
+			if textHeightCalculated < textHeight:
+				textHeight = textHeightCalculated
+
+		j = 0
+		for item in self.__character.traits["Power"]:
+			traits = self.__character.traits["Power"][item].values()
+			traits.sort()
+			for subitem in traits:
+				if (subitem.isAvailable and subitem.value > 0):
+					self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=width, name=subitem.name, value=subitem.value)
+					j += 1
+			if numOfTraits < 1:
+				numOfTraits = j
+
+		if GlobalState.isDebug:
+			if not height:
+				height = self.__fontHeadingHeight + numOfTraits * textHeight
 			self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
@@ -703,7 +797,7 @@ class DrawSheet(QObject):
 			width = self.__pageWidth / 3
 
 		self.__drawHeading(offsetH, offsetV, width, self.tr("Willpower"))
-		self.__drawCenterDots(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, width=width, number=self.__calc.calcWillpower(), squares=True, big=True)
+		self.__drawCenterDots(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, width=width, number=self.__calc.calcWillpower(), maxNumber=Config.willpowerMax, squares=True, big=True)
 
 		self.__painter.restore()
 
@@ -723,7 +817,7 @@ class DrawSheet(QObject):
 			width = self.__pageWidth / 3
 
 		self.__drawHeading(offsetH, offsetV, width, self.__storage.powerstatName(self.__character.species))
-		self.__drawCenterDots(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, width=width, number=self.__calc.calcHealth(), big=True)
+		self.__drawCenterDots(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, width=width, number=self.__character.powerstat, maxNumber=Config.powerstatMax, big=True)
 
 		self.__painter.restore()
 
@@ -945,10 +1039,13 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def __drawCenterDots(self, posX, posY, width, number=0, squares=False, big=False):
+	def __drawCenterDots(self, posX, posY, width, number=0, maxNumber=None, squares=False, big=False):
 		"""
 		Zeichnet Punkte über Kästchen. Diese werden Mittig in der angegebenen Breite ausgerichtet.
 		"""
+
+		if maxNumber == None:
+			maxNumber = number
 
 		if big:
 			dotDiameter = self.__dotBigDiameterH
@@ -963,11 +1060,20 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		widthDots = number * (dotDiameter + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
+		widthDots = maxNumber * (dotDiameter + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
 
 		self.__painter.setBrush(self.__colorFill)
 
 		for i in xrange(number):
+			self.__painter.drawEllipse(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) / 2, posY, dotDiameter, dotDiameter)
+
+		self.__painter.restore()
+
+		self.__painter.save()
+
+		self.__painter.setBrush(self.__colorEmpty)
+
+		for i in xrange(number, maxNumber):
 			self.__painter.drawEllipse(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) / 2, posY, dotDiameter, dotDiameter)
 
 		self.__painter.restore()
@@ -977,7 +1083,7 @@ class DrawSheet(QObject):
 
 			self.__painter.setBrush(self.__colorEmpty)
 
-			for i in xrange(number):
+			for i in xrange(maxNumber):
 				self.__painter.drawRect(posX + i * (dotDiameter + self.__dotSep) + (width - widthDots) / 2, posY + dotDiameter + self.__dotSep, dotDiameter, dotDiameter)
 
 			self.__painter.restore()

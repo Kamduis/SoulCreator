@@ -56,24 +56,24 @@
 			<trait name="Violent" age="Kid"/>
 		</Vice>
 		<Attribute>
-			<Mental>
+			<Category name="Mental">
 				<trait name="Intelligence"/>
 				<trait name="Wits"/>
 				<trait name="Resolve"/>
-			</Mental>
-			<Physical>
+			</Category>
+			<Category name="Physical">
 				<trait name="Strength"/>
 				<trait name="Dexterity"/>
 				<trait name="Stamina"/>
-			</Physical>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Presence"/>
 				<trait name="Manipulation"/>
 				<trait name="Composure"/>
-			</Social>
+			</Category>
 		</Attribute>
 		<Skill>
-			<Mental>
+			<Category name="Mental">
 				<trait name="Academics" age="Adult">
 					<specialty>Anthropology</specialty>
 					<specialty>Architecture</specialty>
@@ -191,7 +191,7 @@
 					<specialty>Pantheon (Roman)</specialty>
 					<specialty>Rituals</specialty>
 				</trait>
-				<trait name="Science" era="Modern">
+				<trait name="Science" age="Adult" era="Modern">
 					<specialty>Biology</specialty>
 					<specialty>Chemistry</specialty>
 					<specialty>Geology</specialty>
@@ -210,7 +210,7 @@
 					<specialty>Physics</specialty>
 					<specialty>Research</specialty>
 				</trait>
-				<trait name="Warfare" era="Ancient">
+				<trait name="Warfare" age="Adult" era="Ancient">
 					<specialty>Ambushes</specialty>
 					<specialty>Barbarians</specialty>
 					<specialty>Fields of Fire</specialty>
@@ -219,8 +219,8 @@
 					<specialty>Terrain</specialty>
 					<specialty>Chess</specialty>
 				</trait>
-			</Mental>
-			<Physical>
+			</Category>
+			<Category name="Physical">
 				<trait name="Archery" era="Ancient">
 					<specialty>Long Bow</specialty>
 					<specialty>Long Shot</specialty>
@@ -254,7 +254,7 @@
 					<specialty>Kung-Fu</specialty>
 					<specialty>Throws</specialty>
 				</trait>
-				<trait name="Drive" era="Modern">
+				<trait name="Drive" age="Adult" era="Modern">
 					<specialty>Big Cars</specialty>
 					<specialty>High-Performance Cars</specialty>
 					<specialty>Motorcycles</specialty>
@@ -285,7 +285,7 @@
 					<specialty>Shoplifting</specialty>
 					<specialty>Sleight of Hand</specialty>
 				</trait>
-				<trait name="Ride" era="Ancient">
+				<trait name="Ride" age="Adult" era="Ancient">
 					<specialty>Chariot</specialty>
 					<specialty>Dangerous Conditions</specialty>
 					<specialty>Pursuit</specialty>
@@ -329,8 +329,8 @@
 					<specialty>Polearms</specialty>
 					<specialty>Swords</specialty>
 				</trait>
-			</Physical>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Animal Ken">
 					<specialty>Animal Needs</specialty>
 					<specialty>Birds</specialty>
@@ -417,10 +417,10 @@
 					<specialty>Lying</specialty>
 					<specialty>Misdirection</specialty>
 				</trait>
-			</Social>
+			</Category>
 		</Skill>
 		<Merit>
-			<Mental>
+			<Category name="Mental">
 				<trait name="Danger Sense" creationOnly="true" source="WoD Core">
 					<value>2</value>
 					<description>You gain a +2 modifier on reflexive Wits + Composure rolls to detect an impending ambush.</description>
@@ -463,8 +463,8 @@
 					<value>2</value>
 					<value>3</value>
 				</trait>
-			</Mental>
-			<Physical>
+			</Category>
+			<Category name="Physical">
 				<trait name="Ambidextrous" source="WoD Core">
 					<value>3</value>
 				</trait>
@@ -597,8 +597,8 @@
 					<value>1</value>
 					<prerequisite>Dexterity > 2 and Brawl > 2 and Weaponry > 2 and Fighting Style >0</prerequisite>
 				</trait>-->
-			</Physical>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Allies" source="WoD Core">
 					<value>1</value>
 					<value>2</value>
@@ -695,8 +695,8 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
-			</Social>
-			<Item>
+			</Category>
+			<Category name="Item">
 				<trait name="Artifact" source="Mage Core">
 					<value>3</value>
 					<value>4</value>
@@ -744,8 +744,8 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
-			</Item>
-			<FightingStyle>
+			</Category>
+			<Category name="Fighting Style">
 				<trait name="Aggressive Striking" source="WoD Armory Reloaded">
 					<value>1</value>
 					<value>2</value>
@@ -926,8 +926,8 @@
 					<value>4</value>
 					<prerequisite>Dexterity > 2 and Resolve > 2 and Firearms > 2 and Stealth > 1</prerequisite>
 				</trait>
-			</FightingStyle>
-			<DebateStyle>
+			</Category>
+			<Category name="Debate Style">
 				<trait name="Reason" source="Vampire Requiem for Rome">
 					<value>1</value>
 					<value>2</value>
@@ -951,8 +951,8 @@
 					<value>4</value>
 					<prerequisite>Presence > 1 and Religion > 1 and Expression > 0</prerequisite>
 				</trait>
-			</DebateStyle>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Difficult to Ride" source="WoD Book of Spirits">
 					<value>4</value>
 					<prerequisite>Composure > 2 and Resolve > 2</prerequisite>
@@ -989,7 +989,7 @@
 					<value>3</value>
 					<prerequisite>Non-werewolf</prerequisite>
 				</trait>-->
-			</Extraordinary>
+			</Category>
 		</Merit>
 		<Derangement>
 			<Mild>
@@ -1072,7 +1072,7 @@
 			</Severe>
 		</Derangement>
 		<Flaw>
-			<Mental>
+			<Category name="Mental">
 				<trait name="Addiction" custom="true"/>
 				<trait name="Amnesia"/>
 				<trait name="Coward"/>
@@ -1080,8 +1080,8 @@
 				<trait name="Headstrong"/>
 				<trait name="Illiterate"/>
 				<trait name="Nightmares"/>
-			</Mental>
-			<Physical>
+			</Category>
+			<Category name="Physical">
 				<trait name="Crippled"/>
 				<trait name="Cumbersome"/>
 				<trait name="Dwarf"/>
@@ -1091,8 +1091,8 @@
 				<trait name="One Arm"/>
 				<trait name="One Eye"/>
 				<trait name="Poor Sight"/>
-			</Physical>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Aloof"/>
 				<trait name="Behavior Blind"/>
 				<trait name="Deformity" custom="true"/>
@@ -1102,7 +1102,7 @@
 				<trait name="Speech Impediment"/>
 				<trait name="True Tongue"/>
 				<trait name="Untrustworthy"/>
-			</Social>
+			</Category>
 		</Flaw>
 	</traits>
 </SoulCreator>

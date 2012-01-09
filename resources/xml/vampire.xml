@@ -69,13 +69,13 @@
 			<trait name="Carthian Movement"/>
 		</Faction>
 		<Merit>
-			<Mental>
+			<Category name="Mental">
 				<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
 					<value>1</value>
 					<prerequisite>Politics > 0 or Occult > 0 or Streetwise > 0</prerequisite>
 				</trait>
-			</Mental>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Domain: Location" source="Vampire Damnation City">
 					<value>1</value>
 					<value>2</value>
@@ -159,8 +159,8 @@
 					<value>5</value>
 					<prerequisite>Status.Camarilla > 2 or Status.Wing > 2</prerequisite>
 				</trait>
-			</Social>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
 					<value>2</value>
 					<prerequisite>Powerstat > 5</prerequisite>
@@ -178,10 +178,10 @@
 					<value>2</value>
 					<prerequisite>Protean > 3</prerequisite>
 				</trait>
-			</Extraordinary>
+			</Category>
 		</Merit>
 		<Power name="Disciplines">
-			<Primary name="Disciplines">
+			<Category name="Disciplines">
 				<trait name="Animalism">
 					<cheap>Gangrel</cheap>
 					<cheap>Ventrue</cheap>
@@ -222,8 +222,8 @@
 					<cheap>Nosferatu</cheap>
 					<cheap>Julii</cheap>
 				</trait>
-			</Primary>
-			<Secondary name="Bloodline Disciplines">
+			</Category>
+			<Category name="Bloodline Disciplines">
 				<trait name="Abjurism">
 				</trait>
 				<trait name="Asphyx">
@@ -260,8 +260,8 @@
 				</trait>
 				<trait name="Xinyao">
 				</trait>
-			</Secondary>
-			<Tertiary name="Blood Sorcery">
+			</Category>
+			<Category name="Blood Sorcery">
 				<trait name="Abjurism">
 				</trait>
 				<trait name="Cruac">
@@ -278,7 +278,7 @@
 				</trait>
 				<trait name="Coil of the Soul">
 				</trait>-->
-			</Tertiary>
+			</Category>
 		</Power>
 		<Derangement>
 			<Mild>
@@ -310,16 +310,16 @@
 			</Severe>
 		</Derangement>
 		<Flaw>
-			<Physical>
+			<Category name="Physical">
 				<trait name="No Fangs"/>
-			</Physical>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Fealty"/>
 				<trait name="Lost Love"/>
-			</Social>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Sluggish Vitae"/>
-			</Extraordinary>
+			</Category>
 		</Flaw>
 	</traits>
 </SoulCreator>

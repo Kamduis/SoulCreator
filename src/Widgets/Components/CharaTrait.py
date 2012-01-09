@@ -46,6 +46,7 @@ class CharaTrait(TraitLine):
 
 
 	specialtiesClicked = Signal(bool, object)
+	visibilityChanged = Signal(bool)
 
 
 	def __init__(self, trait, parent=None):
@@ -177,11 +178,13 @@ class CharaTrait(TraitLine):
 		Versteckt oder zeigt diese Eigenschaft, je nach gewählter Spezies.
 		"""
 
+		visible = False
 		if (not self.__trait.species or self.__trait.species == species):
-			self.setHidden(False)
+			visible = True
 			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
-		else:
-			self.setHidden(True)
+
+		self.setVisible(visible)
+		self.visibilityChanged.emit(visible)
 
 
 	def hideOrShowTrait(self, age, era):
@@ -189,12 +192,14 @@ class CharaTrait(TraitLine):
 		Versteckt oder zeigt diese Eigenschaft.
 		"""
 
+		visible = True
 		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
 		if (self.__trait.age and self.__trait.age != age) or (self.__trait.era and self.__trait.era != era):
-			self.setHidden(True)
+			visible = False
 			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
-		elif (self.__trait.age and self.__trait.age == age) or (self.__trait.era and self.__trait.era == era):
-			self.setHidden(False)
+
+		self.setVisible(visible)
+		self.visibilityChanged.emit(visible)
 
 
 	def setSpecialtiesButtonText(self, specialties):

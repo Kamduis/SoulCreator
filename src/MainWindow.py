@@ -43,6 +43,7 @@ from Widgets.AttributeWidget import AttributeWidget
 from Widgets.SkillWidget import SkillWidget
 from Widgets.Specialties import Specialties
 from Widgets.MeritWidget import MeritWidget
+from Widgets.PowerWidget import PowerWidget
 from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.AdvantagesWidget import AdvantagesWidget
@@ -212,7 +213,7 @@ class MainWindow(QMainWindow):
 		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 		merits = MeritWidget( self.__storage, self.__character, self )
 		morality = MoralityWidget( self.__storage, self.__character, self )
-		#powers = new PowerWidget( self );
+		powers = PowerWidget( self.__storage, self.__character, self )
 		flaws = FlawWidget( self.__storage, self.__character, self );
 		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
 
@@ -222,7 +223,7 @@ class MainWindow(QMainWindow):
 		self.ui.layout_specialties.addWidget( specialties )
 		self.ui.layout_merits.addWidget( merits )
 		self.ui.layout_morality.addWidget( morality )
-		#ui.layout_powers.addWidget( powers );
+		self.ui.layout_powers.addWidget( powers )
 		self.ui.layout_flaws.addWidget( flaws )
 		self.ui.layout_advantages.addWidget( self.__advantages )
 

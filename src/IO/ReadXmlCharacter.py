@@ -180,6 +180,9 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 			if ( self.isStartElement() ):
 				elementName = self.name()
+				elementAttribute = self.attributes().value("name")
+				if elementAttribute:
+					elementName = elementAttribute
 				#Debug.debug("Lese Element {} aus.".format(elementName))
 				self.readTraits( typ, elementName )
 

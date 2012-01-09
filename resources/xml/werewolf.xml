@@ -34,13 +34,13 @@
 			<trait name="Storm Lords"/>
 		</Faction>
 		<Merit>
-			<Physical>
+			<Category name="Physical">
 				<trait name="Metabolic Control" source="Werewolf The Rage">
 					<value>2</value>
 					<prerequisite>Stamina > 2</prerequisite>
 				</trait>
-			</Physical>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Predator's Gaze" source="Werewolf The Rage">
 					<value>3</value>
 					<prerequisite>Presence > 1 and Intimidation > 1</prerequisite>
@@ -51,8 +51,8 @@
 					<value>3</value>
 				</trait>
 				<trait name="Pack Tactics" source="Werewolf The Rage"/>
-			</Social>
-			<Item>
+			</Category>
+			<Category name="Item">
 				<trait name="Fetish" custom="true" source="Werewolf Core">
 					<value>1</value>
 					<value>2</value>
@@ -60,8 +60,8 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
-			</Item>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Auspice Blessing" custom="true" source="Werewolf The Rage">
 					<value>1</value>
 					<!--<prerequisite>auspice affinity > 1</prerequisite>-->
@@ -78,8 +78,8 @@
 				<trait name="Synergy" source="Werewolf The Rage">
 					<value>2</value>
 				</trait>
-			</Extraordinary>
-			<FightingStyle>
+			</Category>
+			<Category name="Fighting Style">
 				<trait name="Tooth and Claw" source="Werewolf The Rage">
 					<value>1</value>
 					<value>2</value>
@@ -95,10 +95,10 @@
 					<value>4</value>
 					<prerequisite>Powerstat > 0 and Dexterity > 2 and Stamina > 1 and Brawl > 2</prerequisite>
 				</trait>
-			</FightingStyle>
+			</Category>
 		</Merit>
 		<Power>
-			<Primary name="Renown">
+			<Category name="Renown">
 				<trait name="Purity">
 					<cheap>Rahu</cheap>
 					<cheap>Hunters in Darkness</cheap>
@@ -119,11 +119,11 @@
 					<cheap>Irraka</cheap>
 					<cheap>Iron Masters</cheap>
 				</trait>
-			</Primary>
-			<Secondary name="Ritual">
+			</Category>
+			<Category name="Ritual">
 				<trait name="Rites">
 				</trait>
-			</Secondary>
+			</Category>
 <!--			<Tertiary name="Gifts">
 				<trait name="Full Moon">
 					<cheap>Rahu</cheap>
@@ -299,18 +299,18 @@
 			</Tertiary>-->
 		</Power>
 		<Flaw>
-			<Physical>
+			<Category name="Physical">
 				<trait name="Bad Regeneration"/>
 				<trait name="Poor Sense of Smell"/>
 				<trait name="Silver Allergy"/>
-			</Physical>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Lone Wolf"/>
-			</Social>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Anthropocentric"/>
 				<trait name="Disharmony"/>
-			</Extraordinary>
+			</Category>
 		</Flaw>
 	</traits>
 </SoulCreator>

@@ -23,7 +23,7 @@
 		<Faction name="Faction">
 		</Faction>
 		<Merit>
-			<Extraordinary>
+			<Category name="Extraordinary">
 				<trait name="Enchanted Mortal" source="Changeling The Equinox Road">
 					<value>2</value>
 				</trait>
@@ -58,7 +58,7 @@
 					<value>2</value>
 					<value>3</value>
 				</trait>
-			</Extraordinary>
+			</Category>
 		</Merit>
 	</traits>
 </SoulCreator>

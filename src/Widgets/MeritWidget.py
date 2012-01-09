@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 #from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QToolBox#, QScrollArea, QGroupBox
+from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 
 from src.Config import Config
 #from src import Error

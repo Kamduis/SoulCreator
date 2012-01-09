@@ -115,7 +115,8 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 							startElementWritten_item = True
 						if not startElementWritten_subitem:
 							try:
-								self.writeStartElement( subitem )
+								self.writeStartElement( "Category" )
+								self.writeAttribute("name", subitem)
 							except ErrTraitCategory as e:
 								Debug.debug(e.message)
 							startElementWritten_subitem = True
