@@ -57,6 +57,7 @@
     <file>images/sheet/Vampire-Background.jpg</file>
     <file>images/sheet/Werewolf.png</file>
     <file>images/sheet/Werewolf-Background.png</file>
+    <file>images/sheet/Werewolf-Shapes.jpg</file>
   </qresource>
   <qresource prefix="types">
     <file>images/svg/karate.svg</file>

@@ -380,8 +380,16 @@ class DrawSheet(QObject):
 			image = QImage(":sheet/images/sheet/Vampire-Background.jpg")
 			self.__painter.drawImage(rect, image)
 		elif self.__character.species == "Werewolf":
+			imageShapes = QImage(":sheet/images/sheet/Werewolf-Shapes.jpg")
+			imageShapes = imageShapes.scaledToWidth(self.__pageWidth)
+			rectShapes = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY + self.__pageHeight - imageShapes.height(), self.__pageWidth, imageShapes.height())
+			self.__painter.drawImage(rectShapes, imageShapes)
+
+			## Dieses Bild wird später gezeichnet, damit es nicht von den Gestalten abgeschnitten wird.
+			offsetV = 80
 			image = QImage(":sheet/images/sheet/Werewolf-Background.png")
-			rect = QRect(0 - self.__borderFrameX + (self.__pageWidth - image.width()) / 2, 0 - self.__borderFrameY + (self.__pageHeight - image.height()) / 2, image.width(), image.height())
+			image = image.scaledToHeight(self.__pageHeight - imageShapes.height() - offsetV)
+			rect = QRect(0 - self.__borderFrameX + (self.__pageWidth - image.width()) / 2, offsetV, image.width(), image.height())
 			self.__painter.drawImage(rect, image)
 		else:
 			rect = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY, (self.__pageWidth + 2 * self.__borderFrameX) / 7, self.__pageHeight + 2 * self.__borderFrameY)
