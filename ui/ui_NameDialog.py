@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ui_NameDialog.ui'
 #
-# Created: Tue Jan 10 19:14:56 2012
+# Created: Tue Jan 10 19:19:50 2012
 #      by: pyside-uic 0.2.11 running on PySide 1.0.6
 #
 # WARNING! All changes made in this file will be lost!
