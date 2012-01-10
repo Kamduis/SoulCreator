@@ -73,8 +73,6 @@ class PowerWidget(QWidget):
 
 			#self.__toolBox.addItem( widgetPowerCategory, item )
 
-			#connect(character, SIGNAL(speciesChanged(cv_Species::SpeciesFlag)), this, SLOT(updateHeaders(cv_Species::SpeciesFlag)));
-
 			## In dieser Liste sammle ich die Widgets, damit sie später bei Bedarf in die ToolBox eingefügt werden können.
 			self.toolBoxPageList[item] = [widgetPowerCategory]
 

@@ -657,6 +657,11 @@ class StorageTemplate(QObject):
 		#print(self.__speciesGroupNames)
 
 
+	@property
+	def creationPoints(self):
+		return self.__creationPointsList
+
+
 	def appendCreationPoints( self, species, typ, points ):
 		"""
 		Fügt einen neuen Satz Erschaffungspunkte zu der entsprechende Liste hinzu.
@@ -665,7 +670,10 @@ class StorageTemplate(QObject):
 
 		Da ein dictionary immer nur einen Schlüssel identischen Namens haben kann, sollte automatisch ein Fehler ausgelöst werden, wenn eine Spezies zweimal drankommt.
 		"""
-		
-		self.__creationPointsList.setdefault(species,{})
-		self.__creationPointsList[species].setdefault(typ,[])
-		self.__creationPointsList[species][typ].append(points)
+
+		points.sort()
+
+		if species not in self.__creationPointsList:
+			self.__creationPointsList.setdefault(species,{})
+
+		self.__creationPointsList[species][typ] = points

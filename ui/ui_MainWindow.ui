@@ -28,7 +28,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_15">
       <item>
-       <widget class="QWidget" name="widget_traits" native="true">
+       <widget class="BackgroundImageWidget" name="widget_traits" native="true">
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="margin">
           <number>0</number>
@@ -323,20 +323,12 @@
           <property name="text">
            <string>Previous</string>
           </property>
-          <property name="icon">
-           <iconset resource="../resources/rc_resource.qrc">
-            <normaloff>:/icons/images/actions/1leftarrow.png</normaloff>:/icons/images/actions/1leftarrow.png</iconset>
-          </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_next">
           <property name="text">
            <string>Next</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../resources/rc_resource.qrc">
-            <normaloff>:/icons/images/actions/1rightarrow.png</normaloff>:/icons/images/actions/1rightarrow.png</iconset>
           </property>
          </widget>
         </item>
@@ -417,10 +409,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSave">
-   <property name="icon">
-    <iconset resource="../resources/rc_resource.qrc">
-     <normaloff>:/icons/images/actions/filesave.png</normaloff>:/icons/images/actions/filesave.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -429,10 +417,6 @@
    </property>
   </action>
   <action name="actionOpen">
-   <property name="icon">
-    <iconset resource="../resources/rc_resource.qrc">
-     <normaloff>:/icons/images/actions/fileopen.png</normaloff>:/icons/images/actions/fileopen.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Open</string>
    </property>
@@ -446,10 +430,6 @@
    </property>
   </action>
   <action name="actionPrint">
-   <property name="icon">
-    <iconset resource="../resources/rc_resource.qrc">
-     <normaloff>:/icons/images/actions/agt_print.png</normaloff>:/icons/images/actions/agt_print.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Print</string>
    </property>
@@ -458,10 +438,6 @@
    </property>
   </action>
   <action name="actionExport">
-   <property name="icon">
-    <iconset resource="../resources/rc_resource.qrc">
-     <normaloff>:/icons/images/actions/fileexport.png</normaloff>:/icons/images/actions/fileexport.png</iconset>
-   </property>
    <property name="text">
     <string>Export...</string>
    </property>
@@ -470,10 +446,6 @@
    </property>
   </action>
   <action name="actionNew">
-   <property name="icon">
-    <iconset resource="../resources/rc_resource.qrc">
-     <normaloff>:/icons/images/actions/filenew.png</normaloff>:/icons/images/actions/filenew.png</iconset>
-   </property>
    <property name="text">
     <string>New</string>
    </property>
@@ -482,19 +454,11 @@
    </property>
   </action>
   <action name="actionSettings">
-   <property name="icon">
-    <iconset resource="../resources/rc_resource.qrc">
-     <normaloff>:/icons/images/actions/exec.png</normaloff>:/icons/images/actions/exec.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Settings...</string>
    </property>
   </action>
   <action name="actionQuit">
-   <property name="icon">
-    <iconset resource="../resources/rc_resource.qrc">
-     <normaloff>:/icons/images/actions/exit.png</normaloff>:/icons/images/actions/exit.png</iconset>
-   </property>
    <property name="text">
     <string>Quit</string>
    </property>
@@ -504,12 +468,15 @@
   <customwidget>
    <class>SelectWidget</class>
    <extends>QListWidget</extends>
-   <header>src/Widgets/Display/SelectWidget.py</header>
+   <header>src/Widgets/SelectWidget</header>
+  </customwidget>
+  <customwidget>
+   <class>BackgroundImageWidget</class>
+   <extends>QWidget</extends>
+   <header>src/Widgets/Components/BackgroundImageWidget</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources/rc_resource.qrc"/>
- </resources>
  <connections>
   <connection>
    <sender>actionQuit</sender>

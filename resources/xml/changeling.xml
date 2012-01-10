@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.6">
 	<creation species="Changeling">
+		<Attribute>
+			<points value="5"/>
+			<points value="4"/>
+			<points value="3"/>
+		</Attribute>
+		<Skill>
+			<points value="11"/>
+			<points value="7"/>
+			<points value="4"/>
+			<points value="3"/>
+		</Skill>
+		<Merit>
+			<points value="7"/>
+		</Merit>
 		<Power>
 			<points value="5"/>
 		</Power>

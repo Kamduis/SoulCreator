@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ui_MainWindow.ui'
 #
-# Created: Thu Dec 22 11:21:16 2011
+# Created: Tue Jan 10 16:39:37 2012
 #      by: pyside-uic 0.2.11 running on PySide 1.0.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,10 +27,9 @@ class Ui_MainWindow(object):
 		self.horizontalLayout_5.addWidget(self.selectWidget_select)
 		self.verticalLayout_15 = QtGui.QVBoxLayout()
 		self.verticalLayout_15.setObjectName("verticalLayout_15")
-		self.widget_traits = QtGui.QWidget(self.centralwidget)
+		self.widget_traits = BackgroundImageWidget(self.centralwidget)
 		self.widget_traits.setObjectName("widget_traits")
 		self.verticalLayout = QtGui.QVBoxLayout(self.widget_traits)
-		self.verticalLayout.setContentsMargins(0, 0, 0, 0)
 		self.verticalLayout.setContentsMargins(0, 0, 0, 0)
 		self.verticalLayout.setObjectName("verticalLayout")
 		self.stackedWidget_traits = QtGui.QStackedWidget(self.widget_traits)
@@ -170,15 +169,9 @@ class Ui_MainWindow(object):
 		spacerItem8 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
 		self.horizontalLayout_2.addItem(spacerItem8)
 		self.pushButton_previous = QtGui.QPushButton(self.centralwidget)
-		icon = QtGui.QIcon()
-		icon.addPixmap(QtGui.QPixmap(":/icons/images/actions/1leftarrow.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.pushButton_previous.setIcon(icon)
 		self.pushButton_previous.setObjectName("pushButton_previous")
 		self.horizontalLayout_2.addWidget(self.pushButton_previous)
 		self.pushButton_next = QtGui.QPushButton(self.centralwidget)
-		icon1 = QtGui.QIcon()
-		icon1.addPixmap(QtGui.QPixmap(":/icons/images/actions/1rightarrow.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.pushButton_next.setIcon(icon1)
 		self.pushButton_next.setObjectName("pushButton_next")
 		self.horizontalLayout_2.addWidget(self.pushButton_next)
 		self.verticalLayout_15.addLayout(self.horizontalLayout_2)
@@ -211,41 +204,20 @@ class Ui_MainWindow(object):
 		self.statusbar.setObjectName("statusbar")
 		MainWindow.setStatusBar(self.statusbar)
 		self.actionSave = QtGui.QAction(MainWindow)
-		icon2 = QtGui.QIcon()
-		icon2.addPixmap(QtGui.QPixmap(":/icons/images/actions/filesave.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.actionSave.setIcon(icon2)
 		self.actionSave.setObjectName("actionSave")
 		self.actionOpen = QtGui.QAction(MainWindow)
-		icon3 = QtGui.QIcon()
-		icon3.addPixmap(QtGui.QPixmap(":/icons/images/actions/fileopen.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.actionOpen.setIcon(icon3)
 		self.actionOpen.setObjectName("actionOpen")
 		self.actionAbout = QtGui.QAction(MainWindow)
 		self.actionAbout.setObjectName("actionAbout")
 		self.actionPrint = QtGui.QAction(MainWindow)
-		icon4 = QtGui.QIcon()
-		icon4.addPixmap(QtGui.QPixmap(":/icons/images/actions/agt_print.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.actionPrint.setIcon(icon4)
 		self.actionPrint.setObjectName("actionPrint")
 		self.actionExport = QtGui.QAction(MainWindow)
-		icon5 = QtGui.QIcon()
-		icon5.addPixmap(QtGui.QPixmap(":/icons/images/actions/fileexport.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.actionExport.setIcon(icon5)
 		self.actionExport.setObjectName("actionExport")
 		self.actionNew = QtGui.QAction(MainWindow)
-		icon6 = QtGui.QIcon()
-		icon6.addPixmap(QtGui.QPixmap(":/icons/images/actions/filenew.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.actionNew.setIcon(icon6)
 		self.actionNew.setObjectName("actionNew")
 		self.actionSettings = QtGui.QAction(MainWindow)
-		icon7 = QtGui.QIcon()
-		icon7.addPixmap(QtGui.QPixmap(":/icons/images/actions/exec.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.actionSettings.setIcon(icon7)
 		self.actionSettings.setObjectName("actionSettings")
 		self.actionQuit = QtGui.QAction(MainWindow)
-		icon8 = QtGui.QIcon()
-		icon8.addPixmap(QtGui.QPixmap(":/icons/images/actions/exit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.actionQuit.setIcon(icon8)
 		self.actionQuit.setObjectName("actionQuit")
 		self.mainToolBar.addAction(self.actionNew)
 		self.mainToolBar.addAction(self.actionOpen)
@@ -295,5 +267,5 @@ class Ui_MainWindow(object):
 		self.actionSettings.setText(QtGui.QApplication.translate("MainWindow", "&Settings...", None, QtGui.QApplication.UnicodeUTF8))
 		self.actionQuit.setText(QtGui.QApplication.translate("MainWindow", "Quit", None, QtGui.QApplication.UnicodeUTF8))
 
+from src.Widgets.Components.BackgroundImageWidget import BackgroundImageWidget
 from src.Widgets.SelectWidget import SelectWidget
-from resources import rc_resource

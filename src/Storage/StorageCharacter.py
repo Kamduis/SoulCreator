@@ -109,7 +109,7 @@ class StorageCharacter(QObject):
 				self.__traits[typ].setdefault(item, {})
 				for subitem in template.traits[typ][item].items():
 					#Debug.debug(subitem)
-					val = 2
+					val = 0
 					# Eigenschaften, die Zusaztest erhalten können (bspw. Language), werden mehrfach an die Liste angefügt.
 					loop = 1
 					custom = False
@@ -538,6 +538,8 @@ class StorageCharacter(QObject):
 	def clearUnusableTraits(self, species):
 		"""
 		Beim Wechsel der Spezies werden zahlreiche Eigenschaften für den Charakter unnutzbar. Diese werden auf den Wert 0 gesetzt.
+
+		\todo Möglicherweise will ich das garnicht. Dann kan ich beim Zurücksetzen der Spezies wieder die zuvor gewählten Powers darstellen. Es muß natürlich darauf geachtet werden, daß beim Speichern nur eigenschaft der richtigen Spezies gespeichert werden und auf dem Charakterbogen auch nur die verwendbaren Werte auftauchen.
 		"""
 
 		## Es müssen nur bei ein paar Typen die Eigenschaft durchsucht werden.

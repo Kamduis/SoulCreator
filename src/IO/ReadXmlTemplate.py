@@ -43,19 +43,25 @@ class ReadXmlTemplate(QObject, ReadXml):
 	"""
 
 	__templateFiles = (
-		"resources/xml/base.xml",
-		"resources/xml/human.xml",
-		"resources/xml/changeling.xml",
-		"resources/xml/mage.xml",
-		"resources/xml/vampire.xml",
-		"resources/xml/werewolf.xml",
+		#"resources/xml/base.xml",
+		#"resources/xml/human.xml",
+		#"resources/xml/changeling.xml",
+		#"resources/xml/mage.xml",
+		#"resources/xml/vampire.xml",
+		#"resources/xml/werewolf.xml",
+		":template/xml/base.xml",
+		":template/xml/human.xml",
+		":template/xml/changeling.xml",
+		":template/xml/mage.xml",
+		":template/xml/vampire.xml",
+		":template/xml/werewolf.xml",
 	)
 
 
 	def __init__(self, template, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
-		
+
 		self.__storage = template
 
 
@@ -63,7 +69,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 		Diese Methode startet den Lesevorgang.
 		"""
-		
+
 		for item in self.__templateFiles:
 			#Debug.debug("Lese aus Datei: {}".format(item))
 			f = QFile(item)
@@ -79,7 +85,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		\todo Momentan wird trotz Argument immer nur die basis-Datei abgearbeitet.
 		"""
-    
+
 		self.openFile( device )
 		self.setDevice( device )
 
@@ -106,10 +112,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readSoulCreator(self):
 		"""
 		Die zweite Ebene des XML-Baumes wird einegelesen. Es wird gespeichert, für welche Spezies dieser Zweig vorgesehen ist. Daraufhin wird die Arbeit an readTree() weitergegeben.
-		
+
 		\exception ErrXmlError Ist das XML_Dokument fehlerhaft, wird diese Exception mit dem passenden Fehlertext geworfen.
 		"""
-		
+
 		while( not self.atEnd() ):
 			self.readNext()
 
@@ -144,12 +150,12 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readTree( self, species ):
 		"""
 		Hier wird der cv_TRait::Type der Eigenschaftengruppe ausgelesen und danach entschieden, an welche Funktion weitergesprungen werden soll.
-		
+
 		- Virtues und Vices werden mit cv_AbstractTrait::CategoryNo bewertet (sie sind weder mental noch physisch oder sozial). Sie werden daraufhin mit der Funktion readTraits(cv_Species::Species sp, cv_AbstractTrait::Type a, cv_AbstractTrait::Category b) weitergelesen.
-		
+
 		- Alle anderen Eigenschaften werden mit der Funktion readTraits(cv_Species::Species sp, cv_AbstractTrait::Type a) weitergelesen.
 		"""
-		
+
 		while( not self.atEnd() ):
 			self.readNext()
 
@@ -252,7 +258,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				else:
 					self.readUnknownElement()
 
-		
+
 
 
 	def readBonusTraits( self, species, breed ):
@@ -429,7 +435,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 		Ab hier werden die Erschaffungspunkte ausgelesen.
 		"""
-		
+
 		while( not self.atEnd() ):
 			self.readNext()
 
@@ -460,7 +466,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				if( self.name() == "points" ):
-					resultList.append( self.attributes().value( "value" ) )
+					resultList.append( int(self.attributes().value( "value" ) ))
 					self.readUnknownElement()
 				else:
 					self.readUnknownElement()

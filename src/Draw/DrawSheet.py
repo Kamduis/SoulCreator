@@ -86,7 +86,7 @@ class DrawSheet(QObject):
 		"""
 		Hier wird gezeichnet und gedruckt.
 		"""
-		
+
 		if self.__character.species == "Human":
 			self.__fontHeading = QFont("ArchitectsDaughter", 13 )
 			self.__fontSubHeading = QFont("ArchitectsDaughter", 11 )
@@ -167,7 +167,7 @@ class DrawSheet(QObject):
 		## Die Breite der Punktwerte hängt vom Eigenschaftshöchstwert für den Charakter ab.
 		self.__dotsWidth = self.__traitMax * (self.__dotDiameterH + self.__dotLineWidth)
 		self.__dotsWidthStandard = self.__traitMaxStandard * (self.__dotDiameterH + self.__dotLineWidth)
-		
+
 		self.__painter.save()
 
 		self._drawBackground()
@@ -182,6 +182,8 @@ class DrawSheet(QObject):
 			lengthX = 250
 		elif self.__character.species == "Vampire":
 			lengthX = 160
+		elif self.__character.species == "Werewolf":
+			lengthX = 250
 		self._drawLogo(offsetV=0, width=lengthX, height=80)
 
 		posY = 80
@@ -202,11 +204,14 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Vampire":
 			lengthX = 230
 			lengthY = 580
+		elif self.__character.species == "Werewolf":
+			lengthX = 270
+			lengthY = 580
 		self._drawSkills(offsetH=0, offsetV=210, width=lengthX, height=lengthY)
 
 		posY = 210
 		posX = 310
-		lengthX = 300
+		lengthX = 250
 		lengthY = 180
 		if self.__character.species == "Changeling":
 			posX = 240
@@ -214,10 +219,14 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Mage":
 			posX = 280
 			lengthX = 260
-			lengthY = 120
+			lengthY = 100
 		elif self.__character.species == "Vampire":
 			posX = 240
 			lengthX = 240
+		elif self.__character.species == "Werewolf":
+			posX = 280
+			lengthX = 260
+			lengthY = 70
 		if self.__character.species != "Human":
 			self._drawPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
@@ -226,11 +235,14 @@ class DrawSheet(QObject):
 			posY = 400
 			lengthY = 290
 		elif self.__character.species == "Mage":
-			posY = 340
-			lengthY = 380
+			posY = 320
+			lengthY = 400
 		elif self.__character.species == "Vampire":
 			posY = 400
 			lengthY = 320
+		elif self.__character.species == "Werewolf":
+			posY = 290
+			lengthY = 330
 		self._drawMerits(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posY = 620
@@ -240,6 +252,8 @@ class DrawSheet(QObject):
 			posY = 730
 		elif self.__character.species == "Vampire":
 			posY = 730
+		elif self.__character.species == "Werewolf":
+			posY = 630
 		self._drawFlaws(offsetH=posX, offsetV=posY, width=lengthX, height=60)
 
 		posX = 570
@@ -253,25 +267,44 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Vampire":
 			posX = 490
 			lengthX = 210
-		self._drawAdvantages(offsetH=posX, offsetV=210, width=lengthX)
+		if self.__character.species != "Werewolf":
+			self._drawAdvantages(offsetH=posX, offsetV=210, width=lengthX)
 
 		posY = 320
 		if self.__character.species == "Changeling":
 			posY = 300
 		elif self.__character.species == "Vampire":
 			posY = 300
+		elif self.__character.species == "Werewolf":
+			posY = 210
 		self._drawHealth(offsetH=posX, offsetV=posY, width=lengthX)
 
 		posY = 400
 		if self.__character.species == "Changeling":
 			posY = 360
+		elif self.__character.species == "Mage":
+			posY = 390
 		elif self.__character.species == "Vampire":
 			posY = 360
+		elif self.__character.species == "Werewolf":
+			posY = 290
 		self._drawWillpower(offsetH=posX, offsetV=posY, width=lengthX)
 
+		posY = 420
+		if self.__character.species == "Mage":
+			posY = 465
+		elif self.__character.species == "Werewolf":
+			posY = 360
 		if self.__character.species != "Human":
-			self._drawPowerstat(offsetH=posX, offsetV=420, width=lengthX)
-			self._drawFuel(offsetH=posX, offsetV=470, width=lengthX)
+			self._drawPowerstat(offsetH=posX, offsetV=posY, width=lengthX)
+
+		posY = 470
+		if self.__character.species == "Mage":
+			posY = 525
+		elif self.__character.species == "Werewolf":
+			posY = 425
+		if self.__character.species != "Human":
+			self._drawFuel(offsetH=posX, offsetV=posY, width=lengthX)
 
 		posY = 490
 		if self.__character.species == "Changeling":
@@ -280,6 +313,8 @@ class DrawSheet(QObject):
 			posY = 610
 		elif self.__character.species == "Vampire":
 			posY = 610
+		elif self.__character.species == "Werewolf":
+			posY = 510
 		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX, species=self.__character.species)
 
 		self.__painter.restore()
@@ -301,11 +336,11 @@ class DrawSheet(QObject):
 		self.__painter.setFont(fontLcl)
 		self.__painter.setRenderHint(QPainter.TextAntialiasing)
 		self.__painter.save()
-		
+
 		pen = QPen(Qt.DashLine)
 		pen.setColor(QColor(0,0,255))
 		self.__painter.setPen(pen)
-		
+
 		for i in range(self.__pageWidth)[::10]:
 			self.__painter.drawLine(i, 0, i, self.__pageHeight)
 		for i in range(self.__pageHeight)[::10]:
@@ -344,6 +379,8 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Vampire":
 			image = QImage(":sheet/images/sheet/Vampire-Rahmen.jpg")
 			self.__painter.drawImage(rect, image)
+		elif self.__character.species == "Werewolf":
+			pass
 		else:
 			rect = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY, (self.__pageWidth + 2 * self.__borderFrameX) / 7, self.__pageHeight + 2 * self.__borderFrameY)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-SeitenrandL-gray.png")
@@ -377,15 +414,12 @@ class DrawSheet(QObject):
 		image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
 		if self.__character.species == "Changeling":
 			image = QImage(":sheet/images/sheet/Changeling.png")
-			pass
 		elif self.__character.species == "Mage":
 			image = QImage(":sheet/images/sheet/Mage.png")
-			pass
 		if self.__character.species == "Vampire":
 			image = QImage(":sheet/images/sheet/Vampire.png")
 		if self.__character.species == "Werewolf":
-			#image = QImage(":sheet/images/sheet/WorldOfDarkness.jpg")
-			pass
+			image = QImage(":sheet/images/sheet/Werewolf.png")
 		else:
 			pass
 		self.__painter.drawImage(rect, image)
@@ -447,6 +481,17 @@ class DrawSheet(QObject):
 				[ textCharacter[1][0], textCharacter[1][1], u"", ],
 				[ self.__character.breed, u"", self.__character.faction, ],
 			]
+		elif self.__character.species == "Werewolf":
+			text = [
+				[ text[0][0], "Pack Name:", u"Totem:", ],
+				[ text[1][0], text[1][1], u"Pack:", ],
+				[ self.__storage.breedTitle(self.__character.species), self.__storage.factionTitle(self.__character.species), u"Lodge:", ],
+			]
+			textCharacter = [
+				[ textCharacter[0][0], self.__character.identities[0].supername, u"", ],
+				[ textCharacter[1][0], textCharacter[1][1], u"", ],
+				[ self.__character.breed, self.__character.faction, u"", ],
+			]
 
 		self.__painter.save()
 
@@ -468,9 +513,9 @@ class DrawSheet(QObject):
 			width.append(max(subWidth))
 
 		self.__painter.restore()
-		
+
 		self.__painter.save()
-		
+
 		self.__painter.setFont(self.__fontScript)
 		fontScriptMetrics = QFontMetrics(self.__painter.font())
 		fontScriptHeight = fontScriptMetrics.height()
@@ -495,12 +540,12 @@ class DrawSheet(QObject):
 		"""
 
 		self.__painter.save()
-		
+
 		self.__painter.setFont(self.__fontSubHeading)
 		fontSubHeadingMetrics = QFontMetrics(self.__painter.font())
 		fontSubHeadingHeight = fontSubHeadingMetrics.height()
 		fontSubHeadingHeightDiff = (fontSubHeadingMetrics.ascent() - self.__fontSubHeadingHeightAscent)
-		
+
 		textwidthArray = []
 		for item in Config.attributeSorts:
 			textwidthArray.append(fontSubHeadingMetrics.boundingRect(item).width())
@@ -606,6 +651,10 @@ class DrawSheet(QObject):
 		\param width Die Breite der Spalte.
 		"""
 
+		twocolumn = False
+		if self.__character.species == "Mage" or self.__character.species == "Werewolf":
+			twocolumn = True
+
 		self.__painter.save()
 
 		if width == None:
@@ -620,27 +669,43 @@ class DrawSheet(QObject):
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
 		numOfTraits = 0
+		for item in self.__character.traits["Power"].values():
+			for subitem in item.values():
+				if subitem.value > 0:
+					numOfTraits += 1
+		if numOfTraits < 1:
+			numOfTraits = 1
 		if height:
-			for item in self.__character.traits["Power"].values():
-				for subitem in item.values():
-					if subitem.value > 0:
-						numOfTraits += 1
-			if numOfTraits < 1:
-				numOfTraits = 1
 			textHeightCalculated = (height - self.__fontHeadingHeight) / numOfTraits
+			if twocolumn:
+				## Bei Magiern und Werwölfen werden die Kräfte in zweo Spalten geschrieben, benötigen also nur die Halbe Höhe.
+				textHeightCalculated *= 2
 			if textHeightCalculated < textHeight:
 				textHeight = textHeightCalculated
 
+		traitWidth = width
+		if twocolumn:
+			traitWidth = width // 2 - self.__dotSep
+
+		i = 0
 		j = 0
+		secondRow = False
 		for item in self.__character.traits["Power"]:
-			traits = self.__character.traits["Power"][item].values()
+			traits = self.__character.traits["Power"][item].items()
 			traits.sort()
+			#Debug.debug(traits)
 			for subitem in traits:
-				if (subitem.isAvailable and subitem.value > 0):
-					self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=width, name=subitem.name, value=subitem.value)
-					j += 1
-			if numOfTraits < 1:
-				numOfTraits = j
+				if (subitem[1].isAvailable and subitem[1].value > 0):
+					if twocolumn:
+						self.__drawTrait(offsetH + i * (width - traitWidth), offsetV + self.__fontHeadingHeight + j * textHeight, width=traitWidth, name=subitem[1].name, value=subitem[1].value, mirrored=secondRow)
+						j += 1
+						if j >= numOfTraits // 2:
+							i += 1
+							j = 0
+							secondRow = True
+					else:
+						self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=traitWidth, name=subitem[1].name, value=subitem[1].value)
+						j += 1
 
 		if GlobalState.isDebug:
 			if not height:
@@ -685,11 +750,11 @@ class DrawSheet(QObject):
 
 		j = 0
 		for item in self.__character.traits["Merit"]:
-			traits = self.__character.traits["Merit"][item].values()
+			traits = self.__character.traits["Merit"][item].items()
 			traits.sort()
 			for subitem in traits:
-				if (subitem.isAvailable and subitem.value > 0):
-					self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=width, name=subitem.name, value=subitem.value)
+				if (subitem[1].isAvailable and subitem[1].value > 0):
+					self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=width, name=subitem[1].name, value=subitem[1].value)
 					j += 1
 			if numOfTraits < 1:
 				numOfTraits = j
@@ -988,7 +1053,7 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def __drawTrait(self, posX, posY, width, align=Qt.AlignLeft, name="", text="", value=0, maxValue=5):
+	def __drawTrait(self, posX, posY, width, align=Qt.AlignLeft, name="", text="", value=0, maxValue=5, mirrored=False):
 		"""
 		Schreibt eine Eigenschaft mit den Punktwerten.
 
@@ -1002,7 +1067,15 @@ class DrawSheet(QObject):
 		dotsWidth = maxValue * (self.__dotDiameterH + self.__dotLineWidth / 2)
 		textWidth = fontMetrics.boundingRect(name).width()
 
-		self.__painter.drawText(posX, posY, width - dotsWidth - self.__dotSep, textHeight, align, name)
+		if mirrored:
+			alignMirrored = align
+			if align == Qt.AlignLeft:
+				alignMirrored = Qt.AlignRight
+			if align == Qt.AlignRight:
+				alignMirrored = Qt.AlignLeft
+			self.__painter.drawText(posX + dotsWidth + self.__dotSep, posY, width - dotsWidth - self.__dotSep, textHeight, alignMirrored, name)
+		else:
+			self.__painter.drawText(posX, posY, width - dotsWidth - self.__dotSep, textHeight, align, name)
 
 		## Bei linksbündigen Eigenschaften muß eine Linie gezogen werden, damit man weiß, welche Punkte zu welcher Eigenschaft gehören.
 		if align == Qt.AlignLeft:
@@ -1030,10 +1103,16 @@ class DrawSheet(QObject):
 				pen = self.__painter.pen()
 				pen.setWidthF(self.__lineWidth)
 				self.__painter.setPen(pen)
-				self.__painter.drawLine(posX + textWidth + smallWidth, posY +  fontMetrics.ascent(), posX + width - dotsWidth - self.__textDotSep, posY +  fontMetrics.ascent())
+				if mirrored:
+					self.__painter.drawLine(posX + dotsWidth + self.__dotSep, posY +  fontMetrics.ascent(), posX + width - textWidth - smallWidth, posY +  fontMetrics.ascent())
+				else:
+					self.__painter.drawLine(posX + textWidth + smallWidth, posY +  fontMetrics.ascent(), posX + width - dotsWidth - self.__textDotSep, posY +  fontMetrics.ascent())
 				self.__painter.restore()
-		
-		self.__drawValueDots(posX + width - dotsWidth, posY + fontMetrics.ascent(), value, maxValue)
+
+		if mirrored:
+			self.__drawValueDots(posX, posY + fontMetrics.ascent(), value, maxValue)
+		else:
+			self.__drawValueDots(posX + width - dotsWidth, posY + fontMetrics.ascent(), value, maxValue)
 
 		self.__painter.restore()
 

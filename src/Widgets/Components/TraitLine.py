@@ -35,7 +35,7 @@ from src.Debug import Debug
 class TraitLine(QWidget):
 	"""
 	@brief Die grafische Darstellung einer einzigen Eigenschaft auf dem Charakterbogen.
- 
+
 	Die Simplen Eigenschaften (z.B. Attribute) bestehen nur aus Name und Wert. Bei kompliziertere Eigenschaften müssen noch Spezialisieren und andere Parameter beachtet werden.
 	"""
 
@@ -53,7 +53,7 @@ class TraitLine(QWidget):
 		self.setLayout( self.__layout )
 
 		self.__labelName = QLabel( self )
-		
+
 		self.__button = QPushButton( self )
 		self.__button.setText( "..." )
 		self.__button.setMaximumHeight( Config.inlineWidgetHeightMax )
@@ -111,7 +111,7 @@ class TraitLine(QWidget):
 		"""
 		Beschriftung des Knopfes.
 		"""
-		
+
 		return self.__button.text()
 
 	@buttonText.setter
@@ -126,7 +126,7 @@ class TraitLine(QWidget):
 		"""
 		\note Diese Funktion ist nicht privat, da ich diese Funktion als Slot benötige.
 		"""
-		
+
 		#Debug.debug("Hurra! Setze Eigenschaft {} auf Wert {}".format(self.name(), value))
 		self.__traitDots.setValue( value )
 
@@ -155,7 +155,7 @@ class TraitLine(QWidget):
 		"""
 		Der Maximalwert für die Dargestellten Punkte.
 		"""
-		
+
 		return self.__traitDots.maximum()
 
 	def setMaximum(self, maximum):
@@ -175,7 +175,7 @@ class TraitLine(QWidget):
 		"""
 		Aktiviere oder Deaktiviere den Spezialisierungs-Knopf.
 		"""
-		
+
 		self.__button.setChecked( sw )
 
 
@@ -183,7 +183,7 @@ class TraitLine(QWidget):
 		"""
 		Mit dieser Methode verstecke ich die Liste der Spezialisierungen. Schließlich haben nur Fertigkeiten eine Notwendigkeit dafür.
 		"""
-		
+
 		if ( sw ):
 			self.__button.hide()
 		else:
@@ -198,7 +198,7 @@ class TraitLine(QWidget):
 		"""
 		Mit dieser Methode verstecke ich die Textzeile, in welcher zusätzlicher Beschreibungstext eingegeben werden kann.
 		"""
-		
+
 		if ( sw ):
 			self.__lineEdit.hide()
 		else:

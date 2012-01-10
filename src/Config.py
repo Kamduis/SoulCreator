@@ -52,29 +52,29 @@ class Config():
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"
 
-	# Vordefinierte Farben
-	##  Wichtige Textabschnitte
-	importantTextColorName = "darkBlue"
-
 	# Einstellungen für das Auswahl-Widget
 	selectIconSize = QSize(50,50)
 	selectWidgetWidth = 150
 
+	# Vordefinierte Farben
+	##  Wichtige Textabschnitte
+	importantTextColor = "darkBlue"
+
 	## Warnfarbe, wenn zuviele Punkte vergeben wurden.
-	pointsNegative = QColor(255,0,0)
+	pointsNegativeColor = "red"
 
 	## Warnfarbe, wenn zuwenige Punkte vergeben wurden.
-	pointsPositive = QColor(0,0,255)
-	
+	pointsPositiveColor = "blue"
+
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
 	vSpace = 5
-	
+
 	## Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 	traitCategorySpace = 10
-	
+
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
 	traitMultipleMax = 3
-	
+
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 	#const int Config::displayTimeout = 10000
 
@@ -85,7 +85,7 @@ class Config():
 	traitCustomTextWidthMin = 100
 
 	## Die größtmögliche Höhe von Widgets, welche sich in einer Textzeile befinden.
-	# 
+	#
 	# Diese Höhe wurde gewählt, um vertikalen Raum zu sparen.
 	inlineWidgetHeightMax = 18
 
@@ -125,7 +125,7 @@ class Config():
 	## Über wievielen Punkten die Eigenschaften 2 Erschaffungspunkte kosten.
 	#
 	# Alle Punkte bis einschließelich dieser Zahl kosten nur 1 Punkt pro Punkt, aber alle darüber kosten das Doppelte.
-	#const int Config::creationTraitDouble = 4
+	creationTraitDouble = 4
 
 	## Schriftgröße für den normalen Text auf dem ausdruckbaren Charakterbogen.
 	#const qreal Config::textSizeFactorPrintNormal = 0.45
@@ -229,10 +229,10 @@ class Config():
 	def version():
 		"""
 		\brief Die aktuelle Version des Programms ausschließlich der Change-Nummer.
-		
+
 		Programme mit unterschieldicher Versionsnummer sind zueinander nicht notwendigerweise kompatibel.
 		"""
-		
+
 		return "{}.{}".format(Config.programVersionMajor, Config.programVersionMinor)
 
 
@@ -240,10 +240,10 @@ class Config():
 	def versionDetail():
 		"""
 		\brief Die aktuelle Version des Programms einschließlich der Change-Nummer.
-		
+
 		Unterscheiden sich Programme in ihrer Change-Nummer, aber der Rest ihrer Versionsnummer ist gleich, sollten eigentlich keine Kompatibilitätsprobleme mit den Template-Dateien und den gespeicherten Charakteren auftreten.
 		"""
-		
+
 		return "{}.{}.{}".format(Config.programVersionMajor, Config.programVersionMinor, Config.programVersionChange)
 
 
@@ -252,7 +252,7 @@ class Config():
 		"""
 		Gibt die Farbe, deren Namen bekannt ist, als QColor zurück.
 		"""
-		
+
 		return QColor( colorName )
 
 
@@ -268,4 +268,4 @@ class Config():
 			return Config.ages[0]
 
 
-		
+

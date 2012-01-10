@@ -25,8 +25,8 @@ from __future__ import division, print_function
 import sys
 import os
 
-from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray
-from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QPrinter, QFont, QFontDatabase
+from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, Signal
+from PySide.QtGui import QMainWindow, QIcon, QPixmap, QMessageBox, QFileDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
 
 from src.GlobalState import GlobalState
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
@@ -38,6 +38,7 @@ from IO.WriteXmlCharacter import WriteXmlCharacter
 from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
 from Calc.CalcAdvantages import CalcAdvantages
+from Calc.Creation import Creation
 from Widgets.InfoWidget import InfoWidget
 from Widgets.AttributeWidget import AttributeWidget
 from Widgets.SkillWidget import SkillWidget
@@ -132,9 +133,9 @@ class MainWindow(QMainWindow):
 		QCoreApplication.setApplicationName( Config.programName )
 		QCoreApplication.setApplicationVersion( Config.version() )
 
-		#QApplication.setStyle(new QGtkStyle(self));
+		#QApplication.setStyle(QGtkStyle(self))
 
-		self.setWindowTitle( "" );
+		self.setWindowTitle( "" )
 		self.setWindowIcon( QIcon( ":/icons/images/WoD.png" ) )
 
 		self.__storage = StorageTemplate( self )
@@ -147,13 +148,12 @@ class MainWindow(QMainWindow):
 		self.ui.pushButton_previous.clicked.connect(self.ui.selectWidget_select.selectPrevious)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.ui.stackedWidget_traits.setCurrentIndex)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.setTabButtonState)
-	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( selectSelectorItem( int ) ) );
 
 		self.populateUi()
 		self.activate()
 		self.reset()
 
-	#connect( self.ui.stackedWidget_traits, SIGNAL( currentChanged( int ) ), self, SLOT( showCreationPoints( int ) ) );
+		self.ui.selectWidget_select.currentRowChanged.connect(self.showCreationPoints)
 
 	#connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
@@ -181,7 +181,7 @@ class MainWindow(QMainWindow):
 		"""
 		In dieser Funktion werden die Template-Daten aus den XML-Dateien ausgelesen und gespeichert, um damit zu einem späteren Zeitpunkt die GUI füllen zu können.
 		"""
-		
+
 		reader = ReadXmlTemplate(self.__storage)
 
 		#connect( &reader, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
@@ -189,28 +189,33 @@ class MainWindow(QMainWindow):
 		try:
 			reader.read()
 		except ErrXmlVersion as e:
-			MessageBox.exception( self, e.message(), e.description() )
+			MessageBox.exception( self, e.message, e.description )
 		except ErrXmlParsing as e:
-			MessageBox.exception( self, e.message(), e.description() )
+			MessageBox.exception( self, e.message, e.description )
 		except ErrFileNotOpened as e:
-			MessageBox.exception( self, e.message(), e.description() )
+			MessageBox.exception( self, e.message, e.description )
 
 
 	def populateUi(self):
 		"""
 		Die Graphische Oberfläche wird bevölkert.
 		"""
-		
-		#// Funktioniert nicht richtig.
-		#// 	// Bevor wir alles in der GUI anzeigen, wollen wir ersteinmal eine alphabetische Reihefolge garantieren.
-		#// 	// Ich weiß nicht, ob das bei den Attributen so gut ist.
-		#// 	storage.sortTraits();
+
+		## Die Icons werden hier definiert, da der Pfad zur ressourcen-DAtei nicht stimmt, wenn pyside-uic über die ui-Datei marschiert ist.
+		self.ui.pushButton_previous.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
+		self.ui.pushButton_next.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
+		self.ui.actionNew.setIcon(QIcon(":/icons/images/actions/filenew.png"))
+		self.ui.actionOpen.setIcon(QIcon(":/icons/images/actions/fileopen.png"))
+		self.ui.actionSave.setIcon(QIcon(":/icons/images/actions/filesave.png"))
+		self.ui.actionExport.setIcon(QIcon(":/icons/images/actions/fileexport.png"))
+		self.ui.actionPrint.setIcon(QIcon(":/icons/images/actions/agt_print.png"))
+		self.ui.actionSettings.setIcon(QIcon(":/icons/images/actions/exec.png"))
+		self.ui.actionQuit.setIcon(QIcon(":/icons/images/actions/exit.png"))
 
 		info = InfoWidget(self.__storage, self.__character, self)
 		attributes = AttributeWidget( self.__storage, self.__character, self )
 		skills = SkillWidget( self.__storage, self.__character, self )
 		specialties = Specialties( self.__storage.traits["Skill"], self )
-		#// Warnung: Merits müssen später erschaffen werden, da sie Voraussetzungen überprüfen und das zum Problem wird, wenn Eigenschaften in der Liste überprüft werden, die noch nicht existieren. Glaube ich zumindest.
 		merits = MeritWidget( self.__storage, self.__character, self )
 		morality = MoralityWidget( self.__storage, self.__character, self )
 		powers = PowerWidget( self.__storage, self.__character, self )
@@ -240,19 +245,15 @@ class MainWindow(QMainWindow):
 		#ui.frame_flaws.setMinimumWidth( Config.traitListVertivalWidth );
 		#ui.frame_flaws.setMaximumWidth( self.ui.frame_powers.minimumWidth() );
 
-		#// Zu Beginn soll immer das erste Tab angezeigt werden.
-		#ui.stackedWidget_traits.setCurrentIndex( 1 );
-		#ui.stackedWidget_traits.setCurrentIndex( 0 );
-
 		# Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
-		#connect( skills, SIGNAL( specialtiesClicked( bool, QString, QList< cv_TraitDetail > ) ), self, SLOT( showSkillSpecialties( bool, QString, QList< cv_TraitDetail > ) ) );
 		skills.specialtiesActivated.connect(specialties.showSpecialties)
 
-		#// Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
-		#connect( self.__self.__character, SIGNAL( speciesChanged( cv_Species.SpeciesFlag ) ), self, SLOT( disablePowerItem( cv_Species.SpeciesFlag ) ) );
+		# Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
+		self.__character.speciesChanged.connect(self.disablePowerItem)
 
-		#connect( self.__self.__character, SIGNAL( speciesChanged( cv_Species.SpeciesFlag ) ), self, SLOT( showBackround( cv_Species.SpeciesFlag ) ) );
-	#}
+		# Hintergrundbild ändert sich je nach Spezies
+		self.__character.speciesChanged.connect(self.showBackround)
+
 		QFontDatabase.addApplicationFont(":fonts/fonts/ArchitectsDaughter.ttf")
 		QFontDatabase.addApplicationFont(":fonts/fonts/CloisterBlack.ttf")
 		QFontDatabase.addApplicationFont(":fonts/fonts/HVD_Edding.otf")
@@ -311,7 +312,7 @@ class MainWindow(QMainWindow):
 		self.__character.traits["Attribute"]["Physical"]["Stamina"].valueChanged.connect(calc.calcHealth)
 		self.__character.traits["Attribute"]["Mental"]["Resolve"].valueChanged.connect(calc.calcWillpower)
 		self.__character.traits["Attribute"]["Social"]["Composure"].valueChanged.connect(calc.calcWillpower)
-		
+
 		calc.sizeChanged.connect(self.__advantages.setSize)
 		calc.initiativeChanged.connect(self.__advantages.setInitiative)
 		calc.speedChanged.connect(self.__advantages.setSpeed)
@@ -319,12 +320,18 @@ class MainWindow(QMainWindow):
 		calc.healthChanged.connect(self.__advantages.setHealth)
 		calc.willpowerChanged.connect(self.__advantages.setWillpower)
 
-		#creation = new Creation( self );
-		#// Schreibe die übrigen Erschaffungspunkte
+		self.__creation = Creation( self.__storage, self.__character, self )
+		for typ in self.__creation.creationPoints[Config.initialSpecies]:
+			for category in self.__storage.categories(typ):
+				for trait in self.__character.traits[typ][category].values():
+					trait.traitChanged.connect(self.__creation.calcPoints)
+
+		# Schreibe die übrigen Erschaffungspunkte
 		#connect( creation, SIGNAL( pointsChanged() ), self, SLOT( showCreationPoints() ) );
-		#connect( creation, SIGNAL( pointsDepleted( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsDepleted( cv_AbstractTrait.Type ) ) );
-		#connect( creation, SIGNAL( pointsNegative( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsNegative( cv_AbstractTrait.Type ) ) );
-		#connect( creation, SIGNAL( pointsPositive( cv_AbstractTrait.Type ) ), self, SLOT( warnCreationPointsPositive( cv_AbstractTrait.Type ) ) );
+		self.__creation.pointsChanged.connect(self.showCreationPoints)
+		self.__creation.pointsChangedZero.connect(self.warnCreationPointsDepleted)
+		self.__creation.pointsChangedNegative.connect(self.warnCreationPointsNegative)
+		self.__creation.pointsChangedPositive.connect(self.warnCreationPointsPositive)
 
 
 	def reset(self):
@@ -341,7 +348,7 @@ class MainWindow(QMainWindow):
 	"""
 	Diese Funktion ruft den Konfigurationsdialog auf und sorgt dafür, daß die änderungen gespeichert oder verworfen werden.
 	"""
-	
+
 	#SettingsDialog dialog;
 	#if ( dialog.exec() ) {
 		#// Ausführen der veränderten Einstellungen.
@@ -353,14 +360,14 @@ class MainWindow(QMainWindow):
 	"""
 	Werte des Charakters auf der Oberfläche anzeigen.
 	"""
-	
+
 #}
 
 #void MainWindow.showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
 	"""
 	Spezialisierungen einer Fertigkeit anzeigen.
 	"""
-	
+
 #// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
 
 	#specialties.clear();
@@ -372,64 +379,28 @@ class MainWindow(QMainWindow):
 	#}
 #}
 
-#void MainWindow.showBackround( cv_Species.SpeciesFlag spec ) {
-	"""
-	Für jede Spezies wird das passende Hintergrundbild angezeigt.
-	"""
-	
-	#if ( spec == cv_Species.Changeling ) {
-		#ui.widget_traits.setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	#} else if ( spec == cv_Species.Mage ) {
-		#ui.widget_traits.setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	#} else if ( spec == cv_Species.Vampire ) {
-		#ui.widget_traits.setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	#} else if ( spec == cv_Species.Werewolf ) {
-		#ui.widget_traits.setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	#} else {
-		#ui.widget_traits.setStyleSheet( "QWidget#widget_traits { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" );
-	#}
+	def showBackround( self, species ):
+		"""
+		Für jede Spezies wird das passende Hintergrundbild angezeigt.
+		"""
 
-#// 	for ( int i = 0; i < self.ui.stackedWidget_traits.count(); ++i ) {
-#// 		ui.stackedWidget_traits.widget( i ).setObjectName( "stackedWidget_item" + QString.number( i ) );
-#// 	}
-#//
-#// 	if ( spec == cv_Species.Changeling ) {
-#// 		for ( int i = 0; i < self.ui.stackedWidget_traits.count(); ++i ) {
-#// 			ui.stackedWidget_traits.widget( i ).setStyleSheet( "QWidget#stackedWidget_item" + QString.number( i ) + "{ background-image: url(:/skulls/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center }" );
-#// 		}
-#// 	} else if ( spec == cv_Species.Mage ) {
-#// 		for ( int i = 0; i < self.ui.stackedWidget_traits.count(); ++i ) {
-#// 			ui.stackedWidget_traits.widget( i ).setStyleSheet( "QWidget#stackedWidget_item" + QString.number( i ) + "{ background-image: url(:/skulls/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center }" );
-#// 		}
-#// 	} else if ( spec == cv_Species.Vampire ) {
-#// 		for ( int i = 0; i < self.ui.stackedWidget_traits.count(); ++i ) {
-#// 			ui.stackedWidget_traits.widget( i ).setStyleSheet( "QWidget#stackedWidget_item" + QString.number( i ) + "{ background-image: url(:/skulls/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center }" );
-#// 		}
-#// 	} else if ( spec == cv_Species.Werewolf ) {
-#// 		for ( int i = 0; i < self.ui.stackedWidget_traits.count(); ++i ) {
-#// 			ui.stackedWidget_traits.widget( i ).setStyleSheet( "QWidget#stackedWidget_item" + QString.number( i ) + "{ background-image: url(:/skulls/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center }" );
-#// 		}
-#// 	} else {
-#// 		for ( int i = 0; i < self.ui.stackedWidget_traits.count(); ++i ) {
-#// 			ui.stackedWidget_traits.widget( i ).setStyleSheet( "QWidget#stackedWidget_item" + QString.number( i ) + "{ background-image: url(:/skulls/images/Skull-Mortal-gray.png); background-repeat: no-repeat; background-position: center }" );
-#// 		}
-#// 	}
-#}
+		if ( species == "Changeling" ):
+			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
+		elif ( species == "Mage" ):
+			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
+		elif ( species == "Vampire" ):
+			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
+		elif ( species == "Werewolf" ):
+			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
+		else:
+			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
 
-
-#void MainWindow.selectSelectorItem( int idx ) {
-	"""
-	Selektiert das zur aktuellen Seite der Eigenschaften zugehörige Symbol in der Auswahlleiste.
-	"""
-	
-	#ui.selectWidget_select.setCurrentItem( self.ui.selectWidget_select.item( idx ) );
-#}
 
 	def setTabButtonState( self, index ):
 		"""
 		Enabled oder Disabled die Knöpfe, mit denen die Eigenschaften durchgeblättert werden können, je nachdem, ob es noch eine weitere Seite zu Blättern gibt.
 		"""
-		
+
 		if ( index < self.ui.selectWidget_select.count() - 1 ):
 			self.ui.pushButton_next.setEnabled( True )
 		else:
@@ -441,106 +412,94 @@ class MainWindow(QMainWindow):
 			self.ui.pushButton_previous.setEnabled( False )
 
 
-#void MainWindow.showCreationPoints( int idx ) {
-	"""
-	Je nachdem, welches Tab gerade gezeigt wird, müssen die Erschaffungspunkte dargestellt oder versteckt werden.
-	"""
+	def showCreationPoints( self ):
+		"""
+		Zeigt die Anzahl der übrigen Punkte bei der Charaktererschaffung an.
 
-	#ui.label_pointsLeft.setHidden( true );
-#// 	ui.frame_creationPointsSpecialties.setHidden( true );
+		Je nachdem, welches Tab gerade gezeigt wird, müssen die Erschaffungspunkte dargestellt oder versteckt werden.
+		"""
 
-	#if ( idx == 1 || idx == 2 || idx == 3 || idx == 5 ) {
-		#ui.label_pointsLeft.setHidden( false );
+		self.ui.label_pointsLeft.setHidden( True )
 
-		#if ( idx == 1 ) {
-			#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Attribute ) );
-		#} else if ( idx == 2 ) {
-#// 			ui.frame_creationPointsSpecialties.setHidden( false );
-			#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Skill ) );
-		#} else if ( idx == 3 ) {
-			#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Merit ) );
-		#} else if ( idx == 5 ) {
-			#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Power ) );
-		#}
-	#}
-#}
+		pagesWithPoints = [1, 2, 3, 5]
 
-#void MainWindow.showCreationPoints() {
-	"""
-	Zeigt die Anzahl der übrigen Punkte bei der Charaktererschaffung an.
+		if self.ui.stackedWidget_traits.currentIndex() in pagesWithPoints:
+			self.ui.label_pointsLeft.setHidden( False )
 
-	\todo Mit Wirkung versehen.
-	"""
+			if ( self.ui.stackedWidget_traits.currentIndex() == 1 ):
+				typ = "Attribute"
+			elif ( self.ui.stackedWidget_traits.currentIndex() == 2 ):
+				typ = "Skill"
+			elif ( self.ui.stackedWidget_traits.currentIndex() == 3 ):
+				typ = "Merit"
+			elif ( self.ui.stackedWidget_traits.currentIndex() == 5 ):
+				typ = "Power"
 
-	#if ( self.ui.stackedWidget_traits.currentIndex() == 1 ) {
-		#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Attribute ) );
-	#} else if ( self.ui.stackedWidget_traits.currentIndex() == 2 ) {
-		#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Skill ) );
-	#} else if ( self.ui.stackedWidget_traits.currentIndex() == 3 ) {
-		#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Merit ) );
-	#} else if ( self.ui.stackedWidget_traits.currentIndex() == 5 ) {
-		#ui.label_pointsLeft.setText( creation.pointsList().pointString( self.__character.species(), cv_AbstractTrait.Power ) );
-	#}
-#}
+			text = "Creation Points: "
+			if typ != None:
+				textList = [unicode(item) for item in self.__creation.creationPointsAvailable[self.__character.species][typ]]
+				text += "/".join(textList)
+				if any(x < 0 for x in self.__creation.creationPointsAvailable[self.__character.species][typ]):
+					text = "<span style='color:{color}'>{text}</span>".format(color=Config.pointsNegativeColor, text=text)
+			self.ui.label_pointsLeft.setText( text )
 
-#void MainWindow.warnCreationPointsDepleted( cv_AbstractTrait.Type type ) {
-	"""
-	Zeigt eine Warnung an, wenn alle Erschafungspunkte vergeben wurden.
-	
-	\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite wieder zur Standardfarbe verändert.
-	"""
-	
-	#if ( type == cv_AbstractTrait.Attribute ) {
-		#ui.selectWidget_select.item( 1 ).setForeground( QColor() );
-	#} else if ( type == cv_AbstractTrait.Skill ) {
-		#ui.selectWidget_select.item( 2 ).setForeground( QColor() );
-	#} else if ( type == cv_AbstractTrait.Merit ) {
-		#ui.selectWidget_select.item( 3 ).setForeground( QColor() );
-	#} else if ( type == cv_AbstractTrait.Power ) {
-		#ui.selectWidget_select.item( 5 ).setForeground( QColor() );
-	#}
-#}
-#void MainWindow.warnCreationPointsPositive( cv_AbstractTrait.Type type ) {
-	"""
-	Zeigt eine Warnung an, wenn nicht alle Erschafungspunkte vergeben wurden.
-	
-	\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite blau eingefärbt.
-	"""
-	
-	#if ( type == cv_AbstractTrait.Attribute ) {
-		#ui.selectWidget_select.item( 1 ).setForeground( Config.pointsPositive );
-	#} else if ( type == cv_AbstractTrait.Skill ) {
-		#ui.selectWidget_select.item( 2 ).setForeground( Config.pointsPositive );
-	#} else if ( type == cv_AbstractTrait.Merit ) {
-		#ui.selectWidget_select.item( 3 ).setForeground( Config.pointsPositive );
-	#} else if ( type == cv_AbstractTrait.Power ) {
-		#ui.selectWidget_select.item( 5 ).setForeground( Config.pointsPositive );
-	#}
-#}
-#void MainWindow.warnCreationPointsNegative( cv_AbstractTrait.Type type ) {
-	"""
-	Zeigt eine Warnung an, wenn zuviele Erschafungspunkte vergeben wurden.
-	
-	\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite rot eingefärbt.
-	"""
-	
-	#if ( type == cv_AbstractTrait.Attribute ) {
-		#ui.selectWidget_select.item( 1 ).setForeground( Config.pointsNegative );
-	#} else if ( type == cv_AbstractTrait.Skill ) {
-		#ui.selectWidget_select.item( 2 ).setForeground( Config.pointsNegative );
-	#} else if ( type == cv_AbstractTrait.Merit ) {
-		#ui.selectWidget_select.item( 3 ).setForeground( Config.pointsNegative );
-	#} else if ( type == cv_AbstractTrait.Power ) {
-		#ui.selectWidget_select.item( 5 ).setForeground( Config.pointsNegative );
-	#}
-#}
+
+	def warnCreationPointsDepleted( self, typ ):
+		"""
+		Zeigt eine Warnung an, wenn alle Erschafungspunkte vergeben wurden.
+
+		\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite wieder zur Standardfarbe verändert.
+		"""
+
+		if typ == "Attribute":
+			self.ui.selectWidget_select.item( 1 ).setForeground( QColor() )
+		elif typ == "Skill":
+			self.ui.selectWidget_select.item( 2 ).setForeground( QColor() )
+		elif typ == "Merit":
+			self.ui.selectWidget_select.item( 3 ).setForeground( QColor() )
+		elif typ == "Power":
+			self.ui.selectWidget_select.item( 5 ).setForeground( QColor() )
+
+
+	def warnCreationPointsPositive( self, typ ):
+		"""
+		Zeigt eine Warnung an, wenn nicht alle Erschafungspunkte vergeben wurden.
+
+		\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite blau eingefärbt.
+		"""
+
+		if typ == "Attribute":
+			self.ui.selectWidget_select.item( 1 ).setForeground( QColor(Config.pointsPositiveColor) )
+		elif typ == "Skill":
+			self.ui.selectWidget_select.item( 2 ).setForeground( QColor(Config.pointsPositiveColor) )
+		elif typ == "Merit":
+			self.ui.selectWidget_select.item( 3 ).setForeground( QColor(Config.pointsPositiveColor) )
+		elif typ == "Power":
+			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.pointsPositiveColor) )
+
+
+	def warnCreationPointsNegative( self, typ ):
+		"""
+		Zeigt eine Warnung an, wenn zuviele Erschafungspunkte vergeben wurden.
+
+		\note Die Schrift im Auswahl-Widget, mit welchem man die verschiedenen Seiten anwählen kann wird für diese Seite rot eingefärbt.
+		"""
+
+		if typ == "Attribute":
+			self.ui.selectWidget_select.item( 1 ).setForeground( QColor(Config.pointsNegativeColor) )
+		elif typ == "Skill":
+			self.ui.selectWidget_select.item( 2 ).setForeground( QColor(Config.pointsNegativeColor) )
+		elif typ == "Merit":
+			self.ui.selectWidget_select.item( 3 ).setForeground( QColor(Config.pointsNegativeColor) )
+		elif typ == "Power":
+			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.pointsNegativeColor) )
 
 
 	def aboutApp(self):
 		"""
 		Zeigt den Informationsdialog für dieses Programm an.
 		"""
-		
+
 		aboutText = self.tr(
 			"""
 			<h1>{name}</h1>
@@ -566,7 +525,7 @@ class MainWindow(QMainWindow):
 		"""
 		Fügt den Inhalt des Arguments zum Fenstertitel hinzu.
 		"""
-		
+
 		titleStr = u"{} {} ({})".format(Config.programName, Config.versionDetail(), name )
 		if not name:
 			titleStr = u"{} {}".format(Config.programName, Config.versionDetail() )
@@ -577,7 +536,7 @@ class MainWindow(QMainWindow):
 		"""
 		Über diese Funktion wird der Dialog aufgerufen, um einen ganz neuen Charakter zu erstellen.
 		"""
-		
+
 		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 		if ( self.maybeSave() ):
 			self.__character.resetCharacter()
@@ -590,11 +549,11 @@ class MainWindow(QMainWindow):
 		"""
 		Über diese Funktion wird der Dialog aufgerufen, um einen gespeicherten Charakter in das Programm laden zu können.
 		"""
-		
+
 		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 		if ( self.maybeSave() ):
 			#Debug.debug("Open")
-			
+
 			appPath = getPath()
 
 			# Pfad zum Speicherverzeichnis
@@ -636,7 +595,7 @@ class MainWindow(QMainWindow):
 		"""
 		Über diese Funktion wird erst der Dialog aufgerufen zum Aussuchen des Speicherortes und danach dann das Schreiben des Charakters in eine XML-Datei eingeletiet.
 		"""
-		
+
 		appPath = getPath()
 
 		# Pfad zum Speicherverzeichnis
@@ -669,17 +628,15 @@ class MainWindow(QMainWindow):
 			self.__character.setModified( False )
 
 
-#void MainWindow.disablePowerItem( cv_Species.SpeciesFlag species ) {
-	"""
-	Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
-	"""
-	
-	#if ( species == cv_Species.Human ) {
-		#ui.selectWidget_select.item( 5 ).setFlags( Qt.NoItemFlags );;
-	#} else {
-		#ui.selectWidget_select.item( 5 ).setFlags( Qt.ItemIsEnabled | Qt.ItemIsSelectable );
-	#}
-#}
+	def disablePowerItem( self, species ):
+		"""
+		Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
+		"""
+
+		if species == "Human":
+			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.NoItemFlags )
+		else:
+			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.ItemIsEnabled | Qt.ItemIsSelectable )
 
 
 	def exportCharacter(self):
@@ -692,23 +649,18 @@ class MainWindow(QMainWindow):
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
 
+		#if GlobalState.isDebug:
+			## Lädt automatisch den Charakter aus testExport.chr
+			#self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
+			##self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
+			#self.__character.setModified( False )
 
-
-		if GlobalState.isDebug:
-			# Lädt automatisch den Charakter aus testExport.chr
-			self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
-			#self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
-			self.__character.setModified( False )
-
-
-
-		
 		# Wenn Unterverzeichnis nicht existiert, erstelle es
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		#filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
-		filePath = ["{}/untitled.pdf".format(savePath), ""]
+		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
+		#filePath = ["{}/untitled.pdf".format(savePath), ""]
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
@@ -734,25 +686,22 @@ class MainWindow(QMainWindow):
 		Druckt den angezeigten Charakter aus.
 		"""
 
-		Debug.debug("Jetzt würde ich drucken, wenn diese Funktion schon implementiert wäre.")
-		#printer = QPrinter()
-		#printDialog = QPrintDialog( printer, self )
+		printer = QPrinter()
+		printDialog = QPrintDialog( printer, self )
 
-		##// 	printer.setOutputFormat( QPrinter.PdfFormat );
-		#printer.setPaperSize( QPrinter.A4 )
-		##// 	printer.setOutputFileName( "print.pdf" );
+		printer.setPaperSize( QPrinter.A4 )
 
-		#if ( printDialog.exec_() == QDialog.Accepted ):
-			#drawSheet = DrawSheet( self, printer )
+		drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
+
+		if ( printDialog.exec_() == QDialog.Accepted ):
+			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
 			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
 
-			##try {
-				##drawSheet.print();
-			##} except ( eSpeciesNotExisting &e ) {
-				##MessageBox.exception( self, e.message(), e.description() );
-			##}
-		##}
+			try:
+				drawSheet.print()
+			except ErrSpeciesNotExisting as e:
+				MessageBox.exception( self, e.message, e.description )
 
 
 	def writeSettings(self):
@@ -800,11 +749,11 @@ class MainWindow(QMainWindow):
 	def maybeSave(self):
 		"""
 		Fragt nach, ob die Änderungen am Charakter gespeichert werden sollen, ehe sie möglicherweise verloren gehen.
-		
+
 		Diese Frage tritt auf, wenn der dargestellte Charakter nicht gespeichert ist und ehe das Programm geschlossen werden oder einen neuen Charakter anlegen soll.
 		"""
-		
-		
+
+
 		if ( self.__character.isModifed() ):
 			ret = QMessageBox.warning(
 				self, self.tr( "Application" ),
@@ -823,7 +772,7 @@ class MainWindow(QMainWindow):
 	"""
 	Ausgabe einer Fehlernachricht.
 	"""
-	
+
 	#MessageBox.warning( self, tr( "Warning" ), tr( "While opening the file the following problem arised:\n%1\n%2\nIt appears, that the self.__character will be importable, so the process will be continued." ).arg( message ).arg( description ) );
 #}
 
@@ -831,32 +780,9 @@ class MainWindow(QMainWindow):
 	"""
 	Zeigt eine Nachricht an, daß die Eigenschaftsanzahl das für den Charakterbogen gesetzte Limit übertrifft, und daß alle überzähligen Eigenschaften des mitgegebenen Typs ignoriert werden.
 	"""
-	
+
 	#MessageBox.warning( self, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_AbstractTrait.toString( type, true ) ) );
 #}
 
 
 
-
-#// void MainWindow.shortcut() {
-#// 	QString filePath = "/home/goliath/Dokumente/Programme/C++/SoulCreator/build/save/untitled1.chr";
-#//
-#// 	if ( !filePath.isEmpty() ) {
-#// 		QFile* file = new QFile( filePath );
-#//
-#// 		// Bevor ich die Werte lade, muß ich erst alle vorhandenen Werte auf 0 setzen.
-#// 		setCharacterValues( 0 );
-#//
-#// 		try {
-#// 			readCharacter.read( file );
-#// 		} except ( eXmlVersion &e ) {
-#// 			MessageBox.exception( self, e.message(), e.description() );
-#// 		} except ( eXmlError &e ) {
-#// 			MessageBox.exception( self, e.message(), e.description() );
-#// 		} except ( eFileNotOpened &e ) {
-#// 			MessageBox.exception( self, e.message(), e.description() );
-#// 		}
-#//
-#// 		delete file;
-#// 	}
-#// }

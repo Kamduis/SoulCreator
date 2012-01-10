@@ -72,7 +72,7 @@ class SkillWidget(TraitWidget):
 			widgetSkillCategory = QGroupBox()
 			widgetSkillCategory.setTitle(item)
 			widgetSkillCategory.setFlat(True)
-			
+
 			layoutSkillCategory = QVBoxLayout()
 			widgetSkillCategory.setLayout( layoutSkillCategory );
 
@@ -85,19 +85,17 @@ class SkillWidget(TraitWidget):
 				traitWidget = CharaTrait( skill[1], self )
 				traitWidget.buttonText = 0
 				traitWidget.setDescriptionHidden( True )
+				traitWidget.enableButton(0)	# Zu Beginn sollen die Spezailisierungen nicht enabled sein.
 
 				# Dieses Widget auch an Liste anhängen, damit ich einfacher darauf zugreifen kann.
 				traitListItem = traitWidget
 				self.__traitWidgets.append(traitListItem)
 
 				# Fertigkeiten haben Spezialisierungen.
-				#connect( traitPtr, SIGNAL( detailsChanged( int )), charaTrait, SLOT( setButtonText(int)) );
-				#connect( character, SIGNAL( characterResetted()), this, SLOT( uncheckAllButtons()) );
 				self._character.eraChanged.connect(self.emitHideReasonChanged)
 				self._character.ageChanged.connect(self.emitHideReasonChanged)
 				self.hideReasonChanged.connect(traitWidget.hideOrShowTrait)
 				traitWidget.specialtiesClicked.connect(self.uncheckOtherButtons)
-				#connect( charaTrait, SIGNAL( specialtiesActivated( bool, QString, QList< cv_TraitDetail > ) ), this, SIGNAL( specialtiesActivated( bool, QString, QList< cv_TraitDetail > ) ) );
 				traitWidget.specialtiesClicked.connect(self.specialtiesActivated.emit)
 				## Wenn sich die Spezialisierungen ändern, sollen die veränderten Spezialisierungen auch angezeigt werden. Das wird so gelöst, als wäre der Knopf für die Spezialisierungen erneut gedrückt worden.
 				#skill.specialtiesChanged.connect(self.emitSpecialtiesActivated)
@@ -119,31 +117,12 @@ class SkillWidget(TraitWidget):
 		"""
 		Über diese Funktion werden alle anderen Spezialisierungs-Knöpfe deaktiviert, sobald einer aktiviert wird.
 		"""
-		
+
 		#Debug.debug("Drücke {}".format(skillName))
 		if sw:
 			for item in self.__traitWidgets:
 				if item.name != trait.name:
 					item.setSpecialtyButtonChecked(False)
-
-
-	#def uncheckAllButtons(self):
-		"""
-		Alle Spezialisierungsknöpfe werden wieder auf Standard gesetzt.
-		"""
-		
-		#// Da hinter jeder Box ein Stretch eingefügt ist, muß dieser übersprungen werden.
-		#for ( int j = 0; j < scrollLayout->count(); j=j+2 ) {
-			#QGroupBox* box = qobject_cast<QGroupBox*>( scrollLayout->itemAt( j )->widget() );
-	#// 		qDebug() << Q_FUNC_INFO << box->layout()->count();
-
-			#for (int k = 0; k < box->layout()->count(); ++k){
-				#CharaTrait* trait = qobject_cast<CharaTrait*>( box->layout()->itemAt( k )->widget() );
-
-				#trait->setSpecialtyButtonChecked( false );
-			#}
-		#}
-	#}
 
 
 	def emitHideReasonChanged(self):
