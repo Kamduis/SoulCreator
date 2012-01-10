@@ -664,7 +664,7 @@ class MainWindow(QMainWindow):
 		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
 		#filePath = ["{}/untitled.pdf".format(savePath), ""]
 
-		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausruck heraus. War zumindest zu C++-Zeiten so.
+		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
 			printer = QPrinter()
 
@@ -692,6 +692,7 @@ class MainWindow(QMainWindow):
 		printDialog = QPrintDialog( printer, self )
 
 		printer.setPaperSize( QPrinter.A4 )
+		printer.setFullPage( True )
 
 		drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
