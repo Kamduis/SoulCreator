@@ -372,24 +372,26 @@ class DrawSheet(QObject):
 
 		rect = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY, self.__pageWidth + 2 * self.__borderFrameX, self.__pageHeight + 2 * self.__borderFrameY)
 		if self.__character.species == "Changeling":
-			image = QImage(":sheet/images/sheet/Changeling-Rahmen.jpg")
+			image = QImage(":sheet/images/sheet/Changeling-Background.jpg")
 			self.__painter.drawImage(rect, image)
 		elif self.__character.species == "Mage":
 			pass
 		elif self.__character.species == "Vampire":
-			image = QImage(":sheet/images/sheet/Vampire-Rahmen.jpg")
+			image = QImage(":sheet/images/sheet/Vampire-Background.jpg")
 			self.__painter.drawImage(rect, image)
 		elif self.__character.species == "Werewolf":
-			pass
+			image = QImage(":sheet/images/sheet/Werewolf-Background.png")
+			rect = QRect(0 - self.__borderFrameX + (self.__pageWidth - image.width()) / 2, 0 - self.__borderFrameY + (self.__pageHeight - image.height()) / 2, image.width(), image.height())
+			self.__painter.drawImage(rect, image)
 		else:
 			rect = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY, (self.__pageWidth + 2 * self.__borderFrameX) / 7, self.__pageHeight + 2 * self.__borderFrameY)
-			image = QImage(":sheet/images/sheet/WorldOfDarkness-SeitenrandL-gray.png")
+			image = QImage(":sheet/images/sheet/WorldOfDarkness-BackgroundL.png")
 			self.__painter.drawImage(rect, image)
 			#if GlobalState.isDebug:
 				#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())
 
 			rect = QRect(self.__pageWidth + self.__borderFrameX - (self.__pageWidth + 2 * self.__borderFrameX) / 7, 0 - self.__borderFrameY, (self.__pageWidth + 2 * self.__borderFrameX) / 7, self.__pageHeight + 2 * self.__borderFrameY)
-			image = QImage(":sheet/images/sheet/WorldOfDarkness-SeitenrandR-gray.png")
+			image = QImage(":sheet/images/sheet/WorldOfDarkness-BackgroundR.png")
 			self.__painter.drawImage(rect, image)
 			#if GlobalState.isDebug:
 				#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())

@@ -46,16 +46,17 @@
   <qresource prefix="sheet">
     <file>images/sheet/WorldOfDarkness.jpg</file>
     <file>images/sheet/WorldOfDarkness-BalkenOben.png</file>
-    <file>images/sheet/WorldOfDarkness-SeitenrandL-gray.png</file>
-    <file>images/sheet/WorldOfDarkness-SeitenrandR-gray.png</file>
+    <file>images/sheet/WorldOfDarkness-BackgroundL.png</file>
+    <file>images/sheet/WorldOfDarkness-BackgroundR.png</file>
     <file>images/sheet/Changeling.png</file>
     <file>images/sheet/Changeling-Balken-h.svg</file>
     <file>images/sheet/Changeling-Balken-v.svg</file>
-    <file>images/sheet/Changeling-Rahmen.jpg</file>
+    <file>images/sheet/Changeling-Background.jpg</file>
     <file>images/sheet/Mage.png</file>
     <file>images/sheet/Vampire.png</file>
-    <file>images/sheet/Vampire-Rahmen.jpg</file>
+    <file>images/sheet/Vampire-Background.jpg</file>
     <file>images/sheet/Werewolf.png</file>
+    <file>images/sheet/Werewolf-Background.png</file>
   </qresource>
   <qresource prefix="types">
     <file>images/svg/karate.svg</file>

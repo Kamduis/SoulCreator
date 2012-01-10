@@ -20,6 +20,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 
 
+from __future__ import division, print_function
+
 import os
 import sys
 from cx_Freeze import setup, Executable
@@ -37,12 +39,15 @@ if __name__ == "__main__":
 	"""
 
 	## Resourcen bauen
+	print("Generate resource file...")
 	cmd_rcc = ["pyside-rcc", "-o", "resources/rc_resource.py", "resources/rc_resource.qrc"]
 	retcode = subprocess.call(cmd_rcc, shell=False)
+	print("Done.")
 
 	if retcode != 0:
 		sys.exit(retcode)
 
+	print("Generate ui files...")
 	cmd_uic_1 = ["pyside-uic", "-i", "0", "-o", "ui/ui_AdvantagesWidget.py", "ui/ui_AdvantagesWidget.ui"]
 	retcode = subprocess.call(cmd_uic_1, shell=False)
 
@@ -58,9 +63,9 @@ if __name__ == "__main__":
 	cmd_uic_3 = ["pyside-uic", "-i", "0", "-o", "ui/ui_NameDialog.py", "ui/ui_NameDialog.ui"]
 	retcode = subprocess.call(cmd_uic_3, shell=False)
 
-
 	if retcode != 0:
 		sys.exit(retcode)
+	print("Done.")
 
 	if os.name == "nt":
 		_base = "Win32GUI"

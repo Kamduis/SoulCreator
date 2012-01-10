@@ -191,7 +191,12 @@ class CalcAdvantages(QObject):
 		Berechnung der Gesundheit.
 		"""
 
-		result = self.__attrSta.value + self.__size
+		## Bevor ich die Gesundheit ausrechnen kann, muß erst die Größe feststehen.
+		size = self.calcSize()
+
+		result = self.__attrSta.value + size
+
+		#Debug.debug("Berechne {} + {} = {}".format(self.__attrSta.value, size, result))
 
 		if ( self.__health != result ):
 			self.__health = result
