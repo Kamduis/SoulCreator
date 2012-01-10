@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.6">
+<SoulCreator version="0.7">
 	<creation species="Vampire">
+		<Attribute>
+			<points value="5"/>
+			<points value="4"/>
+			<points value="3"/>
+		</Attribute>
+		<Skill>
+			<points value="11"/>
+			<points value="7"/>
+			<points value="4"/>
+			<points value="3"/>
+		</Skill>
+		<Merit>
+			<points value="7"/>
+		</Merit>
 		<Power>
 			<points value="3"/>
 		</Power>
 	</creation>
-	<traits species="Vampire" morale="Humanity" supertrait="Blood Potency" fuel="Vitae">
+	<traits species="Vampire" morale="Humanity" powerstat="Blood Potency" fuel="Vitae">
 		<Super>
-			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
-			<supertrait fuelMax="11" fuelPerTurn="1" traitMax="5">2</supertrait>
-			<supertrait fuelMax="12" fuelPerTurn="2" traitMax="5">3</supertrait>
-			<supertrait fuelMax="13" fuelPerTurn="2" traitMax="5">4</supertrait>
-			<supertrait fuelMax="14" fuelPerTurn="3" traitMax="5">5</supertrait>
-			<supertrait fuelMax="15" fuelPerTurn="4" traitMax="6">6</supertrait>
-			<supertrait fuelMax="20" fuelPerTurn="5" traitMax="7">7</supertrait>
-			<supertrait fuelMax="30" fuelPerTurn="7" traitMax="8">8</supertrait>
-			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
-			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
+			<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
+			<powerstat fuelMax="11" fuelPerTurn="1" traitMax="5">2</powerstat>
+			<powerstat fuelMax="12" fuelPerTurn="2" traitMax="5">3</powerstat>
+			<powerstat fuelMax="13" fuelPerTurn="2" traitMax="5">4</powerstat>
+			<powerstat fuelMax="14" fuelPerTurn="3" traitMax="5">5</powerstat>
+			<powerstat fuelMax="15" fuelPerTurn="4" traitMax="6">6</powerstat>
+			<powerstat fuelMax="20" fuelPerTurn="5" traitMax="7">7</powerstat>
+			<powerstat fuelMax="30" fuelPerTurn="7" traitMax="8">8</powerstat>
+			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
+			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
 		<Breed name="Clan">
 			<trait name="Daeva">
@@ -69,13 +83,13 @@
 			<trait name="Carthian Movement"/>
 		</Faction>
 		<Merit>
-			<Mental>
+			<Category name="Mental">
 				<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
 					<value>1</value>
-					<prerequisite>Politics > 0 OR Occult > 0 OR Streetwise > 0</prerequisite>
+					<prerequisite>Politics > 0 or Occult > 0 or Streetwise > 0</prerequisite>
 				</trait>
-			</Mental>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Domain: Location" source="Vampire Damnation City">
 					<value>1</value>
 					<value>2</value>
@@ -142,7 +156,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Haven: Size > 0 OR Haven: Security > 0</prerequisite>
+					<prerequisite>Haven: Size > 0 or Haven: Security > 0</prerequisite>
 				</trait>
 				<trait name="Herd" source="Vampire Core">
 					<value>1</value>
@@ -157,13 +171,13 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Status.Camarilla > 2 OR Status.Wing > 2</prerequisite>
+					<prerequisite>Status.Camarilla > 2 or Status.Wing > 2</prerequisite>
 				</trait>
-			</Social>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
 					<value>2</value>
-					<prerequisite>superTrait > 5</prerequisite>
+					<prerequisite>Powerstat > 5</prerequisite>
 				</trait>
 				<trait name="Lordly Palette" source="Vampire Ventrue">
 					<value>1</value>
@@ -172,16 +186,16 @@
 				</trait>
 				<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
 					<value>2</value>
-					<prerequisite><![CDATA[superTrait > 2 AND morality < 6 AND AGE > 99]]></prerequisite>
+					<prerequisite><![CDATA[Powerstat > 2 and morality < 6 and AGE > 99]]></prerequisite>
 				</trait>
 				<trait name="Swarm Mind" source="Vampire Gangrel">
 					<value>2</value>
 					<prerequisite>Protean > 3</prerequisite>
 				</trait>
-			</Extraordinary>
+			</Category>
 		</Merit>
 		<Power name="Disciplines">
-			<Primary name="Disciplines">
+			<Category name="Disciplines">
 				<trait name="Animalism">
 					<cheap>Gangrel</cheap>
 					<cheap>Ventrue</cheap>
@@ -222,8 +236,8 @@
 					<cheap>Nosferatu</cheap>
 					<cheap>Julii</cheap>
 				</trait>
-			</Primary>
-			<Secondary name="Bloodline Disciplines">
+			</Category>
+			<Category name="Bloodline Disciplines">
 				<trait name="Abjurism">
 				</trait>
 				<trait name="Asphyx">
@@ -260,8 +274,8 @@
 				</trait>
 				<trait name="Xinyao">
 				</trait>
-			</Secondary>
-			<Tertiary name="Blood Sorcery">
+			</Category>
+			<Category name="Blood Sorcery">
 				<trait name="Abjurism">
 				</trait>
 				<trait name="Cruac">
@@ -278,7 +292,7 @@
 				</trait>
 				<trait name="Coil of the Soul">
 				</trait>-->
-			</Tertiary>
+			</Category>
 		</Power>
 		<Derangement>
 			<Mild>
@@ -310,16 +324,16 @@
 			</Severe>
 		</Derangement>
 		<Flaw>
-			<Physical>
+			<Category name="Physical">
 				<trait name="No Fangs"/>
-			</Physical>
-			<Social>
+			</Category>
+			<Category name="Social">
 				<trait name="Fealty"/>
 				<trait name="Lost Love"/>
-			</Social>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Sluggish Vitae"/>
-			</Extraordinary>
+			</Category>
 		</Flaw>
 	</traits>
 </SoulCreator>

@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.6">
+<SoulCreator version="0.7">
 	<creation species="Changeling">
+		<Attribute>
+			<points value="5"/>
+			<points value="4"/>
+			<points value="3"/>
+		</Attribute>
+		<Skill>
+			<points value="11"/>
+			<points value="7"/>
+			<points value="4"/>
+			<points value="3"/>
+		</Skill>
+		<Merit>
+			<points value="7"/>
+		</Merit>
 		<Power>
 			<points value="5"/>
 		</Power>
 	</creation>
-	<traits species="Changeling" morale="Clarity" supertrait="Wyrd" fuel="Glamour">
+	<traits species="Changeling" morale="Clarity" powerstat="Wyrd" fuel="Glamour">
 		<Super>
-			<supertrait fuelMax="10" fuelPerTurn="1" traitMax="5">1</supertrait>
-			<supertrait fuelMax="11" fuelPerTurn="2" traitMax="5">2</supertrait>
-			<supertrait fuelMax="12" fuelPerTurn="3" traitMax="5">3</supertrait>
-			<supertrait fuelMax="13" fuelPerTurn="4" traitMax="5">4</supertrait>
-			<supertrait fuelMax="14" fuelPerTurn="5" traitMax="5">5</supertrait>
-			<supertrait fuelMax="15" fuelPerTurn="6" traitMax="6">6</supertrait>
-			<supertrait fuelMax="20" fuelPerTurn="7" traitMax="7">7</supertrait>
-			<supertrait fuelMax="30" fuelPerTurn="8" traitMax="8">8</supertrait>
-			<supertrait fuelMax="50" fuelPerTurn="10" traitMax="9">9</supertrait>
-			<supertrait fuelMax="100" fuelPerTurn="15" traitMax="10">10</supertrait>
+			<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
+			<powerstat fuelMax="11" fuelPerTurn="2" traitMax="5">2</powerstat>
+			<powerstat fuelMax="12" fuelPerTurn="3" traitMax="5">3</powerstat>
+			<powerstat fuelMax="13" fuelPerTurn="4" traitMax="5">4</powerstat>
+			<powerstat fuelMax="14" fuelPerTurn="5" traitMax="5">5</powerstat>
+			<powerstat fuelMax="15" fuelPerTurn="6" traitMax="6">6</powerstat>
+			<powerstat fuelMax="20" fuelPerTurn="7" traitMax="7">7</powerstat>
+			<powerstat fuelMax="30" fuelPerTurn="8" traitMax="8">8</powerstat>
+			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
+			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
 		<Breed name="Seeming">
 			<trait name="Beast"/>
@@ -50,7 +64,7 @@
 			</Physical>
 		</Skill>
 		<Merit>
-			<Social>
+			<Category name="Social">
 				<trait name="Court Goodwill" custom="true" source="Changeling Core">
 					<value>1</value>
 					<value>2</value>
@@ -64,7 +78,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Wyrd > 6</prerequisite>
+					<prerequisite>Powerstat > 6</prerequisite>
 				</trait>
 				<trait name="Prophet Circle" source="Changeling Rites of Spring">
 					<value>1</value>
@@ -73,11 +87,11 @@
 					<value>4</value>
 					<value>5</value>
 				</trait>
-			</Social>
-			<Extraordinary>
+			</Category>
+			<Category name="Extraordinary">
 				<trait name="Arcadian Body" creationOnly="true" source="Changeling Rites of Spring">
 					<value>4</value>
-					<prerequisite>Intelligence > 2 OR Wits > 2 OR Resolve > 2 OR Strength > 2 OR Dexterity > 2 OR Stamina > 2 OR Presence > 2 OR Manipulation > 2 OR Composure > 2</prerequisite>
+					<prerequisite>Intelligence > 2 or Wits > 2 or Resolve > 2 or Strength > 2 or Dexterity > 2 or Stamina > 2 or Presence > 2 or Manipulation > 2 or Composure > 2</prerequisite>
 				</trait>
 				<trait name="Arcadian Metabolism" source="Changeling Rites of Spring">
 					<value>4</value>
@@ -115,7 +129,7 @@
 				</trait>
 				<trait name="Gentriefied Bearing" source="Changeling Rites of Spring">
 					<value>4</value>
-					<prerequisite>Wyrd > 2</prerequisite>
+					<prerequisite>Powerstat > 2</prerequisite>
 				</trait>
 				<trait name="Goblin Vow" source="Changeling Rites of Spring">
 					<value>1</value>
@@ -143,7 +157,7 @@
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>
-					<prerequisite><![CDATA[Fame < 1 AND Wyrd > 0]]></prerequisite>
+					<prerequisite><![CDATA[Fame < 1 and Powerstat > 0]]></prerequisite>
 				</trait>
 				<trait name="Hobgoblin Trainer" source="Changeling Rites of Spring">
 					<value>2</value>
@@ -182,7 +196,7 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Hollow: Size > 0 OR Hollow: Amenities > 0 OR Hollow: Doors > 0 OR Hollow: Wards > 0</prerequisite>
+					<prerequisite>Hollow: Size > 0 or Hollow: Amenities > 0 or Hollow: Doors > 0 or Hollow: Wards > 0</prerequisite>
 				</trait>
 				<trait name="Workshop" source="Changeling Rites of Spring">
 					<value>1</value>
@@ -202,11 +216,11 @@
 				</trait>
 				<trait name="Hob Kin" source="Changeling Rites of Spring">
 					<value>2</value>
-					<prerequisite>Hollow: Size > 0 OR Hollow: Amenities > 0 OR Hollow: Doors > 0 OR Hollow: Wards > 0</prerequisite>
+					<prerequisite>Hollow: Size > 0 or Hollow: Amenities > 0 or Hollow: Doors > 0 or Hollow: Wards > 0</prerequisite>
 				</trait>
 				<trait name="Lethal Mien" source="Changeling Rites of Spring">
 					<value>2</value>
-					<prerequisite>Wyrd > 2</prerequisite>
+					<prerequisite>Powerstat > 2</prerequisite>
 					<!--<effect>You deal lethal damage when brawling instead of bashing. If you already have an innate lethal attack thanks to your kith, the damage rating of that attack is increased by 1.</effect>-->
 				</trait>
 				<trait name="Long of Days" source="Changeling Rites of Spring">
@@ -248,15 +262,15 @@
 				</trait>
 				<trait name="Visionary Dreams" source="Changeling Rites of Spring">
 					<value>2</value>
-					<prerequisite>Wyrd > 2</prerequisite>
+					<prerequisite>Powerstat > 2</prerequisite>
 				</trait>
 				<trait name="Wisdom of Dreams" source="Changeling Rites of Spring">
 					<value>3</value>
-					<prerequisite>Wyrd > 1</prerequisite>
+					<prerequisite>Powerstat > 1</prerequisite>
 				</trait>
 				<trait name="Wyrdskill" source="Changeling The Equinox Road">
 					<value>1</value>
-					<prerequisite>Wyrd > 5</prerequisite>
+					<prerequisite>Powerstat > 5</prerequisite>
 					<!--<effect>You bind another Skill to your Mien and seeming, and at every \Trait{Wyrd} dot gained starting at \Trait[6]{Wyrd}, you receives another free Specialty for the Skill chosen to be bound to one's \Trait{Wyrd}.</effect>
 					<effect>The experience cost to buy Skill dots in other Skills in the same area as your Wyrdskill increase to new dots $\times$4, and Specialties cost 4~XP.</effect>-->
 				</trait>
@@ -266,25 +280,25 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Wyrd > 6</prerequisite>
+					<prerequisite>Powerstat > 6</prerequisite>
 				</trait>
 				<trait name="Tokenmaster" source="Changeling The Equinox Road">
 					<value>3</value>
-					<prerequisite>Wyrd > 6</prerequisite>
+					<prerequisite>Powerstat > 6</prerequisite>
 				</trait>
 				<trait name="Sublime" source="Changeling The Equinox Road">
 					<value>5</value>
-					<prerequisite>Wyrd > 8</prerequisite>
+					<prerequisite>Powerstat > 8</prerequisite>
 				</trait>
-			</Extraordinary>
-			<FightingStyle>
+			</Category>
+			<Category name="Fighting Style">
 				<trait name="Dream Combat" source="Changeling Rites of Spring">
 					<value>1</value>
 					<value>2</value>
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Empathy > 2 AND Wyrd > 2</prerequisite>
+					<prerequisite>Empathy > 2 and Powerstat > 2</prerequisite>
 				</trait>
 				<trait name="Hedge Duelist" source="Changeling Rites of Spring">
 					<value>1</value>
@@ -292,12 +306,12 @@
 					<value>3</value>
 					<value>4</value>
 					<value>5</value>
-					<prerequisite>Wyrd > 2</prerequisite>
+					<prerequisite>Powerstat > 2</prerequisite>
 				</trait>
-			</FightingStyle>
+			</Category>
 		</Merit>
 		<Power name="Contracts">
-			<Primary name="Universal Contracts">
+			<Category name="Universal Contracts">
 				<trait name="Board">
 					<cheap>Beast</cheap>
 					<cheap>Darkling</cheap>
@@ -498,8 +512,8 @@
 					<cheap>South</cheap>
 					<cheap>West</cheap>
 				</trait>
-			</Primary>
-			<Secondary name="Seeming Contracts">
+			</Category>
+			<Category name="Seeming Contracts">
 				<trait name="Den">
 					<cheap>Beast</cheap>
 				</trait>
@@ -548,8 +562,8 @@
 				<trait name="Artifice">
 					<cheap>Wizened</cheap>
 				</trait>
-			</Secondary>
-			<Tertiary name="Court Contracts">
+			</Category>
+			<Category name="Court Contracts">
 				<trait name="Fleeting Spring">
 					<cheap>Spring</cheap>
 				</trait>
@@ -616,7 +630,7 @@
 				<trait name="Imminent West">
 					<cheap>West</cheap>
 				</trait>
-			</Tertiary>
+			</Category>
 		</Power>
 		<Derangement>
 			<Mild>

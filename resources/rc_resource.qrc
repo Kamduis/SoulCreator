@@ -1,0 +1,86 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>images/actions/exec.png</file>
+    <file>images/actions/exit.png</file>
+    <file>images/Skull-Changeling.png</file>
+    <file>images/Skull-Human.png</file>
+    <file>images/Skull-Mage.png</file>
+    <file>images/Skull-Vampire.png</file>
+    <file>images/Skull-Werewolf.png</file>
+    <file>images/female.png</file>
+    <file>images/male.png</file>
+    <file>images/actions/1leftarrow.png</file>
+    <file>images/actions/1rightarrow.png</file>
+    <file>images/actions/filesave.png</file>
+    <file>images/actions/fileopen.png</file>
+    <file>images/actions/agt_print.png</file>
+    <file>images/actions/fileexport.png</file>
+    <file>images/actions/filenew.png</file>
+    <file>images/WoD.png</file>
+  </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/texgyreheros-bold.otf</file>
+    <file>fonts/texgyreheros-bolditalic.otf</file>
+    <file>fonts/texgyreheros-italic.otf</file>
+    <file>fonts/texgyreheros-regular.otf</file>
+    <file>fonts/texgyrepagella-bold.otf</file>
+    <file>fonts/texgyrepagella-bolditalic.otf</file>
+    <file>fonts/texgyrepagella-italic.otf</file>
+    <file>fonts/texgyrepagella-regular.otf</file>
+    <file>fonts/ArchitectsDaughter.ttf</file>
+    <file>fonts/CloisterBlack.ttf</file>
+    <file>fonts/HVD_Edding.otf</file>
+    <file>fonts/Note_this.ttf</file>
+    <file>fonts/Tangerine_Bold.ttf</file>
+    <file>fonts/Mutlu__Ornamental.ttf</file>
+    <file>fonts/Tangerine_Regular.ttf</file>
+    <file>fonts/Blokletters-Balpen.ttf</file>
+  </qresource>
+  <qresource prefix="background">
+    <file>images/Skull-Changeling-gray.png</file>
+    <file>images/Skull-Human-gray.png</file>
+    <file>images/Skull-Mage-gray.png</file>
+    <file>images/Skull-Vampire-gray.png</file>
+    <file>images/Skull-Werewolf-gray.png</file>
+  </qresource>
+  <qresource prefix="sheet">
+    <file>images/sheet/WorldOfDarkness.jpg</file>
+    <file>images/sheet/WorldOfDarkness-BalkenOben.png</file>
+    <file>images/sheet/WorldOfDarkness-BackgroundL.png</file>
+    <file>images/sheet/WorldOfDarkness-BackgroundR.png</file>
+    <file>images/sheet/Changeling.png</file>
+    <file>images/sheet/Changeling-Balken-h.svg</file>
+    <file>images/sheet/Changeling-Balken-v.svg</file>
+    <file>images/sheet/Changeling-Background.jpg</file>
+    <file>images/sheet/Mage.png</file>
+    <file>images/sheet/Vampire.png</file>
+    <file>images/sheet/Vampire-Background.jpg</file>
+    <file>images/sheet/Werewolf.png</file>
+    <file>images/sheet/Werewolf-Background.png</file>
+    <file>images/sheet/Werewolf-Shapes.jpg</file>
+  </qresource>
+  <qresource prefix="types">
+    <file>images/svg/karate.svg</file>
+    <file>images/svg/knife.svg</file>
+    <file>images/svg/tail.svg</file>
+    <file>images/svg/bolt.svg</file>
+    <file>images/svg/high_jump.svg</file>
+    <file>images/svg/maleprofile.svg</file>
+    <file>images/svg/humans.svg</file>
+  </qresource>
+  <qresource prefix="template">
+    <file>xml/base.xml</file>
+    <file>xml/changeling.xml</file>
+    <file>xml/human.xml</file>
+    <file>xml/mage.xml</file>
+    <file>xml/vampire.xml</file>
+    <file>xml/werewolf.xml</file>
+  </qresource>
+  <qresource prefix="characterSheets">
+    <file>images/Charactersheet-Changeling-1.jpg</file>
+    <file>images/Charactersheet-Human.jpg</file>
+    <file>images/Charactersheet-Mage-1.jpg</file>
+    <file>images/Charactersheet-Vampire-1.jpg</file>
+    <file>images/Charactersheet-Werewolf-1.jpg</file>
+  </qresource>
+</RCC>

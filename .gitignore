@@ -1,6 +1,8 @@
 build
 doc
-src-unused
+save
 *.kdev4
 *~
+*.pyc
+*.ini
 *.kate-swp
