@@ -22,11 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject
+from PySide.QtCore import QObject, Signal
 #from PySide.QtGui import QColor
 
 from src.Config import Config
 from src.IO.ReadXml import ReadXml
+from src.Widgets.Dialogs.MessageBox import MessageBox
 from src.Error import ErrXmlParsing, ErrXmlOldVersion
 from src.Debug import Debug
 
@@ -40,19 +41,15 @@ class ReadXmlCharacter(QObject, ReadXml):
 	Diese Klasse dient dazu, einen auf Datenträger gespeicherten Charakter wieder in das Programm zu laden.
 	"""
 
+
+	exceptionRaised = Signal(str, bool)
+	
+
 	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 
 		self.__character = character
-
-
-#QList< cv_Trait > ReadXmlCharacter::traitList;
-
-#ReadXmlCharacter::ReadXmlCharacter() : QObject(), ReadXml() {
-	#storage = new StorageTemplate();
-	#character = StorageCharacter::getInstance();
-#}
 
 
 	def read( self, f ):
@@ -78,15 +75,13 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.checkXmlVersion( elementName, elementVersion )
 					self.readSoulCreator()
 				except ErrXmlOldVersion as e:
-					MessageBox.exception( self, e.message(), e.description() )
+					messageText = self.tr("While opening the character file the following problem arised:\n{} {}\nIt appears, that the character will be importable, so the process will be continued. But some character values may be wrong after importing.".format(e.message, e.description))
+					self.exceptionRaised.emit(messageText, e.critical)
 					self.readSoulCreator()
 
 		if ( self.hasError() ):
 			Debug.debug("Error!")
 			raise ErrXmlParsing( f.fileName(), self.errorString() )
-
-		## Die möglicherweise veränderten Eigenschaften müssen wieder in den Charakter-Speicher geschrieben werden.
-		#self.__character.traits = self.__traits
 
 		self.closeFile( f )
 

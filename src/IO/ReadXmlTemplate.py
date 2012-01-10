@@ -100,7 +100,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.checkXmlVersion( elementName, elementVersion )
 					self.readSoulCreator()
 				except Error.ErrXmlOldVersion as e:
-					raise Error.ErrXmlOldVersion( e.message(), e.description() )
+					raise Error.ErrXmlOldVersion( e.message, e.description )
 					self.readSoulCreator()
 
 

@@ -88,13 +88,15 @@ class ReadXml(QXmlStreamReader):
 			if version == Config.version():
 				return
 			else:
-				# Unterschiede in der Minor-Version sind ignorierbar, unterschiede in der Major-Version allerdings nicht.
+				# Unterschiede in der Minor-Version sind ignorierbar, Unterschiede in der Major-Version allerdings nicht.
 				splitVersion = version.split(".")
+				splitVersion = [int(item) for item in splitVersion]
 
-				if( splitVersion[0] == Config.programVersionMajor ):
-					raise Error.ErrXmlOldVersion( Config.version(), version )
+				## Es ist darauf zu achten, daß Charaktere bis Version 0.6 nicht mit SoulCreator 0.7 und neuer geladen werden können.
+				if( splitVersion[0] != Config.programVersionMajor or splitVersion[1] < 7):
+					raise Error.ErrXmlTooOldVersion( version )
 				else:
-					raise Error.ErrXmlTooOldVersion( Config.version(), version )
+					raise Error.ErrXmlOldVersion( version )
 		else:
 			raise Error.ErrXmlVersion( "{} {}".format(Config.programName, Config.version()), "{} {}".format(name, version) )
 

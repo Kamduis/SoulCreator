@@ -26,7 +26,7 @@ import sys
 import os
 
 from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, Signal
-from PySide.QtGui import QMainWindow, QIcon, QPixmap, QMessageBox, QFileDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
+from PySide.QtGui import QMainWindow, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
 
 from src.GlobalState import GlobalState
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
@@ -148,6 +148,8 @@ class MainWindow(QMainWindow):
 		self.ui.pushButton_previous.clicked.connect(self.ui.selectWidget_select.selectPrevious)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.ui.stackedWidget_traits.setCurrentIndex)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.setTabButtonState)
+
+		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
 
 		self.populateUi()
 		self.activate()
@@ -662,7 +664,7 @@ class MainWindow(QMainWindow):
 		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
 		#filePath = ["{}/untitled.pdf".format(savePath), ""]
 
-		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausruck heraus. War zumindest zu C++-Zeiten so.
+		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
 			printer = QPrinter()
 
@@ -690,6 +692,7 @@ class MainWindow(QMainWindow):
 		printDialog = QPrintDialog( printer, self )
 
 		printer.setPaperSize( QPrinter.A4 )
+		printer.setFullPage( True )
 
 		drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
@@ -768,13 +771,16 @@ class MainWindow(QMainWindow):
 		return True
 
 
-#void MainWindow.raiseExceptionMessage( QString message, QString description ) {
-	"""
-	Ausgabe einer Fehlernachricht.
-	"""
+	def showExceptionMessage( self, message, critical=True ):
+		"""
+		Ausgabe einer Fehlernachricht.
+		"""
 
-	#MessageBox.warning( self, tr( "Warning" ), tr( "While opening the file the following problem arised:\n%1\n%2\nIt appears, that the self.__character will be importable, so the process will be continued." ).arg( message ).arg( description ) );
-#}
+		if critical:
+			MessageBox.critical( self, self.tr( "Critical Error occured!" ), message )
+		else:
+			MessageBox.warning( self, self.tr( "Error occured!" ), message )
+
 
 #void MainWindow.messageEnforcedTraitLimits( cv_AbstractTrait.Type type ) {
 	"""

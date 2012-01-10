@@ -34,44 +34,59 @@ class Err(Exception):
 	Diese Klasse liegt allen Ausnahmebehandlungen zugrunde.
 	"""
 
-	def __init__(self, msg="", desc=""):
+	def __init__(self, msg="", desc="", critical=True):
 		Exception.__init__(self)
 
 		self.obj = QObject()
 
+		self.__critical = critical
 		self.__message = msg
 		self.__description = desc
 
-	def __getMessage(self):
+	@property
+	def message(self):
 		"""
 		Erlaubt das Auslesen der Standardnachricht.
 		"""
 		
 		return self.__message
 
-	def __setMessage(self, txt):
+	@message.setter
+	def message(self, txt):
 		"""
 		Setzt die Kurznachricht über die Ausnahme.
 		"""
 		
 		self.__message = txt
 
-	message = property(__getMessage, __setMessage)
-
-		
-	def __getDescription(self):
+	@property
+	def description(self):
 		"""
-		Erlaubt das Auslesen einer ausfühlrichen Beschreibung der ausgelösten Ausnahme.
+		Erlaubt das Auslesen einer ausführlichen Beschreibung der ausgelösten Ausnahme.
 		"""
 		
 		return self.__description
 
-	def __setDescription(self, txt):
+	@description.setter
+	def description(self, txt):
 		"""
 		Setzt die ausfühlriche Beschreibung der Ausnahme.
 		"""
 		
 		self.__description = txt
+
+	@property
+	def critical(self):
+		"""
+		Legt fest, ob es sich bei dieser Ausnahme um eine kritische oder um eine einfache Ausnahme handelt.
+		"""
+
+		return self.__critical
+
+	@critical.setter
+	def critical(self, sw):
+
+		self.__critical = sw
 
 
 
@@ -243,33 +258,34 @@ class ErrXmlVersion(ErrXml):
 		ErrXml.__init__(self)
 
 		self.message = self.obj.tr( "Wrong XML-Version." ) 
-		self.description = self.obj.tr( "Got {} but expected was {}".format(got, expected))
+		self.description = self.obj.tr( "Got {} but expected was at least {}".format(got, expected))
 
 
 class ErrXmlOldVersion(ErrXmlVersion):
 	"""
-	@brief Die Version der XML-Datei paßt zwar zu diesem programm, ist aber zu alt.
+	@brief Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber zu alt.
 	"""
 
-	def __init__(self, expected = "unknown", got = "unknown" ):
+	def __init__(self, got = "unknown" ):
 		ErrXmlVersion.__init__(self)
 
-		self.message = self.obj.tr( "Old Version." ) 
-		self.description = self.obj.tr( "Got {} but expected was {}".format(got, expected))
+		self.message = self.obj.tr( "Wrong file Version." ) 
+		self.description = self.obj.tr( "The selected file was created with and older version of SoulCreator (version {}).".format(got))
+		self.critical = False
 
 
-class ErrXmlTooOldVersion(ErrXmlOldVersion):
+class ErrXmlTooOldVersion(ErrXmlVersion):
 	"""
 	@brief Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber viel zu alt.
 
 	Die Version ist so alt, daß eine Verwendung dieser Ressource nicht empfehlenswert ist.
 	"""
 
-	def __init__(self, expected = "unknown", got = "unknown" ):
-		ErrXmlOldVersion.__init__(self)
+	def __init__(self, got = "unknown" ):
+		ErrXmlVersion.__init__(self)
 
-		self.message = self.obj.tr( "Too old Version." ) 
-		self.description = self.obj.tr( "Got {} but expected was {}".format(got, expected))
+		self.message = self.obj.tr( "Wrong file version." )
+		self.description = self.obj.tr( "The selected file was created with SoulCreator {}. This file is not usable with this version of SoulCreator.".format(got))
 
 
 

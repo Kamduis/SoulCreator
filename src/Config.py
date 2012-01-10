@@ -38,7 +38,7 @@ class Config():
 	# Programmdaten
 	programName = "SoulCreator"
 	programVersionMajor = 0
-	programVersionMinor = 6
+	programVersionMinor = 7
 	programVersionChange = 0
 	programDescription = "Charaktergenerator für die World of Darkness."
 	organization = "Caern"
