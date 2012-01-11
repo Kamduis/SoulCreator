@@ -22,6 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import os
+
 #from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 
@@ -48,7 +50,11 @@ class FlawWidget(QWidget):
 		self.setLayout( self.__layout )
 
 		self.__toolBox = QToolBox()
-
+		## Die Auflistung der Merits soll auch unter Windows einen transparenten Hintergrund haben.
+		self.__toolBox.setObjectName("transparentWidget")
+		## \todo Sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
+		if os.name == "nt":
+			self.__toolBox.setStyleSheet( "QScrollArea{ background: transparent; } QWidget#transparentWidget { background: transparent; }" )
 		self.__layout.addWidget(self.__toolBox)
 
 		self.__typ = "Flaw"
@@ -65,6 +71,9 @@ class FlawWidget(QWidget):
 		for item in categories:
 			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.
 			widgetFlawCategory = QWidget()
+			## Dank des Namens übernimmt dieses Widget den Stil des Eltern-Widgets.
+			widgetFlawCategory.setObjectName("transparentWidget")
+
 			layoutFlawCategory = QVBoxLayout()
 
 			widgetFlawCategory.setLayout( layoutFlawCategory )
