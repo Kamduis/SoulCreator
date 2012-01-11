@@ -1,6 +1,8 @@
 build
 doc
 save
+ui/ui_*.py
+resources/rc_*.py
 *.kdev4
 *~
 *.pyc

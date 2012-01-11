@@ -26,7 +26,7 @@ import sys
 import os
 
 from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, Signal
-from PySide.QtGui import QMainWindow, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
+from PySide.QtGui import QMainWindow, QApplication, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog, QGtkStyle
 
 from src.GlobalState import GlobalState
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
@@ -133,7 +133,10 @@ class MainWindow(QMainWindow):
 		QCoreApplication.setApplicationName( Config.programName )
 		QCoreApplication.setApplicationVersion( Config.version() )
 
-		#QApplication.setStyle(QGtkStyle(self))
+		#Debug.debug(QApplication.style())
+
+		#if True or os.name == "nt":
+			#QApplication.setStyle(QGtkStyle(self))
 
 		self.setWindowTitle( "" )
 		self.setWindowIcon( QIcon( ":/icons/images/WoD.png" ) )

@@ -138,7 +138,7 @@
 				<trait name="Rites">
 				</trait>
 			</Category>
-<!--			<Tertiary name="Gifts">
+<!--			<Category name="Gifts">
 				<trait name="Full Moon">
 					<cheap>Rahu</cheap>
 					<only>Rahu</only>
@@ -310,7 +310,7 @@
 				</trait>
 				<trait name="Weakness">
 				</trait>
-			</Tertiary>-->
+			</Category>-->
 		</Power>
 		<Flaw>
 			<Category name="Physical">

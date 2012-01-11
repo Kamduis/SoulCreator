@@ -161,9 +161,7 @@ class Config():
 		"Attribute",
 		"Skill",
 		"Merit",
-		"Derangement",
 		"Flaw",
-		#"Super",
 		"Power",
 	)
 

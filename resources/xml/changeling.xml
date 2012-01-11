@@ -632,16 +632,6 @@
 				</trait>
 			</Category>
 		</Power>
-		<Derangement>
-			<Mild>
-				<trait name="Wanderlust"/>
-			</Mild>
-			<Severe>
-				<trait name="Hedge-Calling">
-					<prerequisite>Wanderlust > 0</prerequisite>
-				</trait>
-			</Severe>
-		</Derangement>
 		<Flaw>
 			<Social>
 				<trait name="Anachronism"/>
@@ -652,5 +642,10 @@
 				<trait name="Manifest Mien"/>
 			</Extraordinary>
 		</Flaw>
+		<Derangement>
+			<item name="Wanderlust">
+				<item name="Hedge-Calling"/>
+			</item>
+		</Derangement>
 	</traits>
 </SoulCreator>

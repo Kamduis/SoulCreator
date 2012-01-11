@@ -139,6 +139,15 @@ class StorageTemplate(QObject):
 	# ]
 	__vices = []
 
+	## Eine Liste aller Geistesstörungen.
+	#
+	# {
+	# 	"Mild1": [Severe1, Severe2, ... ] ]
+	# 	"Mild2": [Severe1, Severe2, ... ] ]
+	# 	...
+	# }
+	__derangements = {}
+
 	# Eine Liste der Effekte der Supereigenschaft.
 	#
 	# {
@@ -567,6 +576,19 @@ class StorageTemplate(QObject):
 			self.__vices.append( trait )
 		else:
 			raise ErrTraitType( ("Virtue", "Vice"), typ )
+
+
+	def appendDerangement( self, mildDerangement, severeList ):
+		"""
+		Fügt eine Geistesstörung mitsamt der Liste daraus möglicherweise erwachsender schwerer Geistesstörungen an die Liste der Geistesstörungen an.
+		"""
+
+		if mildDerangement in self.__derangements:
+			self.__derangements[mildDerangement].extend(severeList)
+		else:
+			self.__derangements[mildDerangement] = severeList
+
+		#Debug.debug(self.__derangements)
 
 
 	def appendTrait( self, typ, category, name, data):

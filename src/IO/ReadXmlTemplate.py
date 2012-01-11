@@ -173,6 +173,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readGroups( species, typ )
 				elif( typ == "Super" ):
 					self.readPowerstat( species )
+				elif( typ == "Derangement" ):
+					self.readDerangements( species )
 				elif( typ in Config.typs):
 					#self.readUnknownElement()
 					self.readTraits( species, typ, typDescriptor )
@@ -325,6 +327,50 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.__storage.appendPowerstat( species, powerstatValue, superEffectData )
 				else:
 					self.readUnknownElement()
+
+
+	def readDerangements( self, species ):
+		"""
+		Liest die Geistesstörungen aus den Template-Dateien.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "item" ):
+					mild = self.attributes().value( "name" )
+					self.readSevereDerangements( species, mild )
+				else:
+					self.readUnknownElement()
+
+
+	def readSevereDerangements( self, species, mildDerangement ):
+		"""
+		Liest die schweren Geistesstörungen, welche sich aus der zuvor ermittelten milden Geistesstörung entwickeln können.
+		"""
+
+		derangements = []
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "item" ):
+					severe = self.attributes().value("name")
+					derangements.append(severe)
+					Debug.debug("Hänge Geistesstörung {severe} and {mild} an.".format(mild=mildDerangement, severe=severe))
+					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
+
+		self.__storage.appendDerangement(mildDerangement, derangements)
 
 
 	def readTraits( self, species, typ, descriptor=None ):

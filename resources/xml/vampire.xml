@@ -294,35 +294,6 @@
 				</trait>-->
 			</Category>
 		</Power>
-		<Derangement>
-			<Mild>
-				<trait name="Fixation"/>
-				<trait name="Inferiority Complex"/>
-				<trait name="Irrationality"/>
-				<trait name="Animal Dependency"/>
-				<trait name="Power Fetish Obsession"/>
-				<trait name="Preferential Obsession"/>
-				<trait name="Sanguinary Animism"/>
-				<trait name="Erythema"/>
-			</Mild>
-			<Severe>
-				<trait name="Bulimia">
-					<prerequisite>Fixation > 0</prerequisite>
-				</trait>
-				<trait name="Diogenes Syndrome">
-					<prerequisite>Inferiority Complex > 0</prerequisite>
-				</trait>
-				<trait name="Dependent-Personality Disorder">
-					<prerequisite>Irrationality > 0</prerequisite>
-				</trait>
-				<trait name="Animal Dependency">
-					<prerequisite>Animal Dependency > 0</prerequisite>
-				</trait>
-				<trait name="Preferential Obsession">
-					<prerequisite>Preferential Obsession > 0</prerequisite>
-				</trait>
-			</Severe>
-		</Derangement>
 		<Flaw>
 			<Category name="Physical">
 				<trait name="No Fangs"/>
@@ -335,5 +306,25 @@
 				<trait name="Sluggish Vitae"/>
 			</Category>
 		</Flaw>
+		<Derangement>
+			<item name="Fixation">
+				<item name="Bulimia"/>
+			</item>
+			<item name="Inferiority Complex">
+				<item name="Diogenes Syndrome"/>
+			</item>
+			<item name="Irrationality">
+				<item name="Dependent-Personality Disorder"/>
+			</item>
+			<item name="Animal Dependency">
+				<item name="Animal Dependency (severe)"/>
+			</item>
+			<item name="Power Fetish Obsession"/>
+			<item name="Preferential Obsession">
+				<item name="Preferential Obsession (severe)"/>
+			</item>
+			<item name="Sanguinary Animism"/>
+			<item name="Erythema"/>
+		</Derangement>
 	</traits>
 </SoulCreator>

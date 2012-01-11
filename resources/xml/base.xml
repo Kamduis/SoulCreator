@@ -975,86 +975,6 @@
 				</trait>-->
 			</Category>
 		</Merit>
-		<Derangement>
-			<Mild>
-				<trait name="Avoidance"/>
-				<trait name="Dehumanization"/>
-				<trait name="Depression"/>
-				<trait name="Fetishism"/>
-				<trait name="Fixation"/>
-				<trait name="Inferiority Complex"/>
-				<trait name="Insomnia"/>
-				<trait name="Irrationality"/>
-				<trait name="Narcissism"/>
-				<trait name="Phobia"/>
-				<trait name="Pyromania"/>
-				<trait name="Repression"/>
-				<trait name="Supernatural Fascination"/>
-				<trait name="Suspicion"/>
-				<trait name="Vocalization"/>
-				<!--<trait name="Blood Fascination" species="ghoul-istfalsch"/>
-				<trait name="Degenerative Fixation" species="ghoul-istfalsch"/>-->
-			</Mild>
-			<Severe>
-				<trait name="Fugue">
-					<prerequisite>Avoidance > 0</prerequisite>
-				</trait>
-				<trait name="Loss of Compassion">
-					<prerequisite>Dehumanization > 0</prerequisite>
-				</trait>
-				<trait name="Manic-Depression">
-					<prerequisite>Depression > 0</prerequisite>
-				</trait>
-				<trait name="Melancholia">
-					<prerequisite>Depression > 0</prerequisite>
-				</trait>
-				<trait name="Masochism">
-					<prerequisite>Fetishism > 0</prerequisite>
-				</trait>
-				<trait name="Bulimia">
-					<prerequisite>Fixation > 0</prerequisite>
-				</trait>
-				<trait name="Anxiety">
-					<prerequisite>Inferiority Complex > 0</prerequisite>
-				</trait>
-				<trait name="Cataplexy">
-					<prerequisite>Insomnia > 0</prerequisite>
-				</trait>
-				<trait name="Delusional Obsession">
-					<prerequisite>Irrationality > 0</prerequisite>
-				</trait>
-				<trait name="Multiple Personality" extreme="true">
-					<prerequisite>Irrationality > 0</prerequisite>
-				</trait>
-				<trait name="Narcissism">
-					<prerequisite>Megalomania > 0</prerequisite>
-				</trait>
-				<trait name="Hysteria">
-					<prerequisite>Phobia > 0</prerequisite>
-				</trait>
-				<trait name="Pyrophilia">
-					<prerequisite>Pyromania > 0</prerequisite>
-				</trait>
-				<trait name="Denial">
-					<prerequisite>Repression > 0</prerequisite>
-				</trait>
-				<trait name="Zealotry">
-					<prerequisite>Supernatural Fascination > 0</prerequisite>
-				</trait>
-				<trait name="Paranoia">
-					<prerequisite>Suspicion > 0</prerequisite>
-				</trait>
-				<trait name="Schizophrenia" extreme="true">
-					<prerequisite>Vocalization > 0</prerequisite>
-				</trait>
-				<!--<trait name="Hemophilic Compulsion" species="ghoul-istfalsch">
-				<prerequisite>Blood Fascination > 0</prerequisite>
-				</trait>
-				<trait name="Identity Erasure" species="ghoul-istfalsch">
-					<prerequisite>Degenerative Fixation > 0</prerequisite>
-				</trait>-->
-			</Severe>
-		</Derangement>
 		<Flaw>
 			<Category name="Mental">
 				<trait name="Addiction" custom="true"/>
@@ -1088,5 +1008,60 @@
 				<trait name="Untrustworthy"/>
 			</Category>
 		</Flaw>
+		<Derangement>
+			<item name="Avoidance">
+				<item name="Fugue"/>
+			</item>
+			<item name="Dehumanization">
+				<item name="Loss of Compassion"/>
+			</item>
+			<item name="Depression">
+				<item name="Manic-Depression"/>
+				<item name="Melancholia"/>
+			</item>
+			<item name="Fetishism">
+				<item name="Masochism"/>
+			</item>
+			<item name="Fixation">
+				<item name="Obsessive Compulsion"/>
+			</item>
+			<item name="Inferiority Complex">
+				<item name="Anxiety"/>
+			</item>
+			<item name="Insomnia">
+				<item name="Cataplexy"/>
+			</item>
+			<item name="Irrationality">
+				<item name="Delusional Obsession"/>
+				<item name="Multiple Personality" extreme="true"/>
+			</item>
+			<item name="Narcissism">
+				<item name="Megalomania"/>
+			</item>
+			<item name="Phobia">
+				<item name="Hysteria"/>
+			</item>
+			<item name="Pyromania">
+				<item name="Pyrophilia"/>
+			</item>
+			<item name="Repression">
+				<item name="Denial"/>
+			</item>
+			<item name="Supernatural Fascination">
+				<item name="Zealotry"/>
+			</item>
+			<item name="Suspicion">
+				<item name="Paranoia"/>
+			</item>
+			<item name="Vocalization">
+				<item name="Schizophrenia"/>
+			</item>
+			<!--<item name="Blood Fascination" species="ghoul-istfalsch">
+				<item name="Hemophilic Compulsion"/>
+			</item>
+			<item name="Degenerative Fixation" species="ghoul-istfalsch">
+				<item name="Identity Erasure"/>
+			</item>-->
+		</Derangement>
 	</traits>
 </SoulCreator>
