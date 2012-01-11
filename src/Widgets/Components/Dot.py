@@ -73,7 +73,7 @@ class Dot(QWidget):
 		
 		# Damit der Rahmen nicht irgendwie abgeschnitten wird, muß der Kreis entsprechend kleiner sein.
 		dotRadius = 100
-		framePen = QPen( QBrush( Qt.OpaqueMode ), frameWidth )
+		framePen = QPen( frameWidth )
 		framePen.setColor( self.__colorFrame )
 
 		dotDiameter = 2 * dotRadius + frameWidth

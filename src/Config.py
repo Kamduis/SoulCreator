@@ -37,6 +37,7 @@ class Config():
 
 	# Programmdaten
 	programName = "SoulCreator"
+	programAuthor = "Victor"
 	programVersionMajor = 0
 	programVersionMinor = 7
 	programVersionChange = 1
