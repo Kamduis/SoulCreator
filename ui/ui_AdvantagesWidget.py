@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ui_AdvantagesWidget.ui'
 #
-# Created: Tue Jan 10 19:19:50 2012
+# Created: Wed Jan 11 19:19:48 2012
 #      by: pyside-uic 0.2.11 running on PySide 1.0.6
 #
 # WARNING! All changes made in this file will be lost!

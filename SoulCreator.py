@@ -44,6 +44,7 @@ from src.MainWindow import MainWindow
 
 
 
+
 if __name__ == "__main__":
 	"""
 	Das Hauptprogramm
@@ -67,5 +68,5 @@ if __name__ == "__main__":
 	w = MainWindow()
 	w.show()
 	retcode = app.exec_()
-	del w	# Ohne dies kann es beim Einfügen von QMenuBar in der ui-Datei zu einem Segfault kommen.
-	sys.exit(retcode)
+	#del w	# Ohne dies kann es beim Einfügen von QMenuBar in der ui-Datei zu einem Segfault kommen.
+	#sys.exit(retcode)
