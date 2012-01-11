@@ -22,6 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import os
+
 from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QScrollArea, QGroupBox
 
@@ -52,11 +54,19 @@ class SkillWidget(TraitWidget):
 		self.setLayout( self.__layout )
 
 		self.__scrollArea = QScrollArea()
+		## Die Auflistung der Fertigkeiten soll auch unter Windows einen transparenten Hintergrund haben.
+		self.__scrollArea.setObjectName("transparentWidget")
+		## \todo Sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
+		if os.name == "nt":
+			self.__scrollArea.setStyleSheet( "QWidget#transparentWidget { background: transparent; }" )
 		self.__layout.addWidget( self.__scrollArea)
 
 		self.__scrollLayout = QVBoxLayout()
 
 		self.__scrollWidget = QWidget()
+		## Die Auflistung der Fertigkeiten soll auch unter Windows einen transparenten Hintergrund haben. Indem ich den selben Namen wie zuvor vergebe, wirkt auch das Stylsheet auf dieses Widget.
+		self.__scrollWidget.setObjectName("transparentWidget")
+		#self.__scrollWidget.setStyleSheet( "QWidget#transparentWidget { background-color:transparent; }" )
 		#scrollWidget.setMinimumSize(this.width(), 400);
 		self.__scrollWidget.setLayout(self.__scrollLayout)
 
