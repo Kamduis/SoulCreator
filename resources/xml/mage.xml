@@ -34,55 +34,56 @@
 		</Super>
 		<Group>
 			<Breed name="Path">
-				<trait name="Acanthus">
+				<item name="Acanthus">
 					<bonus>
 						<Attribute>
-							<trait name="Composure"/>
+							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-				</trait>
-				<trait name="Mastigos">
+				</item>
+				<item name="Mastigos">
 					<bonus>
 						<Attribute>
-							<trait name="Resolve"/>
+							<item name="Resolve"/>
 						</Attribute>
 					</bonus>
-				</trait>
-				<trait name="Moros">
+				</item>
+				<item name="Moros">
 					<bonus>
 						<Attribute>
-							<trait name="Composure"/>
+							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-				</trait>
-				<trait name="Obrimos">
+				</item>
+				<item name="Obrimos">
 					<bonus>
 						<Attribute>
-							<trait name="Resolve"/>
+							<item name="Resolve"/>
 						</Attribute>
 					</bonus>
-				</trait>
-				<trait name="Thyrsus">
+				</item>
+				<item name="Thyrsus">
 					<bonus>
 						<Attribute>
-							<trait name="Composure"/>
+							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-				</trait>
+				</item>
 			</Breed>
 			<Faction name="Order">
-				<trait name="Apostate"/>
-				<trait name="Adamantine Arrow" alt="Ungula Draconis"/>
-				<trait name="Free Council"/>
-				<trait name="Guardians of the Veil" alt="Visus Draconis"/>
-				<trait name="Mysterium" alt="Alae Draconis"/>
-				<trait name="Silver Ladder" alt="Vox Draconis"/>
+				<item name="Apostate"/>
+				<item name="Adamantine Arrow" alt="Ungula Draconis"/>
+				<item name="Free Council"/>
+				<item name="Guardians of the Veil" alt="Visus Draconis"/>
+				<item name="Mysterium" alt="Alae Draconis"/>
+				<item name="Silver Ladder" alt="Vox Draconis"/>
 			</Faction>
 			<Organisation name="Legacy">
-				<trait name="None"/>
-				<trait name="Perfected Adepts"/>
-				<trait name="Subtle Ones"/>
+				<item name="None"/>
+				<item name="Perfected Adepts"/>
+				<item name="Subtle Ones"/>
 			</Organisation>
+			<Party name="Cabal"/>
 		</Group>
 		<Merit>
 			<Category name="Mental">

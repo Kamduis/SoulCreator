@@ -66,6 +66,7 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_era.addItems( Config.eras )
 
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
+		self.ui.comboBox_era.currentIndexChanged[str].connect(self.changeEra)
 		self.ui.comboBox_gender.currentIndexChanged[str].connect(self.changeGender)
 		self.ui.spinBox_age.valueChanged[int].connect(self.changeAge)
 		self.ui.comboBox_species.currentIndexChanged[str].connect(self.changeSpecies)
@@ -74,9 +75,10 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.changeBreed)
 		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.changeFaction)
 		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.changeOrganisation)
-		self.ui.comboBox_era.currentIndexChanged[str].connect(self.changeEra)
+		self.ui.lineEdit_party.textEdited.connect(self.changeParty)
 		self.__character.identities[0].nameChanged.connect(self.updateName)
-		self.__character.identities[0].genderChanged.connect(self.updateGender)
+		self.__character.identities[0].genderChanged[str].connect(self.updateGender)
+		self.__character.eraChanged.connect(self.updateEra)
 		self.__character.ageChanged.connect(self.updateAge)
 		self.__character.speciesChanged.connect(self.updateSpecies)
 		self.__character.virtueChanged.connect(self.updateVirtue)
@@ -92,7 +94,8 @@ class InfoWidget(QWidget):
 		self.__character.organisationChanged.connect(self.updateOrganisation)
 		self.__character.speciesChanged.connect(self.updateOrganisationTitle)
 		self.__character.speciesChanged.connect(self.repopulateOrganisations)
-		self.__character.eraChanged.connect(self.updateEra)
+		self.__character.partyChanged.connect(self.updateParty)
+		self.__character.speciesChanged.connect(self.updatePartyTitle)
 
 
 	def openNameDialog(self):
@@ -102,6 +105,14 @@ class InfoWidget(QWidget):
 		
 		dialog = NameDialog( self.__character, self )
 		dialog.exec_()
+
+
+	def changeEra( self, era ):
+		"""
+		Legt die zeitliche Ära fest, in welcher der Charakter zuhause ist.
+		"""
+
+		self.__character.era = era
 
 
 	def changeGender( self, gender ):
@@ -168,12 +179,12 @@ class InfoWidget(QWidget):
 		self.__character.organisation = organisation
 
 
-	def changeEra( self, era ):
+	def changeParty( self, name ):
 		"""
-		Legt die zeitliche Ära fest, in welcher der Charakter zuhause ist.
+		Verändert den Namen der Freundesgruppe.
 		"""
 
-		self.__character.era = era
+		self.__character.party = name
 
 
 	def updateName( self ):
@@ -278,6 +289,22 @@ class InfoWidget(QWidget):
 		"""
 
 		self.ui.label_organisation.setText( "{}:".format(self.__storage.organisationTitle(species)) )
+
+
+	def updateParty( self, name ):
+		"""
+		Aktualisiert die Anzeige der Freundesgruppe.
+		"""
+
+		self.ui.lineEdit_party.setText( self.__character.party )
+
+
+	def updatePartyTitle( self, species ):
+		"""
+		Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Freundesgruppe.
+		"""
+
+		self.ui.label_party.setText( "{}:".format(self.__storage.partyTitle(species)) )
 
 
 	def updateEra(self, era):

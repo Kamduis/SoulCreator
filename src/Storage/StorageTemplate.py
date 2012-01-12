@@ -67,7 +67,7 @@ class StorageTemplate(QObject):
 	# 		Breed: [Name, [Bla, Blub, ...]],
 	# 		Faction: [Name, [Bla, Blub, ...]],
 	# 		Organisation: [Name [Bla, Blub, ...]],
-	# 		...
+	# 		Party: [Name [Bla, Blub, ...]],
 	# 	},
 	# 	...
 	# }
@@ -78,7 +78,7 @@ class StorageTemplate(QObject):
 	# 		Breed: [Clan, [Daeva, Gangrel, Mekhet, Nosferatu, Ventrue]],
 	# 		Faction: [Covenant, [Cartian Movement, Circle of the Crone, Invictus, Lancea Sancta, Ordo Dracul]],
 	# 		Organisation: [Bloodline, [Toreador, Brujah, ...]],
-	# 		...
+	# 		Party: [Coterie],
 	# 	},
 	# 	...
 	# }
@@ -486,6 +486,10 @@ class StorageTemplate(QObject):
 
 	def organisationTitle(self, species):
 		return self.__speciesGroupNames[species]["Organisation"][0]
+
+
+	def partyTitle(self, species):
+		return self.__speciesGroupNames[species]["Party"][0]
 
 
 	def moralityName(self, species):

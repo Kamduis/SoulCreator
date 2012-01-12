@@ -80,6 +80,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeTextElement( "breed", self.__character.breed )
 		self.writeTextElement( "faction", self.__character.faction )
 		self.writeTextElement( "organisation", self.__character.organisation )
+		self.writeTextElement( "party", self.__character.party )
 		self.writeTextElement( "powerstat", unicode( self.__character.powerstat ) )
 		self.writeTextElement( "morality", unicode( self.__character.morality ) )
 		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )

@@ -50,6 +50,7 @@ class StorageCharacter(QObject):
 	breedChanged = Signal(str)
 	factionChanged = Signal(str)
 	organisationChanged = Signal(str)
+	partyChanged = Signal(str)
 	powerstatChanged = Signal(int)
 	moralityChanged = Signal(int)
 	armorChanged = Signal(object)
@@ -92,6 +93,7 @@ class StorageCharacter(QObject):
 		self.__breed = ""
 		self.__faction = ""
 		self.__organisation = ""
+		self.__party = ""
 		self.__powerstat = 0
 		self.__morality = 0
 		self.__armor = [0, 0]
@@ -443,6 +445,21 @@ class StorageCharacter(QObject):
 			self.organisationChanged.emit( organisation )
 
 
+	@property
+	def party(self):
+		"""
+		Name der Freundesgruppe des Charakters.
+		"""
+
+		return self.__party
+
+	@party.setter
+	def party( self, party ):
+		if ( self.__party != party ):
+			self.__party = party
+			self.partyChanged.emit( party )
+
+
 	def __getPowerstat(self):
 		"""
 		Gibt den Wert des Super-Attributs aus.
@@ -533,6 +550,9 @@ class StorageCharacter(QObject):
 		#Debug.debug(self.__storage.virtues[0]["name"])
 		self.virtue = self.__storage.virtues[0]["name"]
 		self.vice = self.__storage.vices[0]["name"]
+		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
+		#self.breed = self.__storage.breeds(Config.initialSpecies)[0]
+		self.party = ""
 
 		# Menschen haben eine Leere liste, also kann ich auch die Indizes nicht ändern.
 		#// setBreed(storage.breedNames(species()).at(0));

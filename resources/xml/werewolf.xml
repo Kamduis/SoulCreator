@@ -34,24 +34,25 @@
 		</Super>
 		<Group>
 			<Breed name="Auspice">
-				<trait name="Rahu"/>
-				<trait name="Cahalith"/>
-				<trait name="Elodoth"/>
-				<trait name="Ithaeur"/>
-				<trait name="Irraka"/>
+				<item name="Rahu"/>
+				<item name="Cahalith"/>
+				<item name="Elodoth"/>
+				<item name="Ithaeur"/>
+				<item name="Irraka"/>
 			</Breed>
 			<Faction name="Tribe">
-				<trait name="Ghost Wolf"/>
-				<trait name="Blood Talons"/>
-				<trait name="Bone Shadows"/>
-				<trait name="Hunters in Darkness"/>
-				<trait name="Iron Masters"/>
-				<trait name="Storm Lords"/>
+				<item name="Ghost Wolf"/>
+				<item name="Blood Talons"/>
+				<item name="Bone Shadows"/>
+				<item name="Hunters in Darkness"/>
+				<item name="Iron Masters"/>
+				<item name="Storm Lords"/>
 			</Faction>
 			<Organisation name="Lodge">
-				<trait name="None"/>
-				<trait name="???"/>
+				<item name="None"/>
+				<item name="???"/>
 			</Organisation>
+			<Party name="Pack"/>
 		</Group>
 		<Merit>
 			<Category name="Physical">

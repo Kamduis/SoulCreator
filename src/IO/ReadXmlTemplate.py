@@ -231,7 +231,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				elementName = self.name()
 				#Debug.debug(elementName)
-				if( elementName == "Breed" or elementName == "Faction" or elementName == "Organisation" ):
+				if( elementName == "Breed" or elementName == "Faction" or elementName == "Organisation" or elementName == "Party" ):
 					self.readGroupTitles(species, elementName)
 				else:
 					self.readUnknownElement()
@@ -243,6 +243,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		group = self.attributes().value( "name" )
+		#Debug.debug("{} {}".format(groupCategory, group))
 		self.__storage.appendTitle( species, groupCategory, group )
 
 		while( not self.atEnd() ):
@@ -253,7 +254,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				elementName = self.name()
-				if( elementName == "trait" ):
+				if( elementName == "item" ):
 					title = self.attributes().value( "name" )
 					self.__storage.appendTitle( species, groupCategory, group, title )
 

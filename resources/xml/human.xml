@@ -33,12 +33,10 @@
 			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">10</powerstat>
 		</Super>
 		<Group>
-			<Breed name="Breed">
-			</Breed>
-			<Faction name="Faction">
-			</Faction>
-			<Organisation name="Organisation">
-			</Organisation>
+			<Breed name="Breed"/>
+			<Faction name="Faction"/>
+			<Organisation name="Organisation"/>
+			<Party name="Party"/>
 		</Group>
 		<Merit>
 			<Category name="Extraordinary">

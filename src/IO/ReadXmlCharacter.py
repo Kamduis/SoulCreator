@@ -116,6 +116,8 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.faction = self.readElementText()
 				elif ( elementName == "organisation" ):
 					self.__character.organisation = self.readElementText()
+				elif ( elementName == "party" ):
+					self.__character.party = self.readElementText()
 				elif ( elementName == "powerstat" ):
 					self.__character.powerstat = int(self.readElementText())
 				elif ( elementName == "morality" ):

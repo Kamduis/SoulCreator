@@ -45,7 +45,7 @@ class Identity(QObject):
 	# Dieses Signal wird ausgesandt, wann immer sich ein Teil des Namens verändert hat.
 	nameChanged = Signal()
 	# Dieses Signal wird ausgesandt, wann immer sich das Geschlecht geändert hat.
-	genderChanged = Signal(str)
+	genderChanged = Signal((), (str,))
 	# Dieses Signal wird ausgesandt, wann immer sich ein Teil der Identität verändert hat.
 	identityChanged = Signal()
 
@@ -200,7 +200,8 @@ class Identity(QObject):
 	def __setGender(self, gender):
 		if self.__gender != gender:
 			self.__gender = gender
-			self.genderChanged.emit(gender)
+			self.genderChanged[str].emit(gender)
+			self.genderChanged.emit()
 
 	gender = property(__getGender, __setGender)
 

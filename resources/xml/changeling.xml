@@ -34,27 +34,28 @@
 		</Super>
 		<Group>
 			<Breed name="Seeming">
-				<trait name="Beast"/>
-				<trait name="Darkling"/>
-				<trait name="Elemental"/>
-				<trait name="Fairest"/>
-				<trait name="Oger"/>
-				<trait name="Wizened"/>
+				<item name="Beast"/>
+				<item name="Darkling"/>
+				<item name="Elemental"/>
+				<item name="Fairest"/>
+				<item name="Oger"/>
+				<item name="Wizened"/>
 			</Breed>
 			<Faction name="Court">
-				<trait name="Courtless"/>
-				<trait name="Spring"/>
-				<trait name="Summer"/>
-				<trait name="Autumn"/>
-				<trait name="Winter"/>
+				<item name="Courtless"/>
+				<item name="Spring"/>
+				<item name="Summer"/>
+				<item name="Autumn"/>
+				<item name="Winter"/>
 			</Faction>
 			<Organisation name="Entitlement">
-				<trait name="None"/>
-				<trait name="Guild of the Sacred Journey"/>
-				<trait name="Knights of the Knowledge of the Tongue"/>
-				<trait name="The Scarecrow Ministry"/>
-				<trait name="Parlarment of Victors"/>
+				<item name="None"/>
+				<item name="Guild of the Sacred Journey"/>
+				<item name="Knights of the Knowledge of the Tongue"/>
+				<item name="The Scarecrow Ministry"/>
+				<item name="Parlarment of Victors"/>
 			</Organisation>
+			<Party name="Motley"/>
 		</Group>
 		<Skill>
 			<Mental>

@@ -34,60 +34,61 @@
 		</Super>
 		<Group>
 			<Breed name="Clan">
-				<trait name="Daeva">
+				<item name="Daeva">
 					<bonus>
 						<Attribute>
-							<trait name="Dexterity"/>
-							<trait name="Manipulation"/>
+							<item name="Dexterity"/>
+							<item name="Manipulation"/>
 						</Attribute>
 					</bonus>
-				</trait>
-				<trait name="Gangrel">
+				</item>
+				<item name="Gangrel">
 					<bonus>
 						<Attribute>
-							<trait name="Stamina"/>
-							<trait name="Composure"/>
+							<item name="Stamina"/>
+							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-				</trait>
-				<trait name="Mekhet">
+				</item>
+				<item name="Mekhet">
 					<bonus>
 						<Attribute>
-							<trait name="Intelligence"/>
-							<trait name="Wits"/>
+							<item name="Intelligence"/>
+							<item name="Wits"/>
 						</Attribute>
 					</bonus>
-				</trait>
-				<trait name="Nosferatu">
+				</item>
+				<item name="Nosferatu">
 					<bonus>
 						<Attribute>
-							<trait name="Strength"/>
-							<trait name="Composure"/>
+							<item name="Strength"/>
+							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-				</trait>
-				<trait name="Ventrue">
+				</item>
+				<item name="Ventrue">
 					<bonus>
 						<Attribute>
-							<trait name="Prensence"/>
-							<trait name="Composure"/>
+							<item name="Prensence"/>
+							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-				</trait>
+				</item>
 			</Breed>
 			<Faction name="Covenant">
-				<trait name="Unbound"/>
-				<trait name="Lancea Sancta"/>
-				<trait name="Invictus"/>
-				<trait name="Ordo Dracul"/>
-				<trait name="Circle of the Crone"/>
-				<trait name="Carthian Movement"/>
+				<item name="Unbound"/>
+				<item name="Lancea Sancta"/>
+				<item name="Invictus"/>
+				<item name="Ordo Dracul"/>
+				<item name="Circle of the Crone"/>
+				<item name="Carthian Movement"/>
 			</Faction>
 			<Organisation name="Bloodline">
-				<trait name="None"/>
-				<trait name="Toreador"/>
-				<trait name="Brujah"/>
+				<item name="None"/>
+				<item name="Toreador"/>
+				<item name="Brujah"/>
 			</Organisation>
+			<Party name="Coterie"/>
 		</Group>
 		<Merit>
 			<Category name="Mental">
