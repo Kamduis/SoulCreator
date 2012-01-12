@@ -49,6 +49,7 @@ class StorageCharacter(QObject):
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
 	factionChanged = Signal(str)
+	organisationChanged = Signal(str)
 	powerstatChanged = Signal(int)
 	moralityChanged = Signal(int)
 	armorChanged = Signal(object)
@@ -90,6 +91,7 @@ class StorageCharacter(QObject):
 		self.__vice = ""
 		self.__breed = ""
 		self.__faction = ""
+		self.__organisation = ""
 		self.__powerstat = 0
 		self.__morality = 0
 		self.__armor = [0, 0]
@@ -399,14 +401,16 @@ class StorageCharacter(QObject):
 	breed = property(__getBreed, __setBreed)
 
 
-	def __getFaction(self):
+	@property
+	def faction(self):
 		"""
-		Fraktion (Court, order, Covenant, Tribe) des Charakters.
+		Fraktion (Court, Order, Covenant, Tribe) des Charakters.
 		"""
 
 		return self.__faction
 
-	def __setFaction( self, faction ):
+	@faction.setter
+	def faction( self, faction ):
 		"""
 		Verändert die Fraktion.
 
@@ -417,7 +421,26 @@ class StorageCharacter(QObject):
 			self.__faction = faction
 			self.factionChanged.emit( faction )
 
-	faction = property(__getFaction, __setFaction)
+
+	@property
+	def organisation(self):
+		"""
+		Organisation (Entitlement, Legacy, Bloodline, Lodge) des Charakters.
+		"""
+
+		return self.__organisation
+
+	@organisation.setter
+	def organisation( self, organisation ):
+		"""
+		Verändert die Organisation.
+
+		Bei einer Veränderung wird das Signal organisationChanged() ausgesandt.
+		"""
+
+		if ( self.__organisation != organisation ):
+			self.__organisation = organisation
+			self.organisationChanged.emit( organisation )
 
 
 	def __getPowerstat(self):

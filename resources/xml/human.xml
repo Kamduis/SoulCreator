@@ -32,10 +32,14 @@
 			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">9</powerstat>
 			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">10</powerstat>
 		</Super>
-		<Breed name="Breed">
-		</Breed>
-		<Faction name="Faction">
-		</Faction>
+		<Group>
+			<Breed name="Breed">
+			</Breed>
+			<Faction name="Faction">
+			</Faction>
+			<Organisation name="Organisation">
+			</Organisation>
+		</Group>
 		<Merit>
 			<Category name="Extraordinary">
 				<trait name="Enchanted Mortal" source="Changeling The Equinox Road">

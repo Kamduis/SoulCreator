@@ -32,21 +32,30 @@
 			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
 			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
-		<Breed name="Seeming">
-			<trait name="Beast"/>
-			<trait name="Darkling"/>
-			<trait name="Elemental"/>
-			<trait name="Fairest"/>
-			<trait name="Oger"/>
-			<trait name="Wizened"/>
-		</Breed>
-		<Faction name="Court">
-			<trait name="Courtless"/>
-			<trait name="Spring"/>
-			<trait name="Summer"/>
-			<trait name="Autumn"/>
-			<trait name="Winter"/>
-		</Faction>
+		<Group>
+			<Breed name="Seeming">
+				<trait name="Beast"/>
+				<trait name="Darkling"/>
+				<trait name="Elemental"/>
+				<trait name="Fairest"/>
+				<trait name="Oger"/>
+				<trait name="Wizened"/>
+			</Breed>
+			<Faction name="Court">
+				<trait name="Courtless"/>
+				<trait name="Spring"/>
+				<trait name="Summer"/>
+				<trait name="Autumn"/>
+				<trait name="Winter"/>
+			</Faction>
+			<Organisation name="Entitlement">
+				<trait name="None"/>
+				<trait name="Guild of the Sacred Journey"/>
+				<trait name="Knights of the Knowledge of the Tongue"/>
+				<trait name="The Scarecrow Ministry"/>
+				<trait name="Parlarment of Victors"/>
+			</Organisation>
+		</Group>
 		<Skill>
 			<Mental>
 				<trait name="Medicine">

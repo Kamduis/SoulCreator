@@ -32,56 +32,63 @@
 			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
 			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
-		<Breed name="Clan">
-			<trait name="Daeva">
-				<bonus>
-					<Attribute>
-						<trait name="Dexterity"/>
-						<trait name="Manipulation"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Gangrel">
-				<bonus>
-					<Attribute>
-						<trait name="Stamina"/>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Mekhet">
-				<bonus>
-					<Attribute>
-						<trait name="Intelligence"/>
-						<trait name="Wits"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Nosferatu">
-				<bonus>
-					<Attribute>
-						<trait name="Strength"/>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Ventrue">
-				<bonus>
-					<Attribute>
-						<trait name="Prensence"/>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-		</Breed>
-		<Faction name="Covenant">
-			<trait name="Unbound"/>
-			<trait name="Lancea Sancta"/>
-			<trait name="Invictus"/>
-			<trait name="Ordo Dracul"/>
-			<trait name="Circle of the Crone"/>
-			<trait name="Carthian Movement"/>
-		</Faction>
+		<Group>
+			<Breed name="Clan">
+				<trait name="Daeva">
+					<bonus>
+						<Attribute>
+							<trait name="Dexterity"/>
+							<trait name="Manipulation"/>
+						</Attribute>
+					</bonus>
+				</trait>
+				<trait name="Gangrel">
+					<bonus>
+						<Attribute>
+							<trait name="Stamina"/>
+							<trait name="Composure"/>
+						</Attribute>
+					</bonus>
+				</trait>
+				<trait name="Mekhet">
+					<bonus>
+						<Attribute>
+							<trait name="Intelligence"/>
+							<trait name="Wits"/>
+						</Attribute>
+					</bonus>
+				</trait>
+				<trait name="Nosferatu">
+					<bonus>
+						<Attribute>
+							<trait name="Strength"/>
+							<trait name="Composure"/>
+						</Attribute>
+					</bonus>
+				</trait>
+				<trait name="Ventrue">
+					<bonus>
+						<Attribute>
+							<trait name="Prensence"/>
+							<trait name="Composure"/>
+						</Attribute>
+					</bonus>
+				</trait>
+			</Breed>
+			<Faction name="Covenant">
+				<trait name="Unbound"/>
+				<trait name="Lancea Sancta"/>
+				<trait name="Invictus"/>
+				<trait name="Ordo Dracul"/>
+				<trait name="Circle of the Crone"/>
+				<trait name="Carthian Movement"/>
+			</Faction>
+			<Organisation name="Bloodline">
+				<trait name="None"/>
+				<trait name="Toreador"/>
+				<trait name="Brujah"/>
+			</Organisation>
+		</Group>
 		<Merit>
 			<Category name="Mental">
 				<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">

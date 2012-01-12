@@ -32,21 +32,27 @@
 			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
 			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
-		<Breed name="Auspice">
-			<trait name="Rahu"/>
-			<trait name="Cahalith"/>
-			<trait name="Elodoth"/>
-			<trait name="Ithaeur"/>
-			<trait name="Irraka"/>
-		</Breed>
-		<Faction name="Tribe">
-			<trait name="Ghost Wolf"/>
-			<trait name="Blood Talons"/>
-			<trait name="Bone Shadows"/>
-			<trait name="Hunters in Darkness"/>
-			<trait name="Iron Masters"/>
-			<trait name="Storm Lords"/>
-		</Faction>
+		<Group>
+			<Breed name="Auspice">
+				<trait name="Rahu"/>
+				<trait name="Cahalith"/>
+				<trait name="Elodoth"/>
+				<trait name="Ithaeur"/>
+				<trait name="Irraka"/>
+			</Breed>
+			<Faction name="Tribe">
+				<trait name="Ghost Wolf"/>
+				<trait name="Blood Talons"/>
+				<trait name="Bone Shadows"/>
+				<trait name="Hunters in Darkness"/>
+				<trait name="Iron Masters"/>
+				<trait name="Storm Lords"/>
+			</Faction>
+			<Organisation name="Lodge">
+				<trait name="None"/>
+				<trait name="???"/>
+			</Organisation>
+		</Group>
 		<Merit>
 			<Category name="Physical">
 				<trait name="Metabolic Control" source="Werewolf The Rage">

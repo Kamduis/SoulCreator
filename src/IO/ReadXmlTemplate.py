@@ -170,12 +170,12 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				typ = self.name()
 				typDescriptor = self.attributes().value("name")
-
+				#Debug.debug(typ)
+					
 				if( typ == "Virtue" or typ == "Vice" ):
 					self.readCharacteristics( typ )
-				elif(typ == "Breed" or
-						typ == "Faction" ):
-					self.readGroups( species, typ )
+				elif(typ == "Group" ):
+					self.readGroups( species )
 				elif( typ == "Super" ):
 					self.readPowerstat( species )
 				elif( typ == "Derangement" ):
@@ -217,17 +217,33 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readGroups( self, species, typ ):
+	def readGroups( self, species ):
+		"""
+		Hier beginnt das Einlesen der Gruppierungen.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if self.isEndElement():
+				break
+
+			if( self.isStartElement() ):
+				elementName = self.name()
+				#Debug.debug(elementName)
+				if( elementName == "Breed" or elementName == "Faction" or elementName == "Organisation" ):
+					self.readGroupTitles(species, elementName)
+				else:
+					self.readUnknownElement()
+
+
+	def readGroupTitles( self, species, groupCategory ):
 		"""
 		Liest die verschiedenen Gruppierungsnamen der einzelnen Spezies ein.
 		"""
 
-		if( typ == "Breed" or
-				typ == "Faction"
-		):
-			group = self.attributes().value( "name" )
-
-			self.__storage.appendTitle( species, typ, group )
+		group = self.attributes().value( "name" )
+		self.__storage.appendTitle( species, groupCategory, group )
 
 		while( not self.atEnd() ):
 			self.readNext()
@@ -239,7 +255,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				elementName = self.name()
 				if( elementName == "trait" ):
 					title = self.attributes().value( "name" )
-					self.__storage.appendTitle( species, typ, group, title )
+					self.__storage.appendTitle( species, groupCategory, group, title )
 
 					# Damit weitergesucht wird.
 					self.readGroupInfo(species, title)
@@ -247,7 +263,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readGroupInfo( self, species, breed ):
+	def readGroupInfo( self, species, title ):
 		"""
 		Einzelne Gruppen bieten noch zusätzliche Informationen wie beispielsweise die Bonuseigenschaften der Vampir-Clans etc. Die Ermittlung dieser informationen beginnt hier.
 		"""
@@ -261,7 +277,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				name = self.name()
 				if( name == "bonus" ):
-					self.readBonusTraits(species, breed)
+					self.readBonusTraits(species, title)
 				else:
 					self.readUnknownElement()
 

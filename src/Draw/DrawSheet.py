@@ -449,58 +449,172 @@ class DrawSheet(QObject):
 		"""
 
 		text = [
-			[ u"Name:", u"Concept:", ],
-			[ u"Virute:", u"Vice:", ],
-			[ u"Chronicle:", u"Faction:", ],
+			[
+				u"Name:",
+				u"Concept:",
+			],
+			[
+				u"Virute:",
+				u"Vice:",
+			],
+			[
+				u"Chronicle:",
+				u"Faction:",
+			],
 		]
 		textCharacter = [
-			[ Identity.displayNameDisplay(self.__character.identities[0].surename, self.__character.identities[0].firstname, self.__character.identities[0].nickname), u"", ],
-			[ self.__character.virtue, self.__character.vice, ],
-			[ u"", u"", ],
+			[
+				Identity.displayNameDisplay(self.__character.identities[0].surename, self.__character.identities[0].firstname, self.__character.identities[0].nickname),
+				u"",
+			],
+			[
+				self.__character.virtue,
+				self.__character.vice,
+			],
+			[
+				u"",
+				u"",
+			],
 		]
 		if self.__character.species == "Changeling":
 			text = [
-				[ text[0][0], text[0][1], u"", ],
-				[ text[1][0], text[1][1], u"Motley:", ],
-				[ self.__storage.breedTitle(self.__character.species), u"Kith:", self.__storage.factionTitle(self.__character.species), ],
+				[
+					text[0][0],
+					text[0][1],
+					u"",
+				],
+				[
+					text[1][0],
+					text[1][1],
+					u"Motley:",
+				],
+				[
+					u"{} ({}):".format(self.__storage.breedTitle(self.__character.species), "Kith"),
+					self.__storage.factionTitle(self.__character.species),
+					self.__storage.organisationTitle(self.__character.species),
+				],
 			]
 			textCharacter = [
-				[ textCharacter[0][0], textCharacter[0][1], u"", ],
-				[ textCharacter[1][0], textCharacter[1][1], u"", ],
-				[ self.__character.breed, u"", self.__character.faction, ],
+				[
+					textCharacter[0][0],
+					textCharacter[0][1],
+					u"",
+				],
+				[
+					textCharacter[1][0],
+					textCharacter[1][1],
+					u"",
+				],
+				[
+					u"{} ({}):".format(self.__character.breed, "???"),
+					self.__character.faction,
+					self.__character.organisation,
+				],
 			]
 		elif self.__character.species == "Mage":
 			text = [
-				[ text[0][0], u"Shadow Name:", text[0][1], ],
-				[ text[1][0], text[1][1], u"Cabal:", ],
-				[ self.__storage.breedTitle(self.__character.species), self.__storage.factionTitle(self.__character.species), u"Legacy:", ],
+				[
+					text[0][0],
+					u"Shadow Name:",
+					text[0][1],
+				],
+				[
+					text[1][0],
+					text[1][1],
+					u"Cabal:",
+				],
+				[
+					"{}:".format(self.__storage.breedTitle(self.__character.species)),
+					"{}:".format(self.__storage.factionTitle(self.__character.species)),
+					"{}:".format(self.__storage.organisationTitle(self.__character.species)),
+				],
 			]
 			textCharacter = [
-				[ textCharacter[0][0], self.__character.identities[0].supername, textCharacter[0][1], ],
-				[ textCharacter[1][0], textCharacter[1][1], u"", ],
-				[ self.__character.breed, self.__character.faction, u"", ],
+				[
+					textCharacter[0][0],
+					self.__character.identities[0].supername,
+					textCharacter[0][1],
+				],
+				[
+					textCharacter[1][0],
+					textCharacter[1][1],
+					u"",
+				],
+				[
+					self.__character.breed,
+					self.__character.faction,
+					self.__character.organisation,
+				],
 			]
 		elif self.__character.species == "Vampire":
 			text = [
-				[ text[0][0], text[0][1], u"Sire:", ],
-				[ text[1][0], text[1][1], u"Coterie:", ],
-				[ self.__storage.breedTitle(self.__character.species), u"Bloodline:", self.__storage.factionTitle(self.__character.species), ],
+				[
+					text[0][0],
+					text[0][1],
+					u"Sire:",
+				],
+				[
+					text[1][0],
+					text[1][1],
+					u"Coterie:",
+				],
+				[
+					"{}:".format(self.__storage.breedTitle(self.__character.species)),
+					"{}:".format(self.__storage.organisationTitle(self.__character.species)),
+					"{}:".format(self.__storage.factionTitle(self.__character.species)),
+				],
 			]
 			textCharacter = [
-				[ textCharacter[0][0], textCharacter[0][1], u"", ],
-				[ textCharacter[1][0], textCharacter[1][1], u"", ],
-				[ self.__character.breed, u"", self.__character.faction, ],
+				[
+					textCharacter[0][0],
+					textCharacter[0][1],
+					u"",
+				],
+				[
+					textCharacter[1][0],
+					textCharacter[1][1],
+					u"",
+				],
+				[
+					self.__character.breed,
+					self.__character.organisation,
+					self.__character.faction,
+				],
 			]
 		elif self.__character.species == "Werewolf":
 			text = [
-				[ text[0][0], "Pack Name:", u"Totem:", ],
-				[ text[1][0], text[1][1], u"Pack:", ],
-				[ self.__storage.breedTitle(self.__character.species), self.__storage.factionTitle(self.__character.species), u"Lodge:", ],
+				[
+					text[0][0],
+					"Pack Name:",
+					u"Totem:",
+				],
+				[
+					text[1][0],
+					text[1][1],
+					u"Pack:",
+				],
+				[
+					"{}:".format(self.__storage.breedTitle(self.__character.species)),
+					"{}:".format(self.__storage.factionTitle(self.__character.species)),
+					"{}:".format(self.__storage.organisationTitle(self.__character.species)),
+				],
 			]
 			textCharacter = [
-				[ textCharacter[0][0], self.__character.identities[0].supername, u"", ],
-				[ textCharacter[1][0], textCharacter[1][1], u"", ],
-				[ self.__character.breed, self.__character.faction, u"", ],
+				[
+					textCharacter[0][0],
+					self.__character.identities[0].supername,
+					u"",
+				],
+				[
+					textCharacter[1][0],
+					textCharacter[1][1],
+					u"",
+				],
+				[
+					self.__character.breed,
+					self.__character.faction,
+					self.__character.organisation,
+				],
 			]
 
 		self.__painter.save()

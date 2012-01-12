@@ -66,7 +66,7 @@ class StorageTemplate(QObject):
 	# 	Spezies1: {
 	# 		Breed: [Name, [Bla, Blub, ...]],
 	# 		Faction: [Name, [Bla, Blub, ...]],
-	# 		SubGroup: [Name [Bla, Blub, ...]],
+	# 		Organisation: [Name [Bla, Blub, ...]],
 	# 		...
 	# 	},
 	# 	...
@@ -77,7 +77,7 @@ class StorageTemplate(QObject):
 	# 	Vampire: {
 	# 		Breed: [Clan, [Daeva, Gangrel, Mekhet, Nosferatu, Ventrue]],
 	# 		Faction: [Covenant, [Cartian Movement, Circle of the Crone, Invictus, Lancea Sancta, Ordo Dracul]],
-	# 		SubGroup: [Bloodline, [Toreador, Brujah, ...]],
+	# 		Organisation: [Bloodline, [Toreador, Brujah, ...]],
 	# 		...
 	# 	},
 	# 	...
@@ -464,20 +464,28 @@ class StorageTemplate(QObject):
 	vices = property(__getVices, __setVices)
 
 
+	def breeds(self, species):
+		return self.__speciesGroupNames[species]["Breed"][1]
+
+
 	def breedTitle(self, species):
 		return self.__speciesGroupNames[species]["Breed"][0]
 
 
-	def breeds(self, species):
-		return self.__speciesGroupNames[species]["Breed"][1]
+	def factions(self, species):
+		return self.__speciesGroupNames[species]["Faction"][1]
 
 
 	def factionTitle(self, species):
 		return self.__speciesGroupNames[species]["Faction"][0]
 
 
-	def factions(self, species):
-		return self.__speciesGroupNames[species]["Faction"][1]
+	def organisations(self, species):
+		return self.__speciesGroupNames[species]["Organisation"][1]
+
+
+	def organisationTitle(self, species):
+		return self.__speciesGroupNames[species]["Organisation"][0]
 
 
 	def moralityName(self, species):
@@ -634,7 +642,7 @@ class StorageTemplate(QObject):
 			else:
 				self.__speciesGroupNames[species][typ][1].append(names)
 
-		#print(self.__speciesGroupNames)
+		#Debug.debug(self.__speciesGroupNames)
 
 
 	@property

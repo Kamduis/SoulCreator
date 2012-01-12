@@ -32,51 +32,58 @@
 			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
 			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
-		<Breed name="Path">
-			<trait name="Acanthus">
-				<bonus>
-					<Attribute>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Mastigos">
-				<bonus>
-					<Attribute>
-						<trait name="Resolve"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Moros">
-				<bonus>
-					<Attribute>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Obrimos">
-				<bonus>
-					<Attribute>
-						<trait name="Resolve"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Thyrsus">
-				<bonus>
-					<Attribute>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-		</Breed>
-		<Faction name="Order">
-			<trait name="Apostate"/>
-			<trait name="Adamantine Arrow" alt="Ungula Draconis"/>
-			<trait name="Free Council"/>
-			<trait name="Guardians of the Veil" alt="Visus Draconis"/>
-			<trait name="Mysterium" alt="Alae Draconis"/>
-			<trait name="Silver Ladder" alt="Vox Draconis"/>
-		</Faction>
+		<Group>
+			<Breed name="Path">
+				<trait name="Acanthus">
+					<bonus>
+						<Attribute>
+							<trait name="Composure"/>
+						</Attribute>
+					</bonus>
+				</trait>
+				<trait name="Mastigos">
+					<bonus>
+						<Attribute>
+							<trait name="Resolve"/>
+						</Attribute>
+					</bonus>
+				</trait>
+				<trait name="Moros">
+					<bonus>
+						<Attribute>
+							<trait name="Composure"/>
+						</Attribute>
+					</bonus>
+				</trait>
+				<trait name="Obrimos">
+					<bonus>
+						<Attribute>
+							<trait name="Resolve"/>
+						</Attribute>
+					</bonus>
+				</trait>
+				<trait name="Thyrsus">
+					<bonus>
+						<Attribute>
+							<trait name="Composure"/>
+						</Attribute>
+					</bonus>
+				</trait>
+			</Breed>
+			<Faction name="Order">
+				<trait name="Apostate"/>
+				<trait name="Adamantine Arrow" alt="Ungula Draconis"/>
+				<trait name="Free Council"/>
+				<trait name="Guardians of the Veil" alt="Visus Draconis"/>
+				<trait name="Mysterium" alt="Alae Draconis"/>
+				<trait name="Silver Ladder" alt="Vox Draconis"/>
+			</Faction>
+			<Organisation name="Legacy">
+				<trait name="None"/>
+				<trait name="Perfected Adepts"/>
+				<trait name="Subtle Ones"/>
+			</Organisation>
+		</Group>
 		<Merit>
 			<Category name="Mental">
 				<trait name="High Speech" source="Mage Core">
