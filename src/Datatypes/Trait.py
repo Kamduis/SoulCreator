@@ -72,13 +72,13 @@ class Trait(QObject):
 		self.__available = True
 
 
-	def __getName(self):
+	@property
+	def name(self):
 		return self.__name
 
-	def __setName(self, name):
+	@name.setter
+	def name(self, name):
 		self.__name = name
-
-	name = property(__getName, __setName)
 
 
 	def __getValue(self):

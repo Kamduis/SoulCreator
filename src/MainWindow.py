@@ -25,7 +25,7 @@ from __future__ import division, print_function
 import sys
 import os
 
-from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, Signal
+from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, QDir, Signal
 from PySide.QtGui import QMainWindow, QApplication, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog, QGtkStyle
 
 from src.GlobalState import GlobalState
@@ -86,15 +86,13 @@ class MainWindow(QMainWindow):
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 
-	\todo Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.
+	\todo Beim Wechseln zwischen den Spezies eine Warnung ausgeben, wenn Powers und Merits gelöscht würden. Bzw. Powers und Merits nicht löschen, allerdings beim Speichern nicht beachten.
 
 	\todo Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.
 
 	\todo Sonderkräfte der Spezies fehlen. Bei Werwölfen müssen z.B. noch die Gaben/Riten berücksichtigt werden.
 
-	\todo Nutze eine qchecksum, um die Integrität der XML-DAteien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben.
-
-	\todo So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
+	\todo Nutze eine qchecksum, um die Integrität der XML-Dateien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben. -- So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
 
 	\todo Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).
 
@@ -104,19 +102,11 @@ class MainWindow(QMainWindow):
 
 	\todo Charakterbeschreibung einbauen.
 
-	\todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-DAtei bereitstellen, i welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
+	\todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
 
 	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
 
-	\todo Kräfte alphabetisch sortieren oder in Kategorien unterteilen.
-
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
-
-	\todo Die Widgets weiter aufteilen in Main-Widgets, Tool-Widgets etc.
-
-	\todo Damit die SVG-Grafiken unter Windows XP dargestellt werden ist auch QtXML4.dll erforderlich.
-
-	\todo Von der Klasse Trait mehrere Unterklassen ableiten, je nach Typ der Eigenschaft. TraitAttribute hat leicht andere Eigenschaften als TraitSkill etc.? Das würde mehr objektorientiert aussehen. Und natürlich kann ich durch virtuelle Funktionen immer auch auch verschiedene Erben durch ihre Basisklasse Trait vergleichen, aussuchen usw.
 	"""
 
 
@@ -189,7 +179,7 @@ class MainWindow(QMainWindow):
 
 		reader = ReadXmlTemplate(self.__storage)
 
-		#connect( &reader, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
+		reader.exceptionRaised.connect(self.showExceptionMessage)
 
 		try:
 			reader.read()
@@ -259,14 +249,11 @@ class MainWindow(QMainWindow):
 		# Hintergrundbild ändert sich je nach Spezies
 		self.__character.speciesChanged.connect(self.showBackround)
 
-		QFontDatabase.addApplicationFont(":fonts/fonts/ArchitectsDaughter.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/CloisterBlack.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/HVD_Edding.otf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Note_this.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Tangerine_Regular.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Tangerine_Bold.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Mutlu__Ornamental.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Blokletters-Balpen.ttf")
+		## Sämtliche Schriften in das System laden, damit ich sie auch benutzen kann.
+		resourceFontDir = QDir(":/fonts/fonts")
+		fontsList = resourceFontDir.entryList()
+		for font in fontsList:
+			QFontDatabase.addApplicationFont(resourceFontDir.filePath(font))
 
 
 	def activate(self):
@@ -664,7 +651,7 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
+		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
 		#filePath = ["{}/untitled.pdf".format(savePath), ""]
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.

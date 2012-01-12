@@ -80,7 +80,6 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.readSoulCreator()
 
 		if ( self.hasError() ):
-			Debug.debug("Error!")
 			raise ErrXmlParsing( f.fileName(), self.errorString() )
 
 		self.closeFile( f )
@@ -137,7 +136,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 		Liest die Identitäten des Charakters.
 		
-		\todo Derzeit kann nur eine identität eingelesen werden, da das Programm nur eine Identitöät unterstüzt.
+		\todo Derzeit kann nur eine Identität eingelesen werden, da das Programm nur eine Identität unterstüzt.
 		"""
 		
 		while ( not self.atEnd() ):

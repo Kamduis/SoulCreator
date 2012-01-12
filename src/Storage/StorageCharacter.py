@@ -110,7 +110,7 @@ class StorageCharacter(QObject):
 				for subitem in template.traits[typ][item].items():
 					#Debug.debug(subitem)
 					val = 0
-					# Eigenschaften, die Zusaztest erhalten können (bspw. Language), werden mehrfach an die Liste angefügt.
+					# Eigenschaften, die Zusaztext erhalten können (bspw. Language), werden mehrfach in das Dictionary eingefügt. Aber da ein Dictonary immer nur einen Eintrag desselben Namens haben kann, muß selbiger um ein numerisches Suffix erweitert werden.
 					loop = 1
 					custom = False
 					customText = None
@@ -128,7 +128,11 @@ class StorageCharacter(QObject):
 						if "prerequisite" in subitem[1]:
 							trait.hasPrerequisites = True
 							trait.prerequisitesText = subitem[1]["prerequisite"]
-						self.__traits[typ][item].setdefault(subitem[0], trait)
+						# In der Eigenschaft steht der richtige Name aber im Dictionary der Name mit einem numerischen Suffix, damit die Eigenschaft häufiger auftauchen kann.
+						dictKey = subitem[0]
+						if custom:
+							dictKey = "{}{}".format(subitem[0], i)
+						self.__traits[typ][item].setdefault(dictKey, trait)
 
 						# Wenn sich eine Eigenschaft ändert, gilt der Charakter als modifiziert.
 						trait.traitChanged.connect(self.setModified)
@@ -138,17 +142,18 @@ class StorageCharacter(QObject):
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
 		self.__identity.identityChanged.connect(self.setModified)
-		self.speciesChanged.connect(self.clearUnusableTraits)
+		# Unerwünschte Wirkung
+		#self.speciesChanged.connect(self.clearUnusableTraits)
 		self.speciesChanged.connect(self.setModified)
-	#connect( self, SIGNAL( traitChanged( cv_Trait* ) ), self, SLOT( setModified() ) );
 	#connect( self, SIGNAL( derangementsChanged() ), self, SLOT( setModified() ) );
-	#connect( self, SIGNAL( virtueChanged( QString ) ), self, SLOT( setModified() ) );
-	#connect( self, SIGNAL( viceChanged( QString ) ), self, SLOT( setModified() ) );
-	#connect( self, SIGNAL( breedChanged( QString ) ), self, SLOT( setModified() ) );
-	#connect( self, SIGNAL( factionChanged( QString ) ), self, SLOT( setModified() ) );
+		self.virtueChanged.connect(self.setModified)
+		self.viceChanged.connect(self.setModified)
+		self.breedChanged.connect(self.setModified)
+		self.factionChanged.connect(self.setModified)
 		self.powerstatChanged.connect(self.setModified)
-	#connect( self, SIGNAL( moralityChanged( int ) ), self, SLOT( setModified() ) );
-	#connect( self, SIGNAL( armorChanged( int, int ) ), self, SLOT( setModified() ) );
+		self.moralityChanged.connect(self.setModified)
+		self.armorChanged.connect(self.setModified)
+		self.eraChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -243,7 +248,7 @@ class StorageCharacter(QObject):
 		#"""
 		#Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer Index 0 in der \ref self.__identities -Liste
 		
-		#\todo Momentan ist dies die einzige identität, die von diesem programm genutzt wird.
+		#\todo Momentan ist dies die einzige identität, die von diesem Programm genutzt wird.
 		#"""
 
 		#if self.__identities[0] != identity:
@@ -535,21 +540,22 @@ class StorageCharacter(QObject):
 			self.__modified = sw
 
 
-	def clearUnusableTraits(self, species):
-		"""
-		Beim Wechsel der Spezies werden zahlreiche Eigenschaften für den Charakter unnutzbar. Diese werden auf den Wert 0 gesetzt.
+	# Unerwünschte Funktion.
+	#def clearUnusableTraits(self, species):
+		#"""
+		#Beim Wechsel der Spezies werden zahlreiche Eigenschaften für den Charakter unnutzbar. Diese werden auf den Wert 0 gesetzt.
 
-		\todo Möglicherweise will ich das garnicht. Dann kan ich beim Zurücksetzen der Spezies wieder die zuvor gewählten Powers darstellen. Es muß natürlich darauf geachtet werden, daß beim Speichern nur eigenschaft der richtigen Spezies gespeichert werden und auf dem Charakterbogen auch nur die verwendbaren Werte auftauchen.
-		"""
+		#\todo Möglicherweise will ich das garnicht. Dann kan ich beim Zurücksetzen der Spezies wieder die zuvor gewählten Powers darstellen. Es muß natürlich darauf geachtet werden, daß beim Speichern nur eigenschaft der richtigen Spezies gespeichert werden und auf dem Charakterbogen auch nur die verwendbaren Werte auftauchen.
+		#"""
 
-		## Es müssen nur bei ein paar Typen die Eigenschaft durchsucht werden.
-		typesToClear = ( "Merit", "Flaw", "Power", )
-		for typ in typesToClear:
-			for item in self.__traits[typ]:
-				for subitem in self.__traits[typ][item].values():
-					if subitem.species and subitem.species != species and subitem.value != 0:
-						#Debug.debug("Setze {} auf 0.".format(subitem.name))
-						subitem.value = 0
+		### Es müssen nur bei ein paar Typen die Eigenschaft durchsucht werden.
+		#typesToClear = ( "Merit", "Flaw", "Power", )
+		#for typ in typesToClear:
+			#for item in self.__traits[typ]:
+				#for subitem in self.__traits[typ][item].values():
+					#if subitem.species and subitem.species != species and subitem.value != 0:
+						##Debug.debug("Setze {} auf 0.".format(subitem.name))
+						#subitem.value = 0
 
 
 	def checkPrerequisites(self, trait):

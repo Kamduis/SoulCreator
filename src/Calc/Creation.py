@@ -72,6 +72,8 @@ class Creation(QObject):
 	def calcPoints( self, trait ):
 		"""
 		Berechnet die noch verfügbaren Punkte.
+
+		\note Beim Abzählen, der bereits verbrauchten Punkte werden nur Eigenschaften beachtet, die auch der aktuellen Spezies des Charakters angehören. Damit können bspw. Punkte für die Kräfte eines Mages vergeben werden, dann kann man die Spezies ändern, frische Punkte für die Kräfte als Changeling vergeben und wieder auf den Mage wechseln und die ursprünglich dort vergebenen Punkte sind noch verfügbar. Beim Speichern allerdings sollten nur die Punkte der aktuellen Spezies beachtet werden, so daß dieser Effekt beim Laden natürlich nicht eintritt.
 		"""
 
 		## Herausfinden, welchem Typ diese Eigenschaft angehört.
@@ -94,17 +96,18 @@ class Creation(QObject):
 		for item in categories:
 			points = 0
 			for trait in self.__character.traits[typ][item].values():
-				# Alle Punkte über 4 kosten 2 Erschaffungspunkte
-				ans = trait.value - Config.creationTraitDouble
+				## Es werden nur Eigenschaften beachtet, die auch der aktuellen Spezies des Charakters angehören.
+				if not trait.species or trait.species == self.__character.species:
+					ans = trait.value - Config.creationTraitDouble
 
-				if ans < 0:
-					ans = 0
+					if ans < 0:
+						ans = 0
 
-				points += trait.value - ans
-				points += ans * 2
+					points += trait.value - ans
+					points += ans * 2
 
-				if trait.specialties:
-					specialtyPoints += len(trait.specialties)
+					if trait.specialties:
+						specialtyPoints += len(trait.specialties)
 
 			pointList.append(points)
 

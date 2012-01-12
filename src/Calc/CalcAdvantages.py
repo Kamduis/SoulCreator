@@ -142,7 +142,7 @@ class CalcAdvantages(QObject):
 		"""
 		Berechnung der Initiative des Charakters.
 
-		\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig.
+		\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
 		result = self.__attrDex.value + self.__attrCom.value + self.__meritFastReflexes.value
@@ -158,7 +158,7 @@ class CalcAdvantages(QObject):
 		"""
 		Berechnung der Geschwindigkeit des Charakters.
 
-		\todo Bislang nur von Strength und Dexterity abhängig.
+		\todo Bislang nur von Strength und Dexterity abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
 		result = self.__attrStr.value + self.__attrDex.value + 5 + self.__meritFleetOfFoot.value;
@@ -174,7 +174,7 @@ class CalcAdvantages(QObject):
 		"""
 		Berechnung der Defense
 
-		\todo Bislang nicht von der Spezies abhängig. Tiere haben stets das größere von Dex und Wits als Defense.
+		\todo Bislang nicht von der Spezies abhängig: Tiere sollten stets das größere von Dex und Wits als Defense haben.
 		"""
 
 		result = min( self.__attrWit.value, self.__attrDex.value )
@@ -208,8 +208,6 @@ class CalcAdvantages(QObject):
 	def calcWillpower(self):
 		"""
 		Berechnung der Willenskraft.
-
-		\note der Übergebene Wert wird ignoriert. Stattdessen wird alles was man braucht direkt aus dem Charakterspeicher genommen.
 		"""
 
 		result = self.__attrRes.value + self.__attrCom.value

@@ -523,48 +523,6 @@ class StorageTemplate(QObject):
 #}
 
 
-#int StorageTemplate::traitMax( cv_Species::Species species, int value ) {
-	#if( species == cv_Species::Human ) {
-		#return Config::traitMax;
-	#} else {
-		#for( int i = 0; i < v_superEffects.count(); ++i ) {
-			#if( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
-				#return v_superEffects.at( i ).traitMax;
-			#}
-		#}
-	#}
-#}
-
-#int StorageTemplate::fuelMax( cv_Species::Species species, int value ) {
-	#if( species == cv_Species::Human ) {
-		#return 0;
-	#} else {
-		#for( int i = 0; i < v_superEffects.count(); ++i ) {
-			#if( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
-				#return v_superEffects.at( i ).fuelMax;
-			#}
-		#}
-	#}
-#}
-
-#int StorageTemplate::fuelPerTurn( cv_Species::Species species, int value ) {
-	#if( species == cv_Species::Human ) {
-		#return 0;
-	#} else {
-		#for( int i = 0; i < v_superEffects.count(); ++i ) {
-			#if( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
-				#return v_superEffects.at( i ).fuelPerTurn;
-			#}
-		#}
-	#}
-#}
-
-
-#cv_CreationPointsList* StorageTemplate::creationPoints() {
-	#return &v_creationPointsList;
-#}
-
-
 	def appendCharacteristic( self, typ, trait ):
 		"""
 		Fügt eine Charakteristik (Tugend oder Laster) zu der entsprechenden Liste hinzu.

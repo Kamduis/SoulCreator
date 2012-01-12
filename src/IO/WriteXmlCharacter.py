@@ -104,9 +104,9 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 			for subitem in self.__character.traits[item]:
 				startElementWritten_subitem = False
 				for subsubitem in self.__character.traits[item][subitem].values():
-					# Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-					if ( subsubitem.value != 0 ):
-						# Soabld die erste Eigenschaft mit einem Wert != 0 auftaucht, muß das Startelement geschrieben werden.
+					## Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist und sie für die aktuell gewählte Spezies zur Verfügung stehen.
+					if ( subsubitem.value != 0 and (not subsubitem.species or subsubitem.species == self.__character.species) ):
+						## Soabld die erste Eigenschaft mit einem Wert != 0 auftaucht, muß das Startelement geschrieben werden.
 						if not startElementWritten_item:
 							try:
 								self.writeStartElement( item )
@@ -138,10 +138,10 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 						#}
 
 						self.writeEndElement()
-				# Das Endelement taucht natürlich nur auf, wenn auch ein Startelement existiert.
+				# Das Endelement taucht natürlich nur auf, wenn auch ein zugehöriges Startelement existiert.
 				if startElementWritten_subitem:
 					self.writeEndElement()
-			# Das Endelement taucht natürlich nur auf, wenn auch ein Startelement existiert.
+			# Das Endelement taucht natürlich nur auf, wenn auch ein zugehöriges Startelement existiert.
 			if startElementWritten_item:
 				self.writeEndElement()
 

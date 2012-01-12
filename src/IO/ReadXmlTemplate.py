@@ -24,12 +24,13 @@ from __future__ import division, print_function
 
 #import traceback
 
-from PySide.QtCore import QObject, QFile
+from PySide.QtCore import QObject, QFile, Signal
 
 from src.Config import Config
 from src import Error
 from ReadXml import ReadXml
 from src.Tools import ListTools
+from src.Error import ErrXmlParsing, ErrXmlOldVersion
 from src.Debug import Debug
 
 
@@ -41,6 +42,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 	Diese Klasse dient dazu einen möglichst simplen Zugriff auf die Eigenschaften der WoD-Charaktere zu bieten. Dazu werden die Eigenschaften und all ihre Zusatzinformationen aus den xml-Dateien gelesen und in Listen gespeichert.
 	"""
+
+
+	exceptionRaised = Signal(str, bool)
+
 
 	__templateFiles = (
 		#"resources/xml/base.xml",
@@ -81,9 +86,11 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 		Die erste Ebene in der Abarbeitung des XML-Baumes. Kontrolliert, ob es sich um eine Zuässige Template-Datei für dieses Programm handelt und gibt dann die Leseoperation an readSoulCreator() weiter.
 
-		\exception ErrXmlVersion Die XML-DaTei hat die falsche Version.
+		\exception ErrXmlTooOldVersion Die XML-Datei hat die falsche Version.
 
-		\todo Momentan wird trotz Argument immer nur die basis-Datei abgearbeitet.
+		\exception ErrXmlOldVersion Die XML-Datei hat die falsche Version.
+
+		\exception ErrXmlParsing Beim Parsen der XML-Datei ist ein Fehler aufgetreten.
 		"""
 
 		self.openFile( device )
@@ -99,21 +106,19 @@ class ReadXmlTemplate(QObject, ReadXml):
 				try:
 					self.checkXmlVersion( elementName, elementVersion )
 					self.readSoulCreator()
-				except Error.ErrXmlOldVersion as e:
-					raise Error.ErrXmlOldVersion( e.message, e.description )
+				except ErrXmlOldVersion as e:
+					messageText = self.tr("While opening the template file {}, the following problem arised:\n{} {}\nIt appears, that the file will be importable, so the process will be continued but errors may occur.".format(device.fileName(), e.message, e.description))
+					self.exceptionRaised.emit(messageText, e.critical)
 					self.readSoulCreator()
 
 
 		if( self.hasError() ):
-			#Debug.debug("Error!")
 			raise Error.ErrXmlParsing( device.fileName(), self.errorString() )
 
 
 	def readSoulCreator(self):
 		"""
 		Die zweite Ebene des XML-Baumes wird einegelesen. Es wird gespeichert, für welche Spezies dieser Zweig vorgesehen ist. Daraufhin wird die Arbeit an readTree() weitergegeben.
-
-		\exception ErrXmlError Ist das XML_Dokument fehlerhaft, wird diese Exception mit dem passenden Fehlertext geworfen.
 		"""
 
 		while( not self.atEnd() ):
@@ -365,7 +370,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				if( self.name() == "item" ):
 					severe = self.attributes().value("name")
 					derangements.append(severe)
-					Debug.debug("Hänge Geistesstörung {severe} and {mild} an.".format(mild=mildDerangement, severe=severe))
+					#Debug.debug("Hänge Geistesstörung {severe} and {mild} an.".format(mild=mildDerangement, severe=severe))
 					self.readUnknownElement()
 				else:
 					self.readUnknownElement()

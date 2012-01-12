@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import QSize
-from PySide.QtGui import QColor
+#from PySide.QtGui import QColor
 
 
 
@@ -74,7 +74,7 @@ class Config():
 	traitCategorySpace = 10
 
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
-	traitMultipleMax = 3
+	traitMultipleMax = 4
 
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 	#const int Config::displayTimeout = 10000
@@ -213,7 +213,7 @@ class Config():
 	)
 	attributeSorts = ( u"Power", u"Finesse", u"Resistance", )
 
-	## Die unterschieldichen Gestalten der Werwölfe.
+	## Die unterschiedlichen Gestalten der Werwölfe.
 	shapesWerewolf = (
 		"Hishu",
 		"Dalu",
@@ -244,15 +244,6 @@ class Config():
 		"""
 
 		return "{}.{}.{}".format(Config.programVersionMajor, Config.programVersionMinor, Config.programVersionChange)
-
-
-	@staticmethod
-	def color(colorName):
-		"""
-		Gibt die Farbe, deren Namen bekannt ist, als QColor zurück.
-		"""
-
-		return QColor( colorName )
 
 
 	@staticmethod
