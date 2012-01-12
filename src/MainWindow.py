@@ -641,18 +641,20 @@ class MainWindow(QMainWindow):
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
 
-		#if GlobalState.isDebug:
-			## Lädt automatisch den Charakter aus testExport.chr
-			#self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
-			##self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
-			#self.__character.setModified( False )
+		if GlobalState.isDebug:
+			# Lädt automatisch den Charakter aus testExport.chr
+			self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
+			#self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
+			self.__character.setModified( False )
 
 		# Wenn Unterverzeichnis nicht existiert, erstelle es
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
-		#filePath = ["{}/untitled.pdf".format(savePath), ""]
+		if GlobalState.isDebug:
+			filePath = ["{}/untitled.pdf".format(savePath), ""]
+		else:
+			filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):

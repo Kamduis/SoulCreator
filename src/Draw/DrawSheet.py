@@ -22,6 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import math
 import copy
 
 from PySide.QtCore import Qt, QObject, QRectF, QRect
@@ -84,7 +85,7 @@ class DrawSheet(QObject):
 
 	def print(self):
 		"""
-		Hier wird gezeichnet und gedruckt.
+		Einstellungen festlegen.
 		"""
 
 		if self.__character.species == "Human":
@@ -130,45 +131,74 @@ class DrawSheet(QObject):
 			self.__fontSubHeadingHeight *= .7
 			self.__fontSubHeadingHeightAscent *= .7
 
-		self.__pageWidth = self.__printer.width() - 2 * self.__borderFrameX
-		self.__pageHeight = self.__printer.height() - 2 * self.__borderFrameY
-
 		self.__painter.begin( self.__printer )
 
 		self.__painter.setPen( self.__colorText )
 		self.__painter.setBrush( self.__colorFill )
 
-		image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
-		if ( self.__character.species == "Human" ):
-			pass
-		elif ( self.__character.species == "Changeling" ):
-			image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" )
-		elif ( self.__character.species == "Mage" ):
-			image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
-		elif ( self.__character.species == "Vampire" ):
-			image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
-		elif ( self.__character.species == "Werewolf" ):
-			image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
-		else:
-			raise ErrSpeciesNotExisting( self.__character.species )
+		## Damit der Charakterbogen auf die Seite paßt, muß diese auf die Papiergröße skaliert werden.
+		Debug.debug(self.__printer.width())
+		
+		# Die Seitendimensionen werden willkürlich festgelegt und später dann auf das Papier skaliert.
+		self.__paperWidth_defined = 800
+		self.__paperHeight_defined = int(self.__paperWidth_defined * math.sqrt(2))
+		self.__paperWidth_real = self.__printer.width()
+		self.__paperHeight_real = self.__printer.height()
+		#scaleFactor = min(self.__paperWidth_real / self.__paperWidth_defined, self.__paperHeight_real / self.__paperHeight_defined)
+		scaleFactorX = self.__paperWidth_real / self.__paperWidth_defined
+		scaleFactorY = self.__paperHeight_real / self.__paperHeight_defined
+		self.__painter.scale(scaleFactorX, scaleFactorY)
+
+		self.__pageWidth = self.__paperWidth_defined - 2 * self.__borderFrameX
+		self.__pageHeight = self.__paperHeight_defined - 2 * self.__borderFrameY
+
+		## Hiermit wird der Seitenrahmen eingehalten.
+		self.__painter.translate(self.__borderFrameX, self.__borderFrameY)
 
 		## Grundeinstellungen des Painters sind abgeschlossen. Dies ist der Zusatnd, zu dem wir zurückkehren, wenn wir painter.restore() aufrufen.
 		self.__painter.save()
 
+		## Das eigentliche Zeichnen des Charakterbogens.
+		self.drawSheet_1()
+		if self.__character.species != "Human":
+			self.__printer.newPage()
+			self.drawSheet_2()
+		
+		self.__painter.restore()
+
+		self.__painter.end()
+		
+
+	def drawSheet_1(self):
+		"""
+		Hier wird gezeichnet.
+		"""
+
+		self.__painter.save()
+
 		#if GlobalState.isDebug:
+			#image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
+			#if ( self.__character.species == "Human" ):
+				#pass
+			#elif ( self.__character.species == "Changeling" ):
+				#image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" )
+			#elif ( self.__character.species == "Mage" ):
+				#image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
+			#elif ( self.__character.species == "Vampire" ):
+				#image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
+			#elif ( self.__character.species == "Werewolf" ):
+				#image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
+			#else:
+				#raise ErrSpeciesNotExisting( self.__character.species )
+
 			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
 			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
 			#target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
 			#self.__painter.drawImage(target, image, source)
 
-		## Hiermit wird der Seitenrahmen eingehalten.
-		self.__painter.translate(self.__borderFrameX, self.__borderFrameY)
-
 		## Die Breite der Punktwerte hängt vom Eigenschaftshöchstwert für den Charakter ab.
 		self.__dotsWidth = self.__traitMax * (self.__dotDiameterH + self.__dotLineWidth)
 		self.__dotsWidthStandard = self.__traitMaxStandard * (self.__dotDiameterH + self.__dotLineWidth)
-
-		self.__painter.save()
 
 		self._drawBackground()
 
@@ -257,16 +287,16 @@ class DrawSheet(QObject):
 		self._drawFlaws(offsetH=posX, offsetV=posY, width=lengthX, height=60)
 
 		posX = 570
-		lengthX = 193
+		lengthX = self.__pageWidth - posX
 		if self.__character.species == "Changeling":
 			posX = 490
-			lengthX = 193
+			lengthX = self.__pageWidth - posX
 		elif self.__character.species == "Mage":
 			posX = 550
-			lengthX = 213
+			lengthX = self.__pageWidth - posX
 		elif self.__character.species == "Vampire":
 			posX = 490
-			lengthX = 210
+			lengthX = self.__pageWidth - posX
 		if self.__character.species != "Werewolf":
 			self._drawAdvantages(offsetH=posX, offsetV=210, width=lengthX)
 
@@ -319,9 +349,40 @@ class DrawSheet(QObject):
 
 		self.__painter.restore()
 
-		self.__painter.restore()
 
-		self.__painter.end()
+	def drawSheet_2(self):
+		"""
+		Hier wird gezeichnet.
+		"""
+
+		self.__painter.save()
+
+		#if GlobalState.isDebug:
+			#image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
+			#if ( self.__character.species == "Human" ):
+				#pass
+			#elif ( self.__character.species == "Changeling" ):
+				#image = QImage( ":/characterSheets/images/Charactersheet-Changeling-2.jpg" )
+			#elif ( self.__character.species == "Mage" ):
+				#image = QImage( ":/characterSheets/images/Charactersheet-Mage-2.jpg" )
+			#elif ( self.__character.species == "Vampire" ):
+				#image = QImage( ":/characterSheets/images/Charactersheet-Vampire-2.jpg" )
+			#elif ( self.__character.species == "Werewolf" ):
+				#image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-2.jpg" )
+			#else:
+				#raise ErrSpeciesNotExisting( self.__character.species )
+
+			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
+			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
+			#target = QRectF( 0.0, 0.0, float( self.__pageWidth ), float( self.__pageHeight ) )
+			#self.__painter.drawImage(target, image, source)
+
+		self._drawBackground()
+
+		if GlobalState.isDebug:
+			self.__drawGrid()
+
+		self.__painter.restore()
 
 
 	def __drawGrid(self):
