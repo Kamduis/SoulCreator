@@ -43,6 +43,7 @@ class StorageCharacter(QObject):
 	"""
 
 
+	eraChanged = Signal(str)
 	ageChanged = Signal(int)
 	speciesChanged = Signal(str)
 	virtueChanged = Signal(str)
@@ -51,12 +52,12 @@ class StorageCharacter(QObject):
 	factionChanged = Signal(str)
 	organisationChanged = Signal(str)
 	partyChanged = Signal(str)
+	descriptionChanged = Signal(str)
 	powerstatChanged = Signal(int)
 	moralityChanged = Signal(int)
 	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
 	#traitsChanged = Signal(object)
-	eraChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -94,6 +95,7 @@ class StorageCharacter(QObject):
 		self.__faction = ""
 		self.__organisation = ""
 		self.__party = ""
+		self.__description = ""
 		self.__powerstat = 0
 		self.__morality = 0
 		self.__armor = [0, 0]
@@ -146,6 +148,7 @@ class StorageCharacter(QObject):
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
 		self.__identity.identityChanged.connect(self.setModified)
+		self.eraChanged.connect(self.setModified)
 		# Unerwünschte Wirkung
 		#self.speciesChanged.connect(self.clearUnusableTraits)
 		self.speciesChanged.connect(self.setModified)
@@ -154,10 +157,11 @@ class StorageCharacter(QObject):
 		self.viceChanged.connect(self.setModified)
 		self.breedChanged.connect(self.setModified)
 		self.factionChanged.connect(self.setModified)
+		self.partyChanged.connect(self.setModified)
+		self.descriptionChanged.connect(self.setModified)
 		self.powerstatChanged.connect(self.setModified)
 		self.moralityChanged.connect(self.setModified)
 		self.armorChanged.connect(self.setModified)
-		self.eraChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -460,6 +464,21 @@ class StorageCharacter(QObject):
 			self.partyChanged.emit( party )
 
 
+	@property
+	def description(self):
+		"""
+		Name der Freundesgruppe des Charakters.
+		"""
+
+		return self.__description
+
+	@description.setter
+	def description( self, text ):
+		if ( self.__description != text ):
+			self.__description = text
+			self.descriptionChanged.emit( text )
+
+
 	def __getPowerstat(self):
 		"""
 		Gibt den Wert des Super-Attributs aus.
@@ -553,6 +572,7 @@ class StorageCharacter(QObject):
 		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
 		#self.breed = self.__storage.breeds(Config.initialSpecies)[0]
 		self.party = ""
+		self.description = ""
 
 		# Menschen haben eine Leere liste, also kann ich auch die Indizes nicht ändern.
 		#// setBreed(storage.breedNames(species()).at(0));

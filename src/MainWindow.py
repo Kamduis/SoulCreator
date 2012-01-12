@@ -110,6 +110,10 @@ class MainWindow(QMainWindow):
 	"""
 
 
+	### Wird eine neue Seite angewählt, wird dieses Signal mit der Indexnummer der neu angezeigten Seite versandt.
+	#pageChanged = Signal(int)
+
+
 	def __init__(self, parent=None):
 		QMainWindow.__init__(self, parent)
 
@@ -141,6 +145,7 @@ class MainWindow(QMainWindow):
 		self.ui.pushButton_previous.clicked.connect(self.ui.selectWidget_select.selectPrevious)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.ui.stackedWidget_traits.setCurrentIndex)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.setTabButtonState)
+		#self.ui.selectWidget_select.currentRowChanged.connect(self.pageChanged.emit)
 
 		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
 
@@ -229,6 +234,9 @@ class MainWindow(QMainWindow):
 
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
 		info.nameChanged.connect(self.setTitle)
+
+		### Wird eine neue Seite angewählt, muß das Info-Widget den Beschreibungstext speichern.
+		#self.pageChanged.connect(info.saveDescription)
 
 		#/**
 		#* \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite händisch festzulegen.
@@ -683,8 +691,8 @@ class MainWindow(QMainWindow):
 		printer = QPrinter()
 		printDialog = QPrintDialog( printer, self )
 
-		printer.setPaperSize( QPrinter.A4 )
-		printer.setFullPage( True )
+		#printer.setPaperSize( QPrinter.A4 )
+		#printer.setFullPage( True )
 
 		drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 

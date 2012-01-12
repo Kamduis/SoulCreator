@@ -70,13 +70,19 @@ class DrawSheet(QObject):
 		self.__dotsWidth = 0
 
 		## Die Farbe, mit welcher die Punkte auf dem Charakterbogen ausgefüllt werden.
-		self.__colorFill = QColor( 0, 0, 0 )
-		self.__colorEmpty = QColor( 255, 255, 255 )
-		self.__colorText = QColor( 0, 0, 0 )
+		self.__colorFill = QColor( "black" )
+		self.__colorEmpty = QColor( "white" )
+		self.__colorText = QColor( "black" )
 
 		## Schriften sind Abhängig von der Spezies.
 		self.__fontMain = QFont("TeX Gyre Pagella", 10)
-		self.__fontSans = QFont("TeX Gyre Heros" )
+		self.__fontMain_small = copy.copy(self.__fontMain)
+		self.__fontMain_small.setPointSize(8)
+		self.__fontSans = QFont("TeX Gyre Heros", 10 )
+		self.__fontSans_small = copy.copy(self.__fontSans)
+		self.__fontSans_small.setPointSize(8)
+		## Mit dieser Schriftart werden Werte eingetragen, die normalerweise der Spier einträgt.
+		self.__fontScript = QFont("Blokletters Balpen", 6 )
 		self.__headingSep = 4
 
 		self.__traitMax = self.__storage.maxTrait(self.__character.species, self.__character.powerstat)
@@ -111,7 +117,6 @@ class DrawSheet(QObject):
 		else:
 			#self.__fontHeading = QFont("HVD Edding 780", 14 )	# Tiere
 			raise ErrSpeciesNotExisting( character.species )
-		self.__fontScript = QFont("Blokletters Balpen", 6 )
 
 		## Die Schrifthöhe muß bei einigen Schriftarten Manuell festgelegt werden, damit Überschneidungen möglich sind.
 		fontHeadingMetrics = QFontMetrics(self.__fontHeading)
@@ -137,8 +142,6 @@ class DrawSheet(QObject):
 		self.__painter.setBrush( self.__colorFill )
 
 		## Damit der Charakterbogen auf die Seite paßt, muß diese auf die Papiergröße skaliert werden.
-		Debug.debug(self.__printer.width())
-		
 		# Die Seitendimensionen werden willkürlich festgelegt und später dann auf das Papier skaliert.
 		self.__paperWidth_defined = 800
 		self.__paperHeight_defined = int(self.__paperWidth_defined * math.sqrt(2))
@@ -176,31 +179,31 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		#if GlobalState.isDebug:
-			#image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
-			#if ( self.__character.species == "Human" ):
-				#pass
-			#elif ( self.__character.species == "Changeling" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" )
-			#elif ( self.__character.species == "Mage" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
-			#elif ( self.__character.species == "Vampire" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
-			#elif ( self.__character.species == "Werewolf" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
-			#else:
-				#raise ErrSpeciesNotExisting( self.__character.species )
-
-			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
-			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			#target = QRectF( 0.0, 0.0, float( self.__printer.width() ), float( self.__printer.height() ) )
-			#self.__painter.drawImage(target, image, source)
-
 		## Die Breite der Punktwerte hängt vom Eigenschaftshöchstwert für den Charakter ab.
 		self.__dotsWidth = self.__traitMax * (self.__dotDiameterH + self.__dotLineWidth)
 		self.__dotsWidthStandard = self.__traitMaxStandard * (self.__dotDiameterH + self.__dotLineWidth)
 
 		self._drawBackground()
+
+		if GlobalState.isDebug:
+			image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
+			if ( self.__character.species == "Human" ):
+				pass
+			elif ( self.__character.species == "Changeling" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" )
+			elif ( self.__character.species == "Mage" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
+			elif ( self.__character.species == "Vampire" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
+			elif ( self.__character.species == "Werewolf" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
+			else:
+				raise ErrSpeciesNotExisting( self.__character.species )
+
+			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
+			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
+			target = QRectF( 0.0 - self.__borderFrameX, 0.0 - self.__borderFrameY, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
+			self.__painter.drawImage(target, image, source)
 
 		if GlobalState.isDebug:
 			self.__drawGrid()
@@ -357,27 +360,27 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		#if GlobalState.isDebug:
-			#image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
-			#if ( self.__character.species == "Human" ):
-				#pass
-			#elif ( self.__character.species == "Changeling" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Changeling-2.jpg" )
-			#elif ( self.__character.species == "Mage" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Mage-2.jpg" )
-			#elif ( self.__character.species == "Vampire" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Vampire-2.jpg" )
-			#elif ( self.__character.species == "Werewolf" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-2.jpg" )
-			#else:
-				#raise ErrSpeciesNotExisting( self.__character.species )
-
-			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
-			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			#target = QRectF( 0.0, 0.0, float( self.__pageWidth ), float( self.__pageHeight ) )
-			#self.__painter.drawImage(target, image, source)
-
 		self._drawBackground()
+
+		if GlobalState.isDebug:
+			image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
+			if ( self.__character.species == "Human" ):
+				pass
+			elif ( self.__character.species == "Changeling" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Changeling-2.jpg" )
+			elif ( self.__character.species == "Mage" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Mage-2.jpg" )
+			elif ( self.__character.species == "Vampire" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Vampire-2.jpg" )
+			elif ( self.__character.species == "Werewolf" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-2.jpg" )
+			else:
+				raise ErrSpeciesNotExisting( self.__character.species )
+
+			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
+			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
+			target = QRectF( 0.0 - self.__borderFrameX, 0.0 - self.__borderFrameY, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
+			self.__painter.drawImage(target, image, source)
 
 		if GlobalState.isDebug:
 			self.__drawGrid()
@@ -980,9 +983,7 @@ class DrawSheet(QObject):
 		widthDots = number * (dotDiameter + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
 
 		self.__painter.save()
-		font = copy.copy(self.__fontMain)
-		font.setPointSize(int(0.8 * font.pointSize()))
-		self.__painter.setFont(font)
+		self.__painter.setFont(self.__fontMain_small)
 		
 		fontMetrics = QFontMetrics(self.__painter.font())
 
@@ -1056,11 +1057,14 @@ class DrawSheet(QObject):
 
 		self.__drawSquares(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, number=self.__storage.fuelMax(species=self.__character.species, powerstat=self.__character.powerstat), perRow=10, big=True)
 
+		self.__painter.save()
+		self.__painter.setFont(self.__fontMain_small)
 		text = "per Turn"
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontWidth = fontMetrics.boundingRect(text).width()
 
 		self.__painter.drawText(offsetH + width - fontWidth, offsetV + self.__fontHeadingHeight, fontWidth, 2 * fontMetrics.height(), Qt.AlignCenter, "{}\n{}".format(self.__storage.fuelPerTurn(species=self.__character.species, powerstat=self.__character.powerstat), text))
+		self.__painter.restore()
 
 		self.__painter.restore()
 

@@ -41,6 +41,8 @@ class InfoWidget(QWidget):
 	@brief Das Widget, in welchem wichtige Informationen dargestellt werden.
 
 	Spezies, Namen etc. des Charakters werden hier dargestellt.
+
+	\note Der Beschreibungstext wird nur gespeichert, wenn das Textfeld, indem er eingetragen wird, den Fokus verliert. Müßte aber ausreichen, da ihm bspw. schon das Speichern den Fokus raubt.
 	"""
 
 
@@ -65,6 +67,8 @@ class InfoWidget(QWidget):
 
 		self.ui.comboBox_era.addItems( Config.eras )
 
+		#self.ui.textEdit_description.setMinimumWidth(Config.textEditWidthMin)
+
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
 		self.ui.comboBox_era.currentIndexChanged[str].connect(self.changeEra)
 		self.ui.comboBox_gender.currentIndexChanged[str].connect(self.changeGender)
@@ -77,6 +81,8 @@ class InfoWidget(QWidget):
 		self.ui.lineEdit_faction.textEdited.connect(self.changeFaction)
 		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.changeOrganisation)
 		self.ui.lineEdit_party.textEdited.connect(self.changeParty)
+		#self.ui.textEdit_description.textChanged.connect(self.saveDescription)	## Kann ich nicht nutzen, da sonst der Curser bei jeder änderung an den Angang springt.
+		self.ui.textEdit_description.focusLost.connect(self.changeDescription)
 		self.__character.identities[0].nameChanged.connect(self.updateName)
 		self.__character.identities[0].genderChanged[str].connect(self.updateGender)
 		self.__character.eraChanged.connect(self.updateEra)
@@ -97,6 +103,7 @@ class InfoWidget(QWidget):
 		self.__character.speciesChanged.connect(self.repopulateOrganisations)
 		self.__character.partyChanged.connect(self.updateParty)
 		self.__character.speciesChanged.connect(self.updatePartyTitle)
+		self.__character.descriptionChanged.connect(self.updateDescription)
 		# Menschen können ihre Fraktion selbst eintragen und haben einige Angaben einfach nicht nötig.
 		self.__character.speciesChanged.connect(self.hideShowWidgets)
 
@@ -190,6 +197,14 @@ class InfoWidget(QWidget):
 		self.__character.party = name
 
 
+	def changeDescription( self ):
+		"""
+		Verändert den Beschreibungstext im Speicher.
+		"""
+
+		self.__character.description = self.ui.textEdit_description.toPlainText()
+
+
 	def updateName( self ):
 		"""
 		Aktualisiert die Anzeige des Namens.
@@ -201,6 +216,15 @@ class InfoWidget(QWidget):
 			nameStr = self.tr("Name")
 		self.ui.pushButton_name.setText( nameStr )
 		self.nameChanged.emit(nameDisplay)
+
+
+	def updateEra(self, era):
+		"""
+		Aktualisiert die Anzeige der Ära
+		"""
+
+		#Debug.debug("Verändere Anzeige der Ära auf {}".format(era))
+		self.ui.comboBox_era.setCurrentIndex(self.ui.comboBox_era.findText(era))
 
 
 	def updateGender( self, gender ):
@@ -310,13 +334,12 @@ class InfoWidget(QWidget):
 		self.ui.label_party.setText( "{}:".format(self.__storage.partyTitle(species)) )
 
 
-	def updateEra(self, era):
+	def updateDescription( self, text ):
 		"""
-		Aktualisiert die Anzeige der Ära
+		Aktualisiert die Anzeige des Beschreibungstextes.
 		"""
 
-		#Debug.debug("Verändere Anzeige der Ära auf {}".format(era))
-		self.ui.comboBox_era.setCurrentIndex(self.ui.comboBox_era.findText(era))
+		self.ui.textEdit_description.setPlainText( self.__character.description )
 
 
 	def repopulateVirtues(self, age):

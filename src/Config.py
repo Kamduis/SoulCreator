@@ -57,6 +57,9 @@ class Config():
 	selectIconSize = QSize(50,50)
 	selectWidgetWidth = 150
 
+	### Minimale Breite für textEdit-Felder, in denen mehrzeiliger Text eingegeben werden soll.
+	#textEditWidthMin = 200
+
 	# Vordefinierte Farben
 	##  Wichtige Textabschnitte
 	importantTextColor = "darkBlue"
