@@ -22,6 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import copy
+
 from PySide.QtCore import Qt, QObject, QRectF, QRect
 from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage, QFont, QFontDatabase, QFontMetrics
 
@@ -41,8 +43,6 @@ class DrawSheet(QObject):
 	\brief Führt das Drucken des Charakters aus.
 
 	Mit Hilfe dieser Klasse können die Charakterwerte auf Papier gebannt werden.
-
-	\todo Bei Werwölfen wird die Rites-Kraft noch nicht beim Zeichnen der Kräfte unter Renown berücksichtigt.
 	"""
 
 	def __init__(self, template, character, printer, parent=None):
@@ -279,30 +279,30 @@ class DrawSheet(QObject):
 			posY = 210
 		self._drawHealth(offsetH=posX, offsetV=posY, width=lengthX)
 
-		posY = 400
+		posY = 410
 		if self.__character.species == "Changeling":
-			posY = 360
+			posY = 370
 		elif self.__character.species == "Mage":
-			posY = 390
+			posY = 400
 		elif self.__character.species == "Vampire":
-			posY = 360
+			posY = 370
 		elif self.__character.species == "Werewolf":
-			posY = 290
+			posY = 300
 		self._drawWillpower(offsetH=posX, offsetV=posY, width=lengthX)
 
-		posY = 420
+		posY = 430
 		if self.__character.species == "Mage":
-			posY = 465
+			posY = 475
 		elif self.__character.species == "Werewolf":
-			posY = 360
+			posY = 370
 		if self.__character.species != "Human":
 			self._drawPowerstat(offsetH=posX, offsetV=posY, width=lengthX)
 
-		posY = 470
+		posY = 480
 		if self.__character.species == "Mage":
-			posY = 525
+			posY = 535
 		elif self.__character.species == "Werewolf":
-			posY = 425
+			posY = 435
 		if self.__character.species != "Human":
 			self._drawFuel(offsetH=posX, offsetV=posY, width=lengthX)
 
@@ -331,7 +331,7 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		fontLcl = self.__fontSans
+		fontLcl = copy.copy(self.__fontSans)
 		fontLcl.setPointSize(4)
 		self.__painter.setFont(fontLcl)
 		self.__painter.setRenderHint(QPainter.TextAntialiasing)
@@ -459,7 +459,7 @@ class DrawSheet(QObject):
 			],
 			[
 				u"Chronicle:",
-				u"Faction:",
+				"{}:".format(self.__storage.factionTitle(self.__character.species)),
 			],
 		]
 		textCharacter = [
@@ -473,7 +473,7 @@ class DrawSheet(QObject):
 			],
 			[
 				u"",
-				u"",
+				self.__character.faction,
 			],
 		]
 		if self.__character.species != "Human":
@@ -490,7 +490,7 @@ class DrawSheet(QObject):
 				],
 				[
 					"{}:".format(self.__storage.breedTitle(self.__character.species)),
-					"{}:".format(self.__storage.factionTitle(self.__character.species)),
+					text[2][1],
 					"{}:".format(self.__storage.organisationTitle(self.__character.species)),
 				],
 			]
@@ -507,7 +507,7 @@ class DrawSheet(QObject):
 				],
 				[
 					self.__character.breed,
-					self.__character.faction,
+					textCharacter[2][1],
 					self.__character.organisation,
 				],
 			]
@@ -591,7 +591,7 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		mainFont = self.__fontMain
+		mainFont = copy.copy(self.__fontMain)
 		mainFont.setWeight(QFont.Bold)
 		self.__painter.setFont(mainFont)
 		fontMetrics = QFontMetrics(self.__painter.font())
@@ -630,7 +630,7 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth / 3
 
-		mainFont = self.__fontMain
+		mainFont = copy.copy(self.__fontMain)
 		mainFont.setWeight(QFont.Normal)
 		self.__painter.setFont(mainFont)
 
@@ -649,7 +649,7 @@ class DrawSheet(QObject):
 					traitsToDisplay[item].append(trait)
 					traitCount += 1
 
-		fontMetrics = QFontMetrics(self.__fontMain)
+		fontMetrics = QFontMetrics(self.__painter.font())
 		if height:
 			textHeight = height - len(Config.mainCategories) * self.__fontHeadingHeight - (len(Config.mainCategories) - 1) * self.__headingSep
 			textHeight /= traitCount
@@ -693,7 +693,7 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth / 3
 
-		mainFont = self.__fontMain
+		mainFont = copy.copy(self.__fontMain)
 		mainFont.setWeight(QFont.Normal)
 		self.__painter.setFont(mainFont)
 
@@ -706,15 +706,13 @@ class DrawSheet(QObject):
 			for subitem in item.values():
 				if subitem.value > 0:
 					numOfTraits += 1
-		if numOfTraits < 1:
-			numOfTraits = 1
-		if height:
-			textHeightCalculated = (height - self.__fontHeadingHeight) / numOfTraits
-			if twocolumn:
-				## Bei Magiern und Werwölfen werden die Kräfte in zweo Spalten geschrieben, benötigen also nur die Halbe Höhe.
-				textHeightCalculated *= 2
-			if textHeightCalculated < textHeight:
-				textHeight = textHeightCalculated
+		if height and numOfTraits > 0:
+				textHeightCalculated = (height - self.__fontHeadingHeight) / numOfTraits
+				if twocolumn:
+					## Bei Magiern und Werwölfen werden die Kräfte in zweo Spalten geschrieben, benötigen also nur die Halbe Höhe.
+					textHeightCalculated *= 2
+				if textHeightCalculated < textHeight:
+					textHeight = textHeightCalculated
 
 		traitWidth = width
 		if twocolumn:
@@ -740,6 +738,13 @@ class DrawSheet(QObject):
 						self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=traitWidth, name=subitem[1].name, value=subitem[1].value)
 						j += 1
 
+		## Den freien Platz füllen wir mit leeren Zeilen, die der Spieler dann per Stift ausfüllen kann. Natürlich nur, wenn die Kräfte nicht zweispaltig aufgeführt sind.
+		if height and not twocolumn:
+			usedSpace = self.__fontHeadingHeight + numOfTraits * textHeight
+			while usedSpace < height - (.75 * textHeight):
+				self.__drawTrait(offsetH, offsetV + usedSpace, width=width, name="", value=0)
+				usedSpace += textHeight
+
 		if GlobalState.isDebug:
 			if not height:
 				height = self.__fontHeadingHeight + numOfTraits * textHeight
@@ -761,7 +766,7 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth / 3
 
-		mainFont = self.__fontMain
+		mainFont = copy.copy(self.__fontMain)
 		mainFont.setWeight(QFont.Normal)
 		self.__painter.setFont(mainFont)
 
@@ -770,16 +775,14 @@ class DrawSheet(QObject):
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
 		numOfTraits = 0
-		if height:
-			for item in self.__character.traits["Merit"].values():
-				for subitem in item.values():
-					if subitem.value > 0:
-						numOfTraits += 1
-			if numOfTraits < 1:
-				numOfTraits = 1
-			textHeightCalculated = (height - self.__fontHeadingHeight) / numOfTraits
-			if textHeightCalculated < textHeight:
-				textHeight = textHeightCalculated
+		for item in self.__character.traits["Merit"].values():
+			for subitem in item.values():
+				if subitem.value > 0:
+					numOfTraits += 1
+		if height and numOfTraits > 0:
+				textHeightCalculated = (height - self.__fontHeadingHeight) / numOfTraits
+				if textHeightCalculated < textHeight:
+					textHeight = textHeightCalculated
 
 		j = 0
 		for item in self.__character.traits["Merit"]:
@@ -789,8 +792,13 @@ class DrawSheet(QObject):
 				if (subitem[1].isAvailable and subitem[1].value > 0):
 					self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=width, name=subitem[1].name, value=subitem[1].value)
 					j += 1
-			if numOfTraits < 1:
-				numOfTraits = j
+
+		## Den freien Platz füllen wir mit leeren Zeilen, die der Spieler dann per Stift ausfüllen kann.
+		if height:
+			usedSpace = self.__fontHeadingHeight + numOfTraits * textHeight
+			while usedSpace < height - (.75 * textHeight):
+				self.__drawTrait(offsetH, offsetV + usedSpace, width=width, name="", value=0)
+				usedSpace += textHeight
 
 		if GlobalState.isDebug:
 			if not height:
@@ -813,7 +821,7 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth / 3
 
-		mainFont = self.__fontMain
+		mainFont = copy.copy(self.__fontMain)
 		mainFont.setWeight(QFont.Normal)
 		self.__painter.setFont(mainFont)
 
@@ -867,10 +875,9 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		font = self.__fontMain
-		self.__painter.setFont(font)
+		self.__painter.setFont(self.__fontMain)
 
-		fontMetrics = QFontMetrics(self.__fontMain)
+		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
 
 		verticalPos = offsetV
@@ -895,6 +902,8 @@ class DrawSheet(QObject):
 		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox aller Fertigkeiten.
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
 		\param width Die Breite der Fertigkeits-Spalte.
+
+		\todo Kinder haben andere Wundabzüge.
 		"""
 
 		self.__painter.save()
@@ -904,6 +913,24 @@ class DrawSheet(QObject):
 
 		self.__drawHeading(offsetH, offsetV, width, self.tr("Health"))
 		self.__drawCenterDots(offsetH, offsetV + self.__fontHeadingHeight + self.__textDotSep, width=width, number=self.__calc.calcHealth(), squares=True, big=True)
+
+		dotDiameter = self.__dotBigDiameterH
+		number = self.__calc.calcHealth()
+		widthDots = number * (dotDiameter + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
+
+		self.__painter.save()
+		font = copy.copy(self.__fontMain)
+		font.setPointSize(int(0.8 * font.pointSize()))
+		self.__painter.setFont(font)
+		
+		fontMetrics = QFontMetrics(self.__painter.font())
+
+		# Die letzten drei Gesundheitsstufen haben Wundabzüge.
+		for i in xrange(1, 4):
+			modifier = u"−{}".format(4 - i)
+			self.__painter.drawText(offsetH + (width - widthDots) / 2 + widthDots - i * (dotDiameter + self.__dotSep), offsetV + self.__fontHeadingHeight + self.__textDotSep + dotDiameter + self.__dotSep + fontMetrics.ascent(), dotDiameter, fontMetrics.ascent(), Qt.AlignHCenter, modifier)
+
+		self.__painter.restore()
 
 		self.__painter.restore()
 
@@ -993,8 +1020,7 @@ class DrawSheet(QObject):
 
 		self.__drawHeading(offsetH, offsetV, width, self.__storage.moralityName(species))
 
-		font = self.__fontMain
-		self.__painter.setFont(font)
+		self.__painter.setFont(self.__fontMain)
 
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3

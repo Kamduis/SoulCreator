@@ -74,6 +74,7 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.changeVice)
 		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.changeBreed)
 		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.changeFaction)
+		self.ui.lineEdit_faction.textEdited.connect(self.changeFaction)
 		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.changeOrganisation)
 		self.ui.lineEdit_party.textEdited.connect(self.changeParty)
 		self.__character.identities[0].nameChanged.connect(self.updateName)
@@ -96,6 +97,8 @@ class InfoWidget(QWidget):
 		self.__character.speciesChanged.connect(self.repopulateOrganisations)
 		self.__character.partyChanged.connect(self.updateParty)
 		self.__character.speciesChanged.connect(self.updatePartyTitle)
+		# Menschen können ihre Fraktion selbst eintragen und haben einige Angaben einfach nicht nötig.
+		self.__character.speciesChanged.connect(self.hideShowWidgets)
 
 
 	def openNameDialog(self):
@@ -360,3 +363,19 @@ class InfoWidget(QWidget):
 
 		self.ui.comboBox_organisation.clear()
 		self.ui.comboBox_organisation.addItems(self.__storage.organisations(species))
+
+
+	def hideShowWidgets(self, species):
+
+		visible = True
+		if species == "Human":
+			visible = False
+			
+		self.ui.label_breed.setVisible(visible)
+		self.ui.comboBox_breed.setVisible(visible)
+		self.ui.label_organisation.setVisible(visible)
+		self.ui.comboBox_organisation.setVisible(visible)
+
+		self.ui.comboBox_faction.setVisible( visible )
+		self.ui.lineEdit_faction.setVisible( not visible )
+		self.ui.lineEdit_faction.clear()
