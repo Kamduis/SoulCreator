@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, QXmlStreamWriter, QIODevice
+from PySide.QtCore import QObject, QXmlStreamWriter, Qt, QIODevice
 #from PySide.QtGui import QColor
 
 from src.Config import Config
@@ -74,7 +74,11 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeAttribute( "gender", self.__character.identities[0].gender )
 		self.writeEndElement()
 		self.writeEndElement()
-		self.writeTextElement( "age", unicode(self.__character.age) )
+		self.writeStartElement( "dates" )
+		self.writeAttribute( "birth", self.__character.dateBirth.toString(Config.dateFormat) )
+		self.writeAttribute( "becoming", self.__character.dateBecoming.toString(Config.dateFormat) )
+		self.writeAttribute( "game", self.__character.dateGame.toString(Config.dateFormat) )
+		self.writeEndElement()
 		self.writeTextElement( "virtue", self.__character.virtue )
 		self.writeTextElement( "vice", self.__character.vice )
 		self.writeTextElement( "breed", self.__character.breed )

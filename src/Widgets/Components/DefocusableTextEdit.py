@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import Signal
-from PySide.QtGui import QTextEdit
+from PySide.QtGui import QPlainTextEdit
 
 #from src.Config import Config
 from src.Debug import Debug
@@ -31,7 +31,7 @@ from src.Debug import Debug
 
 
 
-class DefocusableTextEdit(QTextEdit):
+class DefocusableTextEdit(QPlainTextEdit):
 	"""
 	\brief Mit dem QTextEdit identisch, allerdings wird ein Signal ausgesandt, wenn dieses Widget den Fokus verliert.
 	"""
@@ -41,7 +41,7 @@ class DefocusableTextEdit(QTextEdit):
 
 
 	def __init__(self, text="", parent=None):
-		QTextEdit.__init__(self, text, parent)
+		QPlainTextEdit.__init__(self, text, parent)
 
 
 	def focusOutEvent(self, event):

@@ -22,18 +22,19 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QSize
+from PySide.QtCore import Qt, QSize
 #from PySide.QtGui import QColor
 
 
 
 
-class Config():
+class Config(object):
 	"""
 	@brief Konfigurationsklasse des Programms.
 
 	Hier werden die Konfigurationseinstellungen gespeichert.
 	"""
+
 
 	# Programmdaten
 	programName = "SoulCreator"
@@ -53,6 +54,9 @@ class Config():
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"
 
+	# Format von Daten bei der Umwandlung in Strings
+	dateFormat = Qt.ISODate
+
 	# Einstellungen für das Auswahl-Widget
 	selectIconSize = QSize(50,50)
 	selectWidgetWidth = 150
@@ -69,6 +73,9 @@ class Config():
 
 	## Warnfarbe, wenn zuwenige Punkte vergeben wurden.
 	pointsPositiveColor = "blue"
+
+	##  Deaktivierte textabschnitte
+	deactivatedTextColor = "darkgrey"
 
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
 	vSpace = 5
@@ -137,9 +144,6 @@ class Config():
 	## Schriftgröße für den kleinen Text auf dem ausdruckbaren Charakterbogen.
 	#const qreal Config::textSizeFactorPrintSmall = 0.33
 
-	## Die Schriftart, welche für den exportierten Charakter verwendet wird.
-	#QFont Config::exportFont = QFont()
-
 	## Die Schriftart, welche für das Programm verwendet wird.
 	#QFont Config::windowFont = QFont()
 
@@ -151,7 +155,6 @@ class Config():
 
 	## Das Alter ab welchem der Charakter /kein/ Kind mehr ist.
 	adultAge = 13
-
 
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (
@@ -225,6 +228,10 @@ class Config():
 		"Urhan",
 	)
 
+
+	## Folgende Werte können über den Einstellungsdialog verändert werden und sollten beim Beenden des Programms gespeichert und beim Starten geladen werden. Die übergebenen Werte sind die Standartwerte, wenn im Einstellungsdialog nichts verändert wird.
+	# Zur Altersberechnung Kalender verwenden
+	calendarForAgeCalculation = True
 
 
 	@staticmethod

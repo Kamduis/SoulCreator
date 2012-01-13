@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>680</width>
-    <height>627</height>
+    <width>442</width>
+    <height>504</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,185 +22,191 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <layout class="QFormLayout" name="formLayout">
-       <property name="formAlignment">
-        <set>Qt::AlignJustify|Qt::AlignTop</set>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Species:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="comboBox_species"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Gender:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="comboBox_gender"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Age:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="spinBox_age">
-         <property name="minimum">
-          <number>6</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Virtue:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="comboBox_virtue"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Vice:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="comboBox_vice"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_breed">
-         <property name="text">
-          <string>Breed:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="comboBox_breed"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_faction">
-         <property name="text">
-          <string>Faction:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="comboBox_organisation"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_organisation">
-         <property name="text">
-          <string>Organisation:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_party">
-         <property name="text">
-          <string>Party:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLineEdit" name="lineEdit_party"/>
-       </item>
-       <item row="6" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QComboBox" name="comboBox_faction"/>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_faction"/>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <layout class="QFormLayout" name="formLayout_2">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Era:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="comboBox_era"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <layout class="QFormLayout" name="formLayout_3">
+    <layout class="QGridLayout" name="layout_main">
      <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Species:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Gender:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="comboBox_gender"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_dateBirth">
+       <property name="text">
+        <string>Birthday:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateEdit" name="dateEdit_dateBirth"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Age:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="label_age">
+       <property name="text">
+        <string>00</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_dateBecoming">
+       <property name="text">
+        <string>Becoming:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QDateEdit" name="dateEdit_dateBecoming"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_ageBecoming_label">
+       <property name="text">
+        <string>Age at Becoming:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Virtue:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QComboBox" name="comboBox_virtue"/>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLabel" name="label_ageBecoming">
+       <property name="text">
+        <string>00</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Vice:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QComboBox" name="comboBox_vice"/>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_breed">
+       <property name="text">
+        <string>Breed:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QComboBox" name="comboBox_breed"/>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_faction">
+       <property name="text">
+        <string>Faction:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QComboBox" name="comboBox_faction"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_faction"/>
+       </item>
+      </layout>
+     </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_organisation">
+       <property name="text">
+        <string>Organisation:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QComboBox" name="comboBox_organisation"/>
+     </item>
+     <item row="11" column="0">
+      <widget class="QLabel" name="label_party">
+       <property name="text">
+        <string>Party:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QLineEdit" name="lineEdit_party"/>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Date of Game:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QDateEdit" name="dateEdit_dateGame"/>
+     </item>
+     <item row="12" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Description:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="12" column="1" colspan="4">
       <widget class="DefocusableTextEdit" name="textEdit_description"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboBox_species"/>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Era:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QComboBox" name="comboBox_era"/>
+     </item>
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>10</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
   </layout>
-  <zorder>pushButton_name</zorder>
-  <zorder>textEdit_description</zorder>
-  <zorder>label_6</zorder>
-  <zorder>textEdit_description</zorder>
-  <zorder></zorder>
-  <zorder>verticalSpacer_2</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -209,6 +215,11 @@
    <header>src/Widgets/Components/DefocusableTextEdit</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>pushButton_name</tabstop>
+  <tabstop>comboBox_faction</tabstop>
+  <tabstop>lineEdit_faction</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

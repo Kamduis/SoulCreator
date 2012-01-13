@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Signal, Slot
+from PySide.QtCore import QObject, QDate, Signal, Slot
 
 from src.Config import Config
 from src.Datatypes.Trait import Trait
@@ -44,7 +44,9 @@ class StorageCharacter(QObject):
 
 
 	eraChanged = Signal(str)
-	ageChanged = Signal(int)
+	dateBirthChanged = Signal(object)
+	dateBecomingChanged = Signal(object)
+	dateGameChanged = Signal(object)
 	speciesChanged = Signal(str)
 	virtueChanged = Signal(str)
 	viceChanged = Signal(str)
@@ -58,6 +60,8 @@ class StorageCharacter(QObject):
 	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
 	#traitsChanged = Signal(object)
+	ageChanged = Signal(int)
+	ageBecomingChanged = Signal(int)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -87,7 +91,10 @@ class StorageCharacter(QObject):
 		self.__storage = template
 
 		self.__modified = False
+		self.__dateBirth = None
+		self.__dateBecoming = None
 		self.__age = 0
+		self.__ageBecoming = 0
 		self.__species = ""
 		self.__virtue = ""
 		self.__vice = ""
@@ -105,6 +112,11 @@ class StorageCharacter(QObject):
 		self.__identities = [self.__identity]
 
 		self.__derangements = []
+
+		self.dateBirthChanged.connect(self.__calcAge)
+		self.dateGameChanged.connect(self.__calcAge)
+		self.dateBecomingChanged.connect(self.__calcAgeBecoming)
+		self.dateGameChanged.connect(self.__calcAgeBecoming)
 
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
@@ -149,6 +161,9 @@ class StorageCharacter(QObject):
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
 		self.__identity.identityChanged.connect(self.setModified)
 		self.eraChanged.connect(self.setModified)
+		self.dateBirthChanged.connect(self.setModified)
+		self.dateBecomingChanged.connect(self.setModified)
+		self.dateGameChanged.connect(self.setModified)
 		# Unerwünschte Wirkung
 		#self.speciesChanged.connect(self.clearUnusableTraits)
 		self.speciesChanged.connect(self.setModified)
@@ -186,25 +201,52 @@ class StorageCharacter(QObject):
 	era = property(__getEra, __setEra)
 
 
-	def __getAge(self):
+	@property
+	def dateBirth(self):
 		"""
-		Gibt das Alter des Charakters aus.
+		Geburtsdatum des Charakters.
+		"""
+
+		return self.__dateBirth
+
+	@dateBirth.setter
+	def dateBirth( self, date ):
+		if ( self.__dateBirth != date ):
+			self.__dateBirth = date
+			self.dateBirthChanged.emit( date )
+
+
+	@property
+	def dateBecoming(self):
+		"""
+		Das Datum, an welchem sich der Charakters zu einem übernatürlichen Wesen veränderte.
+		"""
+
+		return self.__dateBecoming
+
+	@dateBecoming.setter
+	def dateBecoming( self, date ):
+		if ( self.__dateBecoming != date ):
+			self.__dateBecoming = date
+			self.dateBecomingChanged.emit( date )
+
+
+	@property
+	def age(self):
+		"""
+		Alter des Charakters.
 		"""
 
 		return self.__age
 
-	def __setAge( self, age ):
+
+	@property
+	def ageBecoming(self):
 		"""
-		Legt das Alter des Charakters fest.
+		Alter des Charakters bei der Veränderung.
 		"""
 
-		if ( self.__age != age ):
-			self.__age = age
-			#Debug.debug("Alter verändert zu {}".format(age) )
-			self.ageChanged.emit( age )
-
-	age = property(__getAge, __setAge)
-
+		return self.__ageBecoming
 
 	def __getSpecies(self):
 		"""
@@ -275,6 +317,33 @@ class StorageCharacter(QObject):
 
 	traits = property(__getTraits)
 
+
+	def __calcAge(self):
+		"""
+		Zur Berechnung des Alters werden Geburtstag und Datum im Spiel herangezogen.
+		"""
+
+		age = self.dateGame.year() - self.dateBirth.year()
+		if self.dateGame.month() < self.dateBirth.month() or (self.dateGame.month() == self.dateBirth.month() and self.dateGame.day() < self.dateBirth.day()):
+			age -= 1
+
+		if self.__age != age:
+			self.__age = age
+			self.ageChanged.emit(age)
+
+
+	def __calcAgeBecoming(self):
+		"""
+		Zur Berechnung des Alters zum Zeitpunkt der Veränderung (Erwachen, Kuß, erste Verwandlung etc.) werden Geburtsdatum und Datum der Veränderung genutzt.
+		"""
+
+		age = self.dateBecoming.year() - self.dateBirth.year()
+		if self.dateBecoming.month() < self.dateBirth.month() or (self.dateBecoming.month() == self.dateBirth.month() and self.dateBecoming.day() < self.dateBirth.day()):
+			age -= 1
+
+		if self.__ageBecoming != age:
+			self.__ageBecoming = age
+			self.ageBecomingChanged.emit(age)
 
 
 	#def addTrait( self, typ, category, trait ):
@@ -556,8 +625,11 @@ class StorageCharacter(QObject):
 		# Zeitalter festlegen.
 		self.era = Config.eras[0]
 
-		# Standardalter festlegen.
-		self.age = Config.initialAge
+		## Anfangsdatum setzen.
+		today = QDate.currentDate()
+		self.dateGame = today
+		self.dateBirth = QDate(today.year() - Config.initialAge, today.month(), today.day())
+		self.dateBecoming = QDate(today.year() - Config.adultAge, today.month(), today.day())
 
 		# Löschen aller Identitäten.
 		self.__identity.reset()

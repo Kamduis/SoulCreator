@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Signal
+from PySide.QtCore import QObject, QDate, Signal
 #from PySide.QtGui import QColor
 
 from src.Config import Config
@@ -104,8 +104,11 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.species = self.readElementText()
 				elif ( elementName == "identities" ):
 					self.readIdentities()
-				elif ( elementName == "age" ):
-					self.__character.age = int(self.readElementText())
+				elif ( elementName == "dates" ):
+					self.__character.dateBirth = QDate.fromString(self.attributes().value( "birth" ), Config.dateFormat)
+					self.__character.dateBecoming = QDate.fromString(self.attributes().value( "becoming" ), Config.dateFormat)
+					self.__character.dateGame = QDate.fromString(self.attributes().value( "game" ), Config.dateFormat)
+					self.readUnknownElement()
 				elif ( elementName == "virtue" ):
 					self.__character.virtue = self.readElementText()
 				elif ( elementName == "vice" ):

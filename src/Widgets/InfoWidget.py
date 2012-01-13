@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QIcon#, QGridLayout, QLabel, QPushButton, QComboBox, QSpinBox
+from PySide.QtCore import Qt, QDate, Signal
+from PySide.QtGui import QWidget, QIcon, QLabel
 
 from src.Config import Config
 from src.Datatypes.Identity import Identity
@@ -58,6 +58,15 @@ class InfoWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
+		# Die zweite Spalte darf sich strecken.
+		self.ui.layout_main.setColumnStretch(1, 1)
+		# Labels werden rechtsbündig gesetzt.
+		for i in range(self.ui.layout_main.columnCount())[::3]:
+			for j in xrange(self.ui.layout_main.rowCount()):
+				item = self.ui.layout_main.itemAtPosition(j, i)
+				if item != None and type(item.widget()) == QLabel:
+					item.widget().setAlignment(Qt.AlignRight)
+
 		for item in Config.genders:
 			self.ui.comboBox_gender.addItem( QIcon(item[1]), item[0] )
 
@@ -67,12 +76,13 @@ class InfoWidget(QWidget):
 
 		self.ui.comboBox_era.addItems( Config.eras )
 
-		#self.ui.textEdit_description.setMinimumWidth(Config.textEditWidthMin)
-
+		## Speichern der vom Benutzer veränderten Werte
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
 		self.ui.comboBox_era.currentIndexChanged[str].connect(self.changeEra)
 		self.ui.comboBox_gender.currentIndexChanged[str].connect(self.changeGender)
-		self.ui.spinBox_age.valueChanged[int].connect(self.changeAge)
+		self.ui.dateEdit_dateBirth.dateChanged.connect(self.changeDateBirth)
+		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.changeDateBecoming)
+		self.ui.dateEdit_dateGame.dateChanged.connect(self.changeDateGame)
 		self.ui.comboBox_species.currentIndexChanged[str].connect(self.changeSpecies)
 		self.ui.comboBox_virtue.currentIndexChanged[str].connect(self.changeVirtue)
 		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.changeVice)
@@ -83,15 +93,19 @@ class InfoWidget(QWidget):
 		self.ui.lineEdit_party.textEdited.connect(self.changeParty)
 		#self.ui.textEdit_description.textChanged.connect(self.saveDescription)	## Kann ich nicht nutzen, da sonst der Curser bei jeder änderung an den Angang springt.
 		self.ui.textEdit_description.focusLost.connect(self.changeDescription)
+
+		## Aktualisieren der Darstellung der im Charakter veränderten Werte.
 		self.__character.identities[0].nameChanged.connect(self.updateName)
 		self.__character.identities[0].genderChanged[str].connect(self.updateGender)
 		self.__character.eraChanged.connect(self.updateEra)
+		self.__character.dateBirthChanged.connect(self.updateDateBirth)
+		self.__character.dateBecomingChanged.connect(self.updateDateBecoming)
+		self.__character.dateGameChanged.connect(self.updateDateGame)
 		self.__character.ageChanged.connect(self.updateAge)
+		self.__character.ageBecomingChanged.connect(self.updateAgeBecoming)
 		self.__character.speciesChanged.connect(self.updateSpecies)
 		self.__character.virtueChanged.connect(self.updateVirtue)
-		self.__character.ageChanged.connect(self.repopulateVirtues)
 		self.__character.viceChanged.connect(self.updateVice)
-		self.__character.ageChanged.connect(self.repopulateVices)
 		self.__character.breedChanged.connect(self.updateBreed)
 		self.__character.speciesChanged.connect(self.updateBreedTitle)
 		self.__character.speciesChanged.connect(self.repopulateBreeds)
@@ -105,7 +119,11 @@ class InfoWidget(QWidget):
 		self.__character.speciesChanged.connect(self.updatePartyTitle)
 		self.__character.descriptionChanged.connect(self.updateDescription)
 		# Menschen können ihre Fraktion selbst eintragen und haben einige Angaben einfach nicht nötig.
-		self.__character.speciesChanged.connect(self.hideShowWidgets)
+		self.__character.speciesChanged.connect(self.hideShowWidgets_species)
+
+		## Ändert sich das Alter, gibt es andere Virtues und Vices.
+		self.__character.ageChanged.connect(self.repopulateVirtues)
+		self.__character.ageChanged.connect(self.repopulateVices)
 
 
 	def openNameDialog(self):
@@ -133,12 +151,28 @@ class InfoWidget(QWidget):
 		self.__character.identities[0].gender = gender
 
 
-	def changeAge( self, age ):
+	def changeDateBirth( self, date ):
 		"""
-		Legt das Alter des Charakters fest.
+		Legt den Geburtstag des Charakters fest.
 		"""
 
-		self.__character.age = age
+		self.__character.dateBirth = date
+
+
+	def changeDateBecoming( self, date ):
+		"""
+		Legt den Tag fest, an welchem der Charakters zu etwas Übernatürlichem verändert wurde.
+		"""
+
+		self.__character.dateBecoming = date
+
+
+	def changeDateGame( self, date ):
+		"""
+		Legt das Datum des Spiels fest.
+		"""
+
+		self.__character.dateGame = date
 
 
 	def changeSpecies( self, species ):
@@ -235,13 +269,44 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_gender.setCurrentIndex( self.ui.comboBox_gender.findText(gender))
 
 
+	def updateDateBirth(self, date):
+		"""
+		Aktualisiert die Anzeige des Geburtstages.
+		"""
+
+		self.ui.dateEdit_dateBirth.setDate(date)
+
+
+	def updateDateBecoming(self, date):
+		"""
+		Aktualisiert die Anzeige des Datums der Verwandlung zu etwas Übernatürlichem.
+		"""
+
+		self.ui.dateEdit_dateBecoming.setDate(date)
+
+
+	def updateDateGame(self, date):
+		"""
+		Aktualisiert die Anzeige des Datums im Spiel.
+		"""
+
+		self.ui.dateEdit_dateGame.setDate(date)
+
+
 	def updateAge(self, age):
 		"""
 		Aktualisiert die Anzeige des Alters.
 		"""
 
-		#Debug.debug("Verändere Anzeige des Alters auf {}".format(age))
-		self.ui.spinBox_age.setValue(age)
+		self.ui.label_age.setNum(age)
+
+
+	def updateAgeBecoming(self, age):
+		"""
+		Aktualisiert die Anzeige des Alters bei der Veränderung.
+		"""
+
+		self.ui.label_ageBecoming.setNum(age)
 
 
 	def updateSpecies( self, species ):
@@ -388,12 +453,18 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_organisation.addItems(self.__storage.organisations(species))
 
 
-	def hideShowWidgets(self, species):
+	def hideShowWidgets_species(self, species):
 
 		visible = True
 		if species == "Human":
 			visible = False
-			
+
+		## Menschen haben keinen Tag der Verwandlung.
+		self.ui.label_dateBecoming.setVisible(visible)
+		self.ui.dateEdit_dateBecoming.setVisible(visible)
+		self.ui.label_ageBecoming_label.setVisible(visible)
+		self.ui.label_ageBecoming.setVisible(visible)
+
 		self.ui.label_breed.setVisible(visible)
 		self.ui.comboBox_breed.setVisible(visible)
 		self.ui.label_organisation.setVisible(visible)
@@ -402,3 +473,6 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_faction.setVisible( visible )
 		self.ui.lineEdit_faction.setVisible( not visible )
 		self.ui.lineEdit_faction.clear()
+
+
+

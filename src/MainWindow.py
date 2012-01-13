@@ -48,6 +48,7 @@ from Widgets.PowerWidget import PowerWidget
 from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.AdvantagesWidget import AdvantagesWidget
+from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
 from Draw.DrawSheet import DrawSheet
 from Debug import Debug
@@ -149,6 +150,9 @@ class MainWindow(QMainWindow):
 
 		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
 
+		# Laden der Konfiguration
+		self.readSettings()
+
 		self.populateUi()
 		self.activate()
 		self.reset()
@@ -157,16 +161,13 @@ class MainWindow(QMainWindow):
 
 	#connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
-	#connect( self.ui.actionSettings, SIGNAL( triggered() ), self, SLOT( showSettingsDialog() ) );
+		self.ui.actionSettings.triggered.connect(self.showSettingsDialog)
 		self.ui.actionNew.triggered.connect(self.newCharacter)
 		self.ui.actionOpen.triggered.connect(self.openCharacter)
 		self.ui.actionSave.triggered.connect(self.saveCharacter)
 		self.ui.actionExport.triggered.connect(self.exportCharacter)
 		self.ui.actionPrint.triggered.connect(self.printCharacter)
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
-
-		# Laden der Konfiguration
-		self.readSettings()
 
 
 	def closeEvent( self, event ):
@@ -212,7 +213,7 @@ class MainWindow(QMainWindow):
 		self.ui.actionSettings.setIcon(QIcon(":/icons/images/actions/exec.png"))
 		self.ui.actionQuit.setIcon(QIcon(":/icons/images/actions/exit.png"))
 
-		info = InfoWidget(self.__storage, self.__character, self)
+		self.info = InfoWidget(self.__storage, self.__character, self)
 		attributes = AttributeWidget( self.__storage, self.__character, self )
 		skills = SkillWidget( self.__storage, self.__character, self )
 		specialties = Specialties( self.__storage.traits["Skill"], self )
@@ -222,7 +223,7 @@ class MainWindow(QMainWindow):
 		flaws = FlawWidget( self.__storage, self.__character, self );
 		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
 
-		self.ui.layout_info.addWidget( info )
+		self.ui.layout_info.addWidget( self.info )
 		self.ui.layout_attributes.addWidget( attributes )
 		self.ui.layout_skills.addWidget( skills )
 		self.ui.layout_specialties.addWidget( specialties )
@@ -233,10 +234,10 @@ class MainWindow(QMainWindow):
 		self.ui.layout_advantages.addWidget( self.__advantages )
 
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
-		info.nameChanged.connect(self.setTitle)
+		self.info.nameChanged.connect(self.setTitle)
 
 		### Wird eine neue Seite angewählt, muß das Info-Widget den Beschreibungstext speichern.
-		#self.pageChanged.connect(info.saveDescription)
+		#self.pageChanged.connect(self.info.saveDescription)
 
 		#/**
 		#* \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite händisch festzulegen.
@@ -341,43 +342,27 @@ class MainWindow(QMainWindow):
 
 		# Wir wollen zu Beginn immer die Informationen sehen.
 		self.ui.selectWidget_select.setCurrentRow(0)
+		# Am Anfang stehen Menschen, aber das speciesChanged-Signal wurde nicht gesendet.
+		self.disablePowerItem(Config.initialSpecies)
 
 
+	def showSettingsDialog(self):
+		"""
+		Diese Funktion ruft den Einstellungsdialog auf und sorgt dafür, daß die Änderungen gespeichert oder verworfen werden.
+		"""
 
-#void MainWindow.showSettingsDialog() {
-	"""
-	Diese Funktion ruft den Konfigurationsdialog auf und sorgt dafür, daß die änderungen gespeichert oder verworfen werden.
-	"""
+		dialog = SettingsDialog( self )
 
-	#SettingsDialog dialog;
-	#if ( dialog.exec() ) {
-		#// Ausführen der veränderten Einstellungen.
-#// 		self.setFont(Config.windowFont);
-	#}
-#}
+		#dialog.settingsChanged.connect(self.info.useCalenderForAge)
 
-#void MainWindow.showCharacterTraits() {
-	"""
-	Werte des Charakters auf der Oberfläche anzeigen.
-	"""
+		if dialog.exec_():
+			# Ausführen der veränderten Einstellungen.
+			#Debug.debug("Einstellungen werden geändert")
+			#// 		self.setFont(Config.windowFont);
+			pass
 
-#}
+		#dialog.settingsChanged.disconnect(self.info.useCalenderForAge)
 
-#void MainWindow.showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-	"""
-	Spezialisierungen einer Fertigkeit anzeigen.
-	"""
-
-#// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
-
-	#specialties.clear();
-
-	#if ( sw ) {
-#// 		qDebug() << Q_FUNC_INFO << "Test Specialties";
-		#specialties.setSkill( skillName );
-		#specialties.setSpecialties( specialtyList );
-	#}
-#}
 
 	def showBackround( self, species ):
 		"""
@@ -635,8 +620,10 @@ class MainWindow(QMainWindow):
 
 		if species == "Human":
 			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.NoItemFlags )
+			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.deactivatedTextColor) )
 		else:
 			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.ItemIsEnabled | Qt.ItemIsSelectable )
+			self.ui.selectWidget_select.item( 5 ).setForeground( QColor() )
 
 
 	def exportCharacter(self):
@@ -720,10 +707,10 @@ class MainWindow(QMainWindow):
 		settings.setValue( "state", self.saveState() )
 		settings.endGroup()
 
-		#settings.beginGroup( "Config" );
+		settings.beginGroup( "Config" );
 		#// 	settings.setValue( "windowFont", Config.windowFont.family() );
-		#settings.setValue( "exportFont", Config.exportFont.family() );
-		#settings.endGroup();
+		settings.setValue( "calendarForAgeCalculation", Config.calendarForAgeCalculation )
+		settings.endGroup();
 
 
 	def readSettings(self):
@@ -740,10 +727,11 @@ class MainWindow(QMainWindow):
 		self.restoreState( QByteArray(settings.value( "state" )) )
 		settings.endGroup()
 
-		#settings.beginGroup( "Config" );
+		settings.beginGroup( "Config" );
 		#// 	Config.windowFont = QFont( settings.value( "windowFont" ).toString() );
-		#Config.exportFont = QFont( settings.value( "exportFont" ).toString() );
-		#settings.endGroup();
+		## bool(bla) funktioniert nicht, also sorge ich dafür, daß alles außer false (nicht case-sensitive) als Wahr gilt.
+		Config.calendarForAgeCalculation = unicode(settings.value( "calendarForAgeCalculation" )).lower() != "false"
+		settings.endGroup();
 
 		#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.
 		#// 	setFont(Config.windowFont);
