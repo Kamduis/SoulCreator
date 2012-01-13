@@ -31,6 +31,7 @@ from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage, QFont, QFontDat
 from src.GlobalState import GlobalState
 from src.Config import Config
 from src.Error import ErrSpeciesNotExisting
+from src.Calc.CalcShapes import CalcShapes
 from src.Random import Random
 from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
@@ -81,6 +82,8 @@ class DrawSheet(QObject):
 		self.__fontMain = QFont("TeX Gyre Pagella", 10)
 		self.__fontMain_small = copy.copy(self.__fontMain)
 		self.__fontMain_small.setPointSize(8)
+		self.__fontMain_tiny = copy.copy(self.__fontMain)
+		self.__fontMain_tiny.setPointSize(6)
 		self.__fontSans = QFont("TeX Gyre Heros", 10 )
 		self.__fontSans_small = copy.copy(self.__fontSans)
 		self.__fontSans_small.setPointSize(8)
@@ -376,7 +379,7 @@ class DrawSheet(QObject):
 
 		self._drawBackground()
 
-		if GlobalState.isDebug:
+		if False and GlobalState.isDebug:
 			image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
 			if ( self.__character.species == "Human" ):
 				pass
@@ -1165,7 +1168,7 @@ class DrawSheet(QObject):
 
 		self.__drawHeading(offsetH, offsetV, width, self.tr("Description"))
 
-		self.__painter.setFont(self.__fontMain_small)
+		self.__painter.setFont(self.__fontMain_tiny)
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()
 
@@ -1190,17 +1193,45 @@ class DrawSheet(QObject):
 			text[1][0] = "Embrace:"
 		elif self.__character.species == "Werewolf":
 			text[1][0] = "First Change:"
+			# Größe und Gewicht löschen
+			del text[4:6]
 
-		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height - (len(text) // 2 + 1) * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__character.description)
+		additionalSpace = 0
+		if self.__character.species == "Werewolf":
+			additionalSpace = 3 * fontHeight
+
+		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height - additionalSpace - (len(text) // 2 + 1) * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__character.description)
 
 		i = 0
 		j = 0
 		for item in text:
-			self.__drawTextWithValue(posX=offsetH + i * (width / 2 + self.__textDotSep), posY=offsetV + height - (len(text) // 2 - j) * fontHeight, width=width / 2 - self.__textDotSep, text=item[0], value=item[1])
+			self.__drawTextWithValue(posX=offsetH + i * (width / 2 + self.__textDotSep), posY=offsetV + height - additionalSpace - (len(text) // 2 - j) * fontHeight, width=width / 2 - self.__textDotSep, text=item[0], value=item[1])
 			j += 1
 			if j >= len(text) // 2:
 				i += 1
 				j = 0
+
+		## Jede einzelne Gestalt eines Werwolfs hat eigene Maße
+		if self.__character.species == "Werewolf":
+			werwolfHeights = CalcShapes.werewolfHeight(height=self.__character.height, strength=self.__character.traits["Attribute"]["Physical"]["Strength"].value, stamina=self.__character.traits["Attribute"]["Physical"]["Stamina"].value)
+			werwolfWeights = CalcShapes.werewolfWeight(weight=self.__character.weight, strength=self.__character.traits["Attribute"]["Physical"]["Strength"].value, stamina=self.__character.traits["Attribute"]["Physical"]["Stamina"].value)
+			shapeMeasurements = [
+				[ "", "Height:", "Weight:", ],
+				[ Config.shapesWerewolf[0], "{} {}".format(werwolfHeights[0], "m"), "{} {}".format(werwolfWeights[0], "kg"), ],
+				[ Config.shapesWerewolf[1], "{} {}".format(werwolfHeights[1], "m"), "{} {}".format(werwolfWeights[1], "kg"), ],
+				[ Config.shapesWerewolf[2], "{} {}".format(werwolfHeights[2], "m"), "{} {}".format(werwolfWeights[2], "kg"), ],
+				[ Config.shapesWerewolf[3], "{} {}".format(werwolfHeights[3], "m"), "{} {}".format(werwolfWeights[3], "kg"), ],
+				[ Config.shapesWerewolf[4], "{} {}".format(werwolfHeights[4], "m"), "{} {}".format(werwolfWeights[4], "kg"), ],
+			]
+			
+			i = 0
+			posY = offsetV + height - len(shapeMeasurements[0]) * fontHeight
+			lengthX = width / len(shapeMeasurements)
+			for item in shapeMeasurements:
+				posX = offsetH + i * (width / len(shapeMeasurements))
+				for j in xrange(len(item)):
+					self.__painter.drawText(posX, posY + j * fontHeight, lengthX, fontHeight, Qt.AlignHCenter, item[j])
+				i += 1
 
 		if GlobalState.isDebug:
 			self.__drawBB(offsetH, offsetV, width, height)
