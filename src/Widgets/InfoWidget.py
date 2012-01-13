@@ -69,19 +69,19 @@ class InfoWidget(QWidget):
 
 		## Speichern der vom Benutzer veränderten Werte
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
-		self.ui.comboBox_era.currentIndexChanged[str].connect(self.changeEra)
-		self.ui.comboBox_gender.currentIndexChanged[str].connect(self.changeGender)
-		self.ui.dateEdit_dateBirth.dateChanged.connect(self.changeDateBirth)
-		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.changeDateBecoming)
-		self.ui.dateEdit_dateGame.dateChanged.connect(self.changeDateGame)
-		self.ui.comboBox_species.currentIndexChanged[str].connect(self.changeSpecies)
-		self.ui.comboBox_virtue.currentIndexChanged[str].connect(self.changeVirtue)
-		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.changeVice)
-		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.changeBreed)
-		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.changeFaction)
-		self.ui.lineEdit_faction.textEdited.connect(self.changeFaction)
-		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.changeOrganisation)
-		self.ui.lineEdit_party.textEdited.connect(self.changeParty)
+		self.ui.comboBox_era.currentIndexChanged[str].connect(self.__character.setEra)
+		self.ui.comboBox_gender.currentIndexChanged[str].connect(self.__character.identities[0].setGender)
+		self.ui.dateEdit_dateBirth.dateChanged.connect(self.__character.setDateBirth)
+		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.__character.setDateBecoming)
+		self.ui.dateEdit_dateGame.dateChanged.connect(self.__character.setDateGame)
+		self.ui.comboBox_species.currentIndexChanged[str].connect(self.__character.setSpecies)
+		self.ui.comboBox_virtue.currentIndexChanged[str].connect(self.__character.setVirtue)
+		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.__character.setVice)
+		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.__character.setBreed)
+		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.__character.setFaction)
+		self.ui.lineEdit_faction.textEdited.connect(self.__character.setFaction)
+		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.__character.setOrganisation)
+		self.ui.lineEdit_party.textEdited.connect(self.__character.setParty)
 		self.ui.doubleSpinBox_height.valueChanged[float].connect(self.__character.setHeight)
 		self.ui.doubleSpinBox_weight.valueChanged[float].connect(self.__character.setWeight)
 		self.ui.lineEdit_eyes.textEdited.connect(self.__character.setEyes)
@@ -94,11 +94,11 @@ class InfoWidget(QWidget):
 		self.__character.identities[0].nameChanged.connect(self.updateName)
 		self.__character.identities[0].genderChanged[str].connect(self.updateGender)
 		self.__character.eraChanged.connect(self.updateEra)
-		self.__character.dateBirthChanged.connect(self.updateDateBirth)
-		self.__character.dateBecomingChanged.connect(self.updateDateBecoming)
-		self.__character.dateGameChanged.connect(self.updateDateGame)
-		self.__character.ageChanged.connect(self.updateAge)
-		self.__character.ageBecomingChanged.connect(self.updateAgeBecoming)
+		self.__character.dateBirthChanged.connect(self.ui.dateEdit_dateBirth.setDate)
+		self.__character.dateBecomingChanged.connect(self.ui.dateEdit_dateBecoming.setDate)
+		self.__character.dateGameChanged.connect(self.ui.dateEdit_dateGame.setDate)
+		self.__character.ageChanged.connect(self.ui.label_age.setNum)
+		self.__character.ageBecomingChanged.connect(self.ui.label_ageBecoming.setNum)
 		self.__character.speciesChanged.connect(self.updateSpecies)
 		self.__character.virtueChanged.connect(self.updateVirtue)
 		self.__character.viceChanged.connect(self.updateVice)
@@ -111,14 +111,14 @@ class InfoWidget(QWidget):
 		self.__character.organisationChanged.connect(self.updateOrganisation)
 		self.__character.speciesChanged.connect(self.updateOrganisationTitle)
 		self.__character.speciesChanged.connect(self.repopulateOrganisations)
-		self.__character.partyChanged.connect(self.updateParty)
+		self.__character.partyChanged.connect(self.ui.lineEdit_party.setText)
 		self.__character.speciesChanged.connect(self.updatePartyTitle)
 		self.__character.heightChanged.connect(self.ui.doubleSpinBox_height.setValue)
 		self.__character.weightChanged.connect(self.ui.doubleSpinBox_weight.setValue)
 		self.__character.eyesChanged.connect(self.ui.lineEdit_eyes.setText)
 		self.__character.hairChanged.connect(self.ui.lineEdit_hair.setText)
 		self.__character.nationalityChanged.connect(self.ui.lineEdit_nationality.setText)
-		self.__character.descriptionChanged.connect(self.updateDescription)
+		self.__character.descriptionChanged.connect(self.ui.textEdit_description.setPlainText)
 		# Menschen können ihre Fraktion selbst eintragen und haben einige Angaben einfach nicht nötig.
 		self.__character.speciesChanged.connect(self.hideShowWidgets_species)
 
@@ -134,102 +134,6 @@ class InfoWidget(QWidget):
 		
 		dialog = NameDialog( self.__character, self )
 		dialog.exec_()
-
-
-	def changeEra( self, era ):
-		"""
-		Legt die zeitliche Ära fest, in welcher der Charakter zuhause ist.
-		"""
-
-		self.__character.era = era
-
-
-	def changeGender( self, gender ):
-		"""
-		Legt das Geschlecht des Charakters fest.
-		"""
-
-		self.__character.identities[0].gender = gender
-
-
-	def changeDateBirth( self, date ):
-		"""
-		Legt den Geburtstag des Charakters fest.
-		"""
-
-		self.__character.dateBirth = date
-
-
-	def changeDateBecoming( self, date ):
-		"""
-		Legt den Tag fest, an welchem der Charakters zu etwas Übernatürlichem verändert wurde.
-		"""
-
-		self.__character.dateBecoming = date
-
-
-	def changeDateGame( self, date ):
-		"""
-		Legt das Datum des Spiels fest.
-		"""
-
-		self.__character.dateGame = date
-
-
-	def changeSpecies( self, species ):
-		"""
-		Verändert die Spezies des Charakters.
-		"""
-
-		self.__character.species = species
-
-
-	def changeVirtue( self, virtue ):
-		"""
-		Verändert die Tugend des Charakters.
-		"""
-
-		self.__character.virtue = virtue
-
-
-	def changeVice( self, vice ):
-		"""
-		Verändert das Laster des Charakters.
-		"""
-
-		self.__character.vice = vice
-
-
-	def changeBreed( self, breed ):
-		"""
-		Verändert die Brut des Charakters.
-		"""
-
-		self.__character.breed = breed
-
-
-	def changeFaction( self, faction ):
-		"""
-		Verändert die Fraktion des Charakters.
-		"""
-
-		self.__character.faction = faction
-
-
-	def changeOrganisation( self, organisation ):
-		"""
-		Verändert die Organisation (Blutlinie etc.) des Charakters.
-		"""
-
-		self.__character.organisation = organisation
-
-
-	def changeParty( self, name ):
-		"""
-		Verändert den Namen der Freundesgruppe.
-		"""
-
-		self.__character.party = name
 
 
 	def changeDescription( self ):
@@ -268,46 +172,6 @@ class InfoWidget(QWidget):
 		"""
 
 		self.ui.comboBox_gender.setCurrentIndex( self.ui.comboBox_gender.findText(gender))
-
-
-	def updateDateBirth(self, date):
-		"""
-		Aktualisiert die Anzeige des Geburtstages.
-		"""
-
-		self.ui.dateEdit_dateBirth.setDate(date)
-
-
-	def updateDateBecoming(self, date):
-		"""
-		Aktualisiert die Anzeige des Datums der Verwandlung zu etwas Übernatürlichem.
-		"""
-
-		self.ui.dateEdit_dateBecoming.setDate(date)
-
-
-	def updateDateGame(self, date):
-		"""
-		Aktualisiert die Anzeige des Datums im Spiel.
-		"""
-
-		self.ui.dateEdit_dateGame.setDate(date)
-
-
-	def updateAge(self, age):
-		"""
-		Aktualisiert die Anzeige des Alters.
-		"""
-
-		self.ui.label_age.setNum(age)
-
-
-	def updateAgeBecoming(self, age):
-		"""
-		Aktualisiert die Anzeige des Alters bei der Veränderung.
-		"""
-
-		self.ui.label_ageBecoming.setNum(age)
 
 
 	def updateSpecies( self, species ):
@@ -384,28 +248,12 @@ class InfoWidget(QWidget):
 		self.ui.label_organisation.setText( "{}:".format(self.__storage.organisationTitle(species)) )
 
 
-	def updateParty( self, name ):
-		"""
-		Aktualisiert die Anzeige der Freundesgruppe.
-		"""
-
-		self.ui.lineEdit_party.setText( self.__character.party )
-
-
 	def updatePartyTitle( self, species ):
 		"""
 		Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Freundesgruppe.
 		"""
 
 		self.ui.label_party.setText( "{}:".format(self.__storage.partyTitle(species)) )
-
-
-	def updateDescription( self, text ):
-		"""
-		Aktualisiert die Anzeige des Beschreibungstextes.
-		"""
-
-		self.ui.textEdit_description.setPlainText( self.__character.description )
 
 
 	def repopulateVirtues(self, age):

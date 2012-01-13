@@ -57,8 +57,10 @@ class DrawSheet(QObject):
 		self.__painter = QPainter()
 		self.__printer = printer
 
-		self.__borderFrameX = 15
-		self.__borderFrameY = self.__borderFrameX
+		self.__borderFrameWest = 15
+		self.__borderFrameEast = self.__borderFrameWest
+		self.__borderFrameNorth = self.__borderFrameWest
+		self.__borderFrameSouth = self.__borderFrameWest
 
 		self.__lineWidth = .75
 		self.__dotDiameterH = 9
@@ -102,16 +104,20 @@ class DrawSheet(QObject):
 			self.__fontHeading = QFont("Mutlu", 15 )
 			self.__fontSubHeading = QFont("Mutlu", 13 )
 			# Der Rahmen macht es notwendig, daß Wechselbälger einen breiteren Rahmen haben, der für die Charakterwerte nicht zur Verfügung steht.
-			self.__borderFrameX = 55
-			self.__borderFrameY = self.__borderFrameX
+			self.__borderFrameWest = 55
+			self.__borderFrameEast = self.__borderFrameWest
+			self.__borderFrameNorth = self.__borderFrameWest
+			self.__borderFrameSouth = self.__borderFrameWest
 		elif self.__character.species == "Mage":
 			self.__fontHeading = QFont("Tangerine", 21 )
 			self.__fontSubHeading = QFont("Tangerine", 18 )
 		elif self.__character.species == "Vampire":
 			self.__fontHeading = QFont("Cloister Black", 15 )
 			self.__fontSubHeading = QFont("Cloister Black", 13 )
-			self.__borderFrameX = 44
-			self.__borderFrameY = 53
+			self.__borderFrameWest = 44
+			self.__borderFrameEast = 47
+			self.__borderFrameNorth = 53
+			self.__borderFrameSouth = 83
 		elif self.__character.species == "Werewolf":
 			self.__fontHeading = QFont("Note this", 15 )
 			self.__fontSubHeading = QFont("Note this", 13 )
@@ -153,11 +159,11 @@ class DrawSheet(QObject):
 		scaleFactorY = self.__paperHeight_real / self.__paperHeight_defined
 		self.__painter.scale(scaleFactorX, scaleFactorY)
 
-		self.__pageWidth = self.__paperWidth_defined - 2 * self.__borderFrameX
-		self.__pageHeight = self.__paperHeight_defined - 2 * self.__borderFrameY
+		self.__pageWidth = self.__paperWidth_defined - self.__borderFrameWest - self.__borderFrameEast
+		self.__pageHeight = self.__paperHeight_defined - self.__borderFrameNorth - self.__borderFrameSouth
 
 		## Hiermit wird der Seitenrahmen eingehalten.
-		self.__painter.translate(self.__borderFrameX, self.__borderFrameY)
+		self.__painter.translate(self.__borderFrameWest, self.__borderFrameNorth)
 
 		## Grundeinstellungen des Painters sind abgeschlossen. Dies ist der Zusatnd, zu dem wir zurückkehren, wenn wir painter.restore() aufrufen.
 		self.__painter.save()
@@ -203,7 +209,7 @@ class DrawSheet(QObject):
 
 			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
 			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			target = QRectF( 0.0 - self.__borderFrameX, 0.0 - self.__borderFrameY, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
+			target = QRectF( 0.0 - self.__borderFrameNorth, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
 			self.__painter.drawImage(target, image, source)
 
 		if GlobalState.isDebug:
@@ -352,9 +358,9 @@ class DrawSheet(QObject):
 		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX)
 
 		posX = 260
-		posY = 810
+		posY = 800
 		lengthX = 250
-		lengthY = 290
+		lengthY = 300
 		if self.__character.species == "Human":
 			self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
@@ -387,20 +393,32 @@ class DrawSheet(QObject):
 
 			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
 			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			target = QRectF( 0.0 - self.__borderFrameX, 0.0 - self.__borderFrameY, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
+			target = QRectF( 0.0 - self.__borderFrameWest, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
 			self.__painter.drawImage(target, image, source)
 
 		if GlobalState.isDebug:
 			self.__drawGrid()
 
-		posX = 260
-		posY = 730
-		lengthX = 250
+		posX = 230
+		posY = 680
+		lengthX = 230
 		lengthY = self.__pageHeight - posY
 		if self.__character.species == "Mage":
-			lengthY = 240
-		if self.__character.species != "Human":
-			self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+			posX = 260
+			posY = 730
+			lengthX = 250
+			lengthY = self.__pageHeight - posY
+		elif self.__character.species == "Vampire":
+			posX = 240
+			posY = 730
+			lengthX = 230
+			lengthY = self.__pageHeight - posY
+		elif self.__character.species == "Werewolf":
+			posX = 260
+			posY = 820
+			lengthX = 250
+			lengthY = self.__pageHeight - posY
+		self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		self.__painter.restore()
 
@@ -451,7 +469,7 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		rect = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY, self.__pageWidth + 2 * self.__borderFrameX, self.__pageHeight + 2 * self.__borderFrameY)
+		rect = QRect(0 - self.__borderFrameWest, 0 - self.__borderFrameNorth, self.__pageWidth + self.__borderFrameWest + self.__borderFrameEast, self.__pageHeight + self.__borderFrameNorth + self.__borderFrameSouth)
 		if self.__character.species == "Changeling":
 			image = QImage(":sheet/images/sheet/Changeling-Background.jpg")
 			self.__painter.drawImage(rect, image)
@@ -463,23 +481,23 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Werewolf":
 			imageShapes = QImage(":sheet/images/sheet/Werewolf-Shapes.jpg")
 			imageShapes = imageShapes.scaledToWidth(self.__pageWidth)
-			rectShapes = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY + self.__pageHeight - imageShapes.height(), self.__pageWidth, imageShapes.height())
+			rectShapes = QRect(0 - self.__borderFrameWest, 0 - self.__borderFrameNorth + self.__pageHeight - imageShapes.height(), self.__pageWidth, imageShapes.height())
 			self.__painter.drawImage(rectShapes, imageShapes)
 
 			## Dieses Bild wird später gezeichnet, damit es nicht von den Gestalten abgeschnitten wird.
 			offsetV = 80
 			image = QImage(":sheet/images/sheet/Werewolf-Background.png")
 			image = image.scaledToHeight(self.__pageHeight - imageShapes.height() - offsetV)
-			rect = QRect(0 - self.__borderFrameX + (self.__pageWidth - image.width()) / 2, offsetV, image.width(), image.height())
+			rect = QRect(0 - self.__borderFrameWest + (self.__pageWidth - image.width()) / 2, offsetV, image.width(), image.height())
 			self.__painter.drawImage(rect, image)
 		else:
-			rect = QRect(0 - self.__borderFrameX, 0 - self.__borderFrameY, (self.__pageWidth + 2 * self.__borderFrameX) / 7, self.__pageHeight + 2 * self.__borderFrameY)
+			rect = QRect(0 - self.__borderFrameWest, 0 - self.__borderFrameNorth, (self.__pageWidth + self.__borderFrameWest + self.__borderFrameEast) / 7, self.__pageHeight + self.__borderFrameNorth + self.__borderFrameSouth)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-BackgroundL.png")
 			self.__painter.drawImage(rect, image)
 			#if GlobalState.isDebug:
 				#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())
 
-			rect = QRect(self.__pageWidth + self.__borderFrameX - (self.__pageWidth + 2 * self.__borderFrameX) / 7, 0 - self.__borderFrameY, (self.__pageWidth + 2 * self.__borderFrameX) / 7, self.__pageHeight + 2 * self.__borderFrameY)
+			rect = QRect(self.__pageWidth + self.__borderFrameWest - (self.__pageWidth + self.__borderFrameWest + self.__borderFrameEast) / 7, 0 - self.__borderFrameNorth, (self.__pageWidth + self.__borderFrameNorth + self.__borderFrameSouth) / 7, self.__pageHeight + self.__borderFrameNorth + self.__borderFrameSouth)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-BackgroundR.png")
 			self.__painter.drawImage(rect, image)
 			#if GlobalState.isDebug:
@@ -1136,6 +1154,8 @@ class DrawSheet(QObject):
 		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
 		\param width Die Breite der Spalte.
+
+		\todo Changelings benötigen noch mehr Hingabe. Bei denen ist ja alles anders.
 		"""
 
 		self.__painter.save()
@@ -1161,14 +1181,15 @@ class DrawSheet(QObject):
 		]
 		if self.__character.species != "Human":
 			text[0][1] = "{} ({})".format(text[0][1], self.__character.age)
+			text[1][1] = "{} ({})".format(self.__character.dateBecoming.toString(Config.textDateFormat), self.__character.ageBecoming)
 		if self.__character.species == "Changeling":
-			text[1][:] = [ "Taken:", self.__character.dateBecoming.toString(Config.textDateFormat), ]
+			text[1][0] = "Taken:"
 		elif self.__character.species == "Mage":
-			text[1][:] = [ "Awakening:", self.__character.dateBecoming.toString(Config.textDateFormat), ]
+			text[1][0] = "Awakening:"
 		elif self.__character.species == "Vampire":
-			text[1][:] = [ "Embrace:", self.__character.dateBecoming.toString(Config.textDateFormat), ]
+			text[1][0] = "Embrace:"
 		elif self.__character.species == "Werewolf":
-			text[1][:] = [ "First Change:", self.__character.dateBecoming.toString(Config.textDateFormat), ]
+			text[1][0] = "First Change:"
 
 		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height - (len(text) // 2 + 1) * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__character.description)
 

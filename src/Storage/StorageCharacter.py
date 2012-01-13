@@ -199,7 +199,7 @@ class StorageCharacter(QObject):
 
 		return self.__era
 
-	def __setEra( self, era ):
+	def setEra( self, era ):
 		"""
 		Legt die Ära fest, in welcher der Charakter zuhause ist.
 		"""
@@ -209,52 +209,52 @@ class StorageCharacter(QObject):
 			#Debug.debug("Ära verändert zu {}".format(era) )
 			self.eraChanged.emit( era )
 
-	era = property(__getEra, __setEra)
+	era = property(__getEra, setEra)
 
 
-	@property
-	def dateBirth(self):
+	def __getDateBirth(self):
 		"""
 		Geburtsdatum des Charakters.
 		"""
 
 		return self.__dateBirth
 
-	@dateBirth.setter
-	def dateBirth( self, date ):
+	def setDateBirth( self, date ):
 		if ( self.__dateBirth != date ):
 			self.__dateBirth = date
 			self.dateBirthChanged.emit( date )
 
+	dateBirth = property(__getDateBirth, setDateBirth)
 
-	@property
-	def dateBecoming(self):
+
+	def __getDateBecoming(self):
 		"""
 		Das Datum, an welchem sich der Charakters zu einem übernatürlichen Wesen veränderte.
 		"""
 
 		return self.__dateBecoming
 
-	@dateBecoming.setter
-	def dateBecoming( self, date ):
+	def setDateBecoming( self, date ):
 		if ( self.__dateBecoming != date ):
 			self.__dateBecoming = date
 			self.dateBecomingChanged.emit( date )
 
+	dateBecoming = property(__getDateBecoming, setDateBecoming)
 
-	@property
-	def dateGame(self):
+
+	def __getDateGame(self):
 		"""
 		Das aktuelle Datum im Spiel.
 		"""
 
 		return self.__dateGame
 
-	@dateGame.setter
-	def dateGame( self, date ):
+	def setDateGame( self, date ):
 		if ( self.__dateGame != date ):
 			self.__dateGame = date
 			self.dateGameChanged.emit( date )
+
+	dateGame = property(__getDateGame, setDateGame)
 
 
 	@property
@@ -274,6 +274,7 @@ class StorageCharacter(QObject):
 
 		return self.__ageBecoming
 
+
 	def __getSpecies(self):
 		"""
 		Gibt die Spezies des Charakters aus.
@@ -281,7 +282,7 @@ class StorageCharacter(QObject):
 		
 		return self.__species
 
-	def __setSpecies( self, species ):
+	def setSpecies( self, species ):
 		"""
 		Legt die Spezies des Charakters fest.
 		"""
@@ -291,7 +292,7 @@ class StorageCharacter(QObject):
 			#Debug.debug("Spezies in Speicher verändert zu {}!".format(species))
 			self.speciesChanged.emit( species )
 
-	species = property(__getSpecies, __setSpecies)
+	species = property(__getSpecies, setSpecies)
 
 
 	@property
@@ -445,7 +446,7 @@ class StorageCharacter(QObject):
 
 		return self.__virtue
 
-	def __setVirtue( self, virtue ):
+	def setVirtue( self, virtue ):
 		"""
 		Verändert die Tugend.
 
@@ -456,7 +457,7 @@ class StorageCharacter(QObject):
 			self.__virtue = virtue
 			self.virtueChanged.emit( virtue )
 
-	virtue = property(__getVirtue, __setVirtue)
+	virtue = property(__getVirtue, setVirtue)
 
 
 	def __getVice(self):
@@ -466,7 +467,7 @@ class StorageCharacter(QObject):
 
 		return self.__vice
 
-	def __setVice( self, vice ):
+	def setVice( self, vice ):
 		"""
 		Verändert das Laster.
 
@@ -477,7 +478,7 @@ class StorageCharacter(QObject):
 			self.__vice = vice
 			self.viceChanged.emit( vice )
 
-	vice = property(__getVice, __setVice)
+	vice = property(__getVice, setVice)
 
 
 	def __getBreed(self ):
@@ -487,7 +488,7 @@ class StorageCharacter(QObject):
 
 		return self.__breed
 
-	def __setBreed( self, breed ):
+	def setBreed( self, breed ):
 		"""
 		Verändert die Brut.
 
@@ -498,19 +499,17 @@ class StorageCharacter(QObject):
 			self.__breed = breed
 			self.breedChanged.emit( breed)
 
-	breed = property(__getBreed, __setBreed)
+	breed = property(__getBreed, setBreed)
 
 
-	@property
-	def faction(self):
+	def __getFaction(self):
 		"""
 		Fraktion (Court, Order, Covenant, Tribe) des Charakters.
 		"""
 
 		return self.__faction
 
-	@faction.setter
-	def faction( self, faction ):
+	def setFaction( self, faction ):
 		"""
 		Verändert die Fraktion.
 
@@ -521,17 +520,17 @@ class StorageCharacter(QObject):
 			self.__faction = faction
 			self.factionChanged.emit( faction )
 
+	faction = property(__getFaction, setFaction)
 
-	@property
-	def organisation(self):
+
+	def __getOrganisation(self):
 		"""
 		Organisation (Entitlement, Legacy, Bloodline, Lodge) des Charakters.
 		"""
 
 		return self.__organisation
 
-	@organisation.setter
-	def organisation( self, organisation ):
+	def setOrganisation( self, organisation ):
 		"""
 		Verändert die Organisation.
 
@@ -542,20 +541,22 @@ class StorageCharacter(QObject):
 			self.__organisation = organisation
 			self.organisationChanged.emit( organisation )
 
+	organisation = property(__getOrganisation, setOrganisation)
 
-	@property
-	def party(self):
+
+	def __getParty(self):
 		"""
 		Name der Freundesgruppe des Charakters.
 		"""
 
 		return self.__party
 
-	@party.setter
-	def party( self, party ):
+	def setParty( self, party ):
 		if ( self.__party != party ):
 			self.__party = party
 			self.partyChanged.emit( party )
+
+	party = property(__getParty, setParty)
 
 
 	def __getHeight(self):
