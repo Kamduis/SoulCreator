@@ -121,6 +121,16 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.organisation = self.readElementText()
 				elif ( elementName == "party" ):
 					self.__character.party = self.readElementText()
+				elif ( elementName == "height" ):
+					self.__character.height = float(self.readElementText())
+				elif ( elementName == "weight" ):
+					self.__character.weight = float(self.readElementText())
+				elif ( elementName == "eyes" ):
+					self.__character.eyes = self.readElementText()
+				elif ( elementName == "hair" ):
+					self.__character.hair = self.readElementText()
+				elif ( elementName == "nationality" ):
+					self.__character.nationality = self.readElementText()
 				elif ( elementName == "description" ):
 					self.__character.description = self.readElementText()
 				elif ( elementName == "powerstat" ):

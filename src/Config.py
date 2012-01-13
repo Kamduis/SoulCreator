@@ -56,6 +56,7 @@ class Config(object):
 
 	# Format von Daten bei der Umwandlung in Strings
 	dateFormat = Qt.ISODate
+	textDateFormat = "dd.MM.yyyy"
 
 	# Einstellungen für das Auswahl-Widget
 	selectIconSize = QSize(50,50)

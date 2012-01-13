@@ -22,6 +22,33 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+from src.Config import Config
+
+
+
+
+class ImageTools():
+	"""
+	@brief Hilfsfunktionen, im Umgang mit Bildern.
+	"""
+
+	def __init__(self):
+		pass
+
+
+	@staticmethod
+	def genderSymbol(gender):
+		"""
+		Gibt das Symbol für das Übergebene Geschlecht aus.
+		"""
+
+		if gender.lower() == "female" or gender.lower() == "m" or gender.lower() == "w":
+			return u"♀"
+		elif gender.lower() == "male" or gender.lower() == "m":
+			return u"♂"
+		else:
+			return u"⚥"
+
 
 
 

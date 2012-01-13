@@ -62,6 +62,11 @@ class StorageCharacter(QObject):
 	#traitsChanged = Signal(object)
 	ageChanged = Signal(int)
 	ageBecomingChanged = Signal(int)
+	heightChanged = Signal(float)
+	weightChanged = Signal(float)
+	eyesChanged = Signal(str)
+	hairChanged = Signal(str)
+	nationalityChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -91,8 +96,9 @@ class StorageCharacter(QObject):
 		self.__storage = template
 
 		self.__modified = False
-		self.__dateBirth = None
-		self.__dateBecoming = None
+		self.__dateBirth = QDate(0, 0, 0)
+		self.__dateBecoming = QDate(0, 0, 0)
+		self.__dateGame = QDate(0, 0, 0)
 		self.__age = 0
 		self.__ageBecoming = 0
 		self.__species = ""
@@ -102,6 +108,11 @@ class StorageCharacter(QObject):
 		self.__faction = ""
 		self.__organisation = ""
 		self.__party = ""
+		self.__height = 0.0
+		self.__weight = 0.0
+		self.__eyes = ""
+		self.__hair = ""
+		self.__nationality = ""
 		self.__description = ""
 		self.__powerstat = 0
 		self.__morality = 0
@@ -232,6 +243,21 @@ class StorageCharacter(QObject):
 
 
 	@property
+	def dateGame(self):
+		"""
+		Das aktuelle Datum im Spiel.
+		"""
+
+		return self.__dateGame
+
+	@dateGame.setter
+	def dateGame( self, date ):
+		if ( self.__dateGame != date ):
+			self.__dateGame = date
+			self.dateGameChanged.emit( date )
+
+
+	@property
 	def age(self):
 		"""
 		Alter des Charakters.
@@ -268,14 +294,13 @@ class StorageCharacter(QObject):
 	species = property(__getSpecies, __setSpecies)
 
 
-	def __getIdentities(self):
+	@property
+	def identities(self):
 		"""
-		Gibt eine Liste aller Identitäten des Charkaters aus. Die Identität an Indexposition 0 ist die echte Identität.
+		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
 		"""
 		
 		return self.__identities
-
-	identities = property(__getIdentities)
 
 
 	#def insertIdentity( self, index, identity ):
@@ -533,6 +558,81 @@ class StorageCharacter(QObject):
 			self.partyChanged.emit( party )
 
 
+	def __getHeight(self):
+		"""
+		Größe des Charakters in m.
+		"""
+
+		return self.__height
+
+	def setHeight( self, height ):
+		if ( self.__height != height ):
+			self.__height = height
+			self.heightChanged.emit( height )
+
+	height = property(__getHeight, setHeight)
+
+
+	def __getWeight(self):
+		"""
+		Gewicht des Charakters in kg.
+		"""
+
+		return self.__weight
+
+	def setWeight( self, weight ):
+		if ( self.__weight != weight ):
+			self.__weight = weight
+			self.weightChanged.emit( weight )
+
+	weight = property(__getWeight, setWeight)
+
+
+	def __getEyes(self):
+		"""
+		Beschreibung der Augen des Charakters.
+		"""
+
+		return self.__eyes
+
+	def setEyes( self, eyes ):
+		if ( self.__eyes != eyes ):
+			self.__eyes = eyes
+			self.eyesChanged.emit( eyes )
+
+	eyes = property(__getEyes, setEyes)
+
+
+	def __getHair(self):
+		"""
+		Beschreibung der Haare des Charakters.
+		"""
+
+		return self.__hair
+
+	def setHair( self, hair ):
+		if ( self.__hair != hair ):
+			self.__hair = hair
+			self.hairChanged.emit( hair )
+
+	hair = property(__getHair, setHair)
+
+
+	def __getNationality(self):
+		"""
+		Die Nationalität des Charakters.
+		"""
+
+		return self.__nationality
+
+	def setNationality( self, nationality ):
+		if ( self.__nationality != nationality ):
+			self.__nationality = nationality
+			self.nationalityChanged.emit( nationality )
+
+	nationality = property(__getNationality, setNationality)
+
+
 	@property
 	def description(self):
 		"""
@@ -626,10 +726,9 @@ class StorageCharacter(QObject):
 		self.era = Config.eras[0]
 
 		## Anfangsdatum setzen.
-		today = QDate.currentDate()
-		self.dateGame = today
-		self.dateBirth = QDate(today.year() - Config.initialAge, today.month(), today.day())
-		self.dateBecoming = QDate(today.year() - Config.adultAge, today.month(), today.day())
+		self.dateGame = QDate.currentDate()
+		self.dateBirth = QDate(self.dateGame.year() - Config.initialAge, self.dateGame.month(), self.dateGame.day())
+		self.dateBecoming = QDate(self.dateGame.year() - Config.adultAge, self.dateGame.month(), self.dateGame.day())
 
 		# Löschen aller Identitäten.
 		self.__identity.reset()

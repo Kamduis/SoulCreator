@@ -45,7 +45,7 @@ class DefocusableTextEdit(QPlainTextEdit):
 
 
 	def focusOutEvent(self, event):
-		QTextEdit.focusOutEvent(self, event)
+		QPlainTextEdit.focusOutEvent(self, event)
 		#Debug.debug("Dieses Widget verliert den Fokus.")
 		self.focusLost.emit()
 

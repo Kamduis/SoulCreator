@@ -34,6 +34,7 @@ from src.Error import ErrSpeciesNotExisting
 from src.Random import Random
 from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
+from src.Tools import ImageTools
 from src.Debug import Debug
 
 
@@ -348,7 +349,14 @@ class DrawSheet(QObject):
 			posY = 610
 		elif self.__character.species == "Werewolf":
 			posY = 510
-		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX, species=self.__character.species)
+		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX)
+
+		posX = 260
+		posY = 810
+		lengthX = 250
+		lengthY = 290
+		if self.__character.species == "Human":
+			self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		self.__painter.restore()
 
@@ -384,6 +392,15 @@ class DrawSheet(QObject):
 
 		if GlobalState.isDebug:
 			self.__drawGrid()
+
+		posX = 260
+		posY = 730
+		lengthX = 250
+		lengthY = self.__pageHeight - posY
+		if self.__character.species == "Mage":
+			lengthY = 240
+		if self.__character.species != "Human":
+			self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		self.__painter.restore()
 
@@ -514,12 +531,12 @@ class DrawSheet(QObject):
 
 		text = [
 			[
-				u"Name:",
-				u"Concept:",
+				"Name:",
+				"",
 			],
 			[
-				u"Virtue:",
-				u"Vice:",
+				"Virtue:",
+				"Vice:",
 			],
 			[
 				u"Chronicle:",
@@ -1072,7 +1089,7 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawMorality(self, offsetH=0, offsetV=0, width=None, species=Config.initialSpecies):
+	def _drawMorality(self, offsetH=0, offsetV=0, width=None):
 		"""
 		Bannt die Moral auf den Charakterbogen.
 
@@ -1086,7 +1103,7 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth / 3
 
-		self.__drawHeading(offsetH, offsetV, width, self.__storage.moralityName(species))
+		self.__drawHeading(offsetH, offsetV, width, self.__storage.moralityName(self.__character.species))
 
 		self.__painter.setFont(self.__fontMain)
 
@@ -1108,6 +1125,64 @@ class DrawSheet(QObject):
 			self.__painter.drawEllipse(offsetH + width - self.__dotDiameterH, lcl_height - self.__dotDiameterV, self.__dotDiameterH, self.__dotDiameterV)
 			self.__painter.restore()
 		self.__painter.restore()
+
+		self.__painter.restore()
+
+
+	def _drawDescription(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt die Beschreibung und die Daten auf den Charkaterbogen.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Description"))
+
+		self.__painter.setFont(self.__fontMain_small)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		text = [
+			[ "Birthday:", self.__character.dateBirth.toString(Config.textDateFormat), ],
+			[ "Age:", self.__character.age, ],
+			[ "Sex:", ImageTools.genderSymbol(self.__character.identities[0].gender), ],
+			[ "Eyes:", self.__character.eyes, ],
+			[ "Height:", "{} {}".format(self.__character.height, "m"), ],
+			[ "Weight:", "{} {}".format(self.__character.weight, "kg"), ],
+			[ "Hair:", self.__character.hair, ],
+			[ "Nationality:", self.__character.nationality, ],
+		]
+		if self.__character.species != "Human":
+			text[0][1] = "{} ({})".format(text[0][1], self.__character.age)
+		if self.__character.species == "Changeling":
+			text[1][:] = [ "Taken:", self.__character.dateBecoming.toString(Config.textDateFormat), ]
+		elif self.__character.species == "Mage":
+			text[1][:] = [ "Awakening:", self.__character.dateBecoming.toString(Config.textDateFormat), ]
+		elif self.__character.species == "Vampire":
+			text[1][:] = [ "Embrace:", self.__character.dateBecoming.toString(Config.textDateFormat), ]
+		elif self.__character.species == "Werewolf":
+			text[1][:] = [ "First Change:", self.__character.dateBecoming.toString(Config.textDateFormat), ]
+
+		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height - (len(text) // 2 + 1) * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__character.description)
+
+		i = 0
+		j = 0
+		for item in text:
+			self.__drawTextWithValue(posX=offsetH + i * (width / 2 + self.__textDotSep), posY=offsetV + height - (len(text) // 2 - j) * fontHeight, width=width / 2 - self.__textDotSep, text=item[0], value=item[1])
+			j += 1
+			if j >= len(text) // 2:
+				i += 1
+				j = 0
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 

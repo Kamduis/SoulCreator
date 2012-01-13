@@ -58,15 +58,6 @@ class InfoWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
-		# Die zweite Spalte darf sich strecken.
-		self.ui.layout_main.setColumnStretch(1, 1)
-		# Labels werden rechtsbündig gesetzt.
-		for i in range(self.ui.layout_main.columnCount())[::3]:
-			for j in xrange(self.ui.layout_main.rowCount()):
-				item = self.ui.layout_main.itemAtPosition(j, i)
-				if item != None and type(item.widget()) == QLabel:
-					item.widget().setAlignment(Qt.AlignRight)
-
 		for item in Config.genders:
 			self.ui.comboBox_gender.addItem( QIcon(item[1]), item[0] )
 
@@ -91,6 +82,11 @@ class InfoWidget(QWidget):
 		self.ui.lineEdit_faction.textEdited.connect(self.changeFaction)
 		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.changeOrganisation)
 		self.ui.lineEdit_party.textEdited.connect(self.changeParty)
+		self.ui.doubleSpinBox_height.valueChanged[float].connect(self.__character.setHeight)
+		self.ui.doubleSpinBox_weight.valueChanged[float].connect(self.__character.setWeight)
+		self.ui.lineEdit_eyes.textEdited.connect(self.__character.setEyes)
+		self.ui.lineEdit_hair.textEdited.connect(self.__character.setHair)
+		self.ui.lineEdit_nationality.textEdited.connect(self.__character.setNationality)
 		#self.ui.textEdit_description.textChanged.connect(self.saveDescription)	## Kann ich nicht nutzen, da sonst der Curser bei jeder änderung an den Angang springt.
 		self.ui.textEdit_description.focusLost.connect(self.changeDescription)
 
@@ -117,6 +113,11 @@ class InfoWidget(QWidget):
 		self.__character.speciesChanged.connect(self.repopulateOrganisations)
 		self.__character.partyChanged.connect(self.updateParty)
 		self.__character.speciesChanged.connect(self.updatePartyTitle)
+		self.__character.heightChanged.connect(self.ui.doubleSpinBox_height.setValue)
+		self.__character.weightChanged.connect(self.ui.doubleSpinBox_weight.setValue)
+		self.__character.eyesChanged.connect(self.ui.lineEdit_eyes.setText)
+		self.__character.hairChanged.connect(self.ui.lineEdit_hair.setText)
+		self.__character.nationalityChanged.connect(self.ui.lineEdit_nationality.setText)
 		self.__character.descriptionChanged.connect(self.updateDescription)
 		# Menschen können ihre Fraktion selbst eintragen und haben einige Angaben einfach nicht nötig.
 		self.__character.speciesChanged.connect(self.hideShowWidgets_species)
