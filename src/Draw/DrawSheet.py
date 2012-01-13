@@ -854,7 +854,10 @@ class DrawSheet(QObject):
 			traits.sort()
 			for subitem in traits:
 				if (subitem[1].isAvailable and subitem[1].value > 0):
-					self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=width, name=subitem[1].name, value=subitem[1].value)
+					text = ""
+					if subitem[1].custom:
+						text = subitem[1].customText
+					self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + j * textHeight, width=width, name=subitem[1].name, text=text, value=subitem[1].value)
 					j += 1
 
 		## Den freien Platz füllen wir mit leeren Zeilen, die der Spieler dann per Stift ausfüllen kann.
