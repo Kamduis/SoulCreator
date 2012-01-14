@@ -249,7 +249,7 @@ class DrawSheet(QObject):
 			lengthY = 580
 		elif self.__character.species == "Werewolf":
 			lengthX = 270
-			lengthY = 580
+			lengthY = 620
 		self._drawSkills(offsetH=0, offsetV=210, width=lengthX, height=lengthY)
 
 		posY = 210
@@ -285,7 +285,7 @@ class DrawSheet(QObject):
 			lengthY = 320
 		elif self.__character.species == "Werewolf":
 			posY = 290
-			lengthY = 330
+			lengthY = 370
 		self._drawMerits(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posY = 620
@@ -296,7 +296,7 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Vampire":
 			posY = 730
 		elif self.__character.species == "Werewolf":
-			posY = 630
+			posY = 670
 		self._drawFlaws(offsetH=posX, offsetV=posY, width=lengthX, height=60)
 
 		posX = 570
@@ -357,15 +357,22 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Vampire":
 			posY = 610
 		elif self.__character.species == "Werewolf":
-			posY = 510
+			posY = 550
 		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX)
 
 		posX = 260
 		posY = 800
 		lengthX = 250
-		lengthY = 300
+		lengthY = self.__pageHeight - posY
 		if self.__character.species == "Human":
 			self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+		if self.__character.species == "Werewolf":
+			posX = 0
+			posY = 840
+			lengthX = self.__pageWidth
+			lengthY = self.__pageHeight - posY
+			self._drawShapes(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		self.__painter.restore()
 
@@ -957,7 +964,7 @@ class DrawSheet(QObject):
 
 	def _drawAdvantages(self, offsetH=0, offsetV=0, width=None):
 		"""
-		Bannt die Berechneten Werte, Moral und Powerstat sowie die Energie auf den Charakterbogen.
+		Bannt die Berechneten Werte auf den Charakterbogen.
 
 		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox aller Fertigkeiten.
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
@@ -989,7 +996,7 @@ class DrawSheet(QObject):
 		for item in advantages:
 			self.__drawTextWithValue(offsetH, verticalPos, width, item[0], item[1])
 			verticalPos += textHeight
-		self.__drawTextWithValue(offsetH, verticalPos, width, self.tr("Armor"), "{general}/{firearms}".format(general=self.__character.armor[0], firearms=self.__character.armor[0]))
+		self.__drawTextWithValue(offsetH, verticalPos, width, self.tr("Armor"), "{general}/{firearms}".format(general=self.__character.armor[0], firearms=self.__character.armor[1]))
 		verticalPos += textHeight
 
 		self.__painter.restore()
@@ -1146,6 +1153,191 @@ class DrawSheet(QObject):
 			self.__painter.drawEllipse(offsetH + width - self.__dotDiameterH, lcl_height - self.__dotDiameterV, self.__dotDiameterH, self.__dotDiameterV)
 			self.__painter.restore()
 		self.__painter.restore()
+
+		self.__painter.restore()
+
+
+	def _drawShapes(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Zeichnet die Werte aller fünf Gestalten von Werwölfen auf den Charakterbogen.
+
+		\param offsetH Der horizontale Abstand zur linken Kante des nutzbaren Charakterbogens.
+		\param offsetV Der vertikale Abstand zur Oberkante des nutzbaren Charakterbogens.
+		\param width Die Breite.
+		\param height Die Höhe.
+
+		\bug Da ich als Argument von self.tr() keine unicode-String nutzen kann, sind manche minus-Zeichen als "-" und nicht als "−" genutzt worden.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth
+
+		self.__painter.save()
+
+		self.__painter.setFont(self.__fontSubHeading)
+
+		fontSubHeadingMetrics = QFontMetrics(self.__painter.font())
+		fontSubHeadingHeight = fontSubHeadingMetrics.height()
+
+		columnWidth = width / 5
+
+		## Name der Gestalten
+		i = 0
+		for item in Config.shapesWerewolf:
+			self.__painter.drawText(offsetH + i * (columnWidth), offsetV, columnWidth, fontSubHeadingHeight, Qt.AlignHCenter, item)
+			i += 1
+
+		self.__painter.restore()
+
+		self.__painter.save()
+
+		self.__painter.setFont(self.__fontMain)
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		## Attributsänderungen
+		shapesAttributes = [
+			## Hishu
+			[
+			],
+			## Dalu
+			[
+				[ u"Strength (+1)", CalcAdvantages.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[1]) ],
+				[ u"Stamina (+1)", CalcAdvantages.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[1]) ],
+				[ u"Manipulation (−1)", CalcAdvantages.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[1]) ],
+			],
+			## Gauru
+			[
+				[ u"Strength (+3)", CalcAdvantages.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[2]) ],
+				[ u"Dexterity (+1)", CalcAdvantages.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]) ],
+				[ u"Stamina (+2)", CalcAdvantages.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[2]) ],
+			],
+			## Urshul
+			[
+				[ u"Strength (+2)", CalcAdvantages.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[3]) ],
+				[ u"Dexterity (+2)", CalcAdvantages.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]) ],
+				[ u"Stamina (+2)", CalcAdvantages.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[3]) ],
+				[ u"Manipulation (−3)", CalcAdvantages.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[3]) ],
+			],
+			## Urhan
+			[
+				[ u"Dexterity (+2)", CalcAdvantages.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]) ],
+				[ u"Stamina (+1)", CalcAdvantages.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[4]) ],
+			],
+		]
+		
+		listLen = []
+		i = 0
+		for item in shapesAttributes:
+			listLen.append(len(item))
+			j = 0
+			for subitem in item:
+				self.__drawTextWithValue(offsetH + self.__textDotSep + i * columnWidth, offsetV + fontSubHeadingHeight + j * fontHeight, columnWidth - 2 * self.__textDotSep, subitem[0], subitem[1])
+				j += 1
+			i += 1
+
+		## Advantages
+		advantages = [
+			[ self.tr("Size"), self.__calc.calcSize(), ],
+			[ self.tr("Initiative"), self.__calc.calcInitiative(), ],
+			[ self.tr("Speed"), self.__calc.calcSpeed(), ],
+			[ self.tr("Defense"), self.__calc.calcDefense(), ],
+			[ self.tr("Armor"), "{general}/{firearms}".format(general=self.__character.armor[0], firearms=self.__character.armor[1]), ],
+			[ self.tr("Perception"), u"±0", ],
+		]
+		shapesAdvantages = [
+			## Hishu
+			advantages,
+			## Dalu
+			[
+				[ advantages[0][0], CalcAdvantages.size(advantages[0][1], Config.shapesWerewolf[1]), ],
+				[ advantages[1][0], CalcAdvantages.initiative(advantages[1][1], Config.shapesWerewolf[1]), ],
+				[ advantages[2][0], CalcAdvantages.speed(advantages[1][1], Config.shapesWerewolf[1]), ],
+				[ advantages[3][0], CalcAdvantages.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[1]), ],
+				[ advantages[4][0], advantages[4][1], ],
+				[ advantages[5][0], u"+2", ],
+			],
+			## Gauru
+			[
+				[ advantages[0][0], CalcAdvantages.size(advantages[0][1], Config.shapesWerewolf[2]), ],
+				[ advantages[1][0], CalcAdvantages.initiative(advantages[1][1], Config.shapesWerewolf[2]), ],
+				[ advantages[2][0], CalcAdvantages.speed(advantages[1][1], Config.shapesWerewolf[2]), ],
+				[ advantages[3][0], CalcAdvantages.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]), ],
+				[ advantages[4][0], "1/1", ],
+				[ advantages[5][0], u"+3", ],
+			],
+			## Urshul
+			[
+				[ advantages[0][0], CalcAdvantages.size(advantages[0][1], Config.shapesWerewolf[3]), ],
+				[ advantages[1][0], CalcAdvantages.initiative(advantages[1][1], Config.shapesWerewolf[3]), ],
+				[ advantages[2][0], CalcAdvantages.speed(advantages[1][1], Config.shapesWerewolf[3]), ],
+				[ advantages[3][0], CalcAdvantages.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]), ],
+				[ advantages[4][0], "0", ],
+				[ advantages[5][0], u"+3", ],
+			],
+			## Urhan
+			[
+				[ advantages[0][0], CalcAdvantages.size(advantages[0][1], Config.shapesWerewolf[4]), ],
+				[ advantages[1][0], CalcAdvantages.initiative(advantages[1][1], Config.shapesWerewolf[4]), ],
+				[ advantages[2][0], CalcAdvantages.speed(advantages[1][1], Config.shapesWerewolf[4]), ],
+				[ advantages[3][0], CalcAdvantages.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]), ],
+				[ advantages[4][0], "0", ],
+				[ advantages[5][0], u"+4", ],
+			],
+		]
+
+		vSpace = fontSubHeadingHeight + max(listLen) * fontHeight
+		
+		i = 0
+		for item in shapesAdvantages:
+			j = 0
+			for subitem in item:
+				self.__drawTextWithValue(offsetH + self.__textDotSep + i * columnWidth, offsetV + vSpace + j * fontHeight, columnWidth - 2 * self.__textDotSep, subitem[0], subitem[1])
+				j += 1
+			i += 1
+
+		self.__painter.restore()
+
+		self.__painter.save()
+
+		font = copy.copy(self.__fontMain_small)
+		font.setStyle(QFont.StyleItalic)
+		self.__painter.setFont(font)
+
+		fontItalicMetrics = QFontMetrics(self.__painter.font())
+		fontItalicHeight = fontItalicMetrics.height()
+
+		## Ohne unicode im Argument von self.tr() auch kein unicode "−"!
+		comments = [
+			## Hishu
+			#self.tr("Others suffer {minus}2 to all attempts to detect werewolf nature.".format(minus=u"−")),
+			self.tr("Others suffer -2 to all attempts to detect werewolf nature.".format(minus=u"−")),
+			## Dalu
+			self.tr("Lunacy -4"),
+			## Gauru
+			self.tr("Full Lunacy\nBite: +2L, Claw: +1L\n-2 to resist Death Rage"),
+			## Urshul
+			self.tr("Lunacy -2\nBite: +2L"),
+			## Urhan
+			self.tr("Bite: +2L\nOthers suffer -2 to all attempts to detect werewolf nature."),
+		]
+
+		commentBoxHeight = 3 * fontItalicHeight
+
+		vSpace = height - commentBoxHeight
+
+		i = 0
+		for item in comments:
+			self.__painter.drawText(offsetH + self.__textDotSep + i * columnWidth, offsetV + vSpace, columnWidth - 2 * self.__textDotSep, commentBoxHeight, Qt.AlignHCenter | Qt.AlignBottom | Qt.TextWordWrap, item)
+			i += 1
+
+		self.__painter.restore()
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 

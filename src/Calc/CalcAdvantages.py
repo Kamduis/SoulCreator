@@ -323,6 +323,15 @@ class CalcAdvantages(QObject):
 			return speed
 
 
+	@classmethod
+	def defense( cls, wits, dexterity, shape ):
+		"""
+		Berechnet die Verteidigung des Charakters abhängig von den unterschiedlichen Gestalten.
+		"""
+
+		return min(wits, cls.dexterity( dexterity, shape ))
+
+
 	@staticmethod
 	def health( value, shape ):
 		"""
