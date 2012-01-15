@@ -22,7 +22,41 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import sys
+import os
+
 from src.Config import Config
+
+
+
+
+class PathTools():
+	"""
+	@brief Hilfsfunktionen beim Umgang mit Dateien und Pfaden.
+	"""
+
+	def __init__(self):
+		pass
+
+
+	@staticmethod
+	def getPath():
+		"""
+		Bestimmt den Pfad zu diesem Skript, unabhängig davon, wie es ausgeführt wird.
+		"""
+
+		# Bestimmt, ob diese Anwednung eine normale Python-Ausfürhung ist oder ob es sich um eine "Frozen Executable" handelt.
+		if hasattr(sys,  'frozen'):
+			# Es wird eine "Frozen Executable" ausgeführt.
+			dir_path = os.path.dirname(sys.executable)
+		elif '__file__' in locals():
+			# Es wird ein normales py-Skript ausgeführt.
+			dir_path = os.path.dirname(__file__)
+		else:
+			# Es wird von der Kommandozeile gestartet.
+			dir_path = sys.path[0]
+		return dir_path
+
 
 
 

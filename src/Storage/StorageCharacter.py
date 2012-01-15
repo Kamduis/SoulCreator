@@ -23,6 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import QObject, QDate, Signal, Slot
+from PySide.QtGui import QPixmap
 
 from src.Config import Config
 from src.Datatypes.Trait import Trait
@@ -68,6 +69,7 @@ class StorageCharacter(QObject):
 	eyesChanged = Signal(str)
 	hairChanged = Signal(str)
 	nationalityChanged = Signal(str)
+	pictureChanged = Signal(QPixmap)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -119,6 +121,7 @@ class StorageCharacter(QObject):
 		self.__morality = 0
 		self.__armor = [0, 0]
 		self.__era = ""
+		self.__picture = None
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -189,6 +192,7 @@ class StorageCharacter(QObject):
 		self.moralityChanged.connect(self.setModified)
 		self.derangementChanged.connect(self.setModified)
 		self.armorChanged.connect(self.setModified)
+		self.pictureChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -344,6 +348,21 @@ class StorageCharacter(QObject):
 		"""
 		
 		return self.__identities
+
+
+	@property
+	def picture(self):
+		"""
+		Charakterbild.
+		"""
+
+		return self.__picture
+
+	@picture.setter
+	def picture(self, image):
+		if self.__picture != image:
+			self.__picture = image
+			self.pictureChanged.emit(image)
 
 
 	#def insertIdentity( self, index, identity ):

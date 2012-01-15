@@ -6,204 +6,221 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>637</width>
-    <height>644</height>
+    <width>696</width>
+    <height>690</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Species:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="comboBox_species"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Gender:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="comboBox_gender"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_dateBirth">
-         <property name="text">
-          <string>Birthday:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QDateEdit" name="dateEdit_dateBirth"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Age:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="label_age">
-         <property name="text">
-          <string>00</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_dateBecoming">
-         <property name="text">
-          <string>Becoming:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QDateEdit" name="dateEdit_dateBecoming"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_ageBecoming_label">
-         <property name="text">
-          <string>Age at Becoming:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLabel" name="label_ageBecoming">
-         <property name="text">
-          <string>00</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Virtue:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Vice:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QComboBox" name="comboBox_vice"/>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_breed">
-         <property name="text">
-          <string>Breed:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QComboBox" name="comboBox_breed"/>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_faction">
-         <property name="text">
-          <string>Faction:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QComboBox" name="comboBox_faction"/>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Species:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
          </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_faction"/>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="comboBox_species"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Gender:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="comboBox_gender"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_dateBirth">
+           <property name="text">
+            <string>Birthday:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDateEdit" name="dateEdit_dateBirth"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Age:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLabel" name="label_age">
+           <property name="text">
+            <string>00</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_dateBecoming">
+           <property name="text">
+            <string>Becoming:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QDateEdit" name="dateEdit_dateBecoming"/>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_ageBecoming_label">
+           <property name="text">
+            <string>Age at Becoming:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QLabel" name="label_ageBecoming">
+           <property name="text">
+            <string>00</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Virtue:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Vice:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1">
+          <widget class="QComboBox" name="comboBox_vice"/>
+         </item>
+         <item row="9" column="0">
+          <widget class="QLabel" name="label_breed">
+           <property name="text">
+            <string>Breed:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1">
+          <widget class="QComboBox" name="comboBox_breed"/>
+         </item>
+         <item row="10" column="0">
+          <widget class="QLabel" name="label_faction">
+           <property name="text">
+            <string>Faction:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QComboBox" name="comboBox_faction"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_faction"/>
+           </item>
+          </layout>
+         </item>
+         <item row="11" column="0">
+          <widget class="QLabel" name="label_organisation">
+           <property name="text">
+            <string>Organisation:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="1">
+          <widget class="QComboBox" name="comboBox_organisation"/>
+         </item>
+         <item row="12" column="0">
+          <widget class="QLabel" name="label_party">
+           <property name="text">
+            <string>Party:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="1">
+          <widget class="QLineEdit" name="lineEdit_party"/>
+         </item>
+         <item row="7" column="1">
+          <widget class="QComboBox" name="comboBox_virtue"/>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QPushButton" name="pushButton_name">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="label_organisation">
-         <property name="text">
-          <string>Organisation:</string>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1">
-        <widget class="QComboBox" name="comboBox_organisation"/>
-       </item>
-       <item row="12" column="0">
-        <widget class="QLabel" name="label_party">
-         <property name="text">
-          <string>Party:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="1">
-        <widget class="QLineEdit" name="lineEdit_party"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="comboBox_virtue"/>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QPushButton" name="pushButton_name">
-         <property name="minimumSize">
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>200</width>
-           <height>0</height>
+           <width>20</width>
+           <height>40</height>
           </size>
          </property>
-         <property name="text">
-          <string>Name</string>
-         </property>
-        </widget>
+        </spacer>
        </item>
       </layout>
      </item>
@@ -349,6 +366,36 @@
         </layout>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="pushButton_picture">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Open Picture</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>155</width>
+             <height>155</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_pictureClear">
+           <property name="text">
+            <string>PushButton</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -383,28 +430,12 @@
     </layout>
    </item>
   </layout>
-  <zorder>pushButton_name</zorder>
-  <zorder>horizontalSpacer_2</zorder>
-  <zorder>doubleSpinBox_weight</zorder>
-  <zorder>label_12</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder>label_10</zorder>
-  <zorder>label_15</zorder>
-  <zorder>lineEdit_hair</zorder>
-  <zorder>label_14</zorder>
-  <zorder>lineEdit_nationality</zorder>
-  <zorder>label_9</zorder>
-  <zorder>label_11</zorder>
-  <zorder>label_7</zorder>
-  <zorder>lineEdit_eyes</zorder>
-  <zorder>comboBox_era</zorder>
-  <zorder>dateEdit_dateGame</zorder>
   <zorder></zorder>
-  <zorder>label_8</zorder>
-  <zorder>textEdit_description</zorder>
-  <zorder>label_6</zorder>
-  <zorder>comboBox_virtue</zorder>
-  <zorder>verticalSpacer</zorder>
+  <zorder>verticalSpacer_2</zorder>
+  <zorder>label_picture</zorder>
+  <zorder>horizontalSpacer_2</zorder>
+  <zorder>pushButton_picture</zorder>
+  <zorder>pushButton_pictureClear</zorder>
  </widget>
  <customwidgets>
   <customwidget>

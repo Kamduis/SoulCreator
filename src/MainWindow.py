@@ -29,6 +29,7 @@ from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray
 from PySide.QtGui import QMainWindow, QApplication, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog, QGtkStyle
 
 from src.GlobalState import GlobalState
+from src.Tools import PathTools
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from Config import Config
 from IO.Settings import Settings
@@ -58,22 +59,6 @@ from ui.ui_MainWindow import Ui_MainWindow
 
 
 
-def getPath():
-	"""
-	Bestimmt den Pfad zu diesem Skript, unabhängig davon, wie es ausgeführt wird.
-	"""
-
-	# Bestimmt, ob diese Anwednung eine normale Python-Ausfürhung ist oder ob es sich um eine "Frozen Executable" handelt.
-	if hasattr(sys,  'frozen'):
-			# Es wird eine "Frozen Executable" ausgeführt.
-			dir_path = os.path.dirname(sys.executable)
-	elif '__file__' in locals():
-			# Es wird ein normales py-Skript ausgeführt.
-			dir_path = os.path.dirname(__file__)
-	else:
-			# Es wird von der Kommandozeile gestartet.
-			dir_path = sys.path[0]
-	return dir_path
 
 
 
@@ -539,7 +524,7 @@ class MainWindow(QMainWindow):
 		if ( self.maybeSave() ):
 			#Debug.debug("Open")
 
-			appPath = getPath()
+			appPath = PathTools.getPath()
 
 			# Pfad zum Speicherverzeichnis
 			savePath = "{}/{}".format(appPath, Config.saveDir)
@@ -581,7 +566,7 @@ class MainWindow(QMainWindow):
 		Über diese Funktion wird erst der Dialog aufgerufen zum Aussuchen des Speicherortes und danach dann das Schreiben des Charakters in eine XML-Datei eingeletiet.
 		"""
 
-		appPath = getPath()
+		appPath = PathTools.getPath()
 
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
@@ -607,6 +592,7 @@ class MainWindow(QMainWindow):
 			except ErrFileNotOpened as e:
 				MessageBox.exception( self, e.message(), e.description() )
 
+			#Debug.debug()
 			f.close()
 
 			# Unmittelbar nach dem Speichern ist der Charkter natürlich nicht mehr 'geändert'.
@@ -631,7 +617,7 @@ class MainWindow(QMainWindow):
 		Diese Funktion druckt den Charakter in ein PDF-Dokument.
 		"""
 
-		appPath = getPath()
+		appPath = PathTools.getPath()
 
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
@@ -699,7 +685,7 @@ class MainWindow(QMainWindow):
 		Speichert die Konfiguration dieses Programms für den nächsten Aufruf.
 		"""
 
-		settings = Settings( "{}/{}".format(getPath(), Config.configFile ))
+		settings = Settings( "{}/{}".format(PathTools.getPath(), Config.configFile ))
 
 		settings.beginGroup( "MainWindow" )
 		settings.setValue( "size", self.size() )
@@ -718,7 +704,7 @@ class MainWindow(QMainWindow):
 		Liest die Einstellungen für das Programm aus der Konfigurationsdatei.
 		"""
 
-		appPath = getPath()
+		appPath = PathTools.getPath()
 		settings = Settings( "{}/{}".format(appPath, Config.configFile))
 
 		settings.beginGroup( "MainWindow" );

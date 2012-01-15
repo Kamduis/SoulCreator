@@ -22,12 +22,14 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt, QDate, Signal
-from PySide.QtGui import QWidget, QIcon, QLabel
+import os
+
+from PySide.QtCore import Qt, QSize, QFile, QDate, Signal
+from PySide.QtGui import QWidget, QIcon, QLabel, QPixmap, QFileDialog
 
 from src.Config import Config
+from src.Tools import PathTools
 from src.Datatypes.Identity import Identity
-#from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Widgets.Dialogs.NameDialog import NameDialog
 from src.Debug import Debug
 
@@ -67,6 +69,11 @@ class InfoWidget(QWidget):
 
 		self.ui.comboBox_era.addItems( Config.eras )
 
+		
+		self.ui.pushButton_pictureClear.setIcon(QIcon(":/icons/images/actions/cancel.png"))
+		self.ui.pushButton_pictureClear.setText("")
+		self.ui.pushButton_pictureClear.setEnabled(False)
+
 		## Speichern der vom Benutzer veränderten Werte
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
 		self.ui.comboBox_era.currentIndexChanged[str].connect(self.__character.setEra)
@@ -87,6 +94,8 @@ class InfoWidget(QWidget):
 		self.ui.lineEdit_eyes.textEdited.connect(self.__character.setEyes)
 		self.ui.lineEdit_hair.textEdited.connect(self.__character.setHair)
 		self.ui.lineEdit_nationality.textEdited.connect(self.__character.setNationality)
+		self.ui.pushButton_picture.clicked.connect(self.openImage)
+		self.ui.pushButton_pictureClear.clicked.connect(self.clearImage)
 		#self.ui.textEdit_description.textChanged.connect(self.saveDescription)	## Kann ich nicht nutzen, da sonst der Curser bei jeder änderung an den Angang springt.
 		self.ui.textEdit_description.focusLost.connect(self.changeDescription)
 
@@ -118,6 +127,7 @@ class InfoWidget(QWidget):
 		self.__character.eyesChanged.connect(self.ui.lineEdit_eyes.setText)
 		self.__character.hairChanged.connect(self.ui.lineEdit_hair.setText)
 		self.__character.nationalityChanged.connect(self.ui.lineEdit_nationality.setText)
+		self.__character.pictureChanged.connect(self.updatePicture)
 		self.__character.descriptionChanged.connect(self.ui.textEdit_description.setPlainText)
 		# Menschen können ihre Fraktion selbst eintragen und haben einige Angaben einfach nicht nötig.
 		self.__character.speciesChanged.connect(self.hideShowWidgets_species)
@@ -324,4 +334,45 @@ class InfoWidget(QWidget):
 		self.ui.lineEdit_faction.clear()
 
 
+	def openImage(self ):
+		"""
+		Öffnet einen Dialog zum Laden eines Charakterbildes.
+		"""
 
+		appPath = PathTools.getPath()
+
+		# Pfad zum Speicherverzeichnis
+		savePath = os.environ['HOME']
+
+		# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
+		if ( not os.path.exists( savePath ) ):
+			savePath = PathTools.appPath
+
+		filePath = QFileDialog.getOpenFileName(
+			self,
+			self.tr( "Select Image File" ),
+			savePath,
+			self.tr( "Images (*.jpg *.jpeg *.png *.bmp *.gif *.pgm *.pbm *.ppm *.svg )" )
+		)
+
+		if ( filePath[0] ):
+			f = QFile( filePath[0] )
+
+			pixmap = QPixmap(filePath[0])
+			self.updatePicture(pixmap)
+
+			self.__character.picture = pixmap
+
+
+	def clearImage(self):
+		self.__character.picture = QPixmap()
+		self.ui.pushButton_picture.setIcon(QIcon())
+		self.ui.pushButton_picture.setText("Open Picture")
+		self.ui.pushButton_pictureClear.setEnabled(False)
+
+
+	def updatePicture(self, image):
+		self.ui.pushButton_picture.setText("")
+		self.ui.pushButton_picture.setIcon(image)
+
+		self.ui.pushButton_pictureClear.setEnabled(True)

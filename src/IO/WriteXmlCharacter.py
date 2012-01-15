@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, QXmlStreamWriter, Qt, QIODevice
+from PySide.QtCore import QObject, QXmlStreamWriter, Qt, QIODevice, QByteArray, QBuffer
 #from PySide.QtGui import QColor
 
 from src.Config import Config
@@ -64,6 +64,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeStartElement( Config.programName )
 		self.writeAttribute( "version", Config.version() )
 		self.writeTextElement( "species", self.__character.species )
+		self.writeTextElement( "era", self.__character.era )
 		self.writeStartElement( "identities" )
 		self.writeStartElement( "identity" )
 		self.writeAttribute( "forenames", " ".join(self.__character.identities[0].forenames) )
@@ -98,17 +99,21 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 			for item in self.__character.derangements.items():
 				if item[1]:
 					self.writeStartElement( "derangement" )
-					self.writeAttribute( "morality", unicode(item[0]) )
+					self.writeAttribute( "morality", str(item[0]) )
 					self.writeCharacters( item[1] )
 					self.writeEndElement()
 			self.writeEndElement()
 		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
-		self.writeTextElement( "era", self.__character.era )
 
 		self.writeCharacterTraits()
 
-		#writeCharacterDerangements();
-
+		if self.__character.picture:
+			imageData = QByteArray()
+			imageBuffer = QBuffer(imageData)
+			imageBuffer.open(QIODevice.WriteOnly)
+			self.__character.picture.save(imageBuffer, "JPG")	# writes pixmap into bytes in PNG format
+			imageData = imageData.toBase64()
+			self.writeTextElement( "picture", unicode(imageData) )
 		self.writeEndElement()
 		self.writeEndDocument()
 

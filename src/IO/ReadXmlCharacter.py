@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, QDate, Signal
-#from PySide.QtGui import QColor
+from PySide.QtCore import QObject, QDate, QByteArray, Signal
+from PySide.QtGui import QPixmap
 
 from src.Config import Config
 from src.IO.ReadXml import ReadXml
@@ -102,6 +102,8 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 				if ( elementName == "species" ):
 					self.__character.species = self.readElementText()
+				elif ( elementName == "era" ):
+					self.__character.era = self.readElementText()
 				elif ( elementName == "identities" ):
 					self.readIdentities()
 				elif ( elementName == "dates" ):
@@ -142,10 +144,13 @@ class ReadXmlCharacter(QObject, ReadXml):
 				elif ( elementName == "armor" ):
 					txt = self.readElementText()
 					self.__character.armor = [int(n) for n in txt.split(Config.sepChar)]
-				elif ( elementName == "era" ):
-					self.__character.era = self.readElementText()
 				elif ( elementName in Config.typs ):
 					self.readTraitCategories( elementName )
+				elif ( elementName == "picture" ):
+					imageData = QByteArray.fromBase64(str(self.readElementText()))
+					image = QPixmap()
+					image.loadFromData(imageData, "jpg")
+					self.__character.picture = image
 				#elif ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
 	#// 				qDebug() << Q_FUNC_INFO << elementName << "!";
 					#readTraits( cv_AbstractTrait::toType( elementName ) );
