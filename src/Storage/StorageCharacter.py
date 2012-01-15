@@ -179,7 +179,6 @@ class StorageCharacter(QObject):
 		# Unerwünschte Wirkung
 		#self.speciesChanged.connect(self.clearUnusableTraits)
 		self.speciesChanged.connect(self.setModified)
-	#connect( self, SIGNAL( derangementsChanged() ), self, SLOT( setModified() ) );
 		self.virtueChanged.connect(self.setModified)
 		self.viceChanged.connect(self.setModified)
 		self.breedChanged.connect(self.setModified)
@@ -304,6 +303,23 @@ class StorageCharacter(QObject):
 		"""
 
 		return self.__derangements
+
+	@derangements.setter
+	def derangements(self, derangements):
+		"""
+		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
+		"""
+
+		if self.__derangements != derangements:
+			self.__derangements = derangements
+			## Jetzt müssen in der richtigen Reihenfolge (hoch nach tief) die Signale gesandt werden.
+			keys = self.__derangements.keys()
+			#Debug.debug(keys, range(min(keys), max(keys)+1)[::-1])
+			for i in range(min(keys), max(keys)+1)[::-1]:
+				if i in keys:
+					#Debug.debug("Sende signal")
+					self.derangementChanged.emit(i, self.__derangements[i])
+
 
 	def setDerangement(self, moralityValue, derangement):
 		"""
@@ -769,6 +785,7 @@ class StorageCharacter(QObject):
 		self.vice = self.__storage.vices[0]["name"]
 		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
 		#self.breed = self.__storage.breeds(Config.initialSpecies)[0]
+		self.__derangements = {}
 		self.party = ""
 		self.description = ""
 

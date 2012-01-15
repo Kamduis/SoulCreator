@@ -361,8 +361,14 @@ class DrawSheet(QObject):
 			posY = 550
 		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX)
 
-		posX = 260
+		posX = 0
 		posY = 800
+		lengthX = 250
+		lengthY = self.__pageHeight - posY
+		if self.__character.species == "Human":
+			self._drawDerangements(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+		posX = 260
 		lengthX = 250
 		lengthY = self.__pageHeight - posY
 		if self.__character.species == "Human":
@@ -1430,6 +1436,38 @@ class DrawSheet(QObject):
 			self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
+
+
+	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt die Geistesstörungen auf den Charkaterbogen. Allerdings nicht in die Moraltabelle!
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		"""
+		pass
+
+		#self.__painter.save()
+
+		#if width == None:
+			#width = self.__pageWidth / 3
+
+		#self.__drawHeading(offsetH, offsetV, width, self.tr("Derangements"))
+
+		#self.__painter.setFont(self.__fontMain_tiny)
+		#fontMetrics = QFontMetrics(self.__painter.font())
+		#fontHeight = fontMetrics.height()
+
+		#i = 0
+		#for item in self.__character.derangements.items():
+			#self.__drawTextWithValue(offsetH, offsetV + i * fontHeight, width, derangement, item[0], item[1])
+			#i += 1
+
+		#if GlobalState.isDebug:
+			#self.__drawBB(offsetH, offsetV, width, height)
+
+		#self.__painter.restore()
 
 
 	def __drawHeading(self, posX, posY, width, text):

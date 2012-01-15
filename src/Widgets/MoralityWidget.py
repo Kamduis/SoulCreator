@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel
+from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QMessageBox
 
 from src.Config import Config
 from src.Widgets.Components.DerangementComboBox import DerangementComboBox
@@ -93,15 +93,18 @@ class MoralityWidget(QWidget):
 				self.__layoutTab.addWidget(box, i, 1)
 
 				box.currentIndexChanged[str].connect(self.uniqifyDerangements)
-				box.currentIndexChanged[str].connect(self.saveDerangements)
-				self.__character.derangementChanged.connect(self.updateDerangementBoxes)
+				box.derangementChanged.connect(self.checkSevereDerangement)
+				#box.derangementChanged.connect(self.saveDerangements)
 
 			dot.clicked.connect(self.__calcValue)
+
+		self.fillDerangementBoxex()
 
 		self.__character.speciesChanged.connect(self.setMoralityName)
 		self.__character.moralityChanged.connect(self.setValue)
 		self.valueChanged.connect(self.__character.setMorality)
 		self.valueChanged.connect(self.enableDerangementBox)
+		self.__character.derangementChanged.connect(self.updateDerangementBoxes)
 
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateDerangements( cv_Species::SpeciesFlag ) ) );
 		#connect( character, SIGNAL( moralityChanged( int ) ), this, SLOT( setValue( int ) ) );
@@ -188,11 +191,9 @@ class MoralityWidget(QWidget):
 		self.__labelHeading.setText("<b>{}</b>".format(self.__storage.moralityName(species)))
 
 
-	def enableDerangementBox( self, value ):
+	def fillDerangementBoxex( self ):
 		"""
-		Sorgt dafür, daß die Combobox für die Geistesstörung neben einem leeren Moralpunkt aktiviert und mit den verfügbaren Geistesstörungen gefüllt wird.
-
-		Alle Boxen zeigen alle Geistesstörungen an, aber wenn eine Gewählt wird, die schon anderorts gewählt wurde, wird sie dort abgewählt.
+		Sorgt dafür, daß die Comboboxen alle Geistesstörungen enthalten.
 		"""
 
 		## Milde Geistesstörungen.
@@ -203,15 +204,25 @@ class MoralityWidget(QWidget):
 			severe.extend(self.__storage.derangements(self.__character.species, item))
 		## An den Anfang kommt ein leerer String
 		mild.insert(0, "")
-		for i in range(value+1, Config.derangementMoralityTraitMax+1)[::-1]:
-			#Debug.debug(i)
-			self.__derangementBoxList[i].setEnabled(True)
-			##Debug.debug(self.__storage.derangements())
+		for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
 			self.__derangementBoxList[i].addItems(mild)
 			self.__derangementBoxList[i].addItems(severe, severe=True)
+
+
+	def enableDerangementBox( self, value ):
+		"""
+		Sorgt dafür, daß die Combobox für die Geistesstörung neben einem leeren Moralpunkt aktiviert und mit den verfügbaren Geistesstörungen gefüllt wird.
+
+		Alle Boxen zeigen alle Geistesstörungen an, aber wenn eine Gewählt wird, die schon anderorts gewählt wurde, wird sie dort abgewählt.
+		"""
+
+		#Debug.debug(value)
+
+		for i in range(value+1, Config.derangementMoralityTraitMax+1)[::-1]:
+			self.__derangementBoxList[i].setEnabled(True)
 		for i in xrange(1, value+1):
+			self.__derangementBoxList[i].setCurrentIndex(0)
 			self.__derangementBoxList[i].setEnabled(False)
-			self.__derangementBoxList[i].clear()
 
 
 	def uniqifyDerangements(self, text):
@@ -221,6 +232,7 @@ class MoralityWidget(QWidget):
 		Es werd die oberen doppelt vorkommende Geistesstörung gelöscht.
 		"""
 
+		#Debug.debug(text)
 		firstOccuranceHappened = False
 		for i in range(1, Config.derangementMoralityTraitMax+1):
 			if self.__derangementBoxList[i].currentIndex != 0:
@@ -230,20 +242,43 @@ class MoralityWidget(QWidget):
 					firstOccuranceHappened = True
 
 
-	#def addSevereDerangements(self, text):
-		#"""
-		#Wenn in einer Box eine milde Geistesstörung gewählt wurde, müssen in den darunterfolgdenden Boxen die zugehörigen schweren Geistesstörungen zur Verfügung stehen.
-		#"""
+	def checkSevereDerangement(self, derangement, isSevere, sender):
+		"""
+		Wird eine schwere Geistesstörung gewählt und ihre Milde version ist nicht gewählt, muß gewarnt werden.
+		"""
 
-		#selectedMildDerangement = ""
-		#for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
-			#if self.__derangementBoxList[i].currentIndex != 0:
-				#selectedMildDerangement = self.__derangementBoxList[i].currentText()
-				#if selectedMildDerangement in self.__storage.derangements(self.__character.species):
-					### Alle darunter befindlichen Comboboxen müssen die zugehörigen schweren Geistesstörungen in ihre Auswahl erhalten.
-					#severeDerangements = self.__storage.derangements(self.__character.species, selectedMildDerangement)
-					#for j in range(1, i)[::-1]:
-						#self.__derangementBoxList[j].addItems(severeDerangements)
+		if isSevere:
+			mildParent = ""
+			for item in self.__storage.derangements(self.__character.species):
+				if derangement in self.__storage.derangements(self.__character.species, item):
+					mildParent = item
+					break
+			mildExists = False
+			for i in range(1, Config.derangementMoralityTraitMax+1):
+				if self.__derangementBoxList[i].currentText() == mildParent:
+					mildExists = True
+					break
+			if not mildExists:
+				#Debug.debug("Milde Verfsion exisitert nicht!")
+				QMessageBox.warning(self, self.tr("Warning"), self.tr("{severe} can only be taken, if its mild version {mild} was selected at a higher morality level. Instead of {severe}, {mild} will be selected for this morality level.".format(mild=mildParent, severe=derangement)))
+				#Debug.debug(sender)
+				sender.setCurrentIndex(sender.findText(mildParent))
+				derangement = mildParent
+
+		## Nach der Kontrolle, kann die Geistesstörung gespeichert werden.
+		for item in self.__derangementBoxList.items():
+			if sender == item[1]:
+				#Debug.debug(item[0], derangement)
+				self.saveDerangements(moralityValue=item[0], derangement=derangement)
+				break
+
+
+	def saveDerangements( self, moralityValue, derangement ):
+		"""
+		Speichert die gewählte Geistesstörung im Charakter.
+		"""
+
+		self.__character.setDerangement(moralityValue=moralityValue, derangement=derangement)
 
 
 	def updateDerangementBoxes(self, moralityValue, derangement):
@@ -256,20 +291,5 @@ class MoralityWidget(QWidget):
 		#Debug.debug(derangement, moralityValue)
 
 		self.__derangementBoxList[moralityValue].setCurrentIndex(self.__derangementBoxList[moralityValue].findText(derangement))
-
-
-	def saveDerangements( self ):
-		"""
-		Speichert die gewählte Geistesstörung im Charakter.
-
-		\todo Wenn ich weiß bei welcher Moral die Geistesstörungen platziert werden, kann ich auch beim ändern des INdex einer Geistesstörungsbox diese direkt im Charakter ändern, ohne alle löschen und neu abarbeiten zu müssen.
-		"""
-
-		derangementMapping = {}
-
-		isDerangementPresent = False
-		for i in range(1, Config.derangementMoralityTraitMax+1):
-			if self.__derangementBoxList[i].currentIndex != 0:
-				self.__character.setDerangement(derangement=self.__derangementBoxList[i].currentText(), moralityValue=i)
 
 

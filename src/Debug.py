@@ -45,3 +45,14 @@ class Debug():
 
 		if GlobalState.isDebug:
 			print("{:<78}\tl. {:<4}\t{:<18}\n\t{}".format(inspect.stack()[1][1], inspect.stack()[1][2], inspect.stack()[1][3], strPrnt))
+
+
+	#@staticmethod
+	#def stack( *args ):
+		#"""
+		#???
+		#"""
+
+		#if GlobalState.isDebug:
+			#for item in inspect.stack():
+				#print("{}\t{:<78}\t{}".format(item[0], item[1], item[3]))

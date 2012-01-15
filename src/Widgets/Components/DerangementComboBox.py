@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt
+from PySide.QtCore import Qt, Signal
 from PySide.QtGui import QComboBox, QColor
 
 from src.Config import Config
@@ -42,8 +42,15 @@ class DerangementComboBox(QComboBox):
 	"""
 
 
+	derangementChanged = Signal(str, bool, object)
+
+
 	def __init__(self, parent=None):
 		QComboBox.__init__(self, parent)
+
+		self.__severeDerangements = []
+
+		self.currentIndexChanged.connect(self.emitDerangementChanged)
 
 
 	def addItems(self, items, severe=False):
@@ -54,9 +61,22 @@ class DerangementComboBox(QComboBox):
 		if severe:
 			for item in items:
 				self.addItem(item)
+				self.__severeDerangements.append(item)
 				self.setItemData(self.count()-1, QColor(Config.severeDerangementsColor), Qt.BackgroundRole)
 		else:
 			QComboBox.addItems(self, items)
+
+
+	def emitDerangementChanged(self, text):
+		"""
+		Ändert sich der ausgewählte Text der combobox, wird dieses Signal gesendet, welches als Zusatzfunktion noch mitteilt, ob es sich bei der gewählten Geistesstörung um eine schwere handelt, oder nicht.
+		"""
+
+		severe = False
+		if text in self.__severeDerangements:
+			severe = True
+
+		self.derangementChanged.emit(text, severe, self)
 
 
 

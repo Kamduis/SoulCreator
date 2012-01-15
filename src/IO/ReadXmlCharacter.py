@@ -185,7 +185,11 @@ class ReadXmlCharacter(QObject, ReadXml):
 	def readDerangements(self):
 		"""
 		Liest die Geistesstörungen des Charakters.
+
+		\note Es ist wichtig, daß die Geistesstörungen in der richtigen Moral-Reihenfolge eingelesen werden (hoch nach tief). Dies ist der Grund, weil schwere Geistesstörungen nicht erlaubt sind, wenn ihre milde form nicht vorhanden ist.
 		"""
+
+		derangements = {}
 
 		while ( not self.atEnd() ):
 			self.readNext()
@@ -200,9 +204,12 @@ class ReadXmlCharacter(QObject, ReadXml):
 					moralityValue = int(self.attributes().value( "morality" ))
 					derangement = self.readElementText()
 					#Debug.debug("Moral {}: {}".format(moralityValue, derangement))
-					self.__character.setDerangement(moralityValue=moralityValue, derangement=derangement)
+					#self.__character.setDerangement(moralityValue=moralityValue, derangement=derangement)
+					derangements[moralityValue] = derangement
 				else:
 					self.readUnknownElement()
+
+		self.__character.derangements = derangements
 
 
 	def readTraitCategories( self, typ ):
