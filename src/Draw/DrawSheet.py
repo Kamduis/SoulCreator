@@ -838,7 +838,7 @@ class DrawSheet(QObject):
 		numOfTraits = 0
 		for item in self.__character.traits["Power"].values():
 			for subitem in item.values():
-				if subitem.value > 0:
+				if subitem.value > 0 or (self.__character.species == subitem.species and (self.__character.species == "Mage" or self.__character.species == "Werewolf")):
 					numOfTraits += 1
 		if height and numOfTraits > 0:
 				textHeightCalculated = (height - self.__fontHeadingHeight) / numOfTraits
@@ -860,7 +860,7 @@ class DrawSheet(QObject):
 			traits.sort()
 			#Debug.debug(traits)
 			for subitem in traits:
-				if (subitem[1].isAvailable and subitem[1].value > 0):
+				if (subitem[1].isAvailable and (subitem[1].value > 0 or (self.__character.species == subitem[1].species and (self.__character.species == "Mage" or self.__character.species == "Werewolf")))):
 					if twocolumn:
 						self.__drawTrait(offsetH + i * (width - traitWidth), offsetV + self.__fontHeadingHeight + j * textHeight, width=traitWidth, name=subitem[1].name, value=subitem[1].value, mirrored=secondRow)
 						j += 1
