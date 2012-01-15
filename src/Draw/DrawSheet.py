@@ -1481,12 +1481,19 @@ class DrawSheet(QObject):
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()
 
+		fontSmallMetrics = QFontMetrics(self.__fontMain_tiny)
+		fontSmallHeight = fontSmallMetrics.height()
+
 		keys = [item for item in self.__character.derangements.keys()]
 		i = 0
 		for j in range(min(keys), max(keys)+1)[::-1]:
 			derangement = self.__character.derangements[j]
 			self.__drawTextWithValue(posX=offsetH, posY=offsetV + self.__fontHeadingHeight + i * fontHeight, width=width, text=derangement, value="Morality: {}".format(j))
-			i += 1
+			self.__painter.save()
+			self.__painter.setFont(self.__fontMain_tiny)
+			self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight + fontSmallHeight, width, 3 * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__storage.derangementDescription(derangement))
+			self.__painter.restore()
+			i += 3
 
 		if GlobalState.isDebug:
 			self.__drawBB(offsetH, offsetV, width, height)

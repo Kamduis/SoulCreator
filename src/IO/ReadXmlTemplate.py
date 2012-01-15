@@ -366,17 +366,18 @@ class ReadXmlTemplate(QObject, ReadXml):
 				if( self.name() == "item" ):
 					mild = self.attributes().value( "name" )
 					#Debug.debug(species)
-					self.readSevereDerangements( species, mild )
+					self.readDerangementInfo( species, mild, isSevere=False )
 				else:
 					self.readUnknownElement()
 
 
-	def readSevereDerangements( self, species, mildDerangement ):
+	def readDerangementInfo( self, species, derangement, isSevere=False ):
 		"""
 		Liest die schweren Geistesstörungen, welche sich aus der zuvor ermittelten milden Geistesstörung entwickeln können.
 		"""
 
-		derangements = []
+		dependancies = []
+		description = ""
 
 		while( not self.atEnd() ):
 			self.readNext()
@@ -385,15 +386,20 @@ class ReadXmlTemplate(QObject, ReadXml):
 				break
 
 			if( self.isStartElement() ):
-				if( self.name() == "item" ):
+				if self.name() == "description":
+					description = self.readElementText()
+					#Debug.debug(description)
+				elif self.name() == "item":
 					severe = self.attributes().value("name")
-					derangements.append(severe)
-					#Debug.debug("Hänge Geistesstörung {severe} and {mild} an.".format(mild=mildDerangement, severe=severe))
-					self.readUnknownElement()
+					dependancies.append(severe)
+					#Debug.debug("Hänge Geistesstörung {severe} and {mild} an.".format(mild=derangement, severe=severe))
+					#self.readUnknownElement()
+					## Auch die schweren GEistesstörungen haben einen Beschreibungstext.
+					self.readDerangementInfo( species, severe, isSevere=True )
 				else:
 					self.readUnknownElement()
 
-		self.__storage.appendDerangement(species, mildDerangement, derangements)
+		self.__storage.appendDerangement(species=species, name=derangement, dependancy=dependancies, description=description, isSevere=isSevere)
 
 
 	def readTraits( self, species, typ, descriptor=None ):

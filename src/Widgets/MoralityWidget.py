@@ -187,11 +187,11 @@ class MoralityWidget(QWidget):
 		"""
 
 		## Milde Geistesstörungen.
-		mild = self.__storage.derangements(species)
+		mild = self.__storage.derangementList(species)
 		## Ernste Geistesstörungen.
 		severe = []
 		for item in mild:
-			severe.extend(self.__storage.derangements(species, item))
+			severe.extend(self.__storage.derangementList(species, item))
 		severe.sort()
 		## An den Anfang kommt ein leerer String
 		mild.insert(0, "")
@@ -245,8 +245,8 @@ class MoralityWidget(QWidget):
 
 		if isSevere:
 			mildParent = ""
-			for item in self.__storage.derangements(self.__character.species):
-				if derangement in self.__storage.derangements(self.__character.species, item):
+			for item in self.__storage.derangementList(self.__character.species):
+				if derangement in self.__storage.derangementList(self.__character.species, item):
 					mildParent = item
 					break
 			mildExists = False
