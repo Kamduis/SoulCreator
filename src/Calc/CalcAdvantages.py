@@ -329,7 +329,9 @@ class CalcAdvantages(QObject):
 		Berechnet die Verteidigung des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		return min(wits, cls.dexterity( dexterity, shape ))
+		values = [wits, cls.dexterity( dexterity, shape ), ]
+
+		return min(values)
 
 
 	@staticmethod

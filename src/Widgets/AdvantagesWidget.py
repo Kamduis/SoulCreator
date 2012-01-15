@@ -48,6 +48,7 @@ class AdvantagesWidget(QWidget):
 	sizeChanged = Signal(int)
 	initiativeChanged = Signal(int)
 	speedChanged = Signal(int)
+	defenseChanged = Signal(int)
 	healthChanged = Signal(int)
 
 
@@ -84,6 +85,9 @@ class AdvantagesWidget(QWidget):
 		self.initiativeChanged.connect(self.setShapeInitiaitve)
 		self.__character.speciesChanged.connect(self.setShapeSpeed)
 		self.speedChanged.connect(self.setShapeSpeed)
+		self.__character.speciesChanged.connect(self.setShapeDefense)
+		self.__character.traits["Attribute"]["Mental"]["Wits"].valueChanged.connect(self.setShapeDefense)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(self.setShapeDefense)
 		self.__character.speciesChanged.connect(self.setShapeHealth)
 		self.healthChanged.connect(self.setShapeHealth)
 		self.ui.spinBox_armorGeneral.valueChanged.connect(self.saveArmor)
@@ -119,7 +123,9 @@ class AdvantagesWidget(QWidget):
 
 
 	def setDefense(self, value):
-		self.ui.label_defense.setNum(value)
+		if self.ui.label_defense.text() != unicode(value):
+			self.ui.label_defense.setNum(value)
+			self.defenseChanged.emit(value)
 
 
 	def setHealth(self, value):
@@ -170,6 +176,21 @@ class AdvantagesWidget(QWidget):
 				CalcAdvantages.speed(value, Config.shapesWerewolf[2]),
 				CalcAdvantages.speed(value, Config.shapesWerewolf[3]),
 				CalcAdvantages.speed(value, Config.shapesWerewolf[4]),
+			))
+		else:
+			self.ui.label_speedShapes.setHidden(True)
+
+
+	def setShapeDefense(self):
+		if self.__character.species == "Werewolf":
+			wits = self.__character.traits["Attribute"]["Mental"]["Wits"].value
+			dexterity = self.__character.traits["Attribute"]["Physical"]["Dexterity"].value
+			self.ui.label_defenseShapes.setHidden(False)
+			self.ui.label_defenseShapes.setText(", {}, {}, {}, {}".format(
+				CalcAdvantages.defense(wits, dexterity, Config.shapesWerewolf[1]),
+				CalcAdvantages.defense(wits, dexterity, Config.shapesWerewolf[2]),
+				CalcAdvantages.defense(wits, dexterity, Config.shapesWerewolf[3]),
+				CalcAdvantages.defense(wits, dexterity, Config.shapesWerewolf[4]),
 			))
 		else:
 			self.ui.label_speedShapes.setHidden(True)
