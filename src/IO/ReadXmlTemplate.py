@@ -365,6 +365,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				if( self.name() == "item" ):
 					mild = self.attributes().value( "name" )
+					#Debug.debug(species)
 					self.readSevereDerangements( species, mild )
 				else:
 					self.readUnknownElement()
@@ -392,7 +393,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				else:
 					self.readUnknownElement()
 
-		self.__storage.appendDerangement(mildDerangement, derangements)
+		self.__storage.appendDerangement(species, mildDerangement, derangements)
 
 
 	def readTraits( self, species, typ, descriptor=None ):

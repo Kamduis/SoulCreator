@@ -93,6 +93,15 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeTextElement( "description", self.__character.description )
 		self.writeTextElement( "powerstat", unicode( self.__character.powerstat ) )
 		self.writeTextElement( "morality", unicode( self.__character.morality ) )
+		if self.__character.derangements:
+			self.writeStartElement( "derangements" )
+			for item in self.__character.derangements.items():
+				if item[1]:
+					self.writeStartElement( "derangement" )
+					self.writeAttribute( "morality", unicode(item[0]) )
+					self.writeCharacters( item[1] )
+					self.writeEndElement()
+			self.writeEndElement()
 		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
 		self.writeTextElement( "era", self.__character.era )
 

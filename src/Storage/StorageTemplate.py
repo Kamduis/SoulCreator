@@ -142,8 +142,11 @@ class StorageTemplate(QObject):
 	## Eine Liste aller Geistesstörungen.
 	#
 	# {
-	# 	"Mild1": [Severe1, Severe2, ... ] ]
-	# 	"Mild2": [Severe1, Severe2, ... ] ]
+	# 	"Species1": {
+	# 		"Mild1": [Severe1, Severe2, ... ] ]
+	# 		"Mild2": [Severe1, Severe2, ... ] ]
+	# 		...
+	# 	}
 	# 	...
 	# }
 	__derangements = {}
@@ -464,6 +467,21 @@ class StorageTemplate(QObject):
 	vices = property(__getVices, __setVices)
 
 
+	def derangements( self, species, parentDerangement=None ):
+		result = []
+		if parentDerangement == None:
+			result = self.__derangements["All"].keys()
+			if species in self.__derangements:
+				result.extend(self.__derangements[species].keys())
+			return result
+		else:
+			if parentDerangement in self.__derangements["All"]:
+				result = self.__derangements["All"][parentDerangement]
+			if species in self.__derangements and parentDerangement in self.__derangements[species]:
+				result.extend(self.__derangements[species][parentDerangement])
+			return result
+
+
 	def breeds(self, species):
 		return self.__speciesGroupNames[species]["Breed"][1]
 
@@ -548,15 +566,17 @@ class StorageTemplate(QObject):
 			raise ErrTraitType( ("Virtue", "Vice"), typ )
 
 
-	def appendDerangement( self, mildDerangement, severeList ):
+	def appendDerangement( self, species, mildDerangement, severeList ):
 		"""
 		Fügt eine Geistesstörung mitsamt der Liste daraus möglicherweise erwachsender schwerer Geistesstörungen an die Liste der Geistesstörungen an.
 		"""
 
-		if mildDerangement in self.__derangements:
-			self.__derangements[mildDerangement].extend(severeList)
+		if species not in self.__derangements:
+			self.__derangements.setdefault(species,{})
+		if mildDerangement in self.__derangements[species]:
+			self.__derangements[species][mildDerangement].extend(severeList)
 		else:
-			self.__derangements[mildDerangement] = severeList
+			self.__derangements[species][mildDerangement] = severeList
 
 		#Debug.debug(self.__derangements)
 

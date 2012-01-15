@@ -40,6 +40,8 @@ class MoralityWidget(QWidget):
 
 	Diese Tabelle zeigt die aktuelle Moralstufe an und bietet Platz für das Eintragen von Geistesstörungen.
 
+	\todo wenn die Spezies verändert wird, müssen auch die Verfügbaren Geistesstörungen verändert werden.
+
 	\todo Ich bin mit den Geistesstörungen noch nicht gänzlich zufrieden. Es besteht die Gefahr, daß einzelne Geistesstörungen immer und immer wieder zu dem Charkater hinzugefügt werden und dementsprechend das Programm und den gespeicherten Charakter aufblähen können.
 	"""
 
@@ -74,6 +76,7 @@ class MoralityWidget(QWidget):
 		self.__layout.addLayout(self.__layoutTab)
 
 		self.__dotList = {}
+		self.__derangementBoxList = {}
 
 		for i in xrange(Config.moralityTraitMax):
 			label = QLabel("{}".format(Config.moralityTraitMax - i))
@@ -87,64 +90,27 @@ class MoralityWidget(QWidget):
 
 			if i >= Config.moralityTraitMax - Config.derangementMoralityTraitMax:
 				box = QComboBox()
+				self.__derangementBoxList[Config.moralityTraitMax - i] = box
 				self.__layoutTab.addWidget(box, i, 1)
+
+				box.currentIndexChanged[str].connect(self.uniqifyDerangements)
+				box.currentIndexChanged[str].connect(self.saveDerangements)
+				self.__character.derangementChanged.connect(self.updateDerangementBoxes)
 
 			dot.clicked.connect(self.__calcValue)
 
 		self.__character.speciesChanged.connect(self.setMoralityName)
 		self.__character.moralityChanged.connect(self.setValue)
 		self.valueChanged.connect(self.__character.setMorality)
+		self.valueChanged.connect(self.enableDerangementBox)
 
+		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateDerangements( cv_Species::SpeciesFlag ) ) );
+		#connect( character, SIGNAL( moralityChanged( int ) ), this, SLOT( setValue( int ) ) );
+		#connect( this, SIGNAL( valueChanged( int ) ), character, SLOT( setMorality( int ) ) );
+		#connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( drawValue( int ) ) );
+		#connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( disableDerangements( int ) ) );
 
-#MoralityWidget::MoralityWidget( QWidget *parent ) : QWidget( parent )  {
-	#v_value = 0;
-
-	#layout = new QGridLayout( this );
-	#setLayout( layout );
-
-	#labelHeader = new QLabel();
-	#labelHeader->setAlignment( Qt::AlignHCenter );
-
-	#layout->addWidget( labelHeader, 0, 0, 1, 3 );
-
-	#int layoutLine;
-
-	#QList< cv_Trait > list;
-	#v_category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
-
-	#for ( int i = Config::moralityTraitMax; i > 0; i-- ) {
-		#layoutLine =  Config::moralityTraitMax - i + 1;
-
-		#QLabel* label = new QLabel( QString::number( i ) );
-		#TraitDots* traitDots = new TraitDots();
-		#traitDots->setMaximum( 1 );
-
-		#layout->addWidget( label, layoutLine, 0 );
-		#layout->addWidget( traitDots, layoutLine, 2 );
-
-		#if ( i <= Config::derangementMoralityTraitMax ) {
-			#DerangementComboBox* comboBox = new DerangementComboBox();
-			#comboBox->setMaximumHeight( Config::inlineWidgetHeightMax );
-
-			#layout->addWidget( comboBox, layoutLine, 1 );
-
-			#connect( comboBox, SIGNAL( currentIndexChanged( cv_Derangement ) ), this, SLOT( saveDerangements( cv_Derangement ) ) );
-			#connect( character, SIGNAL( derangementsChanged() ), this, SLOT( updateDerangements() ) );
-		#}
-
-		#connect( traitDots, SIGNAL( valueClicked( int ) ), this, SLOT( resetValue( int ) ) );
-	#}
-
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( renameHeader( cv_Species::SpeciesFlag ) ) );
-
-	#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateDerangements( cv_Species::SpeciesFlag ) ) );
-	#connect( character, SIGNAL( moralityChanged( int ) ), this, SLOT( setValue( int ) ) );
-	#connect( this, SIGNAL( valueChanged( int ) ), character, SLOT( setMorality( int ) ) );
-	#connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( drawValue( int ) ) );
-	#connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( disableDerangements( int ) ) );
-
-	#setValue( Config::moralityTraitDefaultValue );
-#}
+		#setValue( Config::moralityTraitDefaultValue );
 
 
 	def __getValue(self):
@@ -154,7 +120,7 @@ class MoralityWidget(QWidget):
 		if ( self.__value != value ):
 			self.__value = value
 			self.__drawValue(value)
-			Debug.debug(value)
+			#Debug.debug(value)
 			self.valueChanged.emit( value )
 
 	value = property(__getValue, setValue)
@@ -215,60 +181,6 @@ class MoralityWidget(QWidget):
 				self.__dotList[i].value = False
 
 
-#void MoralityWidget::resetValue( int value ) {
-	#"""
-	#Wird mit der Maus auf den Punkten herumgeklickt, sorgt diese Funktion dafür, daß der richtige Wert des Widgets ermittelt wird.
-	#"""
-
-	#// Verändere ich einen Punkt zu 1, wird der Gesamtwert erhöht, verändere ich einen Wert zu 0 wird der Gesamtwert reduziert.
-	#bool reduceValue = true;
-
-	#if ( value > 0 ) {
-		#reduceValue = false;
-	#}
-
-	#int newValue;
-
-	#bool changeFromHere = false;
-
-	#if ( reduceValue ) {
-		#for ( int i = layout->rowCount() - 1; i > 0; i-- ) {
-			#TraitDots* traitDots = qobject_cast<TraitDots*>( layout->itemAtPosition( i, 2 )->widget() );
-
-			#if ( traitDots->value() < 1 ) {
-				#newValue = layout->rowCount() - i;
-
-				#// Der Knopf auf den ich drücke, soll schwarz bleiben. Esseidenn natürlich, es ist der unterste, und zuvor war der Wert schon 1, dann soll er abgewählt werden.
-
-				#if ( v_value == 1 && i == layout->rowCount() - 1 ) {
-					#newValue = 0;
-				#}
-
-				#break;
-			#}
-		#}
-	#} else {
-		#for ( int i = 1; i < layout->rowCount(); ++i ) {
-			#TraitDots* traitDots = qobject_cast<TraitDots*>( layout->itemAtPosition( i, 2 )->widget() );
-
-			#if ( traitDots->value() > 0 ) {
-				#newValue = layout->rowCount() - i;
-				#break;
-			#}
-		#}
-	#}
-
-	#// Hiermit wird ein zuvor weißgeklickter Punkt (Es ist ja jeweils ein 1-Punkte Trait angenommen) wieder schwarz gesetzt.
-	#drawValue( newValue );
-
-	#if ( v_value != newValue ) {
-		#v_value = newValue;
-#// 		qDebug() << Q_FUNC_INFO << "Neuer Wert bei Herunterzählen:" << newValue;
-		#emit valueChanged( newValue );
-	#}
-#}
-
-
 	def setMoralityName( self, species ):
 		"""
 		Setzt die Überschrift dieses Widgets auf einen neuen Namen. Der name hängt von der Spezies ab.
@@ -277,123 +189,67 @@ class MoralityWidget(QWidget):
 		self.__labelHeading.setText("<b>{}</b>".format(self.__storage.moralityName(species)))
 
 
-#void MoralityWidget::updateDerangements( cv_Species::SpeciesFlag species ) {
-	#"""
-	#Belegt die Auswahlfelder für die Geistesstörungen neu, so daß immer nur jene angeboten werden, welche ein Charakter dieser Spezies haben kann.
-	#"""
+	def enableDerangementBox( self, value ):
+		"""
+		Sorgt dafür, daß die Combobox für die Geistesstörung neben einem leeren Moralpunkt aktiviert und mit den verfügbaren Geistesstörungen gefüllt wird.
 
-	#QList< Trait* > list;
-	#QList< cv_Derangement > listToUse;
+		Alle Boxen zeigen alle Geistesstörungen an, aber wenn eine Gewählt wird, die schon anderorts gewählt wurde, wird sie dort abgewählt.
+		"""
 
-	#for ( int j = 0; j < v_category.count(); ++j ) {
-		#list = storage->traits( cv_AbstractTrait::Derangement, v_category.at( j ) );
-
-		#for ( int k = 0; k < list.count(); ++k ) {
-			#if ( list.at( k )->species().testFlag( species ) ) {
-				#cv_Derangement lcl_derangement( list.at( k )->name(), 0, list.at( k )->species(), list.at( k )->category() );
-
-#// 				qDebug() << Q_FUNC_INFO << lcl_derangement.name << lcl_derangement.morality;
-
-				#listToUse.append( lcl_derangement );
-			#}
-		#}
-	#}
-
-	#for ( int i = 0; i < Config::derangementMoralityTraitMax; ++i ) {
-		#DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
-		#comboBox->clear();
-
-		#cv_Derangement emptyDerangement;
-
-		#comboBox->addItem( emptyDerangement );
-		#comboBox->addItems( listToUse );
-	#}
-#}
-
-#void MoralityWidget::updateDerangements() {
-	#"""
-	#
-	#"""
-
-	#QList< cv_Derangement* > list;
-	#QList< cv_AbstractTrait::Category > category = cv_AbstractTrait::getCategoryList( cv_AbstractTrait::Derangement );
-
-	#for ( int i = 0; i < category.count(); ++i ) {
-		#list.append( character->derangements( category.at( i ) ) );
-	#}
-
-	#for ( int i = 0; i < Config::derangementMoralityTraitMax; ++i ) {
-		#DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
-
-		#// Ist die Liste leer, werden alle Geistesstörungen auf Index 0 gesetzt.
-		#if ( list.count() == 0 ) {
-			#comboBox->setCurrentIndex( 0 );
-		#} else {
-			#for ( int k = 0; k < list.count(); ++k ) {
-				#if ( list.at( k )->morality() == i + 1 ) {
-					#comboBox->setCurrentIndex( comboBox->findText( list.at( k )->name() ) );
-					#break;
-				#} else if ( k == list.count() - 1 ) {	// Taucht keine Geistesstörung bei dieser Moralstufe in der Liste auzf, wird der Index auf 0 gesetzt.
-					#comboBox->setCurrentIndex( 0 );
-				#}
-			#}
-		#}
-	#}
-#}
+		## Milde Geistesstörungen.
+		mild = self.__storage.derangements(self.__character.species)
+		## An den Anfang kommt ein leerer String
+		mild.insert(0, "")
+		for i in range(value+1, Config.derangementMoralityTraitMax+1)[::-1]:
+			#Debug.debug(i)
+			self.__derangementBoxList[i].setEnabled(True)
+			##Debug.debug(self.__storage.derangements())
+			self.__derangementBoxList[i].addItems(mild)
+		for i in xrange(1, value+1):
+			self.__derangementBoxList[i].setEnabled(False)
+			self.__derangementBoxList[i].clear()
 
 
+	def uniqifyDerangements(self, text):
+		"""
+		Eine Geistesstörung darf immer nur in einer ComboBox auftauchen.
 
-#void MoralityWidget::disableDerangements( int value ) {
-	#"""
-	#Die ComboBox für die Geistesstörungen wird bis zu dem Wert disabled, der im Argument angegeben wird. Mit dem Disablen werden sie auch gleichzeitig auf den (leeren) Index 0 gesetzt.
-	
-	#disableDerangements(7) resultiert darin, daß alle FElder für GEistesstörungen disabled werden.
-	#"""
+		Es werd die oberen doppelt vorkommende Geistesstörung gelöscht.
+		"""
 
-	#int lcl_value = value;
+		firstOccuranceHappened = False
+		for i in range(1, Config.derangementMoralityTraitMax+1):
+			if self.__derangementBoxList[i].currentIndex != 0:
+				if self.__derangementBoxList[i].currentText() == text and firstOccuranceHappened:
+					self.__derangementBoxList[i].setCurrentIndex(0)
+				elif self.__derangementBoxList[i].currentText() == text:
+					firstOccuranceHappened = True
 
-	#if ( lcl_value > Config::derangementMoralityTraitMax ) {
-		#lcl_value = Config::derangementMoralityTraitMax;
-	#}
 
-	#int i = 0;
+	def updateDerangementBoxes(self, moralityValue, derangement):
+		"""
+		Wählt in den derangementBoxen die jeweils übergebenen Geistesstörungen aus.
 
-	#while ( i < lcl_value ) {
-		#DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
-		#comboBox->setCurrentIndex( 0 );
-		#comboBox->setEnabled( false );
-		#i++;
-	#}
+		\bug aus irgendeinem grund nimmt moralityValue manchmal den Wert -1 an. Weiß aber nicht, woher.
+		"""
 
-	#while ( i < Config::derangementMoralityTraitMax ) {
-		#DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
-		#comboBox->setEnabled( true );
-		#i++;
-	#}
-#}
+		#Debug.debug(derangement, moralityValue)
 
-#void MoralityWidget::saveDerangements( cv_Derangement dera ) {
-	#"""
-	#Speichert die gewählte Geistesstörung im Charakter.
-	
-	#\todo Es muß ein neuer DAtentyp für die GEiostesstörungen entwickelt werden, damit ich weiß, bei welcher Moral sie platziert werden müssen.
-	
-	#\todo Wenn ich weiß bei welcher Moral die Geistesstörungen platziert werden, kann ich auch beim ändern des INdex einer Geistesstörungsbox diese direkt im Charakter ändern, ohne alle löschen und neu abarbeiten zu müssen.
-	#"""
+		self.__derangementBoxList[moralityValue].setCurrentIndex(self.__derangementBoxList[moralityValue].findText(derangement))
 
-	#cv_Derangement derang;
 
-	#for ( int i = 0; i < Config::derangementMoralityTraitMax; ++i ) {
-		#DerangementComboBox* comboBox = qobject_cast<DerangementComboBox*>( layout->itemAtPosition( layout->rowCount() - 1 - i, 1 )->widget() );
+	def saveDerangements( self ):
+		"""
+		Speichert die gewählte Geistesstörung im Charakter.
 
-		#if ( comboBox->currentItem() == dera ) {
-			#derang = dera;
-			#derang.setMorality(i + 1);
-			#break;
-		#}
-	#}
+		\todo Wenn ich weiß bei welcher Moral die Geistesstörungen platziert werden, kann ich auch beim ändern des INdex einer Geistesstörungsbox diese direkt im Charakter ändern, ohne alle löschen und neu abarbeiten zu müssen.
+		"""
 
-	#character->addDerangement( derang );
-#}
+		derangementMapping = {}
+
+		isDerangementPresent = False
+		for i in range(1, Config.derangementMoralityTraitMax+1):
+			if self.__derangementBoxList[i].currentIndex != 0:
+				self.__character.setDerangement(derangement=self.__derangementBoxList[i].currentText(), moralityValue=i)
 
 

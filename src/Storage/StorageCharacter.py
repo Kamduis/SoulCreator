@@ -57,6 +57,7 @@ class StorageCharacter(QObject):
 	descriptionChanged = Signal(str)
 	powerstatChanged = Signal(int)
 	moralityChanged = Signal(int)
+	derangementChanged = Signal(int, str)
 	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
 	#traitsChanged = Signal(object)
@@ -122,7 +123,7 @@ class StorageCharacter(QObject):
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
 
-		self.__derangements = []
+		self.__derangements = {}
 
 		self.dateBirthChanged.connect(self.__calcAge)
 		self.dateGameChanged.connect(self.__calcAge)
@@ -187,6 +188,7 @@ class StorageCharacter(QObject):
 		self.descriptionChanged.connect(self.setModified)
 		self.powerstatChanged.connect(self.setModified)
 		self.moralityChanged.connect(self.setModified)
+		self.derangementChanged.connect(self.setModified)
 		self.armorChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
@@ -293,6 +295,30 @@ class StorageCharacter(QObject):
 			self.speciesChanged.emit( species )
 
 	species = property(__getSpecies, setSpecies)
+
+
+	@property
+	def derangements(self):
+		"""
+		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
+		"""
+
+		return self.__derangements
+
+	def setDerangement(self, moralityValue, derangement):
+		"""
+		Legt die Geistesstörung für den zugehörigen Moralwert fest.
+		"""
+
+		#Debug.debug(moralityValue, type(moralityValue))
+		if moralityValue not in self.__derangements:
+			self.__derangements[moralityValue] = derangement
+			#Debug.debug(derangement, moralityValue)
+			self.derangementChanged.emit(moralityValue, derangement)
+		elif self.__derangements[moralityValue] != derangement:
+			self.__derangements[moralityValue] = derangement
+			#Debug.debug(derangement, moralityValue)
+			self.derangementChanged.emit(moralityValue, derangement)
 
 
 	@property

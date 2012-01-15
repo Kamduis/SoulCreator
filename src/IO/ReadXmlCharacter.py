@@ -137,6 +137,8 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.powerstat = int(self.readElementText())
 				elif ( elementName == "morality" ):
 					self.__character.morality = int(self.readElementText())
+				elif ( elementName == "derangements" ):
+					self.readDerangements()
 				elif ( elementName == "armor" ):
 					txt = self.readElementText()
 					self.__character.armor = [int(n) for n in txt.split(Config.sepChar)]
@@ -176,6 +178,29 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.identities[0].gender = self.attributes().value( "gender" )
 
 					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
+
+
+	def readDerangements(self):
+		"""
+		Liest die Geistesstörungen des Charakters.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+
+				if ( elementName == "derangement" ):
+					moralityValue = int(self.attributes().value( "morality" ))
+					derangement = self.readElementText()
+					#Debug.debug("Moral {}: {}".format(moralityValue, derangement))
+					self.__character.setDerangement(moralityValue=moralityValue, derangement=derangement)
 				else:
 					self.readUnknownElement()
 
