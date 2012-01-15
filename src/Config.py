@@ -69,6 +69,9 @@ class Config(object):
 	##  Wichtige Textabschnitte
 	importantTextColor = "darkBlue"
 
+	## Die Textfarbe für ernste Geistesstörungen in der Auswahlliste.
+	severeDerangementsColor = "sandybrown"
+
 	## Warnfarbe, wenn zuviele Punkte vergeben wurden.
 	pointsNegativeColor = "red"
 

@@ -23,11 +23,10 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QComboBox
+from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel
 
 from src.Config import Config
-#from src import Error
-#from ReadXml import ReadXml
+from src.Widgets.Components.DerangementComboBox import DerangementComboBox
 from src.Widgets.Components.Dot import Dot
 from src.Debug import Debug
 
@@ -89,7 +88,7 @@ class MoralityWidget(QWidget):
 			self.__layoutTab.addWidget(dot, i, 2)
 
 			if i >= Config.moralityTraitMax - Config.derangementMoralityTraitMax:
-				box = QComboBox()
+				box = DerangementComboBox()
 				self.__derangementBoxList[Config.moralityTraitMax - i] = box
 				self.__layoutTab.addWidget(box, i, 1)
 
@@ -198,6 +197,10 @@ class MoralityWidget(QWidget):
 
 		## Milde Geistesstörungen.
 		mild = self.__storage.derangements(self.__character.species)
+		## Ernste Geistesstörungen.
+		severe = []
+		for item in mild:
+			severe.extend(self.__storage.derangements(self.__character.species, item))
 		## An den Anfang kommt ein leerer String
 		mild.insert(0, "")
 		for i in range(value+1, Config.derangementMoralityTraitMax+1)[::-1]:
@@ -205,6 +208,7 @@ class MoralityWidget(QWidget):
 			self.__derangementBoxList[i].setEnabled(True)
 			##Debug.debug(self.__storage.derangements())
 			self.__derangementBoxList[i].addItems(mild)
+			self.__derangementBoxList[i].addItems(severe, severe=True)
 		for i in xrange(1, value+1):
 			self.__derangementBoxList[i].setEnabled(False)
 			self.__derangementBoxList[i].clear()
@@ -224,6 +228,22 @@ class MoralityWidget(QWidget):
 					self.__derangementBoxList[i].setCurrentIndex(0)
 				elif self.__derangementBoxList[i].currentText() == text:
 					firstOccuranceHappened = True
+
+
+	#def addSevereDerangements(self, text):
+		#"""
+		#Wenn in einer Box eine milde Geistesstörung gewählt wurde, müssen in den darunterfolgdenden Boxen die zugehörigen schweren Geistesstörungen zur Verfügung stehen.
+		#"""
+
+		#selectedMildDerangement = ""
+		#for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
+			#if self.__derangementBoxList[i].currentIndex != 0:
+				#selectedMildDerangement = self.__derangementBoxList[i].currentText()
+				#if selectedMildDerangement in self.__storage.derangements(self.__character.species):
+					### Alle darunter befindlichen Comboboxen müssen die zugehörigen schweren Geistesstörungen in ihre Auswahl erhalten.
+					#severeDerangements = self.__storage.derangements(self.__character.species, selectedMildDerangement)
+					#for j in range(1, i)[::-1]:
+						#self.__derangementBoxList[j].addItems(severeDerangements)
 
 
 	def updateDerangementBoxes(self, moralityValue, derangement):
