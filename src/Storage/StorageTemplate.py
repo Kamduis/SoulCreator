@@ -25,7 +25,7 @@ from __future__ import division, print_function
 from PySide.QtCore import QObject
 
 #from src.Config import Config
-#from ReadXml import ReadXml
+from src.Tools import ListTools
 from src.Debug import Debug
 from src.Error import ErrTraitType
 
@@ -473,12 +473,18 @@ class StorageTemplate(QObject):
 			result = self.__derangements["All"].keys()
 			if species in self.__derangements:
 				result.extend(self.__derangements[species].keys())
+				## Es können enige Milde versionen mehrfach vorkommen, also müssen Duplikate entfernt werden.
+				result = ListTools.uniqify(result)
+			result.sort()
+			#Debug.debug(result)
 			return result
 		else:
 			if parentDerangement in self.__derangements["All"]:
 				result = self.__derangements["All"][parentDerangement]
 			if species in self.__derangements and parentDerangement in self.__derangements[species]:
 				result.extend(self.__derangements[species][parentDerangement])
+			result.sort()
+			#Debug.debug(result)
 			return result
 
 

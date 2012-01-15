@@ -98,11 +98,12 @@ class MoralityWidget(QWidget):
 
 			dot.clicked.connect(self.__calcValue)
 
-		self.fillDerangementBoxex()
+		#self.fillDerangementBoxes(self.__character.species)
 
 		self.__character.speciesChanged.connect(self.setMoralityName)
 		self.__character.moralityChanged.connect(self.setValue)
 		self.valueChanged.connect(self.__character.setMorality)
+		self.__character.speciesChanged.connect(self.fillDerangementBoxes)
 		self.valueChanged.connect(self.enableDerangementBox)
 		self.__character.derangementChanged.connect(self.updateDerangementBoxes)
 
@@ -191,20 +192,26 @@ class MoralityWidget(QWidget):
 		self.__labelHeading.setText("<b>{}</b>".format(self.__storage.moralityName(species)))
 
 
-	def fillDerangementBoxex( self ):
+	def fillDerangementBoxes( self, species ):
 		"""
-		Sorgt dafür, daß die Comboboxen alle Geistesstörungen enthalten.
+		Sorgt dafür, daß die Comboboxen alle für diese Spezies verfügbaren Geistesstörungen enthalten.
 		"""
 
 		## Milde Geistesstörungen.
-		mild = self.__storage.derangements(self.__character.species)
+		mild = self.__storage.derangements(species)
 		## Ernste Geistesstörungen.
 		severe = []
 		for item in mild:
-			severe.extend(self.__storage.derangements(self.__character.species, item))
+			severe.extend(self.__storage.derangements(species, item))
+		severe.sort()
 		## An den Anfang kommt ein leerer String
 		mild.insert(0, "")
+		#Debug.debug(mild)
+		#Debug.debug(severe)
 		for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
+			## Erst löschen
+			self.__derangementBoxList[i].clear()
+			## Dann wieder füllen
 			self.__derangementBoxList[i].addItems(mild)
 			self.__derangementBoxList[i].addItems(severe, severe=True)
 
