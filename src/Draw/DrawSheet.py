@@ -35,6 +35,7 @@ from src.Calc.CalcShapes import CalcShapes
 from src.Random import Random
 from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
+from src.Calc.CalcShapes import CalcShapes
 from src.Tools import ImageTools
 from src.Debug import Debug
 
@@ -1205,27 +1206,27 @@ class DrawSheet(QObject):
 			],
 			## Dalu
 			[
-				[ u"Strength (+1)", CalcAdvantages.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[1]) ],
-				[ u"Stamina (+1)", CalcAdvantages.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[1]) ],
-				[ u"Manipulation (−1)", CalcAdvantages.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[1]) ],
+				[ u"Strength (+1)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[1]) ],
+				[ u"Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[1]) ],
+				[ u"Manipulation (−1)", CalcShapes.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[1]) ],
 			],
 			## Gauru
 			[
-				[ u"Strength (+3)", CalcAdvantages.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[2]) ],
-				[ u"Dexterity (+1)", CalcAdvantages.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]) ],
-				[ u"Stamina (+2)", CalcAdvantages.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[2]) ],
+				[ u"Strength (+3)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[2]) ],
+				[ u"Dexterity (+1)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]) ],
+				[ u"Stamina (+2)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[2]) ],
 			],
 			## Urshul
 			[
-				[ u"Strength (+2)", CalcAdvantages.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[3]) ],
-				[ u"Dexterity (+2)", CalcAdvantages.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]) ],
-				[ u"Stamina (+2)", CalcAdvantages.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[3]) ],
-				[ u"Manipulation (−3)", CalcAdvantages.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[3]) ],
+				[ u"Strength (+2)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[3]) ],
+				[ u"Dexterity (+2)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]) ],
+				[ u"Stamina (+2)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[3]) ],
+				[ u"Manipulation (−3)", CalcShapes.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[3]) ],
 			],
 			## Urhan
 			[
-				[ u"Dexterity (+2)", CalcAdvantages.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]) ],
-				[ u"Stamina (+1)", CalcAdvantages.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[4]) ],
+				[ u"Dexterity (+2)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]) ],
+				[ u"Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[4]) ],
 			],
 		]
 		
@@ -1253,37 +1254,37 @@ class DrawSheet(QObject):
 			advantages,
 			## Dalu
 			[
-				[ advantages[0][0], CalcAdvantages.size(advantages[0][1], Config.shapesWerewolf[1]), ],
-				[ advantages[1][0], CalcAdvantages.initiative(advantages[1][1], Config.shapesWerewolf[1]), ],
-				[ advantages[2][0], CalcAdvantages.speed(advantages[1][1], Config.shapesWerewolf[1]), ],
-				[ advantages[3][0], CalcAdvantages.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[1]), ],
+				[ advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[1]), ],
+				[ advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[1]), ],
+				[ advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[1]), ],
+				[ advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[1]), ],
 				[ advantages[4][0], advantages[4][1], ],
 				[ advantages[5][0], u"+2", ],
 			],
 			## Gauru
 			[
-				[ advantages[0][0], CalcAdvantages.size(advantages[0][1], Config.shapesWerewolf[2]), ],
-				[ advantages[1][0], CalcAdvantages.initiative(advantages[1][1], Config.shapesWerewolf[2]), ],
-				[ advantages[2][0], CalcAdvantages.speed(advantages[1][1], Config.shapesWerewolf[2]), ],
-				[ advantages[3][0], CalcAdvantages.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]), ],
+				[ advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[2]), ],
+				[ advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[2]), ],
+				[ advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[2]), ],
+				[ advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]), ],
 				[ advantages[4][0], "1/1", ],
 				[ advantages[5][0], u"+3", ],
 			],
 			## Urshul
 			[
-				[ advantages[0][0], CalcAdvantages.size(advantages[0][1], Config.shapesWerewolf[3]), ],
-				[ advantages[1][0], CalcAdvantages.initiative(advantages[1][1], Config.shapesWerewolf[3]), ],
-				[ advantages[2][0], CalcAdvantages.speed(advantages[1][1], Config.shapesWerewolf[3]), ],
-				[ advantages[3][0], CalcAdvantages.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]), ],
+				[ advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[3]), ],
+				[ advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[3]), ],
+				[ advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[3]), ],
+				[ advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]), ],
 				[ advantages[4][0], "0", ],
 				[ advantages[5][0], u"+3", ],
 			],
 			## Urhan
 			[
-				[ advantages[0][0], CalcAdvantages.size(advantages[0][1], Config.shapesWerewolf[4]), ],
-				[ advantages[1][0], CalcAdvantages.initiative(advantages[1][1], Config.shapesWerewolf[4]), ],
-				[ advantages[2][0], CalcAdvantages.speed(advantages[1][1], Config.shapesWerewolf[4]), ],
-				[ advantages[3][0], CalcAdvantages.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]), ],
+				[ advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[4]), ],
+				[ advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[4]), ],
+				[ advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[4]), ],
+				[ advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]), ],
 				[ advantages[4][0], "0", ],
 				[ advantages[5][0], u"+4", ],
 			],
