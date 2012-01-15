@@ -470,7 +470,7 @@ class StorageTemplate(QObject):
 	def derangements( self, species, parentDerangement=None ):
 		result = []
 		if parentDerangement == None:
-			result = self.__derangements["All"].keys()
+			result = self.__derangements[""].keys()
 			if species in self.__derangements:
 				result.extend(self.__derangements[species].keys())
 				## Es können enige Milde versionen mehrfach vorkommen, also müssen Duplikate entfernt werden.
@@ -479,8 +479,8 @@ class StorageTemplate(QObject):
 			#Debug.debug(result)
 			return result
 		else:
-			if parentDerangement in self.__derangements["All"]:
-				result = self.__derangements["All"][parentDerangement]
+			if parentDerangement in self.__derangements[""]:
+				result = self.__derangements[""][parentDerangement]
 			if species in self.__derangements and parentDerangement in self.__derangements[species]:
 				result.extend(self.__derangements[species][parentDerangement])
 			result.sort()

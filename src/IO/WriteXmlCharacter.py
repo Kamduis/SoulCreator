@@ -119,6 +119,10 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		"""
 		Schreibt die veränderten Eigenschaften in die Datei.
 		"""
+
+		#Debug.debug("Hallo!")
+		#for item in self.__character.traits["Attribute"]["Physical"].items():
+			#Debug.debug(item[0], item[1].value)
 		
 		for item in self.__character.traits:
 			startElementWritten_item = False
@@ -127,9 +131,11 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 				for subsubitem in self.__character.traits[item][subitem].values():
 					## Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist und sie für die aktuell gewählte Spezies zur Verfügung stehen.
 					if ( subsubitem.value != 0 and (not subsubitem.species or subsubitem.species == self.__character.species) ):
+						#Debug.debug("Hallo!")
 						## Soabld die erste Eigenschaft mit einem Wert != 0 auftaucht, muß das Startelement geschrieben werden.
 						if not startElementWritten_item:
 							try:
+								#Debug.debug(item)
 								self.writeStartElement( item )
 							except ErrTraitType as e:
 								Debug.debug(e.message())

@@ -310,7 +310,7 @@ class StorageCharacter(QObject):
 		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
 		"""
 
-		if self.__derangements != derangements:
+		if derangements and self.__derangements != derangements:
 			self.__derangements = derangements
 			## Jetzt müssen in der richtigen Reihenfolge (hoch nach tief) die Signale gesandt werden.
 			keys = self.__derangements.keys()

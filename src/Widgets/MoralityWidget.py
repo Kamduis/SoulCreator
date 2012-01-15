@@ -70,7 +70,7 @@ class MoralityWidget(QWidget):
 		self.__layoutHeading.addStretch()
 
 		self.__layoutTab = QGridLayout()
-		# Nur die Spalte mit den GEistesstörungen soll sich strecken dürfen.
+		# Nur die Spalte mit den Geistesstörungen soll sich strecken dürfen.
 		self.__layoutTab.setColumnStretch(1, 1)
 		self.__layout.addLayout(self.__layoutTab)
 
@@ -94,11 +94,8 @@ class MoralityWidget(QWidget):
 
 				box.currentIndexChanged[str].connect(self.uniqifyDerangements)
 				box.derangementChanged.connect(self.checkSevereDerangement)
-				#box.derangementChanged.connect(self.saveDerangements)
 
 			dot.clicked.connect(self.__calcValue)
-
-		#self.fillDerangementBoxes(self.__character.species)
 
 		self.__character.speciesChanged.connect(self.setMoralityName)
 		self.__character.moralityChanged.connect(self.setValue)
@@ -106,14 +103,6 @@ class MoralityWidget(QWidget):
 		self.__character.speciesChanged.connect(self.fillDerangementBoxes)
 		self.valueChanged.connect(self.enableDerangementBox)
 		self.__character.derangementChanged.connect(self.updateDerangementBoxes)
-
-		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( updateDerangements( cv_Species::SpeciesFlag ) ) );
-		#connect( character, SIGNAL( moralityChanged( int ) ), this, SLOT( setValue( int ) ) );
-		#connect( this, SIGNAL( valueChanged( int ) ), character, SLOT( setMorality( int ) ) );
-		#connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( drawValue( int ) ) );
-		#connect( this, SIGNAL( valueChanged( int ) ), this, SLOT( disableDerangements( int ) ) );
-
-		#setValue( Config::moralityTraitDefaultValue );
 
 
 	def __getValue(self):

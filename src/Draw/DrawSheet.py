@@ -416,6 +416,24 @@ class DrawSheet(QObject):
 		if GlobalState.isDebug:
 			self.__drawGrid()
 
+		posX = 0
+		posY = 680
+		lengthX = 220
+		lengthY = self.__pageHeight - posY
+		if self.__character.species == "Mage":
+			posY = 730
+			lengthX = 250
+			lengthY = self.__pageHeight - posY
+		elif self.__character.species == "Vampire":
+			posY = 730
+			lengthX = 230
+			lengthY = self.__pageHeight - posY
+		elif self.__character.species == "Werewolf":
+			posY = 820
+			lengthX = 250
+			lengthY = self.__pageHeight - posY
+		self._drawDerangements(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		posX = 230
 		posY = 680
 		lengthX = 230
@@ -1147,17 +1165,22 @@ class DrawSheet(QObject):
 		textWidth = fontMetrics.boundingRect(unicode(Config.moralityTraitMax)).width()
 
 		self.__painter.save()
-		for i in xrange(Config.moralityTraitMax):
-			lcl_height = offsetV + self.__fontHeadingHeight + (i+1) * textHeight
-			self.__painter.drawText(offsetH, lcl_height - textHeight, textWidth, textHeight, Qt.AlignRight, unicode(Config.moralityTraitMax-i))
-			if (Config.moralityTraitMax - i) <= Config.moralityTraitDefaultValue:
-				self.__painter.drawLine(offsetH + textWidth, lcl_height, offsetH + width - self.__dotDiameterH - self.__dotSep, lcl_height)
+		for i in range(1, Config.moralityTraitMax+1)[::-1]:
+			#Debug.debug(i)
+			lcl_height = offsetV + self.__fontHeadingHeight + (Config.moralityTraitMax-i) * textHeight
+			self.__painter.drawText(offsetH, lcl_height, textWidth, textHeight, Qt.AlignRight, unicode(i))
+			derangementWidth = 0
+			if i in self.__character.derangements:
+				self.__painter.drawText(offsetH + textWidth + self.__textDotSep, lcl_height, width - textWidth - self.__textDotSep - self.__dotDiameterH - self.__dotSep, lcl_height, Qt.AlignLeft, self.__character.derangements[i])
+				derangementWidth = fontMetrics.boundingRect(self.__character.derangements[i]).width()
+			if i <= Config.moralityTraitDefaultValue:
+				self.__painter.drawLine(offsetH + textWidth + self.__textDotSep + derangementWidth, lcl_height + fontMetrics.ascent(), offsetH + width - self.__dotDiameterH - self.__dotSep, lcl_height + fontMetrics.ascent())
 			self.__painter.save()
-			if (Config.moralityTraitMax - i) <= self.__character.morality:
+			if i <= self.__character.morality:
 				self.__painter.setBrush(self.__colorFill)
 			else:
 				self.__painter.setBrush(self.__colorEmpty)
-			self.__painter.drawEllipse(offsetH + width - self.__dotDiameterH, lcl_height - self.__dotDiameterV, self.__dotDiameterH, self.__dotDiameterV)
+			self.__painter.drawEllipse(offsetH + width - self.__dotDiameterH, lcl_height + fontMetrics.ascent() - self.__dotDiameterV, self.__dotDiameterH, self.__dotDiameterV)
 			self.__painter.restore()
 		self.__painter.restore()
 
@@ -1446,28 +1469,29 @@ class DrawSheet(QObject):
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
 		\param width Die Breite der Spalte.
 		"""
-		pass
 
-		#self.__painter.save()
+		self.__painter.save()
 
-		#if width == None:
-			#width = self.__pageWidth / 3
+		if width == None:
+			width = self.__pageWidth / 3
 
-		#self.__drawHeading(offsetH, offsetV, width, self.tr("Derangements"))
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Derangements"))
 
-		#self.__painter.setFont(self.__fontMain_tiny)
-		#fontMetrics = QFontMetrics(self.__painter.font())
-		#fontHeight = fontMetrics.height()
+		self.__painter.setFont(self.__fontMain)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
 
-		#i = 0
-		#for item in self.__character.derangements.items():
-			#self.__drawTextWithValue(offsetH, offsetV + i * fontHeight, width, derangement, item[0], item[1])
-			#i += 1
+		keys = [item for item in self.__character.derangements.keys()]
+		i = 0
+		for j in range(min(keys), max(keys)+1)[::-1]:
+			derangement = self.__character.derangements[j]
+			self.__drawTextWithValue(posX=offsetH, posY=offsetV + self.__fontHeadingHeight + i * fontHeight, width=width, text=derangement, value="Morality: {}".format(j))
+			i += 1
 
-		#if GlobalState.isDebug:
-			#self.__drawBB(offsetH, offsetV, width, height)
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
 
-		#self.__painter.restore()
+		self.__painter.restore()
 
 
 	def __drawHeading(self, posX, posY, width, text):

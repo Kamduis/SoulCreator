@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.7">
-	<traits species="All">
+	<traits species="">
 		<Virtue>
 			<trait name="Charity" age="Adult"/>
 			<trait name="Faith" age="Adult"/>
