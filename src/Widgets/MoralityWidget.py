@@ -154,9 +154,11 @@ class MoralityWidget(QWidget):
 		if ( self.__value != value ):
 			self.__value = value
 			self.__drawValue(value)
+			Debug.debug(value)
 			self.valueChanged.emit( value )
 
 	value = property(__getValue, setValue)
+
 
 	def __calcValue(self, value):
 		"""
@@ -183,16 +185,18 @@ class MoralityWidget(QWidget):
 				if not self.__dotList[i].value:
 					dotsFalse.append(i)
 			minValue = min(dotsFalse)
-			#Debug.debug(dotsFalse)
-			for i in xrange(minValue+1, self.__layoutTab.rowCount()+1):
-				self.__dotList[i].value = False
-				#Debug.debug("{}: {} (Maximalwert {})".format(i, self.__dotList[i].value, minValue))
-			# Intuitiverweise will man die Moral auf den Wert setzen, auf den man klickt. Aber das gilt nicht, wenn man auf den untersten Punkt klickt.
-			if minValue == 1:
-				self.__dotList[minValue].value = False
-				self.value = 0
+			if minValue == self.value and minValue != 1:
+				self.__dotList[minValue].value = True
 			else:
-				self.value = minValue
+				for i in xrange(minValue+1, self.__layoutTab.rowCount()+1):
+					self.__dotList[i].value = False
+					#Debug.debug("{}: {} (Maximalwert {})".format(i, self.__dotList[i].value, minValue))
+				# Intuitiverweise will man die Moral auf den Wert setzen, auf den man klickt. Aber das gilt nicht, wenn man auf den untersten Punkt klickt.
+				if minValue == 1:
+					self.__dotList[minValue].value = False
+					self.value = 0
+				else:
+					self.value = minValue
 
 
 
