@@ -26,7 +26,7 @@ import sys
 import os
 
 from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, QDir, Signal
-from PySide.QtGui import QMainWindow, QApplication, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog, QGtkStyle
+from PySide.QtGui import QMainWindow, QApplication, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
 
 from src.GlobalState import GlobalState
 from src.Tools import PathTools
@@ -115,9 +115,6 @@ class MainWindow(QMainWindow):
 		QCoreApplication.setApplicationVersion( Config.version() )
 
 		#Debug.debug(QApplication.style())
-
-		#if True or os.name == "nt":
-			#QApplication.setStyle(QGtkStyle(self))
 
 		self.setWindowTitle( "" )
 		self.setWindowIcon( QIcon( ":/icons/images/WoD.png" ) )
@@ -625,20 +622,21 @@ class MainWindow(QMainWindow):
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
 
-		if GlobalState.isDebug:
-			# Lädt automatisch den Charakter aus testExport.chr
-			self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
-			#self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
-			self.__character.setModified( False )
+		#if GlobalState.isDebug:
+			## Lädt automatisch den Charakter aus testExport.chr
+			#self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
+			##self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
+			#self.__character.setModified( False )
 
 		# Wenn Unterverzeichnis nicht existiert, erstelle es
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		if GlobalState.isDebug:
-			filePath = ["{}/untitled.pdf".format(savePath), ""]
-		else:
-			filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
+		#if GlobalState.isDebug:
+			#filePath = ["{}/untitled.pdf".format(savePath), ""]
+		#else:
+			#filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
+		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):

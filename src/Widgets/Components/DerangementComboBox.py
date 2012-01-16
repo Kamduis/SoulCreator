@@ -50,7 +50,7 @@ class DerangementComboBox(QComboBox):
 
 		self.__severeDerangements = []
 
-		self.currentIndexChanged.connect(self.emitDerangementChanged)
+		self.currentIndexChanged[str].connect(self.emitDerangementChanged)
 
 
 	def addItems(self, items, severe=False):
