@@ -1481,10 +1481,10 @@ class DrawSheet(QObject):
 				self.__painter.drawText(offsetH + 4 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, strWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["strength"])
 				self.__painter.drawText(offsetH + 5 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, sizeWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["size"])
 				self.__painter.drawText(offsetH + 6 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth + sizeWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, durabWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["durability"])
+				i += 1
 				if self.__fontHeadingHeight + i * fontHeight > height:
 					breakLoop = True
 					break
-				i += 1
 			if breakLoop:
 				break
 
@@ -1527,9 +1527,11 @@ class DrawSheet(QObject):
 			self.__drawTextWithValue(posX=offsetH, posY=offsetV + self.__fontHeadingHeight + i * fontHeight, width=width, text=derangement, value="Morality: {}".format(moralityValue))
 			self.__painter.save()
 			self.__painter.setFont(self.__fontMain_tiny)
-			self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight + fontSmallHeight, width, 3 * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__storage.derangementDescription(derangement))
+			self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight + fontHeight, width, 4 * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__storage.derangementDescription(derangement))
 			self.__painter.restore()
-			i += 3
+			i += 4
+			if self.__fontHeadingHeight + i * fontHeight + 4 * fontHeight > height:
+				break
 
 		if GlobalState.isDebug:
 			self.__drawBB(offsetH, offsetV, width, height)

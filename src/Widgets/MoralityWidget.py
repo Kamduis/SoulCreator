@@ -39,9 +39,7 @@ class MoralityWidget(QWidget):
 
 	Diese Tabelle zeigt die aktuelle Moralstufe an und bietet Platz für das Eintragen von Geistesstörungen.
 
-	\todo wenn die Spezies verändert wird, müssen auch die Verfügbaren Geistesstörungen verändert werden.
-
-	\todo Ich bin mit den Geistesstörungen noch nicht gänzlich zufrieden. Es besteht die Gefahr, daß einzelne Geistesstörungen immer und immer wieder zu dem Charkater hinzugefügt werden und dementsprechend das Programm und den gespeicherten Charakter aufblähen können.
+	\bug Wird die Spezies geändert, verschwinden alle Geistesstörungen.
 	"""
 
 
