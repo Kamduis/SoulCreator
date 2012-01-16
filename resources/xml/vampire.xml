@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.7">
+<SoulCreator version="0.8">
 	<creation species="Vampire">
 		<Attribute>
 			<points value="5"/>
@@ -32,56 +32,64 @@
 			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
 			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
-		<Breed name="Clan">
-			<trait name="Daeva">
-				<bonus>
-					<Attribute>
-						<trait name="Dexterity"/>
-						<trait name="Manipulation"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Gangrel">
-				<bonus>
-					<Attribute>
-						<trait name="Stamina"/>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Mekhet">
-				<bonus>
-					<Attribute>
-						<trait name="Intelligence"/>
-						<trait name="Wits"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Nosferatu">
-				<bonus>
-					<Attribute>
-						<trait name="Strength"/>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Ventrue">
-				<bonus>
-					<Attribute>
-						<trait name="Prensence"/>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-		</Breed>
-		<Faction name="Covenant">
-			<trait name="Unbound"/>
-			<trait name="Lancea Sancta"/>
-			<trait name="Invictus"/>
-			<trait name="Ordo Dracul"/>
-			<trait name="Circle of the Crone"/>
-			<trait name="Carthian Movement"/>
-		</Faction>
+		<Group>
+			<Breed name="Clan">
+				<item name="Daeva">
+					<bonus>
+						<Attribute>
+							<item name="Dexterity"/>
+							<item name="Manipulation"/>
+						</Attribute>
+					</bonus>
+				</item>
+				<item name="Gangrel">
+					<bonus>
+						<Attribute>
+							<item name="Stamina"/>
+							<item name="Composure"/>
+						</Attribute>
+					</bonus>
+				</item>
+				<item name="Mekhet">
+					<bonus>
+						<Attribute>
+							<item name="Intelligence"/>
+							<item name="Wits"/>
+						</Attribute>
+					</bonus>
+				</item>
+				<item name="Nosferatu">
+					<bonus>
+						<Attribute>
+							<item name="Strength"/>
+							<item name="Composure"/>
+						</Attribute>
+					</bonus>
+				</item>
+				<item name="Ventrue">
+					<bonus>
+						<Attribute>
+							<item name="Prensence"/>
+							<item name="Composure"/>
+						</Attribute>
+					</bonus>
+				</item>
+			</Breed>
+			<Faction name="Covenant">
+				<item name="Unbound"/>
+				<item name="Lancea Sancta"/>
+				<item name="Invictus"/>
+				<item name="Ordo Dracul"/>
+				<item name="Circle of the Crone"/>
+				<item name="Carthian Movement"/>
+			</Faction>
+			<Organisation name="Bloodline">
+				<item name="None"/>
+				<item name="Toreador"/>
+				<item name="Brujah"/>
+			</Organisation>
+			<Party name="Coterie"/>
+		</Group>
 		<Merit>
 			<Category name="Mental">
 				<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
@@ -294,35 +302,6 @@
 				</trait>-->
 			</Category>
 		</Power>
-		<Derangement>
-			<Mild>
-				<trait name="Fixation"/>
-				<trait name="Inferiority Complex"/>
-				<trait name="Irrationality"/>
-				<trait name="Animal Dependency"/>
-				<trait name="Power Fetish Obsession"/>
-				<trait name="Preferential Obsession"/>
-				<trait name="Sanguinary Animism"/>
-				<trait name="Erythema"/>
-			</Mild>
-			<Severe>
-				<trait name="Bulimia">
-					<prerequisite>Fixation > 0</prerequisite>
-				</trait>
-				<trait name="Diogenes Syndrome">
-					<prerequisite>Inferiority Complex > 0</prerequisite>
-				</trait>
-				<trait name="Dependent-Personality Disorder">
-					<prerequisite>Irrationality > 0</prerequisite>
-				</trait>
-				<trait name="Animal Dependency">
-					<prerequisite>Animal Dependency > 0</prerequisite>
-				</trait>
-				<trait name="Preferential Obsession">
-					<prerequisite>Preferential Obsession > 0</prerequisite>
-				</trait>
-			</Severe>
-		</Derangement>
 		<Flaw>
 			<Category name="Physical">
 				<trait name="No Fangs"/>
@@ -335,5 +314,25 @@
 				<trait name="Sluggish Vitae"/>
 			</Category>
 		</Flaw>
+		<Derangement>
+			<item name="Fixation">
+				<item name="Bulimia"/>
+			</item>
+			<item name="Inferiority Complex">
+				<item name="Diogenes Syndrome"/>
+			</item>
+			<item name="Irrationality">
+				<item name="Dependent-Personality Disorder"/>
+			</item>
+			<item name="Animal Dependency">
+				<item name="Animal Dependency (severe)"/>
+			</item>
+			<item name="Power Fetish Obsession"/>
+			<item name="Preferential Obsession">
+				<item name="Preferential Obsession (severe)"/>
+			</item>
+			<item name="Sanguinary Animism"/>
+			<item name="Erythema"/>
+		</Derangement>
 	</traits>
 </SoulCreator>

@@ -99,7 +99,7 @@ class MeritWidget(QWidget):
 
 				# Bei Merits sind nur bestimmte Werte erlaubt.
 				#Debug.debug(self.__storage.traits[self.__typ][item][merit[0]])
-				traitWidget.setPossibleValues(self.__storage.traits[self.__typ][item][merit[0]]["value"])
+				traitWidget.setPossibleValues(self.__storage.traits[self.__typ][item][merit[1].name]["value"])
 
 				layoutMeritCategory.addWidget( traitWidget )
 

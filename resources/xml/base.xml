@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.7">
-	<traits>
+<SoulCreator version="0.8">
+	<traits species="">
 		<Virtue>
 			<trait name="Charity" age="Adult"/>
 			<trait name="Faith" age="Adult"/>
@@ -975,86 +975,6 @@
 				</trait>-->
 			</Category>
 		</Merit>
-		<Derangement>
-			<Mild>
-				<trait name="Avoidance"/>
-				<trait name="Dehumanization"/>
-				<trait name="Depression"/>
-				<trait name="Fetishism"/>
-				<trait name="Fixation"/>
-				<trait name="Inferiority Complex"/>
-				<trait name="Insomnia"/>
-				<trait name="Irrationality"/>
-				<trait name="Narcissism"/>
-				<trait name="Phobia"/>
-				<trait name="Pyromania"/>
-				<trait name="Repression"/>
-				<trait name="Supernatural Fascination"/>
-				<trait name="Suspicion"/>
-				<trait name="Vocalization"/>
-				<!--<trait name="Blood Fascination" species="ghoul-istfalsch"/>
-				<trait name="Degenerative Fixation" species="ghoul-istfalsch"/>-->
-			</Mild>
-			<Severe>
-				<trait name="Fugue">
-					<prerequisite>Avoidance > 0</prerequisite>
-				</trait>
-				<trait name="Loss of Compassion">
-					<prerequisite>Dehumanization > 0</prerequisite>
-				</trait>
-				<trait name="Manic-Depression">
-					<prerequisite>Depression > 0</prerequisite>
-				</trait>
-				<trait name="Melancholia">
-					<prerequisite>Depression > 0</prerequisite>
-				</trait>
-				<trait name="Masochism">
-					<prerequisite>Fetishism > 0</prerequisite>
-				</trait>
-				<trait name="Bulimia">
-					<prerequisite>Fixation > 0</prerequisite>
-				</trait>
-				<trait name="Anxiety">
-					<prerequisite>Inferiority Complex > 0</prerequisite>
-				</trait>
-				<trait name="Cataplexy">
-					<prerequisite>Insomnia > 0</prerequisite>
-				</trait>
-				<trait name="Delusional Obsession">
-					<prerequisite>Irrationality > 0</prerequisite>
-				</trait>
-				<trait name="Multiple Personality" extreme="true">
-					<prerequisite>Irrationality > 0</prerequisite>
-				</trait>
-				<trait name="Narcissism">
-					<prerequisite>Megalomania > 0</prerequisite>
-				</trait>
-				<trait name="Hysteria">
-					<prerequisite>Phobia > 0</prerequisite>
-				</trait>
-				<trait name="Pyrophilia">
-					<prerequisite>Pyromania > 0</prerequisite>
-				</trait>
-				<trait name="Denial">
-					<prerequisite>Repression > 0</prerequisite>
-				</trait>
-				<trait name="Zealotry">
-					<prerequisite>Supernatural Fascination > 0</prerequisite>
-				</trait>
-				<trait name="Paranoia">
-					<prerequisite>Suspicion > 0</prerequisite>
-				</trait>
-				<trait name="Schizophrenia" extreme="true">
-					<prerequisite>Vocalization > 0</prerequisite>
-				</trait>
-				<!--<trait name="Hemophilic Compulsion" species="ghoul-istfalsch">
-				<prerequisite>Blood Fascination > 0</prerequisite>
-				</trait>
-				<trait name="Identity Erasure" species="ghoul-istfalsch">
-					<prerequisite>Degenerative Fixation > 0</prerequisite>
-				</trait>-->
-			</Severe>
-		</Derangement>
 		<Flaw>
 			<Category name="Mental">
 				<trait name="Addiction" custom="true"/>
@@ -1088,5 +1008,158 @@
 				<trait name="Untrustworthy"/>
 			</Category>
 		</Flaw>
+		<Derangement>
+			<item name="Avoidance">
+				<description>On a failed roll, you do everything in your power to avoid the situation, short of harming yourself or others. You might escape the scene or disguise yourself as a bystander to sidle away. If you must confront (or can't escape) the situation, any rolls made suffer a −1 penalty.</description>
+				<item name="Fugue">
+					<description>Make a Resolve+Composure roll when you are subjected to your trigger. If the roll fails, roleplay your trance-like state by performing a sequence of behaviors that you performs almost robotically. You might repetitively untie and tie your shoes, walk to the corner of the room and refuse to come out, or curl into the fetal position. If the Storyteller is not satisfied by your reaction, he might take control of the character for the duration of the bout. The state lasts for the remainder of the scene. At the end of the fugue, you regain consciousness with no memory of your actions. If outsiders (including friends and enemies) interfere with or try to prevent your mechanical activities, you may attack them in order to carry on.</description>
+				</item>
+			</item>
+			<item name="Dehumanization">
+				<description>Make a Resolve+Composure roll. If it fails, all Social rolls (except those involving Intimidation suffer a −2 penalty. You are brusque, impatient and crass with others, belittling them and, if necessary, shoving them out of the way to get to your goals.</description>
+				<item name="Loss of Compassion">
+					<description>Whenever you commit a sin against Morality that directly involves doing harm to another person, you roll 1 fewer die.</description>
+				</item>
+			</item>
+			<item name="Depression">
+				<description>If the roll fails, you lose 1 Willpower point and cannot spend any Willpower points for the remainder of the scene.</description>
+				<item name="Manic-Depression">
+					<description>Whichever form of the ailment you have, whenever you fail a task, the Storyteller may secretly roll your Resolve}. A failure means you lapse into depression for the rest of the scene. You also go into depression whenever you make a dramatic failure on a roll, or, as a vampire, have less than 2 Vitae.
+
+					While depressed, you lose half your Willpower points (rounding down), to a minimum of 1. A depressed vampire cannot expend Vitae to gain dice for Physical tasks, either.
+
+					Each scene thereafter, the Storyteller rolls 1 die. On a success, you throw off the depression and become upbeat, energetic and obsessively active for as many scenes as you were depressed. You regain the Willpower points you lost before, and all rolls to resist frenzy suffer a 1-die penalty. </description>
+				</item>
+				<item name="Melancholia">
+					<description>Severe depression. In addition to the above effects of a failed Resolve+Composure roll, all dice pools suffer a −2 penalty for the remainder of the scene.</description>
+				</item>
+			</item>
+			<item name="Fetishism">
+				<description>If you experience something that reminds you of the event or object you're fetishized, roll Resolve+Composure}. If the roll fails, you focus on re-creating the situation or coming in contact with the object in question.</description>
+				<item name="Masochism">
+					<description>As Fetishism}, but you are no longer satisfied with the presence of the object or duplication of the situation. You must now be hurt by it in order to enjoy yourself. The effects of fetishism apply, but you must also suffer an amount of bashing damage at least equal to your Stamina during the compulsive activity in order to be satisfied. Without the interference of an outside agent, you won't stop until the damage is inflicted in full.</description>
+				</item>
+			</item>
+			<item name="Fixation">
+				<description>If your Resolve+Composure roll fails, roll 1 die. The result is the number of scenes in which you are focused on the offending or inspiring event or task, to the possible exclusion of more important goals.</description>
+				<item name="Obsessive Compulsion">
+					<description>Determine a set of specific actions or behaviors that you follow to the exclusion of all else (even if doing so interferes with your current agenda or endangers your life or others'). The effects of obsessive compulsion can be negated for the course of 1 scene by making a successful Resolve+Composure roll at a −2 penalty. If you are forcibly prevented from adhering to your derangement, you may lose control among enemies or allies and attack either (or both) indiscriminately.</description>
+				</item>
+			</item>
+			<item name="Inferiority Complex">
+				<description>In stressful situations roll your character's Resolve+Composure to remain composed. If your roll fails, the weight of the momentous choice is too much for you and you are flustered, doubting your ability to choose correctly or to perform adequately. Once in this state, any rolls made for the remainder of the scene -- including the momentous act itself -- suffer a −1 penalty. In addition, a Willpower point cannot be spent on the singular roll that inspires your bout of inferiority.</description>
+				<item name="Anxiety">
+					<description>As Inferiority Complex}, but you suffer a -2 penalty on all rolls for the remainder of the scene, and Willpower points cannot be spent to bolster any rolls in that period.</description>
+				</item>
+			</item>
+			<item name="Insomnia">
+				<description>You have trouble getting the required amount of sleep, and not just occasionally. Any time you are engaged in a stressful situation, roll Resolve+Composure}. Failure means that you are unable to sleep properly and suffer a −2 penalty on all rolls the following day. Each day thereafter is considered stressful.</description>
+				<item name="Cataplexy">
+					<description>You have so much trouble resting that your body is beginning to fail you. Whenever the roll mentioned at Insomnie fails, you suffer from bouts of overwhelming feebleness throughout the following day. Any circumstance resulting in an intense emotional reaction such as laughter, anger or fear requires a Stamina+Composure roll. Failure means that you slump to the ground, paralyzed with weakness for a full turn even though you remain fully conscious.</description>
+				</item>
+			</item>
+			<item name="Irrationality">
+				<description>Roll Resolve+Composure to keep  cool. On a failed roll, your only way to comfortably deal with confrontation is to act crazy or over the top, in wild hopes that you will scare away your oppressor or at least mitigate your own fears. This behavior persists for the remainder of the scene. Make a Wits+Composure roll to be able to take any action that removes you from the scene or that directly diffuses the situation (such as accepting a hand offered in a conciliatory handshake).</description>
+				<item name="Delusional Obsession">
+					<description>A Willpower point must be spent to resist whenever an opportunity arises to act in accordance with your obsession, or whenever you must act in direct opposition to your obsession. For instance, a gardening fanatic might have to expend Willpower to stay out of a florist's shop. A person who believes that every instance of a crescent or lunar reference indicates Lupine activity might need to expend a Willpower point to step into an Islamic cultural center or to stay in the same room as someone named Moon.</description>
+				</item>
+				<item name="Multiple Personality" extreme="true">
+					<description>You can manifest different Skills or perhaps increased or diminished Social Attributes for each identity (the number of dots allocated to your Social Attributes are rearranged by anywhere from one to three).</description>
+				</item>
+			</item>
+			<item name="Narcissism">
+				<description>Roll Resolve+Composure to avoid a bout of vanity. On a failed roll, you do not work and play well with others -- even if the victory that brings on a bout of narcissism was partly won with their aid. For the remainder of the scene, when called upon to aid in a task you do so only half-heartedly, unless it's a task focused on you or your own needs or wants. You suffer a −3 penalty when participating in teamwork efforts. And you're such a self-obsessed bore that Social rolls all suffer a −1 penalty.</description>
+				<item name="Megalomania">
+					<description>The effects of Narcissism apply, except that the penalties intensify by 1. You are also highly competitive. You cannot allow yourself to fail a contest (even a contested roll). If you do, you obsess about it and work to arrange a rematch when it's most beneficial for you. If, for example, you fail to pick a lock while an ally succeeds, you don't let it go. You constantly insist that you did the job and that your successor took the glory, and demand that similar efforts be tried again, even under inappropriate circumstances such as at an office or restaurant.
+		
+					If you ever lose a contest to someone you feel is socially inferior, you lose 1 point of Willpower due to shame and self-loathing (which is at the heart of your megalomania; you secretly fear that you're a fraud).</description>
+				</item>
+			</item>
+			<item name="Phobia">
+				<description>You move away from the object of your phobia. If you must be near it, you can tolerate being no closer than your Speed in yards. If it approaches you, you must move away at least your Speed in distance in your next action. You cannot easily target the trigger with close combat or ranged attacks. Such attacks suffer a −5 penalty as you shake just looking at it.</description>
+				<item name="Hysteria">
+					<description>This condition operates as a Phobia}, but on a failed Resolve+Composure roll your character cannot be in the same room with the object of your fear. You must run away from it immediately, and cannot tolerate being within sensory range (sight, sound, smell) of it. If the trigger comes within sensory range, you must run away at full running Speed as soon as you can take an action. You cannot target it for an attack under any circumstance. If it touches you, make another Resolve+Composure roll not to freak out and run as far away as you can, thinking of nothing else until you have left the subject far behind. (Even if this roll succeeds, you must still leave the room or area.) If any of your Resolve+Composure rolls suffer a dramatic failure or you are unable to escape, you faint and lose consciousness for the remainder of the scene. If you are unaware of the object's proximity until it touches you, your Resolve+Composure roll suffers a −3 penalty. If it touches you where you can't see it but you can feel it -- a spider dropping on your neck or in your hair -- the penalty is −5.</description>
+				</item>
+			</item>
+			<item name="Pyromania">
+				<description>If you are bored, frustrated or stressed, you must roll Resolve+Composure}. If this roll fails, you must light something on fire. In addition, if you see a fire already burning, you must roll Resolve+Composure}. If this roll fails, you stand, transfixed, staring at the fire. This roll must be made every turn until you succeed, at which point you can tear yourself away.</description>
+				<item name="Pyrophilia">
+					<description>The game system is as with Pyromania, except that the Resolve+Composure rolls suffer a −2 penalty. In addition, you feel the compulsion to set fires in any situation fraught with sexual tension.</description>
+				</item>
+			</item>
+			<item name="Repression">
+				<description>You have blocked out the memory of the event that caused this derangement. In addition, if you find yourself in a similar situation, you must roll Resolve+Composure or else you block out the memory of that scene as well.</description>
+				<item name="Denial">
+					<description>You not only repress the memories that trouble you but have constructed a potentially elaborate scenario to replace them and grow hostile if someone tries to persuade you otherwise. Whenever someone tries to educate you as to the truth of what happens, you roll Resolve+Composure}. If the roll succeeds, your delusion remains intact, and you become irate and refuse to discuss the matter. If the roll fails, your internal commitment to the safety of the delusion weakens a bit, and you are at least willing to listen.</description>
+				</item>
+			</item>
+			<item name="Supernatural Fascination">
+				<description>At least once a scene, and more often if significant events occur during a scene, you must roll Resolve+Composure}. If that roll fails, you must perform some action appropriate to your beliefs. You might utter a brief prayer, mumble into your wallet (which you're sure contains a communication device), line your hat with tinfoil to prevent the aliens from reading your mind and so on.</description>
+				<item name="Zealotry">
+					<description>You have decided that his spiritual or supernatural beliefs are so important than everyone should share them. You proselytize to everyone you meet, given only a few minutes of conversation. You might ask people if they have accepted Jesus Christ as their personal savior, or you might simply warn people engaging in sinful behavior that they are bound for Hell. You might snap pictures of agents of the government conspiracy and warn other people to stay away from them. You might occasionally curse while looking at sky, as though expecting the aliens to arrive any moment. The game system for this derangement works similar to Supernatural Fascination, but the effects are more extreme, as described.</description>
+				</item>
+			</item>
+			<item name="Suspicion">
+				<description>Your trust is undermined for the remainder of the scene, regardless of whether or not the person or persons who did you wrong meant any harm. You question everyone's sincerity and doubts that anyone tries to help you, even if someone saves your life. You suffers a −1 penalty on all Social rolls. Note that, even though you are suspicious, you can still be taken in by con men and hucksters. You get no special bonus to resist their attempts to sway you even though you suspect them of being as bad as everyone else.</description>
+				<item name="Paranoia">
+					<description>You automatically suffer a −2 penalty on Social rolls. You are distrustful and wary of everyone, even close friends and family. The slightest hint of suspicious behavior is enough to provoke a Resolve+Composure roll to retain control (made at a −2 penalty). A failed roll indicates that you flee or attack an offender.
+		
+					Additionally, among Kindred, the slightest hint that someone might be an enemy can provoke a frenzy check, with the number of successes required set by how threatening the trigger event seems. A casual remark that seems to show someone knows a bit about your activities might require only 1 success to avoid frenzy. Finding an intruder in your haven would almost certainly require 5.</description>
+				</item>
+			</item>
+			<item name="Vocalization">
+				<description>On a failed roll, you vocalize your internal monologue but only realize it if it's pointed out by others, at which point you can stop for 1 turn per dot of Wits that you have. After that period, you forget yourself and start doing it all over again. This behavior persists for the remainder of the scene.</description>
+				<item name="Schizophrenia">
+					<description>With this derangement you are unpredictable and dangerous. You automatically suffer a −2 penalty on all Social rolls and may be aggressive or violent toward people who confront you with trauma such as accusations, disturbing truths or heated arguments. Make a Resolve+Composure roll to avoid escaping or attacking the source of trauma.</description>
+				</item>
+			</item>
+			<!--<item name="Blood Fascination" species="ghoul-istfalsch">
+				<description>Testtext</description>
+				<item name="Hemophilic Compulsion"/>
+			</item>
+			<item name="Degenerative Fixation" species="ghoul-istfalsch">
+				<description>Testtext</description>
+				<item name="Identity Erasure"/>
+			</item>-->
+		</Derangement>
 	</traits>
+	<items>
+		<Weapons>
+			<Category name="melee">
+				<weapon name ="Bayonet" damage="2L" size="1/S" durability="3" note="Damage 1L if mounted on a bullpup"/>
+				<weapon name ="Bowie Knife" damage="2L" size="1/J" durability="4" note="+1 to some Crafts rolls"/>
+				<weapon name ="Combat Knife" damage="1L" size="1/S" durability="3"/>
+				<weapon name ="Katar Punch-Dagger" damage="2L" size="1/S" durability="3" note="Strength + Brawl"/>
+				<weapon name ="Keris" damage="2L" size="2/J" durability="3" note="-1 Damage w/o specialty"/>
+				<weapon name ="Khukri" damage="2L" size="2/J" durability="3" note="9 again on targeted attacks"/>
+				<weapon name ="Main Gauche" damage="1L" size="1/S" durability="3" note="+1 Defense if used with another weapon"/>
+				<weapon name ="Pocketknife" damage="-1L" size="1/P" durability="2" note="Fragile 3, +1 to some Crafts rolls"/>
+				<weapon name ="Rondel Dagger" damage="1L" size="1/S" durability="3" note="Armor Piercing 1, +2 Damage on surprise attacks"/>
+				<weapon name ="Trench Knife" damage="1L/B" size="1/S" durability="3" note="Doubles as brass knuckles"/>
+				<weapon name ="Switchblade" damage="0L" size="1/P" durability="3" note=""/>
+			</Category>
+			<Category name="thrown">
+				<weapon name ="Dart" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
+				<weapon name ="Hatchet" damage="1" ranges="Thrown" capacity="-" strength="2" size="1/J" notes="Can inflict bashing damage"/>
+				<weapon name ="Javelin, combat" damage="3" ranges="Aero" capacity="-" strength="2" size="2/N"/>
+				<weapon name ="Javelin, competition" damage="2" ranges="Thrown x4" capacity="-" strength="2" size="2/N"/>
+				<weapon name ="Knife, throwing" damage="1" ranges="Aero" capacity="-" strength="2" size="1/S"/>
+				<weapon name ="Shuriken" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
+			</Category>
+			<Category name="ranged">
+				<weapon name =".22 LR" damage="1" ranges="5/10/20" capacity="6" strength="0" size="1/P"/>
+				<weapon name =".38 Special" damage="2" ranges="20/40/80" capacity="6" strength="1" size="1/S"/>
+				<weapon name =".357 Magnum" damage="3" ranges="30/60/120" capacity="6" strength="2" size="1/S"/>
+				<weapon name =".44 Magnum" damage="3 (9 again)" ranges="35/70/140" capacity="6" strength="3" size="2/J"/>
+				<weapon name ="Colt Single Action Army" damage="3" ranges="20/40/80" capacity="6" strength="2" size="1/J"/>
+				<weapon name ="Freedom Arms Model 83" damage="4" ranges="50/100/200" capacity="5" strength="4" size="2/L"/>
+				<weapon name ="NAA Black Widow" damage="1" ranges="2/5/10" capacity="5" strength="1" size="1/P"/>
+				<weapon name ="P&#38;R Medusa" damage="*" ranges="20/40/80" capacity="6" strength="*" size="1/J" notes="Damage: 2 for .38 or 9mm, 3 for .357 Magnum. Strength always 1 lower than ist Damage"/>
+				<weapon name ="S&#38;W Model 36 Ladysmith" damage="2" ranges="20/40/80" capacity="5" strength="1" size="1/S"/>
+				<weapon name ="S&#38;W Model 500" damage="4 (9 again)" ranges="50/100/200" capacity="5" strength="4" size="2/L"/>
+				<weapon name ="Taurus Model 22H" damage="2" ranges="40/80/160" capacity="8" strength="1" size="2/L" notes="Armor Piercing 1"/>
+				<weapon name ="Thunder-5" damage="2" ranges="15/30/60" capacity="5" strength="2" size="1/J"/>
+			</Category>
+		</Weapons>
+	</items>
 </SoulCreator>

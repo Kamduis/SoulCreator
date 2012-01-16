@@ -25,7 +25,7 @@ from __future__ import division, print_function
 from PySide.QtCore import QObject
 
 #from src.Config import Config
-#from ReadXml import ReadXml
+from src.Tools import ListTools
 from src.Debug import Debug
 from src.Error import ErrTraitType
 
@@ -66,8 +66,8 @@ class StorageTemplate(QObject):
 	# 	Spezies1: {
 	# 		Breed: [Name, [Bla, Blub, ...]],
 	# 		Faction: [Name, [Bla, Blub, ...]],
-	# 		SubGroup: [Name [Bla, Blub, ...]],
-	# 		...
+	# 		Organisation: [Name [Bla, Blub, ...]],
+	# 		Party: [Name [Bla, Blub, ...]],
 	# 	},
 	# 	...
 	# }
@@ -77,8 +77,8 @@ class StorageTemplate(QObject):
 	# 	Vampire: {
 	# 		Breed: [Clan, [Daeva, Gangrel, Mekhet, Nosferatu, Ventrue]],
 	# 		Faction: [Covenant, [Cartian Movement, Circle of the Crone, Invictus, Lancea Sancta, Ordo Dracul]],
-	# 		SubGroup: [Bloodline, [Toreador, Brujah, ...]],
-	# 		...
+	# 		Organisation: [Bloodline, [Toreador, Brujah, ...]],
+	# 		Party: [Coterie],
 	# 	},
 	# 	...
 	# }
@@ -139,6 +139,25 @@ class StorageTemplate(QObject):
 	# ]
 	__vices = []
 
+	## Eine Liste aller Geistesstörungen.
+	#
+	# {
+	# 	"Name1": {
+	# 		"Dependancy": [ severe1, severe2, ... ],
+	# 		"Description": Description,
+	# 		"Severe": True | False,
+	# 		"Species": species1
+	# 	},
+	# 	"Name2": {
+	# 		"Dependancy": [ severe1, severe2, ... ],
+	# 		"Description": Description,
+	# 		"Severe": True | False,
+	# 		"Species": species1
+	# 	}
+	# 	...
+	# }
+	__derangements = {}
+
 	# Eine Liste der Effekte der Supereigenschaft.
 	#
 	# {
@@ -156,7 +175,7 @@ class StorageTemplate(QObject):
 	# }
 	__powerstat = {}
 
-	# Eine Liste der Bonuseigenscahften je nach Spezies, Brut und Fraktion etc.
+	# Eine Liste der Bonuseigenschaften je nach Spezies, Brut und Fraktion etc.
 	#
 	# {
 	# 	Spezies1: {
@@ -177,6 +196,38 @@ class StorageTemplate(QObject):
 	# 	...
 	# }
 	__bonusTraits = {}
+
+	# Eine Liste der Waffen.
+	#
+	# {
+	# 	"melee": {
+	# 		weapon1: {
+	# 			"damage": value,
+	# 			"size": value,
+	# 			"durability": value,
+	# 		},
+	# 		...
+	# 	},
+	# 	"thrown": {
+	# 		weapon1: {
+	# 			"damage": value,
+	# 			"size": value,
+	# 			"durability": value,
+	# 		},
+	# 		...
+	# 	"ranged": {
+	# 		weapon1: {
+	# 			"damage": value,
+	# 			"ranges": value,
+	# 			"capacity": value,
+	# 			"strength": value,
+	# 			"size": value,
+	# 			"durability": value,
+	# 		},
+	# 		...
+	# 	},
+	# }
+	__weapons = {}
 
 #QList< cv_Species > StorageTemplate::v_species;
 #QList< cv_SpeciesTitle > StorageTemplate::v_titles;
@@ -455,20 +506,58 @@ class StorageTemplate(QObject):
 	vices = property(__getVices, __setVices)
 
 
-	def breedTitle(self, species):
-		return self.__speciesGroupNames[species]["Breed"][0]
+	def derangementList( self, species, parentDerangement=None ):
+		result = []
+		if parentDerangement == None:
+			for item in self.__derangements:
+				#Debug.debug(self.__derangements[item])
+				if (not self.__derangements[item]["Species"] or self.__derangements[item]["Species"] == species) and not self.__derangements[item]["Severe"]:
+					result.append(item)
+			result.sort()
+			#Debug.debug(result)
+			return result
+		else:
+			if parentDerangement in self.__derangements:
+				result = self.__derangements[parentDerangement]["Dependancy"]
+			result.sort()
+			#Debug.debug(result)
+			return result
+
+
+	def derangementDescription( self, name ):
+		"""
+		Gibt die Beschreibung der benannten Geistesstörung aus.
+		"""
+
+		return self.__derangements[name]["Description"]
 
 
 	def breeds(self, species):
 		return self.__speciesGroupNames[species]["Breed"][1]
 
 
-	def factionTitle(self, species):
-		return self.__speciesGroupNames[species]["Faction"][0]
+	def breedTitle(self, species):
+		return self.__speciesGroupNames[species]["Breed"][0]
 
 
 	def factions(self, species):
 		return self.__speciesGroupNames[species]["Faction"][1]
+
+
+	def factionTitle(self, species):
+		return self.__speciesGroupNames[species]["Faction"][0]
+
+
+	def organisations(self, species):
+		return self.__speciesGroupNames[species]["Organisation"][1]
+
+
+	def organisationTitle(self, species):
+		return self.__speciesGroupNames[species]["Organisation"][0]
+
+
+	def partyTitle(self, species):
+		return self.__speciesGroupNames[species]["Party"][0]
 
 
 	def moralityName(self, species):
@@ -514,48 +603,6 @@ class StorageTemplate(QObject):
 #}
 
 
-#int StorageTemplate::traitMax( cv_Species::Species species, int value ) {
-	#if( species == cv_Species::Human ) {
-		#return Config::traitMax;
-	#} else {
-		#for( int i = 0; i < v_superEffects.count(); ++i ) {
-			#if( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
-				#return v_superEffects.at( i ).traitMax;
-			#}
-		#}
-	#}
-#}
-
-#int StorageTemplate::fuelMax( cv_Species::Species species, int value ) {
-	#if( species == cv_Species::Human ) {
-		#return 0;
-	#} else {
-		#for( int i = 0; i < v_superEffects.count(); ++i ) {
-			#if( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
-				#return v_superEffects.at( i ).fuelMax;
-			#}
-		#}
-	#}
-#}
-
-#int StorageTemplate::fuelPerTurn( cv_Species::Species species, int value ) {
-	#if( species == cv_Species::Human ) {
-		#return 0;
-	#} else {
-		#for( int i = 0; i < v_superEffects.count(); ++i ) {
-			#if( v_superEffects.at( i ).species == species && v_superEffects.at( i ).value == value ) {
-				#return v_superEffects.at( i ).fuelPerTurn;
-			#}
-		#}
-	#}
-#}
-
-
-#cv_CreationPointsList* StorageTemplate::creationPoints() {
-	#return &v_creationPointsList;
-#}
-
-
 	def appendCharacteristic( self, typ, trait ):
 		"""
 		Fügt eine Charakteristik (Tugend oder Laster) zu der entsprechenden Liste hinzu.
@@ -567,6 +614,27 @@ class StorageTemplate(QObject):
 			self.__vices.append( trait )
 		else:
 			raise ErrTraitType( ("Virtue", "Vice"), typ )
+
+
+	def appendDerangement( self, species, name, dependancy, description, isSevere=False ):
+		"""
+		Fügt eine Geistesstörung mitsamt der Liste daraus möglicherweise erwachsender schwerer Geistesstörungen an die Liste der Geistesstörungen an.
+
+		Eine milde Geistesstörung hat als Abhängigkeit eine beliebig lange Liste von schweren Geistesstörungen. Eine schwere Geistesstörung (isSevere=True) hat als Abhängigkeit eine leere Liste.
+		"""
+
+		if name not in self.__derangements:
+			self.__derangements.setdefault(name, {})
+			self.__derangements[name]["Dependancy"] = dependancy
+			self.__derangements[name]["Description"] = description
+			self.__derangements[name]["Severe"] = isSevere
+			self.__derangements[name]["Species"] = species
+		else:
+			self.__derangements[name]["Dependancy"].extend(dependancy)
+			if description:
+				self.__derangements[name]["Description"] = description
+
+		#Debug.debug(self.__derangements)
 
 
 	def appendTrait( self, typ, category, name, data):
@@ -654,7 +722,7 @@ class StorageTemplate(QObject):
 			else:
 				self.__speciesGroupNames[species][typ][1].append(names)
 
-		#print(self.__speciesGroupNames)
+		#Debug.debug(self.__speciesGroupNames)
 
 
 	@property
@@ -677,3 +745,54 @@ class StorageTemplate(QObject):
 			self.__creationPointsList.setdefault(species,{})
 
 		self.__creationPointsList[species][typ] = points
+
+
+	@property
+	def weapons(self):
+		"""
+		Gibt eine Liste aller Waffen besagter Kategorie zurück.
+		"""
+
+		return self.__weapons
+
+
+	def addWeapon( self, category, name, weaponData ):
+		"""
+		Fügt eine Waffe hinzu. Falls eine Waffe dieses Namens in der angebenen Kategorie (melee, thrown, ranged) schon vorhanden wird, werden die DAten der vorhandenen Waffe überschrieben.
+		"""
+		
+		# {
+		# 	"melee": {
+		# 		weapon1: {
+		# 			"damage": value,
+		# 			"size": value,
+		# 			"durability": value,
+		# 		},
+		# 		...
+		# 	},
+		# 	"thrown": {
+		# 		weapon1: {
+		# 			"damage": value,
+		# 			"size": value,
+		# 			"durability": value,
+		# 		},
+		# 		...
+		# 	"ranged": {
+		# 		weapon1: {
+		# 			"damage": value,
+		# 			"range": value,
+		# 			"capacity": value,
+		# 			"strength": value,
+		# 			"size": value,
+		# 			"durability": value,
+		# 		},
+		# 		...
+		# 	},
+		# }
+		if category not in self.__weapons:
+			self.__weapons.setdefault(category, {})
+
+		self.__weapons[category][name] = weaponData
+
+		#Debug.debug(self.__weapons)
+

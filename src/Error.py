@@ -318,6 +318,32 @@ class ErrSpeciesNotExisting(ErrSpecies):
 
 
 
+#class ErrDerangement(Err):
+	##"""
+	##@brief Ausnahme, falls Fehler bei den Geistesstörungen auftritt.
+	##"""
+
+	#def __init__(self ):
+		#Err.__init__(self)
+
+		#self.message = self.obj.tr( "Problem with derangements occured." )
+		#self.description = self.obj.tr( "There is a problem with a derangement of the character.")
+
+
+#class ErrDerangementNotExisting(ErrDerangement):
+	##"""
+	##@briefDie erwartete Geistesstörung wurde nicht gefunden.
+	##"""
+
+	#def __init__(self, derangement="unknown" ):
+		#ErrDerangement.__init__(self)
+
+		#self.message = self.obj.tr( "Problem with derangements occured." )
+		#self.description = self.obj.tr( "Derangement {} is missing.".format(derangement))
+
+
+
+
 #eGender::eGender() : Exception() {
 	#"""
 	#@brief Ausnahme, falls Fehler bei den Geschlechtern auftritt.

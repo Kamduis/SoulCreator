@@ -96,8 +96,8 @@ class Squares(QWidget):
 
 			# Damit der Rahmen nicht irgendwie abgeschnitten wird, muß das Quadrat entsprechend kleiner sein.
 			squareSideLength = 10
-			framePen = QPen( QBrush( Qt.OpaqueMode ), frameWidth )
-			framePen.setColor( self.__colorFrame );
+			framePen = QPen( frameWidth )
+			framePen.setColor( self.__colorFrame )
 
 			squareSideLengthPlus = squareSideLength + 2 * frameWidth
 

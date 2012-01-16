@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.7">
+<SoulCreator version="0.8">
 	<creation species="Werewolf">
 		<Attribute>
 			<points value="5"/>
@@ -32,21 +32,28 @@
 			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
 			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
-		<Breed name="Auspice">
-			<trait name="Rahu"/>
-			<trait name="Cahalith"/>
-			<trait name="Elodoth"/>
-			<trait name="Ithaeur"/>
-			<trait name="Irraka"/>
-		</Breed>
-		<Faction name="Tribe">
-			<trait name="Ghost Wolf"/>
-			<trait name="Blood Talons"/>
-			<trait name="Bone Shadows"/>
-			<trait name="Hunters in Darkness"/>
-			<trait name="Iron Masters"/>
-			<trait name="Storm Lords"/>
-		</Faction>
+		<Group>
+			<Breed name="Auspice">
+				<item name="Rahu"/>
+				<item name="Cahalith"/>
+				<item name="Elodoth"/>
+				<item name="Ithaeur"/>
+				<item name="Irraka"/>
+			</Breed>
+			<Faction name="Tribe">
+				<item name="Ghost Wolf"/>
+				<item name="Blood Talons"/>
+				<item name="Bone Shadows"/>
+				<item name="Hunters in Darkness"/>
+				<item name="Iron Masters"/>
+				<item name="Storm Lords"/>
+			</Faction>
+			<Organisation name="Lodge">
+				<item name="None"/>
+				<item name="???"/>
+			</Organisation>
+			<Party name="Pack"/>
+		</Group>
 		<Merit>
 			<Category name="Physical">
 				<trait name="Metabolic Control" source="Werewolf The Rage">
@@ -138,7 +145,7 @@
 				<trait name="Rites">
 				</trait>
 			</Category>
-<!--			<Tertiary name="Gifts">
+<!--			<Category name="Gifts">
 				<trait name="Full Moon">
 					<cheap>Rahu</cheap>
 					<only>Rahu</only>
@@ -310,7 +317,7 @@
 				</trait>
 				<trait name="Weakness">
 				</trait>
-			</Tertiary>-->
+			</Category>-->
 		</Power>
 		<Flaw>
 			<Category name="Physical">

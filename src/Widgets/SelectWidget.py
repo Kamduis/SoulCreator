@@ -51,6 +51,7 @@ class SelectWidget(QListWidget):
 		QListWidgetItem(QIcon(":types/images/svg/knife.svg"), self.tr("Morality"), self)
 		QListWidgetItem(QIcon(":types/images/svg/bolt.svg"), self.tr("Powers"), self)
 		QListWidgetItem(QIcon(":types/images/svg/tail.svg"), self.tr("Flaws"), self)
+		QListWidgetItem(QIcon(":types/images/svg/flail.svg"), self.tr("Items"), self)
 
 		for i in xrange(self.count()):
 			self.item(i).setTextAlignment(Qt.AlignVCenter)

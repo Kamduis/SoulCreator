@@ -20,15 +20,15 @@ SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY W
 You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-"""
-\author Victor von Rhein
 
-\mainpage Hauptseite
+## \author Victor von Rhein
+#
+# \mainpage Hauptseite
+#
+# \section Zweck
+#
+# Dieses Programm dient dazu, Charaktere für das Rollenspiel "World of Darkness" von Whilte Wolf zu erzeugen. Aktuell werden nur gewöhnliche Menschen, Wechselbälger, Magier, Vampire und Werwölfe von diesem Programm unterstüzt.
 
-\section Zweck
-
-Dieses Programm dient dazu, Charaktere für das Rollenspiel "World of Darkness" von Whilte Wolf zu erzeugen. Aktuell werden nur gewöhnliche Menschen, Wechselbälger, Magier, Vampire und Werwölfe von diesem Programm unterstüzt.
-"""
 
 
 

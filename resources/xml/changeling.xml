@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.7">
+<SoulCreator version="0.8">
 	<creation species="Changeling">
 		<Attribute>
 			<points value="5"/>
@@ -32,21 +32,31 @@
 			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
 			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
-		<Breed name="Seeming">
-			<trait name="Beast"/>
-			<trait name="Darkling"/>
-			<trait name="Elemental"/>
-			<trait name="Fairest"/>
-			<trait name="Oger"/>
-			<trait name="Wizened"/>
-		</Breed>
-		<Faction name="Court">
-			<trait name="Courtless"/>
-			<trait name="Spring"/>
-			<trait name="Summer"/>
-			<trait name="Autumn"/>
-			<trait name="Winter"/>
-		</Faction>
+		<Group>
+			<Breed name="Seeming">
+				<item name="Beast"/>
+				<item name="Darkling"/>
+				<item name="Elemental"/>
+				<item name="Fairest"/>
+				<item name="Oger"/>
+				<item name="Wizened"/>
+			</Breed>
+			<Faction name="Court">
+				<item name="Courtless"/>
+				<item name="Spring"/>
+				<item name="Summer"/>
+				<item name="Autumn"/>
+				<item name="Winter"/>
+			</Faction>
+			<Organisation name="Entitlement">
+				<item name="None"/>
+				<item name="Guild of the Sacred Journey"/>
+				<item name="Knights of the Knowledge of the Tongue"/>
+				<item name="The Scarecrow Ministry"/>
+				<item name="Parlarment of Victors"/>
+			</Organisation>
+			<Party name="Motley"/>
+		</Group>
 		<Skill>
 			<Mental>
 				<trait name="Medicine">
@@ -632,16 +642,6 @@
 				</trait>
 			</Category>
 		</Power>
-		<Derangement>
-			<Mild>
-				<trait name="Wanderlust"/>
-			</Mild>
-			<Severe>
-				<trait name="Hedge-Calling">
-					<prerequisite>Wanderlust > 0</prerequisite>
-				</trait>
-			</Severe>
-		</Derangement>
 		<Flaw>
 			<Social>
 				<trait name="Anachronism"/>
@@ -652,5 +652,10 @@
 				<trait name="Manifest Mien"/>
 			</Extraordinary>
 		</Flaw>
+		<Derangement>
+			<item name="Wanderlust">
+				<item name="Hedge-Calling"/>
+			</item>
+		</Derangement>
 	</traits>
 </SoulCreator>

@@ -16,6 +16,7 @@
     <file>images/actions/agt_print.png</file>
     <file>images/actions/fileexport.png</file>
     <file>images/actions/filenew.png</file>
+    <file>images/actions/cancel.png</file>
     <file>images/WoD.png</file>
   </qresource>
   <qresource prefix="fonts">
@@ -27,6 +28,14 @@
     <file>fonts/texgyrepagella-bolditalic.otf</file>
     <file>fonts/texgyrepagella-italic.otf</file>
     <file>fonts/texgyrepagella-regular.otf</file>
+<!--    <file>fonts/DejaVuSans-Bold.ttf</file>
+    <file>fonts/DejaVuSans-BoldOblique.ttf</file>
+    <file>fonts/DejaVuSans-Oblique.ttf</file>
+    <file>fonts/DejaVuSans.ttf</file>
+    <file>fonts/DejaVuSerif-Bold.ttf</file>
+    <file>fonts/DejaVuSerif-BoldItalic.ttf</file>
+    <file>fonts/DejaVuSerif-Italic.ttf</file>
+    <file>fonts/DejaVuSerif.ttf</file>-->
     <file>fonts/ArchitectsDaughter.ttf</file>
     <file>fonts/CloisterBlack.ttf</file>
     <file>fonts/HVD_Edding.otf</file>
@@ -67,6 +76,12 @@
     <file>images/svg/high_jump.svg</file>
     <file>images/svg/maleprofile.svg</file>
     <file>images/svg/humans.svg</file>
+    <file>images/svg/flail.svg</file>
+  </qresource>
+  <qresource prefix="weaponCategories">
+    <file>images/svg/machete.svg</file>
+    <file>images/svg/shuriken.svg</file>
+    <file>images/svg/uzi.svg</file>
   </qresource>
   <qresource prefix="template">
     <file>xml/base.xml</file>
@@ -78,9 +93,13 @@
   </qresource>
   <qresource prefix="characterSheets">
     <file>images/Charactersheet-Changeling-1.jpg</file>
+    <file>images/Charactersheet-Changeling-2.jpg</file>
     <file>images/Charactersheet-Human.jpg</file>
     <file>images/Charactersheet-Mage-1.jpg</file>
+    <file>images/Charactersheet-Mage-2.jpg</file>
     <file>images/Charactersheet-Vampire-1.jpg</file>
+    <file>images/Charactersheet-Vampire-2.jpg</file>
     <file>images/Charactersheet-Werewolf-1.jpg</file>
+    <file>images/Charactersheet-Werewolf-2.jpg</file>
   </qresource>
 </RCC>

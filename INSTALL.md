@@ -3,7 +3,8 @@
 
 ## Requirements
 
-SoulCreator requires Python Version 2.7 or greater and PySide Version 1.0 or greater.
+SoulCreator requires Python Version 2.7 or greater and PySide Version 1.0 or greater. (If PySide will be available for Python3, it is planned, to switch SoulCreator from Python2 to Python3.)
+
 
 ### Linux
 
@@ -22,7 +23,7 @@ To get Python for Windows, navigate to the [Python website](http://python.org/do
 
 ## Freezing
 
-With the help of [cx_Freeze](http://cx-freeze.sourceforge.net/) it is possible to *freeze* SoulCreator into a executable file, with all dependancies bundlet with it. This executable will need no installed Python or PySide to work.
+With the help of [cx_Freeze](http://cx-freeze.sourceforge.net/) it is possible to *freeze* SoulCreator into a executable file, with all dependencies bundled with it. This executable will need no installed Python or PySide to work.
 
 To create the executable, navigate to the SoulCreator root directory and then type the following in a shell:
 
@@ -49,16 +50,16 @@ Now the svg-images should be displayed correctly.
 
 ## Execution
 
-To execute the Programm just start SoulCreator.py in an python environement.
+To execute the Program just start SoulCreator.py in an python environment.
 
 
 ### Linux
 
-Most Linux distributions are already shipped with a sufficiently modern Python environmet. Just navigate to the folder in which you saved SoulCreator files and type the following in a shell:
+Most Linux distributions are already shipped with a sufficiently modern Python environment. Just navigate to the folder in which you saved SoulCreator files and type the following in a shell:
 
 	python SoulCreator.py
 
-Alternativley you can set the executable flag for SoulCreator.py and start it directly:
+Alternatively you can set the executable flag for SoulCreator.py and start it directly:
 
 	chmod +x SoulCreator.py
 	./SoulCreator.py
@@ -66,5 +67,10 @@ Alternativley you can set the executable flag for SoulCreator.py and start it di
 
 ### Windows
 
-After you have installed Python and PySide, you should be able to start SoulCreator with a simple Doubleclick on SoulCreator.py.
+After you have installed Python and PySide, you should be able to start SoulCreator with a simple double-click on `SoulCreator.py`.
+
+
+### Frozen Executable
+
+If you have the before mentioned frozen executable, just execute the file `SoulCreator` (or `SoulCreator.exe` on Windows), to start the program.
 

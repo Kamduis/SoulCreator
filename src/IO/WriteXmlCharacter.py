@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, QXmlStreamWriter, QIODevice
+from PySide.QtCore import QObject, QXmlStreamWriter, Qt, QIODevice, QByteArray, QBuffer
 #from PySide.QtGui import QColor
 
 from src.Config import Config
@@ -64,6 +64,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeStartElement( Config.programName )
 		self.writeAttribute( "version", Config.version() )
 		self.writeTextElement( "species", self.__character.species )
+		self.writeTextElement( "era", self.__character.era )
 		self.writeStartElement( "identities" )
 		self.writeStartElement( "identity" )
 		self.writeAttribute( "forenames", " ".join(self.__character.identities[0].forenames) )
@@ -74,20 +75,54 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		self.writeAttribute( "gender", self.__character.identities[0].gender )
 		self.writeEndElement()
 		self.writeEndElement()
-		self.writeTextElement( "age", unicode(self.__character.age) )
+		self.writeStartElement( "dates" )
+		self.writeAttribute( "birth", self.__character.dateBirth.toString(Config.dateFormat) )
+		self.writeAttribute( "becoming", self.__character.dateBecoming.toString(Config.dateFormat) )
+		self.writeAttribute( "game", self.__character.dateGame.toString(Config.dateFormat) )
+		self.writeEndElement()
 		self.writeTextElement( "virtue", self.__character.virtue )
 		self.writeTextElement( "vice", self.__character.vice )
 		self.writeTextElement( "breed", self.__character.breed )
 		self.writeTextElement( "faction", self.__character.faction )
+		self.writeTextElement( "organisation", self.__character.organisation )
+		self.writeTextElement( "party", self.__character.party )
+		self.writeTextElement( "height", unicode(self.__character.height) )
+		self.writeTextElement( "weight", unicode(self.__character.weight) )
+		self.writeTextElement( "eyes", self.__character.eyes )
+		self.writeTextElement( "hair", self.__character.hair )
+		self.writeTextElement( "nationality", self.__character.nationality )
+		self.writeTextElement( "description", self.__character.description )
 		self.writeTextElement( "powerstat", unicode( self.__character.powerstat ) )
 		self.writeTextElement( "morality", unicode( self.__character.morality ) )
-		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
-		self.writeTextElement( "era", self.__character.era )
+		if self.__character.derangements:
+			self.writeStartElement( "derangements" )
+			for item in self.__character.derangements.items():
+				if item[1]:
+					self.writeStartElement( "derangement" )
+					self.writeAttribute( "morality", str(item[0]) )
+					self.writeCharacters( item[1] )
+					self.writeEndElement()
+			self.writeEndElement()
 
 		self.writeCharacterTraits()
 
-		#writeCharacterDerangements();
+		if self.__character.weapons:
+			self.writeStartElement( "weapons" )
+			for category in self.__character.weapons:
+				self.writeStartElement( category )
+				for weapon in self.__character.weapons[category]:
+					self.writeTextElement( "weapon", weapon )
+				self.writeEndElement()
+			self.writeEndElement()
+		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
 
+		if self.__character.picture:
+			imageData = QByteArray()
+			imageBuffer = QBuffer(imageData)
+			imageBuffer.open(QIODevice.WriteOnly)
+			self.__character.picture.save(imageBuffer, Config.pictureFormat)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
+			imageData = imageData.toBase64()
+			self.writeTextElement( "picture", unicode(imageData) )
 		self.writeEndElement()
 		self.writeEndDocument()
 
@@ -98,17 +133,23 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		"""
 		Schreibt die veränderten Eigenschaften in die Datei.
 		"""
+
+		#Debug.debug("Hallo!")
+		#for item in self.__character.traits["Attribute"]["Physical"].items():
+			#Debug.debug(item[0], item[1].value)
 		
 		for item in self.__character.traits:
 			startElementWritten_item = False
 			for subitem in self.__character.traits[item]:
 				startElementWritten_subitem = False
 				for subsubitem in self.__character.traits[item][subitem].values():
-					# Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist.
-					if ( subsubitem.value != 0 ):
-						# Soabld die erste Eigenschaft mit einem Wert != 0 auftaucht, muß das Startelement geschrieben werden.
+					## Eigenschaften müssen nur dann gespeichert werden, wenn ihr Wert != 0 ist und sie für die aktuell gewählte Spezies zur Verfügung stehen.
+					if ( subsubitem.value != 0 and (not subsubitem.species or subsubitem.species == self.__character.species) ):
+						#Debug.debug("Hallo!")
+						## Soabld die erste Eigenschaft mit einem Wert != 0 auftaucht, muß das Startelement geschrieben werden.
 						if not startElementWritten_item:
 							try:
+								#Debug.debug(item)
 								self.writeStartElement( item )
 							except ErrTraitType as e:
 								Debug.debug(e.message())
@@ -138,10 +179,10 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 						#}
 
 						self.writeEndElement()
-				# Das Endelement taucht natürlich nur auf, wenn auch ein Startelement existiert.
+				# Das Endelement taucht natürlich nur auf, wenn auch ein zugehöriges Startelement existiert.
 				if startElementWritten_subitem:
 					self.writeEndElement()
-			# Das Endelement taucht natürlich nur auf, wenn auch ein Startelement existiert.
+			# Das Endelement taucht natürlich nur auf, wenn auch ein zugehöriges Startelement existiert.
 			if startElementWritten_item:
 				self.writeEndElement()
 

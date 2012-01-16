@@ -40,8 +40,6 @@ class PowerWidget(QWidget):
 	"""
 	@brief Das Widget, in welchem sämtliche Übernatürlichen Kräfte angeordnet sind.
 
-	\bug Da ich die Eigenschaften, welche für die jeweilige Spezies nicht gelten nur verstecke, nehmen sie doch ein klein wenig Platz weg. Und das fällt tatsächlich auf!
-
 	\todo Ein gesondertes Widget für die Sonderkräfte machen. Hier tauchen die Übergeordneten Powers auf, in dem anderen Widget dann die speziellen Kräfte (Vampire-Rituale, Werwolf-Gaben + Rituale, Mage-Rotes, Changeling-???)
 	"""
 

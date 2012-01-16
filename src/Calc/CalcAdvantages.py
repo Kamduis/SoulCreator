@@ -22,8 +22,6 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#import traceback
-
 from PySide.QtCore import QObject, Signal
 #from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
 
@@ -39,8 +37,8 @@ from src.Debug import Debug
 class CalcAdvantages(QObject):
 	"""
 	\brief Diese Klasse führt die berechnung der abgeleiteten Eigenschaften durch.
- *
- * Die hier deklarierten Berechnungsfunktionen werden zwar bei der Änderung jeder Eigenschaft aufgerufen, aber berechnen die Werte nur, wenn eine Eigenschaft verändert wurde, welche Einfluß auf das Ergebnis nimmt. Sie geben allerdings immer das Ergebnis der berechnung aus. Entweder den neuen Wert, oder den alten Wert, der in dieser Klasse gespeichert wird.
+
+	Die hier deklarierten Berechnungsfunktionen werden zwar bei der Änderung jeder Eigenschaft aufgerufen, aber berechnen die Werte nur, wenn eine Eigenschaft verändert wurde, welche Einfluß auf das Ergebnis nimmt. Sie geben allerdings immer das Ergebnis der berechnung aus. Entweder den neuen Wert, oder den alten Wert, der in dieser Klasse gespeichert wird.
 	"""
 
 
@@ -142,7 +140,7 @@ class CalcAdvantages(QObject):
 		"""
 		Berechnung der Initiative des Charakters.
 
-		\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig.
+		\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
 		result = self.__attrDex.value + self.__attrCom.value + self.__meritFastReflexes.value
@@ -158,7 +156,7 @@ class CalcAdvantages(QObject):
 		"""
 		Berechnung der Geschwindigkeit des Charakters.
 
-		\todo Bislang nur von Strength und Dexterity abhängig.
+		\todo Bislang nur von Strength und Dexterity abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
 		result = self.__attrStr.value + self.__attrDex.value + 5 + self.__meritFleetOfFoot.value;
@@ -174,7 +172,7 @@ class CalcAdvantages(QObject):
 		"""
 		Berechnung der Defense
 
-		\todo Bislang nicht von der Spezies abhängig. Tiere haben stets das größere von Dex und Wits als Defense.
+		\todo Bislang nicht von der Spezies abhängig: Tiere sollten stets das größere von Dex und Wits als Defense haben.
 		"""
 
 		result = min( self.__attrWit.value, self.__attrDex.value )
@@ -208,8 +206,6 @@ class CalcAdvantages(QObject):
 	def calcWillpower(self):
 		"""
 		Berechnung der Willenskraft.
-
-		\note der Übergebene Wert wird ignoriert. Stattdessen wird alles was man braucht direkt aus dem Charakterspeicher genommen.
 		"""
 
 		result = self.__attrRes.value + self.__attrCom.value
@@ -219,127 +215,5 @@ class CalcAdvantages(QObject):
 			self.willpowerChanged.emit( result )
 
 		return self.__willpower
-
-
-	@staticmethod
-	def strength( strength, shape ):
-		"""
-		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1]:
-			return strength + 1
-		elif shape == Config.shapesWerewolf[2]:
-			return strength + 3
-		elif shape == Config.shapesWerewolf[3]:
-			return strength + 2
-		else:
-			return strength
-
-
-	@staticmethod
-	def dexterity( dexterity, shape ):
-		"""
-		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[2]:
-			return dexterity + 1
-		elif shape == Config.shapesWerewolf[3] or shape == Config.shapesWerewolf[4]:
-			return dexterity + 2
-		else:
-			return dexterity
-
-
-	@staticmethod
-	def stamina( stamina, shape ):
-		"""
-		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1] or shape == Config.shapesWerewolf[4]:
-			return stamina + 1
-		elif shape == Config.shapesWerewolf[2] or shape == Config.shapesWerewolf[3]:
-			return stamina + 2
-		else:
-			return stamina
-
-
-	@staticmethod
-	def manipulation( manipulation, shape ):
-		"""
-		Berechnet die Manipulation des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1]:
-			return manipulation - 1
-		elif shape == Config.shapesWerewolf[3]:
-			return manipulation - 3
-		else:
-			return manipulation
-
-
-	@staticmethod
-	def size( size, shape ):
-		"""
-		Berechnet die Größe des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1] or shape == Config.shapesWerewolf[3]:
-			return size + 1
-		elif shape == Config.shapesWerewolf[2]:
-			return size + 2
-		elif shape == Config.shapesWerewolf[4]:
-			return size - 1
-		else:
-			return size
-
-
-	@staticmethod
-	def initiative( initiative, shape ):
-		"""
-		Berechnet die Initiative des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[2]:
-			return initiative + 1
-		elif shape == Config.shapesWerewolf[3] or shape == Config.shapesWerewolf[4]:
-			return initiative + 2
-		else:
-			return initiative
-
-
-	@staticmethod
-	def speed( speed, shape ):
-		"""
-		Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1]:
-			return speed + 1
-		elif shape == Config.shapesWerewolf[2]:
-			return speed + 4
-		elif shape == Config.shapesWerewolf[3]:
-			return speed + 7
-		elif shape == Config.shapesWerewolf[4]:
-			return speed + 5
-		else:
-			return speed
-
-
-	@staticmethod
-	def health( value, shape ):
-		"""
-		Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1]:
-			return value + 2
-		elif shape == Config.shapesWerewolf[2]:
-			return value + 4
-		elif shape == Config.shapesWerewolf[3]:
-			return value + 3
-		else:
-			return value
 
 

@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Signal
-#from PySide.QtGui import QColor
+from PySide.QtCore import QObject, QDate, QByteArray, Signal
+from PySide.QtGui import QPixmap
 
 from src.Config import Config
 from src.IO.ReadXml import ReadXml
@@ -80,7 +80,6 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.readSoulCreator()
 
 		if ( self.hasError() ):
-			Debug.debug("Error!")
 			raise ErrXmlParsing( f.fileName(), self.errorString() )
 
 		self.closeFile( f )
@@ -103,10 +102,15 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 				if ( elementName == "species" ):
 					self.__character.species = self.readElementText()
+				elif ( elementName == "era" ):
+					self.__character.era = self.readElementText()
 				elif ( elementName == "identities" ):
 					self.readIdentities()
-				elif ( elementName == "age" ):
-					self.__character.age = int(self.readElementText())
+				elif ( elementName == "dates" ):
+					self.__character.dateBirth = QDate.fromString(self.attributes().value( "birth" ), Config.dateFormat)
+					self.__character.dateBecoming = QDate.fromString(self.attributes().value( "becoming" ), Config.dateFormat)
+					self.__character.dateGame = QDate.fromString(self.attributes().value( "game" ), Config.dateFormat)
+					self.readUnknownElement()
 				elif ( elementName == "virtue" ):
 					self.__character.virtue = self.readElementText()
 				elif ( elementName == "vice" ):
@@ -115,17 +119,40 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.breed = self.readElementText()
 				elif ( elementName == "faction" ):
 					self.__character.faction = self.readElementText()
+				elif ( elementName == "organisation" ):
+					self.__character.organisation = self.readElementText()
+				elif ( elementName == "party" ):
+					self.__character.party = self.readElementText()
+				elif ( elementName == "height" ):
+					self.__character.height = float(self.readElementText())
+				elif ( elementName == "weight" ):
+					self.__character.weight = float(self.readElementText())
+				elif ( elementName == "eyes" ):
+					self.__character.eyes = self.readElementText()
+				elif ( elementName == "hair" ):
+					self.__character.hair = self.readElementText()
+				elif ( elementName == "nationality" ):
+					self.__character.nationality = self.readElementText()
+				elif ( elementName == "description" ):
+					self.__character.description = self.readElementText()
 				elif ( elementName == "powerstat" ):
 					self.__character.powerstat = int(self.readElementText())
 				elif ( elementName == "morality" ):
 					self.__character.morality = int(self.readElementText())
+				elif ( elementName == "derangements" ):
+					self.readDerangements()
+				elif ( elementName in Config.typs ):
+					self.readTraitCategories( elementName )
+				elif ( elementName == "weapons" ):
+					self.readWeapons()
 				elif ( elementName == "armor" ):
 					txt = self.readElementText()
 					self.__character.armor = [int(n) for n in txt.split(Config.sepChar)]
-				elif ( elementName == "era" ):
-					self.__character.era = self.readElementText()
-				elif ( elementName in Config.typs ):
-					self.readTraitCategories( elementName )
+				elif ( elementName == "picture" ):
+					imageData = QByteArray.fromBase64(str(self.readElementText()))
+					image = QPixmap()
+					image.loadFromData(imageData, Config.pictureFormat)
+					self.__character.picture = image
 				#elif ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
 	#// 				qDebug() << Q_FUNC_INFO << elementName << "!";
 					#readTraits( cv_AbstractTrait::toType( elementName ) );
@@ -137,7 +164,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 		Liest die Identitäten des Charakters.
 		
-		\todo Derzeit kann nur eine identität eingelesen werden, da das Programm nur eine Identitöät unterstüzt.
+		\todo Derzeit kann nur eine Identität eingelesen werden, da das Programm nur eine Identität unterstüzt.
 		"""
 		
 		while ( not self.atEnd() ):
@@ -158,6 +185,74 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.identities[0].gender = self.attributes().value( "gender" )
 
 					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
+
+
+	def readDerangements(self):
+		"""
+		Liest die Geistesstörungen des Charakters.
+
+		\note Es ist wichtig, daß die Geistesstörungen in der richtigen Moral-Reihenfolge eingelesen werden (hoch nach tief). Dies ist der Grund, weil schwere Geistesstörungen nicht erlaubt sind, wenn ihre milde form nicht vorhanden ist.
+		"""
+
+		derangements = {}
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+
+				if ( elementName == "derangement" ):
+					moralityValue = int(self.attributes().value( "morality" ))
+					derangement = self.readElementText()
+					#Debug.debug("Moral {}: {}".format(moralityValue, derangement))
+					#self.__character.setDerangement(moralityValue=moralityValue, derangement=derangement)
+					derangements[moralityValue] = derangement
+				else:
+					self.readUnknownElement()
+
+		self.__character.derangements = derangements
+
+
+	def readWeapons(self):
+		"""
+		Liest die Waffen des Charakters.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+
+				self.readWeaponName(elementName)
+
+
+	def readWeaponName(self, category):
+		"""
+		Liest den Waffennamen ein.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+
+				if ( elementName == "weapon" ):
+					name = self.readElementText()
+					self.__character.addWeapon(category, name)
 				else:
 					self.readUnknownElement()
 

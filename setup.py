@@ -49,8 +49,9 @@ if __name__ == "__main__":
 	## Resourcen bauen
 	cmd_strings = [
 		["pyside-rcc", "-o", "resources/rc_resource.py", "resources/rc_resource.qrc"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_AdvantagesWidget.py", "ui/ui_AdvantagesWidget.ui"],
 		["pyside-uic", "-i", "0", "-o", "ui/ui_MainWindow.py", "ui/ui_MainWindow.ui"],
+		["pyside-uic", "-i", "0", "-o", "ui/ui_InfoWidget.py", "ui/ui_InfoWidget.ui"],
+		["pyside-uic", "-i", "0", "-o", "ui/ui_AdvantagesWidget.py", "ui/ui_AdvantagesWidget.ui"],
 		["pyside-uic", "-i", "0", "-o", "ui/ui_NameDialog.py", "ui/ui_NameDialog.ui"],
 	]
 	buildResources = True

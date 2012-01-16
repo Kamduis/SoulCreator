@@ -30,6 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QFontMe
 from src.Config import Config
 #from src import Error
 from src.Calc.CalcAdvantages import CalcAdvantages
+from src.Calc.CalcShapes import CalcShapes
 from src.Widgets.Components.TraitDots import TraitDots
 from src.Widgets.Components.Squares import Squares
 from src.Debug import Debug
@@ -48,6 +49,7 @@ class AdvantagesWidget(QWidget):
 	sizeChanged = Signal(int)
 	initiativeChanged = Signal(int)
 	speedChanged = Signal(int)
+	defenseChanged = Signal(int)
 	healthChanged = Signal(int)
 
 
@@ -84,6 +86,9 @@ class AdvantagesWidget(QWidget):
 		self.initiativeChanged.connect(self.setShapeInitiaitve)
 		self.__character.speciesChanged.connect(self.setShapeSpeed)
 		self.speedChanged.connect(self.setShapeSpeed)
+		self.__character.speciesChanged.connect(self.setShapeDefense)
+		self.__character.traits["Attribute"]["Mental"]["Wits"].valueChanged.connect(self.setShapeDefense)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(self.setShapeDefense)
 		self.__character.speciesChanged.connect(self.setShapeHealth)
 		self.healthChanged.connect(self.setShapeHealth)
 		self.ui.spinBox_armorGeneral.valueChanged.connect(self.saveArmor)
@@ -119,7 +124,9 @@ class AdvantagesWidget(QWidget):
 
 
 	def setDefense(self, value):
-		self.ui.label_defense.setNum(value)
+		if self.ui.label_defense.text() != unicode(value):
+			self.ui.label_defense.setNum(value)
+			self.defenseChanged.emit(value)
 
 
 	def setHealth(self, value):
@@ -138,10 +145,10 @@ class AdvantagesWidget(QWidget):
 			size = int(self.ui.label_size.text())
 			self.ui.label_sizeShapes.setHidden(False)
 			self.ui.label_sizeShapes.setText(", {}, {}, {}, {}".format(
-				CalcAdvantages.size(size, Config.shapesWerewolf[1]),
-				CalcAdvantages.size(size, Config.shapesWerewolf[2]),
-				CalcAdvantages.size(size, Config.shapesWerewolf[3]),
-				CalcAdvantages.size(size, Config.shapesWerewolf[4]),
+				CalcShapes.size(size, Config.shapesWerewolf[1]),
+				CalcShapes.size(size, Config.shapesWerewolf[2]),
+				CalcShapes.size(size, Config.shapesWerewolf[3]),
+				CalcShapes.size(size, Config.shapesWerewolf[4]),
 			))
 		else:
 			self.ui.label_sizeShapes.setHidden(True)
@@ -152,10 +159,10 @@ class AdvantagesWidget(QWidget):
 			value = int(self.ui.label_initiative.text())
 			self.ui.label_initiativeShapes.setHidden(False)
 			self.ui.label_initiativeShapes.setText(", {}, {}, {}, {}".format(
-				CalcAdvantages.initiative(value, Config.shapesWerewolf[1]),
-				CalcAdvantages.initiative(value, Config.shapesWerewolf[2]),
-				CalcAdvantages.initiative(value, Config.shapesWerewolf[3]),
-				CalcAdvantages.initiative(value, Config.shapesWerewolf[4]),
+				CalcShapes.initiative(value, Config.shapesWerewolf[1]),
+				CalcShapes.initiative(value, Config.shapesWerewolf[2]),
+				CalcShapes.initiative(value, Config.shapesWerewolf[3]),
+				CalcShapes.initiative(value, Config.shapesWerewolf[4]),
 			))
 		else:
 			self.ui.label_initiativeShapes.setHidden(True)
@@ -166,13 +173,28 @@ class AdvantagesWidget(QWidget):
 			value = int(self.ui.label_speed.text())
 			self.ui.label_speedShapes.setHidden(False)
 			self.ui.label_speedShapes.setText(", {}, {}, {}, {}".format(
-				CalcAdvantages.speed(value, Config.shapesWerewolf[1]),
-				CalcAdvantages.speed(value, Config.shapesWerewolf[2]),
-				CalcAdvantages.speed(value, Config.shapesWerewolf[3]),
-				CalcAdvantages.speed(value, Config.shapesWerewolf[4]),
+				CalcShapes.speed(value, Config.shapesWerewolf[1]),
+				CalcShapes.speed(value, Config.shapesWerewolf[2]),
+				CalcShapes.speed(value, Config.shapesWerewolf[3]),
+				CalcShapes.speed(value, Config.shapesWerewolf[4]),
 			))
 		else:
 			self.ui.label_speedShapes.setHidden(True)
+
+
+	def setShapeDefense(self):
+		if self.__character.species == "Werewolf":
+			wits = self.__character.traits["Attribute"]["Mental"]["Wits"].value
+			dexterity = self.__character.traits["Attribute"]["Physical"]["Dexterity"].value
+			self.ui.label_defenseShapes.setHidden(False)
+			self.ui.label_defenseShapes.setText(", {}, {}, {}, {}".format(
+				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[1]),
+				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[2]),
+				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[3]),
+				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[4]),
+			))
+		else:
+			self.ui.label_defenseShapes.setHidden(True)
 
 
 	def setShapeHealth(self):
@@ -180,10 +202,10 @@ class AdvantagesWidget(QWidget):
 			value = self.ui.dots_health.value()
 			self.ui.label_healthShapes.setHidden(False)
 			self.ui.label_healthShapes.setText("{}, {}, {}, {}".format(
-				CalcAdvantages.health(value, Config.shapesWerewolf[1]),
-				CalcAdvantages.health(value, Config.shapesWerewolf[2]),
-				CalcAdvantages.health(value, Config.shapesWerewolf[3]),
-				CalcAdvantages.health(value, Config.shapesWerewolf[4]),
+				CalcShapes.health(value, Config.shapesWerewolf[1]),
+				CalcShapes.health(value, Config.shapesWerewolf[2]),
+				CalcShapes.health(value, Config.shapesWerewolf[3]),
+				CalcShapes.health(value, Config.shapesWerewolf[4]),
 			))
 		else:
 			self.ui.label_healthShapes.setHidden(True)

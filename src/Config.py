@@ -22,25 +22,26 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QSize
-from PySide.QtGui import QColor
+from PySide.QtCore import Qt, QSize
+#from PySide.QtGui import QColor
 
 
 
 
-class Config():
+class Config(object):
 	"""
 	@brief Konfigurationsklasse des Programms.
 
 	Hier werden die Konfigurationseinstellungen gespeichert.
 	"""
 
+
 	# Programmdaten
 	programName = "SoulCreator"
 	programAuthor = "Victor"
 	programVersionMajor = 0
-	programVersionMinor = 7
-	programVersionChange = 1
+	programVersionMinor = 8
+	programVersionChange = 0
 	programDescription = "Charaktergenerator für die World of Darkness."
 	organization = "Caern"
 
@@ -53,19 +54,51 @@ class Config():
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"
 
+	# Format von Daten bei der Umwandlung in Strings
+	dateFormat = Qt.ISODate
+	textDateFormat = "dd.MM.yyyy"
+
 	# Einstellungen für das Auswahl-Widget
 	selectIconSize = QSize(50,50)
 	selectWidgetWidth = 150
 
+	### Minimale Breite für textEdit-Felder, in denen mehrzeiliger Text eingegeben werden soll.
+	#textEditWidthMin = 200
+
+	## Das Charakterbild darf höchstens die hier festgelegte Größe annehmen.
+	pictureWidthMax = 800
+	pictureHeightMax = 800
+
+	## Das Charakterbild wird in dem hier festgelegten Format gespeichert.
+	pictureFormat = "png"#"jpg"
+
 	# Vordefinierte Farben
 	##  Wichtige Textabschnitte
 	importantTextColor = "darkBlue"
+
+	## Die Hintergrundfarbe für ernste Geistesstörungen in der Auswahlliste.
+	severeDerangementsColor = "sandybrown"
 
 	## Warnfarbe, wenn zuviele Punkte vergeben wurden.
 	pointsNegativeColor = "red"
 
 	## Warnfarbe, wenn zuwenige Punkte vergeben wurden.
 	pointsPositiveColor = "blue"
+
+	##  Deaktivierte textabschnitte
+	deactivatedTextColor = "darkgrey"
+
+	## Hintergrundfarbe für die unterschiedlichen Waffenkategorien.
+	weaponsColor = {}
+	weaponsColor["melee"] = "white"
+	weaponsColor["thrown"] = "wheat"
+	weaponsColor["ranged"] = "khaki"
+
+	## Symbole für die verschiedenen Waffencategorien.
+	weaponIcons = {}
+	weaponIcons["melee"] = ":/weaponCategories/images/svg/machete.svg"
+	weaponIcons["thrown"] = ":/weaponCategories/images/svg/shuriken.svg"
+	weaponIcons["ranged"] = ":/weaponCategories/images/svg/uzi.svg"
 
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
 	vSpace = 5
@@ -74,7 +107,7 @@ class Config():
 	traitCategorySpace = 10
 
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
-	traitMultipleMax = 3
+	traitMultipleMax = 4
 
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
 	#const int Config::displayTimeout = 10000
@@ -134,9 +167,6 @@ class Config():
 	## Schriftgröße für den kleinen Text auf dem ausdruckbaren Charakterbogen.
 	#const qreal Config::textSizeFactorPrintSmall = 0.33
 
-	## Die Schriftart, welche für den exportierten Charakter verwendet wird.
-	#QFont Config::exportFont = QFont()
-
 	## Die Schriftart, welche für das Programm verwendet wird.
 	#QFont Config::windowFont = QFont()
 
@@ -149,7 +179,6 @@ class Config():
 	## Das Alter ab welchem der Charakter /kein/ Kind mehr ist.
 	adultAge = 13
 
-
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (
 		("Male", ":/icons/images/male.png"),
@@ -161,9 +190,7 @@ class Config():
 		"Attribute",
 		"Skill",
 		"Merit",
-		"Derangement",
 		"Flaw",
-		#"Super",
 		"Power",
 	)
 
@@ -215,7 +242,7 @@ class Config():
 	)
 	attributeSorts = ( u"Power", u"Finesse", u"Resistance", )
 
-	## Die unterschieldichen Gestalten der Werwölfe.
+	## Die unterschiedlichen Gestalten der Werwölfe.
 	shapesWerewolf = (
 		"Hishu",
 		"Dalu",
@@ -224,6 +251,10 @@ class Config():
 		"Urhan",
 	)
 
+
+	## Folgende Werte können über den Einstellungsdialog verändert werden und sollten beim Beenden des Programms gespeichert und beim Starten geladen werden. Die übergebenen Werte sind die Standartwerte, wenn im Einstellungsdialog nichts verändert wird.
+	# Zur Altersberechnung Kalender verwenden
+	calendarForAgeCalculation = True
 
 
 	@staticmethod
@@ -246,15 +277,6 @@ class Config():
 		"""
 
 		return "{}.{}.{}".format(Config.programVersionMajor, Config.programVersionMinor, Config.programVersionChange)
-
-
-	@staticmethod
-	def color(colorName):
-		"""
-		Gibt die Farbe, deren Namen bekannt ist, als QColor zurück.
-		"""
-
-		return QColor( colorName )
 
 
 	@staticmethod

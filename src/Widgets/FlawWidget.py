@@ -122,36 +122,3 @@ class FlawWidget(QWidget):
 			else:
 				self.__toolBox.setItemText( self.__categoryIndex[item], item )
 
-
-	#void FlawWidget::countItems() {
-		#"""
-		#Zält die Merits in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
-
-		#Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
-
-		#\bug Merits mit Zusatztext werden nicht gezählt. Kann sein, daß das nur auftritt wenn nichts in der Textbox steht. Ist dann kein Problem, da es ohnehin nicht möglich sein dürfte, Werte einzugeben, wenn Zusatext nicht angegeben ist.
-
-		#\todo Momentan wird eine Liste mit allen Merits des Charakters erstellt und dann alle gezählt, deren Wert größer 0 ist. Das muß doch besser gehen.
-		#"""
-
-		#for (int i = 0; i < v_category.count(); ++i){
-			#QList< Trait* > list = character->traits( cv_AbstractTrait::Flaw, v_category.at(i) );
-
-			#int numberInCategory = 0;
-
-			#for ( int j = 0; j < list.count(); ++j ) {
-				#if ( list.at( j )->value() > 0 ) {
-					#numberInCategory++;
-				#}
-			#}
-
-			#// Index der veränderten Kategorie in Liste suchen und dann die toolBox-Seite mit der identischen Indexzahl anpassen.
-			#int categoryIndex = v_category.indexOf( v_category.at(i) );
-
-			#if ( numberInCategory > 0 ) {
-				#toolBox->setItemText( categoryIndex, cv_AbstractTrait::toString( v_category.at( categoryIndex ), true ) + " (" + QString::number( numberInCategory ) + ")" );
-			#} else {
-				#toolBox->setItemText( categoryIndex, cv_AbstractTrait::toString( v_category.at( categoryIndex ), true ) );
-			#}
-		#}
-	#}

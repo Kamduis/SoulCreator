@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.7">
+<SoulCreator version="0.8">
 	<creation species="Mage">
 		<Attribute>
 			<points value="5"/>
@@ -32,51 +32,59 @@
 			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
 			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
 		</Super>
-		<Breed name="Path">
-			<trait name="Acanthus">
-				<bonus>
-					<Attribute>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Mastigos">
-				<bonus>
-					<Attribute>
-						<trait name="Resolve"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Moros">
-				<bonus>
-					<Attribute>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Obrimos">
-				<bonus>
-					<Attribute>
-						<trait name="Resolve"/>
-					</Attribute>
-				</bonus>
-			</trait>
-			<trait name="Thyrsus">
-				<bonus>
-					<Attribute>
-						<trait name="Composure"/>
-					</Attribute>
-				</bonus>
-			</trait>
-		</Breed>
-		<Faction name="Order">
-			<trait name="Apostate"/>
-			<trait name="Adamantine Arrow" alt="Ungula Draconis"/>
-			<trait name="Free Council"/>
-			<trait name="Guardians of the Veil" alt="Visus Draconis"/>
-			<trait name="Mysterium" alt="Alae Draconis"/>
-			<trait name="Silver Ladder" alt="Vox Draconis"/>
-		</Faction>
+		<Group>
+			<Breed name="Path">
+				<item name="Acanthus">
+					<bonus>
+						<Attribute>
+							<item name="Composure"/>
+						</Attribute>
+					</bonus>
+				</item>
+				<item name="Mastigos">
+					<bonus>
+						<Attribute>
+							<item name="Resolve"/>
+						</Attribute>
+					</bonus>
+				</item>
+				<item name="Moros">
+					<bonus>
+						<Attribute>
+							<item name="Composure"/>
+						</Attribute>
+					</bonus>
+				</item>
+				<item name="Obrimos">
+					<bonus>
+						<Attribute>
+							<item name="Resolve"/>
+						</Attribute>
+					</bonus>
+				</item>
+				<item name="Thyrsus">
+					<bonus>
+						<Attribute>
+							<item name="Composure"/>
+						</Attribute>
+					</bonus>
+				</item>
+			</Breed>
+			<Faction name="Order">
+				<item name="Apostate"/>
+				<item name="Adamantine Arrow" alt="Ungula Draconis"/>
+				<item name="Free Council"/>
+				<item name="Guardians of the Veil" alt="Visus Draconis"/>
+				<item name="Mysterium" alt="Alae Draconis"/>
+				<item name="Silver Ladder" alt="Vox Draconis"/>
+			</Faction>
+			<Organisation name="Legacy">
+				<item name="None"/>
+				<item name="Perfected Adepts"/>
+				<item name="Subtle Ones"/>
+			</Organisation>
+			<Party name="Cabal"/>
+		</Group>
 		<Merit>
 			<Category name="Mental">
 				<trait name="High Speech" source="Mage Core">

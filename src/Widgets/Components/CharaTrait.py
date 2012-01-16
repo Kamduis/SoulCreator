@@ -37,11 +37,7 @@ class CharaTrait(TraitLine):
  
 	Anders als \ref TraitLine, ist dieses Widget direkt mit der korrespondierenden Eigenschaft in der Klasse \ref StorageCharacter verknüpft. Ändert sich der Wert dort, wird automatisch dieses Widget entsprechend verändert. Gleichermaßen wird \ref StorageCharacter verändert, sollte der Benutzer dieses Widget ändern.
  
-	\todo Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.
- 
-	\todo Den Parser \ref StringBoolParser erweitern, damit übriggebliebener Text nach den Ersetzungen der Eigesncahften durch ihre Werte mit 0 gleichgesetzt wird. Aktuell mache ich das durch Stringmanipulation, aber das ist natürlich langsamer.
- 
-	\todo eine fast identische Klasse schaffen, welche Trait anstelle von cv_Trait nutzt und direkte Siganel empfangen kann.
+	\todo Solange kein Text in der Textbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.
 	"""
 
 
@@ -62,9 +58,6 @@ class CharaTrait(TraitLine):
 		#connect( this, SIGNAL( specialtiesClicked( bool ) ), this, SLOT( emitSpecialtiesClicked( bool ) ) );
 		self.buttonToggled.connect(self.emitSpecialtiesClicked)
 
-		## \bug Wenn ich irgendeinbe Spezialisierung abhake, wird der Knop sofort deaktiviert.
-		#self.__trait.specialtiesChanged.connect(self.uncheckButton)
-
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 		self.__trait.valueChanged.connect(self.setValue)
 		self.__trait.customTextChanged.connect(self.setText)
@@ -73,32 +66,6 @@ class CharaTrait(TraitLine):
 		#// Die Signale hier zu verbinden funktioniert offensichtlich nicht. Vielleicht weil einige Fertigkeiten dann noch nicht existieren.
 		#connect( traitPtr(), SIGNAL( availabilityChanged(bool)), this, SLOT( setEnabled(bool)) );
 		self.__trait.availableChanged.connect(self.setEnabled)
-
-		#if ( !traitPtr()->possibleValues().isEmpty() ) {
-			#setPossibleValues( traitPtr()->possibleValues() );
-		#}
-
-		#hideSpecialtyWidget( trait->type() );
-		#hideDescriptionWidget();
-
-
-#// int CharaTrait2::value() const {
-#// 	return traitPtr()->value();
-#// }
-#// void CharaTrait2::setValue( int val ) {
-#// 	qDebug() << Q_FUNC_INFO << name() << val << value();
-#// 	if ( value() != val ) {
-#// 		TraitLine::setValue( val );
-#// 	}
-#// }
-
-
-	#def setMaximum(self, powerstat):
-		#"""
-		#Anders als \ref TraitLine.setMaximum legt diese Funktion die maximale Punktanzahl nicht auf den übergebenen wert fest, sondern auf den Wert, der entsprechend des Powerstats erlaubt ist.
-		#"""
-
-		#pass
 
 
 	def setTraitValue( self, value ):
@@ -128,49 +95,8 @@ class CharaTrait(TraitLine):
 			#emit traitChanged( traitPtr() );
 
 
-
-
-#bool CharaTrait::custom() const {
-	#return ptr_trait->custom();
-#}
-
-#void CharaTrait::setCustom( bool sw ) {
-	#"""
-	#Legt fest, ob es sich um eine Eigenschaft mit einem erklärenden Text handelt.
-	#"""
-	
-	#if ( ptr_trait->custom() != sw ) {
-		#ptr_trait->setCustom( sw );
-
-		#emit traitChanged( traitPtr() );
-	#}
-#}
-
-
 	def emitSpecialtiesClicked(self, sw):
 		self.specialtiesClicked.emit(sw, self.__trait)
-
-
-	#def uncheckButton( self ):
-		##Debug.debug("Alle Spezialisierungsknöpfe werden wieder deaktiviert")
-		#self.setSpecialtyButtonChecked(False)
-
-
-
-#void CharaTrait::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {
-	#"""
-	#Kontrolliert, ob die Eigenschaft für die Spezies im Argument überhaupt existiert.
-	
-	#Wenn nicht, werde sie versteckt und auf 0 gesetzt.
-	#"""
-	
-	#if ( species().testFlag( sp ) ) {
-		#setHidden( false );
-	#} else {
-		#setValue( 0 );
-		#setHidden( true );
-	#}
-#}
 
 
 	def hideOrShowTrait_species(self, species):
@@ -206,6 +132,4 @@ class CharaTrait(TraitLine):
 		#count = len(self.__trait.specialties)
 		count = len(specialties)
 		self.buttonText = count
-
-
 

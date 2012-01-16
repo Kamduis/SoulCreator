@@ -25,10 +25,11 @@ from __future__ import division, print_function
 import sys
 import os
 
-from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, Signal
-from PySide.QtGui import QMainWindow, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
+from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, QDir, Signal
+from PySide.QtGui import QMainWindow, QApplication, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
 
 from src.GlobalState import GlobalState
+from src.Tools import PathTools
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from Config import Config
 from IO.Settings import Settings
@@ -48,6 +49,8 @@ from Widgets.PowerWidget import PowerWidget
 from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.AdvantagesWidget import AdvantagesWidget
+from Widgets.ItemWidget import ItemWidget
+from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
 from Draw.DrawSheet import DrawSheet
 from Debug import Debug
@@ -57,22 +60,6 @@ from ui.ui_MainWindow import Ui_MainWindow
 
 
 
-def getPath():
-	"""
-	Bestimmt den Pfad zu diesem Skript, unabhängig davon, wie es ausgeführt wird.
-	"""
-
-	# Bestimmt, ob diese Anwednung eine normale Python-Ausfürhung ist oder ob es sich um eine "Frozen Executable" handelt.
-	if hasattr(sys,  'frozen'):
-			# Es wird eine "Frozen Executable" ausgeführt.
-			dir_path = os.path.dirname(sys.executable)
-	elif '__file__' in locals():
-			# Es wird ein normales py-Skript ausgeführt.
-			dir_path = os.path.dirname(__file__)
-	else:
-			# Es wird von der Kommandozeile gestartet.
-			dir_path = sys.path[0]
-	return dir_path
 
 
 
@@ -86,15 +73,13 @@ class MainWindow(QMainWindow):
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 
-	\todo Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.
+	\todo Beim Wechseln zwischen den Spezies eine Warnung ausgeben, wenn Powers und Merits gelöscht würden. Bzw. Powers und Merits nicht löschen, allerdings beim Speichern nicht beachten.
 
 	\todo Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.
 
 	\todo Sonderkräfte der Spezies fehlen. Bei Werwölfen müssen z.B. noch die Gaben/Riten berücksichtigt werden.
 
-	\todo Nutze eine qchecksum, um die Integrität der XML-DAteien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben.
-
-	\todo So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
+	\todo Nutze eine qchecksum, um die Integrität der XML-Dateien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben. -- So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
 
 	\todo Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).
 
@@ -104,20 +89,16 @@ class MainWindow(QMainWindow):
 
 	\todo Charakterbeschreibung einbauen.
 
-	\todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-DAtei bereitstellen, i welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
+	\todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
 
 	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
 
-	\todo Kräfte alphabetisch sortieren oder in Kategorien unterteilen.
-
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
-
-	\todo Die Widgets weiter aufteilen in Main-Widgets, Tool-Widgets etc.
-
-	\todo Damit die SVG-Grafiken unter Windows XP dargestellt werden ist auch QtXML4.dll erforderlich.
-
-	\todo Von der Klasse Trait mehrere Unterklassen ableiten, je nach Typ der Eigenschaft. TraitAttribute hat leicht andere Eigenschaften als TraitSkill etc.? Das würde mehr objektorientiert aussehen. Und natürlich kann ich durch virtuelle Funktionen immer auch auch verschiedene Erben durch ihre Basisklasse Trait vergleichen, aussuchen usw.
 	"""
+
+
+	### Wird eine neue Seite angewählt, wird dieses Signal mit der Indexnummer der neu angezeigten Seite versandt.
+	#pageChanged = Signal(int)
 
 
 	def __init__(self, parent=None):
@@ -133,7 +114,7 @@ class MainWindow(QMainWindow):
 		QCoreApplication.setApplicationName( Config.programName )
 		QCoreApplication.setApplicationVersion( Config.version() )
 
-		#QApplication.setStyle(QGtkStyle(self))
+		#Debug.debug(QApplication.style())
 
 		self.setWindowTitle( "" )
 		self.setWindowIcon( QIcon( ":/icons/images/WoD.png" ) )
@@ -148,8 +129,12 @@ class MainWindow(QMainWindow):
 		self.ui.pushButton_previous.clicked.connect(self.ui.selectWidget_select.selectPrevious)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.ui.stackedWidget_traits.setCurrentIndex)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.setTabButtonState)
+		#self.ui.selectWidget_select.currentRowChanged.connect(self.pageChanged.emit)
 
 		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
+
+		# Laden der Konfiguration
+		self.readSettings()
 
 		self.populateUi()
 		self.activate()
@@ -159,16 +144,13 @@ class MainWindow(QMainWindow):
 
 	#connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
-	#connect( self.ui.actionSettings, SIGNAL( triggered() ), self, SLOT( showSettingsDialog() ) );
+		self.ui.actionSettings.triggered.connect(self.showSettingsDialog)
 		self.ui.actionNew.triggered.connect(self.newCharacter)
 		self.ui.actionOpen.triggered.connect(self.openCharacter)
 		self.ui.actionSave.triggered.connect(self.saveCharacter)
 		self.ui.actionExport.triggered.connect(self.exportCharacter)
 		self.ui.actionPrint.triggered.connect(self.printCharacter)
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
-
-		# Laden der Konfiguration
-		self.readSettings()
 
 
 	def closeEvent( self, event ):
@@ -186,7 +168,7 @@ class MainWindow(QMainWindow):
 
 		reader = ReadXmlTemplate(self.__storage)
 
-		#connect( &reader, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
+		reader.exceptionRaised.connect(self.showExceptionMessage)
 
 		try:
 			reader.read()
@@ -214,17 +196,18 @@ class MainWindow(QMainWindow):
 		self.ui.actionSettings.setIcon(QIcon(":/icons/images/actions/exec.png"))
 		self.ui.actionQuit.setIcon(QIcon(":/icons/images/actions/exit.png"))
 
-		info = InfoWidget(self.__storage, self.__character, self)
+		self.info = InfoWidget(self.__storage, self.__character, self)
 		attributes = AttributeWidget( self.__storage, self.__character, self )
 		skills = SkillWidget( self.__storage, self.__character, self )
 		specialties = Specialties( self.__storage.traits["Skill"], self )
 		merits = MeritWidget( self.__storage, self.__character, self )
 		morality = MoralityWidget( self.__storage, self.__character, self )
 		powers = PowerWidget( self.__storage, self.__character, self )
-		flaws = FlawWidget( self.__storage, self.__character, self );
+		flaws = FlawWidget( self.__storage, self.__character, self )
 		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
+		items = ItemWidget( self.__storage, self.__character, self )
 
-		self.ui.layout_info.addWidget( info )
+		self.ui.layout_info.addWidget( self.info )
 		self.ui.layout_attributes.addWidget( attributes )
 		self.ui.layout_skills.addWidget( skills )
 		self.ui.layout_specialties.addWidget( specialties )
@@ -233,9 +216,13 @@ class MainWindow(QMainWindow):
 		self.ui.layout_powers.addWidget( powers )
 		self.ui.layout_flaws.addWidget( flaws )
 		self.ui.layout_advantages.addWidget( self.__advantages )
+		self.ui.layout_items.addWidget( items )
 
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
-		info.nameChanged.connect(self.setTitle)
+		self.info.nameChanged.connect(self.setTitle)
+
+		### Wird eine neue Seite angewählt, muß das Info-Widget den Beschreibungstext speichern.
+		#self.pageChanged.connect(self.info.saveDescription)
 
 		#/**
 		#* \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite händisch festzulegen.
@@ -256,14 +243,11 @@ class MainWindow(QMainWindow):
 		# Hintergrundbild ändert sich je nach Spezies
 		self.__character.speciesChanged.connect(self.showBackround)
 
-		QFontDatabase.addApplicationFont(":fonts/fonts/ArchitectsDaughter.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/CloisterBlack.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/HVD_Edding.otf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Note_this.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Tangerine_Regular.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Tangerine_Bold.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Mutlu__Ornamental.ttf")
-		QFontDatabase.addApplicationFont(":fonts/fonts/Blokletters-Balpen.ttf")
+		## Sämtliche Schriften in das System laden, damit ich sie auch benutzen kann.
+		resourceFontDir = QDir(":/fonts/fonts")
+		fontsList = resourceFontDir.entryList()
+		for font in fontsList:
+			QFontDatabase.addApplicationFont(resourceFontDir.filePath(font))
 
 
 	def activate(self):
@@ -343,43 +327,27 @@ class MainWindow(QMainWindow):
 
 		# Wir wollen zu Beginn immer die Informationen sehen.
 		self.ui.selectWidget_select.setCurrentRow(0)
+		# Am Anfang stehen Menschen, aber das speciesChanged-Signal wurde nicht gesendet.
+		self.disablePowerItem(Config.initialSpecies)
 
 
+	def showSettingsDialog(self):
+		"""
+		Diese Funktion ruft den Einstellungsdialog auf und sorgt dafür, daß die Änderungen gespeichert oder verworfen werden.
+		"""
 
-#void MainWindow.showSettingsDialog() {
-	"""
-	Diese Funktion ruft den Konfigurationsdialog auf und sorgt dafür, daß die änderungen gespeichert oder verworfen werden.
-	"""
+		dialog = SettingsDialog( self )
 
-	#SettingsDialog dialog;
-	#if ( dialog.exec() ) {
-		#// Ausführen der veränderten Einstellungen.
-#// 		self.setFont(Config.windowFont);
-	#}
-#}
+		#dialog.settingsChanged.connect(self.info.useCalenderForAge)
 
-#void MainWindow.showCharacterTraits() {
-	"""
-	Werte des Charakters auf der Oberfläche anzeigen.
-	"""
+		if dialog.exec_():
+			# Ausführen der veränderten Einstellungen.
+			#Debug.debug("Einstellungen werden geändert")
+			#// 		self.setFont(Config.windowFont);
+			pass
 
-#}
+		#dialog.settingsChanged.disconnect(self.info.useCalenderForAge)
 
-#void MainWindow.showSkillSpecialties( bool sw, QString skillName, QList< cv_TraitDetail > specialtyList ) {
-	"""
-	Spezialisierungen einer Fertigkeit anzeigen.
-	"""
-
-#// 	qDebug() << Q_FUNC_INFO << "Zeige Spazialisierungen.";
-
-	#specialties.clear();
-
-	#if ( sw ) {
-#// 		qDebug() << Q_FUNC_INFO << "Test Specialties";
-		#specialties.setSkill( skillName );
-		#specialties.setSpecialties( specialtyList );
-	#}
-#}
 
 	def showBackround( self, species ):
 		"""
@@ -556,7 +524,7 @@ class MainWindow(QMainWindow):
 		if ( self.maybeSave() ):
 			#Debug.debug("Open")
 
-			appPath = getPath()
+			appPath = PathTools.getPath()
 
 			# Pfad zum Speicherverzeichnis
 			savePath = "{}/{}".format(appPath, Config.saveDir)
@@ -598,7 +566,7 @@ class MainWindow(QMainWindow):
 		Über diese Funktion wird erst der Dialog aufgerufen zum Aussuchen des Speicherortes und danach dann das Schreiben des Charakters in eine XML-Datei eingeletiet.
 		"""
 
-		appPath = getPath()
+		appPath = PathTools.getPath()
 
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
@@ -624,6 +592,7 @@ class MainWindow(QMainWindow):
 			except ErrFileNotOpened as e:
 				MessageBox.exception( self, e.message(), e.description() )
 
+			#Debug.debug()
 			f.close()
 
 			# Unmittelbar nach dem Speichern ist der Charkter natürlich nicht mehr 'geändert'.
@@ -637,8 +606,10 @@ class MainWindow(QMainWindow):
 
 		if species == "Human":
 			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.NoItemFlags )
+			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.deactivatedTextColor) )
 		else:
 			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.ItemIsEnabled | Qt.ItemIsSelectable )
+			self.ui.selectWidget_select.item( 5 ).setForeground( QColor() )
 
 
 	def exportCharacter(self):
@@ -646,7 +617,7 @@ class MainWindow(QMainWindow):
 		Diese Funktion druckt den Charakter in ein PDF-Dokument.
 		"""
 
-		appPath = getPath()
+		appPath = PathTools.getPath()
 
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
@@ -661,8 +632,11 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Charactersheet (*.pdf)" ) )
-		#filePath = ["{}/untitled.pdf".format(savePath), ""]
+		#if GlobalState.isDebug:
+			#filePath = ["{}/untitled.pdf".format(savePath), ""]
+		#else:
+			#filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
+		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
@@ -691,8 +665,8 @@ class MainWindow(QMainWindow):
 		printer = QPrinter()
 		printDialog = QPrintDialog( printer, self )
 
-		printer.setPaperSize( QPrinter.A4 )
-		printer.setFullPage( True )
+		#printer.setPaperSize( QPrinter.A4 )
+		#printer.setFullPage( True )
 
 		drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
@@ -712,7 +686,7 @@ class MainWindow(QMainWindow):
 		Speichert die Konfiguration dieses Programms für den nächsten Aufruf.
 		"""
 
-		settings = Settings( "{}/{}".format(getPath(), Config.configFile ))
+		settings = Settings( "{}/{}".format(PathTools.getPath(), Config.configFile ))
 
 		settings.beginGroup( "MainWindow" )
 		settings.setValue( "size", self.size() )
@@ -720,10 +694,10 @@ class MainWindow(QMainWindow):
 		settings.setValue( "state", self.saveState() )
 		settings.endGroup()
 
-		#settings.beginGroup( "Config" );
+		settings.beginGroup( "Config" );
 		#// 	settings.setValue( "windowFont", Config.windowFont.family() );
-		#settings.setValue( "exportFont", Config.exportFont.family() );
-		#settings.endGroup();
+		settings.setValue( "calendarForAgeCalculation", Config.calendarForAgeCalculation )
+		settings.endGroup();
 
 
 	def readSettings(self):
@@ -731,7 +705,7 @@ class MainWindow(QMainWindow):
 		Liest die Einstellungen für das Programm aus der Konfigurationsdatei.
 		"""
 
-		appPath = getPath()
+		appPath = PathTools.getPath()
 		settings = Settings( "{}/{}".format(appPath, Config.configFile))
 
 		settings.beginGroup( "MainWindow" );
@@ -740,10 +714,11 @@ class MainWindow(QMainWindow):
 		self.restoreState( QByteArray(settings.value( "state" )) )
 		settings.endGroup()
 
-		#settings.beginGroup( "Config" );
+		settings.beginGroup( "Config" );
 		#// 	Config.windowFont = QFont( settings.value( "windowFont" ).toString() );
-		#Config.exportFont = QFont( settings.value( "exportFont" ).toString() );
-		#settings.endGroup();
+		## bool(bla) funktioniert nicht, also sorge ich dafür, daß alles außer false (nicht case-sensitive) als Wahr gilt.
+		Config.calendarForAgeCalculation = unicode(settings.value( "calendarForAgeCalculation" )).lower() != "false"
+		settings.endGroup();
 
 		#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.
 		#// 	setFont(Config.windowFont);

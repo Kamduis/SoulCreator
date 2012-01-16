@@ -24,12 +24,13 @@ from __future__ import division, print_function
 
 #import traceback
 
-from PySide.QtCore import QObject, QFile
+from PySide.QtCore import QObject, QFile, Signal
 
 from src.Config import Config
 from src import Error
 from ReadXml import ReadXml
 from src.Tools import ListTools
+from src.Error import ErrXmlParsing, ErrXmlOldVersion
 from src.Debug import Debug
 
 
@@ -41,6 +42,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 	Diese Klasse dient dazu einen möglichst simplen Zugriff auf die Eigenschaften der WoD-Charaktere zu bieten. Dazu werden die Eigenschaften und all ihre Zusatzinformationen aus den xml-Dateien gelesen und in Listen gespeichert.
 	"""
+
+
+	exceptionRaised = Signal(str, bool)
+
 
 	__templateFiles = (
 		#"resources/xml/base.xml",
@@ -81,9 +86,11 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 		Die erste Ebene in der Abarbeitung des XML-Baumes. Kontrolliert, ob es sich um eine Zuässige Template-Datei für dieses Programm handelt und gibt dann die Leseoperation an readSoulCreator() weiter.
 
-		\exception ErrXmlVersion Die XML-DaTei hat die falsche Version.
+		\exception ErrXmlTooOldVersion Die XML-Datei hat die falsche Version.
 
-		\todo Momentan wird trotz Argument immer nur die basis-Datei abgearbeitet.
+		\exception ErrXmlOldVersion Die XML-Datei hat die falsche Version.
+
+		\exception ErrXmlParsing Beim Parsen der XML-Datei ist ein Fehler aufgetreten.
 		"""
 
 		self.openFile( device )
@@ -99,21 +106,19 @@ class ReadXmlTemplate(QObject, ReadXml):
 				try:
 					self.checkXmlVersion( elementName, elementVersion )
 					self.readSoulCreator()
-				except Error.ErrXmlOldVersion as e:
-					raise Error.ErrXmlOldVersion( e.message, e.description )
+				except ErrXmlOldVersion as e:
+					messageText = self.tr("While opening the template file {}, the following problem arised:\n{} {}\nIt appears, that the file will be importable, so the process will be continued but errors may occur.".format(device.fileName(), e.message, e.description))
+					self.exceptionRaised.emit(messageText, e.critical)
 					self.readSoulCreator()
 
 
 		if( self.hasError() ):
-			#Debug.debug("Error!")
 			raise Error.ErrXmlParsing( device.fileName(), self.errorString() )
 
 
 	def readSoulCreator(self):
 		"""
 		Die zweite Ebene des XML-Baumes wird einegelesen. Es wird gespeichert, für welche Spezies dieser Zweig vorgesehen ist. Daraufhin wird die Arbeit an readTree() weitergegeben.
-
-		\exception ErrXmlError Ist das XML_Dokument fehlerhaft, wird diese Exception mit dem passenden Fehlertext geworfen.
 		"""
 
 		while( not self.atEnd() ):
@@ -143,6 +148,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 					speciesFlag = self.attributes().value( "species" )
 					#Debug.debug("Erschaffungspunkte für Spezies {} gefunden.".format(speciesFlag))
 					self.readCreationTree( speciesFlag )
+				elif( elementName == "items" ):
+					self.readItemTree()
 				else:
 					self.readUnknownElement()
 
@@ -165,14 +172,16 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				typ = self.name()
 				typDescriptor = self.attributes().value("name")
-
+				#Debug.debug(typ)
+					
 				if( typ == "Virtue" or typ == "Vice" ):
 					self.readCharacteristics( typ )
-				elif(typ == "Breed" or
-						typ == "Faction" ):
-					self.readGroups( species, typ )
+				elif(typ == "Group" ):
+					self.readGroups( species )
 				elif( typ == "Super" ):
 					self.readPowerstat( species )
+				elif( typ == "Derangement" ):
+					self.readDerangements( species )
 				elif( typ in Config.typs):
 					#self.readUnknownElement()
 					self.readTraits( species, typ, typDescriptor )
@@ -210,17 +219,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readGroups( self, species, typ ):
+	def readGroups( self, species ):
 		"""
-		Liest die verschiedenen Gruppierungsnamen der einzelnen Spezies ein.
+		Hier beginnt das Einlesen der Gruppierungen.
 		"""
-
-		if( typ == "Breed" or
-				typ == "Faction"
-		):
-			group = self.attributes().value( "name" )
-
-			self.__storage.appendTitle( species, typ, group )
 
 		while( not self.atEnd() ):
 			self.readNext()
@@ -230,9 +232,33 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			if( self.isStartElement() ):
 				elementName = self.name()
-				if( elementName == "trait" ):
+				#Debug.debug(elementName)
+				if( elementName == "Breed" or elementName == "Faction" or elementName == "Organisation" or elementName == "Party" ):
+					self.readGroupTitles(species, elementName)
+				else:
+					self.readUnknownElement()
+
+
+	def readGroupTitles( self, species, groupCategory ):
+		"""
+		Liest die verschiedenen Gruppierungsnamen der einzelnen Spezies ein.
+		"""
+
+		group = self.attributes().value( "name" )
+		#Debug.debug("{} {}".format(groupCategory, group))
+		self.__storage.appendTitle( species, groupCategory, group )
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if self.isEndElement():
+				break
+
+			if( self.isStartElement() ):
+				elementName = self.name()
+				if( elementName == "item" ):
 					title = self.attributes().value( "name" )
-					self.__storage.appendTitle( species, typ, group, title )
+					self.__storage.appendTitle( species, groupCategory, group, title )
 
 					# Damit weitergesucht wird.
 					self.readGroupInfo(species, title)
@@ -240,7 +266,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readGroupInfo( self, species, breed ):
+	def readGroupInfo( self, species, title ):
 		"""
 		Einzelne Gruppen bieten noch zusätzliche Informationen wie beispielsweise die Bonuseigenschaften der Vampir-Clans etc. Die Ermittlung dieser informationen beginnt hier.
 		"""
@@ -254,7 +280,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				name = self.name()
 				if( name == "bonus" ):
-					self.readBonusTraits(species, breed)
+					self.readBonusTraits(species, title)
 				else:
 					self.readUnknownElement()
 
@@ -325,6 +351,57 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.__storage.appendPowerstat( species, powerstatValue, superEffectData )
 				else:
 					self.readUnknownElement()
+
+
+	def readDerangements( self, species ):
+		"""
+		Liest die Geistesstörungen aus den Template-Dateien.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "item" ):
+					mild = self.attributes().value( "name" )
+					#Debug.debug(species)
+					self.readDerangementInfo( species, mild, isSevere=False )
+				else:
+					self.readUnknownElement()
+
+
+	def readDerangementInfo( self, species, derangement, isSevere=False ):
+		"""
+		Liest die schweren Geistesstörungen, welche sich aus der zuvor ermittelten milden Geistesstörung entwickeln können.
+		"""
+
+		dependancies = []
+		description = ""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if self.name() == "description":
+					description = self.readElementText()
+					#Debug.debug(description)
+				elif self.name() == "item":
+					severe = self.attributes().value("name")
+					dependancies.append(severe)
+					#Debug.debug("Hänge Geistesstörung {severe} and {mild} an.".format(mild=derangement, severe=severe))
+					#self.readUnknownElement()
+					## Auch die schweren GEistesstörungen haben einen Beschreibungstext.
+					self.readDerangementInfo( species, severe, isSevere=True )
+				else:
+					self.readUnknownElement()
+
+		self.__storage.appendDerangement(species=species, name=derangement, dependancy=dependancies, description=description, isSevere=isSevere)
 
 
 	def readTraits( self, species, typ, descriptor=None ):
@@ -472,4 +549,70 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 		return resultList
+
+
+	def readItemTree(self):
+		"""
+		Wurzelfunktion zum Einlesen sämtlicher Gegenstände
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "Weapons" ):
+					self.readWeapons()
+				else:
+					self.readUnknownElement()
+
+
+	def readWeapons(self):
+		"""
+		Einlesen der Waffen.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "Category" ):
+					category = self.attributes().value("name")
+					self.readWeaponData(category)
+				else:
+					self.readUnknownElement()
+
+
+	def readWeaponData( self, category ):
+		"""
+		Einlesen der Waffendaten.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "weapon" ):
+					weaponName = self.attributes().value("name")
+					weaponData = {
+						"damage": self.attributes().value("damage"),
+						"ranges": self.attributes().value("ranges"),
+						"capacity": self.attributes().value("capacity"),
+						"strength": self.attributes().value("strength"),
+						"size": self.attributes().value("size"),
+						"durability": self.attributes().value("durability"),
+					}
+					self.__storage.addWeapon( category, weaponName, weaponData )
+					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
+		
 
