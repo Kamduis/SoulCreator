@@ -1123,4 +1123,17 @@
 			</item>-->
 		</Derangement>
 	</traits>
+	<items>
+		<Weapons>
+			<Category name="melee">
+				<weapon name ="Sword" damage="+2L" size="2/J" durability="3"/>
+			</Category>
+			<Category name="thrown">
+				<weapon name ="Throwing Knife" damage="+1L" size="1/P" durability="2"/>
+			</Category>
+			<Category name="ranged">
+				<weapon name ="Pistol" damage="2L" range="20;40;80" capacity="15+1" strength="2" size="1/P" durability="3"/>
+			</Category>
+		</Weapons>
+	</items>
 </SoulCreator>

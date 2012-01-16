@@ -175,7 +175,7 @@ class StorageTemplate(QObject):
 	# }
 	__powerstat = {}
 
-	# Eine Liste der Bonuseigenscahften je nach Spezies, Brut und Fraktion etc.
+	# Eine Liste der Bonuseigenschaften je nach Spezies, Brut und Fraktion etc.
 	#
 	# {
 	# 	Spezies1: {
@@ -196,6 +196,38 @@ class StorageTemplate(QObject):
 	# 	...
 	# }
 	__bonusTraits = {}
+
+	# Eine Liste der Waffen.
+	#
+	# {
+	# 	"melee": {
+	# 		weapon1: {
+	# 			"damage": value,
+	# 			"size": value,
+	# 			"durability": value,
+	# 		},
+	# 		...
+	# 	},
+	# 	"thrown": {
+	# 		weapon1: {
+	# 			"damage": value,
+	# 			"size": value,
+	# 			"durability": value,
+	# 		},
+	# 		...
+	# 	"ranged": {
+	# 		weapon1: {
+	# 			"damage": value,
+	# 			"range": value,
+	# 			"capacity": value,
+	# 			"strength": value,
+	# 			"size": value,
+	# 			"durability": value,
+	# 		},
+	# 		...
+	# 	},
+	# }
+	__weapons = {}
 
 #QList< cv_Species > StorageTemplate::v_species;
 #QList< cv_SpeciesTitle > StorageTemplate::v_titles;
@@ -713,3 +745,54 @@ class StorageTemplate(QObject):
 			self.__creationPointsList.setdefault(species,{})
 
 		self.__creationPointsList[species][typ] = points
+
+
+	@property
+	def weapons(self):
+		"""
+		Gibt eine Liste aller Waffen besagter Kategorie zurück.
+		"""
+
+		return self.__weapons
+
+
+	def addWeapon( self, category, name, weaponData ):
+		"""
+		Fügt eine Waffe hinzu. Falls eine Waffe dieses Namens in der angebenen Kategorie (melee, thrown, ranged) schon vorhanden wird, werden die DAten der vorhandenen Waffe überschrieben.
+		"""
+		
+		# {
+		# 	"melee": {
+		# 		weapon1: {
+		# 			"damage": value,
+		# 			"size": value,
+		# 			"durability": value,
+		# 		},
+		# 		...
+		# 	},
+		# 	"thrown": {
+		# 		weapon1: {
+		# 			"damage": value,
+		# 			"size": value,
+		# 			"durability": value,
+		# 		},
+		# 		...
+		# 	"ranged": {
+		# 		weapon1: {
+		# 			"damage": value,
+		# 			"range": value,
+		# 			"capacity": value,
+		# 			"strength": value,
+		# 			"size": value,
+		# 			"durability": value,
+		# 		},
+		# 		...
+		# 	},
+		# }
+		if category not in self.__weapons:
+			self.__weapons.setdefault(category, {})
+
+		self.__weapons[category][name] = weaponData
+
+		#Debug.debug(self.__weapons)
+

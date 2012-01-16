@@ -141,11 +141,13 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.morality = int(self.readElementText())
 				elif ( elementName == "derangements" ):
 					self.readDerangements()
+				elif ( elementName in Config.typs ):
+					self.readTraitCategories( elementName )
+				elif ( elementName == "weapons" ):
+					self.readWeapons()
 				elif ( elementName == "armor" ):
 					txt = self.readElementText()
 					self.__character.armor = [int(n) for n in txt.split(Config.sepChar)]
-				elif ( elementName in Config.typs ):
-					self.readTraitCategories( elementName )
 				elif ( elementName == "picture" ):
 					imageData = QByteArray.fromBase64(str(self.readElementText()))
 					image = QPixmap()
@@ -215,6 +217,44 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.readUnknownElement()
 
 		self.__character.derangements = derangements
+
+
+	def readWeapons(self):
+		"""
+		Liest die Waffen des Charakters.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+
+				self.readWeaponName(elementName)
+
+
+	def readWeaponName(self, category):
+		"""
+		Liest den Waffennamen ein.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+
+				if ( elementName == "weapon" ):
+					name = self.readElementText()
+					self.__character.addWeapon(category, name)
+				else:
+					self.readUnknownElement()
 
 
 	def readTraitCategories( self, typ ):

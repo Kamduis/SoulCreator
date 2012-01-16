@@ -103,9 +103,18 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 					self.writeCharacters( item[1] )
 					self.writeEndElement()
 			self.writeEndElement()
-		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
 
 		self.writeCharacterTraits()
+
+		if self.__character.weapons:
+			self.writeStartElement( "weapons" )
+			for category in self.__character.weapons:
+				self.writeStartElement( category )
+				for weapon in self.__character.weapons[category]:
+					self.writeTextElement( "weapon", weapon )
+				self.writeEndElement()
+			self.writeEndElement()
+		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
 
 		if self.__character.picture:
 			imageData = QByteArray()
