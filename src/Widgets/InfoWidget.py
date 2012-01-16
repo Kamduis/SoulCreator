@@ -336,7 +336,9 @@ class InfoWidget(QWidget):
 
 	def openImage(self ):
 		"""
-		Öffnet einen Dialog zum Laden eines Charakterbildes.
+		Öffnet einen Dialog zum Laden eines Charakterbildes und speichert selbiges im Charakter-Speicher.
+
+		\note Das Bild wird auf eine in der Configurationsdatei festgelegte Maximalgröße skaliert, um die Größe überschaubar zu halten.
 		"""
 
 		appPath = PathTools.getPath()
@@ -358,13 +360,20 @@ class InfoWidget(QWidget):
 		if ( filePath[0] ):
 			f = QFile( filePath[0] )
 
-			pixmap = QPixmap(filePath[0])
-			self.updatePicture(pixmap)
+			image = QPixmap(filePath[0])
+			if image.width() > Config.pictureWidthMax or image.height() > Config.pictureHeightMax:
+				image = image.scaled(800, 800, Qt.KeepAspectRatio)
 
-			self.__character.picture = pixmap
+			self.updatePicture(image)
+
+			self.__character.picture = image
 
 
 	def clearImage(self):
+		"""
+		Löscht das Charakterbild.
+		"""
+		
 		self.__character.picture = QPixmap()
 		self.ui.pushButton_picture.setIcon(QIcon())
 		self.ui.pushButton_picture.setText("Open Picture")
@@ -372,6 +381,10 @@ class InfoWidget(QWidget):
 
 
 	def updatePicture(self, image):
+		"""
+		Stellt das Charakterbild dar.
+		"""
+		
 		self.ui.pushButton_picture.setText("")
 		self.ui.pushButton_picture.setIcon(image)
 

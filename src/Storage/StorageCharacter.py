@@ -314,6 +314,8 @@ class StorageCharacter(QObject):
 		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
 		"""
 
+		#Debug.debug(derangements)
+
 		if derangements and self.__derangements != derangements:
 			self.__derangements = derangements
 			## Jetzt müssen in der richtigen Reihenfolge (hoch nach tief) die Signale gesandt werden.
@@ -321,7 +323,6 @@ class StorageCharacter(QObject):
 			#Debug.debug(keys, range(min(keys), max(keys)+1)[::-1])
 			for i in range(min(keys), max(keys)+1)[::-1]:
 				if i in keys:
-					#Debug.debug("Sende signal")
 					self.derangementChanged.emit(i, self.__derangements[i])
 
 
@@ -332,12 +333,17 @@ class StorageCharacter(QObject):
 
 		#Debug.debug(moralityValue, type(moralityValue))
 		if moralityValue not in self.__derangements:
-			self.__derangements[moralityValue] = derangement
-			#Debug.debug(derangement, moralityValue)
-			self.derangementChanged.emit(moralityValue, derangement)
+			if derangement:
+				self.__derangements[moralityValue] = derangement
+				#Debug.debug(derangement, moralityValue)
+				self.derangementChanged.emit(moralityValue, derangement)
 		elif self.__derangements[moralityValue] != derangement:
-			self.__derangements[moralityValue] = derangement
-			#Debug.debug(derangement, moralityValue)
+			# Wird als Geistesstörung ein leerer String übergeben, wird dieser Eintrag aus der Liste gelöscht. Dennoch wird das Signal einer Änderung mit dem leeren String gesandt.
+			if derangement:
+				self.__derangements[moralityValue] = derangement
+				#Debug.debug(derangement, moralityValue)
+			else:
+				del self.__derangements[moralityValue]
 			self.derangementChanged.emit(moralityValue, derangement)
 
 

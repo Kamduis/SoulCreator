@@ -65,6 +65,13 @@ class Config(object):
 	### Minimale Breite für textEdit-Felder, in denen mehrzeiliger Text eingegeben werden soll.
 	#textEditWidthMin = 200
 
+	## Das Charakterbild darf höchstens die hier festgelegte Größe annehmen.
+	pictureWidthMax = 800
+	pictureHeightMax = 800
+
+	## Das Charakterbild wird in dem hier festgelegten Format gespeichert.
+	pictureFormat = "png"#"jpg"
+
 	# Vordefinierte Farben
 	##  Wichtige Textabschnitte
 	importantTextColor = "darkBlue"

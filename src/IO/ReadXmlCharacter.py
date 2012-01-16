@@ -149,7 +149,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 				elif ( elementName == "picture" ):
 					imageData = QByteArray.fromBase64(str(self.readElementText()))
 					image = QPixmap()
-					image.loadFromData(imageData, "jpg")
+					image.loadFromData(imageData, Config.pictureFormat)
 					self.__character.picture = image
 				#elif ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
 	#// 				qDebug() << Q_FUNC_INFO << elementName << "!";

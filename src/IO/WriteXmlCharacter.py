@@ -111,7 +111,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 			imageData = QByteArray()
 			imageBuffer = QBuffer(imageData)
 			imageBuffer.open(QIODevice.WriteOnly)
-			self.__character.picture.save(imageBuffer, "JPG")	# writes pixmap into bytes in PNG format
+			self.__character.picture.save(imageBuffer, Config.pictureFormat)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
 			imageData = imageData.toBase64()
 			self.writeTextElement( "picture", unicode(imageData) )
 		self.writeEndElement()

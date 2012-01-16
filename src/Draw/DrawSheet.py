@@ -374,6 +374,17 @@ class DrawSheet(QObject):
 		if self.__character.species == "Human":
 			self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
+		posX = 520
+		lengthX = self.__pageWidth - posX
+		lengthY = 220
+		if self.__character.species == "Human":
+			self._drawImage(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+		posY = 1030
+		lengthY = self.__pageHeight - posY
+		if self.__character.species == "Human":
+			self._drawXP(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		if self.__character.species == "Werewolf":
 			posX = 0
 			posY = 840
@@ -435,25 +446,47 @@ class DrawSheet(QObject):
 		self._drawDerangements(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posX = 230
-		posY = 680
 		lengthX = 230
-		lengthY = self.__pageHeight - posY
 		if self.__character.species == "Mage":
 			posX = 260
-			posY = 730
 			lengthX = 250
-			lengthY = self.__pageHeight - posY
 		elif self.__character.species == "Vampire":
 			posX = 240
-			posY = 730
 			lengthX = 230
-			lengthY = self.__pageHeight - posY
 		elif self.__character.species == "Werewolf":
 			posX = 260
-			posY = 820
-			lengthX = 250
-			lengthY = self.__pageHeight - posY
+			lengthX = 270
 		self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+		posX = 470
+		lengthX = self.__pageWidth - posX
+		lengthY = 270
+		if self.__character.species == "Mage":
+			posX = 520
+			lengthX = self.__pageWidth - posX
+			lengthY = 310
+		elif self.__character.species == "Vampire":
+			posX = 480
+			lengthX = self.__pageWidth - posX
+			lengthY = 200
+		elif self.__character.species == "Werewolf":
+			posX = 540
+			lengthX = self.__pageWidth - posX
+			lengthY = 220
+		self._drawImage(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+		posY = 960
+		lengthY = self.__pageHeight - posY
+		if self.__character.species == "Mage":
+			posY = 1050
+			lengthY = self.__pageHeight - posY
+		elif self.__character.species == "Vampire":
+			posY = 940
+			lengthY = self.__pageHeight - posY
+		elif self.__character.species == "Werewolf":
+			posY = 1050
+			lengthY = self.__pageHeight - posY
+		self._drawXP(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		self.__painter.restore()
 
@@ -1372,6 +1405,47 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
+	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt die Geistesstörungen auf den Charkaterbogen. Allerdings nicht in die Moraltabelle!
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Derangements"))
+
+		self.__painter.setFont(self.__fontMain)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		fontSmallMetrics = QFontMetrics(self.__fontMain_tiny)
+		fontSmallHeight = fontSmallMetrics.height()
+
+		keys = [item for item in self.__character.derangements.keys()]
+		keys.sort(reverse=True)
+		i = 0
+		for moralityValue in keys:
+			derangement = self.__character.derangements[moralityValue]
+			self.__drawTextWithValue(posX=offsetH, posY=offsetV + self.__fontHeadingHeight + i * fontHeight, width=width, text=derangement, value="Morality: {}".format(moralityValue))
+			self.__painter.save()
+			self.__painter.setFont(self.__fontMain_tiny)
+			self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight + fontSmallHeight, width, 3 * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__storage.derangementDescription(derangement))
+			self.__painter.restore()
+			i += 3
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
 	def _drawDescription(self, offsetH=0, offsetV=0, width=None, height=None):
 		"""
 		Schreibt die Beschreibung und die Daten auf den Charkaterbogen.
@@ -1390,7 +1464,7 @@ class DrawSheet(QObject):
 
 		self.__drawHeading(offsetH, offsetV, width, self.tr("Description"))
 
-		self.__painter.setFont(self.__fontMain_tiny)
+		self.__painter.setFont(self.__fontMain_small)
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()
 
@@ -1461,9 +1535,9 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):
+	def _drawImage(self, offsetH=0, offsetV=0, width=None, height=None):
 		"""
-		Schreibt die Geistesstörungen auf den Charkaterbogen. Allerdings nicht in die Moraltabelle!
+		Fügt das Charakterbild ein.
 
 		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
@@ -1475,25 +1549,43 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth / 3
 
-		self.__drawHeading(offsetH, offsetV, width, self.tr("Derangements"))
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Picture"))
 
-		self.__painter.setFont(self.__fontMain)
-		fontMetrics = QFontMetrics(self.__painter.font())
-		fontHeight = fontMetrics.height()
+		if self.__character.picture:
+			imageRect = QRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
+			image = self.__character.picture
+			#Debug.debug(image.width(), image.height())
+			image = image.scaled(imageRect.width(), imageRect.height(), Qt.KeepAspectRatio)
+			self.__painter.drawPixmap(imageRect.x() + (imageRect.width() - image.width()) / 2, imageRect.y(), image)
 
-		fontSmallMetrics = QFontMetrics(self.__fontMain_tiny)
-		fontSmallHeight = fontSmallMetrics.height()
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
 
-		keys = [item for item in self.__character.derangements.keys()]
-		i = 0
-		for j in range(min(keys), max(keys)+1)[::-1]:
-			derangement = self.__character.derangements[j]
-			self.__drawTextWithValue(posX=offsetH, posY=offsetV + self.__fontHeadingHeight + i * fontHeight, width=width, text=derangement, value="Morality: {}".format(j))
-			self.__painter.save()
-			self.__painter.setFont(self.__fontMain_tiny)
-			self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight + fontSmallHeight, width, 3 * fontHeight, Qt.AlignLeft | Qt.TextWordWrap, self.__storage.derangementDescription(derangement))
-			self.__painter.restore()
-			i += 3
+		self.__painter.restore()
+
+
+	def _drawXP(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Fügt den Kasten für die Erfahrungspunkte hinzu.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__drawHeading(offsetH, offsetV, width, self.tr("XP"))
+
+		pen = self.__painter.pen()
+		pen.setWidthF(self.__lineWidth)
+		self.__painter.setPen(pen)
+		self.__painter.setBrush(self.__colorEmpty)
+
+		self.__painter.drawRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
 
 		if GlobalState.isDebug:
 			self.__drawBB(offsetH, offsetV, width, height)
