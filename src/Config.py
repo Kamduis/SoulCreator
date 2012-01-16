@@ -94,6 +94,12 @@ class Config(object):
 	weaponsColor["thrown"] = "wheat"
 	weaponsColor["ranged"] = "khaki"
 
+	## Symbole für die verschiedenen Waffencategorien.
+	weaponIcons = {}
+	weaponIcons["melee"] = ":/weaponCategories/images/svg/machete.svg"
+	weaponIcons["thrown"] = ":/weaponCategories/images/svg/shuriken.svg"
+	weaponIcons["ranged"] = ":/weaponCategories/images/svg/uzi.svg"
+
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
 	vSpace = 5
 

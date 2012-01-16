@@ -218,7 +218,7 @@ class StorageTemplate(QObject):
 	# 	"ranged": {
 	# 		weapon1: {
 	# 			"damage": value,
-	# 			"range": value,
+	# 			"ranges": value,
 	# 			"capacity": value,
 	# 			"strength": value,
 	# 			"size": value,

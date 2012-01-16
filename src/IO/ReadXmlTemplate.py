@@ -604,7 +604,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					weaponName = self.attributes().value("name")
 					weaponData = {
 						"damage": self.attributes().value("damage"),
-						"range": self.attributes().value("range"),
+						"ranges": self.attributes().value("ranges"),
 						"capacity": self.attributes().value("capacity"),
 						"strength": self.attributes().value("strength"),
 						"size": self.attributes().value("size"),

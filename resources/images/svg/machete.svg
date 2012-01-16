@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+     width="474.99878"
+     height="350.63467"
+     id="svg2"
+     version="1.1"
+     inkscape:version="0.48.2 r9819"
+     sodipodi:docname="machete.svg">
+    <defs
+         id="defs4" />
+    <sodipodi:namedview
+         id="base"
+         pagecolor="#ffffff"
+         bordercolor="#666666"
+         borderopacity="1.0"
+         inkscape:pageopacity="0.0"
+         inkscape:pageshadow="2"
+         inkscape:zoom="1.4870892"
+         inkscape:cx="178.90397"
+         inkscape:cy="136.83168"
+         inkscape:document-units="px"
+         inkscape:current-layer="layer1"
+         showgrid="false"
+         fit-margin-top="0"
+         fit-margin-left="0"
+         fit-margin-right="0"
+         fit-margin-bottom="0"
+         inkscape:window-width="1835"
+         inkscape:window-height="1060"
+         inkscape:window-x="83"
+         inkscape:window-y="-3"
+         inkscape:window-maximized="1" />
+    <g
+         inkscape:label="Layer 1"
+         inkscape:groupmode="layer"
+         id="layer1"
+         transform="translate(-56.50672,-52.347975)">
+        <g
+             id="g3001">
+            <path
+                 sodipodi:nodetypes="cccc"
+                 inkscape:connector-curvature="0"
+                 id="rect2985"
+                 d="M 407.52098,126.56327 56.510512,402.91759 C 147.84036,406.95544 362.01779,221.86661 439.17659,166.77053 z"
+                 style="fill:#000000;fill-opacity:1;stroke:none" />
+            <rect
+                 transform="matrix(-0.78570857,0.61859683,0.61859683,0.78570857,0,0)"
+                 y="341.77783"
+                 x="-255.08281"
+                 height="70.683647"
+                 width="10.984769"
+                 id="rect2988"
+                 style="fill:#000000;fill-opacity:1;stroke:none" />
+            <rect
+                 transform="matrix(-0.78570857,0.61859683,0.61859683,0.78570857,0,0)"
+                 style="fill:#000000;fill-opacity:1;stroke:none"
+                 id="rect2990"
+                 width="85.681198"
+                 height="42.25676"
+                 x="-342.58591"
+                 y="355.99127" />
+            <rect
+                 transform="matrix(-0.78570857,0.61859683,0.61859683,0.78570857,0,0)"
+                 style="fill:#000000;fill-opacity:1;stroke:none"
+                 id="rect3002"
+                 width="10.984769"
+                 height="61.376331"
+                 x="-355.39499"
+                 y="346.43149" />
+            <path
+                 transform="matrix(-0.60415788,0.47566001,0.47566001,0.60415788,-25.781777,419.59041)"
+                 inkscape:connector-curvature="0"
+                 id="path3012"
+                 d="m -695.62389,36.47319 0,91.9375 14.28125,0 0,-91.9375 -14.28125,0 z m -130.46875,6.0625 0,79.8125 14.28125,0 0,-79.8125 -14.28125,0 z m 147.59375,6.625 0,66.5625 c 123.16612,-5.77517 490.92613,11.03707 581,-66.5625 l -581,0 z m -130.9375,5.8125 0,54.9375 111.4375,0 0,-54.9375 -111.4375,0 z"
+                 style="fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3801)" />
+        </g>
+    </g>
+</svg>

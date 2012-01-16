@@ -361,6 +361,32 @@ class DrawSheet(QObject):
 			posY = 550
 		self._drawMorality(offsetH=posX, offsetV=posY, width=lengthX)
 
+		posX = 310
+		posY = 690
+		lengthX = self.__pageWidth - posX
+		lengthY = 100
+		if self.__character.species == "Changeling":
+			posX = 240
+			posY = 770
+			lengthX = self.__pageWidth - posX
+			lengthY = 120
+		elif self.__character.species == "Mage":
+			posX = 280
+			posY = 800
+			lengthX = self.__pageWidth - posX
+			lengthY = 110
+		elif self.__character.species == "Vampire":
+			posX = 240
+			posY = 800
+			lengthX = self.__pageWidth - posX
+			lengthY = 110
+		elif self.__character.species == "Werewolf":
+			posX = 280
+			posY = 740
+			lengthX = self.__pageWidth - posX
+			lengthY = 90
+		self._drawWeapons(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		posX = 0
 		posY = 800
 		lengthX = 250
@@ -1405,6 +1431,72 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
+	def _drawWeapons(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt die Waffen auf den Charkaterbogen.
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		\param height Die Höhe der Tabelle
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		dmgWidth = 40
+		rangesWidth = 60
+		capWidth = 40
+		strWidth = 30
+		sizeWidth = 40
+		durabWidth = 55
+		colSep = 2
+		nameWidth = width - dmgWidth - rangesWidth - capWidth - strWidth - sizeWidth - durabWidth - 5 * colSep
+
+		self.__drawHeading(offsetH, offsetV, nameWidth, self.tr("Weapons"))
+		self.__drawSubHeading(offsetH + colSep + nameWidth, offsetV, dmgWidth, self.tr("Dmg."))
+		self.__drawSubHeading(offsetH + 2 * colSep + nameWidth + dmgWidth, offsetV, rangesWidth, self.tr("Ranges"))
+		self.__drawSubHeading(offsetH + 3 * colSep + nameWidth + dmgWidth + rangesWidth, offsetV, capWidth, self.tr("Cap."))
+		self.__drawSubHeading(offsetH + 4 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth, offsetV, strWidth, self.tr("Str."))
+		self.__drawSubHeading(offsetH + 5 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth, offsetV, sizeWidth, self.tr("Size"))
+		self.__drawSubHeading(offsetH + 6 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth + sizeWidth, offsetV, durabWidth, self.tr("Durab."))
+
+		self.__painter.save()
+
+		self.__painter.setFont(self.__fontMain_small)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		#Debug.debug(self.__character.weapons)
+
+		breakLoop = False
+		i = 0
+		for category in self.__character.weapons:
+			for weapon in self.__character.weapons[category]:
+				self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight, nameWidth, fontHeight, Qt.AlignLeft, weapon)
+				self.__painter.drawText(offsetH + colSep + nameWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, dmgWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["damage"])
+				self.__painter.drawText(offsetH + 2 * colSep + nameWidth + dmgWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, rangesWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["ranges"])
+				self.__painter.drawText(offsetH + 3 * colSep + nameWidth + dmgWidth + rangesWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, capWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["capacity"])
+				self.__painter.drawText(offsetH + 4 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, strWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["strength"])
+				self.__painter.drawText(offsetH + 5 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, sizeWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["size"])
+				self.__painter.drawText(offsetH + 6 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth + sizeWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, durabWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["durability"])
+				if self.__fontHeadingHeight + i * fontHeight > height:
+					breakLoop = True
+					break
+				i += 1
+			if breakLoop:
+				break
+
+		self.__painter.restore()
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
 	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):
 		"""
 		Schreibt die Geistesstörungen auf den Charkaterbogen. Allerdings nicht in die Moraltabelle!
@@ -1607,6 +1699,39 @@ class DrawSheet(QObject):
 		self.__painter.save()
 
 		self.__painter.setFont(self.__fontHeading)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()# Tatsächliche Höhe der Schrift
+
+		## Differenz der tatsächlichen Höhe der Schrift, und der Höhe für die Platz reserviert werden soll.
+		heightDiff = (fontHeight - self.__fontHeadingHeight)
+
+		if self.__character.species == "Human":
+			imageRect = QRect(posX, posY, width, self.__fontHeadingHeight)
+			image = QImage(":sheet/images/sheet/WorldOfDarkness-BalkenOben.png")
+			rnd = Random.random(1)
+			if rnd == 0:
+				image = image.mirrored(True, False)
+			self.__painter.drawImage(imageRect, image)
+
+		self.__painter.drawText(posX, posY - heightDiff / 2, width, fontHeight, Qt.AlignCenter, text)
+
+		self.__painter.restore()
+
+
+	def __drawSubHeading(self, posX, posY, width, text):
+		"""
+		Zeichnet eine Überschrift in der für die Spezies vorgesehenen Schriftart.
+
+		\param poxX Obere Kante der Boundingbox für die Überschrift.
+		\param poxY Linke Kante der Boundingbox für die Überschrift.
+		\param width Breite der Überschrift
+		\param text Der Text der Überschrift
+		\return die Höhe, welche die Überschrift in Anspruch nimmt. Dies ist nützlich, um den Text darunter besser paltzieren zu können.
+		"""
+
+		self.__painter.save()
+
+		self.__painter.setFont(self.__fontSubHeading)
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()# Tatsächliche Höhe der Schrift
 

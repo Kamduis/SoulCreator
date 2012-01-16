@@ -402,8 +402,9 @@ class StorageCharacter(QObject):
 		if category not in self.__weapons:
 			self.__weapons.setdefault(category, [])
 
-		self.__weapons[category].append(weapon)
-		self.weaponAdded.emit(category, weapon)
+		if weapon not in self.__weapons[category]:
+			self.__weapons[category].append(weapon)
+			self.weaponAdded.emit(category, weapon)
 
 	def deleteWeapon(self, category, weapon):
 		"""
@@ -877,6 +878,10 @@ class StorageCharacter(QObject):
 
 		# Übernatürliche Eigenschaft festlegen.
 		self.powerstat = Config.powerstatDefaultValue
+
+		for category in self.__weapons:
+			for weapon in self.__weapons[category]:
+				self.deleteWeapon(category, weapon)
 
 
 	def isModifed(self):

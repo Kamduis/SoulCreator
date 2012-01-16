@@ -38,6 +38,8 @@ class ItemWidget(QWidget):
 	@brief Auflistung der Gegenstände.
 
 	\todo Drag&Drop wäre auch nicht schlecht.
+
+	\todo Momentan finde ich die Waffenkategorie über die Hintergrundfarbe heraus. Das ist nicht wirklich gut.
 	"""
 
 	def __init__(self, template, character, parent=None):
@@ -56,6 +58,7 @@ class ItemWidget(QWidget):
 			for weapon in self.__storage.weapons[category]:
 				listItem = QListWidgetItem()
 				listItem.setText(weapon)
+				listItem.setIcon(QIcon(Config.weaponIcons[category]))
 				listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
 				self.ui.listWidget_store.addItem(listItem)
 
@@ -105,25 +108,6 @@ class ItemWidget(QWidget):
 			for category in Config.weaponsColor.items():
 				if item.data(Qt.BackgroundRole).name() == QColor(category[1]).name():
 					self.deleteWeapon(category[0], item.text())
-					break
-
-
-	def takeWeapon(self):
-		"""
-		Der Charakter erhält die in der in listWidget_store markierte Waffe.
-		"""
-
-		item = self.ui.listWidget_store.takeItem(self.ui.listWidget_store.row(self.ui.listWidget_store.currentItem()))
-		if item:
-			self.ui.listWidget_inventory.addItem(item)
-			## Knöpfe aktivieren/deaktivieren
-			self.ui.pushButton_give.setEnabled(True)
-			if self.ui.listWidget_store.count() < 1:
-				self.ui.pushButton_take.setEnabled(False)
-
-			for category in Config.weaponsColor.items():
-				if item.data(Qt.BackgroundRole).name() == QColor(category[1]).name():
-					self.saveWeapon(category[0], item.text())
 					break
 
 
