@@ -127,7 +127,7 @@ class DrawSheet(QObject):
 			self.__fontSubHeading = QFont("Note this", 13 )
 		else:
 			#self.__fontHeading = QFont("HVD Edding 780", 14 )	# Tiere
-			raise ErrSpeciesNotExisting( character.species )
+			raise ErrSpeciesNotExisting( self.__character.species )
 
 		## Die Schrifthöhe muß bei einigen Schriftarten Manuell festgelegt werden, damit Überschneidungen möglich sind.
 		fontHeadingMetrics = QFontMetrics(self.__fontHeading)
@@ -788,7 +788,6 @@ class DrawSheet(QObject):
 		mainFont.setWeight(QFont.Bold)
 		self.__painter.setFont(mainFont)
 		fontMetrics = QFontMetrics(self.__painter.font())
-		fontHeight = fontMetrics.height()
 		fontHeightDiff = fontSubHeadingMetrics.ascent() - fontMetrics.ascent()
 
 		distanceH = (self.__pageWidth - headingWidth) / 3

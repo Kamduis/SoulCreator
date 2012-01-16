@@ -348,7 +348,7 @@ class InfoWidget(QWidget):
 
 		# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
 		if ( not os.path.exists( savePath ) ):
-			savePath = PathTools.appPath
+			savePath = appPath
 
 		filePath = QFileDialog.getOpenFileName(
 			self,
@@ -358,8 +358,6 @@ class InfoWidget(QWidget):
 		)
 
 		if ( filePath[0] ):
-			f = QFile( filePath[0] )
-
 			image = QPixmap(filePath[0])
 			if image.width() > Config.pictureWidthMax or image.height() > Config.pictureHeightMax:
 				image = image.scaled(800, 800, Qt.KeepAspectRatio)

@@ -75,14 +75,6 @@ class AttributeWidget(TraitWidget):
 		actualRow += 1
 		self.__layoutAttributes.addWidget( self.__labelResistance, actualRow, actualColumn )
 
-		typ = "Attribute"
-
-		categoryList = (
-			"Mental",
-			"Physical",
-			"Social",
-		)
-
 		self.__labelStr = QLabel( self )
 		self.__labelDex = QLabel( self )
 		self.__labelSta = QLabel( self )
