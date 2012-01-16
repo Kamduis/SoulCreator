@@ -70,6 +70,9 @@ class StorageCharacter(QObject):
 	hairChanged = Signal(str)
 	nationalityChanged = Signal(str)
 	pictureChanged = Signal(QPixmap)
+	weaponAdded = Signal(str, str)
+	weaponRemoved = Signal(str, str)
+	weaponsChanged = Signal()
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -91,6 +94,15 @@ class StorageCharacter(QObject):
 	# 	...
 	# }
 	__traits = {}
+
+	# Eine Liste der Waffen.
+	#
+	# {
+	# 	"melee": [ weapon1, weapon2 ... ]
+	# 	"thrown": [ weapon1, weapon2 ... ]
+	# 	"ranged": [ weapon1, weapon2 ... ]
+	# }
+	__weapons = {}
 
 
 	def __init__(self, template, parent=None):
@@ -132,6 +144,8 @@ class StorageCharacter(QObject):
 		self.dateGameChanged.connect(self.__calcAge)
 		self.dateBecomingChanged.connect(self.__calcAgeBecoming)
 		self.dateGameChanged.connect(self.__calcAgeBecoming)
+		self.weaponAdded.connect(self.weaponsChanged)
+		self.weaponRemoved.connect(self.weaponsChanged)
 
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
@@ -193,6 +207,7 @@ class StorageCharacter(QObject):
 		self.derangementChanged.connect(self.setModified)
 		self.armorChanged.connect(self.setModified)
 		self.pictureChanged.connect(self.setModified)
+		self.weaponsChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -369,6 +384,36 @@ class StorageCharacter(QObject):
 		if self.__picture != image:
 			self.__picture = image
 			self.pictureChanged.emit(image)
+
+
+	@property
+	def weapons(self):
+		"""
+		Die Liste aller Waffen des Charakters.
+		"""
+
+		return self.__weapons
+
+	def addWeapon(self, category, weapon):
+		"""
+		Fügt der Waffenliste eine Waffe hinzu.
+		"""
+
+		if category not in self.__weapons:
+			self.__weapons.setdefault(category, [])
+
+		if weapon not in self.__weapons[category]:
+			self.__weapons[category].append(weapon)
+			self.weaponAdded.emit(category, weapon)
+
+	def deleteWeapon(self, category, weapon):
+		"""
+		Entfernt besagte Waffe aus der Waffenliste.
+		"""
+
+		if category in self.__weapons:
+			self.__weapons[category].remove(weapon)
+			self.weaponRemoved.emit(category, weapon)
 
 
 	#def insertIdentity( self, index, identity ):
@@ -833,6 +878,10 @@ class StorageCharacter(QObject):
 
 		# Übernatürliche Eigenschaft festlegen.
 		self.powerstat = Config.powerstatDefaultValue
+
+		for category in self.__weapons:
+			for weapon in self.__weapons[category]:
+				self.deleteWeapon(category, weapon)
 
 
 	def isModifed(self):

@@ -68,6 +68,12 @@
     <file>images/svg/high_jump.svg</file>
     <file>images/svg/maleprofile.svg</file>
     <file>images/svg/humans.svg</file>
+    <file>images/svg/flail.svg</file>
+  </qresource>
+  <qresource prefix="weaponCategories">
+    <file>images/svg/machete.svg</file>
+    <file>images/svg/shuriken.svg</file>
+    <file>images/svg/uzi.svg</file>
   </qresource>
   <qresource prefix="template">
     <file>xml/base.xml</file>

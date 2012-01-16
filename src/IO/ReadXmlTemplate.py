@@ -148,6 +148,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 					speciesFlag = self.attributes().value( "species" )
 					#Debug.debug("Erschaffungspunkte für Spezies {} gefunden.".format(speciesFlag))
 					self.readCreationTree( speciesFlag )
+				elif( elementName == "items" ):
+					self.readItemTree()
 				else:
 					self.readUnknownElement()
 
@@ -547,4 +549,70 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 
 		return resultList
+
+
+	def readItemTree(self):
+		"""
+		Wurzelfunktion zum Einlesen sämtlicher Gegenstände
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "Weapons" ):
+					self.readWeapons()
+				else:
+					self.readUnknownElement()
+
+
+	def readWeapons(self):
+		"""
+		Einlesen der Waffen.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "Category" ):
+					category = self.attributes().value("name")
+					self.readWeaponData(category)
+				else:
+					self.readUnknownElement()
+
+
+	def readWeaponData( self, category ):
+		"""
+		Einlesen der Waffendaten.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "weapon" ):
+					weaponName = self.attributes().value("name")
+					weaponData = {
+						"damage": self.attributes().value("damage"),
+						"ranges": self.attributes().value("ranges"),
+						"capacity": self.attributes().value("capacity"),
+						"strength": self.attributes().value("strength"),
+						"size": self.attributes().value("size"),
+						"durability": self.attributes().value("durability"),
+					}
+					self.__storage.addWeapon( category, weaponName, weaponData )
+					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
+		
 
