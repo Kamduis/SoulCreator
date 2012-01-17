@@ -62,10 +62,11 @@ class ItemWidget(QWidget):
 				listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
 				self.ui.listWidget_store.addItem(listItem)
 
+		self.__noArmorText = "None"
 		self.__buttonArmorDict = {}
 		self.__buttonGroup_armor = QButtonGroup(self)
 		## Natürlich muß auch die Wahl bestehen, keine Rüstung zu tragen. Dies ist zu Anfang gewählt.
-		radioButton = QRadioButton("None")
+		radioButton = QRadioButton(self.__noArmorText)
 		self.ui.layout_armor.addWidget(radioButton)
 		self.__buttonGroup_armor.addButton(radioButton)
 		radioButton.setChecked(True)
@@ -83,10 +84,12 @@ class ItemWidget(QWidget):
 		self.ui.pushButton_give.clicked.connect(self.giveWeapon)
 		self.ui.listWidget_inventory.itemDoubleClicked.connect(self.giveWeapon)
 		self.__buttonGroup_armor.buttonClicked.connect(self.takeArmor)
+		self.ui.checkBox_armorDedicated.toggled.connect(self.takeArmor)
 
 		self.__character.weaponAdded.connect(self.moveToInventory)
 		self.__character.weaponRemoved.connect(self.moveToStore)
 		self.__character.armorChanged.connect(self.selectArmor)
+		self.__character.speciesChanged.connect(self.hideShowDedicated)
 
 
 	def takeWeapon(self):
@@ -169,19 +172,43 @@ class ItemWidget(QWidget):
 		self.__character.deleteWeapon(category, weapon)
 
 
-	def takeArmor(self, armor):
+	def takeArmor(self):
 		"""
 		Speichert die gewählte Rüstung im Charakter-Speicher.
 		"""
 
-		self.__character.armor = armor.text()
+		armorName = self.__buttonGroup_armor.checkedButton().text()
+		if armorName == self.__noArmorText:
+			armorName = ""
+		dedicated = False
+		if self.ui.checkBox_armorDedicated.isChecked():
+			dedicated = True
+		self.__character.setArmor(armorName, dedicated=dedicated)
 
 
-	def selectArmor(self, armor):
+	def selectArmor(self, armor, dedicated):
 		"""
 		Wählt den Knopf mit der Passenden Bezeichnung aus.
 		"""
 
-		if armor in self.__buttonArmorDict:
-			self.__buttonArmorDict[armor].setChecked(True)
+		armorName = armor
+		if not armorName:
+			armorName = self.__noArmorText
 
+		if armorName in self.__buttonArmorDict:
+			self.__buttonArmorDict[armorName].setChecked(True)
+			if dedicated:
+				self.ui.checkBox_armorDedicated.setChecked(True)
+			else:
+				self.ui.checkBox_armorDedicated.setChecked(False)
+
+
+	def hideShowDedicated(self, species):
+		"""
+		Nur bei Werwölfen macht es Sinn, eine Rüstung zuzueignen. Entsprechendes Widget wird für alle anderen Spezies versteckt.
+		"""
+
+		if species == "Werewolf":
+			self.ui.checkBox_armorDedicated.setVisible(True)
+		else:
+			self.ui.checkBox_armorDedicated.setVisible(False)

@@ -115,7 +115,10 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 				self.writeEndElement()
 			self.writeEndElement()
 		if self.__character.armor:
-			self.writeTextElement( "armor", self.__character.armor )
+			self.writeStartElement( "armor" )
+			self.writeAttribute( "dedicated", unicode(self.__character.armor["dedicated"]) )
+			self.writeCharacters(self.__character.armor["name"])
+			self.writeEndElement()
 		#self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
 
 		if self.__character.picture:

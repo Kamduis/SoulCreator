@@ -174,7 +174,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="checkBox_armorDedicated">
            <property name="text">
             <string>Dedicated</string>
            </property>

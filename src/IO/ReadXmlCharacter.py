@@ -22,6 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import ast
+
 from PySide.QtCore import QObject, QDate, QByteArray, Signal
 from PySide.QtGui import QPixmap
 
@@ -146,7 +148,9 @@ class ReadXmlCharacter(QObject, ReadXml):
 				elif ( elementName == "weapons" ):
 					self.readWeapons()
 				elif ( elementName == "armor" ):
-					self.__character.armor = self.readElementText()
+					armorDedicated = ast.literal_eval(self.attributes().value( "dedicated" ))
+					armorName = self.readElementText()
+					self.__character.setArmor(armorName, armorDedicated)
 				elif ( elementName == "picture" ):
 					imageData = QByteArray.fromBase64(str(self.readElementText()))
 					image = QPixmap()

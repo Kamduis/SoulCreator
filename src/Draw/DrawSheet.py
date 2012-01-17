@@ -1068,10 +1068,9 @@ class DrawSheet(QObject):
 
 		generalArmor = 0
 		firearmsArmor = 0
-
-		if self.__character.armor in self.__storage.armor:
-			generalArmor = self.__storage.armor[self.__character.armor]["general"]
-			firearmsArmor = self.__storage.armor[self.__character.armor]["firearms"]
+		if self.__character.armor["name"] in self.__storage.armor:
+			generalArmor = self.__storage.armor[self.__character.armor["name"]]["general"]
+			firearmsArmor = self.__storage.armor[self.__character.armor["name"]]["firearms"]
 
 		verticalPos = offsetV
 		for item in advantages:
@@ -1326,10 +1325,10 @@ class DrawSheet(QObject):
 
 		generalArmor = 0
 		firearmsArmor = 0
-
-		if self.__character.armor in self.__storage.armor:
-			generalArmor = self.__storage.armor[self.__character.armor]["general"]
-			firearmsArmor = self.__storage.armor[self.__character.armor]["firearms"]
+		isDedicated = self.__character.armor["dedicated"]
+		if self.__character.armor["name"] in self.__storage.armor:
+			generalArmor = self.__storage.armor[self.__character.armor["name"]]["general"]
+			firearmsArmor = self.__storage.armor[self.__character.armor["name"]]["firearms"]
 
 		## Advantages
 		advantages = [
@@ -1340,6 +1339,9 @@ class DrawSheet(QObject):
 			[ self.tr("Armor"), "{general}/{firearms}".format(general=generalArmor, firearms=firearmsArmor), ],
 			[ self.tr("Perception"), u"±0", ],
 		]
+		daluArmor = "0/0"
+		if isDedicated:
+			daluArmor = advantages[4][1]
 		shapesAdvantages = [
 			## Hishu
 			advantages,
@@ -1349,7 +1351,7 @@ class DrawSheet(QObject):
 				[ advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[1]), ],
 				[ advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[1]), ],
 				[ advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[1]), ],
-				[ advantages[4][0], advantages[4][1], ],
+				[ advantages[4][0], daluArmor, ],
 				[ advantages[5][0], u"+2", ],
 			],
 			## Gauru

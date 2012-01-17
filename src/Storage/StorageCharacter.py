@@ -72,7 +72,7 @@ class StorageCharacter(QObject):
 	weaponAdded = Signal(str, str)
 	weaponRemoved = Signal(str, str)
 	weaponsChanged = Signal()
-	armorChanged = Signal(str)
+	armorChanged = Signal(str, bool)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -133,7 +133,10 @@ class StorageCharacter(QObject):
 		self.__morality = 0
 		self.__era = ""
 		self.__picture = None
-		self.__armor = ""
+		self.__armor = {
+			"name": "",
+			"dedicated": False,
+		}
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -424,11 +427,11 @@ class StorageCharacter(QObject):
 
 		return self.__armor
 
-	@armor.setter
-	def armor(self, armor):
-		if self.__armor != armor:
-			self.__armor = armor
-			self.armorChanged.emit(armor)
+	def setArmor(self, name, dedicated=False):
+		if self.__armor["name"] != name or self.__armor["dedicated"] != dedicated:
+			self.__armor["name"] = name
+			self.__armor["dedicated"] = dedicated
+			self.armorChanged.emit(name, dedicated)
 
 
 
@@ -820,36 +823,6 @@ class StorageCharacter(QObject):
 	morality = property(__getMorality, setMorality)
 
 
-	#def __getArmor(self):
-		#"""
-		#Gibt den Wert der getragenen Rüstung aus. Zurückgegeben wird eine Liste mit zwei EInträgen.
-
-		#Die erste Zahl stellt den Rüstungswert gegen alle Angriffe mit Ausnahme von Schußwaffen und Bögen dar.
-
-		#Die zweite Zahl stellt dagegen den Rüstungswert gegen Schußwaffen und Bögen dar.
-		#"""
-
-		#return self.__armor
-
-	#def __setArmor( self, armor ):
-		#"""
-		#Verändert den Wert der Rüstung.
-
-		#Es muß eine Liste mit zwei Elementen übergeben werden.
-
-		#Bei einer Veränderung wird das Signal armorChanged() ausgesandt.
-		#"""
-
-		#if len(armor) == 2:
-			#if self.__armor != armor:
-				#self.__armor = armor
-				#self.armorChanged.emit( self.__armor )
-		#else:
-			#raise ErrListLength(len(self.__armor), len(armor))
-
-	#armor = property(__getArmor, __setArmor)
-
-
 	def resetCharacter(self):
 		# Zeitalter festlegen.
 		self.era = Config.eras[0]
@@ -898,6 +871,8 @@ class StorageCharacter(QObject):
 		for category in self.__weapons:
 			for weapon in self.__weapons[category]:
 				self.deleteWeapon(category, weapon)
+
+		self.setArmor(name="")
 
 
 	def isModifed(self):
