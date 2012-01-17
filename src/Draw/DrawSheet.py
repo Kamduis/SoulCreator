@@ -1529,11 +1529,11 @@ class DrawSheet(QObject):
 		fontSmallHeight = fontSmallMetrics.height()
 
 		#i = 0
-		#for item in self.__character.items:
+		#for item in self.__character.equipment:
 			#self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight, width, fontHeight, Qt.AlignLeft, item)
 			#i += 1
-		items = ", ".join(self.__character.items)
-		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height, Qt.AlignLeft | Qt.TextWordWrap, items)
+		equipment = ", ".join(self.__character.equipment)
+		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height, Qt.AlignLeft | Qt.TextWordWrap, equipment)
 
 		if GlobalState.isDebug:
 			self.__drawBB(offsetH, offsetV, width, height)

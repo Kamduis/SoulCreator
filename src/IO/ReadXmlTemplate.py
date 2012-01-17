@@ -568,6 +568,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 						self.readWeapons()
 					elif( self.name() == "Armor" ):
 						self.readArmor()
+					elif( self.name() == "Equipment" ):
+						self.readEquipment()
 					else:
 						self.readUnknownElement()
 				else:
@@ -642,6 +644,31 @@ class ReadXmlTemplate(QObject, ReadXml):
 						"speed": int(self.attributes().value("speed")),
 					}
 					self.__storage.addArmor( armorName, armorData )
+					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
+
+
+	def readEquipment(self):
+		"""
+		Einlesen der Ausrüstung.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "equipment" ):
+					equipmentName = self.attributes().value("name")
+					equipmentData = {
+						"durability": int(self.attributes().value("durability")),
+						"size": int(self.attributes().value("size")),
+						"cost": int(self.attributes().value("cost")),
+					}
+					self.__storage.addEquipment( equipmentName, equipmentData )
 					self.readUnknownElement()
 				else:
 					self.readUnknownElement()

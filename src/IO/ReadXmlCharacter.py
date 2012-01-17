@@ -278,7 +278,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 				if ( elementName == "item" ):
 					name = self.readElementText()
-					self.__character.addItem(name)
+					self.__character.addEquipment(name)
 				else:
 					self.readUnknownElement()
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>356</width>
-    <height>271</height>
+    <width>560</width>
+    <height>497</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
      </property>
      <widget class="QWidget" name="weapons">
       <attribute name="title">
-       <string>weapons</string>
+       <string>Weapons</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -37,7 +37,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="listWidget_inventory">
+          <widget class="QListWidget" name="listWidget_weaponInventory">
            <property name="toolTip">
             <string>Weapons in the characters inventory.</string>
            </property>
@@ -61,7 +61,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_take">
+          <widget class="QPushButton" name="pushButton_weaponAdd">
            <property name="toolTip">
             <string>Take in inventory.</string>
            </property>
@@ -71,7 +71,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_give">
+          <widget class="QPushButton" name="pushButton_weaponRemove">
            <property name="toolTip">
             <string>Take from inventory.</string>
            </property>
@@ -108,7 +108,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QListWidget" name="listWidget_store">
+          <widget class="QListWidget" name="listWidget_weaponStore">
            <property name="toolTip">
             <string>Available weapons.</string>
            </property>
@@ -120,7 +120,7 @@
      </widget>
      <widget class="QWidget" name="armor">
       <attribute name="title">
-       <string>armor</string>
+       <string>Armor</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
@@ -133,8 +133,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>114</width>
-            <height>219</height>
+            <width>212</width>
+            <height>443</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -197,34 +197,81 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="items">
+     <widget class="QWidget" name="equipment">
       <attribute name="title">
-       <string>Items</string>
+       <string>Equipment</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
-          <widget class="QLineEdit" name="lineEdit_newItem"/>
+          <widget class="QLineEdit" name="lineEdit_equipmentCustom"/>
          </item>
          <item row="0" column="1">
-          <widget class="QPushButton" name="pushButton_addItem">
+          <widget class="QPushButton" name="pushButton_equipmentAddCustom">
            <property name="text">
             <string>Add</string>
            </property>
           </widget>
          </item>
          <item row="1" column="0" colspan="2">
-          <widget class="QListWidget" name="listWidget_items"/>
+          <widget class="QListWidget" name="listWidget_equipmentInventory"/>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="pushButton_removeItem">
+          <widget class="QPushButton" name="pushButton_equipmentRemove">
            <property name="text">
             <string>Remove</string>
            </property>
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <spacer name="verticalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_equipmentAdd">
+           <property name="toolTip">
+            <string>Take in inventory.</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QListWidget" name="listWidget_equipmentStore">
+         <property name="toolTip">
+          <string>Available weapons.</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

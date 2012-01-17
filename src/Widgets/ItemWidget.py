@@ -53,8 +53,8 @@ class ItemWidget(QWidget):
 
 		## Weapons
 
-		self.ui.pushButton_take.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
-		self.ui.pushButton_give.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
+		self.ui.pushButton_weaponAdd.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
+		self.ui.pushButton_weaponRemove.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
 
 		for category in self.__storage.weapons:
 			for weapon in self.__storage.weapons[category]:
@@ -62,17 +62,19 @@ class ItemWidget(QWidget):
 				listItem.setText(weapon)
 				listItem.setIcon(QIcon(Config.weaponIcons[category]))
 				listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
-				self.ui.listWidget_store.addItem(listItem)
+				self.ui.listWidget_weaponStore.addItem(listItem)
 
-		self.ui.pushButton_give.setEnabled(False)
+		self.ui.pushButton_weaponRemove.setEnabled(False)
 
-		self.ui.pushButton_take.clicked.connect(self.takeWeapon)
-		self.ui.listWidget_store.itemDoubleClicked.connect(self.takeWeapon)
-		self.ui.pushButton_give.clicked.connect(self.giveWeapon)
-		self.ui.listWidget_inventory.itemDoubleClicked.connect(self.giveWeapon)
-		
+		self.ui.pushButton_weaponAdd.clicked.connect(self.addWeapon)
+		self.ui.listWidget_weaponStore.itemDoubleClicked.connect(self.addWeapon)
+		self.ui.pushButton_weaponRemove.clicked.connect(self.removeWeapon)
+		self.ui.listWidget_weaponInventory.itemDoubleClicked.connect(self.removeWeapon)
+
 		self.__character.weaponAdded.connect(self.moveToInventory)
 		self.__character.weaponRemoved.connect(self.moveToStore)
+		self.__character.weaponAdded.connect(self.checkButtonEnabledWeapons)
+		self.__character.weaponRemoved.connect(self.checkButtonEnabledWeapons)
 
 		## Armor
 
@@ -97,45 +99,49 @@ class ItemWidget(QWidget):
 		self.__character.armorChanged.connect(self.selectArmor)
 		self.__character.speciesChanged.connect(self.hideShowDedicated)
 
-		## Items
+		## Equipment
 
-		self.ui.pushButton_addItem.clicked.connect(self.addItem)
-		self.ui.pushButton_removeItem.clicked.connect(self.removeItem)
-		self.__character.itemsChanged.connect(self.refillItemList)
+		self.ui.pushButton_equipmentAdd.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
+		
+		for item in self.__storage.equipment:
+			listItem = QListWidgetItem()
+			listItem.setText(item)
+			#listItem.setIcon(QIcon(Config.weaponIcons[category]))
+			#listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
+			self.ui.listWidget_equipmentStore.addItem(listItem)
+
+		self.ui.pushButton_equipmentAdd.clicked.connect(self.addEquipment)
+		self.ui.listWidget_equipmentStore.itemDoubleClicked.connect(self.addEquipment)
+		self.ui.pushButton_equipmentRemove.clicked.connect(self.removeEquipment)
+		self.ui.listWidget_equipmentInventory.itemDoubleClicked.connect(self.removeEquipment)
+		self.ui.pushButton_equipmentAddCustom.clicked.connect(self.addCustomEquipment)
+		self.__character.equipmentChanged.connect(self.refillEquipmentInventory)
+		self.__character.equipmentChanged.connect(self.refillEquipmentStore)
+		self.__character.equipmentChanged.connect(self.checkButtonEnabledEquipment)
 
 
-	def takeWeapon(self):
+	def addWeapon(self):
 		"""
-		Der Charakter erhält die in der in listWidget_store markierte Waffe.
+		Der Charakter erhält die in der in listWidget_weaponStore markierte Waffe.
 		"""
 
-		item = self.ui.listWidget_store.takeItem(self.ui.listWidget_store.row(self.ui.listWidget_store.currentItem()))
+		item = self.ui.listWidget_weaponStore.takeItem(self.ui.listWidget_weaponStore.row(self.ui.listWidget_weaponStore.currentItem()))
 		if item:
-			self.ui.listWidget_inventory.addItem(item)
-			## Knöpfe aktivieren/deaktivieren
-			self.ui.pushButton_give.setEnabled(True)
-			if self.ui.listWidget_store.count() < 1:
-				self.ui.pushButton_take.setEnabled(False)
-
+			self.ui.listWidget_weaponInventory.addItem(item)
 			for category in Config.weaponsColor.items():
 				if item.data(Qt.BackgroundRole).name() == QColor(category[1]).name():
 					self.saveWeapon(category[0], item.text())
 					break
 
 
-	def giveWeapon(self):
+	def removeWeapon(self):
 		"""
-		Der Charakter verliert die in der in listWidget_inventory markierte Waffe.
+		Der Charakter verliert die in der in listWidget_weaponInventory markierte Waffe.
 		"""
 
-		item = self.ui.listWidget_inventory.takeItem(self.ui.listWidget_inventory.row(self.ui.listWidget_inventory.currentItem()))
+		item = self.ui.listWidget_weaponInventory.takeItem(self.ui.listWidget_weaponInventory.row(self.ui.listWidget_weaponInventory.currentItem()))
 		if item:
-			self.ui.listWidget_store.addItem(item)
-			## Knöpfe aktivieren/deaktivieren
-			self.ui.pushButton_take.setEnabled(True)
-			if self.ui.listWidget_inventory.count() < 1:
-				self.ui.pushButton_give.setEnabled(False)
-
+			self.ui.listWidget_weaponStore.addItem(item)
 			for category in Config.weaponsColor.items():
 				if item.data(Qt.BackgroundRole).name() == QColor(category[1]).name():
 					self.deleteWeapon(category[0], item.text())
@@ -148,10 +154,10 @@ class ItemWidget(QWidget):
 		"""
 
 		item = None
-		for i in xrange(self.ui.listWidget_store.count()):
-			if self.ui.listWidget_store.item(i).text() == weapon and self.ui.listWidget_store.item(i).data(Qt.BackgroundRole).name() == QColor(Config.weaponsColor[category]).name():
-				item = self.ui.listWidget_store.takeItem(i)
-				self.ui.listWidget_inventory.addItem(item)
+		for i in xrange(self.ui.listWidget_weaponStore.count()):
+			if self.ui.listWidget_weaponStore.item(i).text() == weapon and self.ui.listWidget_weaponStore.item(i).data(Qt.BackgroundRole).name() == QColor(Config.weaponsColor[category]).name():
+				item = self.ui.listWidget_weaponStore.takeItem(i)
+				self.ui.listWidget_weaponInventory.addItem(item)
 				break
 
 
@@ -161,10 +167,10 @@ class ItemWidget(QWidget):
 		"""
 
 		item = None
-		for i in xrange(self.ui.listWidget_inventory.count()):
-			if self.ui.listWidget_inventory.item(i).text() == weapon and self.ui.listWidget_inventory.item(i).data(Qt.BackgroundRole).name() == QColor(Config.weaponsColor[category]).name():
-				item = self.ui.listWidget_inventory.takeItem(i)
-				self.ui.listWidget_store.addItem(item)
+		for i in xrange(self.ui.listWidget_weaponInventory.count()):
+			if self.ui.listWidget_weaponInventory.item(i).text() == weapon and self.ui.listWidget_weaponInventory.item(i).data(Qt.BackgroundRole).name() == QColor(Config.weaponsColor[category]).name():
+				item = self.ui.listWidget_weaponInventory.takeItem(i)
+				self.ui.listWidget_weaponStore.addItem(item)
 				break
 
 
@@ -182,6 +188,22 @@ class ItemWidget(QWidget):
 		"""
 
 		self.__character.deleteWeapon(category, weapon)
+
+
+	def checkButtonEnabledWeapons(self):
+		"""
+		Aktiviert/Deaktiviert die Knöpfe für das Übertragen von Waffen.
+		"""
+
+		if self.ui.listWidget_weaponStore.count() < 1:
+			self.ui.pushButton_weaponAdd.setEnabled(False)
+		else:
+			self.ui.pushButton_weaponAdd.setEnabled(True)
+
+		if self.ui.listWidget_weaponInventory.count() < 1:
+			self.ui.pushButton_weaponRemove.setEnabled(False)
+		else:
+			self.ui.pushButton_weaponRemove.setEnabled(True)
 
 
 	def takeArmor(self):
@@ -226,45 +248,77 @@ class ItemWidget(QWidget):
 			self.ui.checkBox_armorDedicated.setVisible(False)
 
 
-	def addItem(self):
+	def addCustomEquipment(self):
 		"""
 		Fügt dem Inventar des Charakters einen Gegenstand hinzu.
+
+		\todo Nach dem Drücken des Hinzufügen.Knopfes, sollte der Fokus wieder auf das LineEdit gehen.
 		"""
 
-		newItem = self.ui.lineEdit_newItem.text()
+		newItem = self.ui.lineEdit_equipmentCustom.text()
 		if newItem:
-			#listItem = QListWidgetItem()
-			#listItem.setText(newItem)
-			##listItem.setIcon(QIcon(Config.weaponIcons[category]))
-			#listItem.setFlags(listItem.flags() | Qt.ItemIsEditable)
-			#self.ui.listWidget_items.addItem(listItem)
-			self.__character.addItem(newItem)
+			self.__character.addEquipment(newItem)
 			## Textzeile löschen
-			self.ui.lineEdit_newItem.setText("")
+			self.ui.lineEdit_equipmentCustom.setText("")
 
 
-	def removeItem(self):
+	def addEquipment(self):
 		"""
-		Entfernt einen Gegenstand aus dem Inventar des Charakters.
+		Der Charakter erhält den in \ref listWidget_equipmentStore markierte Ausrüstungsgegenstand.
 		"""
 
-		#oldItem = self.ui.listWidget_items.takeItem(self.ui.listWidget_items.currentRow())
-		self.__character.delItem(self.ui.listWidget_items.currentItem().text())
-		#del oldItem
+		item = self.ui.listWidget_equipmentStore.takeItem(self.ui.listWidget_equipmentStore.row(self.ui.listWidget_equipmentStore.currentItem()))
+		if item:
+			self.__character.addEquipment(item.text())
 
 
-	def refillItemList(self, itemList):
+	def removeEquipment(self):
+		"""
+		Entfernt einen Gegenstand aus dem Inventar des Charakters. Wenn er aus der Liste der vorgeschlagenen Ausrüsrtung stammt, wird er dort wieder hinzugefügt.
+		"""
+
+		if self.ui.listWidget_equipmentInventory.currentItem():
+			item = self.ui.listWidget_equipmentInventory.takeItem(self.ui.listWidget_equipmentInventory.row(self.ui.listWidget_equipmentInventory.currentItem()))
+			self.__character.delEquipment(item.text())
+
+
+	def refillEquipmentInventory(self, itemList):
 		"""
 		Schreibt alle Gegenstände aus dem Charakterspeicher in die Liste
 		"""
 
-		self.ui.listWidget_items.clear()
+		self.ui.listWidget_equipmentInventory.clear()
 		for item in itemList:
 			listItem = QListWidgetItem()
 			listItem.setText(item)
 			#listItem.setIcon(QIcon(Config.weaponIcons[category]))
 			#listItem.setFlags(listItem.flags() | Qt.ItemIsEditable)
-			self.ui.listWidget_items.addItem(listItem)
+			self.ui.listWidget_equipmentInventory.addItem(listItem)
+
+
+	def refillEquipmentStore(self, itemList):
+		"""
+		Löschte alle Gegenstände, die im Inventar des Charakters sind aus dem Laden.
+		"""
+
+		self.ui.listWidget_equipmentStore.clear()
+		for item in self.__storage.equipment:
+			if item not in itemList:
+				listItem = QListWidgetItem()
+				listItem.setText(item)
+				listItem = self.ui.listWidget_equipmentStore.addItem(listItem)
+
+
+	def checkButtonEnabledEquipment(self):
+		"""
+		Aktiviert/Deaktiviert die Knöpfe für das Übertragen von Ausrüstung.
+		"""
+
+		if self.ui.listWidget_equipmentStore.count() < 1:
+			self.ui.pushButton_equipmentAdd.setEnabled(False)
+		else:
+			self.ui.pushButton_equipmentAdd.setEnabled(True)
+
 
 
 

@@ -242,6 +242,18 @@ class StorageTemplate(QObject):
 	# }
 	__armor = {}
 
+	# Eine Liste vorgeschlagenen Equipments
+	#
+	# {
+	# 	equipment1: {
+	# 		"durability": value,
+	# 		"size": value,
+	# 		"cost": value
+	# 	},
+	# 	...
+	# }
+	__equipment = {}
+
 #QList< cv_Species > StorageTemplate::v_species;
 #QList< cv_SpeciesTitle > StorageTemplate::v_titles;
 #QList< Trait* > StorageTemplate::v_traits;
@@ -799,4 +811,23 @@ class StorageTemplate(QObject):
 		self.__armor[name] = armorData
 
 		#Debug.debug(self.__armor)
+
+
+	@property
+	def equipment(self):
+		"""
+		Vorgeschlagene Ausrüstung.
+		"""
+
+		return self.__equipment
+
+
+	def addEquipment( self, name, data ):
+		"""
+		Fügt einen Ausrüstungsgegenstand hinzu. Falls ein Gegenstand dieses Namens schon vorhanden ist, werden die Daten überschrieben.
+		"""
+
+		self.__equipment[name] = data
+
+		#Debug.debug(self.__equipment)
 

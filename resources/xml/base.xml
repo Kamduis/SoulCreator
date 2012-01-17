@@ -1177,5 +1177,20 @@
 		<Armor fallback="True">
 			<armor name="Full Plate" general="3" firearms="0" defense="-3" speed="-3"/>
 		</Armor>
+		<Equipment>
+			<equipment name ="Automotive Tools" durability="3" size="2" cost="1"/>
+			<equipment name ="Climbing Gear" durability="2" size="2" cost="2"/>
+			<equipment name ="Demolitions Kit" durability="2" size="2" cost="3"/>
+			<equipment name ="First-Aid Kit" durability="1" size="2" cost="1"/>
+			<equipment name ="Flashlight" durability="1" size="1" cost="0"/>
+			<equipment name ="Gasmask" durability="1" size="2" cost="2"/>
+			<equipment name ="Gunsmithing Kit" durability="2" size="2" cost="2"/>
+			<equipment name ="Lock Picks" durability="2" size="1" cost="3"/>
+			<equipment name ="Nightvision Goggles" durability="1" size="1" cost="2"/>
+			<equipment name ="Silencer" durability="3" size="1" cost="3"/>
+			<equipment name ="Surveillance Equipment" durability="1" size="3" cost="3"/>
+			<equipment name ="Sights, Laser" durability="1" size="1" cost="3"/>
+			<equipment name ="Sights, Telescopic" durability="1" size="1" cost="3"/>
+		</Equipment>
 	</items>
 </SoulCreator>

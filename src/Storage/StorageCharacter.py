@@ -73,7 +73,7 @@ class StorageCharacter(QObject):
 	weaponRemoved = Signal(str, str)
 	weaponsChanged = Signal()
 	armorChanged = Signal(str, bool)
-	itemsChanged = Signal(object)
+	equipmentChanged = Signal(object)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -138,7 +138,7 @@ class StorageCharacter(QObject):
 			"name": "",
 			"dedicated": False,
 		}
-		self.__items = []
+		self.__equipment = []
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -213,7 +213,7 @@ class StorageCharacter(QObject):
 		self.pictureChanged.connect(self.setModified)
 		self.weaponsChanged.connect(self.setModified)
 		self.armorChanged.connect(self.setModified)
-		self.itemsChanged.connect(self.setModified)
+		self.equipmentChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -438,27 +438,27 @@ class StorageCharacter(QObject):
 
 
 	@property
-	def items(self):
+	def equipment(self):
 		"""
 		Gegenstände im Besitz des Charakters.
 		"""
 
-		return self.__items
+		return self.__equipment
 
-	def addItem(self, item):
-		if item not in self.__items:
-			self.__items.append(item)
-			self.itemsChanged.emit(self.__items)
+	def addEquipment(self, item):
+		if item not in self.__equipment:
+			self.__equipment.append(item)
+			self.equipmentChanged.emit(self.__equipment)
 
-	def delItem(self, item):
-		if item in self.__items:
-			self.__items.remove(item)
-			self.itemsChanged.emit(self.__items)
+	def delEquipment(self, item):
+		if item in self.__equipment:
+			self.__equipment.remove(item)
+			self.equipmentChanged.emit(self.__equipment)
 
-	def clearItems(self):
-		if self.__items:
-			self.__items = []
-			self.itemsChanged.emit(self.__items)
+	def clearEquipment(self):
+		if self.__equipment:
+			self.__equipment = []
+			self.equipmentChanged.emit(self.__equipment)
 
 
 
@@ -528,73 +528,6 @@ class StorageCharacter(QObject):
 		if self.__ageBecoming != age:
 			self.__ageBecoming = age
 			self.ageBecomingChanged.emit(age)
-
-
-	#def addTrait( self, typ, category, trait ):
-		#"""
-		#Fügt dem Speicher eine neue Eigenschaft hinzu.
-
-		#\note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
-
-		#\todo Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
-		#"""
-
-		#if typ not in self.__traits:
-			#self.__traits.setdefault(typ,{})
-
-		#if category not in self.__traits[typ]:
-			#self.__traits[typ].setdefault(category,[])
-
-		#self.__traits[typ][category].append(trait)
-
-		#return self.__traits[typ][category][:-1]
-
-
-	#def modifyTrait( self, typ, category, trait ):
-		#"""
-		#Ändert eine Eigenschaft im Speicher.
-		#"""
-
-		#for item in self.__traits[typ][category]:
-			#if trait["name"] == item["name"]:
-				#if item["value"] != trait["value"]:
-					#item["value"] = trait["value"]
-					#self.traitChanged.emit(item)
-				## Es fehlen noch "customText" und "Details"
-				#break
-
-
-#QList< cv_Derangement >* StorageCharacter::derangements() const {
-	#return &v_derangements;
-#}
-
-#QList< cv_Derangement* > StorageCharacter::derangements( cv_AbstractTrait::Category category ) const {
-	#QList< cv_Derangement* > list;
-
-	#for ( int i = 0; i < v_derangements.count(); ++i ) {
-		#if ( v_derangements.at( i ).category() == category ) {
-			#list.append( &v_derangements[i] );
-		#}
-	#}
-
-	#return list;
-#}
-
-#void StorageCharacter::addDerangement( cv_Derangement derang ) {
-	#if ( !derang.name().isEmpty() && !v_derangements.contains( derang ) ) {
-#// 		qDebug() << Q_FUNC_INFO << derang.name << derang.morality;
-		#v_derangements.append( derang );
-
-		#emit derangementsChanged();
-	#}
-#}
-
-#void StorageCharacter::removeDerangement( cv_Derangement derang ) {
-	#if ( v_derangements.contains( derang ) ) {
-		#v_derangements.removeAll( derang );
-		#emit derangementsChanged();
-	#}
-#}
 
 
 	def __getVirtue(self):
@@ -903,7 +836,7 @@ class StorageCharacter(QObject):
 
 		self.setArmor(name="")
 
-		self.clearItems()
+		self.clearEquipment()
 
 
 	def isModifed(self):
