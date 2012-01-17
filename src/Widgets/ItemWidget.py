@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QColor, QIcon, QListWidgetItem
+from PySide.QtGui import QWidget, QColor, QIcon, QListWidgetItem, QRadioButton, QButtonGroup
 
 from src.Config import Config
 from src.Debug import Debug
@@ -62,15 +62,31 @@ class ItemWidget(QWidget):
 				listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
 				self.ui.listWidget_store.addItem(listItem)
 
+		self.__buttonArmorDict = {}
+		self.__buttonGroup_armor = QButtonGroup(self)
+		## Natürlich muß auch die Wahl bestehen, keine Rüstung zu tragen. Dies ist zu Anfang gewählt.
+		radioButton = QRadioButton("None")
+		self.ui.layout_armor.addWidget(radioButton)
+		self.__buttonGroup_armor.addButton(radioButton)
+		radioButton.setChecked(True)
+		self.__buttonArmorDict[radioButton.text()] = radioButton
+		for armor in self.__storage.armor:
+			radioButton = QRadioButton(armor)
+			self.ui.layout_armor.addWidget(radioButton)
+			self.__buttonGroup_armor.addButton(radioButton)
+			self.__buttonArmorDict[radioButton.text()] = radioButton
+
 		self.ui.pushButton_give.setEnabled(False)
 
 		self.ui.pushButton_take.clicked.connect(self.takeWeapon)
 		self.ui.listWidget_store.itemDoubleClicked.connect(self.takeWeapon)
 		self.ui.pushButton_give.clicked.connect(self.giveWeapon)
 		self.ui.listWidget_inventory.itemDoubleClicked.connect(self.giveWeapon)
+		self.__buttonGroup_armor.buttonClicked.connect(self.takeArmor)
 
 		self.__character.weaponAdded.connect(self.moveToInventory)
 		self.__character.weaponRemoved.connect(self.moveToStore)
+		self.__character.armorChanged.connect(self.selectArmor)
 
 
 	def takeWeapon(self):
@@ -151,4 +167,21 @@ class ItemWidget(QWidget):
 		"""
 
 		self.__character.deleteWeapon(category, weapon)
+
+
+	def takeArmor(self, armor):
+		"""
+		Speichert die gewählte Rüstung im Charakter-Speicher.
+		"""
+
+		self.__character.armor = armor.text()
+
+
+	def selectArmor(self, armor):
+		"""
+		Wählt den Knopf mit der Passenden Bezeichnung aus.
+		"""
+
+		if armor in self.__buttonArmorDict:
+			self.__buttonArmorDict[armor].setChecked(True)
 

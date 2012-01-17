@@ -229,6 +229,19 @@ class StorageTemplate(QObject):
 	# }
 	__weapons = {}
 
+	# Eine Liste der Rüstungen.
+	#
+	# {
+	# 	armor1: {
+	# 		"general": value,
+	# 		"firearms": value,
+	# 		"defense": value,
+	# 		"speed": value
+	# 	},
+	# 	...
+	# }
+	__armor = {}
+
 #QList< cv_Species > StorageTemplate::v_species;
 #QList< cv_SpeciesTitle > StorageTemplate::v_titles;
 #QList< Trait* > StorageTemplate::v_traits;
@@ -643,7 +656,7 @@ class StorageTemplate(QObject):
 
 		Die Eigenschaft sollte im Format eines dict daherkommen.
 		"""
-		
+
 		if typ not in self.__traits:
 			self.__traits.setdefault(typ,{})
 
@@ -758,41 +771,32 @@ class StorageTemplate(QObject):
 
 	def addWeapon( self, category, name, weaponData ):
 		"""
-		Fügt eine Waffe hinzu. Falls eine Waffe dieses Namens in der angebenen Kategorie (melee, thrown, ranged) schon vorhanden wird, werden die DAten der vorhandenen Waffe überschrieben.
+		Fügt eine Waffe hinzu. Falls eine Waffe dieses Namens in der angebenen Kategorie (melee, thrown, ranged) schon vorhanden ist, werden die Daten der vorhandenen Waffe überschrieben.
 		"""
-		
-		# {
-		# 	"melee": {
-		# 		weapon1: {
-		# 			"damage": value,
-		# 			"size": value,
-		# 			"durability": value,
-		# 		},
-		# 		...
-		# 	},
-		# 	"thrown": {
-		# 		weapon1: {
-		# 			"damage": value,
-		# 			"size": value,
-		# 			"durability": value,
-		# 		},
-		# 		...
-		# 	"ranged": {
-		# 		weapon1: {
-		# 			"damage": value,
-		# 			"range": value,
-		# 			"capacity": value,
-		# 			"strength": value,
-		# 			"size": value,
-		# 			"durability": value,
-		# 		},
-		# 		...
-		# 	},
-		# }
+
 		if category not in self.__weapons:
 			self.__weapons.setdefault(category, {})
 
 		self.__weapons[category][name] = weaponData
 
 		#Debug.debug(self.__weapons)
+
+
+	@property
+	def armor(self):
+		"""
+		Gibt eine Liste aller Rüstungen zurück.
+		"""
+
+		return self.__armor
+
+
+	def addArmor( self, name, armorData ):
+		"""
+		Fügt eine Rüstung hinzu. Falls eine Rüstung dieses Namens schon vorhanden ist, werden die Daten der vorhandenen Rüstung überschrieben.
+		"""
+
+		self.__armor[name] = armorData
+
+		#Debug.debug(self.__armor)
 

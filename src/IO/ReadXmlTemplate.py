@@ -173,7 +173,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				typ = self.name()
 				typDescriptor = self.attributes().value("name")
 				#Debug.debug(typ)
-					
+
 				if( typ == "Virtue" or typ == "Vice" ):
 					self.readCharacteristics( typ )
 				elif(typ == "Group" ):
@@ -565,6 +565,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 			if( self.isStartElement() ):
 				if( self.name() == "Weapons" ):
 					self.readWeapons()
+				elif( self.name() == "Armor" ):
+					self.readArmor()
 				else:
 					self.readUnknownElement()
 
@@ -614,5 +616,31 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.readUnknownElement()
 				else:
 					self.readUnknownElement()
-		
+
+
+	def readArmor(self):
+		"""
+		Einlesen der Rüstungen.
+		"""
+
+		while( not self.atEnd() ):
+			self.readNext()
+
+			if( self.isEndElement() ):
+				break
+
+			if( self.isStartElement() ):
+				if( self.name() == "armor" ):
+					armorName = self.attributes().value("name")
+					armorData = {
+						"general": int(self.attributes().value("general")),
+						"firearms": int(self.attributes().value("firearms")),
+						"defense": int(self.attributes().value("defense")),
+						"speed": int(self.attributes().value("speed")),
+					}
+					self.__storage.addArmor( armorName, armorData )
+					self.readUnknownElement()
+				else:
+					self.readUnknownElement()
+
 

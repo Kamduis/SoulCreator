@@ -179,11 +179,11 @@ class DrawSheet(QObject):
 		if self.__character.species != "Human":
 			self.__printer.newPage()
 			self.drawSheet_2()
-		
+
 		self.__painter.restore()
 
 		self.__painter.end()
-		
+
 
 	def drawSheet_1(self):
 		"""
@@ -706,7 +706,7 @@ class DrawSheet(QObject):
 					self.__character.organisation,
 				],
 			]
-			
+
 			if self.__character.species == "Changeling":
 				text[2][0] = "{} ({}):".format(self.__storage.breedTitle(self.__character.species), "Kith")
 				textCharacter[2][0] ="{} ({}):".format(self.__character.breed, "???")
@@ -1066,11 +1066,18 @@ class DrawSheet(QObject):
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
 
+		generalArmor = 0
+		firearmsArmor = 0
+
+		if self.__character.armor in self.__storage.armor:
+			generalArmor = self.__storage.armor[self.__character.armor]["general"]
+			firearmsArmor = self.__storage.armor[self.__character.armor]["firearms"]
+
 		verticalPos = offsetV
 		for item in advantages:
 			self.__drawTextWithValue(offsetH, verticalPos, width, item[0], item[1])
 			verticalPos += textHeight
-		self.__drawTextWithValue(offsetH, verticalPos, width, self.tr("Armor"), "{general}/{firearms}".format(general=self.__character.armor[0], firearms=self.__character.armor[1]))
+		self.__drawTextWithValue(offsetH, verticalPos, width, self.tr("Armor"), "{general}/{firearms}".format(general=generalArmor, firearms=firearmsArmor))
 		verticalPos += textHeight
 
 		self.__painter.restore()
@@ -1106,7 +1113,7 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 		self.__painter.setFont(self.__fontMain_tiny)
-		
+
 		fontMetrics = QFontMetrics(self.__painter.font())
 
 		# Die letzten drei Gesundheitsstufen haben Wundabzüge.
@@ -1306,7 +1313,7 @@ class DrawSheet(QObject):
 				[ u"Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[4]) ],
 			],
 		]
-		
+
 		listLen = []
 		i = 0
 		for item in shapesAttributes:
@@ -1317,13 +1324,20 @@ class DrawSheet(QObject):
 				j += 1
 			i += 1
 
+		generalArmor = 0
+		firearmsArmor = 0
+
+		if self.__character.armor in self.__storage.armor:
+			generalArmor = self.__storage.armor[self.__character.armor]["general"]
+			firearmsArmor = self.__storage.armor[self.__character.armor]["firearms"]
+
 		## Advantages
 		advantages = [
 			[ self.tr("Size"), self.__calc.calcSize(), ],
 			[ self.tr("Initiative"), self.__calc.calcInitiative(), ],
 			[ self.tr("Speed"), self.__calc.calcSpeed(), ],
 			[ self.tr("Defense"), self.__calc.calcDefense(), ],
-			[ self.tr("Armor"), "{general}/{firearms}".format(general=self.__character.armor[0], firearms=self.__character.armor[1]), ],
+			[ self.tr("Armor"), "{general}/{firearms}".format(general=generalArmor, firearms=firearmsArmor), ],
 			[ self.tr("Perception"), u"±0", ],
 		]
 		shapesAdvantages = [
@@ -1368,7 +1382,7 @@ class DrawSheet(QObject):
 		]
 
 		vSpace = fontSubHeadingHeight + max(listLen) * fontHeight + fontHeight
-		
+
 		i = 0
 		for item in shapesAdvantages:
 			j = 0
@@ -1602,7 +1616,7 @@ class DrawSheet(QObject):
 				[ Config.shapesWerewolf[3], "{} {}".format(werwolfHeights[3], "m"), "{} {}".format(werwolfWeights[3], "kg"), ],
 				[ Config.shapesWerewolf[4], "{} {}".format(werwolfHeights[4], "m"), "{} {}".format(werwolfWeights[4], "kg"), ],
 			]
-			
+
 			i = 0
 			posY = offsetV + height - len(shapeMeasurements[0]) * fontHeight
 			lengthX = width / len(shapeMeasurements)

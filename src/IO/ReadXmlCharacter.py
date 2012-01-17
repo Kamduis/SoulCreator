@@ -43,7 +43,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 
 	exceptionRaised = Signal(str, bool)
-	
+
 
 	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
@@ -56,7 +56,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 		Startet den Lesevorgang.
 		"""
-		
+
 		## Wir erzeugen eine neue Trait-Liste aus der aktuellen Trait-Liste des Charakters. Diese wird dann entsprechend des gespeicherten Datei verändert und dann in den Charakter geschrieben. Damit sende ich nur ein Signal, daß die Eigenschaften verändert würden.
 		#self.__traits = self.__character.traits
 
@@ -89,7 +89,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 		Es wird zwischen den einzelnen Eigenscahften unterschieden und je nach Typ unterschiedlich eingelesen.
 		"""
-		
+
 		while ( not self.atEnd() ):
 			self.readNext()
 
@@ -146,8 +146,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 				elif ( elementName == "weapons" ):
 					self.readWeapons()
 				elif ( elementName == "armor" ):
-					txt = self.readElementText()
-					self.__character.armor = [int(n) for n in txt.split(Config.sepChar)]
+					self.__character.armor = self.readElementText()
 				elif ( elementName == "picture" ):
 					imageData = QByteArray.fromBase64(str(self.readElementText()))
 					image = QPixmap()
@@ -163,10 +162,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 	def readIdentities(self):
 		"""
 		Liest die Identitäten des Charakters.
-		
+
 		\todo Derzeit kann nur eine Identität eingelesen werden, da das Programm nur eine Identität unterstüzt.
 		"""
-		
+
 		while ( not self.atEnd() ):
 			self.readNext()
 
@@ -261,7 +260,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 		Liest die Kategorie der Eigenschaft aus und ruft die Funktion auf, welche die tatsächliche Eigenschaftsdaten ausliest.
 		"""
-		
+
 		while ( not self.atEnd() ):
 			self.readNext()
 
@@ -281,7 +280,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 		Liest die Daten der einzelnen Eigenschaften aus dem gespeicherten Charakter aus.
 		"""
-		
+
 		while ( not self.atEnd() ):
 			self.readNext()
 

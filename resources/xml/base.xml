@@ -1071,7 +1071,7 @@
 				<description>Roll Resolve+Composure to avoid a bout of vanity. On a failed roll, you do not work and play well with others -- even if the victory that brings on a bout of narcissism was partly won with their aid. For the remainder of the scene, when called upon to aid in a task you do so only half-heartedly, unless it's a task focused on you or your own needs or wants. You suffer a −3 penalty when participating in teamwork efforts. And you're such a self-obsessed bore that Social rolls all suffer a −1 penalty.</description>
 				<item name="Megalomania">
 					<description>The effects of Narcissism apply, except that the penalties intensify by 1. You are also highly competitive. You cannot allow yourself to fail a contest (even a contested roll). If you do, you obsess about it and work to arrange a rematch when it's most beneficial for you. If, for example, you fail to pick a lock while an ally succeeds, you don't let it go. You constantly insist that you did the job and that your successor took the glory, and demand that similar efforts be tried again, even under inappropriate circumstances such as at an office or restaurant.
-		
+
 					If you ever lose a contest to someone you feel is socially inferior, you lose 1 point of Willpower due to shame and self-loathing (which is at the heart of your megalomania; you secretly fear that you're a fraud).</description>
 				</item>
 			</item>
@@ -1103,7 +1103,7 @@
 				<description>Your trust is undermined for the remainder of the scene, regardless of whether or not the person or persons who did you wrong meant any harm. You question everyone's sincerity and doubts that anyone tries to help you, even if someone saves your life. You suffers a −1 penalty on all Social rolls. Note that, even though you are suspicious, you can still be taken in by con men and hucksters. You get no special bonus to resist their attempts to sway you even though you suspect them of being as bad as everyone else.</description>
 				<item name="Paranoia">
 					<description>You automatically suffer a −2 penalty on Social rolls. You are distrustful and wary of everyone, even close friends and family. The slightest hint of suspicious behavior is enough to provoke a Resolve+Composure roll to retain control (made at a −2 penalty). A failed roll indicates that you flee or attack an offender.
-		
+
 					Additionally, among Kindred, the slightest hint that someone might be an enemy can provoke a frenzy check, with the number of successes required set by how threatening the trigger event seems. A casual remark that seems to show someone knows a bit about your activities might require only 1 success to avoid frenzy. Finding an intruder in your haven would almost certainly require 5.</description>
 				</item>
 			</item>
@@ -1161,5 +1161,9 @@
 				<weapon name ="Thunder-5" damage="2" ranges="15/30/60" capacity="5" strength="2" size="1/J"/>
 			</Category>
 		</Weapons>
+		<Armor>
+			<armor name="Bulletproof Vest" general="1" firearms="3" defense="-1" speed="-1"/>
+			<armor name="Flak Jacket" general="0" firearms="1" defense="-0" speed="-0"/>
+		</Armor>
 	</items>
 </SoulCreator>

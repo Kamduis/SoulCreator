@@ -65,8 +65,8 @@ class AdvantagesWidget(QWidget):
 		fontMetrics = QFontMetrics(self.font())
 		textRect = fontMetrics.boundingRect("0")
 
-		self.ui.spinBox_armorGeneral.setMaximumWidth(textRect.width() + Config.spinBoxNoTextWidth)
-		self.ui.spinBox_armorFirearms.setMaximumWidth(self.ui.spinBox_armorGeneral.maximumWidth())
+		#self.ui.spinBox_armorGeneral.setMaximumWidth(textRect.width() + Config.spinBoxNoTextWidth)
+		#self.ui.spinBox_armorFirearms.setMaximumWidth(self.ui.spinBox_armorGeneral.maximumWidth())
 
 		self.ui.dots_health.setReadOnly( True )
 
@@ -91,8 +91,8 @@ class AdvantagesWidget(QWidget):
 		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(self.setShapeDefense)
 		self.__character.speciesChanged.connect(self.setShapeHealth)
 		self.healthChanged.connect(self.setShapeHealth)
-		self.ui.spinBox_armorGeneral.valueChanged.connect(self.saveArmor)
-		self.ui.spinBox_armorFirearms.valueChanged.connect(self.saveArmor)
+		#self.ui.spinBox_armorGeneral.valueChanged.connect(self.saveArmor)
+		#self.ui.spinBox_armorFirearms.valueChanged.connect(self.saveArmor)
 		self.__character.armorChanged.connect(self.updateArmor)
 ##// 	connect( character, SIGNAL( traitChanged( cv_Trait ) ), self, SLOT( changeSuper( cv_Trait ) ) );
 ##// 	connect( dotsSuper, SIGNAL( valueChanged( int ) ), self, SLOT( emitSuperChanged( int ) ) );
@@ -236,7 +236,7 @@ class AdvantagesWidget(QWidget):
 		"""
 		Benennt die Übernatürlichen Eigenschaften je nach Spezies um.
 		"""
-		
+
 		self.ui.label_powerstat.setText( self.__storage.powerstatName(species) )
 		self.ui.label_fuel.setText( self.__storage.fuelName(species) )
 
@@ -253,22 +253,29 @@ class AdvantagesWidget(QWidget):
 		self.ui.label_fuelPerTurn.setText( self.tr( "{}/Turn".format( perTurn ) ))
 
 
-	def saveArmor(self):
-		"""
-		Schreibe die veränderte Rüstung in den Charkater.
-		"""
+	#def saveArmor(self):
+		#"""
+		#Schreibe die veränderte Rüstung in den Charkater.
+		#"""
 
-		armor = [
-			self.ui.spinBox_armorGeneral.value(),
-			self.ui.spinBox_armorFirearms.value(),
-		]
-		self.__character.armor = armor
+		#armor = [
+			#self.ui.spinBox_armorGeneral.value(),
+			#self.ui.spinBox_armorFirearms.value(),
+		#]
+		#self.__character.armor = armor
 
 	def updateArmor( self, armor ):
 		"""
 		Schreibe die veränderte Rüstung in das Widget.
 		"""
 
-		self.ui.spinBox_armorGeneral.setValue(armor[0])
-		self.ui.spinBox_armorFirearms.setValue(armor[1])
+		general = 0
+		firearms = 0
+
+		if armor in self.__storage.armor:
+			general = self.__storage.armor[armor]["general"]
+			firearms = self.__storage.armor[armor]["firearms"]
+
+		self.ui.label_armorGeneral.setNum(general)
+		self.ui.label_armorFirearms.setNum(firearms)
 

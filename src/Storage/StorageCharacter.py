@@ -59,7 +59,6 @@ class StorageCharacter(QObject):
 	powerstatChanged = Signal(int)
 	moralityChanged = Signal(int)
 	derangementChanged = Signal(int, str)
-	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
 	#traitsChanged = Signal(object)
 	ageChanged = Signal(int)
@@ -73,6 +72,7 @@ class StorageCharacter(QObject):
 	weaponAdded = Signal(str, str)
 	weaponRemoved = Signal(str, str)
 	weaponsChanged = Signal()
+	armorChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -131,9 +131,9 @@ class StorageCharacter(QObject):
 		self.__description = ""
 		self.__powerstat = 0
 		self.__morality = 0
-		self.__armor = [0, 0]
 		self.__era = ""
 		self.__picture = None
+		self.__armor = ""
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -184,7 +184,7 @@ class StorageCharacter(QObject):
 						# Wenn sich eine Eigenschaft ändert, gilt der Charakter als modifiziert.
 						trait.traitChanged.connect(self.setModified)
 
-					
+
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
@@ -299,14 +299,14 @@ class StorageCharacter(QObject):
 		"""
 		Gibt die Spezies des Charakters aus.
 		"""
-		
+
 		return self.__species
 
 	def setSpecies( self, species ):
 		"""
 		Legt die Spezies des Charakters fest.
 		"""
-		
+
 		if ( self.__species != species ):
 			self.__species = species
 			#Debug.debug("Spezies in Speicher verändert zu {}!".format(species))
@@ -367,7 +367,7 @@ class StorageCharacter(QObject):
 		"""
 		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
 		"""
-		
+
 		return self.__identities
 
 
@@ -416,11 +416,27 @@ class StorageCharacter(QObject):
 			self.weaponRemoved.emit(category, weapon)
 
 
+	@property
+	def armor(self):
+		"""
+		Die Rüstung (Name) des Charakters
+		"""
+
+		return self.__armor
+
+	@armor.setter
+	def armor(self, armor):
+		if self.__armor != armor:
+			self.__armor = armor
+			self.armorChanged.emit(armor)
+
+
+
 	#def insertIdentity( self, index, identity ):
 		#"""
 		#Fügt eine neue Identität an der angegebenen Stelle ein.
 		#"""
-		
+
 		#self.__identities.insert( index, identity )
 		#self.identityChanged.emit( identity )
 
@@ -428,14 +444,14 @@ class StorageCharacter(QObject):
 		#"""
 		#Hängt eine neue Identität an die Liste aller Identitäten des Charkaters an.
 		#"""
-		
+
 		#self.__identities.append( identity )
 		#self.identityChanged.emit( identity )
 
 	#def setRealIdentity( self, identity ):
 		#"""
 		#Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer Index 0 in der \ref self.__identities -Liste
-		
+
 		#\todo Momentan ist dies die einzige identität, die von diesem Programm genutzt wird.
 		#"""
 
@@ -487,9 +503,9 @@ class StorageCharacter(QObject):
 	#def addTrait( self, typ, category, trait ):
 		#"""
 		#Fügt dem Speicher eine neue Eigenschaft hinzu.
-		 
+
 		#\note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
-		 
+
 		#\todo Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
 		#"""
 
@@ -771,7 +787,7 @@ class StorageCharacter(QObject):
 	def setPowerstat( self, value ):
 		"""
 		Verändert den Wert des Super-Attributs.
-		
+
 		Bei einer Veränderung wird das Signal powerstatChanged() ausgesandt.
 		"""
 
@@ -792,7 +808,7 @@ class StorageCharacter(QObject):
 	def setMorality( self, value ):
 		"""
 		Verändert den Wert der Moral.
-		
+
 		Bei einer Veränderung wird das Signal moralityChanged() ausgesandt.
 		"""
 
@@ -804,34 +820,34 @@ class StorageCharacter(QObject):
 	morality = property(__getMorality, setMorality)
 
 
-	def __getArmor(self):
-		"""
-		Gibt den Wert der getragenen Rüstung aus. Zurückgegeben wird eine Liste mit zwei EInträgen.
-		
-		Die erste Zahl stellt den Rüstungswert gegen alle Angriffe mit Ausnahme von Schußwaffen und Bögen dar.
+	#def __getArmor(self):
+		#"""
+		#Gibt den Wert der getragenen Rüstung aus. Zurückgegeben wird eine Liste mit zwei EInträgen.
 
-		Die zweite Zahl stellt dagegen den Rüstungswert gegen Schußwaffen und Bögen dar.
-		"""
+		#Die erste Zahl stellt den Rüstungswert gegen alle Angriffe mit Ausnahme von Schußwaffen und Bögen dar.
 
-		return self.__armor
+		#Die zweite Zahl stellt dagegen den Rüstungswert gegen Schußwaffen und Bögen dar.
+		#"""
 
-	def __setArmor( self, armor ):
-		"""
-		Verändert den Wert der Rüstung.
+		#return self.__armor
 
-		Es muß eine Liste mit zwei Elementen übergeben werden.
-		
-		Bei einer Veränderung wird das Signal armorChanged() ausgesandt.
-		"""
+	#def __setArmor( self, armor ):
+		#"""
+		#Verändert den Wert der Rüstung.
 
-		if len(armor) == 2:
-			if self.__armor != armor:
-				self.__armor = armor
-				self.armorChanged.emit( self.__armor )
-		else:
-			raise ErrListLength(len(self.__armor), len(armor))
+		#Es muß eine Liste mit zwei Elementen übergeben werden.
 
-	armor = property(__getArmor, __setArmor)
+		#Bei einer Veränderung wird das Signal armorChanged() ausgesandt.
+		#"""
+
+		#if len(armor) == 2:
+			#if self.__armor != armor:
+				#self.__armor = armor
+				#self.armorChanged.emit( self.__armor )
+		#else:
+			#raise ErrListLength(len(self.__armor), len(armor))
+
+	#armor = property(__getArmor, __setArmor)
 
 
 	def resetCharacter(self):

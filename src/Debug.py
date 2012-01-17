@@ -41,7 +41,7 @@ class Debug():
 		Gibt einen Text aus, wobei der Ort des Aufrufs dieser Funktion vorangestellt ist.
 		"""
 
-		strPrnt = " ".join([unicode(item) for item in args])
+		strPrnt = " ".join([str(item) for item in args])
 
 		if GlobalState.isDebug:
 			print("{:<78}\tl. {:<4}\t{:<18}\n\t{}".format(inspect.stack()[1][1], inspect.stack()[1][2], inspect.stack()[1][3], strPrnt))

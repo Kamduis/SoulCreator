@@ -44,7 +44,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
 		QXmlStreamWriter.__init__(self)
-		
+
 		self.__character = character
 
 		self.setAutoFormatting( True )
@@ -54,7 +54,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		"""
 		Schreibt die veränderten Charakteristika in die Datei.
 		"""
-		
+
 		#Debug.debug("Speicherversuch")
 
 		f.open( QIODevice.WriteOnly )
@@ -114,7 +114,9 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 					self.writeTextElement( "weapon", weapon )
 				self.writeEndElement()
 			self.writeEndElement()
-		self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
+		if self.__character.armor:
+			self.writeTextElement( "armor", self.__character.armor )
+		#self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
 
 		if self.__character.picture:
 			imageData = QByteArray()
@@ -137,7 +139,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		#Debug.debug("Hallo!")
 		#for item in self.__character.traits["Attribute"]["Physical"].items():
 			#Debug.debug(item[0], item[1].value)
-		
+
 		for item in self.__character.traits:
 			startElementWritten_item = False
 			for subitem in self.__character.traits[item]:
@@ -191,7 +193,7 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		"""
 		Schreibt die Geistesstörungen in die Datei.
 		"""
-		
+
 		pass
 		#QList< cv_Derangement* > list;
 
