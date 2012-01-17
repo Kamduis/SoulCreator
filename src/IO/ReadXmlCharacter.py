@@ -151,6 +151,8 @@ class ReadXmlCharacter(QObject, ReadXml):
 					armorDedicated = ast.literal_eval(self.attributes().value( "dedicated" ))
 					armorName = self.readElementText()
 					self.__character.setArmor(armorName, armorDedicated)
+				elif ( elementName == "items" ):
+					self.readItems()
 				elif ( elementName == "picture" ):
 					imageData = QByteArray.fromBase64(str(self.readElementText()))
 					image = QPixmap()
@@ -256,6 +258,27 @@ class ReadXmlCharacter(QObject, ReadXml):
 				if ( elementName == "weapon" ):
 					name = self.readElementText()
 					self.__character.addWeapon(category, name)
+				else:
+					self.readUnknownElement()
+
+
+	def readItems(self):
+		"""
+		Liest die Besitztümer des Charakters.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+
+				if ( elementName == "item" ):
+					name = self.readElementText()
+					self.__character.addItem(name)
 				else:
 					self.readUnknownElement()
 

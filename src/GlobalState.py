@@ -33,6 +33,7 @@ class GlobalState(object):
 	"""
 
 	_isDebug = False
+	_isFallback = False
 
 	_shared = {}
 	def __new__(cls, *args, **kwargs):
@@ -50,6 +51,17 @@ class GlobalState(object):
 	@staticmethod
 	def isDebug(sw):
 		GlobalState._isDebug = sw
+
+
+	@property
+	@staticmethod
+	def isFallback():
+		return GlobalState._isFallback
+
+	@isDebug.setter
+	@staticmethod
+	def isFallback(sw):
+		GlobalState._isFallback = sw
 
 
 

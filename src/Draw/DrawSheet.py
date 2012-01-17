@@ -198,25 +198,25 @@ class DrawSheet(QObject):
 
 		self._drawBackground()
 
-		#if GlobalState.isDebug:
-			#image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
-			#if ( self.__character.species == "Human" ):
-				#pass
-			#elif ( self.__character.species == "Changeling" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" )
-			#elif ( self.__character.species == "Mage" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
-			#elif ( self.__character.species == "Vampire" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
-			#elif ( self.__character.species == "Werewolf" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
-			#else:
-				#raise ErrSpeciesNotExisting( self.__character.species )
+		if GlobalState.isDebug:
+			image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
+			if ( self.__character.species == "Human" ):
+				pass
+			elif ( self.__character.species == "Changeling" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" )
+			elif ( self.__character.species == "Mage" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
+			elif ( self.__character.species == "Vampire" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
+			elif ( self.__character.species == "Werewolf" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
+			else:
+				raise ErrSpeciesNotExisting( self.__character.species )
 
-			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
-			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			#target = QRectF( 0.0 - self.__borderFrameNorth, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
-			#self.__painter.drawImage(target, image, source)
+			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
+			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
+			target = QRectF( 0.0 - self.__borderFrameNorth, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
+			self.__painter.drawImage(target, image, source)
 
 		if GlobalState.isDebug:
 			self.__drawGrid()
@@ -394,7 +394,8 @@ class DrawSheet(QObject):
 		lengthX = 250
 		lengthY = self.__pageHeight - posY
 		if self.__character.species == "Human":
-			self._drawDerangements(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+			#self._drawDerangements(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+			self._drawInventory(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posX = 260
 		lengthX = 250
@@ -432,25 +433,25 @@ class DrawSheet(QObject):
 
 		self._drawBackground()
 
-		#if False and GlobalState.isDebug:
-			#image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
-			#if ( self.__character.species == "Human" ):
-				#pass
-			#elif ( self.__character.species == "Changeling" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Changeling-2.jpg" )
-			#elif ( self.__character.species == "Mage" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Mage-2.jpg" )
-			#elif ( self.__character.species == "Vampire" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Vampire-2.jpg" )
-			#elif ( self.__character.species == "Werewolf" ):
-				#image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-2.jpg" )
-			#else:
-				#raise ErrSpeciesNotExisting( self.__character.species )
+		if False and GlobalState.isDebug:
+			image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
+			if ( self.__character.species == "Human" ):
+				pass
+			elif ( self.__character.species == "Changeling" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Changeling-2.jpg" )
+			elif ( self.__character.species == "Mage" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Mage-2.jpg" )
+			elif ( self.__character.species == "Vampire" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Vampire-2.jpg" )
+			elif ( self.__character.species == "Werewolf" ):
+				image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-2.jpg" )
+			else:
+				raise ErrSpeciesNotExisting( self.__character.species )
 
-			### Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
-			#source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			#target = QRectF( 0.0 - self.__borderFrameWest, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
-			#self.__painter.drawImage(target, image, source)
+			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
+			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
+			target = QRectF( 0.0 - self.__borderFrameWest, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
+			self.__painter.drawImage(target, image, source)
 
 		if GlobalState.isDebug:
 			self.__drawGrid()
@@ -471,7 +472,8 @@ class DrawSheet(QObject):
 			posY = 820
 			lengthX = 250
 			lengthY = self.__pageHeight - posY
-		self._drawDerangements(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+		#self._drawDerangements(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+		self._drawInventory(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posX = 230
 		lengthX = 230
@@ -1502,6 +1504,43 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
+	def _drawInventory(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt das Inventar des Charakters nieder
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		\param height Die Höhe des Kastens.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Inventory"))
+
+		self.__painter.setFont(self.__fontMain)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		fontSmallMetrics = QFontMetrics(self.__fontMain_tiny)
+		fontSmallHeight = fontSmallMetrics.height()
+
+		#i = 0
+		#for item in self.__character.items:
+			#self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight, width, fontHeight, Qt.AlignLeft, item)
+			#i += 1
+		items = ", ".join(self.__character.items)
+		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height, Qt.AlignLeft | Qt.TextWordWrap, items)
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
 	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):
 		"""
 		Schreibt die Geistesstörungen auf den Charkaterbogen. Allerdings nicht in die Moraltabelle!
@@ -1509,6 +1548,8 @@ class DrawSheet(QObject):
 		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
 		\param width Die Breite der Spalte.
+
+		\bug Der erklärende Text der Geistesstörungen ist viel zu lang. Diese Funktion wird daher nicht genutzt, und die Geistesstörungen über \ref _drawMorality aufgezählt.
 		"""
 
 		self.__painter.save()

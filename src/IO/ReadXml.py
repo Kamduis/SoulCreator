@@ -79,6 +79,21 @@ class ReadXml(QXmlStreamReader):
 				self.readUnknownElement()
 
 
+	def jumpOverElement(self):
+		"""
+		Überspringe einen Zweig samt all seiner Unterelemente.
+		"""
+		
+		while not self.atEnd():
+			self.readNext()
+
+			if self.isEndElement():
+				break
+
+			if self.isStartElement():
+				self.jumpOverElement()
+
+
 	def checkXmlVersion(self, name, version ):
 		"""
 		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.

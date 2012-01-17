@@ -1126,6 +1126,24 @@
 	<items>
 		<Weapons>
 			<Category name="melee">
+				<weapon name ="Knife" damage="1L" size="1/S" durability="3" note=""/>
+				<weapon name ="Switchblade" damage="0L" size="1/P" durability="3" note=""/>
+			</Category>
+			<Category name="thrown">
+				<weapon name ="Dart" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
+				<weapon name ="Hatchet" damage="1" ranges="Thrown" capacity="-" strength="2" size="1/J" notes="Can inflict bashing damage"/>
+				<weapon name ="Knife, throwing" damage="1" ranges="Aero" capacity="-" strength="2" size="1/S"/>
+				<weapon name ="Shuriken" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
+			</Category>
+			<Category name="ranged">
+				<weapon name =".22 LR" damage="1" ranges="5/10/20" capacity="6" strength="0" size="1/P"/>
+				<weapon name =".38 Special" damage="2" ranges="20/40/80" capacity="6" strength="1" size="1/S"/>
+				<weapon name =".357 Magnum" damage="3" ranges="30/60/120" capacity="6" strength="2" size="1/S"/>
+				<weapon name =".44 Magnum" damage="3 (9 again)" ranges="35/70/140" capacity="6" strength="3" size="2/J"/>
+			</Category>
+		</Weapons>
+		<Weapons fallback="True">
+			<Category name="melee">
 				<weapon name ="Bayonet" damage="2L" size="1/S" durability="3" note="Damage 1L if mounted on a bullpup"/>
 				<weapon name ="Bowie Knife" damage="2L" size="1/J" durability="4" note="+1 to some Crafts rolls"/>
 				<weapon name ="Combat Knife" damage="1L" size="1/S" durability="3"/>
@@ -1136,21 +1154,12 @@
 				<weapon name ="Pocketknife" damage="-1L" size="1/P" durability="2" note="Fragile 3, +1 to some Crafts rolls"/>
 				<weapon name ="Rondel Dagger" damage="1L" size="1/S" durability="3" note="Armor Piercing 1, +2 Damage on surprise attacks"/>
 				<weapon name ="Trench Knife" damage="1L/B" size="1/S" durability="3" note="Doubles as brass knuckles"/>
-				<weapon name ="Switchblade" damage="0L" size="1/P" durability="3" note=""/>
 			</Category>
 			<Category name="thrown">
-				<weapon name ="Dart" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
-				<weapon name ="Hatchet" damage="1" ranges="Thrown" capacity="-" strength="2" size="1/J" notes="Can inflict bashing damage"/>
 				<weapon name ="Javelin, combat" damage="3" ranges="Aero" capacity="-" strength="2" size="2/N"/>
 				<weapon name ="Javelin, competition" damage="2" ranges="Thrown x4" capacity="-" strength="2" size="2/N"/>
-				<weapon name ="Knife, throwing" damage="1" ranges="Aero" capacity="-" strength="2" size="1/S"/>
-				<weapon name ="Shuriken" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
 			</Category>
 			<Category name="ranged">
-				<weapon name =".22 LR" damage="1" ranges="5/10/20" capacity="6" strength="0" size="1/P"/>
-				<weapon name =".38 Special" damage="2" ranges="20/40/80" capacity="6" strength="1" size="1/S"/>
-				<weapon name =".357 Magnum" damage="3" ranges="30/60/120" capacity="6" strength="2" size="1/S"/>
-				<weapon name =".44 Magnum" damage="3 (9 again)" ranges="35/70/140" capacity="6" strength="3" size="2/J"/>
 				<weapon name ="Colt Single Action Army" damage="3" ranges="20/40/80" capacity="6" strength="2" size="1/J"/>
 				<weapon name ="Freedom Arms Model 83" damage="4" ranges="50/100/200" capacity="5" strength="4" size="2/L"/>
 				<weapon name ="NAA Black Widow" damage="1" ranges="2/5/10" capacity="5" strength="1" size="1/P"/>
@@ -1162,8 +1171,11 @@
 			</Category>
 		</Weapons>
 		<Armor>
-			<armor name="Bulletproof Vest" general="1" firearms="3" defense="-1" speed="-1"/>
+			<armor name="Bulletproof Vest" general="1" firearms="3" defense="-1" speed="-1" bulletproof="True"/>
 			<armor name="Flak Jacket" general="0" firearms="1" defense="-0" speed="-0"/>
+		</Armor>
+		<Armor fallback="True">
+			<armor name="Full Plate" general="3" firearms="0" defense="-3" speed="-3"/>
 		</Armor>
 	</items>
 </SoulCreator>

@@ -212,7 +212,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="label_armorGeneralSign">
          <property name="text">
           <string>General</string>
          </property>
@@ -243,7 +243,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="label_armorFirearmsSign">
          <property name="text">
           <string>Firearms</string>
          </property>

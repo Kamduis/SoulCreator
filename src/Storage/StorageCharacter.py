@@ -73,6 +73,7 @@ class StorageCharacter(QObject):
 	weaponRemoved = Signal(str, str)
 	weaponsChanged = Signal()
 	armorChanged = Signal(str, bool)
+	itemsChanged = Signal(object)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -137,6 +138,7 @@ class StorageCharacter(QObject):
 			"name": "",
 			"dedicated": False,
 		}
+		self.__items = []
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -208,9 +210,10 @@ class StorageCharacter(QObject):
 		self.powerstatChanged.connect(self.setModified)
 		self.moralityChanged.connect(self.setModified)
 		self.derangementChanged.connect(self.setModified)
-		self.armorChanged.connect(self.setModified)
 		self.pictureChanged.connect(self.setModified)
 		self.weaponsChanged.connect(self.setModified)
+		self.armorChanged.connect(self.setModified)
+		self.itemsChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -432,6 +435,30 @@ class StorageCharacter(QObject):
 			self.__armor["name"] = name
 			self.__armor["dedicated"] = dedicated
 			self.armorChanged.emit(name, dedicated)
+
+
+	@property
+	def items(self):
+		"""
+		Gegenstände im Besitz des Charakters.
+		"""
+
+		return self.__items
+
+	def addItem(self, item):
+		if item not in self.__items:
+			self.__items.append(item)
+			self.itemsChanged.emit(self.__items)
+
+	def delItem(self, item):
+		if item in self.__items:
+			self.__items.remove(item)
+			self.itemsChanged.emit(self.__items)
+
+	def clearItems(self):
+		if self.__items:
+			self.__items = []
+			self.itemsChanged.emit(self.__items)
 
 
 
@@ -842,6 +869,8 @@ class StorageCharacter(QObject):
 		#Debug.debug(self.__storage.virtues[0]["name"])
 		self.virtue = self.__storage.virtues[0]["name"]
 		self.vice = self.__storage.vices[0]["name"]
+		self.height = 1.60
+		self.weight = 60
 		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
 		#self.breed = self.__storage.breeds(Config.initialSpecies)[0]
 		self.__derangements = {}
@@ -873,6 +902,8 @@ class StorageCharacter(QObject):
 				self.deleteWeapon(category, weapon)
 
 		self.setArmor(name="")
+
+		self.clearItems()
 
 
 	def isModifed(self):

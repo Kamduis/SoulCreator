@@ -286,7 +286,20 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_height"/>
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_height">
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="minimum">
+              <double>0.200000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>5.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.010000000000000</double>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QLabel" name="label_13">
@@ -313,7 +326,14 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_weight"/>
+            <widget class="QSpinBox" name="spinBox_weight">
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="maximum">
+              <number>399</number>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QLabel" name="label_12">
@@ -431,11 +451,6 @@
    </item>
   </layout>
   <zorder></zorder>
-  <zorder>verticalSpacer_2</zorder>
-  <zorder>label_picture</zorder>
-  <zorder>horizontalSpacer_2</zorder>
-  <zorder>pushButton_picture</zorder>
-  <zorder>pushButton_pictureClear</zorder>
  </widget>
  <customwidgets>
   <customwidget>

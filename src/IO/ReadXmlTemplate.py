@@ -22,11 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#import traceback
+import ast
 
 from PySide.QtCore import QObject, QFile, Signal
 
 from src.Config import Config
+from src.GlobalState import GlobalState
 from src import Error
 from ReadXml import ReadXml
 from src.Tools import ListTools
@@ -139,10 +140,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 							"fuel": self.attributes().value( "fuel" ),
 						}
 						#Debug.debug("Spezies {} gefunden.".format(species))
-
 						# Füge die gerade in der xml-Datei gefundene Spezies einer Liste zu, die später zur Auswahl verwendet werden wird.
 						self.__storage.appendSpecies( species, speciesData )
-
 					self.readTree( species )
 				elif( elementName == "creation" ):
 					speciesFlag = self.attributes().value( "species" )
@@ -563,12 +562,16 @@ class ReadXmlTemplate(QObject, ReadXml):
 				break
 
 			if( self.isStartElement() ):
-				if( self.name() == "Weapons" ):
-					self.readWeapons()
-				elif( self.name() == "Armor" ):
-					self.readArmor()
+				fallback = self.attributes().value( "fallback" )
+				if GlobalState.isFallback or not fallback == "True":
+					if( self.name() == "Weapons" ):
+						self.readWeapons()
+					elif( self.name() == "Armor" ):
+						self.readArmor()
+					else:
+						self.readUnknownElement()
 				else:
-					self.readUnknownElement()
+					self.jumpOverElement()
 
 
 	def readWeapons(self):

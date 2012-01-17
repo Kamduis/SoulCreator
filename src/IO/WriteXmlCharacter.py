@@ -119,7 +119,11 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 			self.writeAttribute( "dedicated", unicode(self.__character.armor["dedicated"]) )
 			self.writeCharacters(self.__character.armor["name"])
 			self.writeEndElement()
-		#self.writeTextElement( "armor", Config.sepChar.join( unicode(n) for n in self.__character.armor ) )
+		if self.__character.items:
+			self.writeStartElement( "items" )
+			for item in self.__character.items:
+				self.writeTextElement( "item", item )
+			self.writeEndElement()
 
 		if self.__character.picture:
 			imageData = QByteArray()

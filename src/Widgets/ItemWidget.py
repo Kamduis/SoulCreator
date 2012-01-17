@@ -51,6 +51,8 @@ class ItemWidget(QWidget):
 		self.__character = character
 		self.__storage = template
 
+		## Weapons
+
 		self.ui.pushButton_take.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
 		self.ui.pushButton_give.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
 
@@ -61,6 +63,18 @@ class ItemWidget(QWidget):
 				listItem.setIcon(QIcon(Config.weaponIcons[category]))
 				listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
 				self.ui.listWidget_store.addItem(listItem)
+
+		self.ui.pushButton_give.setEnabled(False)
+
+		self.ui.pushButton_take.clicked.connect(self.takeWeapon)
+		self.ui.listWidget_store.itemDoubleClicked.connect(self.takeWeapon)
+		self.ui.pushButton_give.clicked.connect(self.giveWeapon)
+		self.ui.listWidget_inventory.itemDoubleClicked.connect(self.giveWeapon)
+		
+		self.__character.weaponAdded.connect(self.moveToInventory)
+		self.__character.weaponRemoved.connect(self.moveToStore)
+
+		## Armor
 
 		self.__noArmorText = "None"
 		self.__buttonArmorDict = {}
@@ -77,19 +91,17 @@ class ItemWidget(QWidget):
 			self.__buttonGroup_armor.addButton(radioButton)
 			self.__buttonArmorDict[radioButton.text()] = radioButton
 
-		self.ui.pushButton_give.setEnabled(False)
-
-		self.ui.pushButton_take.clicked.connect(self.takeWeapon)
-		self.ui.listWidget_store.itemDoubleClicked.connect(self.takeWeapon)
-		self.ui.pushButton_give.clicked.connect(self.giveWeapon)
-		self.ui.listWidget_inventory.itemDoubleClicked.connect(self.giveWeapon)
 		self.__buttonGroup_armor.buttonClicked.connect(self.takeArmor)
 		self.ui.checkBox_armorDedicated.toggled.connect(self.takeArmor)
 
-		self.__character.weaponAdded.connect(self.moveToInventory)
-		self.__character.weaponRemoved.connect(self.moveToStore)
 		self.__character.armorChanged.connect(self.selectArmor)
 		self.__character.speciesChanged.connect(self.hideShowDedicated)
+
+		## Items
+
+		self.ui.pushButton_addItem.clicked.connect(self.addItem)
+		self.ui.pushButton_removeItem.clicked.connect(self.removeItem)
+		self.__character.itemsChanged.connect(self.refillItemList)
 
 
 	def takeWeapon(self):
@@ -212,3 +224,48 @@ class ItemWidget(QWidget):
 			self.ui.checkBox_armorDedicated.setVisible(True)
 		else:
 			self.ui.checkBox_armorDedicated.setVisible(False)
+
+
+	def addItem(self):
+		"""
+		Fügt dem Inventar des Charakters einen Gegenstand hinzu.
+		"""
+
+		newItem = self.ui.lineEdit_newItem.text()
+		if newItem:
+			#listItem = QListWidgetItem()
+			#listItem.setText(newItem)
+			##listItem.setIcon(QIcon(Config.weaponIcons[category]))
+			#listItem.setFlags(listItem.flags() | Qt.ItemIsEditable)
+			#self.ui.listWidget_items.addItem(listItem)
+			self.__character.addItem(newItem)
+			## Textzeile löschen
+			self.ui.lineEdit_newItem.setText("")
+
+
+	def removeItem(self):
+		"""
+		Entfernt einen Gegenstand aus dem Inventar des Charakters.
+		"""
+
+		#oldItem = self.ui.listWidget_items.takeItem(self.ui.listWidget_items.currentRow())
+		self.__character.delItem(self.ui.listWidget_items.currentItem().text())
+		#del oldItem
+
+
+	def refillItemList(self, itemList):
+		"""
+		Schreibt alle Gegenstände aus dem Charakterspeicher in die Liste
+		"""
+
+		self.ui.listWidget_items.clear()
+		for item in itemList:
+			listItem = QListWidgetItem()
+			listItem.setText(item)
+			#listItem.setIcon(QIcon(Config.weaponIcons[category]))
+			#listItem.setFlags(listItem.flags() | Qt.ItemIsEditable)
+			self.ui.listWidget_items.addItem(listItem)
+
+
+
+

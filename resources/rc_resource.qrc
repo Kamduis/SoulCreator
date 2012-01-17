@@ -78,10 +78,11 @@
     <file>images/svg/humans.svg</file>
     <file>images/svg/flail.svg</file>
   </qresource>
-  <qresource prefix="weaponCategories">
+  <qresource prefix="items">
     <file>images/svg/machete.svg</file>
     <file>images/svg/shuriken.svg</file>
     <file>images/svg/uzi.svg</file>
+    <file>images/svg/shield.svg</file>
   </qresource>
   <qresource prefix="template">
     <file>xml/base.xml</file>
