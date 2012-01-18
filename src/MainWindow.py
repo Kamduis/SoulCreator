@@ -35,6 +35,7 @@ from Config import Config
 from IO.Settings import Settings
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from IO.ReadXmlCharacter import ReadXmlCharacter
+from IO.ReadXmlCharacterPythonic import ReadXmlCharacterPythonic
 from IO.WriteXmlCharacter import WriteXmlCharacter
 from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
@@ -96,6 +97,8 @@ class MainWindow(QMainWindow):
 	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
 
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
+
+	\todo Die XML-Arbeit mit Python-Werkzeugen durchführen und nicht auf PySide setzen.
 	"""
 
 
@@ -124,7 +127,9 @@ class MainWindow(QMainWindow):
 		self.__storage = StorageTemplate( self )
 		self.storeTemplateData()
 		self.__character = StorageCharacter(self.__storage)
+		## Später sollte ich mich für einen entscheiden!!
 		self.__readCharacter = ReadXmlCharacter(self.__character)
+		self.__readCharacterPy = ReadXmlCharacterPythonic(self.__character)
 		self.__writeCharacter = WriteXmlCharacter(self.__character)
 
 		self.ui.pushButton_next.clicked.connect(self.ui.selectWidget_select.selectNext)
@@ -134,6 +139,7 @@ class MainWindow(QMainWindow):
 		#self.ui.selectWidget_select.currentRowChanged.connect(self.pageChanged.emit)
 
 		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
+		self.__readCharacterPy.exceptionRaised.connect(self.showExceptionMessage)
 
 		# Laden der Konfiguration
 		self.readSettings()
@@ -555,8 +561,9 @@ class MainWindow(QMainWindow):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
-				f = QFile( filePath )
+				self.__readCharacterPy.read(filePath)
 
+				f = QFile( filePath )
 				try:
 					self.__readCharacter.read( f )
 				except ErrXmlVersion as e:
