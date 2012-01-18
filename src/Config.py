@@ -51,6 +51,12 @@ class Config(object):
 	# Verzeichnisname für gespeicherte Charaktere
 	saveDir = "save"
 
+	# Verzeichnisname für Ressourcen
+	resourceDir = "resources"
+
+	# Verzeichnisname für Uis
+	uiDir = "ui"
+
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"
 

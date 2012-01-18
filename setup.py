@@ -47,31 +47,39 @@ if __name__ == "__main__":
 	path = []
 
 	## Resourcen bauen
-	cmd_strings = [
-		["pyside-rcc", "-o", "resources/rc_resource.py", "resources/rc_resource.qrc"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_MainWindow.py", "ui/ui_MainWindow.ui"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_InfoWidget.py", "ui/ui_InfoWidget.ui"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_AdvantagesWidget.py", "ui/ui_AdvantagesWidget.ui"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_NameDialog.py", "ui/ui_NameDialog.ui"],
-	]
+	cmd_string_rcc = ["pyside-rcc", "-o", ]
+	cmd_string_uic = ["pyside-uic", "-i", "0", "-o", ]
+
 	buildResources = True
 	if os.name == "nt":
 		## Unter Windows sind pyside-rcc und pyside-uic nicht ohne absolute Pfadangabe aufrufbar. Dieser Pfad wird hier ermittelt.
 		pathToRcc = os.path.join(os.path.dirname(sys.executable), "Lib", "site-packages", "PySide")
 		if os.path.exists(pathToRcc):
-			cmd_strings[0][0] = os.path.join(pathToRcc, cmd_strings[0][0])
+			cmd_string_rcc[0] = os.path.join(pathToRcc, cmd_string_rcc[0])
 		else:
 			buildResources = False
 		pathToUic = os.path.join(os.path.dirname(sys.executable), "Scripts")
 		if os.path.exists(pathToUic):
-			for item in cmd_strings[1:]:
-				item[0] = os.path.join(pathToUic, item[0])
+			cmd_string_uic[0] = os.path.join(pathToUic, cmd_string_uic[0])
 		else:
 			buildResources = False
 	if buildResources:
 		print("Generate resource files...")
-		for cmd in cmd_strings:
-			retcode = subprocess.call(cmd, shell=False)
+		cmd_string_list = []
+		for f in os.listdir(Config.resourceDir):
+			if f.endswith(".qrc"):
+				nameWOSuffix = f.split(".qrc")[0]
+				cmd_string_lcl = cmd_string_rcc
+				cmd_string_lcl.extend(["{}/{}.py".format(Config.resourceDir, nameWOSuffix), "{}/{}".format(Config.resourceDir, f)])
+				cmd_string_list.append(cmd_string_lcl)
+		for f in os.listdir(Config.uiDir):
+			if f.endswith(".ui"):
+				nameWOSuffix = f.split(".ui")[0]
+				cmd_string_lcl = cmd_string_uic[:]
+				cmd_string_lcl.extend(["{}/{}.py".format(Config.uiDir, nameWOSuffix), "{}/{}".format(Config.uiDir, f)])
+				cmd_string_list.append(cmd_string_lcl)
+		for cmd in cmd_string_list:
+			retcode = subprocess.call(cmd_string_lcl, shell=False)
 			if retcode != 0:
 				sys.exit(retcode)
 		print("Done.")
