@@ -97,7 +97,6 @@ class PowerWidget(QWidget):
 
 				layoutPowerCategory.addWidget( traitWidget )
 
-				#power[1].valueChanged.connect(self.countMerits)
 				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.

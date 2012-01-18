@@ -71,6 +71,8 @@ class MainWindow(QMainWindow):
 
 	Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
 
+	\bug Bei Menschen soll im Auswahlwidget der Schriftzug Grau sein. Ist er auch, aber sobald man auf irgendeine Eigenschaft klickt (CharaTrait-Klasse), wird der text schwarz!
+
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 
 	\todo Beim Wechseln zwischen den Spezies eine Warnung ausgeben, wenn Powers und Merits gelöscht würden. Bzw. Powers und Merits nicht löschen, allerdings beim Speichern nicht beachten.
@@ -101,7 +103,7 @@ class MainWindow(QMainWindow):
 	#pageChanged = Signal(int)
 
 
-	def __init__(self, parent=None):
+	def __init__(self, fileName=None, parent=None):
 		QMainWindow.__init__(self, parent)
 
 		self.ui = Ui_MainWindow()
@@ -151,6 +153,10 @@ class MainWindow(QMainWindow):
 		self.ui.actionExport.triggered.connect(self.exportCharacter)
 		self.ui.actionPrint.triggered.connect(self.printCharacter)
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
+
+		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
+		if fileName:
+			self.openCharacter(fileName)
 
 
 	def closeEvent( self, event ):
@@ -515,7 +521,7 @@ class MainWindow(QMainWindow):
 			self.__character.setModified( False )
 
 
-	def openCharacter(self):
+	def openCharacter(self, fileName=None):
 		"""
 		Über diese Funktion wird der Dialog aufgerufen, um einen gespeicherten Charakter in das Programm laden zu können.
 		"""
@@ -524,27 +530,32 @@ class MainWindow(QMainWindow):
 		if ( self.maybeSave() ):
 			#Debug.debug("Open")
 
-			appPath = PathTools.getPath()
+			filePath = ""
+			if fileName:
+				filePath = fileName
+			else:
+				appPath = PathTools.getPath()
 
-			# Pfad zum Speicherverzeichnis
-			savePath = "{}/{}".format(appPath, Config.saveDir)
+				# Pfad zum Speicherverzeichnis
+				savePath = "{}/{}".format(appPath, Config.saveDir)
 
-			# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
-			if ( not os.path.exists( savePath ) ):
-				savePath = appPath
+				# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
+				if ( not os.path.exists( savePath ) ):
+					savePath = appPath
 
-			filePath = QFileDialog.getOpenFileName(
-				self,
-				self.tr( "Select Character File" ),
-				savePath,
-				self.tr( "WoD Characters (*.chr)" )
-			)
+				fileData = QFileDialog.getOpenFileName(
+					self,
+					self.tr( "Select Character File" ),
+					savePath,
+					self.tr( "WoD Characters (*.chr)" )
+				)
+				filePath = fileData[0]
 
-			if ( filePath[0] ):
+			if ( filePath ):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
-				f = QFile( filePath[0] )
+				f = QFile( filePath )
 
 				try:
 					self.__readCharacter.read( f )
@@ -605,11 +616,9 @@ class MainWindow(QMainWindow):
 		"""
 
 		if species == "Human":
-			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.NoItemFlags )
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.deactivatedTextColor) )
+			self.ui.selectWidget_select.setItemEnabled(5, False)
 		else:
-			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.ItemIsEnabled | Qt.ItemIsSelectable )
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor() )
+			self.ui.selectWidget_select.setItemEnabled(5, True)
 
 
 	def exportCharacter(self):

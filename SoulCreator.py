@@ -63,6 +63,7 @@ if __name__ == "__main__":
 	parser.add_argument("--fallback", action="store_true", help=argparse.SUPPRESS)
 	#parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
 	parser.add_argument("-V", "--version", action="version", version="{name}: {version}".format( name=sys.argv[0], version=Config.version()) )
+	parser.add_argument(dest="file", metavar="File", nargs="?", help="opens the character from this file at start")
 
 	args = parser.parse_args()
 
@@ -70,6 +71,6 @@ if __name__ == "__main__":
 	GlobalState.isFallback = args.fallback
 
 	app = QApplication(sys.argv)
-	w = MainWindow()
+	w = MainWindow( args.file )
 	w.show()
 	retcode = app.exec_()

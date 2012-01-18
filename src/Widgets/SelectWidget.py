@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import Qt, QSize
-from PySide.QtGui import QListWidget, QListWidgetItem, QIcon
+from PySide.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
 from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.Config import Config
@@ -85,3 +85,16 @@ class SelectWidget(QListWidget):
 					self.selectNext()
 				else:
 					self.selectPrevious()
+
+
+	def setItemEnabled(self, row, sw):
+		"""
+		Aktiviert oder deaktiviert das Item in Zeile row.
+		"""
+
+		if sw:
+			self.item( row ).setFlags( Qt.ItemIsEnabled | Qt.ItemIsSelectable )
+			self.item( row ).setData(Qt.ForegroundRole, QColor())
+		else:
+			self.item( row ).setFlags( Qt.NoItemFlags )
+			self.item( row ).setData(Qt.ForegroundRole, QColor(Config.deactivatedTextColor))
