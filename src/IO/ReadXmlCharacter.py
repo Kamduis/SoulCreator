@@ -143,24 +143,15 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.morality = int(self.readElementText())
 				elif ( elementName == "derangements" ):
 					self.readDerangements()
-				elif ( elementName in Config.typs ):
-					self.readTraitCategories( elementName )
-				elif ( elementName == "weapons" ):
-					self.readWeapons()
-				elif ( elementName == "armor" ):
-					armorDedicated = ast.literal_eval(self.attributes().value( "dedicated" ))
-					armorName = self.readElementText()
-					self.__character.setArmor(armorName, armorDedicated)
-				elif ( elementName == "items" ):
+				elif ( elementName == "Traits" ):
+					self.readTraits()
+				elif ( elementName == "Items" ):
 					self.readItems()
 				elif ( elementName == "picture" ):
 					imageData = QByteArray.fromBase64(str(self.readElementText()))
 					image = QPixmap()
 					image.loadFromData(imageData, Config.pictureFormat)
 					self.__character.picture = image
-				#elif ( elementName != cv_AbstractTrait::toXmlString( cv_AbstractTrait::TypeNo ) ) {
-	#// 				qDebug() << Q_FUNC_INFO << elementName << "!";
-					#readTraits( cv_AbstractTrait::toType( elementName ) );
 				else:
 					self.readUnknownElement()
 
@@ -224,6 +215,32 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.__character.derangements = derangements
 
 
+	def readItems(self):
+		"""
+		Liest die Gegenstände des Charakters aus.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+				
+				if ( elementName == "Weapons" ):
+					self.readWeapons()
+				elif ( elementName == "armor" ):
+					armorDedicated = ast.literal_eval(self.attributes().value( "dedicated" ))
+					armorName = self.readElementText()
+					self.__character.setArmor(armorName, armorDedicated)
+				elif ( elementName == "Equipment" ):
+					self.readEquipment()
+				else:
+					self.readUnknownElement()
+
+
 	def readWeapons(self):
 		"""
 		Liest die Waffen des Charakters.
@@ -262,7 +279,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.readUnknownElement()
 
 
-	def readItems(self):
+	def readEquipment(self):
 		"""
 		Liest die Besitztümer des Charakters.
 		"""
@@ -276,9 +293,29 @@ class ReadXmlCharacter(QObject, ReadXml):
 			if ( self.isStartElement() ):
 				elementName = self.name()
 
-				if ( elementName == "item" ):
+				if ( elementName == "equipment" ):
 					name = self.readElementText()
 					self.__character.addEquipment(name)
+				else:
+					self.readUnknownElement()
+
+
+	def readTraits(self):
+		"""
+		Liest die Eigenschaften des Charakters aus.
+		"""
+
+		while ( not self.atEnd() ):
+			self.readNext()
+
+			if ( self.isEndElement() ):
+				break
+
+			if ( self.isStartElement() ):
+				elementName = self.name()
+				
+				if ( elementName in Config.typs ):
+					self.readTraitCategories( elementName )
 				else:
 					self.readUnknownElement()
 
@@ -300,10 +337,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 				if elementAttribute:
 					elementName = elementAttribute
 				#Debug.debug("Lese Element {} aus.".format(elementName))
-				self.readTraits( typ, elementName )
+				self.readCharacterTraits( typ, elementName )
 
 
-	def readTraits( self, typ, category ):
+	def readCharacterTraits( self, typ, category ):
 		"""
 		Liest die Daten der einzelnen Eigenschaften aus dem gespeicherten Charakter aus.
 		"""

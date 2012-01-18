@@ -51,6 +51,11 @@ class ItemWidget(QWidget):
 		self.__character = character
 		self.__storage = template
 
+		## Resources
+
+		self.ui.traitDots_resources.valueChanged.connect(self.__character.traits["Merit"]["Social"]["Resources"].setValue)
+		self.__character.traits["Merit"]["Social"]["Resources"].valueChanged.connect(self.ui.traitDots_resources.setValue)
+
 		## Weapons
 
 		self.ui.pushButton_weaponAdd.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
@@ -62,6 +67,7 @@ class ItemWidget(QWidget):
 				listItem.setText(weapon)
 				listItem.setIcon(QIcon(Config.weaponIcons[category]))
 				listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
+				#listItem.setFlags(listItem.flags() | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled)
 				self.ui.listWidget_weaponStore.addItem(listItem)
 
 		self.ui.pushButton_weaponRemove.setEnabled(False)
@@ -118,6 +124,12 @@ class ItemWidget(QWidget):
 		self.__character.equipmentChanged.connect(self.refillEquipmentInventory)
 		self.__character.equipmentChanged.connect(self.refillEquipmentStore)
 		self.__character.equipmentChanged.connect(self.checkButtonEnabledEquipment)
+
+		## Magical Tool
+
+		self.__character.speciesChanged.connect(self.hideShowMagicalTool)
+		self.ui.lineEdit_magicalTool.textEdited.connect(self.__character.setMagicalTool)
+		self.__character.magicalToolChanged.connect(self.ui.lineEdit_magicalTool.setText)
 
 
 	def addWeapon(self):
@@ -318,6 +330,17 @@ class ItemWidget(QWidget):
 			self.ui.pushButton_equipmentAdd.setEnabled(False)
 		else:
 			self.ui.pushButton_equipmentAdd.setEnabled(True)
+
+
+	def hideShowMagicalTool(self, species):
+		"""
+		Nur bei Magiern wird ein Magische Werkzeug angeboten.
+		"""
+
+		if species == "Mage":
+			self.ui.widget_magicalTool.setVisible(True)
+		else:
+			self.ui.widget_magicalTool.setVisible(False)
 
 
 

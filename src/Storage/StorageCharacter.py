@@ -74,6 +74,7 @@ class StorageCharacter(QObject):
 	weaponsChanged = Signal()
 	armorChanged = Signal(str, bool)
 	equipmentChanged = Signal(object)
+	magicalToolChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -139,6 +140,7 @@ class StorageCharacter(QObject):
 			"dedicated": False,
 		}
 		self.__equipment = []
+		self.__magicalTool = ""
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -214,6 +216,7 @@ class StorageCharacter(QObject):
 		self.weaponsChanged.connect(self.setModified)
 		self.armorChanged.connect(self.setModified)
 		self.equipmentChanged.connect(self.setModified)
+		self.magicalToolChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -459,6 +462,22 @@ class StorageCharacter(QObject):
 		if self.__equipment:
 			self.__equipment = []
 			self.equipmentChanged.emit(self.__equipment)
+
+
+	def __getMagicalTool(self):
+		"""
+		Magisches Werkzeug.
+		"""
+
+		return self.__magicalTool
+		
+	def setMagicalTool(self, tool):
+
+		if self.__magicalTool != tool:
+			self.__magicalTool = tool
+			self.magicalToolChanged.emit(tool)
+
+	magicalTool = property(__getMagicalTool, setMagicalTool)
 
 
 
@@ -833,10 +852,9 @@ class StorageCharacter(QObject):
 		for category in self.__weapons:
 			for weapon in self.__weapons[category]:
 				self.deleteWeapon(category, weapon)
-
 		self.setArmor(name="")
-
 		self.clearEquipment()
+		self.magicalTool = ""
 
 
 	def isModifed(self):
