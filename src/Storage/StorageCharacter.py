@@ -857,6 +857,8 @@ class StorageCharacter(QObject):
 		self.clearEquipment()
 		self.magicalTool = ""
 
+		self.picture = QPixmap()
+
 
 	def isModifed(self):
 		return self.__modified
