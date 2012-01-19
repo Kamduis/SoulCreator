@@ -86,10 +86,10 @@ class Config(object):
 	severeDerangementsColor = "sandybrown"
 
 	## Warnfarbe, wenn zuviele Punkte vergeben wurden.
-	pointsNegativeColor = "red"
+	pointsNegativeColor = "orangered"
 
 	## Warnfarbe, wenn zuwenige Punkte vergeben wurden.
-	pointsPositiveColor = "blue"
+	pointsPositiveColor = "chartreuse"
 
 	##  Deaktivierte textabschnitte
 	deactivatedTextColor = "darkgrey"

@@ -428,13 +428,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.item( 1 ).setForeground( QColor() )
+			self.ui.selectWidget_select.resetItemColor( 1 )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.item( 2 ).setForeground( QColor() )
+			self.ui.selectWidget_select.resetItemColor( 2 )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.item( 3 ).setForeground( QColor() )
+			self.ui.selectWidget_select.resetItemColor( 3 )
 		elif typ == "Power":
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor() )
+			self.ui.selectWidget_select.resetItemColor( 5 )
 
 
 	def warnCreationPointsPositive( self, typ ):
@@ -445,13 +445,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.item( 1 ).setForeground( QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( 1, QColor(Config.pointsPositiveColor))
 		elif typ == "Skill":
-			self.ui.selectWidget_select.item( 2 ).setForeground( QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( 2, QColor(Config.pointsPositiveColor) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.item( 3 ).setForeground( QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( 3, QColor(Config.pointsPositiveColor) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( 5, QColor(Config.pointsPositiveColor) )
 
 
 	def warnCreationPointsNegative( self, typ ):
@@ -462,13 +462,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.item( 1 ).setForeground( QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( 1, QColor(Config.pointsNegativeColor) )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.item( 2 ).setForeground( QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( 2, QColor(Config.pointsNegativeColor) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.item( 3 ).setForeground( QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( 3, QColor(Config.pointsNegativeColor) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( 5, QColor(Config.pointsNegativeColor) )
 
 
 	def aboutApp(self):

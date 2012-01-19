@@ -53,6 +53,8 @@ class SelectWidget(QListWidget):
 		QListWidgetItem(QIcon(":types/images/svg/tail.svg"), self.tr("Flaws"), self)
 		QListWidgetItem(QIcon(":types/images/svg/flail.svg"), self.tr("Items"), self)
 
+		self.__stdBackgroundRole = self.item( 0 ).data(Qt.BackgroundRole)
+
 		for i in xrange(self.count()):
 			self.item(i).setTextAlignment(Qt.AlignVCenter)
 			self.item(i).setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
@@ -98,3 +100,22 @@ class SelectWidget(QListWidget):
 		else:
 			self.item( row ).setFlags( Qt.NoItemFlags )
 			self.item( row ).setData(Qt.ForegroundRole, QColor(Config.deactivatedTextColor))
+
+
+	def setItemColor( self, row, color ):
+		"""
+		Färbt dieses Item ein.
+		"""
+
+		self.item( row ).setData(Qt.BackgroundRole, color)
+
+
+	def resetItemColor( self, row ):
+		"""
+		Stellt die ursprüngliche Färbung wieder her.
+
+		\note Die durch enabled-hervorgerufene Farbe bleibt hiervon unberührt.
+		"""
+
+		self.item( row ).setData(Qt.BackgroundRole, self.__stdBackgroundRole)
+
