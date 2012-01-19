@@ -43,7 +43,8 @@ class Debug():
 
 		if GlobalState.isDebug:
 			print("{:<78}\tl. {:<4}\t{:<18}".format(inspect.stack()[1][1], inspect.stack()[1][2], inspect.stack()[1][3]))
-			print(args)
+			for arg in args:
+				print(arg)
 
 
 	#@staticmethod

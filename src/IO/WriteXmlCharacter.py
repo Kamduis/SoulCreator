@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Qt, QIODevice, QByteArray
+from PySide.QtCore import QObject, Qt, QIODevice, QByteArray, QBuffer
 
 from src.Config import Config
 from src.Error import ErrTraitType, ErrTraitCategory
@@ -45,17 +45,7 @@ except ImportError:
 			import xml.etree.ElementTree as etree
 			Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
-			try:
-				# normal cElementTree install
-				import cElementTree as etree
-				Debug.debug("running with cElementTree")
-			except ImportError:
-				try:
-					# normal ElementTree install
-					import elementtree.ElementTree as etree
-					Debug.debug("running with ElementTree")
-				except ImportError:
-					Debug.debug("Failed to import ElementTree from any known place")
+			Debug.debug("Failed to import ElementTree from any known place")
 
 
 
