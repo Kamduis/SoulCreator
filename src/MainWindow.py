@@ -35,7 +35,6 @@ from Config import Config
 from IO.Settings import Settings
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from IO.ReadXmlCharacter import ReadXmlCharacter
-from IO.ReadXmlCharacterPythonic import ReadXmlCharacterPythonic
 from IO.WriteXmlCharacter import WriteXmlCharacter
 from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
@@ -129,7 +128,6 @@ class MainWindow(QMainWindow):
 		self.__character = StorageCharacter(self.__storage)
 		## Später sollte ich mich für einen entscheiden!!
 		self.__readCharacter = ReadXmlCharacter(self.__character)
-		self.__readCharacterPy = ReadXmlCharacterPythonic(self.__character)
 		self.__writeCharacter = WriteXmlCharacter(self.__character)
 
 		self.ui.pushButton_next.clicked.connect(self.ui.selectWidget_select.selectNext)
@@ -139,7 +137,6 @@ class MainWindow(QMainWindow):
 		#self.ui.selectWidget_select.currentRowChanged.connect(self.pageChanged.emit)
 
 		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
-		self.__readCharacterPy.exceptionRaised.connect(self.showExceptionMessage)
 
 		# Laden der Konfiguration
 		self.readSettings()
@@ -561,19 +558,16 @@ class MainWindow(QMainWindow):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
-				self.__readCharacterPy.read(filePath)
-
-				f = QFile( filePath )
+				#f = QFile( filePath )
 				try:
-					self.__readCharacter.read( f )
+					self.__readCharacter.read(filePath)
+					#self.__readCharacter.read( f )
 				except ErrXmlVersion as e:
 					MessageBox.exception( self, e.message, e.description )
 				except ErrXmlParsing as e:
 					MessageBox.exception( self, e.message, e.description )
 				except ErrFileNotOpened as e:
 					MessageBox.exception( self, e.message, e.description )
-
-				f.close()
 
 				# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 				self.__character.setModified( False )
@@ -640,8 +634,8 @@ class MainWindow(QMainWindow):
 
 		#if GlobalState.isDebug:
 			## Lädt automatisch den Charakter aus testExport.chr
-			#self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
-			##self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
+			#self.__readCharacter.read( "{}/testExport.chr".format(savePath) )
+			##self.__readCharacter.read( "{}/untitled.chr".format(savePath) )
 			#self.__character.setModified( False )
 
 		# Wenn Unterverzeichnis nicht existiert, erstelle es

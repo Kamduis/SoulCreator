@@ -113,7 +113,8 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 		if self.__character.weapons:
 			self.writeStartElement( "Weapons" )
 			for category in self.__character.weapons:
-				self.writeStartElement( category )
+				self.writeStartElement( "Category" )
+				self.writeAttribute("name", category)
 				for weapon in self.__character.weapons[category]:
 					self.writeTextElement( "weapon", weapon )
 				self.writeEndElement()
@@ -166,7 +167,8 @@ class WriteXmlCharacter(QObject, QXmlStreamWriter):
 						if not startElementWritten_item:
 							try:
 								#Debug.debug(item)
-								self.writeStartElement( item )
+								self.writeStartElement( "Type" )
+								self.writeAttribute("name", item)
 							except ErrTraitType as e:
 								Debug.debug(e.message())
 							startElementWritten_item = True
