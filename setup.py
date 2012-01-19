@@ -47,44 +47,10 @@ if __name__ == "__main__":
 	path = []
 
 	## Resourcen bauen
-	cmd_string_rcc = ["pyside-rcc", "-o", ]
-	cmd_string_uic = ["pyside-uic", "-i", "0", "-o", ]
-
-	buildResources = True
-	if os.name == "nt":
-		## Unter Windows sind pyside-rcc und pyside-uic nicht ohne absolute Pfadangabe aufrufbar. Dieser Pfad wird hier ermittelt.
-		pathToRcc = os.path.join(os.path.dirname(sys.executable), "Lib", "site-packages", "PySide")
-		if os.path.exists(pathToRcc):
-			cmd_string_rcc[0] = os.path.join(pathToRcc, cmd_string_rcc[0])
-		else:
-			buildResources = False
-		pathToUic = os.path.join(os.path.dirname(sys.executable), "Scripts")
-		if os.path.exists(pathToUic):
-			cmd_string_uic[0] = os.path.join(pathToUic, cmd_string_uic[0])
-		else:
-			buildResources = False
-	if buildResources:
-		print("Generate resource files...")
-		cmd_string_list = []
-		for f in os.listdir(Config.resourceDir):
-			if f.endswith(".qrc"):
-				nameWOSuffix = f.split(".qrc")[0]
-				cmd_string_lcl = cmd_string_rcc
-				cmd_string_lcl.extend(["{}/{}.py".format(Config.resourceDir, nameWOSuffix), "{}/{}".format(Config.resourceDir, f)])
-				cmd_string_list.append(cmd_string_lcl)
-		for f in os.listdir(Config.uiDir):
-			if f.endswith(".ui"):
-				nameWOSuffix = f.split(".ui")[0]
-				cmd_string_lcl = cmd_string_uic[:]
-				cmd_string_lcl.extend(["{}/{}.py".format(Config.uiDir, nameWOSuffix), "{}/{}".format(Config.uiDir, f)])
-				cmd_string_list.append(cmd_string_lcl)
-		for cmd in cmd_string_list:
-			retcode = subprocess.call(cmd_string_lcl, shell=False)
-			if retcode != 0:
-				sys.exit(retcode)
-		print("Done.")
-	else:
-		print("Warning: Resources not built. Old resource files used. Inconsistencies may occur.")
+	cmd_string = ("python", "createResources.py")
+	retcode = subprocess.call(cmd_string, shell=False)
+	if retcode != 0:
+		sys.exit(retcode)
 
 	if os.name == "nt":
 		## Unter Windows müssen noch zwei Ordner kopiert und eine Datei erzeugt werden, damit auch SVG-Dateien korrekt dargestellt werden.
