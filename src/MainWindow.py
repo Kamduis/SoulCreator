@@ -60,11 +60,6 @@ from ui.ui_MainWindow import Ui_MainWindow
 
 
 
-
-
-
-
-
 class MainWindow(QMainWindow):
 	"""
 	@brief Das Hauptfenster der Anwendung.
@@ -96,6 +91,8 @@ class MainWindow(QMainWindow):
 	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
 
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
+
+	\todo Die XML-Arbeit mit Python-Werkzeugen durchführen und nicht auf PySide setzen.
 	"""
 
 
@@ -124,6 +121,7 @@ class MainWindow(QMainWindow):
 		self.__storage = StorageTemplate( self )
 		self.storeTemplateData()
 		self.__character = StorageCharacter(self.__storage)
+		## Später sollte ich mich für einen entscheiden!!
 		self.__readCharacter = ReadXmlCharacter(self.__character)
 		self.__writeCharacter = WriteXmlCharacter(self.__character)
 
@@ -157,6 +155,7 @@ class MainWindow(QMainWindow):
 		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
 		if fileName:
 			self.openCharacter(fileName)
+
 
 
 	def closeEvent( self, event ):
@@ -555,18 +554,14 @@ class MainWindow(QMainWindow):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
-				f = QFile( filePath )
-
 				try:
-					self.__readCharacter.read( f )
+					self.__readCharacter.read(filePath)
 				except ErrXmlVersion as e:
 					MessageBox.exception( self, e.message, e.description )
 				except ErrXmlParsing as e:
 					MessageBox.exception( self, e.message, e.description )
 				except ErrFileNotOpened as e:
 					MessageBox.exception( self, e.message, e.description )
-
-				f.close()
 
 				# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 				self.__character.setModified( False )
@@ -591,20 +586,15 @@ class MainWindow(QMainWindow):
 		#Debug.debug(filePath)
 
 		# Nur Speichern, wenn ein Name eingegeben wurde.
-		if filePath:
-			f = QFile( filePath[0] )
-
+		if filePath[0]:
 			try:
-				self.__writeCharacter.write( f )
+				self.__writeCharacter.write( filePath[0] )
 			except ErrXmlVersion as e:
 				MessageBox.exception( self, e.message(), e.description() )
 			except ErrXmlParsing as e:
 				MessageBox.exception( self, e.message(), e.description() )
 			except ErrFileNotOpened as e:
 				MessageBox.exception( self, e.message(), e.description() )
-
-			#Debug.debug()
-			f.close()
 
 			# Unmittelbar nach dem Speichern ist der Charkter natürlich nicht mehr 'geändert'.
 			self.__character.setModified( False )
@@ -633,8 +623,8 @@ class MainWindow(QMainWindow):
 
 		#if GlobalState.isDebug:
 			## Lädt automatisch den Charakter aus testExport.chr
-			#self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
-			##self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
+			#self.__readCharacter.read( "{}/testExport.chr".format(savePath) )
+			##self.__readCharacter.read( "{}/untitled.chr".format(savePath) )
 			#self.__character.setModified( False )
 
 		# Wenn Unterverzeichnis nicht existiert, erstelle es

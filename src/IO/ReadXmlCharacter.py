@@ -28,15 +28,32 @@ from PySide.QtCore import QObject, QDate, QByteArray, Signal
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
-from src.IO.ReadXml import ReadXml
-from src.Widgets.Dialogs.MessageBox import MessageBox
-from src.Error import ErrXmlParsing, ErrXmlOldVersion
+from src.Error import ErrXmlOldVersion
 from src.Debug import Debug
 
+## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
+lxmlLoadad = False
+try:
+	from lxml import etree
+	#Debug.debug("Running with lxml.etree")
+	lxmlLoadad = True
+except ImportError:
+	try:
+		# Python 2.5
+		import xml.etree.cElementTree as etree
+		Debug.debug("running with cElementTree on Python 2.5+")
+	except ImportError:
+		try:
+			# Python 2.5
+			import xml.etree.ElementTree as etree
+			Debug.debug("running with ElementTree on Python 2.5+")
+		except ImportError:
+			Debug.debug("Failed to import ElementTree from any known place")
 
 
 
-class ReadXmlCharacter(QObject, ReadXml):
+
+class ReadXmlCharacter(QObject):
 	"""
 	@brief Liest die gespeicherten Charakterwerte in das Programm.
 
@@ -49,143 +66,112 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
-		ReadXml.__init__(self)
 
 		self.__character = character
 
 
-	def read( self, f ):
+	def read( self, fileName ):
 		"""
 		Startet den Lesevorgang.
 		"""
 
-		## Wir erzeugen eine neue Trait-Liste aus der aktuellen Trait-Liste des Charakters. Diese wird dann entsprechend des gespeicherten Datei verändert und dann in den Charakter geschrieben. Damit sende ich nur ein Signal, daß die Eigenschaften verändert würden.
-		#self.__traits = self.__character.traits
+		xmlContent_etree = etree.parse(fileName)
+		xmlRootElement_etree = xmlContent_etree.getroot()
 
-		self.openFile( f )
-		self.setDevice( f )
+		versionSource = xmlRootElement_etree.attrib["version"]
 
-		while ( not self.atEnd() ):
-			self.readNext()
+		try:
+			self.checkXmlVersion( xmlRootElement_etree.tag, versionSource )
+		except ErrXmlOldVersion as e:
+			messageText = self.tr("While opening the character file the following problem arised:\n{} {}\nIt appears, that the character will be importable, so the process will be continued. But some character values may be wrong after importing.".format(e.message, e.description))
+			self.exceptionRaised.emit(messageText, e.critical)
+			self.readSoulCreator()
 
-			if ( self.isStartElement() ):
-				elementName = self.name()
-				#Debug.debug("Lese Element {} aus.".format(elementName))
-				elementVersion = self.attributes().value( "version" )
+		self.readCharacterInfo(xmlContent_etree)
+		self.readCharacterIdentity(xmlContent_etree)
+		self.readDates(xmlContent_etree)
+		self.readDerangements(xmlContent_etree)
+		self.readTraits(xmlContent_etree)
+		self.readItems(xmlContent_etree)
+		self.readPicture(xmlContent_etree)
 
-				try:
-					self.checkXmlVersion( elementName, elementVersion )
-					self.readSoulCreator()
-				except ErrXmlOldVersion as e:
-					messageText = self.tr("While opening the character file the following problem arised:\n{} {}\nIt appears, that the character will be importable, so the process will be continued. But some character values may be wrong after importing.".format(e.message, e.description))
-					self.exceptionRaised.emit(messageText, e.critical)
-					self.readSoulCreator()
+		#xmlContent = parse(fileName)
+		#xmlRootElement = xmlContent.documentElement
 
-		if ( self.hasError() ):
-			raise ErrXmlParsing( f.fileName(), self.errorString() )
+		##debugList = []
+		##for attrib in xmlRootElement.attributes.items():
+			##debugList.append("{key}=\"{value}\"".format(key=attrib[0], value=attrib[1]))
+		##Debug.debug("\n".join(debugList))
 
-		self.closeFile( f )
+		#versionSource = xmlRootElement.getAttribute("version")
+
+		#try:
+			#self.checkXmlVersion( xmlRootElement.tagName, versionSource )
+		#except ErrXmlOldVersion as e:
+			#messageText = self.tr("While opening the character file the following problem arised:\n{} {}\nIt appears, that the character will be importable, so the process will be continued. But some character values may be wrong after importing.".format(e.message, e.description))
+			#self.exceptionRaised.emit(messageText, e.critical)
+			#self.readSoulCreator()
+
+		#self.readCharacterInfo(xmlRootElement)
+		#self.readCharacterIdentity(xmlRootElement)
+		#self.readDates(xmlRootElement)
+		#self.readDerangements(xmlRootElement)
+		#self.readTraits(xmlRootElement)
+		#self.readItems(xmlRootElement)
+		#self.readPicture(xmlRootElement)
 
 
-	def readSoulCreator(self):
+	def readCharacterInfo(self, tree):
 		"""
-		Es wird zwischen den einzelnen Eigenscahften unterschieden und je nach Typ unterschiedlich eingelesen.
-		"""
-
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-				#Debug.debug("Lese Element {} aus.".format(elementName))
-
-				if ( elementName == "species" ):
-					self.__character.species = self.readElementText()
-				elif ( elementName == "era" ):
-					self.__character.era = self.readElementText()
-				elif ( elementName == "identities" ):
-					self.readIdentities()
-				elif ( elementName == "dates" ):
-					self.__character.dateBirth = QDate.fromString(self.attributes().value( "birth" ), Config.dateFormat)
-					self.__character.dateBecoming = QDate.fromString(self.attributes().value( "becoming" ), Config.dateFormat)
-					self.__character.dateGame = QDate.fromString(self.attributes().value( "game" ), Config.dateFormat)
-					self.readUnknownElement()
-				elif ( elementName == "virtue" ):
-					self.__character.virtue = self.readElementText()
-				elif ( elementName == "vice" ):
-					self.__character.vice = self.readElementText()
-				elif ( elementName == "breed" ):
-					self.__character.breed = self.readElementText()
-				elif ( elementName == "faction" ):
-					self.__character.faction = self.readElementText()
-				elif ( elementName == "organisation" ):
-					self.__character.organisation = self.readElementText()
-				elif ( elementName == "party" ):
-					self.__character.party = self.readElementText()
-				elif ( elementName == "height" ):
-					self.__character.height = float(self.readElementText())
-				elif ( elementName == "weight" ):
-					self.__character.weight = float(self.readElementText())
-				elif ( elementName == "eyes" ):
-					self.__character.eyes = self.readElementText()
-				elif ( elementName == "hair" ):
-					self.__character.hair = self.readElementText()
-				elif ( elementName == "nationality" ):
-					self.__character.nationality = self.readElementText()
-				elif ( elementName == "description" ):
-					self.__character.description = self.readElementText()
-				elif ( elementName == "powerstat" ):
-					self.__character.powerstat = int(self.readElementText())
-				elif ( elementName == "morality" ):
-					self.__character.morality = int(self.readElementText())
-				elif ( elementName == "derangements" ):
-					self.readDerangements()
-				elif ( elementName == "Traits" ):
-					self.readTraits()
-				elif ( elementName == "Items" ):
-					self.readItems()
-				elif ( elementName == "picture" ):
-					imageData = QByteArray.fromBase64(str(self.readElementText()))
-					image = QPixmap()
-					image.loadFromData(imageData, Config.pictureFormat)
-					self.__character.picture = image
-				else:
-					self.readUnknownElement()
-
-
-	def readIdentities(self):
-		"""
-		Liest die Identitäten des Charakters.
-
-		\todo Derzeit kann nur eine Identität eingelesen werden, da das Programm nur eine Identität unterstüzt.
+		Lese die grundlegenden Charakterinformationen aus.
 		"""
 
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-
-				if ( elementName == "identity" ):
-					self.__character.identities[0].forenames = self.attributes().value( "forenames" ).split(" ")
-					self.__character.identities[0].surename = self.attributes().value( "surename" )
-					self.__character.identities[0].honorname = self.attributes().value( "honorname" )
-					self.__character.identities[0].nickname = self.attributes().value( "nickname" )
-					self.__character.identities[0].supername = self.attributes().value( "supername" )
-					self.__character.identities[0].gender = self.attributes().value( "gender" )
-
-					self.readUnknownElement()
-				else:
-					self.readUnknownElement()
+		self.__character.species = tree.find("species").text
+		self.__character.era = tree.find("era").text
+		self.__character.virtue = tree.find("virtue").text
+		self.__character.vice = tree.find("vice").text
+		self.__character.breed = tree.find("breed").text
+		self.__character.faction = tree.find("faction").text
+		self.__character.organisation = tree.find("organisation").text
+		self.__character.party = tree.find("party").text
+		self.__character.height = float(tree.find("height").text)
+		self.__character.weight = int(tree.find("weight").text)
+		self.__character.eyes = tree.find("eyes").text
+		self.__character.hair = tree.find("hair").text
+		self.__character.nationality = tree.find("nationality").text
+		self.__character.description = tree.find("description").text
+		self.__character.powerstat = int(tree.find("powerstat").text)
+		self.__character.morality = int(tree.find("morality").text)
 
 
-	def readDerangements(self):
+	def readCharacterIdentity(self, tree):
+		"""
+		Lese die Identitäten des Charkaters aus.
+
+		\note Derzeit gibt es nur eine. forenames="" surename="" honorname="" nickname="" supername="" gender="Male"
+		"""
+
+		identity = tree.find("identities/identity")
+		self.__character.identities[0].forenames = identity.attrib["forenames"].split(" ")
+		self.__character.identities[0].surename = identity.attrib["surename"]
+		self.__character.identities[0].honorname = identity.attrib["honorname"]
+		self.__character.identities[0].nickname = identity.attrib["nickname"]
+		self.__character.identities[0].supername = identity.attrib["supername"]
+		self.__character.identities[0].gender = identity.attrib["gender"]
+
+
+	def readDates(self, tree):
+		"""
+		Lese die Daten aus (Geburtsdatum, Verwandlungsdatum, aktuelles Datum im Spiel).
+		"""
+
+		dates = tree.find("dates")
+		self.__character.dateBirth = QDate.fromString(dates.attrib["birth"], Config.dateFormat)
+		self.__character.dateBecoming = QDate.fromString(dates.attrib["becoming"], Config.dateFormat)
+		self.__character.dateGame = QDate.fromString(dates.attrib["game"], Config.dateFormat)
+
+
+	def readDerangements(self, tree):
 		"""
 		Liest die Geistesstörungen des Charakters.
 
@@ -194,241 +180,127 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 		derangements = {}
 
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-
-				if ( elementName == "derangement" ):
-					moralityValue = int(self.attributes().value( "morality" ))
-					derangement = self.readElementText()
-					#Debug.debug("Moral {}: {}".format(moralityValue, derangement))
-					#self.__character.setDerangement(moralityValue=moralityValue, derangement=derangement)
-					derangements[moralityValue] = derangement
-				else:
-					self.readUnknownElement()
-
+		derangementList = tree.findall("derangements/derangement")
+		for derangement in derangementList:
+			moralityValue = int(derangement.attrib["morality"])
+			derangementName = derangement.text
+			derangements[moralityValue] = derangementName
+		
 		self.__character.derangements = derangements
 
 
-	def readItems(self):
+	def readTraits(self, tree):
+		"""
+		Liest die Eigenschaften des Charakters aus.
+
+		\todo ich marschiere hier durch alle Eigenschaften, um die Eigenschaft des richtigen Namens zu finden, damit ich customText abarbeiten kann. Das geht doch bestimmt auch mit Direktzugriff.
+		"""
+
+		traitRootElement = tree.find("Traits")
+		for typeElement in traitRootElement.getiterator("Type"):
+			typName = typeElement.attrib["name"]
+			for categoryElement in typeElement.getiterator("Category"):
+				categoryName = categoryElement.attrib["name"]
+				for traitElement in categoryElement.getiterator("trait"):
+					traitName = traitElement.attrib["name"]
+					traitCustomText = ""
+					if "customText" in traitElement.attrib:
+						traitCustomText = traitElement.attrib["customText"]
+					traitValue = int(traitElement.attrib["value"])
+					## Wenn die Eigenschaft nicht im Charakter-Speicher existiert (also in den Template-Dateien nicht vorkam), wird sie ignoriert.
+					for item in self.__character.traits[typName][categoryName].values():
+						if item.name == traitName:
+							## Wenn eine Eigenschaft mit Zusatztext bereits im Speicher existiert, muß weitergesucht werden, bis eine Eigenschaft gleichen Namens mit identischem oder ohne Zusatztext gefunden wurde.
+							if item.customText and item.customText != traitCustomText:
+								continue
+
+							item.value = traitValue
+							## Zusatztext
+							item.customText = traitCustomText
+
+							## Es gibt nur einen Eintrag für specialties, aber da ich den Iterator verwende, zähle ich halt bis 1.
+							for specialties in traitElement.getiterator("specialties"):
+								if specialties is not None:
+									specialtiesText = specialties.text
+									item.specialties = [n for n in specialtiesText.split(Config.sepChar)]
+							break
+
+
+	def readItems(self, tree):
 		"""
 		Liest die Gegenstände des Charakters aus.
 		"""
 
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-				
-				if ( elementName == "Weapons" ):
-					self.readWeapons()
-				elif ( elementName == "armor" ):
-					armorDedicated = ast.literal_eval(self.attributes().value( "dedicated" ))
-					armorName = self.readElementText()
-					self.__character.setArmor(armorName, armorDedicated)
-				elif ( elementName == "Equipment" ):
-					self.readEquipment()
-				else:
-					self.readUnknownElement()
+		items = tree.find("Items")
+		self.readWeapons(tree.find("Items/Weapons"))
+		self.readArmor(tree.find("Items/armor"))
+		self.readEquipment(tree.find("Items/Equipment"))
 
 
-	def readWeapons(self):
+	def readWeapons(self, root):
 		"""
-		Liest die Waffen des Charakters.
+		Liest die Waffen des Charakters aus.
 		"""
 
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-
-				self.readWeaponName(elementName)
+		for categoryElement in root.getiterator("Category"):
+			categoryName = categoryElement.attrib["name"]
+			for weaponElement in categoryElement.getiterator("weapon"):
+				weaponName = weaponElement.text
+				self.__character.addWeapon(categoryName, weaponName)
 
 
-	def readWeaponName(self, category):
+	def readArmor(self, root):
 		"""
-		Liest den Waffennamen ein.
+		Liest die Rüstung des Charakters aus.
 		"""
 
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-
-				if ( elementName == "weapon" ):
-					name = self.readElementText()
-					self.__character.addWeapon(category, name)
-				else:
-					self.readUnknownElement()
+		armorDedicated = ast.literal_eval(root.attrib["dedicated"])
+		armorName = root.text
+		self.__character.setArmor(armorName, armorDedicated)
 
 
-	def readEquipment(self):
+	def readEquipment(self, root):
 		"""
 		Liest die Besitztümer des Charakters.
 		"""
 
-		while ( not self.atEnd() ):
-			self.readNext()
+		for equipment in root.getiterator("equipment"):
+			equipmentName = equipment.text
+			self.__character.addEquipment(equipmentName)
 
-			if ( self.isEndElement() ):
-				break
 
-			if ( self.isStartElement() ):
-				elementName = self.name()
+	def readPicture(self, tree):
+		"""
+		Ließt das Charakterbild aus.
+		"""
 
-				if ( elementName == "equipment" ):
-					name = self.readElementText()
-					self.__character.addEquipment(name)
+		pictureElement = tree.find("picture")
+		if pictureElement is not None:
+			imageData = QByteArray.fromBase64(str(pictureElement.text))
+			image = QPixmap()
+			image.loadFromData(imageData, Config.pictureFormat)
+			self.__character.picture = image
+
+
+	def checkXmlVersion(self, name, version ):
+		"""
+		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.
+		"""
+
+		if name == Config.programName:
+			if version == Config.version():
+				return
+			else:
+				# Unterschiede in der Minor-Version sind ignorierbar, Unterschiede in der Major-Version allerdings nicht.
+				splitVersion = version.split(".")
+				splitVersion = [int(item) for item in splitVersion]
+
+				## Es ist darauf zu achten, daß Charaktere bis Version 0.6 nicht mit SoulCreator 0.7 und neuer geladen werden können.
+				if( splitVersion[0] != Config.programVersionMajor or splitVersion[1] < 7):
+					raise Error.ErrXmlTooOldVersion( version )
 				else:
-					self.readUnknownElement()
-
-
-	def readTraits(self):
-		"""
-		Liest die Eigenschaften des Charakters aus.
-		"""
-
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-				
-				if ( elementName in Config.typs ):
-					self.readTraitCategories( elementName )
-				else:
-					self.readUnknownElement()
-
-
-	def readTraitCategories( self, typ ):
-		"""
-		Liest die Kategorie der Eigenschaft aus und ruft die Funktion auf, welche die tatsächliche Eigenschaftsdaten ausliest.
-		"""
-
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-				elementAttribute = self.attributes().value("name")
-				if elementAttribute:
-					elementName = elementAttribute
-				#Debug.debug("Lese Element {} aus.".format(elementName))
-				self.readCharacterTraits( typ, elementName )
-
-
-	def readCharacterTraits( self, typ, category ):
-		"""
-		Liest die Daten der einzelnen Eigenschaften aus dem gespeicherten Charakter aus.
-		"""
-
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-				#Debug.debug("Lese Element {} aus.".format(elementName))
-
-				#if ( typ == cv_AbstractTrait::Derangement && elementName == "derangement" ) {
-					#cv_Derangement derangement;
-					#derangement.setName(attributes().value( "name" ).toString());
-					#derangement.setType(type);
-					#derangement.setCategory(category);
-					#derangement.setMorality(attributes().value( "morality" ).toString().toInt());
-
-					#character.addDerangement( derangement );
-
-					#while ( !atEnd() ) {
-						#readNext();
-
-						#if ( self.isEndElement() )
-							#break;
-
-						#if ( self.isStartElement() ):
-							#readUnknownElement();
-						#}
-					#}
-				if ( elementName == "trait" ):
-					itemExists = False
-					for item in self.__character.traits[typ][category].values():
-						traitName = self.attributes().value( "name" )
-						traitCustomText = self.attributes().value( "customText" )
-						if item.name == traitName:
-							# Wenn eine Eigenschaft mit Zusatztext bereits im Speicher existiert, muß weitergesucht werden, bis eine Eigenscahft gleichen namens mit identischem oder ohne Zusatztext gefunden wurde.
-							if item.customText and item.customText != traitCustomText:
-								continue
-
-							item.value = int(self.attributes().value( "value" ))
-							#Debug.debug("Ändere Eigenschaft {} zu {}".format(item.name, item.value))
-							# Zusatztext
-							item.customText = traitCustomText
-							self.readSpecialties(item)
-							itemExists = True
-							break
-
-					# Wenn die Eigenscahft ncht schon im Charakter-Speicher existiert (also in den Template-Dateien vorkam), wird sie ignoriert.
-					if not itemExists:
-						self.readUnknownElement()
-
-					#if ( customText.isEmpty() ) {
-	#// 					trait.custom = false;
-						#trait.setCustomText( "" );
-					#} else {
-	#// 					qDebug() << Q_FUNC_INFO << customText;
-	#// 					trait.custom = true;
-						#trait.setCustomText( customText );
-					#}
-
-					#character.modifyTrait( trait );
-				else:
-					self.readUnknownElement()
-
-
-	def readSpecialties( self, trait ):
-		"""
-		Liest die Spezialisierungen der auszulesenen Eigenscahft aus.
-		"""
-
-		while ( not self.atEnd() ):
-			self.readNext()
-
-			if ( self.isEndElement() ):
-				break
-
-			if ( self.isStartElement() ):
-				elementName = self.name()
-				#Debug.debug("Lese Element {} aus.".format(elementName))
-
-				if ( elementName == "specialties" ):
-					txt = self.readElementText()
-					trait.specialties = [n for n in txt.split(Config.sepChar)]
-				else:
-					self.readUnknownElement()
+					raise Error.ErrXmlOldVersion( version )
+		else:
+			raise Error.ErrXmlVersion( "{} {}".format(Config.programName, Config.version()), "{} {}".format(name, version) )
 
 
