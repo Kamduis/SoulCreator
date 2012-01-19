@@ -229,6 +229,7 @@ class InfoWidget(QWidget):
 		Aktualisiert die Anzeige der Fraktion.
 		"""
 
+		self.ui.lineEdit_faction.setText(faction)
 		self.ui.comboBox_faction.setCurrentIndex( self.ui.comboBox_faction.findText( faction ) )
 
 

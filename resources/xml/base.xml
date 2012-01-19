@@ -1133,6 +1133,10 @@
 				<weapon name ="Katana" damage="3L" size="2/L" durability="4"/>
 				<weapon name ="Long Sword" damage="3L" size="2/L" durability="3"/>
 			</Category>
+			<Category name="melee">
+				<weapon name ="Mace" damage="3B" size="2/L" durability="3" cost="2"/>
+				<weapon name ="Wooden Club" damage="2B" size="2/J" durability="1" cost="0"/>
+			</Category>
 			<Category name="thrown">
 				<weapon name ="Dart" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
 				<weapon name ="Hatchet" damage="1" ranges="Thrown" capacity="-" strength="2" size="1/J" notes="Can inflict bashing damage"/>
@@ -1144,6 +1148,12 @@
 				<weapon name =".38 Special" damage="2" ranges="20/40/80" capacity="6" strength="1" size="1/S"/>
 				<weapon name =".357 Magnum" damage="3" ranges="30/60/120" capacity="6" strength="2" size="1/S"/>
 				<weapon name =".44 Magnum" damage="3 (9 again)" ranges="35/70/140" capacity="6" strength="3" size="2/J"/>
+			</Category>
+			<Category name="ranged">
+				<weapon name ="Holdout" damage="1" ranges="5/10/20" capacity="6+1" strength="1" size="1/P" cost="1"/>
+				<weapon name ="9mm Luger" damage="2" ranges="20/40/80" capacity="15+1" strength="2" size="1/S" cost="2"/>
+				<weapon name =".40 S&#38;w" damage="2" ranges="25/50/100" capacity="12+1" strength="2" size="1/S" cost="2"/>
+				<weapon name =".45 ACP" damage="3" ranges="30/60/120" capacity="8+1" strength="2" size="1/S" cost="2"/>
 			</Category>
 		</Weapons>
 		<Weapons fallback="True">
@@ -1165,12 +1175,22 @@
 				<weapon name ="Fencing Sword" damage="1L" size="2/L" durability="3" note="Armor Piercing 1"/>
 				<weapon name ="Fish-Spine Sword" damage="1L (9 again)" size="2/L" durability="1"/>
 				<weapon name ="Gladius" damage="2L" size="2/S" durability="3"/>
-				<weapon name ="Great Sword" damage="4L" size="3/N" durability="3"/>
+				<weapon name ="Great Sword" damage="4L" size="3/N" durability="3" twohanded="True"/>
 				<weapon name ="Machete" damage="2L" size="2/J" durability="3"/>
 				<weapon name ="Rapir" damage="2L" size="2/L" durability="3" note="Armor Piercing 1"/>
 				<weapon name ="Sword Cane" damage="2L/B" size="2/L" durability="3" note="Bashing damage when sheathed"/>
 				<weapon name ="Wakizashi" damage="2L" size="2/S" durability="4"/>
-				<weapon name ="Zweihänder" damage="4L (9 again)" size="4/N" durability="3"/>
+				<weapon name ="Zweihänder" damage="4L (9 again)" size="4/N" durability="3" twohanded="True"/>
+			</Category>
+			<Category name="melee">
+				<weapon name ="Escrima Sticks" damage="1B" size="2/S" durability="2" cost="1"/>
+				<weapon name ="Flail" damage="3B/L" size="3/N" durability="3" cost="2" note="-1 Damage without Dexterity 3, ignores shields"/>
+				<weapon name ="Maul" damage="4B" size="3/N" durability="3" cost="2" twohanded="True"/>
+				<weapon name ="Morning Star" damage="3B" size="3/N" durability="3" cost="2"/>
+				<weapon name ="Sap" damage="1B" size="1/P" durability="2" cost="2" note="Stun (Stamina)"/>
+				<weapon name ="Shakuhachi Flute" damage="0B" size="1/S" durability="2" cost="1" note="+1 to some Wits+Expression rolls"/>
+				<weapon name ="Telescopic Baton" damage="3B" size="2/J" durability="3" cost="1" note="Collapses to Size 1/S"/>
+				<weapon name ="Tonfa (Nightstick)" damage="2B" size="2/J" durability="2" cost="1" note="+1 Defense"/>
 			</Category>
 			<Category name="thrown">
 				<weapon name ="Javelin, combat" damage="3" ranges="Aero" capacity="-" strength="2" size="2/N"/>
@@ -1185,6 +1205,19 @@
 				<weapon name ="S&#38;W Model 500" damage="4 (9 again)" ranges="50/100/200" capacity="5" strength="4" size="2/L"/>
 				<weapon name ="Taurus Model 22H" damage="2" ranges="40/80/160" capacity="8" strength="1" size="2/L" notes="Armor Piercing 1"/>
 				<weapon name ="Thunder-5" damage="2" ranges="15/30/60" capacity="5" strength="2" size="1/J"/>
+			</Category>
+			<Category name="ranged">
+				<weapon name ="Beretta Model 92" damage="2" ranges="20/40/80" capacity="15+1" strength="2" size="1/S" cost="2"/>
+				<weapon name ="Colt M1911A1" damage="3" ranges="30/60/120" capacity="7+1" strength="2" size="1/S" cost="2"/>
+				<weapon name ="FN Five-seveN" damage="2" ranges="30/60/120" capacity="20+1" strength="2" size="1/J" cost="3"/>
+				<weapon name ="Glock 17" damage="2" ranges="20/40/80" capacity="17+1" strength="2" size="1/S" cost="2"/>
+				<weapon name ="Glock 26" damage="2" ranges="10/20/40" capacity="10+1" strength="2" size="1/P" cost="2"/>
+				<weapon name ="H&#38;K Mk. 23" damage="3" ranges="30/60/120" capacity="12+1" strength="2" size="1/J" cost="4"/>
+				<weapon name ="Luger Parabellum P08" damage="2" ranges="15/30/60" capacity="8+1" strength="2" size="1/S" cost="1"/>
+				<weapon name ="Desert Eagle" damage="4" ranges="50/100/200" capacity="7+1" strength="3" size="1/L" cost="4"/>
+				<weapon name ="RSA Makarow PM" damage="2" ranges="15/30/60" capacity="8+1" strength="1" size="1/P" cost="1"/>
+				<weapon name ="Ruger Mark II" damage="1" ranges="15/30/60" capacity="10+1" strength="1" size="1/S" cost="1"/>
+				<weapon name ="Walther PPK" damage="1" ranges="10/20/40" capacity="7+1" strength="1" size="1/P" cost="1"/>
 			</Category>
 		</Weapons>
 		<Armor>

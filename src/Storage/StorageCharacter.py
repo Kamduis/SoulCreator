@@ -821,6 +821,7 @@ class StorageCharacter(QObject):
 		#Debug.debug(self.__storage.virtues[0]["name"])
 		self.virtue = self.__storage.virtues[0]["name"]
 		self.vice = self.__storage.vices[0]["name"]
+		self.faction = ""
 		self.height = 1.60
 		self.weight = 60
 		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
