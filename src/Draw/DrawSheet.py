@@ -122,10 +122,10 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Vampire":
 			self.__fontHeading = QFont("Cloister Black", 47 )
 			self.__fontSubHeading = QFont("Cloister Black", 40 )
-			self.__borderFrameWest = 137
-			self.__borderFrameEast = 147
-			self.__borderFrameNorth = 157
-			self.__borderFrameSouth = 260
+			self.__borderFrameWest = 135
+			self.__borderFrameEast = 155
+			self.__borderFrameNorth = 165
+			self.__borderFrameSouth = 270
 		elif self.__character.species == "Werewolf":
 			self.__fontHeading = QFont("Note this", 47 )
 			self.__fontSubHeading = QFont("Note this", 40 )
@@ -220,7 +220,7 @@ class DrawSheet(QObject):
 
 			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
 			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			target = QRectF( 0.0 - self.__borderFrameNorth, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
+			target = QRectF( 0.0 - self.__borderFrameWest, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
 			self.__painter.drawImage(target, image, source)
 
 		if GlobalState.isDebug:
@@ -235,6 +235,7 @@ class DrawSheet(QObject):
 		elif self.__character.species == "Mage":
 			lengthX = 780
 		elif self.__character.species == "Vampire":
+			posY = -80
 			lengthX = 500
 		elif self.__character.species == "Werewolf":
 			lengthX = 780
@@ -242,10 +243,14 @@ class DrawSheet(QObject):
 
 		posY +=  lengthY
 		lengthY = 150
+		if self.__character.species == "Changeling":
+			lengthY = 160
 		self._drawInfo(offsetV=posY)
 
 		posY += lengthY + self.__posSep
 		lengthY = 200
+		if self.__character.species == "Vampire":
+			lengthY = 160
 		self._drawAttributes(offsetV=posY)
 
 		posY += lengthY + self.__posSep
@@ -270,17 +275,18 @@ class DrawSheet(QObject):
 		posX_spalte2 = posX
 		lengthX = 800
 		if self.__character.species != "Human":
-			lengthY = 560
 			if self.__character.species == "Changeling":
 				lengthX = 750
+				lengthY = 500
 			elif self.__character.species == "Mage":
 				lengthX = 870
 				lengthY = 340
 			elif self.__character.species == "Vampire":
 				lengthX = 750
+				lengthY = 430
 			elif self.__character.species == "Werewolf":
-				lengthX = 260
-				lengthY = 70
+				lengthX = 830
+				lengthY = 230
 			self._drawPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 		posX_spalte3 = posX_spalte2 + lengthX + self.__posSep
 
@@ -288,13 +294,13 @@ class DrawSheet(QObject):
 			posY += lengthY + self.__posSep
 		lengthY = 1340
 		if self.__character.species == "Changeling":
-			lengthY = 1250
+			lengthY = 970
 		elif self.__character.species == "Mage":
-			lengthY = 1250
+			lengthY = 1220
 		elif self.__character.species == "Vampire":
-			lengthY = 1000
+			lengthY = 1030
 		elif self.__character.species == "Werewolf":
-			lengthY = 1150
+			lengthY = 1040
 		self._drawMerits(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posY += lengthY + self.__posSep
@@ -305,13 +311,13 @@ class DrawSheet(QObject):
 		lengthX = self.__pageWidth - posX
 		lengthY = 310
 		if self.__character.species == "Changeling":
-			lengthY = 120
+			lengthY = 350
 		elif self.__character.species == "Mage":
-			lengthY = 110
+			lengthY = 300
 		elif self.__character.species == "Vampire":
-			lengthY = 110
+			lengthY = 400
 		elif self.__character.species == "Werewolf":
-			lengthY = 90
+			lengthY = 390
 		self._drawWeapons(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 		posY_zeile4 = posY + lengthY + self.__posSep
 
@@ -325,18 +331,24 @@ class DrawSheet(QObject):
 		if self.__character.species != "Werewolf":
 			posY += lengthY + self.__posSep
 			lengthY = 295
+			if self.__character.species != "Human":
+				lengthY = 200
 		self._drawHealth(offsetH=posX, offsetV=posY, width=lengthX)
 
 		posY += lengthY + self.__posSep
 		lengthY = 295
+		if self.__character.species != "Human":
+			lengthY = 190
 		self._drawWillpower(offsetH=posX, offsetV=posY, width=lengthX)
 
 		if self.__character.species != "Human":
 			posY += lengthY + self.__posSep
+			lengthY = 140
 			self._drawPowerstat(offsetH=posX, offsetV=posY, width=lengthX)
 
 		posY += lengthY + self.__posSep
 		if self.__character.species != "Human":
+			lengthY = 160
 			self._drawFuel(offsetH=posX, offsetV=posY, width=lengthX)
 
 		if self.__character.species != "Human":
@@ -409,66 +421,58 @@ class DrawSheet(QObject):
 		if GlobalState.isDebug:
 			self.__drawGrid()
 
+		posY_zeile3 = 2500
+		if ( self.__character.species == "Changeling" ):
+			posY_zeile3 = 2200
+		elif ( self.__character.species == "Mage" ):
+			posY_zeile3 = 2500
+		elif ( self.__character.species == "Vampire" ):
+			posY_zeile3 = 2200
+		elif ( self.__character.species == "Werewolf" ):
+			posY_zeile3 = 2500
+
 		posX = 0
-		posY = 680
-		lengthX = 220
+		posY = posY_zeile3
+		lengthX = 680
 		lengthY = self.__pageHeight - posY
-		if self.__character.species == "Mage":
-			posY = 730
-			lengthX = 780
-			lengthY = self.__pageHeight - posY
-		elif self.__character.species == "Vampire":
-			posY = 730
+		if ( self.__character.species == "Changeling" ):
+			lengthX = 680
+		elif ( self.__character.species == "Mage" ):
 			lengthX = 720
-			lengthY = self.__pageHeight - posY
-		elif self.__character.species == "Werewolf":
-			posY = 820
-			lengthX = 780
-			lengthY = self.__pageHeight - posY
+		if ( self.__character.species == "Vampire" ):
+			lengthX = 680
+		elif ( self.__character.species == "Werewolf" ):
+			lengthX = 700
 		#self._drawDerangements(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 		self._drawInventory(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
-		posX = 720
+		posX += lengthX + self.__posSep
 		lengthX = 720
-		if self.__character.species == "Mage":
-			posX = 260
-			lengthX = 780
-		elif self.__character.species == "Vampire":
-			posX = 240
+		if ( self.__character.species == "Changeling" ):
 			lengthX = 720
-		elif self.__character.species == "Werewolf":
-			posX = 260
-			lengthX = 840
+		elif ( self.__character.species == "Mage" ):
+			lengthX = 800
+		elif ( self.__character.species == "Vampire" ):
+			lengthX = 750
+		elif ( self.__character.species == "Werewolf" ):
+			lengthX = 870
 		self._drawDescription(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
-		posX = 470
+		posX += lengthX + self.__posSep
 		lengthX = self.__pageWidth - posX
 		lengthY = 840
-		if self.__character.species == "Mage":
-			posX = 520
-			lengthX = self.__pageWidth - posX
-			lengthY = 970
-		elif self.__character.species == "Vampire":
-			posX = 480
-			lengthX = self.__pageWidth - posX
-			lengthY = 200
-		elif self.__character.species == "Werewolf":
-			posX = 540
-			lengthX = self.__pageWidth - posX
-			lengthY = 220
+		if ( self.__character.species == "Changeling" ):
+			lengthY = 840
+		elif ( self.__character.species == "Mage" ):
+			lengthY = 720
+		elif ( self.__character.species == "Vampire" ):
+			lengthY = 680
+		elif ( self.__character.species == "Werewolf" ):
+			lengthY = 710
 		self._drawImage(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
-		posY = 960
+		posY += lengthY + self.__posSep
 		lengthY = self.__pageHeight - posY
-		if self.__character.species == "Mage":
-			posY = 1050
-			lengthY = self.__pageHeight - posY
-		elif self.__character.species == "Vampire":
-			posY = 940
-			lengthY = self.__pageHeight - posY
-		elif self.__character.species == "Werewolf":
-			posY = 1050
-			lengthY = self.__pageHeight - posY
 		self._drawXP(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		self.__painter.restore()
@@ -1655,7 +1659,7 @@ class DrawSheet(QObject):
 		if self.__character.picture:
 			boxRect = QRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
 			image = self.__character.picture
-			Debug.debug(image.width(), image.height())
+			#Debug.debug(image.width(), image.height())
 			if image.width() > boxRect.width() or image.height() > boxRect.height():
 				image = image.scaled(boxRect.width(), boxRect.height(), Qt.KeepAspectRatio)
 				Debug.debug(image.width(), image.height())
