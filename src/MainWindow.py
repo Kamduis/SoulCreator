@@ -207,7 +207,6 @@ class MainWindow(QMainWindow):
 		specialties = Specialties( self.__storage.traits["Skill"], self )
 		merits = MeritWidget( self.__storage, self.__character, self )
 		morality = MoralityWidget( self.__storage, self.__character, self )
-		powers = PowerWidget( self.__storage, self.__character, self )
 		flaws = FlawWidget( self.__storage, self.__character, self )
 		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
 		items = ItemWidget( self.__storage, self.__character, self )
@@ -218,7 +217,9 @@ class MainWindow(QMainWindow):
 		self.ui.layout_specialties.addWidget( specialties )
 		self.ui.layout_merits.addWidget( merits )
 		self.ui.layout_morality.addWidget( morality )
-		self.ui.layout_powers.addWidget( powers )
+		if "Power" in self.__storage.traits.keys():
+			powers = PowerWidget( self.__storage, self.__character, self )
+			self.ui.layout_powers.addWidget( powers )
 		self.ui.layout_flaws.addWidget( flaws )
 		self.ui.layout_advantages.addWidget( self.__advantages )
 		self.ui.layout_items.addWidget( items )
@@ -265,9 +266,10 @@ class MainWindow(QMainWindow):
 		categoriesMerits = self.__storage.categories(typ)
 		for category in categoriesMerits:
 			for merit in self.__character.traits[typ][category].values():
+				#Debug.debug(merit.hasPrerequisites)
 				if merit.hasPrerequisites:
 					meritPrerequisites = merit.prerequisitesText[0]
-					for item in Config.typs:
+					for item in self.__storage.traits.keys():
 						categories = self.__storage.categories(item)
 						for subitem in categories:
 							for subsubitem in self.__character.traits[item][subitem].values():

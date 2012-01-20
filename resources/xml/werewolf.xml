@@ -1,37 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.8">
-	<creation species="Werewolf">
-		<Attribute>
-			<points value="5"/>
-			<points value="4"/>
-			<points value="3"/>
-		</Attribute>
-		<Skill>
-			<points value="11"/>
-			<points value="7"/>
-			<points value="4"/>
-			<points value="3"/>
-		</Skill>
-		<Merit>
-			<points value="7"/>
-		</Merit>
-		<Power>
-			<points value="3"/>
-		</Power>
-	</creation>
-	<traits species="Werewolf" morale="Harmony" powerstat="Primal Urge" fuel="Essence">
-		<Super>
-			<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
-			<powerstat fuelMax="11" fuelPerTurn="1" traitMax="5">2</powerstat>
-			<powerstat fuelMax="12" fuelPerTurn="2" traitMax="5">3</powerstat>
-			<powerstat fuelMax="13" fuelPerTurn="2" traitMax="5">4</powerstat>
-			<powerstat fuelMax="14" fuelPerTurn="3" traitMax="5">5</powerstat>
-			<powerstat fuelMax="15" fuelPerTurn="4" traitMax="6">6</powerstat>
-			<powerstat fuelMax="20" fuelPerTurn="5" traitMax="7">7</powerstat>
-			<powerstat fuelMax="30" fuelPerTurn="7" traitMax="8">8</powerstat>
-			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
-			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
-		</Super>
+	<Template species="Werewolf">
+		<Creation>
+			<Type name="Attribute">
+				<points value="5"/>
+				<points value="4"/>
+				<points value="3"/>
+			</Type>
+			<Type name="Skill">
+				<points value="11"/>
+				<points value="7"/>
+				<points value="4"/>
+				<points value="3"/>
+			</Type>
+			<Type name="Merit">
+				<points value="7"/>
+			</Type>
+			<Type name="Power">
+				<points value="3"/>
+			</Type>
+		</Creation>
 		<Group>
 			<Breed name="Auspice">
 				<item name="Rahu"/>
@@ -54,284 +42,298 @@
 			</Organisation>
 			<Party name="Pack"/>
 		</Group>
-		<Merit>
-			<Category name="Physical">
-				<trait name="Metabolic Control" source="Werewolf The Rage">
-					<value>2</value>
-					<prerequisite>Stamina > 2</prerequisite>
-				</trait>
-			</Category>
-			<Category name="Social">
-				<trait name="Predator's Gaze" source="Werewolf The Rage">
-					<value>3</value>
-					<prerequisite>Presence > 1 and Intimidation > 1</prerequisite>
-				</trait>
-				<trait name="Pack Affinity" source="Werewolf The Rage">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-				</trait>
-				<trait name="Pack Tactics" source="Werewolf The Rage"/>
-			</Category>
-			<Category name="Item">
-				<trait name="Fetish" custom="true" source="Werewolf Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-			</Category>
-			<Category name="Extraordinary">
-				<trait name="Auspice Blessing" custom="true" source="Werewolf The Rage">
-					<value>1</value>
-					<!--<prerequisite>auspice affinity > 1</prerequisite>-->
-				</trait>
-				<trait name="Ephemeral Reckoning" source="Werewolf The Rage">
-					<value>2</value>
-					<value>4</value>
-				</trait>
-				<trait name="Moon-Centered" source="Werewolf The Rage">
-					<value>2</value>
-				</trait>
-				<!--<trait name="Totem" source="Werewolf Core">
-				</trait>-->
-				<trait name="Synergy" source="Werewolf The Rage">
-					<value>2</value>
-				</trait>
-			</Category>
-			<Category name="Fighting Style">
-				<trait name="Tooth and Claw" source="Werewolf The Rage">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 1 and Dexterity > 2 and Stamina > 2 and Brawl > 1</prerequisite>
-				</trait>
-				<trait name="Wolfpack" source="Werewolf War against the Pure">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Powerstat > 0 and Dexterity > 2 and Stamina > 1 and Brawl > 2</prerequisite>
-				</trait>
-			</Category>
-		</Merit>
-		<Power name="Renown">
-			<Category name="Renown">
-				<trait name="Purity">
-					<cheap>Rahu</cheap>
-					<cheap>Hunters in Darkness</cheap>
-				</trait>
-				<trait name="Glory">
-					<cheap>Cahalith</cheap>
-					<cheap>Blood Talons</cheap>
-				</trait>
-				<trait name="Honor">
-					<cheap>Elodoth</cheap>
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Wisdom">
-					<cheap>Ithaeur</cheap>
-					<cheap>Bone Shadows</cheap>
-				</trait>
-				<trait name="Cunning">
-					<cheap>Irraka</cheap>
-					<cheap>Iron Masters</cheap>
-				</trait>
-			</Category>
-			<Category name="Ritual">
-				<trait name="Rites">
-				</trait>
-			</Category>
-<!--			<Category name="Gifts">
-				<trait name="Full Moon">
-					<cheap>Rahu</cheap>
-					<only>Rahu</only>
-				</trait>
-				<trait name="Warrior's Moon">
-					<cheap>Rahu</cheap>
-					<only>Rahu</only>
-				</trait>
-				<trait name="Gibbous Moon">
-					<cheap>Cahalith</cheap>
-					<only>Cahalith</only>
-				</trait>
-				<trait name="Dreamer's Moon">
-					<cheap>Cahalith</cheap>
-					<only>Cahalith</only>
-				</trait>
-				<trait name="Half Moon">
-					<cheap>Elodoth</cheap>
-					<only>Elodoth</only>
-				</trait>
-				<trait name="Judge's Moon">
-					<cheap>Elodoth</cheap>
-					<only>Elodoth</only>
-				</trait>
-				<trait name="Crescent Moon">
-					<cheap>Ithaeur</cheap>
-					<only>Ithaeur</only>
-				</trait>
-				<trait name="Witch's Moon">
-					<cheap>Ithaeur</cheap>
-					<only>Ithaeur</only>
-				</trait>
-				<trait name="New Moon">
-					<cheap>Irraka</cheap>
-					<only>Irraka</only>
-				</trait>
-				<trait name="Stalker's Moon">
-					<cheap>Irraka</cheap>
-					<only>Irraka</only>
-				</trait>
-				<trait name="Dominance">
-					<cheap>Rahu</cheap>
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Strength">
-					<cheap>Rahu</cheap>
-					<cheap>Blood Talons</cheap>
-				</trait>
-				<trait name="Inspiration">
-					<cheap>Cahalith</cheap>
-					<cheap>Blood Talons</cheap>
-				</trait>
-				<trait name="Insight">
-					<cheap>Elodoth</cheap>
-					<cheap>Bone Shadows</cheap>
-				</trait>
-				<trait name="Warding">
-					<cheap>Cahalith</cheap>
-					<cheap>Elodoth</cheap>
-					<cheap>Bone Shadows</cheap>
-				</trait>
-				<trait name="Elemental">
-					<cheap>Ithaeur</cheap>
-					<cheap>Hunters in Darkness</cheap>
-				</trait>
-				<trait name="Shaping">
-					<cheap>Ithaeur</cheap>
-					<cheap>Iron Masters</cheap>
-				</trait>
-				<trait name="Evasion">
-					<cheap>Irraka</cheap>
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Stealth">
-					<cheap>Irraka</cheap>
-					<cheap>Hunters in Darkness</cheap>
-				</trait>
-				<trait name="Battle">
-					<cheap>Blood Talons</cheap>
-				</trait>
-				<trait name="Blood">
-					<cheap>Blood Talons</cheap>
-				</trait>
-				<trait name="Rage">
-					<cheap>Blood Talons</cheap>
-				</trait>
-				<trait name="Death">
-					<cheap>Bone Shadows</cheap>
-				</trait>
-				<trait name="Ending">
-					<cheap>Bone Shadows</cheap>
-				</trait>
-				<trait name="Information">
-					<cheap>Bone Shadows</cheap>
-				</trait>
-				<trait name="Darkness">
-					<cheap>Hunters in Darkness</cheap>
-				</trait>
-				<trait name="Nature">
-					<cheap>Hunters in Darkness</cheap>
-				</trait>
-				<trait name="Stalking">
-					<cheap>Hunters in Darkness</cheap>
-				</trait>
-				<trait name="Blending">
-					<cheap>Iron Masters</cheap>
-				</trait>
-				<trait name="Knowledge">
-					<cheap>Iron Masters</cheap>
-				</trait>
-				<trait name="Technology">
-					<cheap>Iron Masters</cheap>
-				</trait>
-				<trait name="Urban">
-					<cheap>Iron Masters</cheap>
-				</trait>
-				<trait name="Alpha">
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Halcyon">
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Weather">
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Father Wolf">
-					<cheap>Rahu</cheap>
-					<cheap>Cahalith</cheap>
-					<cheap>Elodoth</cheap>
-					<cheap>Ithaeur</cheap>
-					<cheap>Irraka</cheap>
-					<cheap>Blood Talons</cheap>
-					<cheap>Bone Shadows</cheap>
-					<cheap>Hunters in Darkness</cheap>
-					<cheap>Iron Masters</cheap>
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Mother Luna">
-					<cheap>Rahu</cheap>
-					<cheap>Cahalith</cheap>
-					<cheap>Elodoth</cheap>
-					<cheap>Ithaeur</cheap>
-					<cheap>Irraka</cheap>
-					<cheap>Blood Talons</cheap>
-					<cheap>Bone Shadows</cheap>
-					<cheap>Hunters in Darkness</cheap>
-					<cheap>Iron Masters</cheap>
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Pack">
-					<cheap>Rahu</cheap>
-					<cheap>Cahalith</cheap>
-					<cheap>Elodoth</cheap>
-					<cheap>Ithaeur</cheap>
-					<cheap>Irraka</cheap>
-					<cheap>Blood Talons</cheap>
-					<cheap>Bone Shadows</cheap>
-					<cheap>Hunters in Darkness</cheap>
-					<cheap>Iron Masters</cheap>
-					<cheap>Storm Lords</cheap>
-				</trait>
-				<trait name="Pack">
-				</trait>
-				<trait name="City">
-				</trait>
-				<trait name="Endurance">
-				</trait>
-				<trait name="Predator">
-				</trait>
-				<trait name="Weakness">
-				</trait>
-			</Category>-->
-		</Power>
-		<Flaw>
-			<Category name="Physical">
-				<trait name="Bad Regeneration"/>
-				<trait name="Poor Sense of Smell"/>
-				<trait name="Silver Allergy"/>
-			</Category>
-			<Category name="Social">
-				<trait name="Lone Wolf"/>
-			</Category>
-			<Category name="Extraordinary">
-				<trait name="Anthropocentric"/>
-				<trait name="Disharmony"/>
-			</Category>
-		</Flaw>
-	</traits>
+		<Traits morale="Harmony" powerstat="Primal Urge" fuel="Essence">
+			<Powerstat>
+				<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
+				<powerstat fuelMax="11" fuelPerTurn="1" traitMax="5">2</powerstat>
+				<powerstat fuelMax="12" fuelPerTurn="2" traitMax="5">3</powerstat>
+				<powerstat fuelMax="13" fuelPerTurn="2" traitMax="5">4</powerstat>
+				<powerstat fuelMax="14" fuelPerTurn="3" traitMax="5">5</powerstat>
+				<powerstat fuelMax="15" fuelPerTurn="4" traitMax="6">6</powerstat>
+				<powerstat fuelMax="20" fuelPerTurn="5" traitMax="7">7</powerstat>
+				<powerstat fuelMax="30" fuelPerTurn="7" traitMax="8">8</powerstat>
+				<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
+				<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
+			</Powerstat>
+			<Merit>
+				<Category name="Physical">
+					<trait name="Metabolic Control" source="Werewolf The Rage">
+						<value>2</value>
+						<prerequisite>Stamina > 2</prerequisite>
+					</trait>
+				</Category>
+				<Category name="Social">
+					<trait name="Predator's Gaze" source="Werewolf The Rage">
+						<value>3</value>
+						<prerequisite>Presence > 1 and Intimidation > 1</prerequisite>
+					</trait>
+					<trait name="Pack Affinity" source="Werewolf The Rage">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+					</trait>
+					<trait name="Pack Tactics" source="Werewolf The Rage"/>
+				</Category>
+				<Category name="Item">
+					<trait name="Fetish" custom="true" source="Werewolf Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+				</Category>
+				<Category name="Extraordinary">
+					<trait name="Auspice Blessing" custom="true" source="Werewolf The Rage">
+						<value>1</value>
+						<!--<prerequisite>auspice affinity > 1</prerequisite>-->
+					</trait>
+					<trait name="Ephemeral Reckoning" source="Werewolf The Rage">
+						<value>2</value>
+						<value>4</value>
+					</trait>
+					<trait name="Moon-Centered" source="Werewolf The Rage">
+						<value>2</value>
+					</trait>
+					<!--<trait name="Totem" source="Werewolf Core">
+					</trait>-->
+					<trait name="Synergy" source="Werewolf The Rage">
+						<value>2</value>
+					</trait>
+				</Category>
+				<Category name="Fighting Style">
+					<trait name="Tooth and Claw" source="Werewolf The Rage">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 1 and Dexterity > 2 and Stamina > 2 and Brawl > 1</prerequisite>
+					</trait>
+					<trait name="Wolfpack" source="Werewolf War against the Pure">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Powerstat > 0 and Dexterity > 2 and Stamina > 1 and Brawl > 2</prerequisite>
+					</trait>
+				</Category>
+			</Merit>
+			<Power name="Renown">
+				<Category name="Renown">
+					<trait name="Purity">
+						<cheap>Rahu</cheap>
+						<cheap>Hunters in Darkness</cheap>
+					</trait>
+					<trait name="Glory">
+						<cheap>Cahalith</cheap>
+						<cheap>Blood Talons</cheap>
+					</trait>
+					<trait name="Honor">
+						<cheap>Elodoth</cheap>
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Wisdom">
+						<cheap>Ithaeur</cheap>
+						<cheap>Bone Shadows</cheap>
+					</trait>
+					<trait name="Cunning">
+						<cheap>Irraka</cheap>
+						<cheap>Iron Masters</cheap>
+					</trait>
+				</Category>
+				<Category name="Ritual">
+					<trait name="Rites">
+					</trait>
+				</Category>
+	<!--			<Category name="Gifts">
+					<trait name="Full Moon">
+						<cheap>Rahu</cheap>
+						<only>Rahu</only>
+					</trait>
+					<trait name="Warrior's Moon">
+						<cheap>Rahu</cheap>
+						<only>Rahu</only>
+					</trait>
+					<trait name="Gibbous Moon">
+						<cheap>Cahalith</cheap>
+						<only>Cahalith</only>
+					</trait>
+					<trait name="Dreamer's Moon">
+						<cheap>Cahalith</cheap>
+						<only>Cahalith</only>
+					</trait>
+					<trait name="Half Moon">
+						<cheap>Elodoth</cheap>
+						<only>Elodoth</only>
+					</trait>
+					<trait name="Judge's Moon">
+						<cheap>Elodoth</cheap>
+						<only>Elodoth</only>
+					</trait>
+					<trait name="Crescent Moon">
+						<cheap>Ithaeur</cheap>
+						<only>Ithaeur</only>
+					</trait>
+					<trait name="Witch's Moon">
+						<cheap>Ithaeur</cheap>
+						<only>Ithaeur</only>
+					</trait>
+					<trait name="New Moon">
+						<cheap>Irraka</cheap>
+						<only>Irraka</only>
+					</trait>
+					<trait name="Stalker's Moon">
+						<cheap>Irraka</cheap>
+						<only>Irraka</only>
+					</trait>
+					<trait name="Dominance">
+						<cheap>Rahu</cheap>
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Strength">
+						<cheap>Rahu</cheap>
+						<cheap>Blood Talons</cheap>
+					</trait>
+					<trait name="Inspiration">
+						<cheap>Cahalith</cheap>
+						<cheap>Blood Talons</cheap>
+					</trait>
+					<trait name="Insight">
+						<cheap>Elodoth</cheap>
+						<cheap>Bone Shadows</cheap>
+					</trait>
+					<trait name="Warding">
+						<cheap>Cahalith</cheap>
+						<cheap>Elodoth</cheap>
+						<cheap>Bone Shadows</cheap>
+					</trait>
+					<trait name="Elemental">
+						<cheap>Ithaeur</cheap>
+						<cheap>Hunters in Darkness</cheap>
+					</trait>
+					<trait name="Shaping">
+						<cheap>Ithaeur</cheap>
+						<cheap>Iron Masters</cheap>
+					</trait>
+					<trait name="Evasion">
+						<cheap>Irraka</cheap>
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Stealth">
+						<cheap>Irraka</cheap>
+						<cheap>Hunters in Darkness</cheap>
+					</trait>
+					<trait name="Battle">
+						<cheap>Blood Talons</cheap>
+					</trait>
+					<trait name="Blood">
+						<cheap>Blood Talons</cheap>
+					</trait>
+					<trait name="Rage">
+						<cheap>Blood Talons</cheap>
+					</trait>
+					<trait name="Death">
+						<cheap>Bone Shadows</cheap>
+					</trait>
+					<trait name="Ending">
+						<cheap>Bone Shadows</cheap>
+					</trait>
+					<trait name="Information">
+						<cheap>Bone Shadows</cheap>
+					</trait>
+					<trait name="Darkness">
+						<cheap>Hunters in Darkness</cheap>
+					</trait>
+					<trait name="Nature">
+						<cheap>Hunters in Darkness</cheap>
+					</trait>
+					<trait name="Stalking">
+						<cheap>Hunters in Darkness</cheap>
+					</trait>
+					<trait name="Blending">
+						<cheap>Iron Masters</cheap>
+					</trait>
+					<trait name="Knowledge">
+						<cheap>Iron Masters</cheap>
+					</trait>
+					<trait name="Technology">
+						<cheap>Iron Masters</cheap>
+					</trait>
+					<trait name="Urban">
+						<cheap>Iron Masters</cheap>
+					</trait>
+					<trait name="Alpha">
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Halcyon">
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Weather">
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Father Wolf">
+						<cheap>Rahu</cheap>
+						<cheap>Cahalith</cheap>
+						<cheap>Elodoth</cheap>
+						<cheap>Ithaeur</cheap>
+						<cheap>Irraka</cheap>
+						<cheap>Blood Talons</cheap>
+						<cheap>Bone Shadows</cheap>
+						<cheap>Hunters in Darkness</cheap>
+						<cheap>Iron Masters</cheap>
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Mother Luna">
+						<cheap>Rahu</cheap>
+						<cheap>Cahalith</cheap>
+						<cheap>Elodoth</cheap>
+						<cheap>Ithaeur</cheap>
+						<cheap>Irraka</cheap>
+						<cheap>Blood Talons</cheap>
+						<cheap>Bone Shadows</cheap>
+						<cheap>Hunters in Darkness</cheap>
+						<cheap>Iron Masters</cheap>
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Pack">
+						<cheap>Rahu</cheap>
+						<cheap>Cahalith</cheap>
+						<cheap>Elodoth</cheap>
+						<cheap>Ithaeur</cheap>
+						<cheap>Irraka</cheap>
+						<cheap>Blood Talons</cheap>
+						<cheap>Bone Shadows</cheap>
+						<cheap>Hunters in Darkness</cheap>
+						<cheap>Iron Masters</cheap>
+						<cheap>Storm Lords</cheap>
+					</trait>
+					<trait name="Pack">
+					</trait>
+					<trait name="City">
+					</trait>
+					<trait name="Endurance">
+					</trait>
+					<trait name="Predator">
+					</trait>
+					<trait name="Weakness">
+					</trait>
+				</Category>-->
+			</Power>
+			<Flaw>
+				<Category name="Physical">
+					<trait name="Bad Regeneration"/>
+					<trait name="Poor Sense of Smell"/>
+					<trait name="Silver Allergy"/>
+				</Category>
+				<Category name="Social">
+					<trait name="Lone Wolf"/>
+				</Category>
+				<Category name="Extraordinary">
+					<trait name="Anthropocentric"/>
+					<trait name="Disharmony"/>
+				</Category>
+			</Flaw>
+		</Traits>
+	</Template>
 </SoulCreator>
