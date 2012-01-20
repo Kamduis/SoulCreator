@@ -22,83 +22,49 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QXmlStreamReader, QIODevice
-
-from src.Error import ErrFileNotOpened
 from src.Config import Config
-from src import Error
+from src.Error import ErrXmlOldVersion
 from src.Debug import Debug
 
+## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
+lxmlLoadad = False
+try:
+	from lxml import etree
+	#Debug.debug("Running with lxml.etree")
+	lxmlLoadad = True
+except ImportError:
+	try:
+		# Python 2.5
+		import xml.etree.cElementTree as etree
+		Debug.debug("running with cElementTree on Python 2.5+")
+	except ImportError:
+		try:
+			# Python 2.5
+			import xml.etree.ElementTree as etree
+			Debug.debug("running with ElementTree on Python 2.5+")
+		except ImportError:
+			Debug.debug("Failed to import ElementTree from any known place")
 
 
 
-class ReadXml(QXmlStreamReader):
+
+class ReadXml(object):
 	"""
-	@brief List aus Xml-Dateien.
+	@brief Liest aus Xml-Dateien.
 
-	Diese Klasse bietet die grundlegendsten Funktionen für das Lesen aus Xml-Dateien.
+	Diese Klasse bietet die grundlegendsten Funktionen für das Lesen aus XML-Dateien.
 	"""
 
 
 	def __init__(self):
-		QXmlStreamReader.__init__(self)
-
-
-	def openFile( self, f ):
-		"""
-		Öffnet die im Argument übergebe Datei.
-
-		\exception eFileNotOpen Diese Ausnahme wird geworfen, wenn die XML-DaTei nicht geöffnet werden konnte.
-		"""
-
-		if not f.open( QIODevice.ReadOnly | QIODevice.Text ) :
-			raise ErrFileNotOpened( f.fileName(), f.errorString() )
-
-
-	def closeFile(self, f ):
-		"""
-		Schließt die im Argument übergebe Datei.
-		"""
-
-		f.close()
-
-
-	def readUnknownElement(self):
-		"""
-		Diese Funktion wird immer dann aufgerufen, wenn ein Zweig mit unbekanntem Namen entsdeckt wird. Diese Funktion marschiert bis zum Ende dieses Zweiges.
-		"""
-		
-		while not self.atEnd():
-			self.readNext()
-
-			if self.isEndElement():
-				break
-
-			if self.isStartElement():
-				Debug.debug("Unbekanntes Element: {}".format(self.name()))
-				self.readUnknownElement()
-
-
-	def jumpOverElement(self):
-		"""
-		Überspringe einen Zweig samt all seiner Unterelemente.
-		"""
-		
-		while not self.atEnd():
-			self.readNext()
-
-			if self.isEndElement():
-				break
-
-			if self.isStartElement():
-				self.jumpOverElement()
+		pass
 
 
 	def checkXmlVersion(self, name, version ):
 		"""
 		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.
 		"""
-		
+
 		if name == Config.programName:
 			if version == Config.version():
 				return

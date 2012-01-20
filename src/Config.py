@@ -225,7 +225,7 @@ class Config(object):
 		"Mental",
 		"Physical",
 		"Social",
-		"Extraordinary",
+		#"Extraordinary",
 	)
 
 	## Sämtliche Eras, welcher ein Charakter angehören kann.

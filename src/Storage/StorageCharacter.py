@@ -156,8 +156,8 @@ class StorageCharacter(QObject):
 
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
-		# Eigenscahften setzen.
-		for typ in Config.typs:
+		# Eigenschaften setzen.
+		for typ in self.__storage.traits.keys():
 			self.__traits.setdefault(typ, {})
 			for item in template.traits[typ]:
 				self.__traits[typ].setdefault(item, {})
@@ -179,7 +179,7 @@ class StorageCharacter(QObject):
 						trait.species = subitem[1]["species"]
 						trait.custom = custom
 						trait.customText = customText
-						if "prerequisite" in subitem[1]:
+						if "prerequisite" in subitem[1] and subitem[1]["prerequisite"]:
 							trait.hasPrerequisites = True
 							trait.prerequisitesText = subitem[1]["prerequisite"]
 						# In der Eigenschaft steht der richtige Name aber im Dictionary der Name mit einem numerischen Suffix, damit die Eigenschaft häufiger auftauchen kann.
@@ -896,7 +896,7 @@ class StorageCharacter(QObject):
 		else:
 			if trait.hasPrerequisites:
 				traitPrerequisites = trait.prerequisitesText[0]
-				for item in Config.typs:
+				for item in self.__storage.traits.keys():
 					categories = self.__storage.categories(item)
 					for subitem in categories:
 						for subsubitem in self.traits[item][subitem].values():

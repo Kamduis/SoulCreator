@@ -29,6 +29,7 @@ from PySide.QtGui import QPixmap
 
 from src.Config import Config
 from src.Error import ErrXmlOldVersion
+from src.IO.ReadXml import ReadXml
 from src.Debug import Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
@@ -53,7 +54,7 @@ except ImportError:
 
 
 
-class ReadXmlCharacter(QObject):
+class ReadXmlCharacter(QObject, ReadXml):
 	"""
 	@brief Liest die gespeicherten Charakterwerte in das Programm.
 
@@ -66,6 +67,7 @@ class ReadXmlCharacter(QObject):
 
 	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
+		ReadXml.__init__(self)
 
 		self.__character = character
 
@@ -75,50 +77,24 @@ class ReadXmlCharacter(QObject):
 		Startet den Lesevorgang.
 		"""
 
-		xmlContent_etree = etree.parse(fileName)
-		xmlRootElement_etree = xmlContent_etree.getroot()
+		xmlContent = etree.parse(fileName)
+		xmlRootElement = xmlContent.getroot()
 
-		versionSource = xmlRootElement_etree.attrib["version"]
+		versionSource = xmlRootElement.attrib["version"]
 
 		try:
-			self.checkXmlVersion( xmlRootElement_etree.tag, versionSource )
+			self.checkXmlVersion( xmlRootElement.tag, versionSource )
 		except ErrXmlOldVersion as e:
 			messageText = self.tr("While opening the character file the following problem arised:\n{} {}\nIt appears, that the character will be importable, so the process will be continued. But some character values may be wrong after importing.".format(e.message, e.description))
 			self.exceptionRaised.emit(messageText, e.critical)
-			self.readSoulCreator()
 
-		self.readCharacterInfo(xmlContent_etree)
-		self.readCharacterIdentity(xmlContent_etree)
-		self.readDates(xmlContent_etree)
-		self.readDerangements(xmlContent_etree)
-		self.readTraits(xmlContent_etree)
-		self.readItems(xmlContent_etree)
-		self.readPicture(xmlContent_etree)
-
-		#xmlContent = parse(fileName)
-		#xmlRootElement = xmlContent.documentElement
-
-		##debugList = []
-		##for attrib in xmlRootElement.attributes.items():
-			##debugList.append("{key}=\"{value}\"".format(key=attrib[0], value=attrib[1]))
-		##Debug.debug("\n".join(debugList))
-
-		#versionSource = xmlRootElement.getAttribute("version")
-
-		#try:
-			#self.checkXmlVersion( xmlRootElement.tagName, versionSource )
-		#except ErrXmlOldVersion as e:
-			#messageText = self.tr("While opening the character file the following problem arised:\n{} {}\nIt appears, that the character will be importable, so the process will be continued. But some character values may be wrong after importing.".format(e.message, e.description))
-			#self.exceptionRaised.emit(messageText, e.critical)
-			#self.readSoulCreator()
-
-		#self.readCharacterInfo(xmlRootElement)
-		#self.readCharacterIdentity(xmlRootElement)
-		#self.readDates(xmlRootElement)
-		#self.readDerangements(xmlRootElement)
-		#self.readTraits(xmlRootElement)
-		#self.readItems(xmlRootElement)
-		#self.readPicture(xmlRootElement)
+		self.readCharacterInfo(xmlContent)
+		self.readCharacterIdentity(xmlContent)
+		self.readDates(xmlContent)
+		self.readDerangements(xmlContent)
+		self.readTraits(xmlContent)
+		self.readItems(xmlContent)
+		self.readPicture(xmlContent)
 
 
 	def readCharacterInfo(self, tree):
@@ -280,27 +256,5 @@ class ReadXmlCharacter(QObject):
 			image = QPixmap()
 			image.loadFromData(imageData, Config.pictureFormat)
 			self.__character.picture = image
-
-
-	def checkXmlVersion(self, name, version ):
-		"""
-		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.
-		"""
-
-		if name == Config.programName:
-			if version == Config.version():
-				return
-			else:
-				# Unterschiede in der Minor-Version sind ignorierbar, Unterschiede in der Major-Version allerdings nicht.
-				splitVersion = version.split(".")
-				splitVersion = [int(item) for item in splitVersion]
-
-				## Es ist darauf zu achten, daß Charaktere bis Version 0.6 nicht mit SoulCreator 0.7 und neuer geladen werden können.
-				if( splitVersion[0] != Config.programVersionMajor or splitVersion[1] < 7):
-					raise Error.ErrXmlTooOldVersion( version )
-				else:
-					raise Error.ErrXmlOldVersion( version )
-		else:
-			raise Error.ErrXmlVersion( "{} {}".format(Config.programName, Config.version()), "{} {}".format(name, version) )
 
 

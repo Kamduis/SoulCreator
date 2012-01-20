@@ -391,25 +391,40 @@ class StorageTemplate(QObject):
 	traits = property(__getTraits, __setTraits)
 
 
-#QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
-	#QList< Trait* > traitsPtr;
+	def addTrait( self, typ, category, name, data):
+		"""
+		Fügt eine Eigenschaft zu der entsprechenden Liste hinzu.
 
-#// 	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
+		Ist diese Eigenschaft schon vorhanden, werden die Daten der Eigenschaft um die neuen Daten erweitert. Das gilt ausschließlich für die Spezialisierungen. Die restlichen Daten werden überschrieben.
 
-	#for( int i = 0; i < v_traits.count(); ++i ) {
-		#if( v_traits.at( i )->type() == type && v_traits.at( i )->species().testFlag( species ) ) {
-			#traitsPtr.append( v_traits[i] );
-#// 			qDebug() << Q_FUNC_INFO << "Füge hinzu:" << v_traits.at(i)->name();
-		#}
-	#}
+		Die Eigenschaft sollte im Format eines dict daherkommen.
 
-	#if( traitsPtr.isEmpty() ) {
-#// 		qDebug() << Q_FUNC_INFO << "Trait Typ" << cv_AbstractTrait::toString( type ) << "mit Kategorie" << cv_AbstractTrait::toString( category ) << "existiert nicht!";
-		#throw eTraitNotExisting();
-	#}
+		\param name Der Name der Eigenschaft
+		
+		\param data Alle Informationen über die Eigenschaft außer dem Namen.
+		"""
 
-	#return traitsPtr;
-#}
+		if typ not in self.__traits:
+			self.__traits.setdefault(typ,{})
+
+		if category not in self.__traits[typ]:
+			self.__traits[typ].setdefault(category,{})
+
+		if name not in self.__traits[typ][category]:
+			self.__traits[typ][category].setdefault(name, data)
+		else:
+			specialties = self.__traits[typ][category][name]["specialty"]
+			specialties.extend(data["specialty"])
+			self.__traits[typ][category][name] = data
+			self.__traits[typ][category][name]["specialty"] = specialties
+
+		## Kontrolle zu Debugzwecken:
+		#keys = self.__traits.keys()
+		#for key in self.__traits:
+			#Debug.debug(key)
+			#for keyA in self.__traits[key]:
+				#Debug.debug(keyA)
+				#Debug.debug(self.__traits[key][keyA])
 
 
 	def traitNames( self, typ, category, era=None, age=None ):
@@ -483,7 +498,7 @@ class StorageTemplate(QObject):
 #// }
 
 	def appendSpecies( self, species, speciesData ):
-		if species not in self.__species:
+		if species and species not in self.__species:
 			self.__species.setdefault(species, speciesData )
 
 

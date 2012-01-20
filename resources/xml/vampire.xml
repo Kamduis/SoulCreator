@@ -1,37 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.8">
-	<creation species="Vampire">
-		<Attribute>
-			<points value="5"/>
-			<points value="4"/>
-			<points value="3"/>
-		</Attribute>
-		<Skill>
-			<points value="11"/>
-			<points value="7"/>
-			<points value="4"/>
-			<points value="3"/>
-		</Skill>
-		<Merit>
-			<points value="7"/>
-		</Merit>
-		<Power>
-			<points value="3"/>
-		</Power>
-	</creation>
-	<traits species="Vampire" morale="Humanity" powerstat="Blood Potency" fuel="Vitae">
-		<Super>
-			<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
-			<powerstat fuelMax="11" fuelPerTurn="1" traitMax="5">2</powerstat>
-			<powerstat fuelMax="12" fuelPerTurn="2" traitMax="5">3</powerstat>
-			<powerstat fuelMax="13" fuelPerTurn="2" traitMax="5">4</powerstat>
-			<powerstat fuelMax="14" fuelPerTurn="3" traitMax="5">5</powerstat>
-			<powerstat fuelMax="15" fuelPerTurn="4" traitMax="6">6</powerstat>
-			<powerstat fuelMax="20" fuelPerTurn="5" traitMax="7">7</powerstat>
-			<powerstat fuelMax="30" fuelPerTurn="7" traitMax="8">8</powerstat>
-			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
-			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
-		</Super>
+	<Template species="Vampire">
+		<Creation>
+			<Type name="Attribute">
+				<points value="5"/>
+				<points value="4"/>
+				<points value="3"/>
+			</Type>
+			<Type name="Skill">
+				<points value="11"/>
+				<points value="7"/>
+				<points value="4"/>
+				<points value="3"/>
+			</Type>
+			<Type name="Merit">
+				<points value="7"/>
+			</Type>
+			<Type name="Power">
+				<points value="3"/>
+			</Type>
+		</Creation>
 		<Group>
 			<Breed name="Clan">
 				<item name="Daeva">
@@ -90,249 +78,263 @@
 			</Organisation>
 			<Party name="Coterie"/>
 		</Group>
-		<Merit>
-			<Category name="Mental">
-				<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
-					<value>1</value>
-					<prerequisite>Politics > 0 or Occult > 0 or Streetwise > 0</prerequisite>
-				</trait>
-			</Category>
-			<Category name="Social">
-				<trait name="Domain: Location" source="Vampire Damnation City">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Fealty > 0</prerequisite>
-				</trait>
-				<trait name="Domain: Security" source="Vampire Damnation City">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Fealty > 0</prerequisite>
-				</trait>
-				<trait name="Domain: Size" source="Vampire Damnation City">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Fealty > 0</prerequisite>
-				</trait>
-				<trait name="Tenant" custom="true" source="Vampire Damnation City">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Domain: Size > 0</prerequisite>
-				</trait>
-				<trait name="Vassal" custom="true" source="Vampire Damnation City">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Domain: Size > 0</prerequisite>
-				</trait>
-				<trait name="Feeding Ground" source="Vampire Damnation City">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<!--<prerequisite>Fealty > 0</prerequisite>-->
-				</trait>
-				<trait name="Haven: Size" source="Vampire Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Haven: Security" source="Vampire Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Tomb" source="Vampire Damnation City">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Haven: Size > 0 or Haven: Security > 0</prerequisite>
-				</trait>
-				<trait name="Herd" source="Vampire Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Patron" source="Vampire Requiem for Rome">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Status.Camarilla > 2 or Status.Wing > 2</prerequisite>
-				</trait>
-			</Category>
-			<Category name="Extraordinary">
-				<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
-					<value>2</value>
-					<prerequisite>Powerstat > 5</prerequisite>
-				</trait>
-				<trait name="Lordly Palette" source="Vampire Ventrue">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-				</trait>
-				<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
-					<value>2</value>
-					<prerequisite><![CDATA[Powerstat > 2 and morality < 6 and AGE > 99]]></prerequisite>
-				</trait>
-				<trait name="Swarm Mind" source="Vampire Gangrel">
-					<value>2</value>
-					<prerequisite>Protean > 3</prerequisite>
-				</trait>
-			</Category>
-		</Merit>
-		<Power name="Disciplines">
-			<Category name="Disciplines">
-				<trait name="Animalism">
-					<cheap>Gangrel</cheap>
-					<cheap>Ventrue</cheap>
-					<cheap>Julii</cheap>
-				</trait>
-				<trait name="Auspex">
-					<cheap>Mekhet</cheap>
-				</trait>
-				<trait name="Celerity">
-					<cheap>Daeva</cheap>
-					<cheap>Mekhet</cheap>
-				</trait>
-				<trait name="Dominate">
-					<cheap>Ventrue</cheap>
-				</trait>
-				<trait name="Nightmare">
-					<cheap>Nosferatu</cheap>
-				</trait>
-				<trait name="Obtenebration">
-					<cheap>Julii</cheap>
-				</trait>
-				<trait name="Obfuscate">
-					<cheap>Mekhet</cheap>
-					<cheap>Nosferatu</cheap>
-				</trait>
-				<trait name="Presence">
-					<cheap>Daeva</cheap>
-				</trait>
-				<trait name="Protean">
-					<cheap>Gangrel</cheap>
-				</trait>
-				<trait name="Resilience">
-					<cheap>Gangrel</cheap>
-					<cheap>Ventrue</cheap>
-				</trait>
-				<trait name="Vigor">
-					<cheap>Daeva</cheap>
-					<cheap>Nosferatu</cheap>
-					<cheap>Julii</cheap>
-				</trait>
-			</Category>
-			<Category name="Bloodline Disciplines">
-				<trait name="Abjurism">
-				</trait>
-				<trait name="Asphyx">
-				</trait>
-				<trait name="Bloodworking">
-				</trait>
-				<trait name="Blut Alchemie">
-				</trait>
-				<trait name="Cachaxy">
-				</trait>
-				<trait name="Cattiveria">
-				</trait>
-				<trait name="Crochan">
-				</trait>
-				<trait name="Domus">
-				</trait>
-				<trait name="Getsumei">
-				</trait>
-				<trait name="Kamen">
-				</trait>
-				<trait name="Kingian">
-				</trait>
-				<trait name="Licencieux">
-				</trait>
-				<trait name="Linagem">
-				</trait>
-				<trait name="Mimetismo">
-				</trait>
-				<trait name="Nepenthe">
-				</trait>
-				<trait name="Stigmatica">
-				</trait>
-				<trait name="Sunnikuse">
-				</trait>
-				<trait name="Xinyao">
-				</trait>
-			</Category>
-			<Category name="Blood Sorcery">
-				<trait name="Abjurism">
-				</trait>
-				<trait name="Cruac">
-				</trait>
-				<trait name="Veneficia">
-				</trait>
-				<trait name="Coils of the Dragon">
-				</trait>
-<!--				<trait name="Coil of the Beast">
-				</trait>
-				<trait name="Coil of Flesh">
-				</trait>
-				<trait name="Coil of Slumber">
-				</trait>
-				<trait name="Coil of the Soul">
-				</trait>-->
-			</Category>
-		</Power>
-		<Flaw>
-			<Category name="Physical">
-				<trait name="No Fangs"/>
-			</Category>
-			<Category name="Social">
-				<trait name="Fealty"/>
-				<trait name="Lost Love"/>
-			</Category>
-			<Category name="Extraordinary">
-				<trait name="Sluggish Vitae"/>
-			</Category>
-		</Flaw>
-		<Derangement>
-			<item name="Fixation">
-				<item name="Bulimia"/>
-			</item>
-			<item name="Inferiority Complex">
-				<item name="Diogenes Syndrome"/>
-			</item>
-			<item name="Irrationality">
-				<item name="Dependent-Personality Disorder"/>
-			</item>
-			<item name="Animal Dependency">
-				<item name="Animal Dependency (severe)"/>
-			</item>
-			<item name="Power Fetish Obsession"/>
-			<item name="Preferential Obsession">
-				<item name="Preferential Obsession (severe)"/>
-			</item>
-			<item name="Sanguinary Animism"/>
-			<item name="Erythema"/>
-		</Derangement>
-	</traits>
+		<Traits morale="Humanity" powerstat="Blood Potency" fuel="Vitae">
+			<Powerstat>
+				<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
+				<powerstat fuelMax="11" fuelPerTurn="1" traitMax="5">2</powerstat>
+				<powerstat fuelMax="12" fuelPerTurn="2" traitMax="5">3</powerstat>
+				<powerstat fuelMax="13" fuelPerTurn="2" traitMax="5">4</powerstat>
+				<powerstat fuelMax="14" fuelPerTurn="3" traitMax="5">5</powerstat>
+				<powerstat fuelMax="15" fuelPerTurn="4" traitMax="6">6</powerstat>
+				<powerstat fuelMax="20" fuelPerTurn="5" traitMax="7">7</powerstat>
+				<powerstat fuelMax="30" fuelPerTurn="7" traitMax="8">8</powerstat>
+				<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
+				<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
+			</Powerstat>
+			<Merit>
+				<Category name="Mental">
+					<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
+						<value>1</value>
+						<prerequisite>Politics > 0 or Occult > 0 or Streetwise > 0</prerequisite>
+					</trait>
+				</Category>
+				<Category name="Social">
+					<trait name="Domain: Location" source="Vampire Damnation City">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Fealty > 0</prerequisite>
+					</trait>
+					<trait name="Domain: Security" source="Vampire Damnation City">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Fealty > 0</prerequisite>
+					</trait>
+					<trait name="Domain: Size" source="Vampire Damnation City">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Fealty > 0</prerequisite>
+					</trait>
+					<trait name="Tenant" custom="true" source="Vampire Damnation City">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Domain: Size > 0</prerequisite>
+					</trait>
+					<trait name="Vassal" custom="true" source="Vampire Damnation City">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Domain: Size > 0</prerequisite>
+					</trait>
+					<trait name="Feeding Ground" source="Vampire Damnation City">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<!--<prerequisite>Fealty > 0</prerequisite>-->
+					</trait>
+					<trait name="Haven: Size" source="Vampire Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Haven: Security" source="Vampire Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Tomb" source="Vampire Damnation City">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Haven: Size > 0 or Haven: Security > 0</prerequisite>
+					</trait>
+					<trait name="Herd" source="Vampire Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Patron" source="Vampire Requiem for Rome">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Status.Camarilla > 2 or Status.Wing > 2</prerequisite>
+					</trait>
+				</Category>
+				<Category name="Extraordinary">
+					<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
+						<value>2</value>
+						<prerequisite>Powerstat > 5</prerequisite>
+					</trait>
+					<trait name="Lordly Palette" source="Vampire Ventrue">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+					</trait>
+					<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
+						<value>2</value>
+						<prerequisite><![CDATA[Powerstat > 2 and morality < 6 and AGE > 99]]></prerequisite>
+					</trait>
+					<trait name="Swarm Mind" source="Vampire Gangrel">
+						<value>2</value>
+						<prerequisite>Protean > 3</prerequisite>
+					</trait>
+				</Category>
+			</Merit>
+			<Power name="Disciplines">
+				<Category name="Disciplines">
+					<trait name="Animalism">
+						<cheap>Gangrel</cheap>
+						<cheap>Ventrue</cheap>
+						<cheap>Julii</cheap>
+					</trait>
+					<trait name="Auspex">
+						<cheap>Mekhet</cheap>
+					</trait>
+					<trait name="Celerity">
+						<cheap>Daeva</cheap>
+						<cheap>Mekhet</cheap>
+					</trait>
+					<trait name="Dominate">
+						<cheap>Ventrue</cheap>
+					</trait>
+					<trait name="Nightmare">
+						<cheap>Nosferatu</cheap>
+					</trait>
+					<trait name="Obtenebration">
+						<cheap>Julii</cheap>
+					</trait>
+					<trait name="Obfuscate">
+						<cheap>Mekhet</cheap>
+						<cheap>Nosferatu</cheap>
+					</trait>
+					<trait name="Presence">
+						<cheap>Daeva</cheap>
+					</trait>
+					<trait name="Protean">
+						<cheap>Gangrel</cheap>
+					</trait>
+					<trait name="Resilience">
+						<cheap>Gangrel</cheap>
+						<cheap>Ventrue</cheap>
+					</trait>
+					<trait name="Vigor">
+						<cheap>Daeva</cheap>
+						<cheap>Nosferatu</cheap>
+						<cheap>Julii</cheap>
+					</trait>
+				</Category>
+				<Category name="Bloodline Disciplines">
+					<trait name="Abjurism">
+					</trait>
+					<trait name="Asphyx">
+					</trait>
+					<trait name="Bloodworking">
+					</trait>
+					<trait name="Blut Alchemie">
+					</trait>
+					<trait name="Cachaxy">
+					</trait>
+					<trait name="Cattiveria">
+					</trait>
+					<trait name="Crochan">
+					</trait>
+					<trait name="Domus">
+					</trait>
+					<trait name="Getsumei">
+					</trait>
+					<trait name="Kamen">
+					</trait>
+					<trait name="Kingian">
+					</trait>
+					<trait name="Licencieux">
+					</trait>
+					<trait name="Linagem">
+					</trait>
+					<trait name="Mimetismo">
+					</trait>
+					<trait name="Nepenthe">
+					</trait>
+					<trait name="Stigmatica">
+					</trait>
+					<trait name="Sunnikuse">
+					</trait>
+					<trait name="Xinyao">
+					</trait>
+				</Category>
+				<Category name="Blood Sorcery">
+					<trait name="Abjurism">
+					</trait>
+					<trait name="Cruac">
+					</trait>
+					<trait name="Veneficia">
+					</trait>
+					<trait name="Coils of the Dragon">
+					</trait>
+	<!--				<trait name="Coil of the Beast">
+					</trait>
+					<trait name="Coil of Flesh">
+					</trait>
+					<trait name="Coil of Slumber">
+					</trait>
+					<trait name="Coil of the Soul">
+					</trait>-->
+				</Category>
+			</Power>
+			<Flaw>
+				<Category name="Physical">
+					<trait name="No Fangs"/>
+				</Category>
+				<Category name="Social">
+					<trait name="Fealty"/>
+					<trait name="Lost Love"/>
+				</Category>
+				<Category name="Extraordinary">
+					<trait name="Sluggish Vitae"/>
+				</Category>
+			</Flaw>
+			<Derangement>
+				<mild name="Fixation">
+					<severe name="Bulimia"/>
+				</mild>
+				<mild name="Inferiority Complex">
+					<severe name="Diogenes Syndrome"/>
+				</mild>
+				<mild name="Irrationality">
+					<severe name="Dependent-Personality Disorder"/>
+				</mild>
+				<mild name="Animal Dependency">
+					<severe name="Animal Dependency (severe)"/>
+				</mild>
+				<mild name="Power Fetish Obsession"/>
+				<mild name="Preferential Obsession">
+					<severe name="Preferential Obsession (severe)"/>
+				</mild>
+				<mild name="Sanguinary Animism"/>
+				<mild name="Erythema"/>
+			</Derangement>
+		</Traits>
+	</Template>
 </SoulCreator>

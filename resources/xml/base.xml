@@ -1,1246 +1,1266 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SoulCreator version="0.8">
-	<traits species="">
-		<Virtue>
-			<trait name="Charity" age="Adult"/>
-			<trait name="Faith" age="Adult"/>
-			<trait name="Fortitude" age="Adult"/>
-			<trait name="Hope" age="Adult"/>
-			<trait name="Justice" age="Adult"/>
-			<trait name="Prudence" age="Adult"/>
-			<trait name="Temperance" age="Adult"/>
-			<trait name="Brave" age="Kid"/>
-			<trait name="Calm" age="Kid"/>
-			<trait name="Creative" age="Kid"/>
-			<trait name="Dependable" age="Kid"/>
-			<trait name="Fair" age="Kid"/>
-			<trait name="Friendly" age="Kid"/>
-			<trait name="Generous" age="Kid"/>
-			<trait name="Honest" age="Kid"/>
-			<trait name="Kind" age="Kid"/>
-			<trait name="Optimistic" age="Kid"/>
-		</Virtue>
-		<Vice>
-			<trait name="Envy" age="Adult"/>
-			<trait name="Gluttony" age="Adult"/>
-			<trait name="Greed" age="Adult"/>
-			<trait name="Lust" age="Adult"/>
-			<trait name="Pride" age="Adult"/>
-			<trait name="Sloth" age="Adult"/>
-			<trait name="Wrath" age="Adult"/>
-			<trait name="Brash" age="Kid"/>
-			<trait name="Cowardly" age="Kid"/>
-			<trait name="Cruel" age="Kid"/>
-			<trait name="Dishonest" age="Kid"/>
-			<trait name="Dull" age="Kid"/>
-			<trait name="Egoistical" age="Kid"/>
-			<trait name="Greedy" age="Kid"/>
-			<trait name="Hyperactive" age="Kid"/>
-			<trait name="Irresponsible" age="Kid"/>
-			<trait name="Violent" age="Kid"/>
-		</Vice>
-		<Attribute>
-			<Category name="Mental">
-				<trait name="Intelligence"/>
-				<trait name="Wits"/>
-				<trait name="Resolve"/>
-			</Category>
-			<Category name="Physical">
-				<trait name="Strength"/>
-				<trait name="Dexterity"/>
-				<trait name="Stamina"/>
-			</Category>
-			<Category name="Social">
-				<trait name="Presence"/>
-				<trait name="Manipulation"/>
-				<trait name="Composure"/>
-			</Category>
-		</Attribute>
-		<Skill>
-			<Category name="Mental">
-				<trait name="Academics" age="Adult">
-					<specialty>Anthropology</specialty>
-					<specialty>Architecture</specialty>
-					<specialty>Art</specialty>
-					<specialty>Criminology</specialty>
-					<specialty>English</specialty>
-					<specialty>Finance</specialty>
-					<specialty>Folklore</specialty>
-					<specialty>History</specialty>
-					<specialty>Law</specialty>
-					<specialty>Mathematics</specialty>
-					<specialty>Military Theory</specialty>
-					<specialty>Religion</specialty>
-					<specialty>Research</specialty>
-				</trait>
-				<trait name="Computer" era="Modern">
-					<specialty>Artificial Intelligence</specialty>
-					<specialty>Data Retrieval</specialty>
-					<specialty>Gaming</specialty>
-					<specialty>Graphics</specialty>
-					<specialty>Hacking</specialty>
-					<specialty>Internet</specialty>
-					<specialty>Music</specialty>
-					<specialty>Networking</specialty>
-					<specialty>Programming</specialty>
-					<specialty>Video</specialty>
-				</trait>
-				<trait name="Crafts">
-					<specialty>Automobiles</specialty>
-					<specialty>Aircraft</specialty>
-					<specialty>Cooking</specialty>
-					<specialty>Clothing</specialty>
-					<specialty>Demolitions</specialty>
-					<specialty>Explosives</specialty>
-					<specialty>Forging</specialty>
-					<specialty>Jury-Rigging</specialty>
-					<specialty>Knitting</specialty>
-					<specialty>Sculpting</specialty>
-					<specialty>Sewing</specialty>
-					<specialty>Smithing</specialty>
-					<specialty>Spinning</specialty>
-					<specialty>Woodworking</specialty>
-				</trait>
-				<trait name="Investigation">
-					<specialty>Artifacts</specialty>
-					<specialty>Autopsy</specialty>
-					<specialty>Crime Scenes</specialty>
-					<specialty>Cryptography</specialty>
-					<specialty>Dreams</specialty>
-					<specialty>Eavesdropping</specialty>
-					<specialty>Little Details</specialty>
-					<specialty>Puzzles</specialty>
-					<specialty>Research</specialty>
-					<specialty>Riddles</specialty>
-					<specialty>Scientific Experiments</specialty>
-					<specialty>Searching</specialty>
-					<specialty>Surveillance</specialty>
-					<specialty>Taste</specialty>
-				</trait>
-				<trait name="Medicine">
-					<specialty>Amputation</specialty>
-					<specialty>Emergency Care</specialty>
-					<specialty>First Aid</specialty>
-					<specialty>Human Biology</specialty>
-					<specialty>Illness</specialty>
-					<specialty>Pathology</specialty>
-					<specialty>Pharmaceuticals</specialty>
-					<specialty>Physical Therapy</specialty>
-					<specialty>Poisons</specialty>
-					<specialty>Surgery</specialty>
-					<specialty>Torture (to inflict pain)</specialty>
-				</trait>
-				<trait name="Occult">
-					<specialty>Cultural Beliefs</specialty>
-					<specialty>Curses</specialty>
-					<specialty>Exorcism</specialty>
-					<specialty>Fairy Tales</specialty>
-					<specialty>Ghosts</specialty>
-					<specialty>Local Legends</specialty>
-					<specialty>Magic</specialty>
-					<specialty>Monsters</specialty>
-					<specialty>Religious Rituals</specialty>
-					<specialty>Spirit Wilds</specialty>
-					<specialty>Superstitions</specialty>
-					<specialty>Witchcraft</specialty>
-					<specialty>Urban Legends</specialty>
-					<specialty>Voodoo</specialty>
-					<specialty>Changelings</specialty>
-					<specialty>Mages</specialty>
-					<specialty>Vampires</specialty>
-					<specialty>Werewolves</specialty>
-				</trait>
-				<trait name="Politics">
-					<specialty>Bribery</specialty>
-					<specialty>City Bureaucracy</specialty>
-					<specialty>Cliques</specialty>
-					<specialty>Elections</specialty>
-					<specialty>Federal</specialty>
-					<specialty>Gangs</specialty>
-					<specialty>High School</specialty>
-					<specialty>Local</specialty>
-					<specialty>Personal Rivalries</specialty>
-					<specialty>School Administration</specialty>
-					<specialty>State</specialty>
-					<specialty>Scandals</specialty>
-				</trait>
-				<trait name="Religion" era="Ancient">
-					<specialty>Dogma (Christian)</specialty>
-					<specialty>Dogma (Islamic)</specialty>
-					<specialty>Dogma (Jewish)</specialty>
-					<specialty>Omens</specialty>
-					<specialty>Pantheon (Egyptian)</specialty>
-					<specialty>Pantheon (Greek)</specialty>
-					<specialty>Pantheon (Nordic)</specialty>
-					<specialty>Pantheon (Roman)</specialty>
-					<specialty>Rituals</specialty>
-				</trait>
-				<trait name="Science" age="Adult" era="Modern">
-					<specialty>Biology</specialty>
-					<specialty>Chemistry</specialty>
-					<specialty>Geology</specialty>
-					<specialty>Hypnotherapy</specialty>
-					<specialty>Metallurgy</specialty>
-					<specialty>Physics</specialty>
-				</trait>
-				<trait name="Study" age="Kid">
-					<specialty>Art</specialty>
-					<specialty>Biology</specialty>
-					<specialty>Chemistry</specialty>
-					<specialty>English</specialty>
-					<specialty>Experimentation</specialty>
-					<specialty>Geology</specialty>
-					<specialty>History</specialty>
-					<specialty>Physics</specialty>
-					<specialty>Research</specialty>
-				</trait>
-				<trait name="Warfare" age="Adult" era="Ancient">
-					<specialty>Ambushes</specialty>
-					<specialty>Barbarians</specialty>
-					<specialty>Fields of Fire</specialty>
-					<specialty>Troop Movements</specialty>
-					<specialty>Supply Lines</specialty>
-					<specialty>Terrain</specialty>
-					<specialty>Chess</specialty>
-				</trait>
-			</Category>
-			<Category name="Physical">
-				<trait name="Archery" era="Ancient">
-					<specialty>Long Bow</specialty>
-					<specialty>Long Shot</specialty>
-					<specialty>Short Bow</specialty>
-					<specialty>Sling</specialty>
-					<specialty>Trick Shot</specialty>
-					<specialty>Crossbow</specialty>
-				</trait>
-				<trait name="Athletics">
-					<specialty>Acrobatics</specialty>
-					<specialty>Climbing</specialty>
-					<specialty>Dance</specialty>
-					<specialty>Endurance</specialty>
-					<specialty>Kayaking</specialty>
-					<specialty>Long-Distance Running</specialty>
-					<specialty>Sprinting</specialty>
-					<specialty>Swimming</specialty>
-					<specialty>Throwing</specialty>
-				</trait>
-				<trait name="Brawl">
-					<specialty>Biting</specialty>
-					<specialty>Blocking</specialty>
-					<specialty>Boxing</specialty>
-					<specialty>Claws</specialty>
-					<specialty>Crush</specialty>
-					<specialty>Dirty Tricks</specialty>
-					<specialty>Grappling</specialty>
-					<specialty>Head-Butt</specialty>
-					<specialty>Lashing Out</specialty>
-					<specialty>Karate</specialty>
-					<specialty>Kung-Fu</specialty>
-					<specialty>Throws</specialty>
-				</trait>
-				<trait name="Drive" age="Adult" era="Modern">
-					<specialty>Big Cars</specialty>
-					<specialty>High-Performance Cars</specialty>
-					<specialty>Motorcycles</specialty>
-					<specialty>Off-Road</specialty>
-					<specialty>Pursuit</specialty>
-					<specialty>Tails</specialty>
-					<specialty>Stunts</specialty>
-				</trait>
-				<trait name="Firearms" era="Modern">
-					<specialty>Assault rifles</specialty>
-					<specialty>Autofire</specialty>
-					<specialty>Close Range</specialty>
-					<specialty>Pistols</specialty>
-					<specialty>Revolvers</specialty>
-					<specialty>Rifles</specialty>
-					<specialty>Sniping</specialty>
-					<specialty>Submachine Guns</specialty>
-					<specialty>Target Shooting</specialty>
-					<specialty>Trick Shot</specialty>
-				</trait>
-				<trait name="Larceny">
-					<specialty>Alarm Systems</specialty>
-					<specialty>Concealing Stolen Goods</specialty>
-					<specialty>Lockpicking</specialty>
-					<specialty>Pickpocketing</specialty>
-					<specialty>Security Systems</specialty>
-					<specialty>Safecracking</specialty>
-					<specialty>Shoplifting</specialty>
-					<specialty>Sleight of Hand</specialty>
-				</trait>
-				<trait name="Ride" age="Adult" era="Ancient">
-					<specialty>Chariot</specialty>
-					<specialty>Dangerous Conditions</specialty>
-					<specialty>Pursuit</specialty>
-					<specialty>Maintaining Speed</specialty>
-					<specialty>Quick Start</specialty>
-					<specialty>Stunts</specialty>
-				</trait>
-				<trait name="Stealth">
-					<specialty>Camouflage</specialty>
-					<specialty>Crowds</specialty>
-					<specialty>Hiding</specialty>
-					<specialty>Lurking</specialty>
-					<specialty>Moving Like a Cat</specialty>
-					<specialty>Darkness</specialty>
-					<specialty>Forest</specialty>
-					<specialty>Remaining Still</specialty>
-					<specialty>Shadowing</specialty>
-					<specialty>Shadows</specialty>
-					<specialty>Silent Running</specialty>
-					<specialty>Spying</specialty>
-					<specialty>Staying Quiet</specialty>
-				</trait>
-				<trait name="Survival">
-					<specialty>Foraging</specialty>
-					<specialty>Herbology</specialty>
-					<specialty>Hunting (Specific Kind of Animal)</specialty>
-					<specialty>Navigation</specialty>
-					<specialty>Meteorology</specialty>
-					<specialty>Shelter</specialty>
-					<specialty>Spirit Wilds</specialty>
-					<specialty>Streets</specialty>
-					<specialty>Urban Scavenging</specialty>
-					<specialty>Wilderness Scavenging</specialty>
-					<specialty>Weather</specialty>
-				</trait>
-				<trait name="Weaponry">
-					<specialty>Blunt Weapons</specialty>
-					<specialty>Flexible Weapons</specialty>
-					<specialty>Improvised Weapons</specialty>
-					<specialty>Knives</specialty>
-					<specialty>Polearms</specialty>
-					<specialty>Swords</specialty>
-				</trait>
-			</Category>
-			<Category name="Social">
-				<trait name="Animal Ken">
-					<specialty>Animal Needs</specialty>
-					<specialty>Birds</specialty>
-					<specialty>Cats</specialty>
-					<specialty>Deer</specialty>
-					<specialty>Dogs</specialty>
-					<specialty>Sensing Imminent Attack</specialty>
-					<specialty>Training</specialty>
-					<specialty>Wolves</specialty>
-				</trait>
-				<trait name="Empathy">
-					<specialty>Emotion</specialty>
-					<specialty>Body Language</specialty>
-					<specialty>Boyfriends</specialty>
-					<specialty>Family</specialty>
-					<specialty>Lies</specialty>
-					<specialty>Motives</specialty>
-					<specialty>Personalities</specialty>
-				</trait>
-				<trait name="Expression">
-					<specialty>Classical Dance</specialty>
-					<specialty>Drama</specialty>
-					<specialty>Poetry</specialty>
-					<specialty>Exposés</specialty>
-					<specialty>Jokes</specialty>
-					<specialty>Music</specialty>
-					<specialty>Musical Instrument</specialty>
-					<specialty>Newspaper Articles</specialty>
-					<specialty>Oration</specialty>
-					<specialty>Preaching</specialty>
-					<specialty>Speeches</specialty>
-					<specialty>Storytelling</specialty>
-					<specialty>Theater</specialty>
-				</trait>
-				<trait name="Intimidation">
-					<specialty>Authority</specialty>
-					<specialty>Blackmail</specialty>
-					<specialty>Bluster</specialty>
-					<specialty>Eerie Presence</specialty>
-					<specialty>Loud</specialty>
-					<specialty>Physical Threats</specialty>
-					<specialty>Screaming</specialty>
-					<specialty>Stare-Downs</specialty>
-					<specialty>Torture (to gather information)</specialty>
-					<specialty>Veiled Threats</specialty>
-				</trait>
-				<trait name="Persuasion" age="Adult">
-					<specialty>Diplomacy</specialty>
-					<specialty>Fast-Talking</specialty>
-					<specialty>Inspiring Troops</specialty>
-					<specialty>Lulling</specialty>
-					<specialty>Money</specialty>
-					<specialty>Motivational Speeches</specialty>
-					<specialty>Sales Pitches</specialty>
-					<specialty>Seduction</specialty>
-				</trait>
-				<trait name="Socialize">
-					<specialty>Bar Hopping</specialty>
-					<specialty>Dress Balls</specialty>
-					<specialty>Etiquette</specialty>
-					<specialty>Formal Events</specialty>
-					<specialty>Frat Parties</specialty>
-					<specialty>Lower Class</specialty>
-					<specialty>Orgies</specialty>
-					<specialty>Partying</specialty>
-					<specialty>Sexual Techniques</specialty>
-					<specialty>State Dinners</specialty>
-				</trait>
-				<trait name="Streetwise">
-					<specialty>Avoiding Trouble</specialty>
-					<specialty>Black Market</specialty>
-					<specialty>Docks</specialty>
-					<specialty>Gangs</specialty>
-					<specialty>Rumors</specialty>
-					<specialty>Slave Dealing</specialty>
-					<specialty>Subway Net</specialty>
-					<specialty>Undercover Operations</specialty>
-				</trait>
-				<trait name="Subterfuge">
-					<specialty>Appear Innocent</specialty>
-					<specialty>Con Jobs</specialty>
-					<specialty>Disguises</specialty>
-					<specialty>Hiding Emotions</specialty>
-					<specialty>Lying</specialty>
-					<specialty>Misdirection</specialty>
-				</trait>
-			</Category>
-		</Skill>
-		<Merit>
-			<Category name="Mental">
-				<trait name="Danger Sense" creationOnly="true" source="WoD Core">
-					<value>2</value>
-					<description>You gain a +2 modifier on reflexive Wits + Composure rolls to detect an impending ambush.</description>
-				</trait>
-				<trait name="Eidetic Memory" creationOnly="true" source="WoD Core">
-					<value>2</value>
-					<description>You have a near-photographic memory, being able to recall vast amounts of observed detail with astonishing accuracy.</description>
-				</trait>
-				<trait name="Encyclopedic Knowledge" source="WoD Core">
-					<value>4</value>
-				</trait>
-				<trait name="EOD" source="WoD Armory">
-					<value>2</value>
-					<prerequisite>(Wits > 2 or Dexterity > 2) and Crafts.Demolitions > 2</prerequisite>
-				</trait>
-				<trait name="Holistic Awareness" source="WoD Core">
-					<value>3</value>
-				</trait>
-				<trait name="Hypnotic Voice" source="WoD Second Sight">
-					<value>4</value>
-					<prerequisite>Persuasion > 2 or Science.Hypnotherapy > 2</prerequisite>
-				</trait>
-				<trait name="Language" source="WoD Core" custom="true">
-					<value>1</value>
-					<value>2</value>
-				</trait>
-				<trait name="Lucid Dreaming" source="Changeling Core">
-					<value>2</value>
-					<prerequisite>Resolve > 2</prerequisite>
-				</trait>
-				<trait name="Meditative Mind" source="WoD Core">
-					<value>1</value>
-				</trait>
-				<trait name="Technophile" source="WoD Armory">
-					<value>1</value>
-					<value>2</value>
-				</trait>
-				<trait name="Territorial Familiarity" source="Werewolf Blood of the Wolf">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-				</trait>
-			</Category>
-			<Category name="Physical">
-				<trait name="Ambidextrous" source="WoD Core">
-					<value>3</value>
-				</trait>
-				<trait name="Armored Fighting" source="WoD Armory Reloaded">
-					<value>2</value>
-					<value>4</value>
-					<prerequisite>Strength > 1 and Stamina > 2</prerequisite>
-				</trait>
-				<trait name="Athletics Dodge" source="WoD Dogs of War">
-					<value>1</value>
-					<prerequisite>Dexterity > 1 and Athletics > 0</prerequisite>
-				</trait>
-				<trait name="Brawling Dodge" source="WoD Core">
-					<value>1</value>
-					<prerequisite>Strength > 1 and Brawl > 0</prerequisite>
-				</trait>
-				<trait name="Direction Sense" source="WoD Core">
-					<value>1</value>
-				</trait>
-				<trait name="Disarm" source="WoD Core">
-					<value>2</value>
-					<prerequisite>Dexterity > 2 and Weaponry > 1</prerequisite>
-				</trait>
-				<trait name="Entering Strike" source="WoD Armory Reloaded">
-					<value>2</value>
-					<prerequisite>Dexterity > 2 and Brawl > 2</prerequisite>
-				</trait>
-				<trait name="Equipped Grappling" source="WoD Armory Reloaded">
-					<value>2</value>
-					<prerequisite>Dexterity > 2 and Brawl > 1 and Weaponry > 1</prerequisite>
-				</trait>
-				<trait name="Fast Reflexes" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<prerequisite>Dexterity > 2</prerequisite>
-					<effect value="+value">Initiative</effect>
-				</trait>
-				<trait name="Fighting Finesse" source="WoD Core" custom="true">
-					<value>2</value>
-					<prerequisite>Dexterity > 2 and Weaponry > 1</prerequisite>
-				</trait>
-				<trait name="Firearm Retention" source="WoD Armory Reloaded">
-					<value>1</value>
-					<prerequisite>Wits > 1 and Dexterity > 1 and Brawl > 1 and Firearms > 1</prerequisite>
-				</trait>
-				<trait name="Fleet of Foot" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<prerequisite>Strength > 1</prerequisite>
-					<effect value="+value">Speed</effect>
-				</trait>
-				<trait name="Giant" creationOnly="true" source="WoD Core">
-					<value>4</value>
-				</trait>
-				<trait name="Gunslinger" source="WoD Core">
-					<value>3</value>
-					<prerequisite>Dexterity > 2 and Firearms > 2</prerequisite>
-				</trait>
-				<trait name="High Performance Driving" source="WoD Midnight Roads">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Dexterity > 2 and Resolve > 1 and Drive > 1</prerequisite>
-				</trait>
-				<trait name="Iron Stamina" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<prerequisite>Stamina > 2 or Resolve > 1</prerequisite>
-				</trait>
-				<trait name="Iron Stomach" source="WoD Core">
-					<value>2</value>
-					<prerequisite>Stamina > 1</prerequisite>
-				</trait>
-				<trait name="Natural Immunity" source="WoD Core">
-					<value>4</value>
-					<prerequisite>Stamina > 1</prerequisite>
-				</trait>
-				<trait name="Parkour" source="Promethean Strange Alchemies">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Dexterity > 2 and Athletics > 1</prerequisite>
-				</trait>
-				<trait name="Quick Draw" source="WoD Core">
-					<value>1</value>
-					<prerequisite>Dexterity > 2</prerequisite>
-				</trait>
-				<trait name="Quick Healer" source="WoD Core">
-					<value>4</value>
-					<prerequisite>Stamina > 3</prerequisite>
-				</trait>
-				<trait name="Shield Bearer" source="WoD Armory Reloaded">
-					<value>4</value>
-					<prerequisite>Strength > 1</prerequisite>
-				</trait>
-				<trait name="Strong Back" source="WoD Core">
-					<value>1</value>
-					<prerequisite>Strength > 1</prerequisite>
-				</trait>
-				<trait name="Strong Lungs" source="WoD Core">
-					<value>3</value>
-					<prerequisite>Athletics > 2</prerequisite>
-				</trait>
-				<trait name="Stunt Driver" source="WoD Core">
-					<value>3</value>
-					<prerequisite>Dexterity > 2</prerequisite>
-				</trait>
-				<trait name="Stunt Rider" source="Vampire Requiem for Rome">
-					<value>3</value>
-					<prerequisite>Dexterity > 2</prerequisite>
-				</trait>
-				<trait name="Student of the Blade" source="WoD Armory Reloaded">
-					<value>1</value>
-					<prerequisite>Aggressive Light Sword > 0 or Defensive Light Sword > 0</prerequisite>
-				</trait>
-				<trait name="Toxin Resistance" source="WoD Core">
-					<value>2</value>
-					<prerequisite>Stamina > 2</prerequisite>
-				</trait>
-				<trait name="Weaponry Dodge" source="WoD Core">
-					<value>1</value>
-					<prerequisite>Strength > 1 and Weaponry > 0</prerequisite>
-				</trait>
-				<!--<trait name="Weapons to Empty Hands" source="WoD Armory Reloaded">
-					<value>1</value>
-					<prerequisite>Dexterity > 2 and Brawl > 2 and Weaponry > 2 and Fighting Style >0</prerequisite>
-				</trait>-->
-			</Category>
-			<Category name="Social">
-				<trait name="Allies" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Anonymity" source="Werewolf Blood of the Wolf">
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Resolve > 1 and (Larceny > 1 or Subterfuge > 1)</prerequisite>
-				</trait>
-				<!--<trait name="Barfly" source="WoD Core">
-					<value>1</value>
-				</trait>-->
-				<trait name="Contacts" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Fame" cutom="true" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-				</trait>
-				<trait name="Ghost Ally" source="WoD Second Sight">
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Inspiring" source="WoD Core">
-					<value>4</value>
-					<prerequisite>Presence > 3</prerequisite>
-				</trait>
-				<trait name="Luxury" source="Mage Seers of the Throne">
-					<value>2</value>
-					<value>4</value>
-				</trait>
-				<trait name="Mentor" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="New Identity" source="Changeling Core">
-					<value>1</value>
-					<value>2</value>
-					<value>4</value>
-				</trait>
-				<trait name="Noble Heritage" source="Vampire Requiem for Rome">
-					<value>2</value>
-					<value>4</value>
-				</trait>
-				<trait name="Resources" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Retainer" custom="true" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Site" custom="true" source="Vampire Damnation City">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Status" custom="true" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Striking Looks" source="WoD Core">
-					<value>2</value>
-					<value>4</value>
-				</trait>
-				<trait name="Dream" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-			</Category>
-			<Category name="Item">
-				<trait name="Artifact" source="Mage Core">
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<value>6</value>
-					<value>7</value>
-					<value>8</value>
-					<value>9</value>
-					<value>10</value>
-				</trait>
-				<trait name="Enhanced Item" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Imbued Item" source="Mage Core">
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<value>6</value>
-					<value>7</value>
-					<value>8</value>
-					<value>9</value>
-					<value>10</value>
-				</trait>
-				<trait name="Token" source="Changeling Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<value>6</value>
-					<value>7</value>
-					<value>8</value>
-					<value>9</value>
-					<value>10</value>
-				</trait>
-				<trait name="Cursed Item" source="WoD Book of Spirits">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-			</Category>
-			<Category name="Fighting Style">
-				<trait name="Aggressive Striking" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 2 and Stamina > 1 and Brawl > 1</prerequisite>
-				</trait>
-				<trait name="Aikido" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Wits > 1 and Dexterity > 1 and Brawl > 1</prerequisite>
-				</trait>
-				<trait name="Brute Force" source="Promethean Strange Alchemies">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Strength > 2 and Brawl > 2</prerequisite>
-				</trait>
-				<trait name="Defensive Striking" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 1 and Dexterity > 1 and Stamina > 1 and Brawl > 1</prerequisite>
-				</trait>
-				<trait name="Grappling" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 1 and Dexterity > 2 and Stamina > 2 and Brawl > 1</prerequisite>
-				</trait>
-				<trait name="Judo" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Wits > 1 and Dexterity > 1 and Athletics > 1 and Brawl > 1</prerequisite>
-				</trait>
-				<trait name="Krav Maga" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Wits > 2 and Strength > 1 and Dexterity > 2 and Brawl > 2</prerequisite>
-				</trait>
-				<trait name="Oinna" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Dexterity > 2 and Brawl > 1</prerequisite>
-				</trait>
-				<trait name="Aggressive Light Sword" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Dexterity > 2 and Weaponry > 2</prerequisite>
-				</trait>
-				<trait name="Defensive Light Sword" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 1 and Dexterity > 2 and Composure > 2 and Weaponry > 2 and Quick Draw > 0</prerequisite>
-				</trait>
-				<trait name="Flexible Weapons" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Strength > 2 and Dexterity > 2 and Weaponry > 2</prerequisite>
-				</trait>
-				<trait name="Formation Tactics" source="Vampire Requiem for Rome">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 1 and Stamina > 2 and Weaponry > 1</prerequisite>
-				</trait>
-				<trait name="Gladiatorial" source="Vampire Requiem for Rome">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Strength > 2 and Presence > 1 and Weaponry > 2</prerequisite>
-				</trait>
-				<trait name="Knife Fighting" source="WoD Armory">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Dexterity > 2 and Weaponry > 1</prerequisite>
-				</trait>
-				<trait name="Langschwert" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 2 and Weaponry > 2</prerequisite>
-				</trait>
-				<trait name="Shurikenjutsu" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Dexterity > 2 and Athletics > 1</prerequisite>
-				</trait>
-				<trait name="Spear and Bayonet Fighting" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Strength > 2 and Dexterity > 1 and Weaponry > 2</prerequisite>
-				</trait>
-				<trait name="Staff Fighting" source="WoD Armory">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Strength > 2 and Dexterity > 1 and Weaponry > 1</prerequisite>
-				</trait>
-				<trait name="Stick Fighting" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Dexterity > 2 and Weaponry > 2</prerequisite>
-				</trait>
-				<trait name="Sword and Shield" source="WoD Armory Reloaded">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 2 and Dexterity > 1 and Stamina > 1 and Weaponry > 1</prerequisite>
-				</trait>
-				<trait name="Two Weapons" source="WoD Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Dexterity > 2 and Weaponry > 2</prerequisite>
-				</trait>
-				<trait name="Archery" source="WoD Armory">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Strength > 1 and Dexterity > 1 and Athletics > 1</prerequisite>
-				</trait>
-				<trait name="Combat Marksmanship" source="WoD Armory">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Strength > 1 and Dexterity > 1 and Composure > 2 and Firearms > 1</prerequisite>
-				</trait>
-				<trait name="Sniping" source="WoD Armory">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Dexterity > 2 and Resolve > 2 and Firearms > 2 and Stealth > 1</prerequisite>
-				</trait>
-			</Category>
-			<Category name="Debate Style">
-				<trait name="Reason" source="Vampire Requiem for Rome">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Intelligence > 2 and Academics > 0</prerequisite>
-				</trait>
-				<trait name="Rhetoric" source="Vampire Requiem for Rome">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Presence > 2 and Expression > 0</prerequisite>
-				</trait>
-				<trait name="Theology" source="Vampire Requiem for Rome" era="Ancient">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>Presence > 1 and Religion > 1 and Expression > 0</prerequisite>
-				</trait>
-			</Category>
-			<Category name="Extraordinary">
-				<trait name="Difficult to Ride" source="WoD Book of Spirits">
-					<value>4</value>
-					<prerequisite>Composure > 2 and Resolve > 2</prerequisite>
-				</trait>
-				<trait name="Easy Ride" source="WoD Book of Spirits">
-					<value>2</value>
-					<prerequisite>Wits > 2</prerequisite>
-				</trait>
-				<trait name="Hollow Soul" source="WoD Book of Spirits">
-					<value>2</value>
-					<prerequisite>Easy Ride > 0</prerequisite>
-				</trait>
-				<trait name="Shadow Contacts" source="WoD Book of Spirits">
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Shadowless Chambers" source="WoD Book of Spirits">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<!--<trait name="Pleasing Aura" source="WoD Book of Spirits">
-					<value>3</value>
-					<prerequisite>Non-werewolf</prerequisite>
-				</trait>
-				<trait name="Saintly" source="WoD Book of Spirits">
-					<value>3</value>
-					<prerequisite>Non-werewolf</prerequisite>
-				</trait>
-				<trait name="Spirit Tongue" source="WoD Book of Spirits">
-					<value>3</value>
-					<prerequisite>Non-werewolf</prerequisite>
-				</trait>-->
-			</Category>
-		</Merit>
-		<Flaw>
-			<Category name="Mental">
-				<trait name="Addiction" custom="true"/>
-				<trait name="Amnesia"/>
-				<trait name="Coward"/>
-				<trait name="Forgetful"/>
-				<trait name="Headstrong"/>
-				<trait name="Illiterate"/>
-				<trait name="Nightmares"/>
-			</Category>
-			<Category name="Physical">
-				<trait name="Crippled"/>
-				<trait name="Cumbersome"/>
-				<trait name="Dwarf"/>
-				<trait name="Hard of Hearing"/>
-				<trait name="Lame"/>
-				<trait name="Mute"/>
-				<trait name="One Arm"/>
-				<trait name="One Eye"/>
-				<trait name="Poor Sight"/>
-			</Category>
-			<Category name="Social">
-				<trait name="Aloof"/>
-				<trait name="Behavior Blind"/>
-				<trait name="Deformity" custom="true"/>
-				<trait name="Embarrassing Secret" custom ="true"/>
-				<trait name="Notoriety"/>
-				<trait name="Racist/Sexist"/>
-				<trait name="Speech Impediment"/>
-				<trait name="True Tongue"/>
-				<trait name="Untrustworthy"/>
-			</Category>
-		</Flaw>
-		<Derangement>
-			<item name="Avoidance">
-				<description>On a failed roll, you do everything in your power to avoid the situation, short of harming yourself or others. You might escape the scene or disguise yourself as a bystander to sidle away. If you must confront (or can't escape) the situation, any rolls made suffer a −1 penalty.</description>
-				<item name="Fugue">
-					<description>Make a Resolve+Composure roll when you are subjected to your trigger. If the roll fails, roleplay your trance-like state by performing a sequence of behaviors that you performs almost robotically. You might repetitively untie and tie your shoes, walk to the corner of the room and refuse to come out, or curl into the fetal position. If the Storyteller is not satisfied by your reaction, he might take control of the character for the duration of the bout. The state lasts for the remainder of the scene. At the end of the fugue, you regain consciousness with no memory of your actions. If outsiders (including friends and enemies) interfere with or try to prevent your mechanical activities, you may attack them in order to carry on.</description>
-				</item>
-			</item>
-			<item name="Dehumanization">
-				<description>Make a Resolve+Composure roll. If it fails, all Social rolls (except those involving Intimidation suffer a −2 penalty. You are brusque, impatient and crass with others, belittling them and, if necessary, shoving them out of the way to get to your goals.</description>
-				<item name="Loss of Compassion">
-					<description>Whenever you commit a sin against Morality that directly involves doing harm to another person, you roll 1 fewer die.</description>
-				</item>
-			</item>
-			<item name="Depression">
-				<description>If the roll fails, you lose 1 Willpower point and cannot spend any Willpower points for the remainder of the scene.</description>
-				<item name="Manic-Depression">
-					<description>Whichever form of the ailment you have, whenever you fail a task, the Storyteller may secretly roll your Resolve}. A failure means you lapse into depression for the rest of the scene. You also go into depression whenever you make a dramatic failure on a roll, or, as a vampire, have less than 2 Vitae.
+	<Template species="">
+		<Traits>
+			<Virtue>
+				<trait name="Charity" age="Adult"/>
+				<trait name="Faith" age="Adult"/>
+				<trait name="Fortitude" age="Adult"/>
+				<trait name="Hope" age="Adult"/>
+				<trait name="Justice" age="Adult"/>
+				<trait name="Prudence" age="Adult"/>
+				<trait name="Temperance" age="Adult"/>
+				<trait name="Brave" age="Kid"/>
+				<trait name="Calm" age="Kid"/>
+				<trait name="Creative" age="Kid"/>
+				<trait name="Dependable" age="Kid"/>
+				<trait name="Fair" age="Kid"/>
+				<trait name="Friendly" age="Kid"/>
+				<trait name="Generous" age="Kid"/>
+				<trait name="Honest" age="Kid"/>
+				<trait name="Kind" age="Kid"/>
+				<trait name="Optimistic" age="Kid"/>
+			</Virtue>
+			<Vice>
+				<trait name="Envy" age="Adult"/>
+				<trait name="Gluttony" age="Adult"/>
+				<trait name="Greed" age="Adult"/>
+				<trait name="Lust" age="Adult"/>
+				<trait name="Pride" age="Adult"/>
+				<trait name="Sloth" age="Adult"/>
+				<trait name="Wrath" age="Adult"/>
+				<trait name="Brash" age="Kid"/>
+				<trait name="Cowardly" age="Kid"/>
+				<trait name="Cruel" age="Kid"/>
+				<trait name="Dishonest" age="Kid"/>
+				<trait name="Dull" age="Kid"/>
+				<trait name="Egoistical" age="Kid"/>
+				<trait name="Greedy" age="Kid"/>
+				<trait name="Hyperactive" age="Kid"/>
+				<trait name="Irresponsible" age="Kid"/>
+				<trait name="Violent" age="Kid"/>
+			</Vice>
+			<Attribute>
+				<Category name="Mental">
+					<trait name="Intelligence"/>
+					<trait name="Wits"/>
+					<trait name="Resolve"/>
+				</Category>
+				<Category name="Physical">
+					<trait name="Strength"/>
+					<trait name="Dexterity"/>
+					<trait name="Stamina"/>
+				</Category>
+				<Category name="Social">
+					<trait name="Presence"/>
+					<trait name="Manipulation"/>
+					<trait name="Composure"/>
+				</Category>
+			</Attribute>
+			<Skill>
+				<Category name="Mental">
+					<trait name="Academics" age="Adult">
+						<specialty>Anthropology</specialty>
+						<specialty>Architecture</specialty>
+						<specialty>Art</specialty>
+						<specialty>Criminology</specialty>
+						<specialty>English</specialty>
+						<specialty>Finance</specialty>
+						<specialty>Folklore</specialty>
+						<specialty>History</specialty>
+						<specialty>Law</specialty>
+						<specialty>Mathematics</specialty>
+						<specialty>Military Theory</specialty>
+						<specialty>Religion</specialty>
+						<specialty>Research</specialty>
+					</trait>
+					<trait name="Computer" era="Modern">
+						<specialty>Artificial Intelligence</specialty>
+						<specialty>Data Retrieval</specialty>
+						<specialty>Gaming</specialty>
+						<specialty>Graphics</specialty>
+						<specialty>Hacking</specialty>
+						<specialty>Internet</specialty>
+						<specialty>Music</specialty>
+						<specialty>Networking</specialty>
+						<specialty>Programming</specialty>
+						<specialty>Video</specialty>
+					</trait>
+					<trait name="Crafts">
+						<specialty>Automobiles</specialty>
+						<specialty>Aircraft</specialty>
+						<specialty>Cooking</specialty>
+						<specialty>Clothing</specialty>
+						<specialty>Demolitions</specialty>
+						<specialty>Explosives</specialty>
+						<specialty>Forging</specialty>
+						<specialty>Jury-Rigging</specialty>
+						<specialty>Knitting</specialty>
+						<specialty>Sculpting</specialty>
+						<specialty>Sewing</specialty>
+						<specialty>Smithing</specialty>
+						<specialty>Spinning</specialty>
+						<specialty>Woodworking</specialty>
+					</trait>
+					<trait name="Investigation">
+						<specialty>Artifacts</specialty>
+						<specialty>Autopsy</specialty>
+						<specialty>Crime Scenes</specialty>
+						<specialty>Cryptography</specialty>
+						<specialty>Dreams</specialty>
+						<specialty>Eavesdropping</specialty>
+						<specialty>Little Details</specialty>
+						<specialty>Puzzles</specialty>
+						<specialty>Research</specialty>
+						<specialty>Riddles</specialty>
+						<specialty>Scientific Experiments</specialty>
+						<specialty>Searching</specialty>
+						<specialty>Surveillance</specialty>
+						<specialty>Taste</specialty>
+					</trait>
+					<trait name="Medicine">
+						<specialty>Amputation</specialty>
+						<specialty>Emergency Care</specialty>
+						<specialty>First Aid</specialty>
+						<specialty>Human Biology</specialty>
+						<specialty>Illness</specialty>
+						<specialty>Pathology</specialty>
+						<specialty>Pharmaceuticals</specialty>
+						<specialty>Physical Therapy</specialty>
+						<specialty>Poisons</specialty>
+						<specialty>Surgery</specialty>
+						<specialty>Torture (to inflict pain)</specialty>
+					</trait>
+					<trait name="Occult">
+						<specialty>Cultural Beliefs</specialty>
+						<specialty>Curses</specialty>
+						<specialty>Exorcism</specialty>
+						<specialty>Fairy Tales</specialty>
+						<specialty>Ghosts</specialty>
+						<specialty>Local Legends</specialty>
+						<specialty>Magic</specialty>
+						<specialty>Monsters</specialty>
+						<specialty>Religious Rituals</specialty>
+						<specialty>Spirit Wilds</specialty>
+						<specialty>Superstitions</specialty>
+						<specialty>Witchcraft</specialty>
+						<specialty>Urban Legends</specialty>
+						<specialty>Voodoo</specialty>
+						<specialty>Changelings</specialty>
+						<specialty>Mages</specialty>
+						<specialty>Vampires</specialty>
+						<specialty>Werewolves</specialty>
+					</trait>
+					<trait name="Politics">
+						<specialty>Bribery</specialty>
+						<specialty>City Bureaucracy</specialty>
+						<specialty>Cliques</specialty>
+						<specialty>Elections</specialty>
+						<specialty>Federal</specialty>
+						<specialty>Gangs</specialty>
+						<specialty>High School</specialty>
+						<specialty>Local</specialty>
+						<specialty>Personal Rivalries</specialty>
+						<specialty>School Administration</specialty>
+						<specialty>State</specialty>
+						<specialty>Scandals</specialty>
+					</trait>
+					<trait name="Religion" era="Ancient">
+						<specialty>Dogma (Christian)</specialty>
+						<specialty>Dogma (Islamic)</specialty>
+						<specialty>Dogma (Jewish)</specialty>
+						<specialty>Omens</specialty>
+						<specialty>Pantheon (Egyptian)</specialty>
+						<specialty>Pantheon (Greek)</specialty>
+						<specialty>Pantheon (Nordic)</specialty>
+						<specialty>Pantheon (Roman)</specialty>
+						<specialty>Rituals</specialty>
+					</trait>
+					<trait name="Science" age="Adult" era="Modern">
+						<specialty>Biology</specialty>
+						<specialty>Chemistry</specialty>
+						<specialty>Geology</specialty>
+						<specialty>Hypnotherapy</specialty>
+						<specialty>Metallurgy</specialty>
+						<specialty>Physics</specialty>
+					</trait>
+					<trait name="Study" age="Kid">
+						<specialty>Art</specialty>
+						<specialty>Biology</specialty>
+						<specialty>Chemistry</specialty>
+						<specialty>English</specialty>
+						<specialty>Experimentation</specialty>
+						<specialty>Geology</specialty>
+						<specialty>History</specialty>
+						<specialty>Physics</specialty>
+						<specialty>Research</specialty>
+					</trait>
+					<trait name="Warfare" age="Adult" era="Ancient">
+						<specialty>Ambushes</specialty>
+						<specialty>Barbarians</specialty>
+						<specialty>Fields of Fire</specialty>
+						<specialty>Troop Movements</specialty>
+						<specialty>Supply Lines</specialty>
+						<specialty>Terrain</specialty>
+						<specialty>Chess</specialty>
+					</trait>
+				</Category>
+				<Category name="Physical">
+					<trait name="Archery" era="Ancient">
+						<specialty>Long Bow</specialty>
+						<specialty>Long Shot</specialty>
+						<specialty>Short Bow</specialty>
+						<specialty>Sling</specialty>
+						<specialty>Trick Shot</specialty>
+						<specialty>Crossbow</specialty>
+					</trait>
+					<trait name="Athletics">
+						<specialty>Acrobatics</specialty>
+						<specialty>Climbing</specialty>
+						<specialty>Dance</specialty>
+						<specialty>Endurance</specialty>
+						<specialty>Kayaking</specialty>
+						<specialty>Long-Distance Running</specialty>
+						<specialty>Sprinting</specialty>
+						<specialty>Swimming</specialty>
+						<specialty>Throwing</specialty>
+					</trait>
+					<trait name="Brawl">
+						<specialty>Biting</specialty>
+						<specialty>Blocking</specialty>
+						<specialty>Boxing</specialty>
+						<specialty>Claws</specialty>
+						<specialty>Crush</specialty>
+						<specialty>Dirty Tricks</specialty>
+						<specialty>Grappling</specialty>
+						<specialty>Head-Butt</specialty>
+						<specialty>Lashing Out</specialty>
+						<specialty>Karate</specialty>
+						<specialty>Kung-Fu</specialty>
+						<specialty>Throws</specialty>
+					</trait>
+					<trait name="Drive" age="Adult" era="Modern">
+						<specialty>Big Cars</specialty>
+						<specialty>High-Performance Cars</specialty>
+						<specialty>Motorcycles</specialty>
+						<specialty>Off-Road</specialty>
+						<specialty>Pursuit</specialty>
+						<specialty>Tails</specialty>
+						<specialty>Stunts</specialty>
+					</trait>
+					<trait name="Firearms" era="Modern">
+						<specialty>Assault rifles</specialty>
+						<specialty>Autofire</specialty>
+						<specialty>Close Range</specialty>
+						<specialty>Pistols</specialty>
+						<specialty>Revolvers</specialty>
+						<specialty>Rifles</specialty>
+						<specialty>Sniping</specialty>
+						<specialty>Submachine Guns</specialty>
+						<specialty>Target Shooting</specialty>
+						<specialty>Trick Shot</specialty>
+					</trait>
+					<trait name="Larceny">
+						<specialty>Alarm Systems</specialty>
+						<specialty>Concealing Stolen Goods</specialty>
+						<specialty>Lockpicking</specialty>
+						<specialty>Pickpocketing</specialty>
+						<specialty>Security Systems</specialty>
+						<specialty>Safecracking</specialty>
+						<specialty>Shoplifting</specialty>
+						<specialty>Sleight of Hand</specialty>
+					</trait>
+					<trait name="Ride" age="Adult" era="Ancient">
+						<specialty>Chariot</specialty>
+						<specialty>Dangerous Conditions</specialty>
+						<specialty>Pursuit</specialty>
+						<specialty>Maintaining Speed</specialty>
+						<specialty>Quick Start</specialty>
+						<specialty>Stunts</specialty>
+					</trait>
+					<trait name="Stealth">
+						<specialty>Camouflage</specialty>
+						<specialty>Crowds</specialty>
+						<specialty>Hiding</specialty>
+						<specialty>Lurking</specialty>
+						<specialty>Moving Like a Cat</specialty>
+						<specialty>Darkness</specialty>
+						<specialty>Forest</specialty>
+						<specialty>Remaining Still</specialty>
+						<specialty>Shadowing</specialty>
+						<specialty>Shadows</specialty>
+						<specialty>Silent Running</specialty>
+						<specialty>Spying</specialty>
+						<specialty>Staying Quiet</specialty>
+					</trait>
+					<trait name="Survival">
+						<specialty>Foraging</specialty>
+						<specialty>Herbology</specialty>
+						<specialty>Hunting (Specific Kind of Animal)</specialty>
+						<specialty>Navigation</specialty>
+						<specialty>Meteorology</specialty>
+						<specialty>Shelter</specialty>
+						<specialty>Spirit Wilds</specialty>
+						<specialty>Streets</specialty>
+						<specialty>Urban Scavenging</specialty>
+						<specialty>Wilderness Scavenging</specialty>
+						<specialty>Weather</specialty>
+					</trait>
+					<trait name="Weaponry">
+						<specialty>Blunt Weapons</specialty>
+						<specialty>Flexible Weapons</specialty>
+						<specialty>Improvised Weapons</specialty>
+						<specialty>Knives</specialty>
+						<specialty>Polearms</specialty>
+						<specialty>Swords</specialty>
+					</trait>
+				</Category>
+				<Category name="Social">
+					<trait name="Animal Ken">
+						<specialty>Animal Needs</specialty>
+						<specialty>Birds</specialty>
+						<specialty>Cats</specialty>
+						<specialty>Deer</specialty>
+						<specialty>Dogs</specialty>
+						<specialty>Sensing Imminent Attack</specialty>
+						<specialty>Training</specialty>
+						<specialty>Wolves</specialty>
+					</trait>
+					<trait name="Empathy">
+						<specialty>Emotion</specialty>
+						<specialty>Body Language</specialty>
+						<specialty>Boyfriends</specialty>
+						<specialty>Family</specialty>
+						<specialty>Lies</specialty>
+						<specialty>Motives</specialty>
+						<specialty>Personalities</specialty>
+					</trait>
+					<trait name="Expression">
+						<specialty>Classical Dance</specialty>
+						<specialty>Drama</specialty>
+						<specialty>Poetry</specialty>
+						<specialty>Exposés</specialty>
+						<specialty>Jokes</specialty>
+						<specialty>Music</specialty>
+						<specialty>Musical Instrument</specialty>
+						<specialty>Newspaper Articles</specialty>
+						<specialty>Oration</specialty>
+						<specialty>Preaching</specialty>
+						<specialty>Speeches</specialty>
+						<specialty>Storytelling</specialty>
+						<specialty>Theater</specialty>
+					</trait>
+					<trait name="Intimidation">
+						<specialty>Authority</specialty>
+						<specialty>Blackmail</specialty>
+						<specialty>Bluster</specialty>
+						<specialty>Eerie Presence</specialty>
+						<specialty>Loud</specialty>
+						<specialty>Physical Threats</specialty>
+						<specialty>Screaming</specialty>
+						<specialty>Stare-Downs</specialty>
+						<specialty>Torture (to gather information)</specialty>
+						<specialty>Veiled Threats</specialty>
+					</trait>
+					<trait name="Persuasion" age="Adult">
+						<specialty>Diplomacy</specialty>
+						<specialty>Fast-Talking</specialty>
+						<specialty>Inspiring Troops</specialty>
+						<specialty>Lulling</specialty>
+						<specialty>Money</specialty>
+						<specialty>Motivational Speeches</specialty>
+						<specialty>Sales Pitches</specialty>
+						<specialty>Seduction</specialty>
+					</trait>
+					<trait name="Socialize">
+						<specialty>Bar Hopping</specialty>
+						<specialty>Dress Balls</specialty>
+						<specialty>Etiquette</specialty>
+						<specialty>Formal Events</specialty>
+						<specialty>Frat Parties</specialty>
+						<specialty>Lower Class</specialty>
+						<specialty>Orgies</specialty>
+						<specialty>Partying</specialty>
+						<specialty>Sexual Techniques</specialty>
+						<specialty>State Dinners</specialty>
+					</trait>
+					<trait name="Streetwise">
+						<specialty>Avoiding Trouble</specialty>
+						<specialty>Black Market</specialty>
+						<specialty>Docks</specialty>
+						<specialty>Gangs</specialty>
+						<specialty>Rumors</specialty>
+						<specialty>Slave Dealing</specialty>
+						<specialty>Subway Net</specialty>
+						<specialty>Undercover Operations</specialty>
+					</trait>
+					<trait name="Subterfuge">
+						<specialty>Appear Innocent</specialty>
+						<specialty>Con Jobs</specialty>
+						<specialty>Disguises</specialty>
+						<specialty>Hiding Emotions</specialty>
+						<specialty>Lying</specialty>
+						<specialty>Misdirection</specialty>
+					</trait>
+				</Category>
+			</Skill>
+			<Merit>
+				<Category name="Mental">
+					<trait name="Danger Sense" creationOnly="true" source="WoD Core">
+						<value>2</value>
+						<description>You gain a +2 modifier on reflexive Wits + Composure rolls to detect an impending ambush.</description>
+					</trait>
+					<trait name="Eidetic Memory" creationOnly="true" source="WoD Core">
+						<value>2</value>
+						<description>You have a near-photographic memory, being able to recall vast amounts of observed detail with astonishing accuracy.</description>
+					</trait>
+					<trait name="Encyclopedic Knowledge" source="WoD Core">
+						<value>4</value>
+					</trait>
+					<trait name="EOD" source="WoD Armory">
+						<value>2</value>
+						<prerequisite>(Wits > 2 or Dexterity > 2) and Crafts.Demolitions > 2</prerequisite>
+					</trait>
+					<trait name="Holistic Awareness" source="WoD Core">
+						<value>3</value>
+					</trait>
+					<trait name="Hypnotic Voice" source="WoD Second Sight">
+						<value>4</value>
+						<prerequisite>Persuasion > 2 or Science.Hypnotherapy > 2</prerequisite>
+					</trait>
+					<trait name="Language" source="WoD Core" custom="true">
+						<value>1</value>
+						<value>2</value>
+					</trait>
+					<trait name="Lucid Dreaming" source="Changeling Core">
+						<value>2</value>
+						<prerequisite>Resolve > 2</prerequisite>
+					</trait>
+					<trait name="Meditative Mind" source="WoD Core">
+						<value>1</value>
+					</trait>
+					<trait name="Technophile" source="WoD Armory">
+						<value>1</value>
+						<value>2</value>
+					</trait>
+					<trait name="Territorial Familiarity" source="Werewolf Blood of the Wolf">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+					</trait>
+				</Category>
+				<Category name="Physical">
+					<trait name="Ambidextrous" source="WoD Core">
+						<value>3</value>
+					</trait>
+					<trait name="Armored Fighting" source="WoD Armory Reloaded">
+						<value>2</value>
+						<value>4</value>
+						<prerequisite>Strength > 1 and Stamina > 2</prerequisite>
+					</trait>
+					<trait name="Athletics Dodge" source="WoD Dogs of War">
+						<value>1</value>
+						<prerequisite>Dexterity > 1 and Athletics > 0</prerequisite>
+					</trait>
+					<trait name="Brawling Dodge" source="WoD Core">
+						<value>1</value>
+						<prerequisite>Strength > 1 and Brawl > 0</prerequisite>
+					</trait>
+					<trait name="Direction Sense" source="WoD Core">
+						<value>1</value>
+					</trait>
+					<trait name="Disarm" source="WoD Core">
+						<value>2</value>
+						<prerequisite>Dexterity > 2 and Weaponry > 1</prerequisite>
+					</trait>
+					<trait name="Entering Strike" source="WoD Armory Reloaded">
+						<value>2</value>
+						<prerequisite>Dexterity > 2 and Brawl > 2</prerequisite>
+					</trait>
+					<trait name="Equipped Grappling" source="WoD Armory Reloaded">
+						<value>2</value>
+						<prerequisite>Dexterity > 2 and Brawl > 1 and Weaponry > 1</prerequisite>
+					</trait>
+					<trait name="Fast Reflexes" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<prerequisite>Dexterity > 2</prerequisite>
+						<effect value="+value">Initiative</effect>
+					</trait>
+					<trait name="Fighting Finesse" source="WoD Core" custom="true">
+						<value>2</value>
+						<prerequisite>Dexterity > 2 and Weaponry > 1</prerequisite>
+					</trait>
+					<trait name="Firearm Retention" source="WoD Armory Reloaded">
+						<value>1</value>
+						<prerequisite>Wits > 1 and Dexterity > 1 and Brawl > 1 and Firearms > 1</prerequisite>
+					</trait>
+					<trait name="Fleet of Foot" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<prerequisite>Strength > 1</prerequisite>
+						<effect value="+value">Speed</effect>
+					</trait>
+					<trait name="Giant" creationOnly="true" source="WoD Core">
+						<value>4</value>
+					</trait>
+					<trait name="Gunslinger" source="WoD Core">
+						<value>3</value>
+						<prerequisite>Dexterity > 2 and Firearms > 2</prerequisite>
+					</trait>
+					<trait name="High Performance Driving" source="WoD Midnight Roads">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Dexterity > 2 and Resolve > 1 and Drive > 1</prerequisite>
+					</trait>
+					<trait name="Iron Stamina" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<prerequisite>Stamina > 2 or Resolve > 1</prerequisite>
+					</trait>
+					<trait name="Iron Stomach" source="WoD Core">
+						<value>2</value>
+						<prerequisite>Stamina > 1</prerequisite>
+					</trait>
+					<trait name="Natural Immunity" source="WoD Core">
+						<value>4</value>
+						<prerequisite>Stamina > 1</prerequisite>
+					</trait>
+					<trait name="Parkour" source="Promethean Strange Alchemies">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Dexterity > 2 and Athletics > 1</prerequisite>
+					</trait>
+					<trait name="Quick Draw" source="WoD Core">
+						<value>1</value>
+						<prerequisite>Dexterity > 2</prerequisite>
+					</trait>
+					<trait name="Quick Healer" source="WoD Core">
+						<value>4</value>
+						<prerequisite>Stamina > 3</prerequisite>
+					</trait>
+					<trait name="Shield Bearer" source="WoD Armory Reloaded">
+						<value>4</value>
+						<prerequisite>Strength > 1</prerequisite>
+					</trait>
+					<trait name="Strong Back" source="WoD Core">
+						<value>1</value>
+						<prerequisite>Strength > 1</prerequisite>
+					</trait>
+					<trait name="Strong Lungs" source="WoD Core">
+						<value>3</value>
+						<prerequisite>Athletics > 2</prerequisite>
+					</trait>
+					<trait name="Stunt Driver" source="WoD Core">
+						<value>3</value>
+						<prerequisite>Dexterity > 2</prerequisite>
+					</trait>
+					<trait name="Stunt Rider" source="Vampire Requiem for Rome">
+						<value>3</value>
+						<prerequisite>Dexterity > 2</prerequisite>
+					</trait>
+					<trait name="Student of the Blade" source="WoD Armory Reloaded">
+						<value>1</value>
+						<prerequisite>Aggressive Light Sword > 0 or Defensive Light Sword > 0</prerequisite>
+					</trait>
+					<trait name="Toxin Resistance" source="WoD Core">
+						<value>2</value>
+						<prerequisite>Stamina > 2</prerequisite>
+					</trait>
+					<trait name="Weaponry Dodge" source="WoD Core">
+						<value>1</value>
+						<prerequisite>Strength > 1 and Weaponry > 0</prerequisite>
+					</trait>
+					<!--<trait name="Weapons to Empty Hands" source="WoD Armory Reloaded">
+						<value>1</value>
+						<prerequisite>Dexterity > 2 and Brawl > 2 and Weaponry > 2 and Fighting Style >0</prerequisite>
+					</trait>-->
+				</Category>
+				<Category name="Social">
+					<trait name="Allies" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Anonymity" source="Werewolf Blood of the Wolf">
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Resolve > 1 and (Larceny > 1 or Subterfuge > 1)</prerequisite>
+					</trait>
+					<!--<trait name="Barfly" source="WoD Core">
+						<value>1</value>
+					</trait>-->
+					<trait name="Contacts" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Fame" cutom="true" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+					</trait>
+					<trait name="Ghost Ally" source="WoD Second Sight">
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Inspiring" source="WoD Core">
+						<value>4</value>
+						<prerequisite>Presence > 3</prerequisite>
+					</trait>
+					<trait name="Luxury" source="Mage Seers of the Throne">
+						<value>2</value>
+						<value>4</value>
+					</trait>
+					<trait name="Mentor" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="New Identity" source="Changeling Core">
+						<value>1</value>
+						<value>2</value>
+						<value>4</value>
+					</trait>
+					<trait name="Noble Heritage" source="Vampire Requiem for Rome">
+						<value>2</value>
+						<value>4</value>
+					</trait>
+					<trait name="Resources" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Retainer" custom="true" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Site" custom="true" source="Vampire Damnation City">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Status" custom="true" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Striking Looks" source="WoD Core">
+						<value>2</value>
+						<value>4</value>
+					</trait>
+					<trait name="Dream" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+				</Category>
+				<Category name="Item">
+					<trait name="Artifact" source="Mage Core">
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<value>6</value>
+						<value>7</value>
+						<value>8</value>
+						<value>9</value>
+						<value>10</value>
+					</trait>
+					<trait name="Enhanced Item" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Imbued Item" source="Mage Core">
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<value>6</value>
+						<value>7</value>
+						<value>8</value>
+						<value>9</value>
+						<value>10</value>
+					</trait>
+					<trait name="Token" source="Changeling Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<value>6</value>
+						<value>7</value>
+						<value>8</value>
+						<value>9</value>
+						<value>10</value>
+					</trait>
+					<trait name="Cursed Item" source="WoD Book of Spirits">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+				</Category>
+				<Category name="Fighting Style">
+					<trait name="Aggressive Striking" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 2 and Stamina > 1 and Brawl > 1</prerequisite>
+					</trait>
+					<trait name="Aikido" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Wits > 1 and Dexterity > 1 and Brawl > 1</prerequisite>
+					</trait>
+					<trait name="Brute Force" source="Promethean Strange Alchemies">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Strength > 2 and Brawl > 2</prerequisite>
+					</trait>
+					<trait name="Defensive Striking" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 1 and Dexterity > 1 and Stamina > 1 and Brawl > 1</prerequisite>
+					</trait>
+					<trait name="Grappling" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 1 and Dexterity > 2 and Stamina > 2 and Brawl > 1</prerequisite>
+					</trait>
+					<trait name="Judo" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Wits > 1 and Dexterity > 1 and Athletics > 1 and Brawl > 1</prerequisite>
+					</trait>
+					<trait name="Krav Maga" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Wits > 2 and Strength > 1 and Dexterity > 2 and Brawl > 2</prerequisite>
+					</trait>
+					<trait name="Oinna" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Dexterity > 2 and Brawl > 1</prerequisite>
+					</trait>
+					<trait name="Aggressive Light Sword" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Dexterity > 2 and Weaponry > 2</prerequisite>
+					</trait>
+					<trait name="Defensive Light Sword" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 1 and Dexterity > 2 and Composure > 2 and Weaponry > 2 and Quick Draw > 0</prerequisite>
+					</trait>
+					<trait name="Flexible Weapons" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Strength > 2 and Dexterity > 2 and Weaponry > 2</prerequisite>
+					</trait>
+					<trait name="Formation Tactics" source="Vampire Requiem for Rome">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 1 and Stamina > 2 and Weaponry > 1</prerequisite>
+					</trait>
+					<trait name="Gladiatorial" source="Vampire Requiem for Rome">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Strength > 2 and Presence > 1 and Weaponry > 2</prerequisite>
+					</trait>
+					<trait name="Knife Fighting" source="WoD Armory">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Dexterity > 2 and Weaponry > 1</prerequisite>
+					</trait>
+					<trait name="Langschwert" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 2 and Weaponry > 2</prerequisite>
+					</trait>
+					<trait name="Shurikenjutsu" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Dexterity > 2 and Athletics > 1</prerequisite>
+					</trait>
+					<trait name="Spear and Bayonet Fighting" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Strength > 2 and Dexterity > 1 and Weaponry > 2</prerequisite>
+					</trait>
+					<trait name="Staff Fighting" source="WoD Armory">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Strength > 2 and Dexterity > 1 and Weaponry > 1</prerequisite>
+					</trait>
+					<trait name="Stick Fighting" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Dexterity > 2 and Weaponry > 2</prerequisite>
+					</trait>
+					<trait name="Sword and Shield" source="WoD Armory Reloaded">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 2 and Dexterity > 1 and Stamina > 1 and Weaponry > 1</prerequisite>
+					</trait>
+					<trait name="Two Weapons" source="WoD Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Dexterity > 2 and Weaponry > 2</prerequisite>
+					</trait>
+					<trait name="Archery" source="WoD Armory">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Strength > 1 and Dexterity > 1 and Athletics > 1</prerequisite>
+					</trait>
+					<trait name="Combat Marksmanship" source="WoD Armory">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Strength > 1 and Dexterity > 1 and Composure > 2 and Firearms > 1</prerequisite>
+					</trait>
+					<trait name="Sniping" source="WoD Armory">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Dexterity > 2 and Resolve > 2 and Firearms > 2 and Stealth > 1</prerequisite>
+					</trait>
+				</Category>
+				<Category name="Debate Style">
+					<trait name="Reason" source="Vampire Requiem for Rome">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Intelligence > 2 and Academics > 0</prerequisite>
+					</trait>
+					<trait name="Rhetoric" source="Vampire Requiem for Rome">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisite>Presence > 2 and Expression > 0</prerequisite>
+					</trait>
+					<trait name="Theology" source="Vampire Requiem for Rome" era="Ancient">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisite>Presence > 1 and Religion > 1 and Expression > 0</prerequisite>
+					</trait>
+				</Category>
+				<Category name="Extraordinary">
+					<trait name="Difficult to Ride" source="WoD Book of Spirits">
+						<value>4</value>
+						<prerequisite>Composure > 2 and Resolve > 2</prerequisite>
+					</trait>
+					<trait name="Easy Ride" source="WoD Book of Spirits">
+						<value>2</value>
+						<prerequisite>Wits > 2</prerequisite>
+					</trait>
+					<trait name="Hollow Soul" source="WoD Book of Spirits">
+						<value>2</value>
+						<prerequisite>Easy Ride > 0</prerequisite>
+					</trait>
+					<trait name="Shadow Contacts" source="WoD Book of Spirits">
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Shadowless Chambers" source="WoD Book of Spirits">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<!--<trait name="Pleasing Aura" source="WoD Book of Spirits">
+						<value>3</value>
+						<prerequisite>Non-werewolf</prerequisite>
+					</trait>
+					<trait name="Saintly" source="WoD Book of Spirits">
+						<value>3</value>
+						<prerequisite>Non-werewolf</prerequisite>
+					</trait>
+					<trait name="Spirit Tongue" source="WoD Book of Spirits">
+						<value>3</value>
+						<prerequisite>Non-werewolf</prerequisite>
+					</trait>-->
+				</Category>
+			</Merit>
+			<Flaw>
+				<Category name="Mental">
+					<trait name="Addiction" custom="true"/>
+					<trait name="Amnesia"/>
+					<trait name="Coward"/>
+					<trait name="Forgetful"/>
+					<trait name="Headstrong"/>
+					<trait name="Illiterate"/>
+					<trait name="Nightmares"/>
+				</Category>
+				<Category name="Physical">
+					<trait name="Crippled"/>
+					<trait name="Cumbersome"/>
+					<trait name="Dwarf"/>
+					<trait name="Hard of Hearing"/>
+					<trait name="Lame"/>
+					<trait name="Mute"/>
+					<trait name="One Arm"/>
+					<trait name="One Eye"/>
+					<trait name="Poor Sight"/>
+				</Category>
+				<Category name="Social">
+					<trait name="Aloof"/>
+					<trait name="Behavior Blind"/>
+					<trait name="Deformity" custom="true"/>
+					<trait name="Embarrassing Secret" custom ="true"/>
+					<trait name="Notoriety"/>
+					<trait name="Racist/Sexist"/>
+					<trait name="Speech Impediment"/>
+					<trait name="True Tongue"/>
+					<trait name="Untrustworthy"/>
+				</Category>
+			</Flaw>
+			<Derangement>
+				<mild name="Avoidance">
+					<description>On a failed roll, you do everything in your power to avoid the situation, short of harming yourself or others. You might escape the scene or disguise yourself as a bystander to sidle away. If you must confront (or can't escape) the situation, any rolls made suffer a −1 penalty.</description>
+					<severe name="Fugue">
+						<description>Make a Resolve+Composure roll when you are subjected to your trigger. If the roll fails, roleplay your trance-like state by performing a sequence of behaviors that you performs almost robotically. You might repetitively untie and tie your shoes, walk to the corner of the room and refuse to come out, or curl into the fetal position. If the Storyteller is not satisfied by your reaction, he might take control of the character for the duration of the bout. The state lasts for the remainder of the scene. At the end of the fugue, you regain consciousness with no memory of your actions. If outsiders (including friends and enemies) interfere with or try to prevent your mechanical activities, you may attack them in order to carry on.</description>
+					</severe>
+				</mild>
+				<mild name="Dehumanization">
+					<description>Make a Resolve+Composure roll. If it fails, all Social rolls (except those involving Intimidation suffer a −2 penalty. You are brusque, impatient and crass with others, belittling them and, if necessary, shoving them out of the way to get to your goals.</description>
+					<severe name="Loss of Compassion">
+						<description>Whenever you commit a sin against Morality that directly involves doing harm to another person, you roll 1 fewer die.</description>
+					</severe>
+				</mild>
+				<mild name="Depression">
+					<description>If the roll fails, you lose 1 Willpower point and cannot spend any Willpower points for the remainder of the scene.</description>
+					<severe name="Manic-Depression">
+						<description>Whichever form of the ailment you have, whenever you fail a task, the Storyteller may secretly roll your Resolve}. A failure means you lapse into depression for the rest of the scene. You also go into depression whenever you make a dramatic failure on a roll, or, as a vampire, have less than 2 Vitae.
 
-					While depressed, you lose half your Willpower points (rounding down), to a minimum of 1. A depressed vampire cannot expend Vitae to gain dice for Physical tasks, either.
+						While depressed, you lose half your Willpower points (rounding down), to a minimum of 1. A depressed vampire cannot expend Vitae to gain dice for Physical tasks, either.
 
-					Each scene thereafter, the Storyteller rolls 1 die. On a success, you throw off the depression and become upbeat, energetic and obsessively active for as many scenes as you were depressed. You regain the Willpower points you lost before, and all rolls to resist frenzy suffer a 1-die penalty. </description>
-				</item>
-				<item name="Melancholia">
-					<description>Severe depression. In addition to the above effects of a failed Resolve+Composure roll, all dice pools suffer a −2 penalty for the remainder of the scene.</description>
-				</item>
-			</item>
-			<item name="Fetishism">
-				<description>If you experience something that reminds you of the event or object you're fetishized, roll Resolve+Composure}. If the roll fails, you focus on re-creating the situation or coming in contact with the object in question.</description>
-				<item name="Masochism">
-					<description>As Fetishism}, but you are no longer satisfied with the presence of the object or duplication of the situation. You must now be hurt by it in order to enjoy yourself. The effects of fetishism apply, but you must also suffer an amount of bashing damage at least equal to your Stamina during the compulsive activity in order to be satisfied. Without the interference of an outside agent, you won't stop until the damage is inflicted in full.</description>
-				</item>
-			</item>
-			<item name="Fixation">
-				<description>If your Resolve+Composure roll fails, roll 1 die. The result is the number of scenes in which you are focused on the offending or inspiring event or task, to the possible exclusion of more important goals.</description>
-				<item name="Obsessive Compulsion">
-					<description>Determine a set of specific actions or behaviors that you follow to the exclusion of all else (even if doing so interferes with your current agenda or endangers your life or others'). The effects of obsessive compulsion can be negated for the course of 1 scene by making a successful Resolve+Composure roll at a −2 penalty. If you are forcibly prevented from adhering to your derangement, you may lose control among enemies or allies and attack either (or both) indiscriminately.</description>
-				</item>
-			</item>
-			<item name="Inferiority Complex">
-				<description>In stressful situations roll your character's Resolve+Composure to remain composed. If your roll fails, the weight of the momentous choice is too much for you and you are flustered, doubting your ability to choose correctly or to perform adequately. Once in this state, any rolls made for the remainder of the scene -- including the momentous act itself -- suffer a −1 penalty. In addition, a Willpower point cannot be spent on the singular roll that inspires your bout of inferiority.</description>
-				<item name="Anxiety">
-					<description>As Inferiority Complex}, but you suffer a -2 penalty on all rolls for the remainder of the scene, and Willpower points cannot be spent to bolster any rolls in that period.</description>
-				</item>
-			</item>
-			<item name="Insomnia">
-				<description>You have trouble getting the required amount of sleep, and not just occasionally. Any time you are engaged in a stressful situation, roll Resolve+Composure}. Failure means that you are unable to sleep properly and suffer a −2 penalty on all rolls the following day. Each day thereafter is considered stressful.</description>
-				<item name="Cataplexy">
-					<description>You have so much trouble resting that your body is beginning to fail you. Whenever the roll mentioned at Insomnie fails, you suffer from bouts of overwhelming feebleness throughout the following day. Any circumstance resulting in an intense emotional reaction such as laughter, anger or fear requires a Stamina+Composure roll. Failure means that you slump to the ground, paralyzed with weakness for a full turn even though you remain fully conscious.</description>
-				</item>
-			</item>
-			<item name="Irrationality">
-				<description>Roll Resolve+Composure to keep  cool. On a failed roll, your only way to comfortably deal with confrontation is to act crazy or over the top, in wild hopes that you will scare away your oppressor or at least mitigate your own fears. This behavior persists for the remainder of the scene. Make a Wits+Composure roll to be able to take any action that removes you from the scene or that directly diffuses the situation (such as accepting a hand offered in a conciliatory handshake).</description>
-				<item name="Delusional Obsession">
-					<description>A Willpower point must be spent to resist whenever an opportunity arises to act in accordance with your obsession, or whenever you must act in direct opposition to your obsession. For instance, a gardening fanatic might have to expend Willpower to stay out of a florist's shop. A person who believes that every instance of a crescent or lunar reference indicates Lupine activity might need to expend a Willpower point to step into an Islamic cultural center or to stay in the same room as someone named Moon.</description>
-				</item>
-				<item name="Multiple Personality" extreme="true">
-					<description>You can manifest different Skills or perhaps increased or diminished Social Attributes for each identity (the number of dots allocated to your Social Attributes are rearranged by anywhere from one to three).</description>
-				</item>
-			</item>
-			<item name="Narcissism">
-				<description>Roll Resolve+Composure to avoid a bout of vanity. On a failed roll, you do not work and play well with others -- even if the victory that brings on a bout of narcissism was partly won with their aid. For the remainder of the scene, when called upon to aid in a task you do so only half-heartedly, unless it's a task focused on you or your own needs or wants. You suffer a −3 penalty when participating in teamwork efforts. And you're such a self-obsessed bore that Social rolls all suffer a −1 penalty.</description>
-				<item name="Megalomania">
-					<description>The effects of Narcissism apply, except that the penalties intensify by 1. You are also highly competitive. You cannot allow yourself to fail a contest (even a contested roll). If you do, you obsess about it and work to arrange a rematch when it's most beneficial for you. If, for example, you fail to pick a lock while an ally succeeds, you don't let it go. You constantly insist that you did the job and that your successor took the glory, and demand that similar efforts be tried again, even under inappropriate circumstances such as at an office or restaurant.
+						Each scene thereafter, the Storyteller rolls 1 die. On a success, you throw off the depression and become upbeat, energetic and obsessively active for as many scenes as you were depressed. You regain the Willpower points you lost before, and all rolls to resist frenzy suffer a 1-die penalty. </description>
+					</severe>
+					<severe name="Melancholia">
+						<description>Severe depression. In addition to the above effects of a failed Resolve+Composure roll, all dice pools suffer a −2 penalty for the remainder of the scene.</description>
+					</severe>
+				</mild>
+				<mild name="Fetishism">
+					<description>If you experience something that reminds you of the event or object you're fetishized, roll Resolve+Composure}. If the roll fails, you focus on re-creating the situation or coming in contact with the object in question.</description>
+					<severe name="Masochism">
+						<description>As Fetishism}, but you are no longer satisfied with the presence of the object or duplication of the situation. You must now be hurt by it in order to enjoy yourself. The effects of fetishism apply, but you must also suffer an amount of bashing damage at least equal to your Stamina during the compulsive activity in order to be satisfied. Without the interference of an outside agent, you won't stop until the damage is inflicted in full.</description>
+					</severe>
+				</mild>
+				<mild name="Fixation">
+					<description>If your Resolve+Composure roll fails, roll 1 die. The result is the number of scenes in which you are focused on the offending or inspiring event or task, to the possible exclusion of more important goals.</description>
+					<severe name="Obsessive Compulsion">
+						<description>Determine a set of specific actions or behaviors that you follow to the exclusion of all else (even if doing so interferes with your current agenda or endangers your life or others'). The effects of obsessive compulsion can be negated for the course of 1 scene by making a successful Resolve+Composure roll at a −2 penalty. If you are forcibly prevented from adhering to your derangement, you may lose control among enemies or allies and attack either (or both) indiscriminately.</description>
+					</severe>
+				</mild>
+				<mild name="Inferiority Complex">
+					<description>In stressful situations roll your character's Resolve+Composure to remain composed. If your roll fails, the weight of the momentous choice is too much for you and you are flustered, doubting your ability to choose correctly or to perform adequately. Once in this state, any rolls made for the remainder of the scene -- including the momentous act itself -- suffer a −1 penalty. In addition, a Willpower point cannot be spent on the singular roll that inspires your bout of inferiority.</description>
+					<severe name="Anxiety">
+						<description>As Inferiority Complex}, but you suffer a -2 penalty on all rolls for the remainder of the scene, and Willpower points cannot be spent to bolster any rolls in that period.</description>
+					</severe>
+				</mild>
+				<mild name="Insomnia">
+					<description>You have trouble getting the required amount of sleep, and not just occasionally. Any time you are engaged in a stressful situation, roll Resolve+Composure}. Failure means that you are unable to sleep properly and suffer a −2 penalty on all rolls the following day. Each day thereafter is considered stressful.</description>
+					<severe name="Cataplexy">
+						<description>You have so much trouble resting that your body is beginning to fail you. Whenever the roll mentioned at Insomnie fails, you suffer from bouts of overwhelming feebleness throughout the following day. Any circumstance resulting in an intense emotional reaction such as laughter, anger or fear requires a Stamina+Composure roll. Failure means that you slump to the ground, paralyzed with weakness for a full turn even though you remain fully conscious.</description>
+					</severe>
+				</mild>
+				<mild name="Irrationality">
+					<description>Roll Resolve+Composure to keep  cool. On a failed roll, your only way to comfortably deal with confrontation is to act crazy or over the top, in wild hopes that you will scare away your oppressor or at least mitigate your own fears. This behavior persists for the remainder of the scene. Make a Wits+Composure roll to be able to take any action that removes you from the scene or that directly diffuses the situation (such as accepting a hand offered in a conciliatory handshake).</description>
+					<severe name="Delusional Obsession">
+						<description>A Willpower point must be spent to resist whenever an opportunity arises to act in accordance with your obsession, or whenever you must act in direct opposition to your obsession. For instance, a gardening fanatic might have to expend Willpower to stay out of a florist's shop. A person who believes that every instance of a crescent or lunar reference indicates Lupine activity might need to expend a Willpower point to step into an Islamic cultural center or to stay in the same room as someone named Moon.</description>
+					</severe>
+					<severe name="Multiple Personality" extreme="true">
+						<description>You can manifest different Skills or perhaps increased or diminished Social Attributes for each identity (the number of dots allocated to your Social Attributes are rearranged by anywhere from one to three).</description>
+					</severe>
+				</mild>
+				<mild name="Narcissism">
+					<description>Roll Resolve+Composure to avoid a bout of vanity. On a failed roll, you do not work and play well with others -- even if the victory that brings on a bout of narcissism was partly won with their aid. For the remainder of the scene, when called upon to aid in a task you do so only half-heartedly, unless it's a task focused on you or your own needs or wants. You suffer a −3 penalty when participating in teamwork efforts. And you're such a self-obsessed bore that Social rolls all suffer a −1 penalty.</description>
+					<severe name="Megalomania">
+						<description>The effects of Narcissism apply, except that the penalties intensify by 1. You are also highly competitive. You cannot allow yourself to fail a contest (even a contested roll). If you do, you obsess about it and work to arrange a rematch when it's most beneficial for you. If, for example, you fail to pick a lock while an ally succeeds, you don't let it go. You constantly insist that you did the job and that your successor took the glory, and demand that similar efforts be tried again, even under inappropriate circumstances such as at an office or restaurant.
 
-					If you ever lose a contest to someone you feel is socially inferior, you lose 1 point of Willpower due to shame and self-loathing (which is at the heart of your megalomania; you secretly fear that you're a fraud).</description>
-				</item>
-			</item>
-			<item name="Phobia">
-				<description>You move away from the object of your phobia. If you must be near it, you can tolerate being no closer than your Speed in yards. If it approaches you, you must move away at least your Speed in distance in your next action. You cannot easily target the trigger with close combat or ranged attacks. Such attacks suffer a −5 penalty as you shake just looking at it.</description>
-				<item name="Hysteria">
-					<description>This condition operates as a Phobia}, but on a failed Resolve+Composure roll your character cannot be in the same room with the object of your fear. You must run away from it immediately, and cannot tolerate being within sensory range (sight, sound, smell) of it. If the trigger comes within sensory range, you must run away at full running Speed as soon as you can take an action. You cannot target it for an attack under any circumstance. If it touches you, make another Resolve+Composure roll not to freak out and run as far away as you can, thinking of nothing else until you have left the subject far behind. (Even if this roll succeeds, you must still leave the room or area.) If any of your Resolve+Composure rolls suffer a dramatic failure or you are unable to escape, you faint and lose consciousness for the remainder of the scene. If you are unaware of the object's proximity until it touches you, your Resolve+Composure roll suffers a −3 penalty. If it touches you where you can't see it but you can feel it -- a spider dropping on your neck or in your hair -- the penalty is −5.</description>
-				</item>
-			</item>
-			<item name="Pyromania">
-				<description>If you are bored, frustrated or stressed, you must roll Resolve+Composure}. If this roll fails, you must light something on fire. In addition, if you see a fire already burning, you must roll Resolve+Composure}. If this roll fails, you stand, transfixed, staring at the fire. This roll must be made every turn until you succeed, at which point you can tear yourself away.</description>
-				<item name="Pyrophilia">
-					<description>The game system is as with Pyromania, except that the Resolve+Composure rolls suffer a −2 penalty. In addition, you feel the compulsion to set fires in any situation fraught with sexual tension.</description>
-				</item>
-			</item>
-			<item name="Repression">
-				<description>You have blocked out the memory of the event that caused this derangement. In addition, if you find yourself in a similar situation, you must roll Resolve+Composure or else you block out the memory of that scene as well.</description>
-				<item name="Denial">
-					<description>You not only repress the memories that trouble you but have constructed a potentially elaborate scenario to replace them and grow hostile if someone tries to persuade you otherwise. Whenever someone tries to educate you as to the truth of what happens, you roll Resolve+Composure}. If the roll succeeds, your delusion remains intact, and you become irate and refuse to discuss the matter. If the roll fails, your internal commitment to the safety of the delusion weakens a bit, and you are at least willing to listen.</description>
-				</item>
-			</item>
-			<item name="Supernatural Fascination">
-				<description>At least once a scene, and more often if significant events occur during a scene, you must roll Resolve+Composure}. If that roll fails, you must perform some action appropriate to your beliefs. You might utter a brief prayer, mumble into your wallet (which you're sure contains a communication device), line your hat with tinfoil to prevent the aliens from reading your mind and so on.</description>
-				<item name="Zealotry">
-					<description>You have decided that his spiritual or supernatural beliefs are so important than everyone should share them. You proselytize to everyone you meet, given only a few minutes of conversation. You might ask people if they have accepted Jesus Christ as their personal savior, or you might simply warn people engaging in sinful behavior that they are bound for Hell. You might snap pictures of agents of the government conspiracy and warn other people to stay away from them. You might occasionally curse while looking at sky, as though expecting the aliens to arrive any moment. The game system for this derangement works similar to Supernatural Fascination, but the effects are more extreme, as described.</description>
-				</item>
-			</item>
-			<item name="Suspicion">
-				<description>Your trust is undermined for the remainder of the scene, regardless of whether or not the person or persons who did you wrong meant any harm. You question everyone's sincerity and doubts that anyone tries to help you, even if someone saves your life. You suffers a −1 penalty on all Social rolls. Note that, even though you are suspicious, you can still be taken in by con men and hucksters. You get no special bonus to resist their attempts to sway you even though you suspect them of being as bad as everyone else.</description>
-				<item name="Paranoia">
-					<description>You automatically suffer a −2 penalty on Social rolls. You are distrustful and wary of everyone, even close friends and family. The slightest hint of suspicious behavior is enough to provoke a Resolve+Composure roll to retain control (made at a −2 penalty). A failed roll indicates that you flee or attack an offender.
+						If you ever lose a contest to someone you feel is socially inferior, you lose 1 point of Willpower due to shame and self-loathing (which is at the heart of your megalomania; you secretly fear that you're a fraud).</description>
+					</severe>
+				</mild>
+				<mild name="Phobia">
+					<description>You move away from the object of your phobia. If you must be near it, you can tolerate being no closer than your Speed in yards. If it approaches you, you must move away at least your Speed in distance in your next action. You cannot easily target the trigger with close combat or ranged attacks. Such attacks suffer a −5 penalty as you shake just looking at it.</description>
+					<severe name="Hysteria">
+						<description>This condition operates as a Phobia}, but on a failed Resolve+Composure roll your character cannot be in the same room with the object of your fear. You must run away from it immediately, and cannot tolerate being within sensory range (sight, sound, smell) of it. If the trigger comes within sensory range, you must run away at full running Speed as soon as you can take an action. You cannot target it for an attack under any circumstance. If it touches you, make another Resolve+Composure roll not to freak out and run as far away as you can, thinking of nothing else until you have left the subject far behind. (Even if this roll succeeds, you must still leave the room or area.) If any of your Resolve+Composure rolls suffer a dramatic failure or you are unable to escape, you faint and lose consciousness for the remainder of the scene. If you are unaware of the object's proximity until it touches you, your Resolve+Composure roll suffers a −3 penalty. If it touches you where you can't see it but you can feel it -- a spider dropping on your neck or in your hair -- the penalty is −5.</description>
+					</severe>
+				</mild>
+				<mild name="Pyromania">
+					<description>If you are bored, frustrated or stressed, you must roll Resolve+Composure}. If this roll fails, you must light something on fire. In addition, if you see a fire already burning, you must roll Resolve+Composure}. If this roll fails, you stand, transfixed, staring at the fire. This roll must be made every turn until you succeed, at which point you can tear yourself away.</description>
+					<severe name="Pyrophilia">
+						<description>The game system is as with Pyromania, except that the Resolve+Composure rolls suffer a −2 penalty. In addition, you feel the compulsion to set fires in any situation fraught with sexual tension.</description>
+					</severe>
+				</mild>
+				<mild name="Repression">
+					<description>You have blocked out the memory of the event that caused this derangement. In addition, if you find yourself in a similar situation, you must roll Resolve+Composure or else you block out the memory of that scene as well.</description>
+					<severe name="Denial">
+						<description>You not only repress the memories that trouble you but have constructed a potentially elaborate scenario to replace them and grow hostile if someone tries to persuade you otherwise. Whenever someone tries to educate you as to the truth of what happens, you roll Resolve+Composure}. If the roll succeeds, your delusion remains intact, and you become irate and refuse to discuss the matter. If the roll fails, your internal commitment to the safety of the delusion weakens a bit, and you are at least willing to listen.</description>
+					</severe>
+				</mild>
+				<mild name="Supernatural Fascination">
+					<description>At least once a scene, and more often if significant events occur during a scene, you must roll Resolve+Composure}. If that roll fails, you must perform some action appropriate to your beliefs. You might utter a brief prayer, mumble into your wallet (which you're sure contains a communication device), line your hat with tinfoil to prevent the aliens from reading your mind and so on.</description>
+					<severe name="Zealotry">
+						<description>You have decided that his spiritual or supernatural beliefs are so important than everyone should share them. You proselytize to everyone you meet, given only a few minutes of conversation. You might ask people if they have accepted Jesus Christ as their personal savior, or you might simply warn people engaging in sinful behavior that they are bound for Hell. You might snap pictures of agents of the government conspiracy and warn other people to stay away from them. You might occasionally curse while looking at sky, as though expecting the aliens to arrive any moment. The game system for this derangement works similar to Supernatural Fascination, but the effects are more extreme, as described.</description>
+					</severe>
+				</mild>
+				<mild name="Suspicion">
+					<description>Your trust is undermined for the remainder of the scene, regardless of whether or not the person or persons who did you wrong meant any harm. You question everyone's sincerity and doubts that anyone tries to help you, even if someone saves your life. You suffers a −1 penalty on all Social rolls. Note that, even though you are suspicious, you can still be taken in by con men and hucksters. You get no special bonus to resist their attempts to sway you even though you suspect them of being as bad as everyone else.</description>
+					<severe name="Paranoia">
+						<description>You automatically suffer a −2 penalty on Social rolls. You are distrustful and wary of everyone, even close friends and family. The slightest hint of suspicious behavior is enough to provoke a Resolve+Composure roll to retain control (made at a −2 penalty). A failed roll indicates that you flee or attack an offender.
 
-					Additionally, among Kindred, the slightest hint that someone might be an enemy can provoke a frenzy check, with the number of successes required set by how threatening the trigger event seems. A casual remark that seems to show someone knows a bit about your activities might require only 1 success to avoid frenzy. Finding an intruder in your haven would almost certainly require 5.</description>
-				</item>
-			</item>
-			<item name="Vocalization">
-				<description>On a failed roll, you vocalize your internal monologue but only realize it if it's pointed out by others, at which point you can stop for 1 turn per dot of Wits that you have. After that period, you forget yourself and start doing it all over again. This behavior persists for the remainder of the scene.</description>
-				<item name="Schizophrenia">
-					<description>With this derangement you are unpredictable and dangerous. You automatically suffer a −2 penalty on all Social rolls and may be aggressive or violent toward people who confront you with trauma such as accusations, disturbing truths or heated arguments. Make a Resolve+Composure roll to avoid escaping or attacking the source of trauma.</description>
-				</item>
-			</item>
-			<!--<item name="Blood Fascination" species="ghoul-istfalsch">
-				<description>Testtext</description>
-				<item name="Hemophilic Compulsion"/>
-			</item>
-			<item name="Degenerative Fixation" species="ghoul-istfalsch">
-				<description>Testtext</description>
-				<item name="Identity Erasure"/>
-			</item>-->
-		</Derangement>
-	</traits>
-	<items>
-		<Weapons>
-			<Category name="melee">
-				<weapon name ="Knife" damage="1L" size="1/S" durability="3" note=""/>
-				<weapon name ="Switchblade" damage="0L" size="1/P" durability="3" note=""/>
-			</Category>
-			<Category name="melee">
-				<weapon name ="Katana" damage="3L" size="2/L" durability="4"/>
-				<weapon name ="Long Sword" damage="3L" size="2/L" durability="3"/>
-			</Category>
-			<Category name="melee">
-				<weapon name ="Mace" damage="3B" size="2/L" durability="3" cost="2"/>
-				<weapon name ="Wooden Club" damage="2B" size="2/J" durability="1" cost="0"/>
-			</Category>
-			<Category name="thrown">
-				<weapon name ="Dart" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
-				<weapon name ="Hatchet" damage="1" ranges="Thrown" capacity="-" strength="2" size="1/J" notes="Can inflict bashing damage"/>
-				<weapon name ="Knife, throwing" damage="1" ranges="Aero" capacity="-" strength="2" size="1/S"/>
-				<weapon name ="Shuriken" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
-			</Category>
-			<Category name="ranged">
-				<weapon name =".22 LR" damage="1" ranges="5/10/20" capacity="6" strength="0" size="1/P"/>
-				<weapon name =".38 Special" damage="2" ranges="20/40/80" capacity="6" strength="1" size="1/S"/>
-				<weapon name =".357 Magnum" damage="3" ranges="30/60/120" capacity="6" strength="2" size="1/S"/>
-				<weapon name =".44 Magnum" damage="3 (9 again)" ranges="35/70/140" capacity="6" strength="3" size="2/J"/>
-			</Category>
-			<Category name="ranged">
-				<weapon name ="Holdout" damage="1" ranges="5/10/20" capacity="6+1" strength="1" size="1/P" cost="1"/>
-				<weapon name ="9mm Luger" damage="2" ranges="20/40/80" capacity="15+1" strength="2" size="1/S" cost="2"/>
-				<weapon name =".40 S&#38;w" damage="2" ranges="25/50/100" capacity="12+1" strength="2" size="1/S" cost="2"/>
-				<weapon name =".45 ACP" damage="3" ranges="30/60/120" capacity="8+1" strength="2" size="1/S" cost="2"/>
-			</Category>
-		</Weapons>
-		<Weapons fallback="True">
-			<Category name="melee">
-				<weapon name ="Bayonet" damage="2L" size="1/S" durability="3" note="Damage 1L if mounted on a bullpup"/>
-				<weapon name ="Bowie Knife" damage="2L" size="1/J" durability="4" note="+1 to some Crafts rolls"/>
-				<weapon name ="Combat Knife" damage="1L" size="1/S" durability="3"/>
-				<weapon name ="Katar Punch-Dagger" damage="2L" size="1/S" durability="3" note="Strength + Brawl"/>
-				<weapon name ="Keris" damage="2L" size="2/J" durability="3" note="-1 Damage w/o specialty"/>
-				<weapon name ="Khukri" damage="2L" size="2/J" durability="3" note="9 again on targeted attacks"/>
-				<weapon name ="Main Gauche" damage="1L" size="1/S" durability="3" note="+1 Defense if used with another weapon"/>
-				<weapon name ="Pocketknife" damage="-1L" size="1/P" durability="2" note="Fragile 3, +1 to some Crafts rolls"/>
-				<weapon name ="Rondel Dagger" damage="1L" size="1/S" durability="3" note="Armor Piercing 1, +2 Damage on surprise attacks"/>
-				<weapon name ="Trench Knife" damage="1L/B" size="1/S" durability="3" note="Doubles as brass knuckles"/>
-			</Category>
-			<Category name="melee">
-				<weapon name ="Bastard Sword" damage="3/4L" size="3/N" durability="3" note="One- or two-handed"/>
-				<weapon name ="Curved Sword" damage="3L" size="2/L" durability="3" note="+1 Damage from positions of height"/>
-				<weapon name ="Fencing Sword" damage="1L" size="2/L" durability="3" note="Armor Piercing 1"/>
-				<weapon name ="Fish-Spine Sword" damage="1L (9 again)" size="2/L" durability="1"/>
-				<weapon name ="Gladius" damage="2L" size="2/S" durability="3"/>
-				<weapon name ="Great Sword" damage="4L" size="3/N" durability="3" twohanded="True"/>
-				<weapon name ="Machete" damage="2L" size="2/J" durability="3"/>
-				<weapon name ="Rapir" damage="2L" size="2/L" durability="3" note="Armor Piercing 1"/>
-				<weapon name ="Sword Cane" damage="2L/B" size="2/L" durability="3" note="Bashing damage when sheathed"/>
-				<weapon name ="Wakizashi" damage="2L" size="2/S" durability="4"/>
-				<weapon name ="Zweihänder" damage="4L (9 again)" size="4/N" durability="3" twohanded="True"/>
-			</Category>
-			<Category name="melee">
-				<weapon name ="Escrima Sticks" damage="1B" size="2/S" durability="2" cost="1"/>
-				<weapon name ="Flail" damage="3B/L" size="3/N" durability="3" cost="2" note="-1 Damage without Dexterity 3, ignores shields"/>
-				<weapon name ="Maul" damage="4B" size="3/N" durability="3" cost="2" twohanded="True"/>
-				<weapon name ="Morning Star" damage="3B" size="3/N" durability="3" cost="2"/>
-				<weapon name ="Sap" damage="1B" size="1/P" durability="2" cost="2" note="Stun (Stamina)"/>
-				<weapon name ="Shakuhachi Flute" damage="0B" size="1/S" durability="2" cost="1" note="+1 to some Wits+Expression rolls"/>
-				<weapon name ="Telescopic Baton" damage="3B" size="2/J" durability="3" cost="1" note="Collapses to Size 1/S"/>
-				<weapon name ="Tonfa (Nightstick)" damage="2B" size="2/J" durability="2" cost="1" note="+1 Defense"/>
-			</Category>
-			<Category name="thrown">
-				<weapon name ="Javelin, combat" damage="3" ranges="Aero" capacity="-" strength="2" size="2/N"/>
-				<weapon name ="Javelin, competition" damage="2" ranges="Thrown x4" capacity="-" strength="2" size="2/N"/>
-			</Category>
-			<Category name="ranged">
-				<weapon name ="Colt Single Action Army" damage="3" ranges="20/40/80" capacity="6" strength="2" size="1/J"/>
-				<weapon name ="Freedom Arms Model 83" damage="4" ranges="50/100/200" capacity="5" strength="4" size="2/L"/>
-				<weapon name ="NAA Black Widow" damage="1" ranges="2/5/10" capacity="5" strength="1" size="1/P"/>
-				<weapon name ="P&#38;R Medusa" damage="*" ranges="20/40/80" capacity="6" strength="*" size="1/J" notes="Damage: 2 for .38 or 9mm, 3 for .357 Magnum. Strength always 1 lower than ist Damage"/>
-				<weapon name ="S&#38;W Model 36 Ladysmith" damage="2" ranges="20/40/80" capacity="5" strength="1" size="1/S"/>
-				<weapon name ="S&#38;W Model 500" damage="4 (9 again)" ranges="50/100/200" capacity="5" strength="4" size="2/L"/>
-				<weapon name ="Taurus Model 22H" damage="2" ranges="40/80/160" capacity="8" strength="1" size="2/L" notes="Armor Piercing 1"/>
-				<weapon name ="Thunder-5" damage="2" ranges="15/30/60" capacity="5" strength="2" size="1/J"/>
-			</Category>
-			<Category name="ranged">
-				<weapon name ="Beretta Model 92" damage="2" ranges="20/40/80" capacity="15+1" strength="2" size="1/S" cost="2"/>
-				<weapon name ="Colt M1911A1" damage="3" ranges="30/60/120" capacity="7+1" strength="2" size="1/S" cost="2"/>
-				<weapon name ="FN Five-seveN" damage="2" ranges="30/60/120" capacity="20+1" strength="2" size="1/J" cost="3"/>
-				<weapon name ="Glock 17" damage="2" ranges="20/40/80" capacity="17+1" strength="2" size="1/S" cost="2"/>
-				<weapon name ="Glock 26" damage="2" ranges="10/20/40" capacity="10+1" strength="2" size="1/P" cost="2"/>
-				<weapon name ="H&#38;K Mk. 23" damage="3" ranges="30/60/120" capacity="12+1" strength="2" size="1/J" cost="4"/>
-				<weapon name ="Luger Parabellum P08" damage="2" ranges="15/30/60" capacity="8+1" strength="2" size="1/S" cost="1"/>
-				<weapon name ="Desert Eagle" damage="4" ranges="50/100/200" capacity="7+1" strength="3" size="1/L" cost="4"/>
-				<weapon name ="RSA Makarow PM" damage="2" ranges="15/30/60" capacity="8+1" strength="1" size="1/P" cost="1"/>
-				<weapon name ="Ruger Mark II" damage="1" ranges="15/30/60" capacity="10+1" strength="1" size="1/S" cost="1"/>
-				<weapon name ="Walther PPK" damage="1" ranges="10/20/40" capacity="7+1" strength="1" size="1/P" cost="1"/>
-			</Category>
-		</Weapons>
-		<Armor>
-			<armor name="Bulletproof Vest" general="1" firearms="3" defense="-1" speed="-1" bulletproof="True"/>
-			<armor name="Flak Jacket" general="0" firearms="1" defense="-0" speed="-0"/>
-		</Armor>
-		<Armor fallback="True">
-			<armor name="Full Plate" general="3" firearms="0" defense="-3" speed="-3"/>
-		</Armor>
-		<Equipment>
-			<equipment name ="Automotive Tools" durability="3" size="2" cost="1"/>
-			<equipment name ="Climbing Gear" durability="2" size="2" cost="2"/>
-			<equipment name ="Demolitions Kit" durability="2" size="2" cost="3"/>
-			<equipment name ="First-Aid Kit" durability="1" size="2" cost="1"/>
-			<equipment name ="Flashlight" durability="1" size="1" cost="0"/>
-			<equipment name ="Gasmask" durability="1" size="2" cost="2"/>
-			<equipment name ="Gunsmithing Kit" durability="2" size="2" cost="2"/>
-			<equipment name ="Lock Picks" durability="2" size="1" cost="3"/>
-			<equipment name ="Nightvision Goggles" durability="1" size="1" cost="2"/>
-			<equipment name ="Silencer" durability="3" size="1" cost="3"/>
-			<equipment name ="Surveillance Equipment" durability="1" size="3" cost="3"/>
-			<equipment name ="Sights, Laser" durability="1" size="1" cost="3"/>
-			<equipment name ="Sights, Telescopic" durability="1" size="1" cost="3"/>
-		</Equipment>
-	</items>
+						Additionally, among Kindred, the slightest hint that someone might be an enemy can provoke a frenzy check, with the number of successes required set by how threatening the trigger event seems. A casual remark that seems to show someone knows a bit about your activities might require only 1 success to avoid frenzy. Finding an intruder in your haven would almost certainly require 5.</description>
+					</severe>
+				</mild>
+				<mild name="Vocalization">
+					<description>On a failed roll, you vocalize your internal monologue but only realize it if it's pointed out by others, at which point you can stop for 1 turn per dot of Wits that you have. After that period, you forget yourself and start doing it all over again. This behavior persists for the remainder of the scene.</description>
+					<severe name="Schizophrenia">
+						<description>With this derangement you are unpredictable and dangerous. You automatically suffer a −2 penalty on all Social rolls and may be aggressive or violent toward people who confront you with trauma such as accusations, disturbing truths or heated arguments. Make a Resolve+Composure roll to avoid escaping or attacking the source of trauma.</description>
+					</severe>
+				</mild>
+				<!--<mild name="Blood Fascination" species="ghoul-istfalsch">
+					<description>Testtext</description>
+					<severe name="Hemophilic Compulsion"/>
+				</mild>
+				<mild name="Degenerative Fixation" species="ghoul-istfalsch">
+					<description>Testtext</description>
+					<severe name="Identity Erasure"/>
+				</mild>-->
+			</Derangement>
+		</Traits>
+		<Items>
+			<Weapons>
+				<Type name="melee">
+					<Category name="Knives">
+						<weapon name ="Knife" damage="1L" size="1/S" durability="3" note=""/>
+						<weapon name ="Switchblade" damage="0L" size="1/P" durability="3" note=""/>
+					</Category>
+					<Category name="Swords">
+						<weapon name ="Katana" damage="3L" size="2/L" durability="4"/>
+						<weapon name ="Long Sword" damage="3L" size="2/L" durability="3"/>
+					</Category>
+					<Category name="melee">
+						<weapon name ="Mace" damage="3B" size="2/L" durability="3" cost="2"/>
+						<weapon name ="Wooden Club" damage="2B" size="2/J" durability="1" cost="0"/>
+					</Category>
+				</Type>
+				<Type name="thrown">
+					<Category name="???">
+						<weapon name ="Dart" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
+						<weapon name ="Hatchet" damage="1" ranges="Thrown" capacity="-" strength="2" size="1/J" notes="Can inflict bashing damage"/>
+						<weapon name ="Knife, throwing" damage="1" ranges="Aero" capacity="-" strength="2" size="1/S"/>
+						<weapon name ="Shuriken" damage="-1" ranges="Aero" capacity="-" strength="1" size="1/P" notes="Do not reroll 10s"/>
+					</Category>
+				</Type>
+				<Type name="ranged">
+					<Category name="Revolvers">
+						<weapon name =".22 LR" damage="1" ranges="5/10/20" capacity="6" strength="0" size="1/P"/>
+						<weapon name =".38 Special" damage="2" ranges="20/40/80" capacity="6" strength="1" size="1/S"/>
+						<weapon name =".357 Magnum" damage="3" ranges="30/60/120" capacity="6" strength="2" size="1/S"/>
+						<weapon name =".44 Magnum" damage="3 (9 again)" ranges="35/70/140" capacity="6" strength="3" size="2/J"/>
+					</Category>
+				</Type>
+				<Type name="ranged">
+					<Category name="Autoloaders">
+						<weapon name ="Holdout" damage="1" ranges="5/10/20" capacity="6+1" strength="1" size="1/P" cost="1"/>
+						<weapon name ="9mm Luger" damage="2" ranges="20/40/80" capacity="15+1" strength="2" size="1/S" cost="2"/>
+						<weapon name =".40 S&#38;w" damage="2" ranges="25/50/100" capacity="12+1" strength="2" size="1/S" cost="2"/>
+						<weapon name =".45 ACP" damage="3" ranges="30/60/120" capacity="8+1" strength="2" size="1/S" cost="2"/>
+					</Category>
+				</Type>
+			</Weapons>
+			<Weapons fallback="True">
+				<Type name="melee">
+					<Category name="Knives">
+						<weapon name ="Bayonet" damage="2L" size="1/S" durability="3" note="Damage 1L if mounted on a bullpup"/>
+						<weapon name ="Bowie Knife" damage="2L" size="1/J" durability="4" note="+1 to some Crafts rolls"/>
+						<weapon name ="Combat Knife" damage="1L" size="1/S" durability="3"/>
+						<weapon name ="Katar Punch-Dagger" damage="2L" size="1/S" durability="3" note="Strength + Brawl"/>
+						<weapon name ="Keris" damage="2L" size="2/J" durability="3" note="-1 Damage w/o specialty"/>
+						<weapon name ="Khukri" damage="2L" size="2/J" durability="3" note="9 again on targeted attacks"/>
+						<weapon name ="Main Gauche" damage="1L" size="1/S" durability="3" note="+1 Defense if used with another weapon"/>
+						<weapon name ="Pocketknife" damage="-1L" size="1/P" durability="2" note="Fragile 3, +1 to some Crafts rolls"/>
+						<weapon name ="Rondel Dagger" damage="1L" size="1/S" durability="3" note="Armor Piercing 1, +2 Damage on surprise attacks"/>
+						<weapon name ="Trench Knife" damage="1L/B" size="1/S" durability="3" note="Doubles as brass knuckles"/>
+					</Category>
+					<Category name="Swords">
+						<weapon name ="Bastard Sword" damage="3/4L" size="3/N" durability="3" note="One- or two-handed"/>
+						<weapon name ="Curved Sword" damage="3L" size="2/L" durability="3" note="+1 Damage from positions of height"/>
+						<weapon name ="Fencing Sword" damage="1L" size="2/L" durability="3" note="Armor Piercing 1"/>
+						<weapon name ="Fish-Spine Sword" damage="1L (9 again)" size="2/L" durability="1"/>
+						<weapon name ="Gladius" damage="2L" size="2/S" durability="3"/>
+						<weapon name ="Great Sword" damage="4L" size="3/N" durability="3"/>
+						<weapon name ="Machete" damage="2L" size="2/J" durability="3"/>
+						<weapon name ="Rapir" damage="2L" size="2/L" durability="3" note="Armor Piercing 1"/>
+						<weapon name ="Sword Cane" damage="2L/B" size="2/L" durability="3" note="Bashing damage when sheathed"/>
+						<weapon name ="Wakizashi" damage="2L" size="2/S" durability="4"/>
+						<weapon name ="Zweihänder" damage="4L (9 again)" size="4/N" durability="3"/>
+					</Category>
+				</Type>
+				<Type name="thrown">
+					<Category name="???">
+						<weapon name ="Escrima Sticks" damage="1B" size="2/S" durability="2" cost="1"/>
+						<weapon name ="Flail" damage="3B/L" size="3/N" durability="3" cost="2" note="-1 Damage without Dexterity 3, ignores shields"/>
+						<weapon name ="Maul" damage="4B" size="3/N" durability="3" cost="2" twohanded="True"/>
+						<weapon name ="Morning Star" damage="3B" size="3/N" durability="3" cost="2"/>
+						<weapon name ="Sap" damage="1B" size="1/P" durability="2" cost="2" note="Stun (Stamina)"/>
+						<weapon name ="Shakuhachi Flute" damage="0B" size="1/S" durability="2" cost="1" note="+1 to some Wits+Expression rolls"/>
+						<weapon name ="Telescopic Baton" damage="3B" size="2/J" durability="3" cost="1" note="Collapses to Size 1/S"/>
+						<weapon name ="Tonfa (Nightstick)" damage="2B" size="2/J" durability="2" cost="1" note="+1 Defense"/>
+					</Category>
+				</Type>
+				<Type name="thrown">
+					<Category name="???">
+						<weapon name ="Javelin, combat" damage="3" ranges="Aero" capacity="-" strength="2" size="2/N"/>
+						<weapon name ="Javelin, competition" damage="2" ranges="Thrown x4" capacity="-" strength="2" size="2/N"/>
+					</Category>
+				</Type>
+				<Type name="ranged">
+					<Category name="Revolvers">
+						<weapon name ="Colt Single Action Army" damage="3" ranges="20/40/80" capacity="6" strength="2" size="1/J"/>
+						<weapon name ="Freedom Arms Model 83" damage="4" ranges="50/100/200" capacity="5" strength="4" size="2/L"/>
+						<weapon name ="NAA Black Widow" damage="1" ranges="2/5/10" capacity="5" strength="1" size="1/P"/>
+						<weapon name ="P&#38;R Medusa" damage="*" ranges="20/40/80" capacity="6" strength="*" size="1/J" notes="Damage: 2 for .38 or 9mm, 3 for .357 Magnum. Strength always 1 lower than ist Damage"/>
+						<weapon name ="S&#38;W Model 36 Ladysmith" damage="2" ranges="20/40/80" capacity="5" strength="1" size="1/S"/>
+						<weapon name ="S&#38;W Model 500" damage="4 (9 again)" ranges="50/100/200" capacity="5" strength="4" size="2/L"/>
+						<weapon name ="Taurus Model 22H" damage="2" ranges="40/80/160" capacity="8" strength="1" size="2/L" notes="Armor Piercing 1"/>
+						<weapon name ="Thunder-5" damage="2" ranges="15/30/60" capacity="5" strength="2" size="1/J"/>
+					</Category>
+				</Type>
+				<Type name="ranged">
+					<Category name="Autoloaders">
+						<weapon name ="Beretta Model 92" damage="2" ranges="20/40/80" capacity="15+1" strength="2" size="1/S" cost="2"/>
+						<weapon name ="Colt M1911A1" damage="3" ranges="30/60/120" capacity="7+1" strength="2" size="1/S" cost="2"/>
+						<weapon name ="FN Five-seveN" damage="2" ranges="30/60/120" capacity="20+1" strength="2" size="1/J" cost="3"/>
+						<weapon name ="Glock 17" damage="2" ranges="20/40/80" capacity="17+1" strength="2" size="1/S" cost="2"/>
+						<weapon name ="Glock 26" damage="2" ranges="10/20/40" capacity="10+1" strength="2" size="1/P" cost="2"/>
+						<weapon name ="H&#38;K Mk. 23" damage="3" ranges="30/60/120" capacity="12+1" strength="2" size="1/J" cost="4"/>
+						<weapon name ="Luger Parabellum P08" damage="2" ranges="15/30/60" capacity="8+1" strength="2" size="1/S" cost="1"/>
+						<weapon name ="Desert Eagle" damage="4" ranges="50/100/200" capacity="7+1" strength="3" size="1/L" cost="4"/>
+						<weapon name ="RSA Makarow PM" damage="2" ranges="15/30/60" capacity="8+1" strength="1" size="1/P" cost="1"/>
+						<weapon name ="Ruger Mark II" damage="1" ranges="15/30/60" capacity="10+1" strength="1" size="1/S" cost="1"/>
+						<weapon name ="Walther PPK" damage="1" ranges="10/20/40" capacity="7+1" strength="1" size="1/P" cost="1"/>
+					</Category>
+				</Type>
+			</Weapons>
+			<Armor>
+				<armor name="Bulletproof Vest" general="1" firearms="3" defense="-1" speed="-1" bulletproof="True"/>
+				<armor name="Flak Jacket" general="0" firearms="1" defense="-0" speed="-0"/>
+			</Armor>
+			<Armor fallback="True">
+				<armor name="Full Plate" general="3" firearms="0" defense="-3" speed="-3"/>
+			</Armor>
+			<Equipment>
+				<equipment name ="Automotive Tools" durability="3" size="2" cost="1"/>
+				<equipment name ="Climbing Gear" durability="2" size="2" cost="2"/>
+				<equipment name ="Demolitions Kit" durability="2" size="2" cost="3"/>
+				<equipment name ="First-Aid Kit" durability="1" size="2" cost="1"/>
+				<equipment name ="Flashlight" durability="1" size="1" cost="0"/>
+				<equipment name ="Gasmask" durability="1" size="2" cost="2"/>
+				<equipment name ="Gunsmithing Kit" durability="2" size="2" cost="2"/>
+				<equipment name ="Lock Picks" durability="2" size="1" cost="3"/>
+				<equipment name ="Nightvision Goggles" durability="1" size="1" cost="2"/>
+				<equipment name ="Silencer" durability="3" size="1" cost="3"/>
+				<equipment name ="Surveillance Equipment" durability="1" size="3" cost="3"/>
+				<equipment name ="Sights, Laser" durability="1" size="1" cost="3"/>
+				<equipment name ="Sights, Telescopic" durability="1" size="1" cost="3"/>
+			</Equipment>
+		</Items>
+	</Template>
 </SoulCreator>
