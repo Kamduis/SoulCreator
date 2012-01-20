@@ -631,11 +631,11 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		#if GlobalState.isDebug:
-			#filePath = ["{}/untitled.pdf".format(savePath), ""]
-		#else:
-			#filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
+		if GlobalState.isDebug:
+			filePath = ["{}/untitled.pdf".format(savePath), ""]
+		else:
+			filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
+		#filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
