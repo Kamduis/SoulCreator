@@ -38,8 +38,6 @@ class MoralityWidget(QWidget):
 	@brief Dieses Widget stellt die Moral-Tabelle dar.
 
 	Diese Tabelle zeigt die aktuelle Moralstufe an und bietet Platz für das Eintragen von Geistesstörungen.
-
-	\bug Wird die Spezies geändert, verschwinden alle Geistesstörungen.
 	"""
 
 
@@ -196,11 +194,15 @@ class MoralityWidget(QWidget):
 		#Debug.debug(mild)
 		#Debug.debug(severe)
 		for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
+			## Speichern der alten Auswahl.
+			oldSelection = self.__derangementBoxList[i].currentText()
 			## Erst löschen
 			self.__derangementBoxList[i].clear()
 			## Dann wieder füllen
 			self.__derangementBoxList[i].addItems(mild)
 			self.__derangementBoxList[i].addItems(severe, severe=True)
+			## Und wenn möglich, alte Auswahl wiederherstellen.
+			self.__derangementBoxList[i].setCurrentIndex(self.__derangementBoxList[i].findText(oldSelection))
 
 
 	def enableDerangementBox( self, value ):
@@ -278,8 +280,6 @@ class MoralityWidget(QWidget):
 	def updateDerangementBoxes(self, moralityValue, derangement):
 		"""
 		Wählt in den derangementBoxen die jeweils übergebenen Geistesstörungen aus.
-
-		\bug aus irgendeinem grund nimmt moralityValue manchmal den Wert -1 an. Weiß aber nicht, woher.
 		"""
 
 		#Debug.debug(derangement, moralityValue)
