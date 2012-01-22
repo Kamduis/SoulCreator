@@ -68,29 +68,21 @@ class MainWindow(QMainWindow):
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 
-	\todo Beim Wechseln zwischen den Spezies eine Warnung ausgeben, wenn Powers und Merits gelöscht würden. Bzw. Powers und Merits nicht löschen, allerdings beim Speichern nicht beachten.
-
 	\todo Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.
 
 	\todo Sonderkräfte der Spezies fehlen. Bei Werwölfen müssen z.B. noch die Gaben/Riten berücksichtigt werden.
 
-	\todo Nutze eine qchecksum, um die Integrität der XML-Dateien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben. -- So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
-
-	\todo Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).
+	\todo Speicherdateien komprimieren.
 
 	\todo Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.
 
-	\todo Waffen einbauen.
-
-	\todo Charakterbeschreibung einbauen.
+	\todo Kosten von Gegenständen berücksichtigen.
 
 	\todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
 
 	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
 
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
-
-	\todo Die XML-Arbeit mit Python-Werkzeugen durchführen und nicht auf PySide setzen.
 	"""
 
 
@@ -733,9 +725,11 @@ class MainWindow(QMainWindow):
 
 		if ( self.__character.isModifed() ):
 			ret = QMessageBox.warning(
-				self, self.tr( "Application" ),
+				self,
+				self.tr( "Application" ),
 				self.tr( "The character has been modified.\nDo you want to save your changes?" ),
-				QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel )
+				QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel
+			)
 
 			if ( ret == QMessageBox.Save ):
 				self.saveCharacter()

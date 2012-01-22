@@ -112,6 +112,8 @@ class MeritWidget(QWidget):
 
 		self.setMinimumWidth(Config.traitLineWidthMin)
 
+		self.__character.speciesChanged.connect(self.countMerits)
+
 	#// 	dialog = new SelectMeritsDialog( this );
 	#//
 	#// 	QHBoxLayout* layout_button = new QHBoxLayout();
@@ -131,12 +133,14 @@ class MeritWidget(QWidget):
 		Zält die Merits in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
 
 		Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
+
+		Versteckte Eigenschaften. also solche, die der Spezies nicht zur Verfügung stehen, können einen Wert > 0 haben, sollten aber nicht mitgezählt werden.
 		"""
 
 		for item in self.__character.traits[self.__typ]:
 			numberInCategory = 0
 			for subitem in self.__character.traits[self.__typ][item].values():
-				if subitem.value > 0:
+				if subitem.value > 0 and (not subitem.species or subitem.species == self.__character.species):
 					numberInCategory += 1
 
 			# ToolBox-Seite des entsprechenden Kategorie mit der Anzahl gewählter Merits beschriften.

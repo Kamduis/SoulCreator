@@ -193,6 +193,7 @@ class MoralityWidget(QWidget):
 		mild.insert(0, "")
 		#Debug.debug(mild)
 		#Debug.debug(severe)
+		lostDerangements = []
 		for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
 			## Speichern der alten Auswahl.
 			oldSelection = self.__derangementBoxList[i].currentText()
@@ -202,7 +203,27 @@ class MoralityWidget(QWidget):
 			self.__derangementBoxList[i].addItems(mild)
 			self.__derangementBoxList[i].addItems(severe, severe=True)
 			## Und wenn möglich, alte Auswahl wiederherstellen.
-			self.__derangementBoxList[i].setCurrentIndex(self.__derangementBoxList[i].findText(oldSelection))
+			oldIndex = self.__derangementBoxList[i].findText(oldSelection)
+			if oldIndex < 0:
+				lostDerangements.append(oldSelection)
+			else:
+				self.__derangementBoxList[i].setCurrentIndex(oldIndex)
+
+		if lostDerangements:
+			derangements = ""
+			infoText = ""
+			if len(lostDerangements) > 1:
+				derangements = ", ".join(lostDerangements[:-1])
+				derangements = "{} and {}".format(derangements, lostDerangements[-1])
+				infoText = self.tr( "The derangements \"{derangements}\" are not available for a {species}. The character lost these deragnements.".format(derangements=derangements, species=species) )
+			else:
+				derangements = "".join(lostDerangements)
+				infoText = self.tr( "The derangement \"{derangements}\" is not available for a {species}. The character lost this deragnement.".format(derangements=derangements, species=species) )
+			QMessageBox.information(
+				self,
+				self.tr( "Lost Derangement" ),
+				infoText
+			)
 
 
 	def enableDerangementBox( self, value ):

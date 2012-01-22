@@ -191,8 +191,6 @@ class DrawSheet(QObject):
 	def drawSheet_1(self):
 		"""
 		Hier wird gezeichnet.
-
-		\todo alle Koordinaten mit 3.125 multiplizieren.
 		"""
 
 		self.__painter.save()
