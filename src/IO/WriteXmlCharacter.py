@@ -164,12 +164,12 @@ class WriteXmlCharacter(QObject):
 					etree.SubElement(weaponCategory, "weapon").text = weapon
 		if self.__character.armor:
 			armor = etree.SubElement(items, "armor", dedicated=unicode(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
-		if self.__character.equipment:
+		if self.__character.equipment or self.__character.magicalTool:
 			equipment = etree.SubElement(items, "Equipment")
 			for item in self.__character.equipment:
 				etree.SubElement(equipment, "equipment").text = item
-		if self.__character.magicalTool:
-			etree.SubElement(item, "magicalTool").text = self.__character.magicalTool
+			if self.__character.magicalTool:
+				etree.SubElement(equipment, "magicalTool").text = self.__character.magicalTool
 
 		if self.__character.picture:
 			imageData = QByteArray()

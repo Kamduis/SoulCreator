@@ -69,22 +69,6 @@ class ReadXmlTemplate(QObject, ReadXml):
 	exceptionRaised = Signal(str, bool)
 
 
-	__templateFiles = (
-		##"resources/xml/base.xml",
-		##"resources/xml/human.xml",
-		##"resources/xml/changeling.xml",
-		##"resources/xml/mage.xml",
-		##"resources/xml/vampire.xml",
-		##"resources/xml/werewolf.xml",
-		#":template/xml/base.xml",
-		#":template/xml/human.xml",
-		#":template/xml/changeling.xml",
-		#":template/xml/mage.xml",
-		#":template/xml/vampire.xml",
-		#":template/xml/werewolf.xml",
-	)
-
-
 	def __init__(self, template, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
@@ -207,6 +191,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		if root is not None:
+			if root.tag == "Power":
+				self.__storage.setPowerName(species, "power", self.__getElementAttribute(root, "name"))
 			for category in root.getiterator("Category"):
 				categoryName = category.attrib["name"]
 				traits = self.__readTraitData(category, species)

@@ -269,8 +269,14 @@ class DrawSheet(QObject):
 			lengthY = 1940
 		self._drawSkills(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
+		if self.__character.species == "Mage":
+			posY += lengthY + self.__posSep
+			lengthY = 300
+		self._drawMagicalTool(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		posX += lengthX + self.__posSep
 		posX_spalte2 = posX
+		posY = posY_zeile3
 		lengthX = 800
 		if self.__character.species != "Human":
 			if self.__character.species == "Changeling":
@@ -837,6 +843,8 @@ class DrawSheet(QObject):
 
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox aller Fertigkeiten.
 		\param width Die Breite der Spalte.
+
+		\todo Jedes Arcanum sollte mit seiner Rune dargestellt werden.
 		"""
 
 		twocolumn = False
@@ -1691,6 +1699,33 @@ class DrawSheet(QObject):
 		self.__painter.setBrush(self.__colorEmpty)
 
 		self.__painter.drawRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
+	def _drawMagicalTool(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt das Magisce Werkzeug nieder
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		\param height Höhe dieser Spalte
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Magical Tool"))
+
+		self.__painter.setFont(self.__fontMain)
+
+		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep, Qt.AlignLeft, self.__character.magicalTool)
 
 		if GlobalState.isDebug:
 			self.__drawBB(offsetH, offsetV, width, height)

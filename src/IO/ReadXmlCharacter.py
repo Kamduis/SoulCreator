@@ -240,9 +240,12 @@ class ReadXmlCharacter(QObject, ReadXml):
 		Liest die Besitztümer des Charakters.
 		"""
 
-		for equipment in root.getiterator("equipment"):
-			equipmentName = equipment.text
+		for equipmentElement in root.getiterator("equipment"):
+			equipmentName = equipmentElement.text
 			self.__character.addEquipment(equipmentName)
+		for magicalToolElement in root.getiterator("magicalTool"):
+			toolName = magicalToolElement.text
+			self.__character.setMagicalTool(toolName)
 
 
 	def readPicture(self, tree):
