@@ -60,6 +60,7 @@ if __name__ == "__main__":
 
 	#parser.add_argument("-o", "--onepage", action="store_true", help="Charactersheets will consist of one page only. (Momentan noch ohne Funktion.)")
 	parser.add_argument("--debug", action="store_true", help="Give debug information. Not recommended for printing or exporting character sheets.")
+	parser.add_argument("--develop", action="store_true", help=argparse.SUPPRESS)
 	parser.add_argument("--fallback", action="store_true", help=argparse.SUPPRESS)
 	#parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
 	parser.add_argument("-V", "--version", action="version", version="{name}: {version}".format( name=sys.argv[0], version=Config.version()) )
@@ -68,6 +69,7 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	GlobalState.isDebug = args.debug
+	GlobalState.isDevelop = args.develop
 	GlobalState.isFallback = args.fallback
 
 	app = QApplication(sys.argv)

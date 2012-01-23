@@ -22,6 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import ast
+
 from PySide.QtCore import QObject, QDate, Signal, Slot
 from PySide.QtGui import QPixmap
 
@@ -889,6 +891,8 @@ class StorageCharacter(QObject):
 	def checkPrerequisites(self, trait):
 		"""
 		Diese Funktion überprüft, ob die Voraussetzungen der Eigenschaft "trait" erfüllt sind oder nicht.
+
+		\todo Den SyntaxError sollte ich nicht verstecken!
 		"""
 
 		if type(trait) != Trait:
@@ -930,6 +934,7 @@ class StorageCharacter(QObject):
 
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
 				try:
+					#Debug.debug(traitPrerequisites)
 					result = eval(traitPrerequisites)
 					#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
 				except (NameError, SyntaxError) as e:

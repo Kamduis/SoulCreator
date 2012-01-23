@@ -33,6 +33,7 @@ class GlobalState(object):
 	"""
 
 	_isDebug = False
+	_isDevelop = False
 	_isFallback = False
 
 	_shared = {}
@@ -51,6 +52,17 @@ class GlobalState(object):
 	@staticmethod
 	def isDebug(sw):
 		GlobalState._isDebug = sw
+
+
+	@property
+	@staticmethod
+	def isDevelop():
+		return GlobalState._isDevelop
+
+	@isDebug.setter
+	@staticmethod
+	def isDevelop(sw):
+		GlobalState._isDevelop = sw
 
 
 	@property

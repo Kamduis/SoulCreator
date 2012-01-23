@@ -221,7 +221,7 @@ class DrawSheet(QObject):
 			target = QRectF( 0.0 - self.__borderFrameWest, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
 			self.__painter.drawImage(target, image, source)
 
-		if GlobalState.isDebug:
+		if GlobalState.isDevelop:
 			self.__drawGrid()
 
 		posX = 0

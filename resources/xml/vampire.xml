@@ -307,7 +307,31 @@
 			</Power>
 			<Subpower name="Rituals">
 				<Category name="Cruac Rituals">
-					<trait name="Test1" level="1">
+					<trait name="Balancing the Four Humors" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+					<trait name="Confidence in Adversity" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+					<trait name="Drops of Destiny" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+					<trait name="Fires of Inspiration" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+					<trait name="Pangs of Proserpina" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+					<trait name="Pythian Renewal" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+					<trait name="Rigor Mortis" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+					<trait name="Taste of Knowledge" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+					<trait name="Visage of the Crone" level="1">
 						<prerequisites>Cruac > 0</prerequisites>
 					</trait>
 				</Category>

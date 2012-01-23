@@ -41,12 +41,10 @@ from Storage.StorageTemplate import StorageTemplate
 from Calc.CalcAdvantages import CalcAdvantages
 from Calc.Creation import Creation
 from Widgets.InfoWidget import InfoWidget
-from Widgets.AttributeWidget import AttributeWidget
-from Widgets.SkillWidget import SkillWidget
+from Widgets.TraitWidget import AttributeWidget, SkillWidget
+from Widgets.TraitCategoryWidget import PowerWidget, SubPowerWidget
 from Widgets.Specialties import Specialties
 from Widgets.MeritWidget import MeritWidget
-from Widgets.PowerWidget import PowerWidget
-from Widgets.SubPowerWidget import SubPowerWidget
 from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.AdvantagesWidget import AdvantagesWidget

@@ -30,7 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 from src.Config import Config
 #from src import Error
 from src.Tools import ListTools
-from src.Widgets.Components.CharaTrait import CharaTrait
+from src.Widgets.Components.TraitLine import CharaTrait
 from src.Debug import Debug
 
 

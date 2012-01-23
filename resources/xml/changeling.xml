@@ -645,11 +645,30 @@
 			</Power>
 			<Subpower name="Goblin Contracts">
 				<Category name="All">
-					<trait name="Test1" level="1"/>
-					<trait name="Test2" level="1"/>
-					<trait name="Test3" level="1"/>
-					<trait name="Test4" level="1"/>
-					<trait name="Test5" level="1"/>
+					<trait name="Trading Luck for Fate" level="1"/>
+					<trait name="Shooter's Bargain" level="1"/>
+					<trait name="Sight of Truth and Lies" level="1"/>
+					<trait name="Calling the Guardian" level="2"/>
+					<trait name="Diviner's Madness" level="2"/>
+					<trait name="Dream Rendering" level="2"/>
+					<trait name="Fair Entrance" level="2"/>
+					<trait name="Fool's Gold" level="2"/>
+					<trait name="Sandman's Bargain" level="2"/>
+					<trait name="Blessing of Forgetfulness" level="3"/>
+					<trait name="Breath of Fire" level="3"/>
+					<trait name="Burden of Life" level="3"/>
+					<trait name="Delayed Harm" level="3"/>
+					<trait name="Grace Falsely Shed" level="3"/>
+					<trait name="Mirror, Mirror" level="3"/>
+					<trait name="Goblin Oath" level="4"/>
+					<trait name="Good and Bad Luck" level="4"/>
+					<trait name="Call the Hunt" level="4"/>
+					<trait name="Royal Oil" level="5"/>
+					<trait name="Blood-Binding" level="5"/>
+					<trait name="Goblin Ward" level="5"/>
+					<trait name="Lost and Found" level="5"/>
+					<trait name="Mad Trespass" level="5"/>
+					<trait name="Sleepwalker" level="5"/>
 				</Category>
 			</Subpower>
 			<Flaw>
