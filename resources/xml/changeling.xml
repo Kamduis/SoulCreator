@@ -89,7 +89,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Powerstat > 6</prerequisite>
+						<prerequisites>Powerstat > 6</prerequisites>
 					</trait>
 					<trait name="Prophet Circle" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -102,14 +102,14 @@
 				<Category name="Extraordinary">
 					<trait name="Arcadian Body" creationOnly="true" source="Changeling Rites of Spring">
 						<value>4</value>
-						<prerequisite>Intelligence > 2 or Wits > 2 or Resolve > 2 or Strength > 2 or Dexterity > 2 or Stamina > 2 or Presence > 2 or Manipulation > 2 or Composure > 2</prerequisite>
+						<prerequisites>Intelligence > 2 or Wits > 2 or Resolve > 2 or Strength > 2 or Dexterity > 2 or Stamina > 2 or Presence > 2 or Manipulation > 2 or Composure > 2</prerequisites>
 					</trait>
 					<trait name="Arcadian Metabolism" source="Changeling Rites of Spring">
 						<value>4</value>
 					</trait>
 					<!--<trait name="Broken Mirror" custom="true" source="Changeling Core">
 						<value>1</value>
-						<prerequisite>Killing one's fetch</prerequisite>
+						<prerequisites>Killing one's fetch</prerequisites>
 					</trait>-->
 					<trait name="Brownie's Boon" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -124,7 +124,7 @@
 					</trait>
 					<trait name="Enchanting Performance" source="Changeling Rites of Spring">
 						<value>4</value>
-						<prerequisite>Expression > 2</prerequisite>
+						<prerequisites>Expression > 2</prerequisites>
 					</trait>
 					<trait name="Fae Mount" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -140,7 +140,7 @@
 					</trait>
 					<trait name="Gentriefied Bearing" source="Changeling Rites of Spring">
 						<value>4</value>
-						<prerequisite>Powerstat > 2</prerequisite>
+						<prerequisites>Powerstat > 2</prerequisites>
 					</trait>
 					<trait name="Goblin Vow" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -168,7 +168,7 @@
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
-						<prerequisite><![CDATA[Fame < 1 and Powerstat > 0]]></prerequisite>
+						<prerequisites><![CDATA[Fame < 1 and Powerstat > 0]]></prerequisites>
 					</trait>
 					<trait name="Hobgoblin Trainer" source="Changeling Rites of Spring">
 						<value>2</value>
@@ -207,7 +207,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Hollow: Size > 0 or Hollow: Amenities > 0 or Hollow: Doors > 0 or Hollow: Wards > 0</prerequisite>
+						<prerequisites>Hollow: Size > 0 or Hollow: Amenities > 0 or Hollow: Doors > 0 or Hollow: Wards > 0</prerequisites>
 					</trait>
 					<trait name="Workshop" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -215,7 +215,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Hollow: Size > 0</prerequisite>
+						<prerequisites>Hollow: Size > 0</prerequisites>
 					</trait>
 					<trait name="Ritual Doorway" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -223,15 +223,15 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Hollow: Doors > 0</prerequisite>
+						<prerequisites>Hollow: Doors > 0</prerequisites>
 					</trait>
 					<trait name="Hob Kin" source="Changeling Rites of Spring">
 						<value>2</value>
-						<prerequisite>Hollow: Size > 0 or Hollow: Amenities > 0 or Hollow: Doors > 0 or Hollow: Wards > 0</prerequisite>
+						<prerequisites>Hollow: Size > 0 or Hollow: Amenities > 0 or Hollow: Doors > 0 or Hollow: Wards > 0</prerequisites>
 					</trait>
 					<trait name="Lethal Mien" source="Changeling Rites of Spring">
 						<value>2</value>
-						<prerequisite>Powerstat > 2</prerequisite>
+						<prerequisites>Powerstat > 2</prerequisites>
 						<!--<effect>You deal lethal damage when brawling instead of bashing. If you already have an innate lethal attack thanks to your kith, the damage rating of that attack is increased by 1.</effect>-->
 					</trait>
 					<trait name="Long of Days" source="Changeling Rites of Spring">
@@ -253,7 +253,7 @@
 					</trait>
 					<trait name="Perfect Stillness" source="Changeling Rites of Spring">
 						<value>1</value>
-						<prerequisite>Stealth > 0</prerequisite>
+						<prerequisites>Stealth > 0</prerequisites>
 					</trait>
 					<trait name="Pledgesmith" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -262,26 +262,26 @@
 					</trait>
 					<trait name="Rigid Mask" source="Changeling Rites of Spring">
 						<value>2</value>
-						<prerequisite>Subterfuge > 1</prerequisite>
+						<prerequisites>Subterfuge > 1</prerequisites>
 					</trait>
 					<trait name="Siren Song" source="Changeling Rites of Spring">
 						<value>3</value>
 					</trait>
 					<trait name="Soul Sense" source="Changeling Rites of Spring">
 						<value>2</value>
-						<!--<prerequisite>A living Fetch</prerequisite>-->
+						<!--<prerequisites>A living Fetch</prerequisites>-->
 					</trait>
 					<trait name="Visionary Dreams" source="Changeling Rites of Spring">
 						<value>2</value>
-						<prerequisite>Powerstat > 2</prerequisite>
+						<prerequisites>Powerstat > 2</prerequisites>
 					</trait>
 					<trait name="Wisdom of Dreams" source="Changeling Rites of Spring">
 						<value>3</value>
-						<prerequisite>Powerstat > 1</prerequisite>
+						<prerequisites>Powerstat > 1</prerequisites>
 					</trait>
 					<trait name="Wyrdskill" source="Changeling The Equinox Road">
 						<value>1</value>
-						<prerequisite>Powerstat > 5</prerequisite>
+						<prerequisites>Powerstat > 5</prerequisites>
 						<!--<effect>You bind another Skill to your Mien and seeming, and at every \Trait{Wyrd} dot gained starting at \Trait[6]{Wyrd}, you receives another free Specialty for the Skill chosen to be bound to one's \Trait{Wyrd}.</effect>
 						<effect>The experience cost to buy Skill dots in other Skills in the same area as your Wyrdskill increase to new dots $\times$4, and Specialties cost 4~XP.</effect>-->
 					</trait>
@@ -291,15 +291,15 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Powerstat > 6</prerequisite>
+						<prerequisites>Powerstat > 6</prerequisites>
 					</trait>
 					<trait name="Tokenmaster" source="Changeling The Equinox Road">
 						<value>3</value>
-						<prerequisite>Powerstat > 6</prerequisite>
+						<prerequisites>Powerstat > 6</prerequisites>
 					</trait>
 					<trait name="Sublime" source="Changeling The Equinox Road">
 						<value>5</value>
-						<prerequisite>Powerstat > 8</prerequisite>
+						<prerequisites>Powerstat > 8</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Fighting Style">
@@ -309,7 +309,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Empathy > 2 and Powerstat > 2</prerequisite>
+						<prerequisites>Empathy > 2 and Powerstat > 2</prerequisites>
 					</trait>
 					<trait name="Hedge Duelist" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -317,7 +317,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Powerstat > 2</prerequisite>
+						<prerequisites>Powerstat > 2</prerequisites>
 					</trait>
 				</Category>
 			</Merit>

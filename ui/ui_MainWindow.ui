@@ -42,7 +42,7 @@
             <enum>QFrame::Plain</enum>
            </property>
            <property name="currentIndex">
-            <number>7</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="stackedWidgetPage_info">
             <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -227,6 +227,15 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_subPowers">
+               <layout class="QVBoxLayout" name="layout_subPowers">
+                <property name="margin">
+                 <number>0</number>
+                </property>
+               </layout>
+              </widget>
              </item>
             </layout>
            </widget>

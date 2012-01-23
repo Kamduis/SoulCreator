@@ -122,7 +122,7 @@ class Specialties(CheckedList):
 				for subitem in self.__storage[item].items():
 					#Debug.debug(subitem)
 					if subitem[0] == trait.name:
-						self.setSpecialties(subitem[1]["specialty"])
+						self.setSpecialties(subitem[1]["specialties"])
 						return
 
 
@@ -131,7 +131,7 @@ class Specialties(CheckedList):
 		for item in self.__storage:
 			for subitem in self.__storage[item].items():
 				if subitem[0] == self.__trait.name:
-					self.setSpecialties(subitem[1]["specialty"])
+					self.setSpecialties(subitem[1]["specialties"])
 					return
 
 

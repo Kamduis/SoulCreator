@@ -95,7 +95,7 @@
 				<Category name="Mental">
 					<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
 						<value>1</value>
-						<prerequisite>Politics > 0 or Occult > 0 or Streetwise > 0</prerequisite>
+						<prerequisites>Politics > 0 or Occult > 0 or Streetwise > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Social">
@@ -105,7 +105,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Fealty > 0</prerequisite>
+						<prerequisites>Fealty > 0</prerequisites>
 					</trait>
 					<trait name="Domain: Security" source="Vampire Damnation City">
 						<value>1</value>
@@ -113,7 +113,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Fealty > 0</prerequisite>
+						<prerequisites>Fealty > 0</prerequisites>
 					</trait>
 					<trait name="Domain: Size" source="Vampire Damnation City">
 						<value>1</value>
@@ -121,7 +121,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Fealty > 0</prerequisite>
+						<prerequisites>Fealty > 0</prerequisites>
 					</trait>
 					<trait name="Tenant" custom="true" source="Vampire Damnation City">
 						<value>1</value>
@@ -129,7 +129,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Domain: Size > 0</prerequisite>
+						<prerequisites>Domain: Size > 0</prerequisites>
 					</trait>
 					<trait name="Vassal" custom="true" source="Vampire Damnation City">
 						<value>1</value>
@@ -137,13 +137,13 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Domain: Size > 0</prerequisite>
+						<prerequisites>Domain: Size > 0</prerequisites>
 					</trait>
 					<trait name="Feeding Ground" source="Vampire Damnation City">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
-						<!--<prerequisite>Fealty > 0</prerequisite>-->
+						<!--<prerequisites>Fealty > 0</prerequisites>-->
 					</trait>
 					<trait name="Haven: Size" source="Vampire Core">
 						<value>1</value>
@@ -165,7 +165,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Haven: Size > 0 or Haven: Security > 0</prerequisite>
+						<prerequisites>Haven: Size > 0 or Haven: Security > 0</prerequisites>
 					</trait>
 					<trait name="Herd" source="Vampire Core">
 						<value>1</value>
@@ -180,13 +180,13 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisite>Status.Camarilla > 2 or Status.Wing > 2</prerequisite>
+						<prerequisites>Status.Camarilla > 2 or Status.Wing > 2</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Extraordinary">
 					<trait name="Distant Sympathy" source="Vampire Ancient Mysteries">
 						<value>2</value>
-						<prerequisite>Powerstat > 5</prerequisite>
+						<prerequisites>Powerstat > 5</prerequisites>
 					</trait>
 					<trait name="Lordly Palette" source="Vampire Ventrue">
 						<value>1</value>
@@ -195,11 +195,11 @@
 					</trait>
 					<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
 						<value>2</value>
-						<prerequisite><![CDATA[Powerstat > 2 and morality < 6 and AGE > 99]]></prerequisite>
+						<prerequisites><![CDATA[Powerstat > 2 and morality < 6 and AGE > 99]]></prerequisites>
 					</trait>
 					<trait name="Swarm Mind" source="Vampire Gangrel">
 						<value>2</value>
-						<prerequisite>Protean > 3</prerequisite>
+						<prerequisites>Protean > 3</prerequisites>
 					</trait>
 				</Category>
 			</Merit>
