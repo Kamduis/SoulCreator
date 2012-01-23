@@ -66,8 +66,7 @@ class CheckTrait(QWidget):
 		self.__lineEdit.textChanged.connect(self.setTraitCustomText)
 		self.__trait.valueChanged.connect(self.setValue)
 		self.__trait.customTextChanged.connect(self.setText)
-		#connect( checkBox, SIGNAL( stateChanged( int ) ), this, SIGNAL( stateChanged( int ) ) );
-		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
+		self.__trait.availableChanged.connect(self.setEnabled)
 
 
 	def __getValue(self):
@@ -112,66 +111,6 @@ class CheckTrait(QWidget):
 			self.__trait.customText = text
 
 
-#cv_AbstractTrait::Type CheckTrait::type() const {
-	#return ptr_trait.type();
-#}
-
-#void CheckTrait::setType( cv_AbstractTrait::Type type ) {
-	#if ( ptr_trait.type() != type ) {
-		#ptr_trait.setType(type);
-	#}
-#}
-
-#cv_AbstractTrait::Category CheckTrait::category() const {
-	#return ptr_trait.category();
-#}
-
-#void CheckTrait::setCategory( cv_AbstractTrait::Category category ) {
-	#if ( ptr_trait.category() != category ) {
-		#ptr_trait.setCategory(category);
-	#}
-#}
-
-#cv_Species::Species CheckTrait::species() const {
-	#return ptr_trait.species();
-#}
-
-#void CheckTrait::setSpecies( cv_Species::Species species ) {
-	#if ( ptr_trait.species() != species ) {
-		#ptr_trait.setSpecies(species);
-	#}
-#}
-
-
-#bool CheckTrait::custom() const {
-	#return ptr_trait.custom();
-#}
-
-#void CheckTrait::setCustom( bool sw ) {
-	#if ( ptr_trait.custom() != sw ) {
-		#ptr_trait.setCustom(sw);
-	#}
-#}
-
-#void CheckTrait::hideDescriptionWidget() {
-	#if ( custom() ) {
-		#lineEdit.setHidden( false );
-	#} else {
-		#lineEdit.setHidden( true );
-	#}
-#}
-
-
-#void CheckTrait::hideTraitIfNotAvailable( cv_Species::SpeciesFlag sp ) {
-	#if ( species().testFlag( sp ) ) {
-		#setHidden( false );
-	#} else {
-		#setValue( 0 );
-		#setHidden( true );
-	#}
-#}
-
-
 	def setDescriptionHidden( self, sw ):
 		"""
 		Mit dieser Methode verstecke ich die Textzeile, in welcher zusätzlicher Beschreibungstext eingegeben werden kann.
@@ -193,3 +132,4 @@ class CheckTrait(QWidget):
 			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
 		else:
 			self.setHidden(True)
+

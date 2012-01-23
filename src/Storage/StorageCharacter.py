@@ -903,7 +903,9 @@ class StorageCharacter(QObject):
 						#Debug.debug(categories)
 						for subsubitem in self.traits[item][subitem].values():
 							# Überprüfen, ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-							if subsubitem.name in traitPrerequisites:
+							# Namen, die nur aus Zahlen bestehen, werden zudem nicht ersetzt, denn sonst könnte ich unter Umständen die Zahlen ersetzen, mit denen ich vergleichen will.
+							# in Python3 kann ich dafür auch "not subsubitem.name.isnumeric()" schreiben
+							if subsubitem.name and subsubitem.name in traitPrerequisites and not subsubitem.name.isdigit():
 								# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
 								idxA = traitPrerequisites.index(subsubitem.name)
 								strBefore = traitPrerequisites[:idxA]
@@ -920,6 +922,7 @@ class StorageCharacter(QObject):
 											traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
 										else:
 											traitPrerequisites = traitPrerequisites.replace("{}.{}".format(subsubitem.name, specialty), "0")
+									#Debug.debug("{} hat einen Wert von {}".format(subsubitem.name, subsubitem.value))
 									traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
 				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
 				if Config.powerstatIdentifier in traitPrerequisites:
@@ -928,10 +931,11 @@ class StorageCharacter(QObject):
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
 				try:
 					result = eval(traitPrerequisites)
-					Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
+					#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
 				except (NameError, SyntaxError) as e:
-					Debug.debug("Error: {}".format(traitPrerequisites))
+					#Debug.debug("Error: {}".format(traitPrerequisites))
 					result = False
 
+				#Debug.debug("Eigenschaft {} wird verfügbar? {}".format(trait.name, result))
 				trait.setAvailable(result)
 

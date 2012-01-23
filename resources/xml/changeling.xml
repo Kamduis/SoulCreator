@@ -643,6 +643,15 @@
 					</trait>
 				</Category>
 			</Power>
+			<Subpower name="Goblin Contracts">
+				<Category name="All">
+					<trait name="Test1" level="1"/>
+					<trait name="Test2" level="1"/>
+					<trait name="Test3" level="1"/>
+					<trait name="Test4" level="1"/>
+					<trait name="Test5" level="1"/>
+				</Category>
+			</Subpower>
 			<Flaw>
 				<Social>
 					<trait name="Anachronism"/>

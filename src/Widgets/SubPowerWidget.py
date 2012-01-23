@@ -30,7 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 from src.Config import Config
 #from src import Error
 from src.Tools import ListTools
-from src.Widgets.Components.CharaTrait import CharaTrait
+from src.Widgets.Components.CheckTrait import CheckTrait
 from src.Debug import Debug
 
 
@@ -63,9 +63,13 @@ class SubPowerWidget(QWidget):
 
 		self.__typ = "Subpower"
 		categories = self.__storage.categories(self.__typ)
+		#Debug.debug(categories)
 
 		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
 		self.__categoryIndex = {}
+
+		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
+		self.toolBoxPageList = {}
 
 		for item in categories:
 			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.
@@ -80,19 +84,23 @@ class SubPowerWidget(QWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
+			## In dieser Liste sammle ich die Widgets, damit sie später bei Bedarf in die ToolBox eingefügt werden können.
+			self.toolBoxPageList[item] = [widgetSubpowerCategory]
+
 			__list = self.__character.traits[self.__typ][item].items()
 			__list.sort()
-			for merit in __list:
+			for trait in __list:
 				#Debug.debug(merit)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				traitWidget = CharaTrait( merit[1], self )
-				traitWidget.setSpecialtiesHidden(True)
-				if not merit[1].custom:
+				traitWidget = CheckTrait( trait[1], self )
+				if not trait[1].custom:
 					traitWidget.setDescriptionHidden(True)
+
+				self.toolBoxPageList[item].append(trait[1])
 
 				layoutSubpowerCategory.addWidget( traitWidget )
 
-				merit[1].valueChanged.connect(self.countTraits)
+				trait[1].valueChanged.connect(self.countTraits)
 				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
 
 
@@ -102,6 +110,32 @@ class SubPowerWidget(QWidget):
 		self.setMinimumWidth(Config.traitLineWidthMin)
 
 		self.__character.speciesChanged.connect(self.countTraits)
+		self.__character.speciesChanged.connect(self.hideOrShowToolPage)
+
+
+	def hideOrShowToolPage(self, species):
+		"""
+		Verbirgt eine Seite der ToolBox, wenn alle darin enthaltenen Widgets versteckt sind. Ansonsten wird sie dargestellt.
+		"""
+
+		# Damit die Kategorien auch nach dem Entfernen und Hinzufügen von Eigenschaften alphapetisch sortiert bleiben.
+		keys = self.toolBoxPageList.keys()
+		keys.sort()
+
+		for item in keys:
+			available = False
+			for subitem in self.toolBoxPageList[item][1:]:
+				if (not subitem.species or subitem.species == species):
+					available = True
+					break
+			if available:
+				self.__toolBox.addItem(self.toolBoxPageList[item][0], item)
+				self.toolBoxPageList[item][0].setVisible(True)
+			else:
+				indexOfWidget = self.__toolBox.indexOf(self.toolBoxPageList[item][0])
+				if indexOfWidget != -1:
+					self.__toolBox.removeItem(indexOfWidget)
+				self.toolBoxPageList[item][0].setVisible(False)
 
 
 	def countTraits(self):

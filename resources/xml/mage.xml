@@ -255,7 +255,7 @@
 					</trait>
 				</Category>
 			</Power>
-			<Subpower>
+			<Subpower name="Rotes">
 				<Category name="Death">
 					<trait name="Test1" level="1">
 						<prerequisites>Death > 0</prerequisites>
@@ -271,22 +271,49 @@
 					</trait>
 				</Category>
 				<Category name="Fate">
+					<trait name="Test1" level="1">
+						<prerequisites>Fate > 0</prerequisites>
+					</trait>
 				</Category>
 				<Category name="Forces">
+					<trait name="Test1" level="1">
+						<prerequisites>Forces > 0</prerequisites>
+					</trait>
 				</Category>
 				<Category name="Life">
+					<trait name="Test1" level="1">
+						<prerequisites>Life > 0</prerequisites>
+					</trait>
 				</Category>
 				<Category name="Matter">
+					<trait name="Test1" level="1">
+						<prerequisites>Matter > 0</prerequisites>
+					</trait>
 				</Category>
 				<Category name="Mind">
+					<trait name="Test1" level="1">
+						<prerequisites>Mind > 0</prerequisites>
+					</trait>
 				</Category>
 				<Category name="Prime">
+					<trait name="Test1" level="1">
+						<prerequisites>Prime > 0</prerequisites>
+					</trait>
 				</Category>
 				<Category name="Space">
+					<trait name="Test1" level="1">
+						<prerequisites>Space > 0</prerequisites>
+					</trait>
 				</Category>
 				<Category name="Spirit">
+					<trait name="Test1" level="1">
+						<prerequisites>Spirit > 0</prerequisites>
+					</trait>
 				</Category>
 				<Category name="Time">
+					<trait name="Test1" level="1">
+						<prerequisites>Time > 0</prerequisites>
+					</trait>
 				</Category>
 			</Subpower>
 			<Flaw>

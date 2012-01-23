@@ -284,7 +284,9 @@ class StorageTemplate(QObject):
 
 
 	def categories(self, typ):
-		return self.__traits[typ].keys()
+		listOfCategories = self.__traits[typ].keys()
+		listOfCategories.sort()
+		return listOfCategories
 
 
 	def __getSpecies(self):

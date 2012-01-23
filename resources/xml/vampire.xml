@@ -291,18 +291,32 @@
 					</trait>
 					<trait name="Veneficia">
 					</trait>
-					<trait name="Coils of the Dragon">
+					<trait name="Theban Sorcery">
 					</trait>
-	<!--				<trait name="Coil of the Beast">
+<!--					<trait name="Coils of the Dragon">
+					</trait>-->
+					<trait name="Coil of the Beast">
 					</trait>
 					<trait name="Coil of Flesh">
 					</trait>
 					<trait name="Coil of Slumber">
 					</trait>
 					<trait name="Coil of the Soul">
-					</trait>-->
+					</trait>
 				</Category>
 			</Power>
+			<Subpower name="Rituals">
+				<Category name="Cruac Rituals">
+					<trait name="Test1" level="1">
+						<prerequisites>Cruac > 0</prerequisites>
+					</trait>
+				</Category>
+				<Category name="Theban Sorcery Rituals">
+					<trait name="Test1" level="1">
+						<prerequisites>Theban Sorcery > 0</prerequisites>
+					</trait>
+				</Category>
+			</Subpower>
 			<Flaw>
 				<Category name="Physical">
 					<trait name="No Fangs"/>
