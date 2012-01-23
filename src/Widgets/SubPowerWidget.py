@@ -30,19 +30,17 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 from src.Config import Config
 #from src import Error
 from src.Tools import ListTools
-from src.Widgets.Components.CharaTrait import CharaTrait
+from src.Widgets.Components.CheckTrait import CheckTrait
 from src.Debug import Debug
 
 
 
 
-class MeritWidget(QWidget):
+class SubPowerWidget(QWidget):
 	"""
-	@brief Das Widget, in welchem sämtliche Merits angeordnet sind.
-
-	\todo Einen Knopf erstellen, über den der Benutzer angeben kann, welche Merits er denn wirklich alle angezeigt haben will.
-
-	\todo Bei Merits mit Zusatztext (Language) in diesem men+ ein Zahlenfle dangeben, bei welchem der benutzer einstellen kann, wieviele verschiedene dieser scheinbar identischen merits er angezeigt haben will.
+	@briefIn diesem Widget werden die "Zaubersprüche" (Wechselbalg-GoblinContracts, Magier-Rotes, Vampir-Rituale, Werwolf-Gaben etc.) untergebracht. Diese können abgehakt werden und haben als Voraussetzung in der Regel eine bestimmte Power (\ref PowerWidget), um überhaupt gewählt werden zu können.
+	
+	\todo Das obligatorisch transparent Setzen des Hintergrundes sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
 	"""
 
 
@@ -56,81 +54,93 @@ class MeritWidget(QWidget):
 		self.setLayout( self.__layout )
 
 		self.__toolBox = QToolBox()
-		## Die Auflistung der Merits soll auch unter Windows einen transparenten Hintergrund haben.
+		## Die Auflistung der Eigenschaften soll auch unter Windows einen transparenten Hintergrund haben.
 		self.__toolBox.setObjectName("transparentWidget")
-		## \todo Sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
+		## Sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
 		if os.name == "nt":
 			self.__toolBox.setStyleSheet( "QScrollArea{ background: transparent; } QWidget#transparentWidget { background: transparent; }" )
 		self.__layout.addWidget(self.__toolBox)
 
-		self.__typ = "Merit"
-		categories = []
-		categories.extend(Config.meritCategories)
-		categories.extend(self.__storage.categories(self.__typ))
-		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
-		categories = ListTools.uniqifyOrdered(categories)
+		self.__typ = "Subpower"
+		categories = self.__storage.categories(self.__typ)
+		#Debug.debug(categories)
 
 		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
 		self.__categoryIndex = {}
 
-		# Merits werden in einer Spalte heruntergeschrieben, aber mit vertikalem Platz dazwischen.
+		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
+		self.toolBoxPageList = {}
+
 		for item in categories:
 			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.
-			widgetMeritCategory = QWidget()
+			widgetSubpowerCategory = QWidget()
 			## Dank des Namens übernimmt dieses Widget den Stil des Eltern-Widgets.
-			widgetMeritCategory.setObjectName("transparentWidget")
+			widgetSubpowerCategory.setObjectName("transparentWidget")
 
-			layoutMeritCategory = QVBoxLayout()
-			widgetMeritCategory.setLayout( layoutMeritCategory )
+			layoutSubpowerCategory = QVBoxLayout()
+			widgetSubpowerCategory.setLayout( layoutSubpowerCategory )
 
-			self.__toolBox.addItem( widgetMeritCategory, item )
+			self.__toolBox.addItem( widgetSubpowerCategory, item )
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
+			## In dieser Liste sammle ich die Widgets, damit sie später bei Bedarf in die ToolBox eingefügt werden können.
+			self.toolBoxPageList[item] = [widgetSubpowerCategory]
+
 			__list = self.__character.traits[self.__typ][item].items()
 			__list.sort()
-			for merit in __list:
+			for trait in __list:
 				#Debug.debug(merit)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
-				traitWidget = CharaTrait( merit[1], self )
-				traitWidget.setSpecialtiesHidden(True)
-				if not merit[1].custom:
+				traitWidget = CheckTrait( trait[1], self )
+				if not trait[1].custom:
 					traitWidget.setDescriptionHidden(True)
 
-				# Bei Merits sind nur bestimmte Werte erlaubt.
-				#Debug.debug(self.__storage.traits[self.__typ][item][merit[0]])
-				traitWidget.setPossibleValues(self.__storage.traits[self.__typ][item][merit[1].name]["values"])
+				self.toolBoxPageList[item].append(trait[1])
 
-				layoutMeritCategory.addWidget( traitWidget )
+				layoutSubpowerCategory.addWidget( traitWidget )
 
-				merit[1].valueChanged.connect(self.countMerits)
+				trait[1].valueChanged.connect(self.countTraits)
 				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
 
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
-			layoutMeritCategory.addStretch()
+			layoutSubpowerCategory.addStretch()
 
 		self.setMinimumWidth(Config.traitLineWidthMin)
 
-		self.__character.speciesChanged.connect(self.countMerits)
-
-	#// 	dialog = new SelectMeritsDialog( this );
-	#//
-	#// 	QHBoxLayout* layout_button = new QHBoxLayout();
-	#// 	layoutTop.addLayout( layout_button );
-	#//
-	#// 	button = new QPushButton();
-	#// 	button.setIcon( style().standardIcon( QStyle::SP_FileDialogStart ) );
-	#//
-	#// 	layout_button.addStretch();
-	#// 	layout_button.addWidget( button );
-	#//
-	#// 	connect( button, SIGNAL( clicked( bool ) ), dialog, SLOT( exec() ) );
+		self.__character.speciesChanged.connect(self.countTraits)
+		self.__character.speciesChanged.connect(self.hideOrShowToolPage)
 
 
-	def countMerits(self):
+	def hideOrShowToolPage(self, species):
 		"""
-		Zält die Merits in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
+		Verbirgt eine Seite der ToolBox, wenn alle darin enthaltenen Widgets versteckt sind. Ansonsten wird sie dargestellt.
+		"""
+
+		# Damit die Kategorien auch nach dem Entfernen und Hinzufügen von Eigenschaften alphapetisch sortiert bleiben.
+		keys = self.toolBoxPageList.keys()
+		keys.sort()
+
+		for item in keys:
+			available = False
+			for subitem in self.toolBoxPageList[item][1:]:
+				if (not subitem.species or subitem.species == species):
+					available = True
+					break
+			if available:
+				self.__toolBox.addItem(self.toolBoxPageList[item][0], item)
+				self.toolBoxPageList[item][0].setVisible(True)
+			else:
+				indexOfWidget = self.__toolBox.indexOf(self.toolBoxPageList[item][0])
+				if indexOfWidget != -1:
+					self.__toolBox.removeItem(indexOfWidget)
+				self.toolBoxPageList[item][0].setVisible(False)
+
+
+	def countTraits(self):
+		"""
+		Zält die Subpowers in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
 
 		Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
 
@@ -143,7 +153,7 @@ class MeritWidget(QWidget):
 				if subitem.value > 0 and (not subitem.species or subitem.species == self.__character.species):
 					numberInCategory += 1
 
-			# ToolBox-Seite des entsprechenden Kategorie mit der Anzahl gewählter Merits beschriften.
+			# ToolBox-Seite des entsprechenden Kategorie mit der Anzahl gewählter Subpowers beschriften.
 			if numberInCategory > 0:
 				self.__toolBox.setItemText( self.__categoryIndex[item], "{} ({})".format(item, numberInCategory) )
 			else:

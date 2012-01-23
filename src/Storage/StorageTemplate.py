@@ -104,6 +104,18 @@ class StorageTemplate(QObject):
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
 	#
+	# Eigenschaften haben folgende Parameter:
+	#
+	# "name" 			Name der Eigenschaft (alle)
+	# "level"			Stufe der Eigenschaft (Subpowers)
+	# "values"			Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
+	# "species"			Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
+	# "age"				Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
+	# "era"				Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
+	# "custom"			Handelt es sich um eine Kraft mit Zusatztext?
+	# "specialties"		Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
+	# "prerequisites"	Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
+	#
 	# {
 	# 	Typ1: {
 	# 		Kategorie1: {
@@ -272,7 +284,9 @@ class StorageTemplate(QObject):
 
 
 	def categories(self, typ):
-		return self.__traits[typ].keys()
+		listOfCategories = self.__traits[typ].keys()
+		listOfCategories.sort()
+		return listOfCategories
 
 
 	def __getSpecies(self):

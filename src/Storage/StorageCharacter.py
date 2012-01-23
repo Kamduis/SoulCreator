@@ -163,7 +163,7 @@ class StorageCharacter(QObject):
 				self.__traits[typ].setdefault(item, {})
 				for subitem in template.traits[typ][item].items():
 					#Debug.debug(subitem)
-					val = 0
+					val = 2	# Dies mache ich, damit beim initialen Charakter-Reset, auch alle Voraussetzungen überprüft werden.
 					# Eigenschaften, die Zusaztext erhalten können (bspw. Language), werden mehrfach in das Dictionary eingefügt. Aber da ein Dictonary immer nur einen Eintrag desselben Namens haben kann, muß selbiger um ein numerisches Suffix erweitert werden.
 					loop = 1
 					custom = False
@@ -179,9 +179,9 @@ class StorageCharacter(QObject):
 						trait.species = subitem[1]["species"]
 						trait.custom = custom
 						trait.customText = customText
-						if "prerequisite" in subitem[1] and subitem[1]["prerequisite"]:
+						if "prerequisites" in subitem[1] and subitem[1]["prerequisites"]:
 							trait.hasPrerequisites = True
-							trait.prerequisitesText = subitem[1]["prerequisite"]
+							trait.prerequisitesText = subitem[1]["prerequisites"]
 						# In der Eigenschaft steht der richtige Name aber im Dictionary der Name mit einem numerischen Suffix, damit die Eigenschaft häufiger auftauchen kann.
 						dictKey = subitem[0]
 						if custom:
@@ -888,20 +888,24 @@ class StorageCharacter(QObject):
 
 	def checkPrerequisites(self, trait):
 		"""
-		Diese Funktion überprüft, ob die Voraussetzungen der Eigenscahft "trait" erfüllt sind ode rnicht.
+		Diese Funktion überprüft, ob die Voraussetzungen der Eigenschaft "trait" erfüllt sind oder nicht.
 		"""
 
 		if type(trait) != Trait:
 			Debug.debug("Error!")
 		else:
 			if trait.hasPrerequisites:
-				traitPrerequisites = trait.prerequisitesText[0]
+				traitPrerequisites = trait.prerequisitesText#[0]
+				#Debug.debug("{trait} hat Voraussetzungen? {truth}".format(trait=trait.name, truth=trait.hasPrerequisites))
 				for item in self.__storage.traits.keys():
 					categories = self.__storage.categories(item)
 					for subitem in categories:
+						#Debug.debug(categories)
 						for subsubitem in self.traits[item][subitem].values():
-							# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-							if subsubitem.name in traitPrerequisites:
+							# Überprüfen, ob die Eigenschaft im Anforderungstext des Merits vorkommt.
+							# Namen, die nur aus Zahlen bestehen, werden zudem nicht ersetzt, denn sonst könnte ich unter Umständen die Zahlen ersetzen, mit denen ich vergleichen will.
+							# in Python3 kann ich dafür auch "not subsubitem.name.isnumeric()" schreiben
+							if subsubitem.name and subsubitem.name in traitPrerequisites and not subsubitem.name.isdigit():
 								# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
 								idxA = traitPrerequisites.index(subsubitem.name)
 								strBefore = traitPrerequisites[:idxA]
@@ -918,6 +922,7 @@ class StorageCharacter(QObject):
 											traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
 										else:
 											traitPrerequisites = traitPrerequisites.replace("{}.{}".format(subsubitem.name, specialty), "0")
+									#Debug.debug("{} hat einen Wert von {}".format(subsubitem.name, subsubitem.value))
 									traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
 				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
 				if Config.powerstatIdentifier in traitPrerequisites:
@@ -926,10 +931,11 @@ class StorageCharacter(QObject):
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
 				try:
 					result = eval(traitPrerequisites)
-					#print("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
+					#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
 				except (NameError, SyntaxError) as e:
-					Debug.debug("Error: {}".format(traitPrerequisites))
+					#Debug.debug("Error: {}".format(traitPrerequisites))
 					result = False
 
+				#Debug.debug("Eigenschaft {} wird verfügbar? {}".format(trait.name, result))
 				trait.setAvailable(result)
 

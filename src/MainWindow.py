@@ -46,6 +46,7 @@ from Widgets.SkillWidget import SkillWidget
 from Widgets.Specialties import Specialties
 from Widgets.MeritWidget import MeritWidget
 from Widgets.PowerWidget import PowerWidget
+from Widgets.SubPowerWidget import SubPowerWidget
 from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.AdvantagesWidget import AdvantagesWidget
@@ -192,26 +193,37 @@ class MainWindow(QMainWindow):
 		self.ui.actionQuit.setIcon(QIcon(":/icons/images/actions/exit.png"))
 
 		self.info = InfoWidget(self.__storage, self.__character, self)
-		attributes = AttributeWidget( self.__storage, self.__character, self )
-		skills = SkillWidget( self.__storage, self.__character, self )
-		specialties = Specialties( self.__storage.traits["Skill"], self )
-		merits = MeritWidget( self.__storage, self.__character, self )
-		morality = MoralityWidget( self.__storage, self.__character, self )
-		flaws = FlawWidget( self.__storage, self.__character, self )
-		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
-		items = ItemWidget( self.__storage, self.__character, self )
-
 		self.ui.layout_info.addWidget( self.info )
+
+		attributes = AttributeWidget( self.__storage, self.__character, self )
 		self.ui.layout_attributes.addWidget( attributes )
+
+		skills = SkillWidget( self.__storage, self.__character, self )
 		self.ui.layout_skills.addWidget( skills )
+
+		specialties = Specialties( self.__storage.traits["Skill"], self )
 		self.ui.layout_specialties.addWidget( specialties )
+
+		merits = MeritWidget( self.__storage, self.__character, self )
 		self.ui.layout_merits.addWidget( merits )
+
+		morality = MoralityWidget( self.__storage, self.__character, self )
 		self.ui.layout_morality.addWidget( morality )
+
 		if "Power" in self.__storage.traits.keys():
 			powers = PowerWidget( self.__storage, self.__character, self )
 			self.ui.layout_powers.addWidget( powers )
+
+			subPowers = SubPowerWidget( self.__storage, self.__character, self )
+			self.ui.layout_subPowers.addWidget( subPowers )
+
+		flaws = FlawWidget( self.__storage, self.__character, self )
 		self.ui.layout_flaws.addWidget( flaws )
+
+		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
 		self.ui.layout_advantages.addWidget( self.__advantages )
+
+		items = ItemWidget( self.__storage, self.__character, self )
 		self.ui.layout_items.addWidget( items )
 
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
@@ -251,33 +263,34 @@ class MainWindow(QMainWindow):
 		Diese Funktion "aktiviert" SoulCreator. Hier werden beispielsweise Merits mit allen anderen Eigenschaften verknüpft, die in ihren Voraussetzungen vorkommen. und bei einem ändern dieser Eigenschaft, wird neu geprüft, ob der Merit verfügbar ist, oder nicht.
 		"""
 
-		# Merits müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
-		typ = "Merit"
-		categoriesMerits = self.__storage.categories(typ)
-		for category in categoriesMerits:
-			for merit in self.__character.traits[typ][category].values():
-				#Debug.debug(merit.hasPrerequisites)
-				if merit.hasPrerequisites:
-					meritPrerequisites = merit.prerequisitesText[0]
-					for item in self.__storage.traits.keys():
-						categories = self.__storage.categories(item)
-						for subitem in categories:
-							for subsubitem in self.__character.traits[item][subitem].values():
-								# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-								if subsubitem.name in meritPrerequisites:
-									# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
-									idxA = meritPrerequisites.index(subsubitem.name)
-									strBefore = meritPrerequisites[:idxA]
-									strBefore = strBefore.rstrip()
-									strBeforeList = strBefore.split(" ")
-									if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
-										# \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
-										# Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
-										#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, merit.name))
-										subsubitem.traitChanged.connect(merit.checkPrerequisites)
-					# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
-					if Config.powerstatIdentifier in meritPrerequisites:
-						self.__character.powerstatChanged.connect(merit.checkPrerequisites)
+		# Merits und Subpowers müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
+		typs = ["Merit", "Subpower"]
+		for typ in typs:
+			categoriesTraits = self.__storage.categories(typ)
+			for category in categoriesTraits:
+				for trait in self.__character.traits[typ][category].values():
+					#Debug.debug("{trait} hat Voraussetzungen? {truth}".format(trait=trait.name, truth=trait.hasPrerequisites))
+					if trait.hasPrerequisites:
+						traitPrerequisites = trait.prerequisitesText#[0]
+						for item in self.__storage.traits.keys():
+							categories = self.__storage.categories(item)
+							for subitem in categories:
+								for subsubitem in self.__character.traits[item][subitem].values():
+									# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
+									if subsubitem.name in traitPrerequisites:
+										# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
+										idxA = traitPrerequisites.index(subsubitem.name)
+										strBefore = traitPrerequisites[:idxA]
+										strBefore = strBefore.rstrip()
+										strBeforeList = strBefore.split(" ")
+										if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
+											# \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
+											# Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
+											#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, trait.name))
+											subsubitem.traitChanged.connect(trait.checkPrerequisites)
+						# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
+						if Config.powerstatIdentifier in traitPrerequisites:
+							self.__character.powerstatChanged.connect(trait.checkPrerequisites)
 
 		# Bei der Änderung gewisser Eigenschaften müssen die Advantages neu berechnet werden. Die Verknüpfung dazu werden hier festgelegt.
 		calc = CalcAdvantages( self.__character, self )

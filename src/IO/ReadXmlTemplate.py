@@ -148,6 +148,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		self.readTraits(tree.find("Template/Traits/Merit"), species)
 		self.readTraits(tree.find("Template/Traits/Flaw"), species)
 		self.readTraits(tree.find("Template/Traits/Power"), species)
+		self.readTraits(tree.find("Template/Traits/Subpower"), species)
 		self.readCreationPoints(tree.find("Template/Creation"), species)
 		self.readGroups(tree.find("Template/Group/Breed"), species)
 		self.readGroups(tree.find("Template/Group/Faction"), species)
@@ -365,22 +366,23 @@ class ReadXmlTemplate(QObject, ReadXml):
 				for traitSubElement in traitElement.getiterator("specialty"):
 					listOfSpecialties.append(traitSubElement.text)
 				listOfPrerequisites = []
-				for traitSubElement in traitElement.getiterator("prerequisite"):
+				for traitSubElement in traitElement.getiterator("prerequisites"):
 					listOfPrerequisites.append(traitSubElement.text)
 				listOfValues = []
 				for traitSubElement in traitElement.getiterator("value"):
 					listOfValues.append(int(traitSubElement.text))
 				traitData = {
-					"name": traitElement.attrib["name"],
-					"value": [0],
-					"species": species,
-					"age": self.__getElementAttribute(traitElement, "age"),
-					"era": self.__getElementAttribute(traitElement, "era"),
-					"custom": self.__getElementAttribute(traitElement, "custom"),
-					"specialty": listOfSpecialties,
-					"prerequisite": " and ".join(listOfPrerequisites)
+					"name": traitElement.attrib["name"],							# Name der Eigenschaft (alle)
+					"level": self.__getElementAttribute(traitElement, "level"),		# Stufe der Eigenschaft (Subpowers)
+					"values": [0],													# Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
+					"species": species,												# Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
+					"age": self.__getElementAttribute(traitElement, "age"),			# Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
+					"era": self.__getElementAttribute(traitElement, "era"),			# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
+					"custom": self.__getElementAttribute(traitElement, "custom"),	# Handelt es sich um eine Kraft mit Zusatztext?
+					"specialties": listOfSpecialties,									# Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
+					"prerequisites": " and ".join(listOfPrerequisites)				# Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
 				}
-				traitData["value"].extend(listOfValues)
+				traitData["values"].extend(listOfValues)
 				listOfTraits.append(traitData)
 
 		return listOfTraits
