@@ -20,22 +20,10 @@
     <file>images/WoD.png</file>
   </qresource>
   <qresource prefix="fonts">
-    <file>fonts/texgyreheros-bold.otf</file>
-    <file>fonts/texgyreheros-bolditalic.otf</file>
-    <file>fonts/texgyreheros-italic.otf</file>
-    <file>fonts/texgyreheros-regular.otf</file>
-    <file>fonts/texgyrepagella-bold.otf</file>
-    <file>fonts/texgyrepagella-bolditalic.otf</file>
-    <file>fonts/texgyrepagella-italic.otf</file>
-    <file>fonts/texgyrepagella-regular.otf</file>
-<!--    <file>fonts/DejaVuSans-Bold.ttf</file>
-    <file>fonts/DejaVuSans-BoldOblique.ttf</file>
-    <file>fonts/DejaVuSans-Oblique.ttf</file>
-    <file>fonts/DejaVuSans.ttf</file>
-    <file>fonts/DejaVuSerif-Bold.ttf</file>
-    <file>fonts/DejaVuSerif-BoldItalic.ttf</file>
-    <file>fonts/DejaVuSerif-Italic.ttf</file>
-    <file>fonts/DejaVuSerif.ttf</file>-->
+    <file>fonts/linlibertine_bd-4.1.5ro.ttf</file>
+    <file>fonts/linlibertine_bi-4.1.0ro.ttf</file>
+    <file>fonts/linlibertine_it-4.2.6ro.ttf</file>
+    <file>fonts/linlibertine_re-4.7.5ro.ttf</file>
     <file>fonts/ArchitectsDaughter.ttf</file>
     <file>fonts/CloisterBlack.ttf</file>
     <file>fonts/HVD_Edding.otf</file>
@@ -95,12 +83,10 @@
   <qresource prefix="characterSheets">
     <file>images/Charactersheet-Changeling-1.jpg</file>
     <file>images/Charactersheet-Changeling-2.jpg</file>
-    <file>images/Charactersheet-Human.jpg</file>
     <file>images/Charactersheet-Mage-1.jpg</file>
     <file>images/Charactersheet-Mage-2.jpg</file>
     <file>images/Charactersheet-Vampire-1.jpg</file>
     <file>images/Charactersheet-Vampire-2.jpg</file>
-    <file>images/Charactersheet-Werewolf-1.jpg</file>
     <file>images/Charactersheet-Werewolf-2.jpg</file>
   </qresource>
 </RCC>

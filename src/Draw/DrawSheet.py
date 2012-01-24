@@ -82,15 +82,16 @@ class DrawSheet(QObject):
 
 		## Schriften sind Abhängig von der Spezies.
 		#self.__fontMain = QFont("DejaVu Serif", 31)
-		self.__fontMain = QFont("TeXGyrePagella", 31)
+		#self.__fontMain = QFont("TeXGyrePagella", 31)
+		self.__fontMain = QFont("Linux Libertine O", 31)
 		self.__fontMain_small = copy.copy(self.__fontMain)
 		self.__fontMain_small.setPointSize(25)
 		self.__fontMain_tiny = copy.copy(self.__fontMain)
 		self.__fontMain_tiny.setPointSize(18)
 		#self.__fontSans = QFont("DejaVu Sans", 31 )
-		self.__fontSans = QFont("TeXGyreHeros", 31 )
-		self.__fontSans_small = copy.copy(self.__fontSans)
-		self.__fontSans_small.setPointSize(25)
+		#self.__fontSans = QFont("TeXGyreHeros", 31 )
+		#self.__fontSans_small = copy.copy(self.__fontSans)
+		#self.__fontSans_small.setPointSize(25)
 		## Mit dieser Schriftart werden Werte eingetragen, die normalerweise der Spier einträgt.
 		self.__fontScript = QFont("Blokletters Balpen", 18 )
 		self.__headingSep = 12.5
@@ -106,29 +107,29 @@ class DrawSheet(QObject):
 		"""
 
 		if self.__character.species == "Human":
-			self.__fontHeading = QFont("Architects Daughter", 40 )
-			self.__fontSubHeading = QFont("Architects Daughter", 35 )
+			self.__fontHeading = QFont("Architects Daughter", 40, QFont.Bold )
+			self.__fontSubHeading = QFont("Architects Daughter", 35, QFont.Bold )
 		elif self.__character.species == "Changeling":
-			self.__fontHeading = QFont("Mutlu", 47 )
-			self.__fontSubHeading = QFont("Mutlu", 40 )
+			self.__fontHeading = QFont("Mutlu", 47, QFont.Bold )
+			self.__fontSubHeading = QFont("Mutlu", 40, QFont.Bold )
 			# Der Rahmen macht es notwendig, daß Wechselbälger einen breiteren Rahmen haben, der für die Charakterwerte nicht zur Verfügung steht.
 			self.__borderFrameWest = 172
 			self.__borderFrameEast = self.__borderFrameWest
 			self.__borderFrameNorth = self.__borderFrameWest
 			self.__borderFrameSouth = self.__borderFrameWest
 		elif self.__character.species == "Mage":
-			self.__fontHeading = QFont("Tangerine", 65 )
-			self.__fontSubHeading = QFont("Tangerine", 56 )
+			self.__fontHeading = QFont("Tangerine", 65, QFont.DemiBold )
+			self.__fontSubHeading = QFont("Tangerine", 56, QFont.DemiBold )
 		elif self.__character.species == "Vampire":
-			self.__fontHeading = QFont("Cloister Black", 47 )
-			self.__fontSubHeading = QFont("Cloister Black", 40 )
+			self.__fontHeading = QFont("Cloister Black", 47, QFont.Bold )
+			self.__fontSubHeading = QFont("Cloister Black", 40, QFont.Bold )
 			self.__borderFrameWest = 135
 			self.__borderFrameEast = 155
 			self.__borderFrameNorth = 165
 			self.__borderFrameSouth = 270
 		elif self.__character.species == "Werewolf":
-			self.__fontHeading = QFont("Note this", 47 )
-			self.__fontSubHeading = QFont("Note this", 40 )
+			self.__fontHeading = QFont("Note this", 47, QFont.Bold )
+			self.__fontSubHeading = QFont("Note this", 40, QFont.Bold )
 		else:
 			#self.__fontHeading = QFont("HVD Edding 780", 44 )	# Tiere
 			raise ErrSpeciesNotExisting( self.__character.species )
@@ -202,7 +203,7 @@ class DrawSheet(QObject):
 		self._drawBackground()
 
 		if GlobalState.isDebug:
-			image  = QImage(":/characterSheets/images/Charactersheet-Human.jpg")
+			image  = QImage()
 			if ( self.__character.species == "Human" ):
 				pass
 			elif ( self.__character.species == "Changeling" ):
@@ -212,7 +213,7 @@ class DrawSheet(QObject):
 			elif ( self.__character.species == "Vampire" ):
 				image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
 			elif ( self.__character.species == "Werewolf" ):
-				image = QImage( ":/characterSheets/images/Charactersheet-Werewolf-1.jpg" )
+				pass
 			else:
 				raise ErrSpeciesNotExisting( self.__character.species )
 
@@ -239,7 +240,7 @@ class DrawSheet(QObject):
 			lengthX = 780
 		self._drawLogo(offsetV=posY, width=lengthX, height=lengthY)
 
-		posY +=  lengthY
+		posY += lengthY + self.__posSep
 		lengthY = 150
 		if self.__character.species == "Changeling":
 			lengthY = 160
@@ -247,7 +248,9 @@ class DrawSheet(QObject):
 
 		posY += lengthY + self.__posSep
 		lengthY = 200
-		if self.__character.species == "Vampire":
+		if self.__character.species == "Mage":
+			lengthY = 220
+		elif self.__character.species == "Vampire":
 			lengthY = 160
 		self._drawAttributes(offsetV=posY)
 
@@ -272,7 +275,7 @@ class DrawSheet(QObject):
 		if self.__character.species == "Mage":
 			posY += lengthY + self.__posSep
 			lengthY = 300
-		self._drawMagicalTool(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+			self._drawMagicalTool(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posX += lengthX + self.__posSep
 		posX_spalte2 = posX
@@ -402,8 +405,8 @@ class DrawSheet(QObject):
 
 		self._drawBackground()
 
-		if False and GlobalState.isDebug:
-			image  = QImage( ":/characterSheets/images/Charactersheet-Human.jpg" )
+		if GlobalState.isDebug:
+			image  = QImage()
 			if ( self.__character.species == "Human" ):
 				pass
 			elif ( self.__character.species == "Changeling" ):
@@ -489,7 +492,7 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		fontLcl = copy.copy(self.__fontSans)
+		fontLcl = copy.copy(self.__fontMain)
 		fontLcl.setPointSize(20)
 		self.__painter.setFont(fontLcl)
 		self.__painter.setRenderHint(QPainter.TextAntialiasing)
