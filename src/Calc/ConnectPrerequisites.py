@@ -89,10 +89,7 @@ class ConnectPrerequisites(object):
 													#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, trait.name))
 													subsubitem.traitChanged.connect(trait.checkPrerequisites)
 													## Sind alle Voraussetzungen mit Verweisen ersetzt, kann man die Schleife hier abbrechen.
-													#Debug.debug(trait.prerequisitesText)
 													traitString = re.search(r"(?<!ptr)\w+\.\w+", trait.prerequisitesText)
-													if "Demoli" in trait.prerequisitesText:
-														Debug.debug(traitString.group())
 													if not traitString:
 														#Debug.debug("Abbruch der Schleife")
 														stopLoop = True

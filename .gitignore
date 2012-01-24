@@ -7,4 +7,6 @@ resources/rc_*.py
 *~
 *.pyc
 *.ini
+*.h
+*.cpp
 *.kate-swp
