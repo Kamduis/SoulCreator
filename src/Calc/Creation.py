@@ -81,7 +81,7 @@ class Creation(QObject):
 		stopLoop = False
 		for item in self.__storage.traits:
 			for subitem in self.__storage.traits[item]:
-				if trait.name in self.__storage.traits[item][subitem]:
+				if trait.identifier in self.__storage.traits[item][subitem]:
 					typ = item
 					stopLoop = True
 					break

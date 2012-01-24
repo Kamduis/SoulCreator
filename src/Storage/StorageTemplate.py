@@ -119,12 +119,12 @@ class StorageTemplate(QObject):
 	# {
 	# 	Typ1: {
 	# 		Kategorie1: {
-	# 			Name1: { "species": Species1, "age": Alter1, ... },
-	# 			Name2: { "species": Species2, "age": Alter2, ... },
+	# 			Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 			Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
 	# 			...
 	# 		},
 	# 		Kategorie2: {
-	# 			Name1: { "species": Species1, "age": Alter1, ... },
+	# 			Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
 	# 			...
 	# 		},
 	# 		...
@@ -405,7 +405,7 @@ class StorageTemplate(QObject):
 	traits = property(__getTraits, __setTraits)
 
 
-	def addTrait( self, typ, category, name, data):
+	def addTrait( self, typ, category, identifier, data):
 		"""
 		Fügt eine Eigenschaft zu der entsprechenden Liste hinzu.
 
@@ -413,9 +413,9 @@ class StorageTemplate(QObject):
 
 		Die Eigenschaft sollte im Format eines dict daherkommen.
 
-		\param name Der Name der Eigenschaft
+		\param identifier Die einzigartige Identität der Eigenschaft, meist identisch mit ihrem Namen.
 		
-		\param data Alle Informationen über die Eigenschaft außer dem Namen.
+		\param data Alle Informationen über die Eigenschaft außer der Identität.
 		"""
 
 		if typ not in self.__traits:
@@ -424,13 +424,13 @@ class StorageTemplate(QObject):
 		if category not in self.__traits[typ]:
 			self.__traits[typ].setdefault(category,{})
 
-		if name not in self.__traits[typ][category]:
-			self.__traits[typ][category].setdefault(name, data)
+		if identifier not in self.__traits[typ][category]:
+			self.__traits[typ][category].setdefault(identifier, data)
 		else:
-			specialties = self.__traits[typ][category][name]["specialty"]
+			specialties = self.__traits[typ][category][identifier]["specialty"]
 			specialties.extend(data["specialty"])
-			self.__traits[typ][category][name] = data
-			self.__traits[typ][category][name]["specialty"] = specialties
+			self.__traits[typ][category][identifier] = data
+			self.__traits[typ][category][identifier]["specialty"] = specialties
 
 		## Kontrolle zu Debugzwecken:
 		#keys = self.__traits.keys()

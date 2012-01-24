@@ -30,6 +30,7 @@ from PySide.QtGui import QPixmap
 from src.Config import Config
 from src.Datatypes.Trait import Trait
 from src.Datatypes.Identity import Identity
+from src.Calc.ConnectPrerequisites import ConnectPrerequisites
 from src.Error import ErrListLength
 from src.Debug import Debug
 
@@ -175,7 +176,8 @@ class StorageCharacter(QObject):
 						custom = True
 
 					for i in xrange(loop):
-						trait = Trait(self, subitem[0], val)
+						trait = Trait(self, subitem[1]["name"], val)
+						trait.identifier = subitem[0]
 						trait.age = subitem[1]["age"]
 						trait.era = subitem[1]["era"]
 						trait.species = subitem[1]["species"]
@@ -895,52 +897,8 @@ class StorageCharacter(QObject):
 		\todo Den SyntaxError sollte ich nicht verstecken!
 		"""
 
-		if type(trait) != Trait:
-			Debug.debug("Error!")
-		else:
-			if trait.hasPrerequisites:
-				traitPrerequisites = trait.prerequisitesText#[0]
-				#Debug.debug("{trait} hat Voraussetzungen? {truth}".format(trait=trait.name, truth=trait.hasPrerequisites))
-				for item in self.__storage.traits.keys():
-					categories = self.__storage.categories(item)
-					for subitem in categories:
-						#Debug.debug(categories)
-						for subsubitem in self.traits[item][subitem].values():
-							# Überprüfen, ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-							# Namen, die nur aus Zahlen bestehen, werden zudem nicht ersetzt, denn sonst könnte ich unter Umständen die Zahlen ersetzen, mit denen ich vergleichen will.
-							# in Python3 kann ich dafür auch "not subsubitem.name.isnumeric()" schreiben
-							if subsubitem.name and subsubitem.name in traitPrerequisites and not subsubitem.name.isdigit():
-								# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
-								idxA = traitPrerequisites.index(subsubitem.name)
-								strBefore = traitPrerequisites[:idxA]
-								strBefore = strBefore.rstrip()
-								strBeforeList = strBefore.split(" ")
-								if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
-									# Wenn Spezialisierungen vorausgesetzt werden.
-									if "." in traitPrerequisites and "{}.".format(subsubitem.name) in traitPrerequisites:
-										idx =[0,0]
-										idx[0] = traitPrerequisites.index("{}.".format(subsubitem.name))
-										idx[1] = traitPrerequisites.index(" ", idx[0])
-										specialty = traitPrerequisites[idx[0]:idx[1]].replace("{}.".format(subsubitem.name), "")
-										if specialty in subsubitem.specialties:
-											traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
-										else:
-											traitPrerequisites = traitPrerequisites.replace("{}.{}".format(subsubitem.name, specialty), "0")
-									#Debug.debug("{} hat einen Wert von {}".format(subsubitem.name, subsubitem.value))
-									traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
-				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
-				if Config.powerstatIdentifier in traitPrerequisites:
-					traitPrerequisites = traitPrerequisites.replace(Config.powerstatIdentifier, unicode(self.__powerstat))
+		ConnectPrerequisites.checkPrerequisites(trait, self.__storage, self)
 
-				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
-				try:
-					#Debug.debug(traitPrerequisites)
-					result = eval(traitPrerequisites)
-					#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
-				except (NameError, SyntaxError) as e:
-					#Debug.debug("Error: {}".format(traitPrerequisites))
-					result = False
 
-				#Debug.debug("Eigenschaft {} wird verfügbar? {}".format(trait.name, result))
-				trait.setAvailable(result)
+
 

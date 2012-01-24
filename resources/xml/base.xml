@@ -419,14 +419,14 @@
 					</trait>
 					<trait name="EOD" source="WoD Armory">
 						<value>2</value>
-						<prerequisites>(Wits > 2 or Dexterity > 2) and Crafts.Demolitions > 2</prerequisites>
+						<prerequisites>(Attribute.Wits > 2 or Attribute.Dexterity > 2) and Skill.Crafts.Demolitions > 2</prerequisites>
 					</trait>
 					<trait name="Holistic Awareness" source="WoD Core">
 						<value>3</value>
 					</trait>
 					<trait name="Hypnotic Voice" source="WoD Second Sight">
 						<value>4</value>
-						<prerequisites>Persuasion > 2 or Science.Hypnotherapy > 2</prerequisites>
+						<prerequisites>Skill.Persuasion > 2 or Skill.Science.Hypnotherapy > 2</prerequisites>
 					</trait>
 					<trait name="Language" source="WoD Core" custom="true">
 						<value>1</value>
@@ -434,7 +434,7 @@
 					</trait>
 					<trait name="Lucid Dreaming" source="Changeling Core">
 						<value>2</value>
-						<prerequisites>Resolve > 2</prerequisites>
+						<prerequisites>Attribute.Resolve > 2</prerequisites>
 					</trait>
 					<trait name="Meditative Mind" source="WoD Core">
 						<value>1</value>
@@ -456,50 +456,50 @@
 					<trait name="Armored Fighting" source="WoD Armory Reloaded">
 						<value>2</value>
 						<value>4</value>
-						<prerequisites>Strength > 1 and Stamina > 2</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Attribute.Stamina > 2</prerequisites>
 					</trait>
 					<trait name="Athletics Dodge" source="WoD Dogs of War">
 						<value>1</value>
-						<prerequisites>Dexterity > 1 and Athletics > 0</prerequisites>
+						<prerequisites>Attribute.Dexterity > 1 and Skill.Athletics > 0</prerequisites>
 					</trait>
 					<trait name="Brawling Dodge" source="WoD Core">
 						<value>1</value>
-						<prerequisites>Strength > 1 and Brawl > 0</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Skill.Brawl > 0</prerequisites>
 					</trait>
 					<trait name="Direction Sense" source="WoD Core">
 						<value>1</value>
 					</trait>
 					<trait name="Disarm" source="WoD Core">
 						<value>2</value>
-						<prerequisites>Dexterity > 2 and Weaponry > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 1</prerequisites>
 					</trait>
 					<trait name="Entering Strike" source="WoD Armory Reloaded">
 						<value>2</value>
-						<prerequisites>Dexterity > 2 and Brawl > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Brawl > 2</prerequisites>
 					</trait>
 					<trait name="Equipped Grappling" source="WoD Armory Reloaded">
 						<value>2</value>
-						<prerequisites>Dexterity > 2 and Brawl > 1 and Weaponry > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Brawl > 1 and Skill.Weaponry > 1</prerequisites>
 					</trait>
 					<trait name="Fast Reflexes" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
-						<prerequisites>Dexterity > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2</prerequisites>
 						<effect value="+value">Initiative</effect>
 					</trait>
 					<trait name="Fighting Finesse" source="WoD Core" custom="true">
 						<value>2</value>
-						<prerequisites>Dexterity > 2 and Weaponry > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 1</prerequisites>
 					</trait>
 					<trait name="Firearm Retention" source="WoD Armory Reloaded">
 						<value>1</value>
-						<prerequisites>Wits > 1 and Dexterity > 1 and Brawl > 1 and Firearms > 1</prerequisites>
+						<prerequisites>Attribute.Wits > 1 and Attribute.Dexterity > 1 and Skill.Brawl > 1 and Skill.Firearms > 1</prerequisites>
 					</trait>
 					<trait name="Fleet of Foot" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
-						<prerequisites>Strength > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 1</prerequisites>
 						<effect value="+value">Speed</effect>
 					</trait>
 					<trait name="Giant" creationOnly="true" source="WoD Core">
@@ -507,28 +507,28 @@
 					</trait>
 					<trait name="Gunslinger" source="WoD Core">
 						<value>3</value>
-						<prerequisites>Dexterity > 2 and Firearms > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Firearms > 2</prerequisites>
 					</trait>
 					<trait name="High Performance Driving" source="WoD Midnight Roads">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Dexterity > 2 and Resolve > 1 and Drive > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Attribute.Resolve > 1 and Skill.Drive > 1</prerequisites>
 					</trait>
 					<trait name="Iron Stamina" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
-						<prerequisites>Stamina > 2 or Resolve > 1</prerequisites>
+						<prerequisites>Attribute.Stamina > 2 or Attribute.Resolve > 1</prerequisites>
 					</trait>
 					<trait name="Iron Stomach" source="WoD Core">
 						<value>2</value>
-						<prerequisites>Stamina > 1</prerequisites>
+						<prerequisites>Attribute.Stamina > 1</prerequisites>
 					</trait>
 					<trait name="Natural Immunity" source="WoD Core">
 						<value>4</value>
-						<prerequisites>Stamina > 1</prerequisites>
+						<prerequisites>Attribute.Stamina > 1</prerequisites>
 					</trait>
 					<trait name="Parkour" source="Promethean Strange Alchemies">
 						<value>1</value>
@@ -536,47 +536,47 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Dexterity > 2 and Athletics > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Athletics > 1</prerequisites>
 					</trait>
 					<trait name="Quick Draw" source="WoD Core">
 						<value>1</value>
-						<prerequisites>Dexterity > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2</prerequisites>
 					</trait>
 					<trait name="Quick Healer" source="WoD Core">
 						<value>4</value>
-						<prerequisites>Stamina > 3</prerequisites>
+						<prerequisites>Attribute.Stamina > 3</prerequisites>
 					</trait>
 					<trait name="Shield Bearer" source="WoD Armory Reloaded">
 						<value>4</value>
-						<prerequisites>Strength > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 1</prerequisites>
 					</trait>
 					<trait name="Strong Back" source="WoD Core">
 						<value>1</value>
-						<prerequisites>Strength > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 1</prerequisites>
 					</trait>
 					<trait name="Strong Lungs" source="WoD Core">
 						<value>3</value>
-						<prerequisites>Athletics > 2</prerequisites>
+						<prerequisites>Skill.Athletics > 2</prerequisites>
 					</trait>
 					<trait name="Stunt Driver" source="WoD Core">
 						<value>3</value>
-						<prerequisites>Dexterity > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2</prerequisites>
 					</trait>
 					<trait name="Stunt Rider" source="Vampire Requiem for Rome">
 						<value>3</value>
-						<prerequisites>Dexterity > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2</prerequisites>
 					</trait>
 					<trait name="Student of the Blade" source="WoD Armory Reloaded">
 						<value>1</value>
-						<prerequisites>Aggressive Light Sword > 0 or Defensive Light Sword > 0</prerequisites>
+						<prerequisites>Merit.Aggressive Light Sword > 0 or Merit.Defensive Light Sword > 0</prerequisites>
 					</trait>
 					<trait name="Toxin Resistance" source="WoD Core">
 						<value>2</value>
-						<prerequisites>Stamina > 2</prerequisites>
+						<prerequisites>Attribute.Stamina > 2</prerequisites>
 					</trait>
 					<trait name="Weaponry Dodge" source="WoD Core">
 						<value>1</value>
-						<prerequisites>Strength > 1 and Weaponry > 0</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Skill.Weaponry > 0</prerequisites>
 					</trait>
 					<!--<trait name="Weapons to Empty Hands" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -595,7 +595,7 @@
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Resolve > 1 and (Larceny > 1 or Subterfuge > 1)</prerequisites>
+						<prerequisites>Attribute.Resolve > 1 and (Skill.Larceny > 1 or Skill.Subterfuge > 1)</prerequisites>
 					</trait>
 					<!--<trait name="Barfly" source="WoD Core">
 						<value>1</value>
@@ -619,7 +619,7 @@
 					</trait>
 					<trait name="Inspiring" source="WoD Core">
 						<value>4</value>
-						<prerequisites>Presence > 3</prerequisites>
+						<prerequisites>Attribute.Presence > 3</prerequisites>
 					</trait>
 					<trait name="Luxury" source="Mage Seers of the Throne">
 						<value>2</value>
@@ -737,7 +737,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Strength > 2 and Stamina > 1 and Brawl > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 2 and Attribute.Stamina > 1 and Skill.Brawl > 1</prerequisites>
 					</trait>
 					<trait name="Aikido" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -745,14 +745,14 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Wits > 1 and Dexterity > 1 and Brawl > 1</prerequisites>
+						<prerequisites>Attribute.Wits > 1 and Attribute.Dexterity > 1 and Skill.Brawl > 1</prerequisites>
 					</trait>
 					<trait name="Brute Force" source="Promethean Strange Alchemies">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Strength > 2 and Brawl > 2</prerequisites>
+						<prerequisites>Attribute.Strength > 2 and Skill.Brawl > 2</prerequisites>
 					</trait>
 					<trait name="Defensive Striking" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -760,7 +760,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Strength > 1 and Dexterity > 1 and Stamina > 1 and Brawl > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 1 and Attribute.Stamina > 1 and Skill.Brawl > 1</prerequisites>
 					</trait>
 					<trait name="Grappling" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -768,7 +768,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Strength > 1 and Dexterity > 2 and Stamina > 2 and Brawl > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 2 and Attribute.Stamina > 2 and Skill.Brawl > 1</prerequisites>
 					</trait>
 					<trait name="Judo" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -776,7 +776,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Wits > 1 and Dexterity > 1 and Athletics > 1 and Brawl > 1</prerequisites>
+						<prerequisites>Attribute.Wits > 1 and Attribute.Dexterity > 1 and Skill.Athletics > 1 and Skill.Brawl > 1</prerequisites>
 					</trait>
 					<trait name="Krav Maga" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -784,7 +784,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Wits > 2 and Strength > 1 and Dexterity > 2 and Brawl > 2</prerequisites>
+						<prerequisites>Attribute.Wits > 2 and Attribute.Strength > 1 and Attribute.Dexterity > 2 and Skill.Brawl > 2</prerequisites>
 					</trait>
 					<trait name="Oinna" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -792,14 +792,14 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Dexterity > 2 and Brawl > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Brawl > 1</prerequisites>
 					</trait>
 					<trait name="Aggressive Light Sword" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Dexterity > 2 and Weaponry > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
 					<trait name="Defensive Light Sword" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -807,14 +807,14 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Strength > 1 and Dexterity > 2 and Composure > 2 and Weaponry > 2 and Quick Draw > 0</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 2 and Attribute.Composure > 2 and Skill.Weaponry > 2 and Merit.Quick Draw > 0</prerequisites>
 					</trait>
 					<trait name="Flexible Weapons" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Strength > 2 and Dexterity > 2 and Weaponry > 2</prerequisites>
+						<prerequisites>Attribute.Strength > 2 and Attribute.Dexterity > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
 					<trait name="Formation Tactics" source="Vampire Requiem for Rome">
 						<value>1</value>
@@ -822,21 +822,21 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Strength > 1 and Stamina > 2 and Weaponry > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Attribute.Stamina > 2 and Skill.Weaponry > 1</prerequisites>
 					</trait>
 					<trait name="Gladiatorial" source="Vampire Requiem for Rome">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Strength > 2 and Presence > 1 and Weaponry > 2</prerequisites>
+						<prerequisites>Attribute.Strength > 2 and Attribute.Presence > 1 and Skill.Weaponry > 2</prerequisites>
 					</trait>
 					<trait name="Knife Fighting" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Dexterity > 2 and Weaponry > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 1</prerequisites>
 					</trait>
 					<trait name="Langschwert" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -844,35 +844,35 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Strength > 2 and Weaponry > 2</prerequisites>
+						<prerequisites>Attribute.Strength > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
 					<trait name="Shurikenjutsu" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Dexterity > 2 and Athletics > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Athletics > 1</prerequisites>
 					</trait>
 					<trait name="Spear and Bayonet Fighting" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Strength > 2 and Dexterity > 1 and Weaponry > 2</prerequisites>
+						<prerequisites>Attribute.Strength > 2 and Attribute.Dexterity > 1 and Skill.Weaponry > 2</prerequisites>
 					</trait>
 					<trait name="Staff Fighting" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Strength > 2 and Dexterity > 1 and Weaponry > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 2 and Attribute.Dexterity > 1 and Skill.Weaponry > 1</prerequisites>
 					</trait>
 					<trait name="Stick Fighting" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Dexterity > 2 and Weaponry > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
 					<trait name="Sword and Shield" source="WoD Armory Reloaded">
 						<value>1</value>
@@ -880,21 +880,21 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Strength > 2 and Dexterity > 1 and Stamina > 1 and Weaponry > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 2 and Attribute.Dexterity > 1 and Attribute.Stamina > 1 and Skill.Weaponry > 1</prerequisites>
 					</trait>
 					<trait name="Two Weapons" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Dexterity > 2 and Weaponry > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
 					<trait name="Archery" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Strength > 1 and Dexterity > 1 and Athletics > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 1 and Skill.Athletics > 1</prerequisites>
 					</trait>
 					<trait name="Combat Marksmanship" source="WoD Armory">
 						<value>1</value>
@@ -902,14 +902,14 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Strength > 1 and Dexterity > 1 and Composure > 2 and Firearms > 1</prerequisites>
+						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 1 and Attribute.Composure > 2 and Skill.Firearms > 1</prerequisites>
 					</trait>
 					<trait name="Sniping" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Dexterity > 2 and Resolve > 2 and Firearms > 2 and Stealth > 1</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Attribute.Resolve > 2 and Skill.Firearms > 2 and Skill.Stealth > 1</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Debate Style">
@@ -919,7 +919,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Intelligence > 2 and Academics > 0</prerequisites>
+						<prerequisites>Attribute.Intelligence > 2 and Skill.Academics > 0</prerequisites>
 					</trait>
 					<trait name="Rhetoric" source="Vampire Requiem for Rome">
 						<value>1</value>
@@ -927,28 +927,28 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Presence > 2 and Expression > 0</prerequisites>
+						<prerequisites>Attribute.Presence > 2 and Skill.Expression > 0</prerequisites>
 					</trait>
 					<trait name="Theology" source="Vampire Requiem for Rome" era="Ancient">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Presence > 1 and Religion > 1 and Expression > 0</prerequisites>
+						<prerequisites>Attribute.Presence > 1 and Skill.Religion > 1 and Skill.Expression > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Extraordinary">
 					<trait name="Difficult to Ride" source="WoD Book of Spirits">
 						<value>4</value>
-						<prerequisites>Composure > 2 and Resolve > 2</prerequisites>
+						<prerequisites>Attribute.Composure > 2 and Attribute.Resolve > 2</prerequisites>
 					</trait>
 					<trait name="Easy Ride" source="WoD Book of Spirits">
 						<value>2</value>
-						<prerequisites>Wits > 2</prerequisites>
+						<prerequisites>Attribute.Wits > 2</prerequisites>
 					</trait>
 					<trait name="Hollow Soul" source="WoD Book of Spirits">
 						<value>2</value>
-						<prerequisites>Easy Ride > 0</prerequisites>
+						<prerequisites>Merit.Easy Ride > 0</prerequisites>
 					</trait>
 					<trait name="Shadow Contacts" source="WoD Book of Spirits">
 						<value>3</value>

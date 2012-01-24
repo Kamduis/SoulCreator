@@ -93,14 +93,14 @@
 					</trait>
 					<trait name="Atlantean Hesychia" source="Mage Secrets of the ruined Temple">
 						<value>1</value>
-						<prerequisites>High Speech > 0</prerequisites>
+						<prerequisites>Merit.High Speech > 0</prerequisites>
 					</trait>
 					<trait name="Glyph Lore" source="Mage Tome of the Mysteries">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>High Speech > 0 and Intelligence > 2 and Occult > 2</prerequisites>
+						<prerequisites>Merit.High Speech > 0 and Attribute.Intelligence > 2 and Skill.Occult > 2</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Social">
@@ -133,7 +133,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Dexterity > 2 and Occult > 2</prerequisites>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Occult > 2</prerequisites>
 					</trait>
 					<trait name="Ghost Familiar" source="Mage Summoners">
 						<value>3</value>
@@ -146,7 +146,7 @@
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
-						<prerequisites><![CDATA[Fame < 1]]></prerequisites>
+						<prerequisites><![CDATA[Merit.Fame < 1]]></prerequisites>
 					</trait>
 					<trait name="Ritual Synergy" source="Mage Tome of the Mysteries">
 						<value>3</value>
@@ -173,21 +173,21 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisites>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
 					</trait>
 					<trait name="Guardian Ghost" source="Mage Sanctum and Sigil">
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisites>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
 					</trait>
 					<trait name="Guardian Spirit" source="Mage Sanctum and Sigil">
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisites>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
 					</trait>
 					<trait name="Hallow" source="Mage Core">
 						<value>1</value>
@@ -195,7 +195,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisites>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
 					</trait>
 					<trait name="Library" source="Mage Core">
 						<value>1</value>
@@ -203,7 +203,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisites>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
 					</trait>
 					<trait name="Sanctum Gauntlet" source="Mage Sanctum and Sigil">
 						<value>1</value>
@@ -211,13 +211,13 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisites>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
 					</trait>
 					<trait name="Summoning Circle" source="Mage Summoners">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
-						<prerequisites>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisites>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
 					</trait>
 				</Category>
 			</Merit>
@@ -257,62 +257,83 @@
 			</Power>
 			<Subpower name="Rotes">
 				<Category name="Death">
-					<trait name="Test1" level="1">
-						<prerequisites>Death > 0</prerequisites>
+					<trait name="Ectoplasmic Shaping" level="1">
+						<prerequisites>Power.Death > 0</prerequisites>
+					</trait>
+					<trait name="Eye for Destruction" level="1">
+						<prerequisites>Power.Death > 0 and Power.Matter > 0</prerequisites>
+					</trait>
+					<trait name="Forensic Gaze" level="1">
+						<prerequisites>Power.Death > 0</prerequisites>
+					</trait>
+					<trait name="Grim Sight" level="1">
+						<prerequisites>Power.Death > 0</prerequisites>
+					</trait>
+					<trait name="Otherworldly Instrument" level="1">
+						<prerequisites>Power.Death > 0 and Power.Spirit > 0</prerequisites>
+					</trait>
+					<trait name="Sense the Living Dead" level="1">
+						<prerequisites>Power.Death > 0</prerequisites>
+					</trait>
+					<trait name="Shadow Sculpting" level="1">
+						<prerequisites>Power.Death > 0</prerequisites>
+					</trait>
+					<trait name="Soul Marks" level="1">
+						<prerequisites>Power.Death > 0</prerequisites>
 					</trait>
 					<trait name="Speak with the Dead" level="1">
-						<prerequisites>Death > 0</prerequisites>
+						<prerequisites>Power.Death > 0</prerequisites>
+					</trait>
+					<trait name="Unsettling Visage" level="1">
+						<prerequisites>Power.Death > 0</prerequisites>
 					</trait>
 					<trait name="Test2" level="2">
-						<prerequisites>Death > 1</prerequisites>
-					</trait>
-					<trait name="Test3" level="2">
-						<prerequisites>Death > 1 and Spirit > 1</prerequisites>
+						<prerequisites>Power.Death > 1</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Fate">
 					<trait name="Test1" level="1">
-						<prerequisites>Fate > 0</prerequisites>
+						<prerequisites>Power.Fate > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Forces">
 					<trait name="Test1" level="1">
-						<prerequisites>Forces > 0</prerequisites>
+						<prerequisites>Power.Forces > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Life">
 					<trait name="Test1" level="1">
-						<prerequisites>Life > 0</prerequisites>
+						<prerequisites>Power.Life > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Matter">
 					<trait name="Test1" level="1">
-						<prerequisites>Matter > 0</prerequisites>
+						<prerequisites>Power.Matter > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Mind">
 					<trait name="Test1" level="1">
-						<prerequisites>Mind > 0</prerequisites>
+						<prerequisites>Power.Mind > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Prime">
 					<trait name="Test1" level="1">
-						<prerequisites>Prime > 0</prerequisites>
+						<prerequisites>Power.Prime > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Space">
 					<trait name="Test1" level="1">
-						<prerequisites>Space > 0</prerequisites>
+						<prerequisites>Power.Space > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Spirit">
 					<trait name="Test1" level="1">
-						<prerequisites>Spirit > 0</prerequisites>
+						<prerequisites>Power.Spirit > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Time">
 					<trait name="Test1" level="1">
-						<prerequisites>Time > 0</prerequisites>
+						<prerequisites>Power.Time > 0</prerequisites>
 					</trait>
 				</Category>
 			</Subpower>

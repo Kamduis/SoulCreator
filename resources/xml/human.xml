@@ -53,14 +53,14 @@
 					<trait name="Unseen Sense" custom="true" source="WoD Core">
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Wits > 1</prerequisites>
+						<prerequisites>Attribute.Wits > 1</prerequisites>
 					</trait>
 					<trait name="Unseen Sense (Spirits)" source="WoD Book of Spirits">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
-						<prerequisites>Wits > 1</prerequisites>
+						<prerequisites>Attribute.Wits > 1</prerequisites>
 					</trait>
 					<!--<trait name="AntiPsi" source="WoD Second Sight">
 						<value>5</value>

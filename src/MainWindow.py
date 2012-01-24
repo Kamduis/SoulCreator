@@ -40,6 +40,7 @@ from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
 from Calc.CalcAdvantages import CalcAdvantages
 from Calc.Creation import Creation
+from Calc.ConnectPrerequisites import ConnectPrerequisites
 from Widgets.InfoWidget import InfoWidget
 from Widgets.TraitWidget import AttributeWidget, SkillWidget
 from Widgets.TraitCategoryWidget import PowerWidget, SubPowerWidget
@@ -261,34 +262,8 @@ class MainWindow(QMainWindow):
 		Diese Funktion "aktiviert" SoulCreator. Hier werden beispielsweise Merits mit allen anderen Eigenschaften verknüpft, die in ihren Voraussetzungen vorkommen. und bei einem ändern dieser Eigenschaft, wird neu geprüft, ob der Merit verfügbar ist, oder nicht.
 		"""
 
-		# Merits und Subpowers müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
-		typs = ["Merit", "Subpower"]
-		for typ in typs:
-			categoriesTraits = self.__storage.categories(typ)
-			for category in categoriesTraits:
-				for trait in self.__character.traits[typ][category].values():
-					#Debug.debug("{trait} hat Voraussetzungen? {truth}".format(trait=trait.name, truth=trait.hasPrerequisites))
-					if trait.hasPrerequisites:
-						traitPrerequisites = trait.prerequisitesText#[0]
-						for item in self.__storage.traits.keys():
-							categories = self.__storage.categories(item)
-							for subitem in categories:
-								for subsubitem in self.__character.traits[item][subitem].values():
-									# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-									if subsubitem.name in traitPrerequisites:
-										# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
-										idxA = traitPrerequisites.index(subsubitem.name)
-										strBefore = traitPrerequisites[:idxA]
-										strBefore = strBefore.rstrip()
-										strBeforeList = strBefore.split(" ")
-										if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
-											# \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
-											# Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
-											#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, trait.name))
-											subsubitem.traitChanged.connect(trait.checkPrerequisites)
-						# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
-						if Config.powerstatIdentifier in traitPrerequisites:
-							self.__character.powerstatChanged.connect(trait.checkPrerequisites)
+		## Merits und Subpowers müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
+		ConnectPrerequisites.buildConnection(self.__storage, self.__character)
 
 		# Bei der Änderung gewisser Eigenschaften müssen die Advantages neu berechnet werden. Die Verknüpfung dazu werden hier festgelegt.
 		calc = CalcAdvantages( self.__character, self )
@@ -624,21 +599,14 @@ class MainWindow(QMainWindow):
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
 
-		#if GlobalState.isDebug:
-			## Lädt automatisch den Charakter aus testExport.chr
-			#self.__readCharacter.read( "{}/testExport.chr".format(savePath) )
-			##self.__readCharacter.read( "{}/untitled.chr".format(savePath) )
-			#self.__character.setModified( False )
-
 		# Wenn Unterverzeichnis nicht existiert, erstelle es
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		if GlobalState.isDebug:
+		if GlobalState.isDevelop:
 			filePath = ["{}/untitled.pdf".format(savePath), ""]
 		else:
 			filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
-		#filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):

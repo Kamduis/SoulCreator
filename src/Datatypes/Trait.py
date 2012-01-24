@@ -59,6 +59,7 @@ class Trait(QObject):
 
 		self.__character = character
 
+		self.__identifier = name
 		self.__name = name
 		self.__value = value
 		self.__specialties = []
@@ -70,6 +71,15 @@ class Trait(QObject):
 		self.__prerequisites = False
 		self.__prerequisitesText = ""
 		self.__available = True
+
+
+	@property
+	def identifier(self):
+		return self.__identifier
+
+	@identifier.setter
+	def identifier(self, identifier):
+		self.__identifier = identifier
 
 
 	@property

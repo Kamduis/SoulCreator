@@ -198,9 +198,9 @@ class ReadXmlTemplate(QObject, ReadXml):
 				categoryName = category.attrib["name"]
 				traits = self.__readTraitData(category, species)
 				for trait in traits:
-					traitName = trait["name"]
-					del trait["name"]
-					self.__storage.addTrait( root.tag, categoryName, traitName, trait )
+					traitId = trait["id"]
+					del trait["id"]
+					self.__storage.addTrait( root.tag, categoryName, traitId, trait )
 
 
 	def readCreationPoints( self, root, species ):
@@ -372,6 +372,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				for traitSubElement in traitElement.getiterator("value"):
 					listOfValues.append(int(traitSubElement.text))
 				traitData = {
+					"id": self.__getElementAttribute(traitElement, "id"),			# Einzigartiger Identifier der Eigenschaft. Ist meist identisch mit dem Namen.
 					"name": traitElement.attrib["name"],							# Name der Eigenschaft (alle)
 					"level": self.__getElementAttribute(traitElement, "level"),		# Stufe der Eigenschaft (Subpowers)
 					"values": [0],													# Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
@@ -382,6 +383,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 					"specialties": listOfSpecialties,									# Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
 					"prerequisites": " and ".join(listOfPrerequisites)				# Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
 				}
+				if not traitData["id"]:
+					traitData["id"] = traitData["name"]
 				traitData["values"].extend(listOfValues)
 				listOfTraits.append(traitData)
 

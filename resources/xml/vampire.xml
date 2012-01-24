@@ -95,17 +95,52 @@
 				<Category name="Mental">
 					<trait name="Cant Fluency" custom="true" source="Vampire Damnation City">
 						<value>1</value>
-						<prerequisites>Politics > 0 or Occult > 0 or Streetwise > 0</prerequisites>
+						<prerequisites>Skill.Politics > 0 or Skill.Occult > 0 or Skill.Streetwise > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Social">
+					<trait name="Status: City" id="vampireStatus:City" source="Vampire Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Status: Clan" id="vampireStatus:Clan" source="Vampire Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Status: Covenant" id="vampireStatus:Covenant" source="Vampire Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Status: Camarilla" id="vampireStatus:Camarilla" source="Vampire Requiem for Rome">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Status: Wing" id="vampireStatus:Wing" source="Vampire Requiem for Rome">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
 					<trait name="Domain: Location" source="Vampire Damnation City">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Fealty > 0</prerequisites>
+						<prerequisites>Flaw.Fealty > 0</prerequisites>
 					</trait>
 					<trait name="Domain: Security" source="Vampire Damnation City">
 						<value>1</value>
@@ -113,7 +148,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Fealty > 0</prerequisites>
+						<prerequisites>Flaw.Fealty > 0</prerequisites>
 					</trait>
 					<trait name="Domain: Size" source="Vampire Damnation City">
 						<value>1</value>
@@ -121,7 +156,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Fealty > 0</prerequisites>
+						<prerequisites>Flaw.Fealty > 0</prerequisites>
 					</trait>
 					<trait name="Tenant" custom="true" source="Vampire Damnation City">
 						<value>1</value>
@@ -129,7 +164,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Domain: Size > 0</prerequisites>
+						<prerequisites>Merit.Domain:Size > 0</prerequisites>
 					</trait>
 					<trait name="Vassal" custom="true" source="Vampire Damnation City">
 						<value>1</value>
@@ -137,13 +172,13 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Domain: Size > 0</prerequisites>
+						<prerequisites>Merit.Domain:Size > 0</prerequisites>
 					</trait>
 					<trait name="Feeding Ground" source="Vampire Damnation City">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
-						<!--<prerequisites>Fealty > 0</prerequisites>-->
+						<!--<prerequisites>Flaw.Fealty > 0</prerequisites>-->
 					</trait>
 					<trait name="Haven: Size" source="Vampire Core">
 						<value>1</value>
@@ -165,7 +200,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Haven: Size > 0 or Haven: Security > 0</prerequisites>
+						<prerequisites>Merit.Haven:Size > 0 or Merit.Haven:Security > 0</prerequisites>
 					</trait>
 					<trait name="Herd" source="Vampire Core">
 						<value>1</value>
@@ -180,7 +215,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Status.Camarilla > 2 or Status.Wing > 2</prerequisites>
+						<prerequisites>Merit.vampireStatus:Camarilla > 2 or Merit.vampireStatus:Wing > 2</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Extraordinary">
@@ -195,11 +230,11 @@
 					</trait>
 					<trait name="Vice Over Virtue" source="Vampire Ancient Mysteries">
 						<value>2</value>
-						<prerequisites><![CDATA[Powerstat > 2 and morality < 6 and AGE > 99]]></prerequisites>
+						<prerequisites><![CDATA[Powerstat > 2 and Morality < 6 and Age > 99]]></prerequisites>
 					</trait>
 					<trait name="Swarm Mind" source="Vampire Gangrel">
 						<value>2</value>
-						<prerequisites>Protean > 3</prerequisites>
+						<prerequisites>Power.Protean > 3</prerequisites>
 					</trait>
 				</Category>
 			</Merit>
@@ -308,36 +343,36 @@
 			<Subpower name="Rituals">
 				<Category name="Cruac Rituals">
 					<trait name="Balancing the Four Humors" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 					<trait name="Confidence in Adversity" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 					<trait name="Drops of Destiny" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 					<trait name="Fires of Inspiration" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 					<trait name="Pangs of Proserpina" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 					<trait name="Pythian Renewal" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 					<trait name="Rigor Mortis" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 					<trait name="Taste of Knowledge" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 					<trait name="Visage of the Crone" level="1">
-						<prerequisites>Cruac > 0</prerequisites>
+						<prerequisites>Power.Cruac > 0</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Theban Sorcery Rituals">
 					<trait name="Test1" level="1">
-						<prerequisites>Theban Sorcery > 0</prerequisites>
+						<prerequisites>Power.Theban Sorcery > 0</prerequisites>
 					</trait>
 				</Category>
 			</Subpower>

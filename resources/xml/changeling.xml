@@ -102,7 +102,7 @@
 				<Category name="Extraordinary">
 					<trait name="Arcadian Body" creationOnly="true" source="Changeling Rites of Spring">
 						<value>4</value>
-						<prerequisites>Intelligence > 2 or Wits > 2 or Resolve > 2 or Strength > 2 or Dexterity > 2 or Stamina > 2 or Presence > 2 or Manipulation > 2 or Composure > 2</prerequisites>
+						<prerequisites>Attribute.Intelligence > 2 or Attribute.Wits > 2 or Attribute.Resolve > 2 or Attribute.Strength > 2 or Attribute.Dexterity > 2 or Attribute.Stamina > 2 or Attribute.Presence > 2 or Attribute.Manipulation > 2 or Attribute.Composure > 2</prerequisites>
 					</trait>
 					<trait name="Arcadian Metabolism" source="Changeling Rites of Spring">
 						<value>4</value>
@@ -124,7 +124,7 @@
 					</trait>
 					<trait name="Enchanting Performance" source="Changeling Rites of Spring">
 						<value>4</value>
-						<prerequisites>Expression > 2</prerequisites>
+						<prerequisites>Skill.Expression > 2</prerequisites>
 					</trait>
 					<trait name="Fae Mount" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -168,7 +168,7 @@
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
-						<prerequisites><![CDATA[Fame < 1 and Powerstat > 0]]></prerequisites>
+						<prerequisites><![CDATA[Merit.Fame < 1 and Powerstat > 0]]></prerequisites>
 					</trait>
 					<trait name="Hobgoblin Trainer" source="Changeling Rites of Spring">
 						<value>2</value>
@@ -207,7 +207,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Hollow: Size > 0 or Hollow: Amenities > 0 or Hollow: Doors > 0 or Hollow: Wards > 0</prerequisites>
+						<prerequisites>Merit.Hollow: Size > 0 or Merit.Hollow: Amenities > 0 or Merit.Hollow: Doors > 0 or Merit.Hollow: Wards > 0</prerequisites>
 					</trait>
 					<trait name="Workshop" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -215,7 +215,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Hollow: Size > 0</prerequisites>
+						<prerequisites>Merit.Hollow: Size > 0</prerequisites>
 					</trait>
 					<trait name="Ritual Doorway" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -223,11 +223,11 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Hollow: Doors > 0</prerequisites>
+						<prerequisites>Merit.Hollow: Doors > 0</prerequisites>
 					</trait>
 					<trait name="Hob Kin" source="Changeling Rites of Spring">
 						<value>2</value>
-						<prerequisites>Hollow: Size > 0 or Hollow: Amenities > 0 or Hollow: Doors > 0 or Hollow: Wards > 0</prerequisites>
+						<prerequisites>Merit.Hollow: Size > 0 or Merit.Hollow: Amenities > 0 or Merit.Hollow: Doors > 0 or Merit.Hollow: Wards > 0</prerequisites>
 					</trait>
 					<trait name="Lethal Mien" source="Changeling Rites of Spring">
 						<value>2</value>
@@ -253,7 +253,7 @@
 					</trait>
 					<trait name="Perfect Stillness" source="Changeling Rites of Spring">
 						<value>1</value>
-						<prerequisites>Stealth > 0</prerequisites>
+						<prerequisites>Skill.Stealth > 0</prerequisites>
 					</trait>
 					<trait name="Pledgesmith" source="Changeling Rites of Spring">
 						<value>1</value>
@@ -262,7 +262,7 @@
 					</trait>
 					<trait name="Rigid Mask" source="Changeling Rites of Spring">
 						<value>2</value>
-						<prerequisites>Subterfuge > 1</prerequisites>
+						<prerequisites>Skill.Subterfuge > 1</prerequisites>
 					</trait>
 					<trait name="Siren Song" source="Changeling Rites of Spring">
 						<value>3</value>
@@ -309,7 +309,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Empathy > 2 and Powerstat > 2</prerequisites>
+						<prerequisites>Skill.Empathy > 2 and Powerstat > 2</prerequisites>
 					</trait>
 					<trait name="Hedge Duelist" source="Changeling Rites of Spring">
 						<value>1</value>
