@@ -138,6 +138,9 @@ class Config(object):
 	## Eigenschaftshöchstwert.
 	#const int Config::traitMax = 5
 
+	## Bezeichnung der Moral für alle Spezies
+	moralityIdentifier = "Morality"
+
 	## Höchstwert der Moral.
 	moralityTraitMax = 10
 

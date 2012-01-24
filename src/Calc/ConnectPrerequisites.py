@@ -48,6 +48,7 @@ class ConnectPrerequisites(object):
 		"""
 		
 		typs = ["Merit", "Subpower"]
+		stopLoop = False
 		for typ in typs:
 			categoriesTraits = storage.categories(typ)
 			for category in categoriesTraits:
@@ -56,6 +57,7 @@ class ConnectPrerequisites(object):
 					if trait.hasPrerequisites:
 						traitPrerequisites = trait.prerequisitesText
 						#Debug.debug("Voraussetzungen von {trait}: {prerequisite}".format(trait=trait.name, prerequisite=trait.prerequisitesText))
+						stopLoop = False
 						for item in storage.traits.keys():
 							## Angabe in den Ressourcen: <typ>.<trait>[.<specialty>]
 							typResource = "{}.".format(item)
@@ -67,19 +69,45 @@ class ConnectPrerequisites(object):
 										## Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
 										traitResource = "{}.{}".format(item, subsubitem.identifier)
 										if traitResource in traitPrerequisites:
-											## Vor <typ>.<trait> darf kein anderes Wort außer "and", "or" und "(" stehen.
-											idxA = traitPrerequisites.index(traitResource)
-											strBefore = traitPrerequisites[:idxA]
-											strBefore = strBefore.rstrip()
-											strBeforeList = strBefore.split(" ")
-											if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
-												## \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
-												## Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
-												#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, trait.name))
-												subsubitem.traitChanged.connect(trait.checkPrerequisites)
-							## Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
-							if Config.powerstatIdentifier in traitPrerequisites:
-								character.powerstatChanged.connect(trait.checkPrerequisites)
+											# Überprüfen ob diese Eigenschaft tatsächlich in den Voraussetzungen enthalten ist. Bei dieser Überprüfung ist es wichtig, auf den ganuen Namen zu prüfen: "Status" != "Status: Camarilla"
+											# Diese Überprüfung wird aber nur durchgeführt, wenn die Chance besteht, daß dieser String identisch ist.
+											matchList = re.findall(r"(\w+\.[\w:\s]+[\w]+)", traitPrerequisites)
+											if traitResource in matchList:
+												## Vor <typ>.<trait> darf kein anderes Wort außer "and", "or" und "(" stehen.
+												idxA = traitPrerequisites.index(traitResource)
+												strBefore = traitPrerequisites[:idxA]
+												strBefore = strBefore.rstrip()
+												strBeforeList = strBefore.split(" ")
+												if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
+													## \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
+													## Die Eigenschaft, von welcher diese hier abhängig ist, der entsprechenden Liste hinzufügen.
+													trait.addPrerequisiteTrait(subsubitem)
+													# Ändere den prerequisitesText dahingehend, daß der Verweis dort steht.
+													trait.prerequisitesText = trait.prerequisitesText.replace(traitResource, "ptr{}".format(id(subsubitem)))
+													#Debug.debug(trait.prerequisiteTraits, trait.prerequisitesText)
+													## Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
+													#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, trait.name))
+													subsubitem.traitChanged.connect(trait.checkPrerequisites)
+													## Sind alle Voraussetzungen mit Verweisen ersetzt, kann man die Schleife hier abbrechen.
+													#Debug.debug(trait.prerequisitesText)
+													traitString = re.search(r"(?<!ptr)\w+\.\w+", trait.prerequisitesText)
+													if "Demoli" in trait.prerequisitesText:
+														Debug.debug(traitString.group())
+													if not traitString:
+														#Debug.debug("Abbruch der Schleife")
+														stopLoop = True
+										if stopLoop:
+											break
+									if stopLoop:
+										break
+							if stopLoop:
+								break
+						## Es kann auch die Supereigenschaft als Voraussetzung vorkommen ...
+						if Config.powerstatIdentifier in traitPrerequisites:
+							character.powerstatChanged.connect(trait.checkPrerequisites)
+						## ... oder die Moral
+						if Config.moralityIdentifier in traitPrerequisites:
+							character.moralityChanged.connect(trait.checkPrerequisites)
 
 
 	@staticmethod
@@ -87,44 +115,33 @@ class ConnectPrerequisites(object):
 		if type(trait) != Trait:
 			Debug.debug("Error!")
 		else:
-			if trait.hasPrerequisites:
+			if trait.hasPrerequisites and trait.prerequisiteTraits:
 				## Angabe in den Ressourcen: <typ>.<trait>[.<specialty>] >|<|== ? and|or ...
 				## Diese werden aufgeteilt in [[ <typ>, <trait>, <specialty> ] >|<|== ? and|or ... ]
 				traitPrerequisites = trait.prerequisitesText
 				#Debug.debug("{trait} hat Voraussetzungen? {truth}".format(trait=trait.name, truth=trait.hasPrerequisites))
-				for item in storage.traits.keys():
-					categories = storage.categories(item)
-					for subitem in categories:
-						#Debug.debug(categories)
-						for subsubitem in character.traits[item][subitem].values():
-							# Überprüfen, ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-							traitResource = "{}.{}".format(item, subsubitem.identifier)
-							if traitResource in traitPrerequisites:
-								# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
-								idxA = traitPrerequisites.index(traitResource)
-								strBefore = traitPrerequisites[:idxA]
-								strBefore = strBefore.rstrip()
-								strBeforeList = strBefore.split(" ")
-								if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
-									# Wenn Spezialisierungen vorausgesetzt werden.
-									if "{}.".format(traitResource) in traitPrerequisites:
-										idx = [0,0]
-										idx[0] = traitPrerequisites.index("{}.".format(traitResource))
-										## Dieser Vergleich setzt voraus, daß zwischen Spezialisierung und Vergleichsoperator mindestens ein Leerzeichen existiert.
-										skillWithSpecialty = re.search(r"\w+\.{1}\w+\.{1}(\w+)", traitPrerequisites[idx[0]:])
-										#Debug.debug(skillWithSpecialty.group())
-										specialty = skillWithSpecialty.group(1)
-										#Debug.debug(traitPrerequisites, specialty)
-										if specialty in subsubitem.specialties:
-											traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
-										else:
-											traitPrerequisites = traitPrerequisites.replace("{}.{}".format(traitResource, specialty), "0")
-										#Debug.debug(traitPrerequisites)
-									#Debug.debug("{} hat einen Wert von {}".format(subsubitem.name, subsubitem.value))
-									traitPrerequisites = traitPrerequisites.replace(traitResource, unicode(subsubitem.value))
-				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
+				for item in trait.prerequisiteTraits:
+					# Überprüfen, ob die Eigenschaft im Anforderungstext des Merits vorkommt.
+					literalReference = "ptr{}".format(id(item))
+					if literalReference in traitPrerequisites:
+						## Spezialisierungen
+						literalReferencePlusSpecial = "{}.".format(literalReference)
+						if literalReferencePlusSpecial in traitPrerequisites:
+							idx = traitPrerequisites.index(literalReferencePlusSpecial)
+							traitWithSpecial = re.search(r"\w+\.{1}(\w+)", traitPrerequisites[idx:])
+							special = traitWithSpecial.group(1)
+							#Debug.debug(traitPrerequisites, special)
+							if special in item.specialties:
+								traitPrerequisites = traitPrerequisites.replace(".{}".format(special), "")
+							else:
+								traitPrerequisites = traitPrerequisites.replace("{}.{}".format(literalReference, special), "0")
+						traitPrerequisites = traitPrerequisites.replace(literalReference, unicode(item.value))
+				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen ...
 				if Config.powerstatIdentifier in traitPrerequisites:
 					traitPrerequisites = traitPrerequisites.replace(Config.powerstatIdentifier, unicode(character.powerstat))
+				# ... oder die Moral
+				if Config.moralityIdentifier in traitPrerequisites:
+					traitPrerequisites = traitPrerequisites.replace(Config.moralityIdentifier, unicode(character.morality))
 
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
 				try:
@@ -140,5 +157,3 @@ class ConnectPrerequisites(object):
 
 
 
-
-	

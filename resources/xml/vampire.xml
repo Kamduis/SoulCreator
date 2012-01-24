@@ -120,14 +120,14 @@
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="Status: Camarilla" id="vampireStatus:Camarilla" source="Vampire Requiem for Rome">
+					<trait name="Status: Camarilla" source="Vampire Requiem for Rome">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="Status: Wing" id="vampireStatus:Wing" source="Vampire Requiem for Rome">
+					<trait name="Status: Wing" source="Vampire Requiem for Rome">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -215,7 +215,7 @@
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
-						<prerequisites>Merit.vampireStatus:Camarilla > 2 or Merit.vampireStatus:Wing > 2</prerequisites>
+						<prerequisites>Merit.Status: Camarilla > 2 or Merit.Status: Wing > 2</prerequisites>
 					</trait>
 				</Category>
 				<Category name="Extraordinary">

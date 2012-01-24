@@ -72,6 +72,9 @@ class Trait(QObject):
 		self.__prerequisitesText = ""
 		self.__available = True
 
+		# In dieser Liste werden Verweise auf alle Eigenschaften gespeichert, die in den Voraussetzungen erwähnung finden.
+		self.__prerequisiteTraits = []
+
 
 	@property
 	def identifier(self):
@@ -205,6 +208,27 @@ class Trait(QObject):
 			#self.prerequisitesTextChanged.emit(text)
 
 	prerequisitesText = property(__getPrerequisitesText, __setPrerequisitesText)
+
+
+	@property
+	def prerequisiteTraits(self):
+		"""
+		Eine Liste mit Verweisen auf alle Eigenschaften, die in den Voraussetzungen dieser Eigenschaft vorkommen.
+		"""
+		
+		return self.__prerequisiteTraits
+
+	@prerequisiteTraits.setter
+	def prerequisiteTraits(self, prerequisites):
+		if self.__prerequisiteTraits != prerequisites:
+			self.__prerequisiteTraits = prerequisites
+
+	def addPrerequisiteTrait(self, prerequisite):
+		"""
+		Fügt den Verweis auf eine Eigenschaft hinzu.
+		"""
+
+		self.__prerequisiteTraits.append(prerequisite)
 
 
 #Trait::Trait( QString txt, int val, cv_Species::Species spe, cv_AbstractTrait::Type ty, cv_AbstractTrait::Category ca, QObject* parent ) : QObject( parent ), cv_Trait( txt, val, spe, ty, ca ) {
