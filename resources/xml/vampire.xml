@@ -342,37 +342,288 @@
 			</Power>
 			<Subpower name="Rituals">
 				<Category name="Cruac Rituals">
-					<trait name="Balancing the Four Humors" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Balancing the Four Humors" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
 					</trait>
-					<trait name="Confidence in Adversity" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Confidence in Adversity" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
 					</trait>
-					<trait name="Drops of Destiny" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Drops of Destiny" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
 					</trait>
-					<trait name="Fires of Inspiration" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Fires of Inspiration" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
 					</trait>
-					<trait name="Pangs of Proserpina" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Pangs of Proserpina" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
 					</trait>
-					<trait name="Pythian Renewal" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Pythian Renewal" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
 					</trait>
-					<trait name="Rigor Mortis" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Rigor Mortis" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
 					</trait>
-					<trait name="Taste of Knowledge" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Taste of Knowledge" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
 					</trait>
-					<trait name="Visage of the Crone" level="1">
-						<prerequisites>Power.Cruac > 0</prerequisites>
+					<trait name="Visage of the Crone" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="1">Cruac</power>
+					</trait>
+					<trait name="Rex Sanguis Sacrorum" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="Cheval" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="Imperious Call" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="Maiden Skin" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="Path of Thorns" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="Soul s Work" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="Succulent Buboes" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="The Heliolater's Warning" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="The Hydra's Vitae" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="Wisdom of the Soul" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Cruac</power>
+					</trait>
+					<trait name="Beloved Deodand" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="3">Cruac</power>
+					</trait>
+					<trait name="Deflection of Wooden Doom" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="3">Cruac</power>
+					</trait>
+					<trait name="Rain" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="3">Cruac</power>
+					</trait>
+					<trait name="Servant from the Hidden Realms" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="3">Cruac</power>
+					</trait>
+					<trait name="Song of the Blood" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="3">Cruac</power>
+					</trait>
+					<trait name="Taste of Destiny" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="3">Cruac</power>
+					</trait>
+					<trait name="Ti'amat's Offspring" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="3">Cruac</power>
+					</trait>
+					<trait name="Touch of the Morrigan" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="3">Cruac</power>
+					</trait>
+					<trait name="Bleeding the Tarantula" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="4">Cruac</power>
+					</trait>
+					<trait name="Blood Price" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="4">Cruac</power>
+					</trait>
+					<trait name="Eye of the Norn" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="4">Cruac</power>
+					</trait>
+					<trait name="Fount of Wisdom" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="4">Cruac</power>
+					</trait>
+					<trait name="Mask of Blood" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="4">Cruac</power>
+					</trait>
+					<trait name="Sacrifice of Odin" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="4">Cruac</power>
+					</trait>
+					<trait name="Willful Vitae" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="4">Cruac</power>
+					</trait>
+					<trait name="A Child from the Stones" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="5">Cruac</power>
+					</trait>
+					<trait name="As One" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="5">Cruac</power>
+					</trait>
+					<trait name="Blood Blight" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="5">Cruac</power>
+					</trait>
+					<trait name="Crone's Renewal" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="5">Cruac</power>
+					</trait>
+					<trait name="Curse of Ahasverus" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="5">Cruac</power>
+					</trait>
+					<trait name="Feeding the Crone" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="5">Cruac</power>
+					</trait>
+					<trait name="Roving Hut" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="5">Cruac</power>
+					</trait>
+				</Category>
+				<Category name="Veneficia Rituals">
+					<trait name="Apollonian Sight" level="1" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="1">Veneficia</power>
+					</trait>
+					<trait name="Pangs of Proserpina" level="1" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="1">Veneficia</power>
+					</trait>
+					<trait name="The Gorgon's Touch" level="1" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="1">Veneficia</power>
+					</trait>
+					<trait name="The Eyes of Minerva" level="2" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="2">Veneficia</power>
+					</trait>
+					<trait name="The Hydra's Vitae" level="2" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="2">Veneficia</power>
+					</trait>
+					<trait name="Fortuna's Blessing" level="3" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="3">Veneficia</power>
+					</trait>
+					<trait name="Jupiter's Wrath" level="3" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="3">Veneficia</power>
+					</trait>
+					<trait name="The Blessing of Antaeus" level="3" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="3">Veneficia</power>
+					</trait>
+					<trait name="The Curse of Echidna" level="3" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="3">Veneficia</power>
+					</trait>
+					<trait name="Blinding Cupid" level="4" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="4">Veneficia</power>
+					</trait>
+					<trait name="Saturn's Tithe" level="5" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="5">Veneficia</power>
+					</trait>
+					<trait name="The Arrow of Tartarus" level="5" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="5">Veneficia</power>
+					</trait>
+					<trait name="Typhon's Maw" level="5" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
+						<power value="5">Veneficia</power>
 					</trait>
 				</Category>
 				<Category name="Theban Sorcery Rituals">
-					<trait name="Test1" level="1">
-						<prerequisites>Power.Theban Sorcery > 0</prerequisites>
+					<trait name="Blood Scourge" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="1">Theban Sorcery</power>
+					</trait>
+					<trait name="Celibacy" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="1">Theban Sorcery</power>
+					</trait>
+					<trait name="Crown of Thorns" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="1">Theban Sorcery</power>
+					</trait>
+					<trait name="Hauberk of Blood" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="1">Theban Sorcery</power>
+					</trait>
+					<trait name="Messenger's Mark" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="1">Theban Sorcery</power>
+					</trait>
+					<trait name="Sinner Song" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="1">Theban Sorcery</power>
+					</trait>
+					<trait name="Theban Inscription" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="1">Theban Sorcery</power>
+					</trait>
+					<trait name="Vitae Reliquary" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="1">Theban Sorcery</power>
+					</trait>
+					<trait name="Bird of Sin" level="2" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="2">Theban Sorcery</power>
+					</trait>
+					<trait name="Curse of Babel" level="2" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="2">Theban Sorcery</power>
+					</trait>
+					<trait name="Damned Radiance" level="2" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="2">Theban Sorcery</power>
+					</trait>
+					<trait name="Liar's Plague" level="2" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="2">Theban Sorcery</power>
+					</trait>
+					<trait name="Prison of Denial" level="2" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="2">Theban Sorcery</power>
+					</trait>
+					<trait name="Resistance of Discipline" level="2" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="2">Theban Sorcery</power>
+					</trait>
+					<trait name="Sanctity" level="2" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="2">Theban Sorcery</power>
+					</trait>
+					<trait name="Wings of the Seraph" level="2" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="2">Theban Sorcery</power>
+					</trait>
+					<trait name="Blandishment of Sin" level="3" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="3">Theban Sorcery</power>
+					</trait>
+					<trait name="Blood Fire" level="3" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="3">Theban Sorcery</power>
+					</trait>
+					<trait name="Lash Beyond Death" level="3" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="3">Theban Sorcery</power>
+					</trait>
+					<trait name="Legionnaire's Blessing" level="3" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="3">Theban Sorcery</power>
+					</trait>
+					<trait name="Malediction of Despair" level="3" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="3">Theban Sorcery</power>
+					</trait>
+					<trait name="Pharaoh's Paces" level="3" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="3">Theban Sorcery</power>
+					</trait>
+					<trait name="Scrivener's Eye" level="3" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="3">Theban Sorcery</power>
+					</trait>
+					<trait name="Vision of the Will" level="3" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="3">Theban Sorcery</power>
+					</trait>
+					<trait name="Gift of Lazarus" level="4" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="4">Theban Sorcery</power>
+					</trait>
+					<trait name="Call of Amoniel" level="4" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="4">Theban Sorcery</power>
+					</trait>
+					<trait name="Display of the Beast" level="4" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="4">Theban Sorcery</power>
+					</trait>
+					<trait name="Mark of the Damned" level="4" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="4">Theban Sorcery</power>
+					</trait>
+					<trait name="Sacred Haven" level="4" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="4">Theban Sorcery</power>
+					</trait>
+					<trait name="Song of the Prey" level="4" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="4">Theban Sorcery</power>
+					</trait>
+					<trait name="Spear of Faith" level="4" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="4">Theban Sorcery</power>
+					</trait>
+					<trait name="Stigmata" level="4" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="4">Theban Sorcery</power>
+					</trait>
+					<trait name="Transubstantiation" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="5">Theban Sorcery</power>
+					</trait>
+					<trait name="Wrathful Judgment" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="5">Theban Sorcery</power>
+					</trait>
+					<trait name="Damned's Day" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="5">Theban Sorcery</power>
+					</trait>
+					<trait name="Fires of Vengeance" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="5">Theban Sorcery</power>
+					</trait>
+					<trait name="Imprecation of Sin" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="5">Theban Sorcery</power>
+					</trait>
+					<trait name="Night of Hell" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="5">Theban Sorcery</power>
+					</trait>
+					<trait name="Rain of Blood" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
+						<power value="5">Theban Sorcery</power>
 					</trait>
 				</Category>
 			</Subpower>

@@ -206,6 +206,8 @@ class StorageCharacter(QObject):
 
 						# Wenn sich eine Eigenschaft ändert, gilt der Charakter als modifiziert.
 						trait.traitChanged.connect(self.setModified)
+				#if typ == "Subpower":
+					#Debug.debug(self.__traits[typ][item])
 
 
 

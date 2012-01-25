@@ -428,6 +428,21 @@ class DrawSheet(QObject):
 		if GlobalState.isDebug:
 			self.__drawGrid()
 
+		posX = 700
+		posY = 0
+		lengthX = self.__pageWidth - posX
+		lengthY = 1000
+		if ( self.__character.species == "Changeling" ):
+			pass
+		elif ( self.__character.species == "Mage" ):
+			pass
+		elif ( self.__character.species == "Vampire" ):
+			posX = 750
+			lengthX = self.__pageWidth - posX
+		elif ( self.__character.species == "Werewolf" ):
+			pass
+		self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		posY_zeile3 = 2500
 		if ( self.__character.species == "Changeling" ):
 			posY_zeile3 = 2200
@@ -863,7 +878,7 @@ class DrawSheet(QObject):
 		mainFont.setWeight(QFont.Normal)
 		self.__painter.setFont(mainFont)
 
-		self.__drawHeading(offsetH, offsetV, width, self.__storage.powerName(self.__character.species, "power"))
+		self.__drawHeading(offsetH, offsetV, width, self.__storage.powerName(self.__character.species))
 
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
@@ -907,6 +922,72 @@ class DrawSheet(QObject):
 		if GlobalState.isDebug:
 			if not height:
 				height = self.__fontHeadingHeight + numOfTraits * textHeight
+			self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
+	def _drawSubPowers(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Bannt die übernatürlichen Unterkräfte auf den Charakterbogen.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__painter.setFont(self.__fontMain)
+
+		self.__drawHeading(offsetH, offsetV, width, self.__storage.subPowerName(self.__character.species))
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+		numOfTraits = 0
+		for item in self.__character.traits["Subpower"].values():
+			for subitem in item.values():
+				if subitem.value > 0:
+					numOfTraits += 1
+
+		widths = [
+			300,
+			50,
+			50,
+			500,
+		]
+		widths.insert(0, width - sum(widths) - len(widths) * self.__textDotSep)
+
+		i = 0
+		for item in self.__character.traits["Subpower"]:
+			traits = self.__character.traits["Subpower"][item].items()
+			traits.sort()
+			#Debug.debug(traits)
+			for subitem in traits:
+				if subitem[1].isAvailable and subitem[1].value > 0 and subitem[1].species == self.__character.species:
+					posY = offsetV + self.__fontHeadingHeight + i * fontHeight
+					self.__painter.drawText(offsetH, posY, widths[0], fontHeight, Qt.AlignLeft, subitem[1].name)
+					j = 1
+					if self.__storage.traits["Subpower"][item][subitem[0]]["powers"]:
+						j = 0
+						for power in self.__storage.traits["Subpower"][item][subitem[0]]["powers"].items():
+							#Debug.debug(subitem[0], power)
+							self.__drawTrait(offsetH + self.__textDotSep + widths[0], posY + j * fontHeight, width=widths[1], name=power[0], value=power[1])
+							j += 1
+					self.__painter.drawText(offsetH + 2 * self.__textDotSep + sum(widths[:2]), posY, widths[2], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["costWill"])
+					self.__painter.drawText(offsetH + 3 * self.__textDotSep + sum(widths[:3]), posY, widths[3], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["costFuel"])
+					self.__painter.drawText(offsetH + 4 * self.__textDotSep + sum(widths[:4]), posY, widths[4], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["roll"])
+					i += j
+
+		### Den freien Platz füllen wir mit leeren Zeilen, die der Spieler dann per Stift ausfüllen kann. Natürlich nur, wenn die Kräfte nicht zweispaltig aufgeführt sind.
+		#if height:
+			#usedSpace = self.__fontHeadingHeight + numOfTraits * fontHeight
+			#while usedSpace < height - (.75 * fontHeight):
+				#self.__drawTrait(offsetH, offsetV + usedSpace, width=width, name="", value=0)
+				#usedSpace += fontHeight
+
+		if GlobalState.isDebug:
+			if not height:
+				height = self.__fontHeadingHeight + numOfTraits * fontHeight
 			self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()

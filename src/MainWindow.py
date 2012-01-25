@@ -232,7 +232,7 @@ class MainWindow(QMainWindow):
 		### Wird eine neue Seite angewählt, muß das Info-Widget den Beschreibungstext speichern.
 		#self.pageChanged.connect(self.info.saveDescription)
 
-		# Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
+		# Die Spezialisierungen einer Fertigkeit sollen angezeigt werden.
 		skills.specialtiesActivated.connect(specialties.showSpecialties)
 
 		# Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.

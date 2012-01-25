@@ -443,20 +443,12 @@ class StorageTemplate(QObject):
 			self.__traits[typ].setdefault(category,{})
 
 		if identifier not in self.__traits[typ][category]:
-			self.__traits[typ][category].setdefault(identifier, data)
+			self.__traits[typ][category][identifier] = data
 		elif (typ != "Subpower"):
 			specialties = self.__traits[typ][category][identifier]["specialty"]
 			specialties.extend(data["specialty"])
 			self.__traits[typ][category][identifier] = data
 			self.__traits[typ][category][identifier]["specialty"] = specialties
-
-		## Kontrolle zu Debugzwecken:
-		#keys = self.__traits.keys()
-		#for key in self.__traits:
-			#Debug.debug(key)
-			#for keyA in self.__traits[key]:
-				#Debug.debug(keyA)
-				#Debug.debug(self.__traits[key][keyA])
 
 
 	def traitNames( self, typ, category, era=None, age=None ):
@@ -474,14 +466,24 @@ class StorageTemplate(QObject):
 		return result
 
 
-	def powerName(self, species, power):
-		return self.__powerNames[species][power]
+	def powerName(self, species):
+		return self.__powerNames[species]["Power"]
 
-	def setPowerName(self, species, power, name):
+	def setPowerName(self, species, name):
 		if species not in self.__powerNames:
 			self.__powerNames.setdefault(species,{})
 
-			self.__powerNames[species][power] = name
+		self.__powerNames[species]["Power"] = name
+
+
+	def subPowerName(self, species):
+		return self.__powerNames[species]["Subpower"]
+
+	def setSubPowerName(self, species, name):
+		if species not in self.__powerNames:
+			self.__powerNames.setdefault(species,{})
+
+		self.__powerNames[species]["Subpower"] = name
 
 
 	#@property

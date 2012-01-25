@@ -193,7 +193,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		if root is not None:
 			if root.tag == "Power":
-				self.__storage.setPowerName(species, "power", self.__getElementAttribute(root, "name"))
+				self.__storage.setPowerName(species, self.__getElementAttribute(root, "name"))
 			for category in root.getiterator("Category"):
 				categoryName = category.attrib["name"]
 				traits = self.__readTraitData(category, species)
@@ -211,26 +211,35 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		if root is not None:
-			for category in root.getiterator("Category"):
-				categoryName = category.attrib["name"]
+			self.__storage.setSubPowerName(species, self.__getElementAttribute(root, "name"))
+			for categoryElement in root.getiterator("Category"):
+				categoryName = categoryElement.attrib["name"]
 
-				listOfTraits = []
-				for traitElement in root.getiterator("trait"):
+				for traitElement in categoryElement.getiterator("trait"):
 					listOfPowers = {}
 					for traitSubElement in traitElement.getiterator("power"):
 						listOfPowers.setdefault(traitSubElement.text, int(traitSubElement.attrib["value"]))
-					prerequisitePowers = ["Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()]
+					listOfPrerequisites = []
+					for traitSubElement in traitElement.getiterator("prerequisites"):
+						listOfPrerequisites.append(traitSubElement.text)
+					if not listOfPrerequisites:
+						listOfPrerequisites = ["Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()]
 					#Debug.debug(prerequisitePowers)
 					subPowerData = {
 						"name": traitElement.attrib["name"],
 						"level": self.__getElementAttribute(traitElement, "level"),
 						"species": species,
+						"costFuel": self.__getElementAttribute(traitElement, "costFuel"),
+						"costWill": self.__getElementAttribute(traitElement, "costWill"),
+						"roll": self.__getElementAttribute(traitElement, "roll"),
 						"powers": listOfPowers,
-						"prerequisites": " and ".join(prerequisitePowers),
+						"prerequisites": " and ".join(listOfPrerequisites),
 					}
 					identifier = self.__getElementAttribute(traitElement, "id")
 					if not identifier:
 						identifier = subPowerData["name"]
+					#if species == "Werewolf":
+						#Debug.debug(root.tag, categoryName, identifier, subPowerData)
 					self.__storage.addTrait( root.tag, categoryName, identifier, subPowerData )
 
 

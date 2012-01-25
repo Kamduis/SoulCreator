@@ -149,19 +149,19 @@
 			</Power>
 			<Subpower name="Gifts">
 				<Category name="Father Wolf">
-					<trait name="Wolf-Blood's Lure" level="1">
+					<trait name="Wolf-Blood's Lure" level="1" costFuel="0" costWill="0" roll="">
 						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
 					</trait>
-					<trait name="Father Wolf's Speed" level="2">
+					<trait name="Father Wolf's Speed" level="2" costFuel="1" costWill="0" roll="">
 						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
 					</trait>
-					<trait name="Primal Howl" level="3">
+					<trait name="Primal Howl" level="3" costFuel="1" costWill="0" roll="Presence+Expression+Purity">
 						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
 					</trait>
-					<trait name="Savage Rending" level="4">
+					<trait name="Savage Rending" level="4" costFuel="1" costWill="0" roll="">
 						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
 					</trait>
-					<trait name="Spirit Pack" level="5">
+					<trait name="Spirit Pack" level="5" costFuel="1" costWill="0" roll="Manipulation+Animal Ken+Glory">
 						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
 					</trait>
 					<cheap>Rahu</cheap>
@@ -177,19 +177,19 @@
 					<cheap>Ghost Wolves</cheap>
 				</Category>
 				<Category name="Mother Luna">
-					<trait name="Partial Change" level="1">
+					<trait name="Partial Change" level="1" costFuel="(1)" costWill="0" roll="Stamina+Survival+Primal Urge">
 						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
 					</trait>
-					<trait name="Anybeast" level="2">
+					<trait name="Anybeast" level="2" costFuel="1" costWill="0" roll="">
 						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
 					</trait>
-					<trait name="Silver Jaws" level="3">
+					<trait name="Silver Jaws" level="3" costFuel="1" costWill="0" roll="">
 						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
 					</trait>
-					<trait name="Skin-Stealing" level="4">
+					<trait name="Skin-Stealing" level="4" costFuel="1/2" costWill="0" roll="">
 						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
 					</trait>
-					<trait name="Primal Form" level="5">
+					<trait name="Primal Form" level="5" costFuel="1" costWill="0" roll="Stamina+Survival+Primal Urge">
 						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
 					</trait>
 					<cheap>Rahu</cheap>
@@ -205,19 +205,19 @@
 					<cheap>Ghost Wolves</cheap>
 				</Category>
 				<Category name="Pack">
-					<trait name="Web of Scent" level="1">
+					<trait name="Web of Scent" level="1" costFuel="0" costWill="0" roll="">
 						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
 					</trait>
-					<trait name="Warning Howl" level="2">
+					<trait name="Warning Howl" level="2" costFuel="1" costWill="0" roll="Wits+Expression+Honor">
 						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
 					</trait>
-					<trait name="Brother's Strength" level="3">
+					<trait name="Brother's Strength" level="3" costFuel="0" costWill="1" roll="Composure+Empathy+Glory">
 						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
 					</trait>
-					<trait name="Synergy" level="4">
+					<trait name="Synergy" level="4" costFuel="2" costWill="0" roll="Manipulation+Larceny+Cunning">
 						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
 					</trait>
-					<trait name="Unity" level="5">
+					<trait name="Unity" level="5" costFuel="3" costWill="1" roll="">
 						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
 					</trait>
 					<cheap>Rahu</cheap>
@@ -233,38 +233,38 @@
 					<cheap>Ghost Wolves</cheap>
 				</Category>
 				<Category name="Full Moon">
-					<trait name="1" level="1">
+					<trait name="1" level="1" costFuel="1" costWill="0" roll="">
 						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
 					</trait>
-					<trait name="2" level="2">
+					<trait name="2" level="2" costFuel="0" costWill="1" roll="Wits+Brawl+Wisdom">
 						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
 					</trait>
-					<trait name="3" level="3">
+					<trait name="3" level="3" costFuel="1" costWill="0" roll="">
 						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
 					</trait>
-					<trait name="4" level="4">
+					<trait name="4" level="4" costFuel="1" costWill="0" roll="Stamina+Survival+Honor">
 						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
 					</trait>
-					<trait name="5" level="5">
+					<trait name="5" level="5" costFuel="1+" costWill="0" roll="Dexterity+Empathy+Cunning">
 						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
 					</trait>
 					<cheap>Rahu</cheap>
 					<only>Rahu</only>
 				</Category>
 				<Category name="Gibbous Moon">
-					<trait name="1" level="1">
+					<trait name="1" level="1" costFuel="0" costWill="0" roll="Wits+Empathy+Wisdom">
 						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
 					</trait>
-					<trait name="2" level="2">
+					<trait name="2" level="2" costFuel="0" costWill="1" roll="Stamina+Survival+Honor">
 						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
 					</trait>
-					<trait name="3" level="3">
+					<trait name="3" level="3" costFuel="0" costWill="1" roll="Manipulation+Expression+Glory">
 						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
 					</trait>
-					<trait name="4" level="4">
+					<trait name="4" level="4" costFuel="1" costWill="0" roll="Intelligence+Socialize+Purity">
 						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
 					</trait>
-					<trait name="5" level="5">
+					<trait name="5" level="5" costFuel="0" costWill="1" roll="Presence+Expression+Glory">
 						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
 					</trait>
 					<cheap>Rahu</cheap>
@@ -431,26 +431,145 @@
 					</trait>
 				</Category>-->
 				<Category name="Rites">
-					<trait name="Rite of Dedication" level="1">
-						<prerequisites>Power.Rites > 0</prerequisites>
+					<trait name="Banish Human" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
 					</trait>
-					<trait name="Rite of the Spirits Promise" level="1">
-						<prerequisites>Power.Rites > 0</prerequisites>
+					<trait name="Funeral Rite" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
 					</trait>
-					<trait name="Rousing the Fetish" level="2">
-						<prerequisites>Power.Rites > 1</prerequisites>
+					<trait name="Howl of Ownership" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
 					</trait>
-					<trait name="Rite of Healing" level="3">
-						<prerequisites>Power.Rites > 2</prerequisites>
+					<trait name="Rite of Dedication" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
 					</trait>
-					<trait name="Rite of Dormancy" level="4">
-						<prerequisites>Power.Rites > 3</prerequisites>
+					<trait name="Rite of Renunciation" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
 					</trait>
-					<trait name="Rite of Overpower" level="5">
-						<prerequisites>Power.Rites > 4</prerequisites>
+					<trait name="Ritual Mind" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
 					</trait>
-					<cheap>Rahu</cheap>
-					<only>Rahu</only>
+					<trait name="Shared Scent" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
+					</trait>
+					<trait name="Rite of the Spirit Brand" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
+					</trait>
+					<trait name="Rite of the Spirit's Promise" level="1" costFuel="0" costWill="0" roll="Harmony">
+						<power value="1">Rites</power>
+					</trait>
+					<trait name="Banish Spirit" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Bar to Birth" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Blessing of the Spirit Hunt" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Call Gaffling" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Call Human" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Cleansed Blood" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Fortify the Border Marches" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Fresh Scent" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Hallow Touchstone" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Rite of Contrition" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Rite of the Dizzing Wind" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Rite of Dormancy" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Rouse the Fetish" level="2" costFuel="0" costWill="0" roll="Harmony">
+						<power value="2">Rites</power>
+					</trait>
+					<trait name="Bestowing the Shadowblind Cloak" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Bind Human" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Bind Spirit" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Call Jaggling" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Rite of the Boundary Stone" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Rite of Healing" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Rite of Initiation" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Rite of the Bone Club" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Rite of the Moon's Love" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Sacred Hunt" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Wake the Spirit" level="3" costFuel="0" costWill="0" roll="Harmony">
+						<power value="3">Rites</power>
+					</trait>
+					<trait name="Fetish Rite" level="4" costFuel="0" costWill="0" roll="Harmony">
+						<power value="4">Rites</power>
+					</trait>
+					<trait name="Mark of the Death Wolf" level="4" costFuel="0" costWill="0" roll="Harmony">
+						<power value="4">Rites</power>
+					</trait>
+					<trait name="Rite of the Chosen Ground" level="4" costFuel="0" costWill="0" roll="Harmony">
+						<power value="4">Rites</power>
+					</trait>
+					<trait name="Rite of Desert Rain" level="4" costFuel="0" costWill="0" roll="Harmony">
+						<power value="4">Rites</power>
+					</trait>
+					<trait name="Shadow Play" level="4" costFuel="0" costWill="0" roll="Harmony">
+						<power value="4">Rites</power>
+					</trait>
+					<trait name="Slaying the Truth" level="4" costFuel="0" costWill="0" roll="Harmony">
+						<power value="4">Rites</power>
+					</trait>
+					<trait name="Questioning Rite" level="4" costFuel="0" costWill="0" roll="Harmony">
+						<power value="4">Rites</power>
+					</trait>
+					<trait name="Besieging the Shadow" level="5" costFuel="0" costWill="0" roll="Harmony">
+						<power value="5">Rites</power>
+					</trait>
+					<trait name="Drawing down the Shadow" level="5" costFuel="0" costWill="0" roll="Harmony">
+						<power value="5">Rites</power>
+					</trait>
+					<trait name="Rending the Gauntlet" level="5" costFuel="0" costWill="0" roll="Harmony">
+						<power value="5">Rites</power>
+					</trait>
+					<trait name="Return to the Borderland" level="5" costFuel="0" costWill="0" roll="Harmony">
+						<power value="5">Rites</power>
+					</trait>
+					<trait name="Risen the Wardens, Closed the Gates" level="5" costFuel="0" costWill="0" roll="Harmony">
+						<power value="5">Rites</power>
+					</trait>
+					<trait name="Rite of the Border Citadel" level="5" costFuel="0" costWill="0" roll="Harmony">
+						<power value="5">Rites</power>
+					</trait>
+					<cheap>Ithaeur</cheap>
 				</Category>
 			</Subpower>
 			<Flaw>
