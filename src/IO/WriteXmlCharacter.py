@@ -148,7 +148,7 @@ class WriteXmlCharacter(QObject):
 							value=unicode(subsubitem.value),
 						)
 						# Zusatztext
-						if subsubitem.custom:
+						if item != "Subpower" and subsubitem.custom:
 							trait.attrib["customText"] =  unicode( subsubitem.customText )
 						# Spezialisierungen
 						if subsubitem.specialties:

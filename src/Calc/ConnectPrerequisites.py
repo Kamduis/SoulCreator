@@ -25,7 +25,7 @@ from __future__ import division, print_function
 import re
 
 from src.Config import Config
-from src.Datatypes.Trait import Trait
+from src.Datatypes.BasicTrait import BasicTrait
 from src.Debug import Debug
 
 
@@ -47,7 +47,8 @@ class ConnectPrerequisites(object):
 		Merits und Subpowers müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
 		"""
 		
-		typs = ["Merit", "Subpower"]
+		typs = [ "Merit", "Subpower", ]
+		#typs = [ "Merit" ]
 		stopLoop = False
 		for typ in typs:
 			categoriesTraits = storage.categories(typ)
@@ -109,7 +110,7 @@ class ConnectPrerequisites(object):
 
 	@staticmethod
 	def checkPrerequisites(trait, storage, character):
-		if type(trait) != Trait:
+		if not isinstance(trait, BasicTrait):
 			Debug.debug("Error!")
 		else:
 			if trait.hasPrerequisites and trait.prerequisiteTraits:

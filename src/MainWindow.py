@@ -43,7 +43,8 @@ from Calc.Creation import Creation
 from Calc.ConnectPrerequisites import ConnectPrerequisites
 from Widgets.InfoWidget import InfoWidget
 from Widgets.TraitWidget import AttributeWidget, SkillWidget
-from Widgets.TraitCategoryWidget import PowerWidget, SubPowerWidget
+from Widgets.PowerWidget import PowerWidget
+from Widgets.SubPowerWidget import SubPowerWidget
 from Widgets.Specialties import Specialties
 from Widgets.MeritWidget import MeritWidget
 from Widgets.FlawWidget import FlawWidget
@@ -230,16 +231,6 @@ class MainWindow(QMainWindow):
 
 		### Wird eine neue Seite angewählt, muß das Info-Widget den Beschreibungstext speichern.
 		#self.pageChanged.connect(self.info.saveDescription)
-
-		#/**
-		#* \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite händisch festzulegen.
-		#**/
-		#ui.frame_merits.setMinimumWidth( Config.traitListVertivalWidth );
-		#ui.frame_merits.setMaximumWidth( self.ui.frame_merits.minimumWidth() );
-		#ui.frame_powers.setMinimumWidth( Config.traitListVertivalWidth );
-		#ui.frame_powers.setMaximumWidth( self.ui.frame_powers.minimumWidth() );
-		#ui.frame_flaws.setMinimumWidth( Config.traitListVertivalWidth );
-		#ui.frame_flaws.setMaximumWidth( self.ui.frame_powers.minimumWidth() );
 
 		# Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
 		skills.specialtiesActivated.connect(specialties.showSpecialties)

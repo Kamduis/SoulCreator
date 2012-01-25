@@ -23,12 +23,14 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 import ast
+import copy
 
 from PySide.QtCore import QObject, QDate, Signal, Slot
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
-from src.Datatypes.Trait import Trait
+from src.Datatypes.StandardTrait import StandardTrait
+from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
 from src.Calc.ConnectPrerequisites import ConnectPrerequisites
 from src.Error import ErrListLength
@@ -111,6 +113,10 @@ class StorageCharacter(QObject):
 
 
 	def __init__(self, template, parent=None):
+		"""
+		\todo Eigentlich benötigt Subpower keinen eigenen Datentyp. Da die ganzen Zusatzinformationen ja nur im Template zu stehen haben und nicht auch für den Charakter bekannt sein müssen. Der Wert "level" ist aber interessant und gilt für andere Klassen nicht.
+		"""
+		
 		QObject.__init__(self, parent)
 
 		self.__storage = template
@@ -171,18 +177,24 @@ class StorageCharacter(QObject):
 					loop = 1
 					custom = False
 					customText = None
-					if subitem[1]["custom"]:
+					if typ != "Subpower" and subitem[1]["custom"]:
 						loop = Config.traitMultipleMax
 						custom = True
 
 					for i in xrange(loop):
-						trait = Trait(self, subitem[1]["name"], val)
+						trait = None
+						if typ == "Subpower":
+							trait = SubPowerTrait(self, subitem[1]["name"], val)
+							trait.level = subitem[1]["level"]
+							trait.powers = subitem[1]["powers"]
+						else:
+							trait = StandardTrait(self, subitem[1]["name"], val)
+							trait.age = subitem[1]["age"]
+							trait.era = subitem[1]["era"]
+							trait.custom = custom
+							trait.customText = customText
 						trait.identifier = subitem[0]
-						trait.age = subitem[1]["age"]
-						trait.era = subitem[1]["era"]
 						trait.species = subitem[1]["species"]
-						trait.custom = custom
-						trait.customText = customText
 						if "prerequisites" in subitem[1] and subitem[1]["prerequisites"]:
 							trait.hasPrerequisites = True
 							trait.prerequisitesText = subitem[1]["prerequisites"]
@@ -514,7 +526,8 @@ class StorageCharacter(QObject):
 			#self.realIdentityChanged.emit( identity )
 
 
-	def __getTraits(self):
+	@property
+	def traits(self):
 		return self.__traits
 
 	#def __setTraits(self, traits):
@@ -522,7 +535,10 @@ class StorageCharacter(QObject):
 			#self.__traits = traits
 			#self.traitsChanged.emit(traits)
 
-	traits = property(__getTraits)
+
+	@property
+	def subPowers(self):
+		return self.__subPowers
 
 
 	def __calcAge(self):

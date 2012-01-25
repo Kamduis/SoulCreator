@@ -29,7 +29,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 
 #from src.Config import Config
 #from src import Error
-#from src.Tools import ListTools
+from src.Datatypes.StandardTrait import StandardTrait
 from src.Widgets.Components.TraitLine import CharaTrait
 from src.Widgets.Components.CheckTrait import CheckTrait
 from src.Debug import Debug
@@ -37,7 +37,7 @@ from src.Debug import Debug
 
 
 
-class CategoryTraitWidget(QWidget):
+class CategoryWidget(QWidget):
 	"""
 	@brief Dieses Widget kann in Kategorien aufgeteilte Widgets aufnehmen. Es werden nur jene Kategorien angezeigt, welche auch ein anzuzeigendes Widget enthalten.
 	"""
@@ -90,7 +90,7 @@ class CategoryTraitWidget(QWidget):
 				else:
 					traitWidget = CharaTrait( trait[1], self )
 					traitWidget.setSpecialtiesHidden(True)
-				if not trait[1].custom:
+				if type(trait) != StandardTrait or not trait[1].custom:
 					traitWidget.setDescriptionHidden(True)
 
 				self._toolBoxPageList[item].append(trait[1])
@@ -128,34 +128,6 @@ class CategoryTraitWidget(QWidget):
 				if indexOfWidget != -1:
 					self._toolBox.removeItem(indexOfWidget)
 				self._toolBoxPageList[item][0].setVisible(False)
-
-
-
-
-class PowerWidget(CategoryTraitWidget):
-	"""
-	@brief Das Widget, in welchem sämtliche Übernatürlichen Kräfte angeordnet sind.
-
-	Hier tauchen die nur die übergeordneten Powers auf, in dem anderen Widget dann die speziellen Kräfte (Vampire-Rituale, Werwolf-Gaben + Rituale, Mage-Rotes, Changeling-???)
-	"""
-
-
-	def __init__(self, template, character, parent=None):
-		CategoryTraitWidget.__init__(self, template, character, typ="Power", isCheckable=False, parent=parent)
-
-
-
-
-class SubPowerWidget(CategoryTraitWidget):
-	"""
-	@brief In diesem Widget werden die "Zaubersprüche" (Wechselbalg-GoblinContracts, Magier-Rotes, Vampir-Rituale, Werwolf-Gaben etc.) untergebracht. Diese können abgehakt werden und haben als Voraussetzung in der Regel eine bestimmte Power (\ref PowerWidget), um überhaupt gewählt werden zu können.
-
-	\todo Das obligatorisch transparent Setzen des Hintergrundes sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
-	"""
-
-
-	def __init__(self, template, character, parent=None):
-		CategoryTraitWidget.__init__(self, template, character, typ="Subpower", isCheckable=True, parent=parent)
 
 
 

@@ -148,7 +148,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		self.readTraits(tree.find("Template/Traits/Merit"), species)
 		self.readTraits(tree.find("Template/Traits/Flaw"), species)
 		self.readTraits(tree.find("Template/Traits/Power"), species)
-		self.readTraits(tree.find("Template/Traits/Subpower"), species)
+		self.readSubPowers(tree.find("Template/Traits/Subpower"), species)
 		self.readCreationPoints(tree.find("Template/Creation"), species)
 		self.readGroups(tree.find("Template/Group/Breed"), species)
 		self.readGroups(tree.find("Template/Group/Faction"), species)
@@ -201,6 +201,37 @@ class ReadXmlTemplate(QObject, ReadXml):
 					traitId = trait["id"]
 					del trait["id"]
 					self.__storage.addTrait( root.tag, categoryName, traitId, trait )
+
+
+	def readSubPowers( self, root, species ):
+		"""
+		Lese die Unterkräfte aus den Template-Dateien.
+
+		Diese werden zwar auch im trait-Dictionary gespeichert, haben aber andere Attribute als die normalen Eigenschaften.
+		"""
+
+		if root is not None:
+			for category in root.getiterator("Category"):
+				categoryName = category.attrib["name"]
+
+				listOfTraits = []
+				for traitElement in root.getiterator("trait"):
+					listOfPowers = {}
+					for traitSubElement in traitElement.getiterator("power"):
+						listOfPowers.setdefault(traitSubElement.text, int(traitSubElement.attrib["value"]))
+					prerequisitePowers = ["Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()]
+					#Debug.debug(prerequisitePowers)
+					subPowerData = {
+						"name": traitElement.attrib["name"],
+						"level": self.__getElementAttribute(traitElement, "level"),
+						"species": species,
+						"powers": listOfPowers,
+						"prerequisites": " and ".join(prerequisitePowers),
+					}
+					identifier = self.__getElementAttribute(traitElement, "id")
+					if not identifier:
+						identifier = subPowerData["name"]
+					self.__storage.addTrait( root.tag, categoryName, identifier, subPowerData )
 
 
 	def readCreationPoints( self, root, species ):

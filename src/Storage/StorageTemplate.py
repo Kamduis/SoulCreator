@@ -133,6 +133,22 @@ class StorageTemplate(QObject):
 	# }
 	__traits = {}
 
+	# Eine Liste der Unterkräfte.
+	#
+	# {
+	# 	Kategorie1: {
+	# 		Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 		Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
+	# 		...
+	# 	},
+	# 	Kategorie2: {
+	# 		Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 		...
+	# 	},
+	# 	...
+	# }
+	__subPowers = {}
+
 	## Eine Liste aller Tugenden.
 	#
 	# [
@@ -413,6 +429,8 @@ class StorageTemplate(QObject):
 
 		Die Eigenschaft sollte im Format eines dict daherkommen.
 
+		Eigenschaften des Typs "Subpower" haben abweichende Attribute und werden deswegen gesondert behandelt.
+
 		\param identifier Die einzigartige Identität der Eigenschaft, meist identisch mit ihrem Namen.
 		
 		\param data Alle Informationen über die Eigenschaft außer der Identität.
@@ -426,7 +444,7 @@ class StorageTemplate(QObject):
 
 		if identifier not in self.__traits[typ][category]:
 			self.__traits[typ][category].setdefault(identifier, data)
-		else:
+		elif (typ != "Subpower"):
 			specialties = self.__traits[typ][category][identifier]["specialty"]
 			specialties.extend(data["specialty"])
 			self.__traits[typ][category][identifier] = data
@@ -466,80 +484,42 @@ class StorageTemplate(QObject):
 			self.__powerNames[species][power] = name
 
 
-#// cv_Trait StorageTemplate::trait( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name ) {
-#// 	bool trait_exists = false;
-#//
-#// 	cv_Trait trait;
-#//
-#// 	for ( int i = 0; i < v_traits.count(); ++i ) {
-#// 		if ( v_traits.at( i ).type() == type && v_traits.at( i ).category() == category && v_traits.at( i ).name() == name ) {
-#// 			trait = v_traits.at( i );
-#// 			trait_exists = true;
-#//
-#// 			break;
-#// 		}
-#// 	}
-#//
-#// 	if ( !trait_exists ) {
-#// // 		qDebug() << Q_FUNC_INFO << "Trait" << type << category << name << "existiert nicht!";
-#// // 		throw eTraitNotExisting();
-#// 	}
-#//
-#// 	return trait;
-#// }
-
-
-#QList< TraitBonus* > StorageTemplate::traitsBonus( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
-	#QList< TraitBonus* > traitsPtr;
-
-	#for( int i = 0; i < v_traitsBonus.count(); ++i ) {
-		#if( v_traitsBonus.at( i )->type() == type && v_traitsBonus.at( i )->species().testFlag( species ) ) {
-			#traitsPtr.append( v_traitsBonus[i] );
+	#@property
+	#def subPowers(self):
+		#"""Eine Liste der Unterkräfte.
+		
+		#{
+			#Kategorie1: {
+				#Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+				#Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
+				#...
+			#},
+			#Kategorie2: {
+				#Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+				#...
+			#},
+			#...
 		#}
-	#}
+		#"""
 
-	#// Es wird eine leere Liste ausgegeben, wenn keine entsprechende Einträge gefunden werden.
-#// 	if ( traitsPtr.isEmpty() ) {
-#// 		throw eTraitNotExisting();
-#// 	}
+		#return self.__subPowers
 
-	#return traitsPtr;
-#}
+	#def addSubPower(self, category, identifier, data):
+		#"""
+		#Fügt eine Unterkraft zur Liste hinzu.
+		#"""
 
+		##Debug.debug(category, identifier, data)
 
-#// void StorageTemplate::setTraits( QList< cv_Trait > traits ) {
-#// 	v_traits = traits;
-#// }
+		#if category not in self.__subPowers:
+			#self.__subPowers.setdefault(category,{})
+
+		#self.__subPowers[category][identifier] = data
+
 
 	def appendSpecies( self, species, speciesData ):
 		if species and species not in self.__species:
 			self.__species.setdefault(species, speciesData )
-
-
-
-#void StorageTemplate::appendTrait( cv_Trait trait ) {
-	#bool exists = false;
-
-	#// Unterschiedliche Klassen für die einzelnen Eigenschafts-Typen:
-	#Trait* lcl_trait;
-	#if( trait.type() == cv_AbstractTrait::Attribute ) {
-		#lcl_trait = new AttributeTrait( trait );
-	#} else if( trait.type() == cv_AbstractTrait::Skill ) {
-		#lcl_trait = new SkillTrait( trait );
-	#} else {
-		#lcl_trait = new Trait( trait );
-	#}
-
-	#for( int i = 0; i < v_traits.count(); ++i ) {
-		#if( v_traits.at( i )->type() == lcl_trait->type() && v_traits.at( i )->name() == lcl_trait->name() ) {
-			#exists = true;
-			#break;
-		#}
-	#}
-	#if( !exists ) {
-		#v_traits.append( lcl_trait );
-	#}
-#}
 
 
 	def __getVirtues(self):

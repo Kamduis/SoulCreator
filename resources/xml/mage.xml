@@ -257,83 +257,84 @@
 			</Power>
 			<Subpower name="Rotes">
 				<Category name="Death">
-					<trait name="Ectoplasmic Shaping" level="1">
-						<prerequisites>Power.Death > 0</prerequisites>
+					<trait name="Ectoplasmic Shaping" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Eye for Destruction" level="1">
-						<prerequisites>Power.Death > 0 and Power.Matter > 0</prerequisites>
+					<trait name="Eye for Destruction" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Forensic Gaze" level="1">
-						<prerequisites>Power.Death > 0</prerequisites>
+					<trait name="Forensic Gaze" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Grim Sight" level="1">
-						<prerequisites>Power.Death > 0</prerequisites>
+					<trait name="Grim Sight" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Otherworldly Instrument" level="1">
-						<prerequisites>Power.Death > 0 and Power.Spirit > 0</prerequisites>
+					<trait name="Otherworldly Instrument" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
+						<power value="1">Spirit</power>
 					</trait>
-					<trait name="Sense the Living Dead" level="1">
-						<prerequisites>Power.Death > 0</prerequisites>
+					<trait name="Sense the Living Dead" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Shadow Sculpting" level="1">
-						<prerequisites>Power.Death > 0</prerequisites>
+					<trait name="Shadow Sculpting" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Soul Marks" level="1">
-						<prerequisites>Power.Death > 0</prerequisites>
+					<trait name="Soul Marks" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Speak with the Dead" level="1">
-						<prerequisites>Power.Death > 0</prerequisites>
+					<trait name="Speak with the Dead" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Unsettling Visage" level="1">
-						<prerequisites>Power.Death > 0</prerequisites>
+					<trait name="Unsettling Visage" level="1" costFuel="0" costWill="0" roll="">
+						<power value="1">Death</power>
 					</trait>
-					<trait name="Test2" level="2">
-						<prerequisites>Power.Death > 1</prerequisites>
+					<trait name="Test2" level="2" costFuel="0" costWill="0" roll="">
+						<power value="2">Death</power>
 					</trait>
 				</Category>
 				<Category name="Fate">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Fate > 0</prerequisites>
+						<power value="1">Fate</power>
 					</trait>
 				</Category>
 				<Category name="Forces">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Forces > 0</prerequisites>
+						<power value="1">Forces</power>
 					</trait>
 				</Category>
 				<Category name="Life">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Life > 0</prerequisites>
+						<power value="1">Life</power>
 					</trait>
 				</Category>
 				<Category name="Matter">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Matter > 0</prerequisites>
+						<power value="1">Matter</power>
 					</trait>
 				</Category>
 				<Category name="Mind">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Mind > 0</prerequisites>
+						<power value="1">Mind</power>
 					</trait>
 				</Category>
 				<Category name="Prime">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Prime > 0</prerequisites>
+						<power value="1">Prime</power>
 					</trait>
 				</Category>
 				<Category name="Space">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Space > 0</prerequisites>
+						<power value="1">Space</power>
 					</trait>
 				</Category>
 				<Category name="Spirit">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Spirit > 0</prerequisites>
+						<power value="1">Spirit</power>
 					</trait>
 				</Category>
 				<Category name="Time">
 					<trait name="Test1" level="1">
-						<prerequisites>Power.Time > 0</prerequisites>
+						<power value="1">Time</power>
 					</trait>
 				</Category>
 			</Subpower>
