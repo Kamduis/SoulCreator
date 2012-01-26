@@ -115,7 +115,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			try:
 				self.checkXmlVersion( xmlRootElement.tag, versionSource )
 			except ErrXmlOldVersion as e:
-				messageText = self.tr("While opening the template file {}, the following problem arised:\n{} {}\nIt appears, that the file will be importable, so the process will be continued but errors may occur.".format(device.fileName(), e.message, e.description))
+				messageText = self.tr("While opening the template file {}, the following problem arised:\n{} {}\nIt appears, that the file will be importable, so the process will be continued but errors may occur.".format(qrcFile.fileName(), e.message, e.description))
 				self.exceptionRaised.emit(messageText, e.critical)
 
 			species = self.readSpecies(xmlContent)
