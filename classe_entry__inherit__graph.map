@@ -1,5 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node5" href="$classe_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten." alt="" coords="28,160,121,189"/>
-<area shape="rect" id="node2" href="$class_exception.html" title="Basisklasse für die Ausnahmebehandlung." alt="" coords="33,5,116,35"/>
-<area shape="rect" id="node7" href="$classe_missing_user_entry.html" title="Ausnahme, falls Fehler bei einer Benutzereingabe auftreten." alt="" coords="5,237,144,267"/>
-</map>

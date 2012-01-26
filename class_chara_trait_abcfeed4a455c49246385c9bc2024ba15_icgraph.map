@@ -1,8 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_attribute_widget.html#ab498116d47f94a62e3b82eaa79976b36" title="AttributeWidget::AttributeWidget" alt="" coords="209,5,436,35"/>
-<area shape="rect" id="node5" href="$class_chara_trait.html#acfe4795a41019f6c92e85e82c0a6ab1a" title="CharaTrait::CharaTrait" alt="" coords="492,136,649,165"/>
-<area shape="rect" id="node7" href="$class_chara_trait.html#ab02b27973fec9c68cee320dd61e5c618" title="CharaTrait::checkTraitPrerequisites" alt="" coords="203,109,443,139"/>
-<area shape="rect" id="node10" href="$class_chara_trait.html#a8b30fcf229fb59f96c3926a59269194e" title="CharaTrait::hideTraitIfNotAvailable" alt="" coords="207,163,439,192"/>
-<area shape="rect" id="node13" href="$class_merit_widget.html#a3f99dd98cf0c027d9e5a65a6a82d88c8" title="MeritWidget::MeritWidget" alt="" coords="233,216,412,245"/>
-<area shape="rect" id="node15" href="$class_chara_trait.html#a0a5adca1cfd4732d6c4f64299e6d6fd3" title="CharaTrait::updateWidget" alt="" coords="232,269,413,299"/>
-</map>

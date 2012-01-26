@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: ui.ui_MainWindow.Ui_MainWindow Klassenreferenz</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.4 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Auflistung&#160;der&#160;Klassen</span></a></li>
+      <li><a href="classes.html"><span>Klassen-Verzeichnis</span></a></li>
+      <li><a href="inherits.html"><span>Klassenhierarchie</span></a></li>
+      <li><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('classui_1_1ui___main_window_1_1_ui___main_window.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Öffentliche Methoden</a> &#124;
+<a href="#pub-attribs">Öffentliche Attribute</a>  </div>
+  <div class="headertitle">
+<div class="title">ui.ui_MainWindow.Ui_MainWindow Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="ui::ui_MainWindow::Ui_MainWindow" --><!-- doxytag: inherits="object" --><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Klassendiagramm für ui.ui_MainWindow.Ui_MainWindow:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classui_1_1ui___main_window_1_1_ui___main_window__inherit__graph.svg" width="243" height="118" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Zusammengehörigkeiten von ui.ui_MainWindow.Ui_MainWindow:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classui_1_1ui___main_window_1_1_ui___main_window__coll__graph.svg" width="243" height="118" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+
+<p><a href="classui_1_1ui___main_window_1_1_ui___main_window-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Öffentliche Methoden</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b72264d1dc05972c80819dcac9a5346"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::retranslateUi" ref="a9b72264d1dc05972c80819dcac9a5346" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>retranslateUi</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba85ef41b3409b88286e6d963e8a657d"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::setupUi" ref="aba85ef41b3409b88286e6d963e8a657d" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setupUi</b></td></tr>
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Öffentliche Attribute</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af45ad67ba1eddc4fecbb2b177d004a7e"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::actionAbout" ref="af45ad67ba1eddc4fecbb2b177d004a7e" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>actionAbout</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac27207ac41fe6ab59a537287a05ecc42"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::actionExport" ref="ac27207ac41fe6ab59a537287a05ecc42" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>actionExport</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2743e57880c1b4a81f72f0e98365376c"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::actionNew" ref="a2743e57880c1b4a81f72f0e98365376c" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>actionNew</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9af4cae002601a17dd584bb4e60ab8b5"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::actionOpen" ref="a9af4cae002601a17dd584bb4e60ab8b5" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>actionOpen</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e020cc8cf33ff6bff3d3b5a7774b7c5"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::actionPrint" ref="a3e020cc8cf33ff6bff3d3b5a7774b7c5" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>actionPrint</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53acf2e82758b0f4f753b422735a4515"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::actionQuit" ref="a53acf2e82758b0f4f753b422735a4515" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>actionQuit</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7de917837426cdf54223ded963898380"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::actionSave" ref="a7de917837426cdf54223ded963898380" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>actionSave</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28cebc70a0c1ee6d80027604f040bd11"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::actionSettings" ref="a28cebc70a0c1ee6d80027604f040bd11" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>actionSettings</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6ff3066ee48d4083911bbfae2c5fa4f"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::centralwidget" ref="ae6ff3066ee48d4083911bbfae2c5fa4f" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>centralwidget</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4e3b6344e3b7736af5793185afb0fa8"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::dockWidget_advantages" ref="aa4e3b6344e3b7736af5793185afb0fa8" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>dockWidget_advantages</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac702ddddf73299949b362058611a4004"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::dockWidget_advantagesContents" ref="ac702ddddf73299949b362058611a4004" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>dockWidget_advantagesContents</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad58518d4ecc5d52a89bf38d8391fcffa"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_attributes" ref="ad58518d4ecc5d52a89bf38d8391fcffa" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_attributes</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2040e6d9bc9d2c7c2494a1204f68f87"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_flaws" ref="ac2040e6d9bc9d2c7c2494a1204f68f87" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_flaws</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7acd37d74d519c26c08672a184bf444e"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_info" ref="a7acd37d74d519c26c08672a184bf444e" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_info</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44088a07dd1e05519d4e6a22d430ab1c"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_merits" ref="a44088a07dd1e05519d4e6a22d430ab1c" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_merits</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3243c5efd6fcce9c91b22aed3de8cd5"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_morality" ref="ac3243c5efd6fcce9c91b22aed3de8cd5" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_morality</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30fa331475a42248d9de20be3adef99a"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_powers" ref="a30fa331475a42248d9de20be3adef99a" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_powers</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2a8120831e60399c50eccc07dd9408c"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_skills" ref="ab2a8120831e60399c50eccc07dd9408c" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_skills</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad24eeaea10de60d04b04839e0f6b94c1"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_skillSpecialties" ref="ad24eeaea10de60d04b04839e0f6b94c1" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_skillSpecialties</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae138d722746b39806ce96208ac3fa391"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::frame_subPowers" ref="ae138d722746b39806ce96208ac3fa391" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>frame_subPowers</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7de8e044fc19ddaea92971b4cf1e0e8"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::horizontalLayout" ref="af7de8e044fc19ddaea92971b4cf1e0e8" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58f2394c50d2ff047cbd549df822b1aa"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::horizontalLayout_10" ref="a58f2394c50d2ff047cbd549df822b1aa" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout_10</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ddab286630519142bb6aad704d44a52"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::horizontalLayout_2" ref="a5ddab286630519142bb6aad704d44a52" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout_2</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61a3cd8909ed670bd00b44e0177d6eea"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::horizontalLayout_3" ref="a61a3cd8909ed670bd00b44e0177d6eea" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout_3</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd149f30f51b3c0e4dc4f7e1e70bf185"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::horizontalLayout_4" ref="afd149f30f51b3c0e4dc4f7e1e70bf185" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout_4</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4fcfa8b83d5b9296310bc6991babc73"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::horizontalLayout_5" ref="ad4fcfa8b83d5b9296310bc6991babc73" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout_5</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a603956fcf5c5d30e6b85ba0b6b101728"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::horizontalLayout_6" ref="a603956fcf5c5d30e6b85ba0b6b101728" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout_6</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf953691ac0f2433053d408d34382f5b"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::horizontalLayout_7" ref="adf953691ac0f2433053d408d34382f5b" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout_7</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd5c40d8f66800e552d57ecf6b65da81"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::label_pointsLeft" ref="abd5c40d8f66800e552d57ecf6b65da81" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>label_pointsLeft</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a537be0a1af257e3efffe00312034afb3"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_advantages" ref="a537be0a1af257e3efffe00312034afb3" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_advantages</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac00e8f717b7a1d16a46501f9bd87c436"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_attributes" ref="ac00e8f717b7a1d16a46501f9bd87c436" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_attributes</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a784a264804d8302300adb24caee9ca63"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_flaws" ref="a784a264804d8302300adb24caee9ca63" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_flaws</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae85e600656bd5d02809f4b47723fe5de"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_info" ref="ae85e600656bd5d02809f4b47723fe5de" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_info</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49e6168478916cccbfd360693a97b631"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_items" ref="a49e6168478916cccbfd360693a97b631" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_items</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a133b1ae0f15645124b568843231afa"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_merits" ref="a8a133b1ae0f15645124b568843231afa" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_merits</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9077cc0f70064b5d192ff1d1dfbbe36"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_morality" ref="ac9077cc0f70064b5d192ff1d1dfbbe36" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_morality</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61e1f6afa4a456f040c172fa1f9f7e16"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_powers" ref="a61e1f6afa4a456f040c172fa1f9f7e16" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_powers</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9636d223d818e470c24931202029b73"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_skills" ref="ae9636d223d818e470c24931202029b73" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_skills</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe4d300667231f868e327aa1e1283543"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_specialties" ref="abe4d300667231f868e327aa1e1283543" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_specialties</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75ceb63ba1f5cf75a0ef9b6b4d27c670"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::layout_subPowers" ref="a75ceb63ba1f5cf75a0ef9b6b4d27c670" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>layout_subPowers</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace444d19c6f4aa7bc76bcacb0bb9525d"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::mainToolBar" ref="ace444d19c6f4aa7bc76bcacb0bb9525d" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>mainToolBar</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9dc4380897aab362ce501163e6697485"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::menuAbout" ref="a9dc4380897aab362ce501163e6697485" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>menuAbout</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59f05e5b76dafa49c4c9f0dbf4a980bf"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::menubar" ref="a59f05e5b76dafa49c4c9f0dbf4a980bf" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>menubar</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af19f3a0d2f72c79d57765c29187819dc"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::menuConfiguration" ref="af19f3a0d2f72c79d57765c29187819dc" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>menuConfiguration</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54f44e6d131de142ec3b78e856cbc1af"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::menuFile" ref="a54f44e6d131de142ec3b78e856cbc1af" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>menuFile</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae797779b887069c4f9ce11a734121f76"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::pushButton_next" ref="ae797779b887069c4f9ce11a734121f76" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>pushButton_next</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa99ddbee3bade7a03e9fc557dfccb78"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::pushButton_previous" ref="aaa99ddbee3bade7a03e9fc557dfccb78" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>pushButton_previous</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0cf23425cedc87dde52000de8a99af99"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::selectWidget_select" ref="a0cf23425cedc87dde52000de8a99af99" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>selectWidget_select</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaeed23f84744c2a31f585eca3414512f"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidget_traits" ref="aaeed23f84744c2a31f585eca3414512f" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidget_traits</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb721e5cdcec4ea9f205922155fa2726"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidgetPage_attributes" ref="abb721e5cdcec4ea9f205922155fa2726" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidgetPage_attributes</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a2e54ab0c6132a404d7d098e7e8f625"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidgetPage_flaws" ref="a0a2e54ab0c6132a404d7d098e7e8f625" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidgetPage_flaws</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fb5c374dbdb739785e1140f6923b004"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidgetPage_info" ref="a0fb5c374dbdb739785e1140f6923b004" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidgetPage_info</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad27c5e26a16e6f124e272adceb58639f"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidgetPage_items" ref="ad27c5e26a16e6f124e272adceb58639f" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidgetPage_items</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c3bf83deee03729f98c485b513d653e"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidgetPage_merits" ref="a0c3bf83deee03729f98c485b513d653e" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidgetPage_merits</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad780f0534675aa948ff374d0d1fc6db0"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidgetPage_morality" ref="ad780f0534675aa948ff374d0d1fc6db0" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidgetPage_morality</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8636da6dc49acafd7e8485f17b7f854"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidgetPage_powers" ref="ad8636da6dc49acafd7e8485f17b7f854" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidgetPage_powers</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c6fdb7c23b41a9ba2f120246f8618ba"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::stackedWidgetPage_skills" ref="a5c6fdb7c23b41a9ba2f120246f8618ba" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>stackedWidgetPage_skills</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa9e715beb433b0699c6f8b9b137b18e"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::statusbar" ref="aaa9e715beb433b0699c6f8b9b137b18e" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>statusbar</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a461957c342f2a7f6d42ca7b18c5f2fef"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::verticalLayout" ref="a461957c342f2a7f6d42ca7b18c5f2fef" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>verticalLayout</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3bfba92cc4bf358d071bd9bd6c14ec6"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::verticalLayout_14" ref="ac3bfba92cc4bf358d071bd9bd6c14ec6" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>verticalLayout_14</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72b5ab0cbc6516f6e9beed317350624e"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::verticalLayout_15" ref="a72b5ab0cbc6516f6e9beed317350624e" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>verticalLayout_15</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8341c38bf69a89961a2d4ed0d43d2bb0"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::verticalLayout_2" ref="a8341c38bf69a89961a2d4ed0d43d2bb0" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>verticalLayout_2</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6280edba4bc6c6c058bdd3165bf88661"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::verticalLayout_3" ref="a6280edba4bc6c6c058bdd3165bf88661" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>verticalLayout_3</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aacc389a86ad8a80a7b7484ed091bde14"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::verticalLayout_4" ref="aacc389a86ad8a80a7b7484ed091bde14" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>verticalLayout_4</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ac7bed1984165e0d27477a695a7156e"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::verticalLayout_6" ref="a0ac7bed1984165e0d27477a695a7156e" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>verticalLayout_6</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0dc395769d80e6859211680dbc009bd7"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::verticalLayout_7" ref="a0dc395769d80e6859211680dbc009bd7" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>verticalLayout_7</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecb85d2add52df07d318793171f46666"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::widget" ref="aecb85d2add52df07d318793171f46666" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>widget</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f69ad0b52693b72c0ab8bf3bc24b31f"></a><!-- doxytag: member="ui::ui_MainWindow::Ui_MainWindow::widget_traits" ref="a3f69ad0b52693b72c0ab8bf3bc24b31f" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>widget_traits</b></td></tr>
+</table>
+</div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>ui</b>      </li>
+      <li class="navelem"><b>ui_MainWindow</b>      </li>
+      <li class="navelem"><a class="el" href="classui_1_1ui___main_window_1_1_ui___main_window.html">Ui_MainWindow</a>      </li>
+      <li class="footer">Erzeugt am Thu Jan 26 2012 18:51:17 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

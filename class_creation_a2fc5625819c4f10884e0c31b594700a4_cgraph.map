@@ -1,9 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_storage_template.html#a5a93e89c57e3651cb8b8e02064bfa88b" title="StorageTemplate::creationPoints" alt="" coords="204,5,433,35"/>
-<area shape="rect" id="node5" href="$classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f" title="cv_AbstractTrait::getCategoryList" alt="" coords="203,59,435,88"/>
-<area shape="rect" id="node7" href="$classcv___creation_points_list.html#a4ff0731279c6490ae83649264bb36c01" title="cv_CreationPointsList::pointList" alt="" coords="209,112,428,141"/>
-<area shape="rect" id="node9" href="$class_creation.html#a39e54cf85df2c019dd2646c977366021" title="Creation::pointsChanged" alt="" coords="229,165,408,195"/>
-<area shape="rect" id="node11" href="$class_storage_character.html#a003ec6624532c534b04c93f18f9c381c" title="StorageCharacter::species" alt="" coords="223,219,415,248"/>
-<area shape="rect" id="node13" href="$class_storage_character.html#a2db5654b50bd29cc391c05ec220b2e08" title="StorageCharacter::traits" alt="" coords="231,272,407,301"/>
-<area shape="rect" id="node15" href="$classcv___abstract_trait.html#aba0dfcb5b539afe0db14c6e3c4ddd4bc" title="cv_AbstractTrait::type" alt="" coords="240,325,397,355"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_read_xml.html#a0305be8e000422c577df73f8b4be3e81" title="ReadXml::closeFile" alt="" coords="244,5,383,35"/>
-<area shape="rect" id="node5" href="$class_exception.html#a7cb124af6ec64ad88a8721b60c7932fb" title="Exception::description" alt="" coords="232,59,395,88"/>
-<area shape="rect" id="node7" href="$class_exception.html#aeaf3a81717287d50938bc72ed67bacd8" title="Exception::message" alt="" coords="239,112,388,141"/>
-<area shape="rect" id="node9" href="$class_read_xml.html#a764cf8f1ae5230e93852c5743a54d81c" title="ReadXml::openFile" alt="" coords="245,165,381,195"/>
-</map>

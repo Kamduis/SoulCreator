@@ -1,8 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_chara_trait.html#a73cbb56f5bc87964994e962168d04e69" title="CharaTrait::setCategory" alt="" coords="241,5,412,35"/>
-<area shape="rect" id="node5" href="$class_chara_trait.html#a620d140e562c4102205d2c2a44af5622" title="CharaTrait::setCustom" alt="" coords="245,59,408,88"/>
-<area shape="rect" id="node7" href="$class_chara_trait.html#ace22816278072df97eb782603153600b" title="CharaTrait::setCustomText" alt="" coords="232,112,421,141"/>
-<area shape="rect" id="node11" href="$class_chara_trait.html#a340feb7c80cc516245c80d1ff03a8aec" title="CharaTrait::setSpecies" alt="" coords="245,165,408,195"/>
-<area shape="rect" id="node13" href="$class_chara_trait.html#aa119a2d69592d27154b05a52dfeb21bd" title="CharaTrait::setType" alt="" coords="256,219,397,248"/>
-<area shape="rect" id="node9" href="$class_chara_trait.html#a21787eb972b4fc8779368a78f4430f14" title="CharaTrait::CharaTrait" alt="" coords="471,112,628,141"/>
-</map>

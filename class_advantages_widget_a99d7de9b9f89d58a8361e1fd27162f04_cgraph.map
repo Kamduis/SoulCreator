@@ -1,6 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_storage_template.html#ab1cbf91553890c5a7ec6b5e7dd8aca09" title="StorageTemplate::fuelMax" alt="" coords="339,5,525,35"/>
-<area shape="rect" id="node5" href="$class_storage_character.html#a50022b948be1e566d902d64095c4470b" title="StorageCharacter::getInstance" alt="" coords="323,59,541,88"/>
-<area shape="rect" id="node7" href="$class_storage_character.html#a003ec6624532c534b04c93f18f9c381c" title="StorageCharacter::species" alt="" coords="336,112,528,141"/>
-<area shape="rect" id="node9" href="$class_storage_character.html#a976fa01b0a773d46a67ddf00670ea5e3" title="StorageCharacter::superTrait" alt="" coords="329,165,535,195"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_trait.html#aff507cb19b22e5668fc20b471d73d691" title="Trait::setValue" alt="" coords="201,26,311,55"/>
-<area shape="rect" id="node5" href="$class_check_trait.html#a9073e7f8bbac8c351bf829b23a9fc850" title="CheckTrait::setValue" alt="" coords="361,26,511,55"/>
-<area shape="rect" id="node7" href="$class_check_trait.html#a3d74335165852938fb58d285bcc25b52" title="CheckTrait::CheckTrait" alt="" coords="843,27,1003,56"/>
-<area shape="rect" id="node9" href="$class_flaw_widget.html#af387a892373d07ce615ad19d6da45448" title="FlawWidget::FlawWidget" alt="" coords="592,26,763,55"/>
-<area shape="rect" id="node11" href="$class_check_trait.html#a38b03dfbcc01dbb65a9b345423e232db" title="CheckTrait::hideTraitIfNotAvailable" alt="" coords="560,79,795,108"/>
-</map>

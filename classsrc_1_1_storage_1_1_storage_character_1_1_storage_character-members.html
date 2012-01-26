@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: Elementverzeichnis</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.4 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Auflistung&#160;der&#160;Klassen</span></a></li>
+      <li><a href="classes.html"><span>Klassen-Verzeichnis</span></a></li>
+      <li><a href="inherits.html"><span>Klassenhierarchie</span></a></li>
+      <li><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<div class="title">src.Storage.StorageCharacter.StorageCharacter Elementverzeichnis</div>  </div>
+</div>
+<div class="contents">
+Vollständige Aufstellung aller Elemente für <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a> einschließlich aller geerbten Elemente.<table>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a268bebdb04824fa3c25bfd9d541c1a01">__init__</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>addEquipment</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a589f1ffbb72ee337eb4c114dfa2de61e">addWeapon</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a595093ac34be8d214ce0efb0869f94a5">age</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a4bec4cd60e372ec626ec3d1dc54b5c58">ageBecoming</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>ageBecomingChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>ageChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a20d4b66e5f1a5fd207685009ecc4659d">armor</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>armorChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>breed</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>breedChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#abc827c3ac500f3c9123f7e67b079932a">checkPrerequisites</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>clearEquipment</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>dateBecoming</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>dateBecomingChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>dateBirth</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>dateBirthChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a6ee4cf334e9d6cb52a2b011ca076274e">dateGame</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>dateGameChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>delEquipment</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a8cc4e5fe7adca1a82513f6202cdce683">deleteWeapon</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>derangementChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a5f529e8ab06394a831e938f980379313">derangements</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a5f529e8ab06394a831e938f980379313">derangements</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>description</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a1f5c653a0cc80890cb4734846eb6ced3">description</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>description</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>descriptionChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#aa649aeb9a1450cbbf80dbc5903004252">equipment</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>equipmentChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>era</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>eraChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>eyes</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>eyesChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>faction</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>factionChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>hair</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>hairChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>height</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>heightChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#aca2bb8feec51655680a6c2a233307e9b">identities</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>isModifed</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>magicalTool</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>magicalToolChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>morality</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>moralityChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>nationality</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>nationalityChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>organisation</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>organisationChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>party</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>partyChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>picture</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a80e448928dcc65fe0fde141426b6a26f">picture</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>picture</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pictureChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>powerstat</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>powerstatChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>resetCharacter</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setArmor</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#afe5f0a5fdccfb18674f6790aaf966e44">setBreed</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setDateBecoming</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setDateBirth</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setDateGame</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a2e53b75c9e568a5136f4fb2d5e4188a8">setDerangement</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#ae7800bf29224d3dcb24c5052f3c4b5ea">setEra</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setEyes</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a2cfada0181c435f18623d46d91c34997">setFaction</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setHair</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setHeight</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setMagicalTool</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setModified</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#ae3a2bc709c57078cc4ac9017b35200e1">setMorality</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setNationality</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a495b26a2293beb1bff7a95e0c1249b31">setOrganisation</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setParty</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#aefa2f0cf55e4ef773ad42e68a67027c9">setPowerstat</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#ab7102ddd22e06d083b6da8528487c1cf">setSpecies</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a6308a56664fa30ef7bf93306aecad260">setVice</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a5bd0e220eb5e86d05fb69aea44cdc356">setVirtue</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>setWeight</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>species</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>speciesChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>subPowers</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>traits</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>vice</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>viceChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>virtue</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>virtueChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>weaponAdded</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>weaponRemoved</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a2e711dcee04f0d6b4fa19d10573f88f7">weapons</a></td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>weaponsChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>weight</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>weightChanged</b> (Definiert in <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a>)</td><td><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">src.Storage.StorageCharacter.StorageCharacter</a></td><td><code> [static]</code></td></tr>
+</table></div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="footer">Erzeugt am Thu Jan 26 2012 18:51:17 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: src.Storage.StorageCharacter.StorageCharacter Klassenreferenz</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.4 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Auflistung&#160;der&#160;Klassen</span></a></li>
+      <li><a href="classes.html"><span>Klassen-Verzeichnis</span></a></li>
+      <li><a href="inherits.html"><span>Klassenhierarchie</span></a></li>
+      <li><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#properties">Propertys</a> &#124;
+<a href="#pub-methods">Öffentliche Methoden</a> &#124;
+<a href="#pub-attribs">Öffentliche Attribute</a> &#124;
+<a href="#pub-static-attribs">Statische öffentliche Attribute</a>  </div>
+  <div class="headertitle">
+<div class="title">src.Storage.StorageCharacter.StorageCharacter Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="src::Storage::StorageCharacter::StorageCharacter" --><!-- doxytag: inherits="PySide::QtCore::QObject" -->
+<p>In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert.  
+ <a href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#details">Mehr ...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Klassendiagramm für src.Storage.StorageCharacter.StorageCharacter:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character__inherit__graph.svg" width="342" height="118" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Zusammengehörigkeiten von src.Storage.StorageCharacter.StorageCharacter:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character__coll__graph.svg" width="439" height="310" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+
+<p><a href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="properties"></a>
+Propertys</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add5e9150d6ca587a344d80dc4075b8bb"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::breed" ref="add5e9150d6ca587a344d80dc4075b8bb" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>breed</b> = property(__getBreed, setBreed)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a958013f6413525a84f5ed9a999d4c382"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::dateBecoming" ref="a958013f6413525a84f5ed9a999d4c382" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>dateBecoming</b> = property(__getDateBecoming, setDateBecoming)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae9a2c4ea5c3bf4492885f76350ada43"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::dateBirth" ref="aae9a2c4ea5c3bf4492885f76350ada43" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>dateBirth</b> = property(__getDateBirth, setDateBirth)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a6ee4cf334e9d6cb52a2b011ca076274e">dateGame</a> = property(__getDateGame, setDateGame)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c56ba84f15d65a35285a9d041a9771b"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::era" ref="a9c56ba84f15d65a35285a9d041a9771b" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>era</b> = property(__getEra, setEra)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab634047c8f2b0a4e2754b67cc83a775b"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::eyes" ref="ab634047c8f2b0a4e2754b67cc83a775b" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>eyes</b> = property(__getEyes, setEyes)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a757d54fa34a6728d50a59f9dcb6ba4dd"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::faction" ref="a757d54fa34a6728d50a59f9dcb6ba4dd" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>faction</b> = property(__getFaction, setFaction)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5dc8ac3fe93fa7601aaa8f3b0a16e31"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::hair" ref="af5dc8ac3fe93fa7601aaa8f3b0a16e31" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>hair</b> = property(__getHair, setHair)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36485bf4251628d906be7fbe508f7ba5"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::height" ref="a36485bf4251628d906be7fbe508f7ba5" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>height</b> = property(__getHeight, setHeight)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea4a07e3428edd6cf1937488443e4b4d"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::magicalTool" ref="aea4a07e3428edd6cf1937488443e4b4d" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>magicalTool</b> = property(__getMagicalTool, setMagicalTool)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02e2a4599a336b0346a33f3ead344f4d"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::morality" ref="a02e2a4599a336b0346a33f3ead344f4d" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>morality</b> = property(__getMorality, setMorality)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5bb862d59827f18a5dcb85aaa6a6b583"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::nationality" ref="a5bb862d59827f18a5dcb85aaa6a6b583" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>nationality</b> = property(__getNationality, setNationality)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac75b9177b0e2d03a782d55f3af042a6"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::organisation" ref="aac75b9177b0e2d03a782d55f3af042a6" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>organisation</b> = property(__getOrganisation, setOrganisation)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02a75823178a11abd43a3ad011412b46"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::party" ref="a02a75823178a11abd43a3ad011412b46" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>party</b> = property(__getParty, setParty)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa28e530706416c02b03ed44c033d0967"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::powerstat" ref="aa28e530706416c02b03ed44c033d0967" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>powerstat</b> = property(__getPowerstat, setPowerstat)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09eead95e4742e558ea0a99d73c260ef"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::species" ref="a09eead95e4742e558ea0a99d73c260ef" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>species</b> = property(__getSpecies, setSpecies)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a982b848d617878855aa6b908e8b7254e"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::vice" ref="a982b848d617878855aa6b908e8b7254e" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>vice</b> = property(__getVice, setVice)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af98bfff8e556300eac46c5a59df63894"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::virtue" ref="af98bfff8e556300eac46c5a59df63894" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>virtue</b> = property(__getVirtue, setVirtue)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a642174ca959f0ac39629c1bf63ca6a31"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::weight" ref="a642174ca959f0ac39629c1bf63ca6a31" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>weight</b> = property(__getWeight, setWeight)</td></tr>
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Öffentliche Methoden</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a268bebdb04824fa3c25bfd9d541c1a01">__init__</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1aeda84df86f459b6ea875498aaa13b1"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::addEquipment" ref="a1aeda84df86f459b6ea875498aaa13b1" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>addEquipment</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a589f1ffbb72ee337eb4c114dfa2de61e"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::addWeapon" ref="a589f1ffbb72ee337eb4c114dfa2de61e" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a589f1ffbb72ee337eb4c114dfa2de61e">addWeapon</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a595093ac34be8d214ce0efb0869f94a5"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::age" ref="a595093ac34be8d214ce0efb0869f94a5" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a595093ac34be8d214ce0efb0869f94a5">age</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bec4cd60e372ec626ec3d1dc54b5c58"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::ageBecoming" ref="a4bec4cd60e372ec626ec3d1dc54b5c58" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a4bec4cd60e372ec626ec3d1dc54b5c58">ageBecoming</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20d4b66e5f1a5fd207685009ecc4659d"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::armor" ref="a20d4b66e5f1a5fd207685009ecc4659d" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a20d4b66e5f1a5fd207685009ecc4659d">armor</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#abc827c3ac500f3c9123f7e67b079932a">checkPrerequisites</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46c538144c9514ccc9608d6808df0f44"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::clearEquipment" ref="a46c538144c9514ccc9608d6808df0f44" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>clearEquipment</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd5833485a4c7a4ad02b63aa4b31af95"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::delEquipment" ref="afd5833485a4c7a4ad02b63aa4b31af95" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>delEquipment</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cc4e5fe7adca1a82513f6202cdce683"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::deleteWeapon" ref="a8cc4e5fe7adca1a82513f6202cdce683" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a8cc4e5fe7adca1a82513f6202cdce683">deleteWeapon</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a5f529e8ab06394a831e938f980379313">derangements</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a5f529e8ab06394a831e938f980379313">derangements</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f5c653a0cc80890cb4734846eb6ced3"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::description" ref="a1f5c653a0cc80890cb4734846eb6ced3" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a1f5c653a0cc80890cb4734846eb6ced3">description</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f5c653a0cc80890cb4734846eb6ced3"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::description" ref="a1f5c653a0cc80890cb4734846eb6ced3" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>description</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa649aeb9a1450cbbf80dbc5903004252"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::equipment" ref="aa649aeb9a1450cbbf80dbc5903004252" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#aa649aeb9a1450cbbf80dbc5903004252">equipment</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#aca2bb8feec51655680a6c2a233307e9b">identities</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa98b8d276e570bbe86f2b4a76be24bf5"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::isModifed" ref="aa98b8d276e570bbe86f2b4a76be24bf5" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>isModifed</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80e448928dcc65fe0fde141426b6a26f"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::picture" ref="a80e448928dcc65fe0fde141426b6a26f" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a80e448928dcc65fe0fde141426b6a26f">picture</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80e448928dcc65fe0fde141426b6a26f"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::picture" ref="a80e448928dcc65fe0fde141426b6a26f" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>picture</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c569201ff790bf6364b0cb83a3dc5cc"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::resetCharacter" ref="a6c569201ff790bf6364b0cb83a3dc5cc" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>resetCharacter</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3e4ac16ea0911e954995b3b56bd7942"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setArmor" ref="ac3e4ac16ea0911e954995b3b56bd7942" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setArmor</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#afe5f0a5fdccfb18674f6790aaf966e44">setBreed</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab18fee97e36580ba44f0e9f060e548e7"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setDateBecoming" ref="ab18fee97e36580ba44f0e9f060e548e7" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setDateBecoming</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8793c49d043fae3329f17840820bbc51"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setDateBirth" ref="a8793c49d043fae3329f17840820bbc51" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setDateBirth</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6522f01c4b9ad09fb92f86a697a5c354"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setDateGame" ref="a6522f01c4b9ad09fb92f86a697a5c354" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setDateGame</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e53b75c9e568a5136f4fb2d5e4188a8"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setDerangement" ref="a2e53b75c9e568a5136f4fb2d5e4188a8" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a2e53b75c9e568a5136f4fb2d5e4188a8">setDerangement</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7800bf29224d3dcb24c5052f3c4b5ea"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setEra" ref="ae7800bf29224d3dcb24c5052f3c4b5ea" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#ae7800bf29224d3dcb24c5052f3c4b5ea">setEra</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec27ba81cb720ae93c3c452a65f6e329"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setEyes" ref="aec27ba81cb720ae93c3c452a65f6e329" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setEyes</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a2cfada0181c435f18623d46d91c34997">setFaction</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aabfa58af55522ed7fb4f7135180ae6e8"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setHair" ref="aabfa58af55522ed7fb4f7135180ae6e8" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setHair</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a941ef3dc3681a68245b8c9fc3c9628c3"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setHeight" ref="a941ef3dc3681a68245b8c9fc3c9628c3" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setHeight</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad58ce1db0f175395f860b6eb66838256"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setMagicalTool" ref="ad58ce1db0f175395f860b6eb66838256" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setMagicalTool</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34d0154d41ea8a0bed0dc03dc0ec61f0"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setModified" ref="a34d0154d41ea8a0bed0dc03dc0ec61f0" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setModified</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#ae3a2bc709c57078cc4ac9017b35200e1">setMorality</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac19caa0b14dd5f418e533ddcc560d753"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setNationality" ref="ac19caa0b14dd5f418e533ddcc560d753" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setNationality</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a495b26a2293beb1bff7a95e0c1249b31">setOrganisation</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68dadd465bedd23269db6553166784c4"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setParty" ref="a68dadd465bedd23269db6553166784c4" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setParty</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#aefa2f0cf55e4ef773ad42e68a67027c9">setPowerstat</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7102ddd22e06d083b6da8528487c1cf"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setSpecies" ref="ab7102ddd22e06d083b6da8528487c1cf" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#ab7102ddd22e06d083b6da8528487c1cf">setSpecies</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a6308a56664fa30ef7bf93306aecad260">setVice</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a5bd0e220eb5e86d05fb69aea44cdc356">setVirtue</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae1ae0c9a98697e0d5cc079af7008c76"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setWeight" ref="aae1ae0c9a98697e0d5cc079af7008c76" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>setWeight</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65154f7b6ba3d751248602cc65b49d3b"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::subPowers" ref="a65154f7b6ba3d751248602cc65b49d3b" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>subPowers</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96f1bf3e13c878ac8622b6a30e6544d9"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::traits" ref="a96f1bf3e13c878ac8622b6a30e6544d9" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>traits</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e711dcee04f0d6b4fa19d10573f88f7"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::weapons" ref="a2e711dcee04f0d6b4fa19d10573f88f7" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a2e711dcee04f0d6b4fa19d10573f88f7">weapons</a></td></tr>
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Öffentliche Attribute</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af89352c6c8ad17a3a8cbdc2049ccca08"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::description" ref="af89352c6c8ad17a3a8cbdc2049ccca08" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>description</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af59169bdb60d033fc34f0568da19f2a8"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::picture" ref="af59169bdb60d033fc34f0568da19f2a8" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>picture</b></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
+Statische öffentliche Attribute</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60188e89b271595ddbdf4e8bd28310e6"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::ageBecomingChanged" ref="a60188e89b271595ddbdf4e8bd28310e6" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>ageBecomingChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0b14f0c014e5bca3da9afccbe37936a"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::ageChanged" ref="ac0b14f0c014e5bca3da9afccbe37936a" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>ageChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54aa7e412fb6bdd28d5e97e9c2a357c9"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::armorChanged" ref="a54aa7e412fb6bdd28d5e97e9c2a357c9" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>armorChanged</b> = Signal(str, bool)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c70ccec262ef40638ffc1594c76d4cb"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::breedChanged" ref="a6c70ccec262ef40638ffc1594c76d4cb" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>breedChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed33fc0f2c3d9ab48bb25e7ec7e59502"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::dateBecomingChanged" ref="aed33fc0f2c3d9ab48bb25e7ec7e59502" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>dateBecomingChanged</b> = Signal(<a class="el" href="classobject.html">object</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a205b387a77f0062f363f4870a6533862"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::dateBirthChanged" ref="a205b387a77f0062f363f4870a6533862" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>dateBirthChanged</b> = Signal(<a class="el" href="classobject.html">object</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e243ebafce3afcbdca3d5f90747d8fb"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::dateGameChanged" ref="a9e243ebafce3afcbdca3d5f90747d8fb" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>dateGameChanged</b> = Signal(<a class="el" href="classobject.html">object</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb4600970ff53a6da7699d11a2c2a442"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::derangementChanged" ref="acb4600970ff53a6da7699d11a2c2a442" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>derangementChanged</b> = Signal(int, str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e57403a4c0190d66d6c1a5ccc55f46e"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::descriptionChanged" ref="a0e57403a4c0190d66d6c1a5ccc55f46e" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>descriptionChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a351a2c148a690a35fee5fad27e10faed"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::equipmentChanged" ref="a351a2c148a690a35fee5fad27e10faed" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>equipmentChanged</b> = Signal(<a class="el" href="classobject.html">object</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76cb0b02a57b5521f13e28099ecaa614"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::eraChanged" ref="a76cb0b02a57b5521f13e28099ecaa614" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>eraChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a228ea338fdcdc4519fc782c727b7c597"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::eyesChanged" ref="a228ea338fdcdc4519fc782c727b7c597" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>eyesChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9db2cb7ef3bcdfb23f2f55c4d39b3da8"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::factionChanged" ref="a9db2cb7ef3bcdfb23f2f55c4d39b3da8" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>factionChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad49eb50030a145dc4d0fb07975ac6099"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::hairChanged" ref="ad49eb50030a145dc4d0fb07975ac6099" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>hairChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac525a1c50664682086e378d6da826180"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::heightChanged" ref="ac525a1c50664682086e378d6da826180" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>heightChanged</b> = Signal(float)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15a82464978aaad35608aa8c46f5aa38"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::magicalToolChanged" ref="a15a82464978aaad35608aa8c46f5aa38" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>magicalToolChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af82bfe02d6716698cb6c6881043cf851"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::moralityChanged" ref="af82bfe02d6716698cb6c6881043cf851" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>moralityChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accae8d7a2d420140aebdbd1eed3a8403"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::nationalityChanged" ref="accae8d7a2d420140aebdbd1eed3a8403" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>nationalityChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aebff639ce9ad613ef12d955dd5657760"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::organisationChanged" ref="aebff639ce9ad613ef12d955dd5657760" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>organisationChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8527dbddebef7cf49456e2400b9e675d"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::partyChanged" ref="a8527dbddebef7cf49456e2400b9e675d" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>partyChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad349eb2d6a96bacd3dfeddf6533ef62d"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::pictureChanged" ref="ad349eb2d6a96bacd3dfeddf6533ef62d" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>pictureChanged</b> = Signal(QPixmap)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92665a0ef06bb9e373a8d5fdfc3dbd33"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::powerstatChanged" ref="a92665a0ef06bb9e373a8d5fdfc3dbd33" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>powerstatChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45faee8510e60c2dcc56b2be91577e8a"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::speciesChanged" ref="a45faee8510e60c2dcc56b2be91577e8a" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>speciesChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8c47bf1afee6d9bde8ca546220ac5dc"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::viceChanged" ref="ac8c47bf1afee6d9bde8ca546220ac5dc" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>viceChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a638de3b7657201e8f51b421ae1d9e663"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::virtueChanged" ref="a638de3b7657201e8f51b421ae1d9e663" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>virtueChanged</b> = Signal(str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3714ad2858b916207fc4adee5f55514c"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::weaponAdded" ref="a3714ad2858b916207fc4adee5f55514c" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>weaponAdded</b> = Signal(str, str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a677fba6b2faf4452a5bf621feb980c7c"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::weaponRemoved" ref="a677fba6b2faf4452a5bf621feb980c7c" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>weaponRemoved</b> = Signal(str, str)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62c598d9764420aa30c6e67b0717e7e5"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::weaponsChanged" ref="a62c598d9764420aa30c6e67b0717e7e5" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>weaponsChanged</b> = Signal()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0749e6014c0e3a841996d3d2bb46b573"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::weightChanged" ref="a0749e6014c0e3a841996d3d2bb46b573" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>weightChanged</b> = Signal(float)</td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>In dieser Klasse werden sämtliche Daten des gerade geöffneten Charakters gespeichert. </p>
+<p>Wird ein Wert durch das Programm geändert, muß der Wert tatsächlich in dieser Klasse verändert werden. Denn der Inhalt dieser Klasse wird beim Speichern in eine Datei geschrieben und beim Laden wird diese Klasse aufgefüllt. Die Anzeige nimmt all ihre Daten aus dieser Klasse.</p>
+<p>Außerdem bietet diese Klasse angenehme Zugriffsfunktionen aus den Informationen, welche zum Programmstart aus den Template-Dateien geladen werden. </p>
+</div><hr/><h2>Dokumentation der Propertys</h2>
+<a class="anchor" id="a6ee4cf334e9d6cb52a2b011ca076274e"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::dateGame" ref="a6ee4cf334e9d6cb52a2b011ca076274e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">src.Storage.StorageCharacter.StorageCharacter.dateGame = property(__getDateGame, setDateGame)<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Anfangsdatum setzen. </p>
+
+</div>
+</div>
+<hr/><h2>Beschreibung der Konstruktoren und Destruktoren</h2>
+<a class="anchor" id="a268bebdb04824fa3c25bfd9d541c1a01"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::__init__" ref="a268bebdb04824fa3c25bfd9d541c1a01" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>template</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Noch zu erledigen:</a></b></dt><dd>Eigentlich benötigt Subpower keinen eigenen Datentyp.</dd></dl>
+<p>Da die ganzen Zusatzinformationen ja nur im Template zu stehen haben und nicht auch für den Charakter bekannt sein müssen. Der Wert "level" ist aber interessant und gilt für andere Klassen nicht. </p>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Elementfunktionen</h2>
+<a class="anchor" id="abc827c3ac500f3c9123f7e67b079932a"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::checkPrerequisites" ref="abc827c3ac500f3c9123f7e67b079932a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.checkPrerequisites </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>trait</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Es müssen nur bei ein paar Typen die Eigenschaft durchsucht werden. </p>
+<p>typesToClear = ( "Merit", "Flaw", "Power", ) for typ in typesToClear: for item in self.__traits[typ]: for subitem in self.__traits[typ][item].values(): if subitem.species and subitem.species != species and subitem.value != 0: <a class="el" href="classsrc_1_1_debug_1_1_debug.html#a6a65b5bc86d5eeff9d2678ef18bd8cd7" title="Gibt einen Text aus, wobei der Ort des Aufrufs dieser Funktion vorangestellt ist.">Debug.debug</a>("Setze {} auf 0.".format(subitem.name)) subitem.value = 0</p>
+<p>Diese Funktion überprüft, ob die Voraussetzungen der Eigenschaft "trait" erfüllt sind oder nicht.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Noch zu erledigen:</a></b></dt><dd>Den SyntaxError sollte ich nicht verstecken! </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5f529e8ab06394a831e938f980379313"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::derangements" ref="a5f529e8ab06394a831e938f980379313" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.derangements </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Eine Liste aller Identitäten des Charkaters. </p>
+<p>Die Identität an Indexposition 0 ist die echte Identität. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5f529e8ab06394a831e938f980379313"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::derangements" ref="a5f529e8ab06394a831e938f980379313" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.derangements </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>derangements</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Eine Liste aller Identitäten des Charkaters. </p>
+<p>Die Identität an Indexposition 0 ist die echte Identität. </p>
+
+</div>
+</div>
+<a class="anchor" id="aca2bb8feec51655680a6c2a233307e9b"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::identities" ref="aca2bb8feec51655680a6c2a233307e9b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.identities </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Eine Liste aller Identitäten des Charkaters. </p>
+<p>Die Identität an Indexposition 0 ist die echte Identität. </p>
+
+</div>
+</div>
+<a class="anchor" id="afe5f0a5fdccfb18674f6790aaf966e44"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setBreed" ref="afe5f0a5fdccfb18674f6790aaf966e44" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.setBreed </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>breed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verändert die Brut. </p>
+<p>Bei einer Veränderung wird das Signal breedChanged() ausgesandt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2cfada0181c435f18623d46d91c34997"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setFaction" ref="a2cfada0181c435f18623d46d91c34997" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.setFaction </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>faction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verändert die Fraktion. </p>
+<p>Bei einer Veränderung wird das Signal factionChanged() ausgesandt. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae3a2bc709c57078cc4ac9017b35200e1"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setMorality" ref="ae3a2bc709c57078cc4ac9017b35200e1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.setMorality </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verändert den Wert der Moral. </p>
+<p>Bei einer Veränderung wird das Signal moralityChanged() ausgesandt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a495b26a2293beb1bff7a95e0c1249b31"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setOrganisation" ref="a495b26a2293beb1bff7a95e0c1249b31" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.setOrganisation </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>organisation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verändert die Organisation. </p>
+<p>Bei einer Veränderung wird das Signal organisationChanged() ausgesandt. </p>
+
+</div>
+</div>
+<a class="anchor" id="aefa2f0cf55e4ef773ad42e68a67027c9"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setPowerstat" ref="aefa2f0cf55e4ef773ad42e68a67027c9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.setPowerstat </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verändert den Wert des Super-Attributs. </p>
+<p>Bei einer Veränderung wird das Signal powerstatChanged() ausgesandt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6308a56664fa30ef7bf93306aecad260"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setVice" ref="a6308a56664fa30ef7bf93306aecad260" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.setVice </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>vice</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verändert das Laster. </p>
+<p>Bei einer Veränderung wird das Signal viceChanged() ausgesandt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5bd0e220eb5e86d05fb69aea44cdc356"></a><!-- doxytag: member="src::Storage::StorageCharacter::StorageCharacter::setVirtue" ref="a5bd0e220eb5e86d05fb69aea44cdc356" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Storage.StorageCharacter.StorageCharacter.setVirtue </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>virtue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verändert die Tugend. </p>
+<p>Bei einer Veränderung wird das Signal virtueChanged() ausgesandt. </p>
+
+</div>
+</div>
+</div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>src</b>      </li>
+      <li class="navelem"><b>Storage</b>      </li>
+      <li class="navelem"><b>StorageCharacter</b>      </li>
+      <li class="navelem"><a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html">StorageCharacter</a>      </li>
+      <li class="footer">Erzeugt am Thu Jan 26 2012 18:51:17 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

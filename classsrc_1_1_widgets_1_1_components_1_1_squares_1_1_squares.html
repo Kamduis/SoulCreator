@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: src.Widgets.Components.Squares.Squares Klassenreferenz</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.4 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Auflistung&#160;der&#160;Klassen</span></a></li>
+      <li><a href="classes.html"><span>Klassen-Verzeichnis</span></a></li>
+      <li><a href="inherits.html"><span>Klassenhierarchie</span></a></li>
+      <li><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('classsrc_1_1_widgets_1_1_components_1_1_squares_1_1_squares.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#properties">Propertys</a> &#124;
+<a href="#pub-methods">Öffentliche Methoden</a> &#124;
+<a href="#pub-static-attribs">Statische öffentliche Attribute</a>  </div>
+  <div class="headertitle">
+<div class="title">src.Widgets.Components.Squares.Squares Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="src::Widgets::Components::Squares::Squares" --><!-- doxytag: inherits="PySide::QtGui::QWidget" -->
+<p>Darstellung von ankreuzbaren Quadraten.  
+ <a href="classsrc_1_1_widgets_1_1_components_1_1_squares_1_1_squares.html#details">Mehr ...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Klassendiagramm für src.Widgets.Components.Squares.Squares:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_widgets_1_1_components_1_1_squares_1_1_squares__inherit__graph.svg" width="304" height="118" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Zusammengehörigkeiten von src.Widgets.Components.Squares.Squares:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_widgets_1_1_components_1_1_squares_1_1_squares__coll__graph.svg" width="323" height="256" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+
+<p><a href="classsrc_1_1_widgets_1_1_components_1_1_squares_1_1_squares-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="properties"></a>
+Propertys</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5dd8747b3c5cc705ed7d83d09e87d03"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::columnMax" ref="af5dd8747b3c5cc705ed7d83d09e87d03" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>columnMax</b> = property(__getColumnMax, __setColumnMax)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abfe66879475a6b028b587619bdb3d86f"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::maximum" ref="abfe66879475a6b028b587619bdb3d86f" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>maximum</b> = property(__getMaximum, __setMaximum)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85b3e1890f6e256954d518e455c77fbd"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::minimum" ref="a85b3e1890f6e256954d518e455c77fbd" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>minimum</b> = property(__getMinimum, __setMinimum)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafd5f281dba35de8bc9dd5e7e3d36598"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::readOnly" ref="aafd5f281dba35de8bc9dd5e7e3d36598" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>readOnly</b> = property(__getReadOnly, __setReadOnly)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28056054e9e8bd43dcca803ce167e969"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::value" ref="a28056054e9e8bd43dcca803ce167e969" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>value</b> = property(__getValue, __setValue)</td></tr>
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Öffentliche Methoden</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90e57d05a523891e8adc0a3264f17743"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::__init__" ref="a90e57d05a523891e8adc0a3264f17743" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af70f1b6e694667e2660314399cbec700"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::changeEvent" ref="af70f1b6e694667e2660314399cbec700" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>changeEvent</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37233e22bab8d295ab24c8704d6e69f4"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::mousePressEvent" ref="a37233e22bab8d295ab24c8704d6e69f4" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>mousePressEvent</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0cfcd94c8ed2f6b39a97da953fc1262"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::paintEvent" ref="ac0cfcd94c8ed2f6b39a97da953fc1262" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_squares_1_1_squares.html#ac0cfcd94c8ed2f6b39a97da953fc1262">paintEvent</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c3e56d62b9e2164a2dd632926dde2f7"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::resetMinimumSize" ref="a2c3e56d62b9e2164a2dd632926dde2f7" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_squares_1_1_squares.html#a2c3e56d62b9e2164a2dd632926dde2f7">resetMinimumSize</a></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
+Statische öffentliche Attribute</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef5e8e7f43b614a309a60ba986318ce3"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::clicked" ref="aef5e8e7f43b614a309a60ba986318ce3" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>clicked</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1acd06ae2f60cf1ecc81fe1a5d2ee9ea"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::columnMaxChanged" ref="a1acd06ae2f60cf1ecc81fe1a5d2ee9ea" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>columnMaxChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3913a7427235abe936c939f542abb012"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::maximumChanged" ref="a3913a7427235abe936c939f542abb012" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>maximumChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a1ff1d88ad4aacf8ce2f93f72073e92"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::minimumChanged" ref="a5a1ff1d88ad4aacf8ce2f93f72073e92" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>minimumChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d73a95640918f7bb21d8555c2393715"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::mousePoint" ref="a6d73a95640918f7bb21d8555c2393715" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>mousePoint</b> = event.pos()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a985f963bffa6e7d83150112bd13cbfc7"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::squareSide" ref="a985f963bffa6e7d83150112bd13cbfc7" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>squareSide</b> = self.width()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e489f647a79865f282387d80dc45ab4"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::value" ref="a0e489f647a79865f282387d80dc45ab4" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>value</b> = int( mousePoint.x() / squareSide )</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f2d3ca071481a384b92902c5d919e15"></a><!-- doxytag: member="src::Widgets::Components::Squares::Squares::valueChanged" ref="a4f2d3ca071481a384b92902c5d919e15" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>valueChanged</b> = Signal(int)</td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Darstellung von ankreuzbaren Quadraten. </p>
+<p>Ein einfacher ganzzahliger Wert wirden in Form angekreuzter Quadrate dargestellt. Die bis zum Maximalwert übrigen Quadrate sind nicht ausgefüllt.</p>
+<p>Wird das Widget disabled, wird der Alphakanal genutzt, um die Quadrate teilweise durchsichtig zu machen und sie so grau erscheinen zu lassen. </p>
+</div></div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>src</b>      </li>
+      <li class="navelem"><b>Widgets</b>      </li>
+      <li class="navelem"><b>Components</b>      </li>
+      <li class="navelem"><b>Squares</b>      </li>
+      <li class="navelem"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_squares_1_1_squares.html">Squares</a>      </li>
+      <li class="footer">Erzeugt am Thu Jan 26 2012 18:51:17 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

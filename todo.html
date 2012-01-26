@@ -16,7 +16,7 @@ $(document).ready(initResizable);
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
 <body onload='searchBox.OnSelectItem(0);'>
-<!-- Erzeugt von Doxygen 1.7.3 -->
+<!-- Erzeugt von Doxygen 1.7.4 -->
 <script type="text/javascript"><!--
 var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
 --></script>
@@ -62,7 +62,7 @@ function toggleVisibility(linkObj) {
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="WoD.png"></td>
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">SoulCreator</div>
    <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
@@ -112,190 +112,130 @@ function toggleVisibility(linkObj) {
 <div id="doc-content">
 <div class="header">
   <div class="headertitle">
-<h1>Ausstehende Aufgaben </h1>  </div>
+<div class="title">Ausstehende Aufgaben </div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="_todo000052"></a> </p>
+<div class="textblock"><p><a class="anchor" id="_todo000003"></a> </p>
 <dl>
-<dt>Klasse <a class="el" href="class_attribute_widget.html">AttributeWidget</a>  </dt>
-<dd>Die Attribute in ein Gridlayout packen, damit bei den Werwölfen die Manipulation nicht so heraussticht. </dd>
+<dt>Element <a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a5694b796ecd6e0a21966a4eef18f35a4">src.Calc.CalcAdvantages.CalcAdvantages.calcDefense</a>  </dt>
+<dd>Bislang nicht von der Spezies abhängig: Tiere sollten stets das größere von Dex und Wits als Defense haben. </dd>
 </dl>
 <p><a class="anchor" id="_todo000001"></a> </p>
 <dl>
-<dt>Element <a class="el" href="class_calc_advantages.html#abb4dfdc6c26b4e59b140831cfa3df49e">CalcAdvantages::CalcAdvantages</a> (<a class="el" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a> *tmp, QObject *parent=0) </dt>
-<dd><p class="startdd">Hat noch keinen Effekt.</p>
-<p class="enddd">Soll später den Konstruktor ersetzen. </p>
+<dt>Element <a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a33d48525ddee92701dc4dd7d40d7cbf2">src.Calc.CalcAdvantages.CalcAdvantages.calcInitiative</a>  </dt>
+<dd>Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt. </dd>
+</dl>
+<p><a class="anchor" id="_todo000002"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a2eab5f557aa6798ed49b78f9e06173a6">src.Calc.CalcAdvantages.CalcAdvantages.calcSpeed</a>  </dt>
+<dd>Bislang nur von Strength und Dexterity abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt. </dd>
+</dl>
+<p><a class="anchor" id="_todo000004"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classsrc_1_1_calc_1_1_calc_shapes_1_1_calc_shapes.html#a1f9ee252f94d70f4cdc191400a03f5a8">src.Calc.CalcShapes.CalcShapes.werewolfHeight</a>  </dt>
+<dd><p class="startdd">Möglicherweise noch einen Hauch Zufall einfügen, der aber bei einem Charakter immer gleich sein sollte, also vielelicht mit dem Namen seeden oder so ähnlich.</p>
+<p class="enddd">GEschlecht berücksichtigen? Weibchen sind um 2 bis 12 % kleiner als die Rüden und 20 bis 25 % leichter. </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000053"></a> </p>
+<p><a class="anchor" id="_todo000006"></a> </p>
 <dl>
-<dt>Klasse <a class="el" href="class_chara_specialties.html">CharaSpecialties</a>  </dt>
-<dd>Es wäre toll, wenn der Benutzer eigene Spezialisierungen eintragen könnte, zusätzlich zu denen, die schon angeboten werden. </dd>
-</dl>
-<p><a class="anchor" id="_todo000054"></a> </p>
-<dl>
-<dt>Klasse <a class="el" href="class_chara_trait.html">CharaTrait</a>  </dt>
-<dd><p class="startdd">Solange kein Text in der TExtbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können.</p>
-<p>Den Parser <a class="el" href="class_string_bool_parser.html">StringBoolParser</a> erweitern, damit übriggebliebener Text nach den Ersetzungen der Eigesncahften durch ihre Werte mit 0 gleichgesetzt wird. Aktuell mache ich das durch Stringmanipulation, aber das ist natürlich langsamer.</p>
-<p class="enddd">eine fast identische Klasse schaffen, welche <a class="el" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a> anstelle von <a class="el" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> nutzt und direkte Siganel empfangen kann. </p>
+<dt>Element <a class="el" href="classsrc_1_1_calc_1_1_calc_shapes_1_1_calc_shapes.html#ae06d89ef9d191fac8a326a26b28cf55e">src.Calc.CalcShapes.CalcShapes.werewolfWeight</a>  </dt>
+<dd><p class="startdd">Möglicherweise noch einen Hauch Zufall einfügen, der aber bei einem Charakter immer gleich sein sollte, also vielelicht mit dem Namen seeden oder so ähnlich.</p>
+<p class="enddd">GEschlecht berücksichtigen? </p>
 </dd>
-</dl>
-<p><a class="anchor" id="_todo000057"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_chara_trait.html#a794ddd73f3604b16fe4b468b4a02f7df">CharaTrait::hideDescriptionWidget</a> () </dt>
-<dd>Muß natürlich auch bei manchen Powers vorhanden sein. </dd>
-</dl>
-<p><a class="anchor" id="_todo000007"></a> </p>
-<dl>
-<dt>Element <a class="el" href="classcv___abstract_trait.html#a8348d3df93415c4dd31838ad79f3d176">cv_AbstractTrait::operator==</a> (const <a class="el" href="classcv___abstract_trait.html" title="Grundlegender Datentyp für eine Charaktereigenschaft.">cv_AbstractTrait</a> &amp;trait) const  </dt>
-<dd>Die Vergleiche sind noch nicht umfassend genug. Typ und Kategorie muß nich verglichen werden. etc. </dd>
-</dl>
-<p><a class="anchor" id="_todo000008"></a> </p>
-<dl>
-<dt>Element <a class="el" href="classcv___trait.html#adee2adf82138573180ff0d1486974ff6">cv_Trait::customText</a> () const  </dt>
-<dd>Eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, wenn kein Zusatztext vorgesehen ist.</dd>
-</dl>
-<p><a class="anchor" id="_todo000009"></a> </p>
-<dl>
-<dt>Element <a class="el" href="classcv___trait.html#a8c0d39d14efbcce546fbc6212f6e984b">cv_Trait::operator==</a> (const <a class="el" href="classcv___trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">cv_Trait</a> &amp;trait) const  </dt>
-<dd>Die Vergleiche sind noch nicht umfassend genug. Typ und Kategorie muß nich verglichen werden. etc. </dd>
-</dl>
-<p><a class="anchor" id="_todo000058"></a> </p>
-<dl>
-<dt>Klasse <a class="el" href="class_derangement_combo_box.html">DerangementComboBox</a>  </dt>
-<dd>Die Anzeige unterscheidet noch nicht zwischen milden und ernsten Störungen. </dd>
 </dl>
 <p><a class="anchor" id="_todo000012"></a> </p>
 <dl>
-<dt>Klasse <a class="el" href="class_draw_sheet.html">DrawSheet</a>  </dt>
-<dd>Bei Werwölfen wird die Rites-Kraft noch nicht beim Zeichnen der Kräfte unter Renown berücksichtigt. </dd>
+<dt>Element <a class="el" href="classsrc_1_1_i_o_1_1_read_xml_character_1_1_read_xml_character.html#adeaa72120720b1c9545966671f70fc1f">src.IO.ReadXmlCharacter.ReadXmlCharacter.readTraits</a>  </dt>
+<dd>ich marschiere hier durch alle Eigenschaften, um die Eigenschaft des richtigen Namens zu finden, damit ich customText abarbeiten kann. Das geht doch bestimmt auch mit Direktzugriff. </dd>
 </dl>
-<p><a class="anchor" id="_todo000061"></a> </p>
+<p><a class="anchor" id="_todo000014"></a> </p>
 <dl>
-<dt>Klasse <a class="el" href="class_info_widget.html">InfoWidget</a>  </dt>
-<dd>Bei den Virtues und Vices wird bislang nur der erwachsene behrücksichtigt. </dd>
-</dl>
-<p><a class="anchor" id="_todo000019"></a> </p>
-<dl>
-<dt>Klasse <a class="el" href="class_main_window.html">MainWindow</a>  </dt>
-<dd><p class="startdd">Der Text im Reiter Powers sollte je nach Spezies angepaßt werden (Disciplines, Renown, etc.)</p>
-<p>Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.</p>
-<p>Beim Wechseln zwischen den Spezies eie Warnung ausgeben, wenn Powers und Merits gelöscht würden.</p>
+<dt>Klasse <a class="el" href="classsrc_1_1_main_window_1_1_main_window.html">src.MainWindow.MainWindow</a>  </dt>
+<dd><p class="startdd">Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.</p>
 <p>Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.</p>
-<p>Bei Werwölfen nimmt "Rites" eine Sonderstellung ein. Auch die Gaben/Riten müssen berücksichtigt werden.</p>
-<p>Nutze eine qchecksum, um die Integrität der XML-DAteien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben.</p>
-<p>So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!</p>
-<p>Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).</p>
+<p>Sonderkräfte der Spezies fehlen. Bei Werwölfen müssen z.B. noch die Gaben/Riten berücksichtigt werden.</p>
+<p>Speicherdateien komprimieren.</p>
 <p>Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.</p>
-<p>Waffen einbauen.</p>
-<p>Charakterbeschreibung einbauen.</p>
-<p>Alle Reiter, bei denen nicht alle Punkte vergeben wurden grün färben und jene, bei denen zu viele vergeben wurde, rot färben.</p>
-<p>Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-DAtei bereitstellen, i welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.</p>
-<p>Zu verteilende Punkte für Spezialisierungen</p>
-<p>Zu verteilende Punkte für Kräfte.</p>
+<p>Kosten von Gegenständen berücksichtigen.</p>
+<p>Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.</p>
 <p>Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.</p>
-<p>Bei langen Liste (Powers) Wird das Stacked Widget zu groß und es wird überall ein Scrollbalken angezeigt und das Bild liegt nicht in der Mitte!</p>
 <p class="enddd">Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden. </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000062"></a> </p>
+<p><a class="anchor" id="_todo000023"></a> </p>
 <dl>
-<dt>Klasse <a class="el" href="class_merit_widget.html">MeritWidget</a>  </dt>
+<dt>Element <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#a268bebdb04824fa3c25bfd9d541c1a01">src.Storage.StorageCharacter.StorageCharacter.__init__</a>  </dt>
+<dd>Eigentlich benötigt Subpower keinen eigenen Datentyp.</dd>
+</dl>
+<p><a class="anchor" id="_todo000024"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classsrc_1_1_storage_1_1_storage_character_1_1_storage_character.html#abc827c3ac500f3c9123f7e67b079932a">src.Storage.StorageCharacter.StorageCharacter.checkPrerequisites</a>  </dt>
+<dd>Den SyntaxError sollte ich nicht verstecken! </dd>
+</dl>
+<p><a class="anchor" id="_todo000026"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_line_1_1_chara_trait.html">src.Widgets.Components.TraitLine.CharaTrait</a>  </dt>
+<dd>Solange kein Text in der Textbox einer Eigenschaft mit Zusatztext steht, sollte der Wert nicht verändert werden können. </dd>
+</dl>
+<p><a class="anchor" id="_todo000027"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classsrc_1_1_widgets_1_1_dialogs_1_1_message_box_1_1_message_box.html#abb343c689e9729d05d2c67db849c48d6">src.Widgets.Dialogs.MessageBox.MessageBox.exception</a>  </dt>
+<dd>Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann und nicht nur als Debug-Hilfe dienen kann. Dies wird auch Änderungen in der <a class="el" href="class_exception.html">Exception</a> -Klasse erfordern. </dd>
+</dl>
+<p><a class="anchor" id="_todo000029"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classsrc_1_1_widgets_1_1_info_widget_1_1_info_widget.html#a908f2b5cd76f5b160066be156ace4375">src.Widgets.InfoWidget.InfoWidget.updateOrganisation</a>  </dt>
+<dd>Um einer Organisation beizutreten sind gewisse Anforderungen zu erfüllen. Diese sollten in das programm irgendwie eingebaut werden. </dd>
+</dl>
+<p><a class="anchor" id="_todo000030"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="classsrc_1_1_widgets_1_1_item_widget_1_1_item_widget.html">src.Widgets.ItemWidget.ItemWidget</a>  </dt>
+<dd><p class="startdd">Drag&amp;Drop wäre auch nicht schlecht.</p>
+<p class="enddd">Momentan finde ich die Waffenkategorie über die Hintergrundfarbe heraus. Das ist nicht wirklich gut. </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000032"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classsrc_1_1_widgets_1_1_item_widget_1_1_item_widget.html#af04e7e74e27849b66d94e38838de5e76">src.Widgets.ItemWidget.ItemWidget.addCustomEquipment</a>  </dt>
+<dd>Nach dem Drücken des Hinzufügen.Knopfes, sollte der Fokus wieder auf das LineEdit gehen. </dd>
+</dl>
+<p><a class="anchor" id="_todo000033"></a> </p>
+<dl>
+<dt>Klasse <a class="el" href="classsrc_1_1_widgets_1_1_merit_widget_1_1_merit_widget.html">src.Widgets.MeritWidget.MeritWidget</a>  </dt>
 <dd><p class="startdd">Einen Knopf erstellen, über den der Benutzer angeben kann, welche Merits er denn wirklich alle angezeigt haben will.</p>
 <p class="enddd">Bei Merits mit Zusatztext (Language) in diesem men+ ein Zahlenfle dangeben, bei welchem der benutzer einstellen kann, wieviele verschiedene dieser scheinbar identischen merits er angezeigt haben will. </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000059"></a> </p>
+<p><a class="anchor" id="_todo000036"></a> </p>
 <dl>
-<dt>Element <a class="el" href="class_message_box.html#a8fb85b7476c12b1f70b5bfd5b30c9bc1">MessageBox::description</a>  </dt>
-<dd>Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann und nicht nur als Debug-Hilfe dienen kann. Dies wird auch Änderungen in der <a class="el" href="class_exception.html">Exception</a> -Klasse erfordern. </dd>
+<dt>Klasse <a class="el" href="classsrc_1_1_widgets_1_1_specialties_1_1_specialties.html">src.Widgets.Specialties.Specialties</a>  </dt>
+<dd>Es wäre toll, wenn der Benutzer eigene Spezialisierungen eintragen könnte, zusätzlich zu denen, die schon angeboten werden. </dd>
 </dl>
-<p><a class="anchor" id="_todo000065"></a> </p>
+<p><a class="anchor" id="_todo000037"></a> </p>
 <dl>
-<dt>Klasse <a class="el" href="class_morality_widget.html">MoralityWidget</a>  </dt>
-<dd>Ich bin mit den Geistesstörungen noch nicht gänzlich zufrieden. Es besteht die Gefahr, daß einzelne GEistesstörungen immer und immer wieder zu dem Charkater hinzugefügt werden und dementsprechend das Programm und den gespeicherten Charakter aufblähen können. </dd>
-</dl>
-<p><a class="anchor" id="_todo000044"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_character.html#aa39c61634020fb271ef6428ffe533cd1">StorageCharacter::addSkillSpecialties</a> (QString name, <a class="el" href="structcv___trait_detail.html" title="Speichert die zusätzlichen Parameter einer Eigenschaft.">cv_TraitDetail</a> detail) </dt>
-<dd>Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen. </dd>
-</dl>
-<p><a class="anchor" id="_todo000045"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_character.html#a2093dc6b7f575513846c3e8cd2fa0985">StorageCharacter::addTrait</a> (<a class="el" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a> *trait) </dt>
-<dd>Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist. </dd>
-</dl>
-<p><a class="anchor" id="_todo000046"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_character.html#a6534667b942bd21253c432fee79a8850">StorageCharacter::resetCharacter</a> () </dt>
-<dd>Kontrolle, ob das Löschen des Zusatztextes nicht ein Problem darstellt, da ich diesen Zusatext ja manchmal als Kriterium nutze. </dd>
-</dl>
-<p><a class="anchor" id="_todo000042"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_character.html#ae4fc2c6b281bfe6411812dc6f3ff41ff">StorageCharacter::setRealIdentity</a> (<a class="el" href="classcv___identity.html" title="Speichert die vollständige Identität des Charakters.">cv_Identity</a> id) </dt>
-<dd>Momentan ist dies die einzige identität, die von diesem programm genutzt wird. </dd>
-</dl>
-<p><a class="anchor" id="_todo000043"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_character.html#a6273e4a5881f52b074bb1e4885ce70a6">StorageCharacter::setSkillSpecialties</a> (QString name, QList&lt; cv_TraitDetail &gt; details) </dt>
-<dd>Wenn die Fertigkeit nicht existiert, zu der die Spezialisierungen gehören, sollte diese Funktion eine Ausnahme werfen. </dd>
-</dl>
-<p><a class="anchor" id="_todo000047"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_template.html#afd7774df0806805b5edf6055cdac41d5">StorageTemplate::breedTitle</a> (<a class="el" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe=cv_Species::SpeciesNo) const  </dt>
-<dd>Eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, falls der entsprechende Titel nicht gefunden wird. </dd>
-</dl>
-<p><a class="anchor" id="_todo000048"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_template.html#a75e002ef5fe704b9073bcc9ff1b58b98">StorageTemplate::factionTitle</a> (<a class="el" href="classcv___species.html#af8305d6f06136f65e34b447f195d3e17">cv_Species::SpeciesFlag</a> spe=cv_Species::SpeciesNo) const  </dt>
-<dd>Eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, falls der entsprechende Titel nicht gefunden wird. </dd>
-</dl>
-<p><a class="anchor" id="_todo000050"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_template.html#a24fae94e62d885bfb3a3ecb36bfeb96f">StorageTemplate::sortTraits</a> () </dt>
-<dd><p class="startdd">Sollte vielleicht eine <a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> werfen, wenn keine passende Eigenschaft gefunden wurde.</p>
-<p class="enddd">Sollte die Funktion traits() nutzen und nicht alles nochmal selbst implementieren. </p>
-</dd>
-</dl>
-<p><a class="anchor" id="_todo000049"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_storage_template.html#a75022d10255d8f09b675d8c01d2295f3">StorageTemplate::traits</a> (<a class="el" href="classcv___abstract_trait.html#a09217ebcc24e67440271013312406961">cv_AbstractTrait::Type</a> type, <a class="el" href="classcv___abstract_trait.html#ae5c124fc8c2dafa75496d176e8660ce0">cv_AbstractTrait::Category</a> category, <a class="el" href="classcv___trait.html#a56b86cd53ca095828363075eb53618b1">cv_Trait::EraFlag</a> era=cv_Trait::Modern, <a class="el" href="classcv___trait.html#ac80e116e2d5f044e58ffd3f1290bd87b">cv_Trait::AgeFlag</a> age=cv_Trait::Adult) const  </dt>
-<dd>Vielleicht kann ich die Anzahl der at()s reduzieren durch speichern des Zeigers? vor den if-Abfragen und Zuweisungen. Gilt auch für ähnliche Funktionen. </dd>
-</dl>
-<p><a class="anchor" id="_todo000011"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_trait.html#a2978f151799625492ce4bae4b3db5c04">Trait::addPrerequisitePtrs</a> (<a class="el" href="class_trait.html" title="Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.">Trait</a> *replacement) </dt>
-<dd>Besser wäre natürlich, aus dem Textstring ein C++-if-Konstrukt zu erzeugen. </dd>
-</dl>
-<p><a class="anchor" id="_todo000069"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_trait_specialties.html#a00f3539756417240d957be84471a86aa">TraitSpecialties::removeSpecialty</a> (int i) </dt>
-<dd><a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> auswerfen, wenn das Entfernen fehlschlägt. </dd>
-</dl>
-<p><a class="anchor" id="_todo000068"></a> </p>
-<dl>
-<dt>Element <a class="el" href="class_trait_specialties.html#a71e53c67062245ffc2bc8a84e9962fba">TraitSpecialties::removeSpecialty</a> (QString spec) </dt>
-<dd><a class="el" href="class_exception.html" title="Basisklasse für die Ausnahmebehandlung.">Exception</a> auswerfen, wenn das Entfernen fehlschlägt. </dd>
+<dt>Klasse <a class="el" href="classsrc_1_1_widgets_1_1_trait_widget_1_1_attribute_widget.html">src.Widgets.TraitWidget.AttributeWidget</a>  </dt>
+<dd>Bonusattribut als tatsächlichen Attributspunkt einfügen. </dd>
 </dl>
 </div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Erzeugt am Thu Oct 6 2011 19:42:10 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Thu Jan 26 2012 18:51:17 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>
   </div>
-<!--- window showing the filter options -->
+<!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Aufzählungen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="" frameborder="0" 
+<iframe src="javascript:void(0)" frameborder="0" 
         name="MSearchResults" id="MSearchResults">
 </iframe>
 </div>

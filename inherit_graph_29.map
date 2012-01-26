@@ -1,5 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$class_read_xml.html" title="List aus Xml&#45;Dateien." alt="" coords="5,32,83,61"/>
-<area shape="rect" id="node3" href="$class_read_xml_character.html" title="Liest die gespeicherten Charakterwerte in das Programm." alt="" coords="132,5,271,35"/>
-<area shape="rect" id="node5" href="$class_read_xml_template.html" title="Liest die Eigenschaften aus den beigefügten xml&#45;Dateien." alt="" coords="135,59,268,88"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_trait.html#aff507cb19b22e5668fc20b471d73d691" title="Trait::setValue" alt="" coords="220,32,329,61"/>
-<area shape="rect" id="node9" href="$class_check_trait.html#a5dde04a27f8ada588ecb3516630c9e6f" title="CheckTrait::traitPtr" alt="" coords="205,85,344,115"/>
-<area shape="rect" id="node11" href="$class_check_trait.html#a4399a810312044b74f6227955a1879a9" title="CheckTrait::value" alt="" coords="211,139,339,168"/>
-<area shape="rect" id="node5" href="$classcv___trait.html#a965fb56fc4ff6e659b4c44752cfaa538" title="cv_Trait::value" alt="" coords="411,5,520,35"/>
-<area shape="rect" id="node7" href="$class_trait.html#a953d7925e76098c051e7ade90a25cc03" title="Trait::valueChanged" alt="" coords="392,59,539,88"/>
-</map>

@@ -1,6 +1,17 @@
 build
 doc
+resources
+save
+src
+ui
 src-unused
 *.kdev4
 *~
 *.kate-swp
+*.py
+*.pyc
+*.h
+*.cpp
+*.map
+*.md5
+config.ini

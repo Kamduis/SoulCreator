@@ -16,7 +16,7 @@ $(document).ready(initResizable);
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
 <body onload='searchBox.OnSelectItem(0);'>
-<!-- Erzeugt von Doxygen 1.7.3 -->
+<!-- Erzeugt von Doxygen 1.7.4 -->
 <script type="text/javascript"><!--
 var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
 --></script>
@@ -62,7 +62,7 @@ function toggleVisibility(linkObj) {
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="WoD.png"></td>
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">SoulCreator</div>
    <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
@@ -112,38 +112,43 @@ function toggleVisibility(linkObj) {
 <div id="doc-content">
 <div class="header">
   <div class="headertitle">
-<h1>Liste der bekannten Fehler </h1>  </div>
+<div class="title">Liste der bekannten Fehler </div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="_bug000002"></a> </p>
+<div class="textblock"><p><a class="anchor" id="_bug000003"></a> </p>
 <dl>
-<dt>Klasse <a class="el" href="class_main_window.html">MainWindow</a>  </dt>
-<dd>Manchmal wird (zeitlich deutlich versetzt) eine fast komplett schwarze Seite ausgedruckt. Ich weiß nicht, ob die Export- oder die Druckfunktion von SoulCreator die Ursache ist. Scheint aber die Exportfunktion zu sein.</dd>
+<dt>Klasse <a class="el" href="classsrc_1_1_main_window_1_1_main_window.html">src.MainWindow.MainWindow</a>  </dt>
+<dd>Bei Menschen soll im Auswahlwidget der Schriftzug Grau sein. Ist er auch, aber sobald man auf irgendeine Eigenschaft klickt (CharaTrait-Klasse), wird der text schwarz!</dd>
 </dl>
-<p><a class="anchor" id="_bug000008"></a> </p>
+<p><a class="anchor" id="_bug000004"></a> </p>
 <dl>
-<dt>Klasse <a class="el" href="class_power_widget.html">PowerWidget</a>  </dt>
-<dd>Da ich die Eigenschaften, welche für die jeweilige Spezies nicht gelten nur verstecke, nehmen sie doch ein klein Wenig Platz weg. Und das fällt tatsächlich auf! </dd>
+<dt>Klasse <a class="el" href="classsrc_1_1_widgets_1_1_morality_widget_1_1_morality_widget.html">src.Widgets.MoralityWidget.MoralityWidget</a>  </dt>
+<dd>Wird die Spezies geändert, verschwinden alle Geistesstörungen. </dd>
+</dl>
+<p><a class="anchor" id="_bug000005"></a> </p>
+<dl>
+<dt>Element <a class="el" href="classsrc_1_1_widgets_1_1_morality_widget_1_1_morality_widget.html#a00a91d57952845bee3da4a28ca1937c2">src.Widgets.MoralityWidget.MoralityWidget.updateDerangementBoxes</a>  </dt>
+<dd>aus irgendeinem grund nimmt moralityValue manchmal den Wert -1 an. Weiß aber nicht, woher. </dd>
 </dl>
 </div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Erzeugt am Thu Oct 6 2011 19:42:10 für SoulCreator von&#160;
+      <li class="footer">Erzeugt am Sat Jan 21 2012 12:20:37 für SoulCreator von&#160;
 <a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>
   </div>
-<!--- window showing the filter options -->
+<!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Aufzählungen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="" frameborder="0" 
+<iframe src="javascript:void(0)" frameborder="0" 
         name="MSearchResults" id="MSearchResults">
 </iframe>
 </div>

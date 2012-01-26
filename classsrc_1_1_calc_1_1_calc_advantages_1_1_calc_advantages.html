@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: src.Calc.CalcAdvantages.CalcAdvantages Klassenreferenz</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.4 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Auflistung&#160;der&#160;Klassen</span></a></li>
+      <li><a href="classes.html"><span>Klassen-Verzeichnis</span></a></li>
+      <li><a href="inherits.html"><span>Klassenhierarchie</span></a></li>
+      <li><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Öffentliche Methoden</a> &#124;
+<a href="#pub-static-attribs">Statische öffentliche Attribute</a>  </div>
+  <div class="headertitle">
+<div class="title">src.Calc.CalcAdvantages.CalcAdvantages Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="src::Calc::CalcAdvantages::CalcAdvantages" --><!-- doxytag: inherits="PySide::QtCore::QObject" -->
+<p>Diese Klasse führt die berechnung der abgeleiteten Eigenschaften durch.  
+ <a href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#details">Mehr ...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Klassendiagramm für src.Calc.CalcAdvantages.CalcAdvantages:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages__inherit__graph.svg" width="296" height="118" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Zusammengehörigkeiten von src.Calc.CalcAdvantages.CalcAdvantages:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages__coll__graph.svg" width="300" height="222" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+
+<p><a href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Öffentliche Methoden</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0280c4848c09d92731cc612e66697373"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::__init__" ref="a0280c4848c09d92731cc612e66697373" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a5694b796ecd6e0a21966a4eef18f35a4">calcDefense</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4065f3df6537de36c63cbe814d319465"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::calcHealth" ref="a4065f3df6537de36c63cbe814d319465" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a4065f3df6537de36c63cbe814d319465">calcHealth</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a33d48525ddee92701dc4dd7d40d7cbf2">calcInitiative</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a452342b9ef5088028e0ebc5750c17273"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::calcSize" ref="a452342b9ef5088028e0ebc5750c17273" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a452342b9ef5088028e0ebc5750c17273">calcSize</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a2eab5f557aa6798ed49b78f9e06173a6">calcSpeed</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47cf4935eba14427ef6172389dc67d4a"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::calcWillpower" ref="a47cf4935eba14427ef6172389dc67d4a" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html#a47cf4935eba14427ef6172389dc67d4a">calcWillpower</a></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
+Statische öffentliche Attribute</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d360f275abe5a0249231a05142b842a"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::defenseChanged" ref="a3d360f275abe5a0249231a05142b842a" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>defenseChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ddbd8e3ce04c530b0269f3189c184d9"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::healthChanged" ref="a6ddbd8e3ce04c530b0269f3189c184d9" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>healthChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f2a87cb1f5d5ca3f3ae3cf79fdeac22"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::initiativeChanged" ref="a4f2a87cb1f5d5ca3f3ae3cf79fdeac22" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>initiativeChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e1f7ef6ce45b47b722ddc9dac8f2376"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::sizeChanged" ref="a1e1f7ef6ce45b47b722ddc9dac8f2376" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>sizeChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac440b088fa12b2db8dab23d2104470f"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::speedChanged" ref="aac440b088fa12b2db8dab23d2104470f" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>speedChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae203303d90ede4b79f555105e0e6f97d"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::willpowerChanged" ref="ae203303d90ede4b79f555105e0e6f97d" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>willpowerChanged</b> = Signal(int)</td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Diese Klasse führt die berechnung der abgeleiteten Eigenschaften durch. </p>
+<p>Die hier deklarierten Berechnungsfunktionen werden zwar bei der Änderung jeder Eigenschaft aufgerufen, aber berechnen die Werte nur, wenn eine Eigenschaft verändert wurde, welche Einfluß auf das Ergebnis nimmt. Sie geben allerdings immer das Ergebnis der berechnung aus. Entweder den neuen Wert, oder den alten Wert, der in dieser Klasse gespeichert wird. </p>
+</div><hr/><h2>Dokumentation der Elementfunktionen</h2>
+<a class="anchor" id="a5694b796ecd6e0a21966a4eef18f35a4"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::calcDefense" ref="a5694b796ecd6e0a21966a4eef18f35a4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Calc.CalcAdvantages.CalcAdvantages.calcDefense </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Berechnung der Defense. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Noch zu erledigen:</a></b></dt><dd>Bislang nicht von der Spezies abhängig: Tiere sollten stets das größere von Dex und Wits als Defense haben. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a33d48525ddee92701dc4dd7d40d7cbf2"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::calcInitiative" ref="a33d48525ddee92701dc4dd7d40d7cbf2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Calc.CalcAdvantages.CalcAdvantages.calcInitiative </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Berechnung der Initiative des Charakters. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Noch zu erledigen:</a></b></dt><dd>Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2eab5f557aa6798ed49b78f9e06173a6"></a><!-- doxytag: member="src::Calc::CalcAdvantages::CalcAdvantages::calcSpeed" ref="a2eab5f557aa6798ed49b78f9e06173a6" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Calc.CalcAdvantages.CalcAdvantages.calcSpeed </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Berechnung der Geschwindigkeit des Charakters. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Noch zu erledigen:</a></b></dt><dd>Bislang nur von Strength und Dexterity abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt. </dd></dl>
+
+</div>
+</div>
+</div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>src</b>      </li>
+      <li class="navelem"><b>Calc</b>      </li>
+      <li class="navelem"><b>CalcAdvantages</b>      </li>
+      <li class="navelem"><a class="el" href="classsrc_1_1_calc_1_1_calc_advantages_1_1_calc_advantages.html">CalcAdvantages</a>      </li>
+      <li class="footer">Erzeugt am Thu Jan 26 2012 18:51:17 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

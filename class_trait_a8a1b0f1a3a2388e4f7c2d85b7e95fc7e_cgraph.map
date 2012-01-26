@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_exception.html#a7cb124af6ec64ad88a8721b60c7932fb" title="Exception::description" alt="" coords="232,5,395,35"/>
-<area shape="rect" id="node5" href="$class_exception.html#aeaf3a81717287d50938bc72ed67bacd8" title="Exception::message" alt="" coords="239,59,388,88"/>
-<area shape="rect" id="node7" href="$classcv___abstract_trait.html#a3bbbc5a0073617a70c86741d4c918576" title="cv_AbstractTrait::name" alt="" coords="229,112,397,141"/>
-<area shape="rect" id="node9" href="$class_trait.html#acb5c6e66ed14d1d6105a40c0babad47c" title="Trait::prerequisitePtrs" alt="" coords="235,165,392,195"/>
-<area shape="rect" id="node11" href="$classcv___trait.html#a6bc140c1db6f0b138451fb8ab38b0661" title="cv_Trait::prerequisites" alt="" coords="233,219,393,248"/>
-</map>

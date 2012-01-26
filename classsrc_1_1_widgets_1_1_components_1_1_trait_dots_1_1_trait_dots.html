@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: src.Widgets.Components.TraitDots.TraitDots Klassenreferenz</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.4 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Auflistung&#160;der&#160;Klassen</span></a></li>
+      <li><a href="classes.html"><span>Klassen-Verzeichnis</span></a></li>
+      <li><a href="inherits.html"><span>Klassenhierarchie</span></a></li>
+      <li><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Öffentliche Methoden</a> &#124;
+<a href="#pub-static-attribs">Statische öffentliche Attribute</a>  </div>
+  <div class="headertitle">
+<div class="title">src.Widgets.Components.TraitDots.TraitDots Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="src::Widgets::Components::TraitDots::TraitDots" --><!-- doxytag: inherits="PySide::QtGui::QWidget" -->
+<p>Eine Darstellung von Werten in Form ausgefüllter Punkte.  
+ <a href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#details">Mehr ...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Klassendiagramm für src.Widgets.Components.TraitDots.TraitDots:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots__inherit__graph.svg" width="312" height="118" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Zusammengehörigkeiten von src.Widgets.Components.TraitDots.TraitDots:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots__coll__graph.svg" width="406" height="222" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+
+<p><a href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Öffentliche Methoden</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af260b13f31a23e3845aaffa3438f2827"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::__init__" ref="af260b13f31a23e3845aaffa3438f2827" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e808c1bc4583959f0abeff528d88c93"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::addAllowedValue" ref="a3e808c1bc4583959f0abeff528d88c93" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a3e808c1bc4583959f0abeff528d88c93">addAllowedValue</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56540628a61cef1e053c4d4909c12059"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::addForbiddenValue" ref="a56540628a61cef1e053c4d4909c12059" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a56540628a61cef1e053c4d4909c12059">addForbiddenValue</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af573cf5f0df86d5ba3b7bc92bb56744c"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::changeEvent" ref="af573cf5f0df86d5ba3b7bc92bb56744c" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>changeEvent</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6463f2c797730affcc47420ef2067788"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::maximum" ref="a6463f2c797730affcc47420ef2067788" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>maximum</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a893da38abf744eca163d6df97a36f692"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::minimum" ref="a893da38abf744eca163d6df97a36f692" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>minimum</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb44ff91390bc90767d7c56b9a51d123"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::mousePressEvent" ref="adb44ff91390bc90767d7c56b9a51d123" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#adb44ff91390bc90767d7c56b9a51d123">mousePressEvent</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbd3f32fdbf8c7413860b8724591917f"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::paintEvent" ref="adbd3f32fdbf8c7413860b8724591917f" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30f2878e517fb5af7c533b9bae7ab79e"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::readOnly" ref="a30f2878e517fb5af7c533b9bae7ab79e" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>readOnly</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c365cb353c4db7130e2da51154f853d"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::resetMinimumSize" ref="a0c365cb353c4db7130e2da51154f853d" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><b>resetMinimumSize</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a7027c0c84784c497d8558d185814ddba">setAllowedValues</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a7283dc6db697ecd079e133eca01ad6ae">setForbiddenValues</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0749b2ac1501f35a92e0bea598548d80"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::setMaximum" ref="a0749b2ac1501f35a92e0bea598548d80" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a0749b2ac1501f35a92e0bea598548d80">setMaximum</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55465f7fe2758b61851563adf5ed49e6"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::setMinimum" ref="a55465f7fe2758b61851563adf5ed49e6" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a55465f7fe2758b61851563adf5ed49e6">setMinimum</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae45597eb08a05e3583a14c65cbf01d6e"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::setReadOnly" ref="ae45597eb08a05e3583a14c65cbf01d6e" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#ae45597eb08a05e3583a14c65cbf01d6e">setReadOnly</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a324d64784ffa1a85f0c348a5c4fba9ce">setValue</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a450450c8da8db2799bc70fc2068d492d">value</a></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
+Statische öffentliche Attribute</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a00d0900cdded7445ee9cb16d68be08"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::activated" ref="a3a00d0900cdded7445ee9cb16d68be08" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>activated</b> = Signal()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed463c5f3399f07b29b2c95a665fb678"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::dotRadiusHalf" ref="aed463c5f3399f07b29b2c95a665fb678" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>dotRadiusHalf</b> = 2</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9228458d147c9cd709c2683001e7bf46"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::j" ref="a9228458d147c9cd709c2683001e7bf46" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>j</b> = 1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3b1bc80b2ecb23148fda22f927be27b"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::maximumChanged" ref="ae3b1bc80b2ecb23148fda22f927be27b" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>maximumChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4f289322f12d5e97a38dfef6f68b0f3"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::minimumChanged" ref="af4f289322f12d5e97a38dfef6f68b0f3" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>minimumChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8cdd3d680d64d6d19025d88daaf6996"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::shiftCenter" ref="af8cdd3d680d64d6d19025d88daaf6996" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#af8cdd3d680d64d6d19025d88daaf6996">shiftCenter</a> = dotCenter+QPoint( 0 + dotDiameter * i, 0 )</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55ced0fbf6ac88eeb37eeda2f2e9bfe5"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::valueChanged" ref="a55ced0fbf6ac88eeb37eeda2f2e9bfe5" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>valueChanged</b> = Signal(int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ab91d9ea1582ddd2ff4f3f1e3f1f05e"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::valueClicked" ref="a4ab91d9ea1582ddd2ff4f3f1e3f1f05e" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>valueClicked</b> = Signal(int)</td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Eine Darstellung von Werten in Form ausgefüllter Punkte. </p>
+<p>Ein einfacher ganzzahliger Wert wirden in Form ausgefüllter Punkte dargestellt. Die bis zum Maximalwert übrigen Punkte sind nicht ausgefüllt.</p>
+<p>Wird das Widget disabled, wird der Alphakanal genutzt, um die Punkte teilweise durchsichtig zu machen und sie so grau erscheinen zu lassen.</p>
+<p>Es besteht die Möglichkeit aus der Menge an Werten zwischen minimum und maximum einige zu verbieten. </p>
+</div><hr/><h2>Dokumentation der Elementfunktionen</h2>
+<a class="anchor" id="a7027c0c84784c497d8558d185814ddba"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::setAllowedValues" ref="a7027c0c84784c497d8558d185814ddba" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Widgets.Components.TraitDots.TraitDots.setAllowedValues </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>values</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Über diese Funktion wird eine Liste der erlaubten Werte gesetzt. </p>
+<p>Da es manchmal einfacher ist, erlaubte Werte einzugeben, müssen diese entsprechend Übersetzt werden, ehe sie in die self.__forbiddenList eingesetzt werden. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7283dc6db697ecd079e133eca01ad6ae"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::setForbiddenValues" ref="a7283dc6db697ecd079e133eca01ad6ae" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Widgets.Components.TraitDots.TraitDots.setForbiddenValues </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>values</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Verändere die Breite des Seperators void TraitDots.setSeperatorWidth( int valueArg ){ MySeperatorWidth = valueArg; }. </p>
+<p>Verändere die Anzahl Punkte, ehe ein Seperator gesetzt wird void TraitDots.setSeperatorWidth( int valueArg ){ MySeperatorStep = valueArg; } Verändert die FÜllfarbe void TraitDots.setColorEmpty( const QColor &amp; color ) { v_colorEmpty = color; Neu zeichnen update(); } Verändert die FÜllfarbe void TraitDots.setColorFull( const QColor &amp; color ) { v_colorFull = color; Neu zeichnen update(); } Verändert die Randfarbe void TraitDots.setColorFrame( const QColor &amp; color ) { v_colorFrame = color; Neu zeichnen update(); }</p>
+<p>Über diese Funktion wird eine Liste der verbotenen Werte gesetzt.</p>
+<p>Beachtet noch nicht, daß ein aktueller Wert nach einer veränderung der verbotenen Werte erhalten bleibt, obwohl er inzsichen verboten ist. </p>
+
+</div>
+</div>
+<a class="anchor" id="a324d64784ffa1a85f0c348a5c4fba9ce"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::setValue" ref="a324d64784ffa1a85f0c348a5c4fba9ce" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Widgets.Components.TraitDots.TraitDots.setValue </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Speichert den aktuellen Wert des Widgets. </p>
+<p>Dieser Wert stellt die Zahl der ausgefüllten Punkte dar. Die Gesamtzahl der dargestellten Punkte ist in maximum() gespeichert.</p>
+<p>Soll value auf einen Wert gesetzt werden, der über dem Maximum liegt, wird er nur auf das Maximum gesetzt, soll er unter das Minimum gesetzt werden, wird er auf Minimum gesetzt.</p>
+<p>Soll value auf einen verbotenen Wert gesetzt werden, wird er auf den nächstkleineren, erlaubten Wert gesetzt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a450450c8da8db2799bc70fc2068d492d"></a><!-- doxytag: member="src::Widgets::Components::TraitDots::TraitDots::value" ref="a450450c8da8db2799bc70fc2068d492d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Widgets.Components.TraitDots.TraitDots.value </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Ist anatomisch nicht sehr sinnvoll Doppelklick soll den Wert entweder auf 0 setzen, wenn er vorher nicht 0 war oder ihn auf das Maximum setzen. </p>
+<p>void TraitDots.mouseDoubleClickEvent(QMouseEvent *event){ if (<a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html#a450450c8da8db2799bc70fc2068d492d" title="Ist anatomisch nicht sehr sinnvoll Doppelklick soll den Wert entweder auf 0 setzen, wenn er vorher nicht 0 war oder ihn auf das Maximum setzen.">value()</a> == 0) setValue( maximum() ); else setValue( 0 );</p>
+<p>## Neu zeichnen update(); } </p>
+
+</div>
+</div>
+</div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>src</b>      </li>
+      <li class="navelem"><b>Widgets</b>      </li>
+      <li class="navelem"><b>Components</b>      </li>
+      <li class="navelem"><b>TraitDots</b>      </li>
+      <li class="navelem"><a class="el" href="classsrc_1_1_widgets_1_1_components_1_1_trait_dots_1_1_trait_dots.html">TraitDots</a>      </li>
+      <li class="footer">Erzeugt am Thu Jan 26 2012 18:51:17 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

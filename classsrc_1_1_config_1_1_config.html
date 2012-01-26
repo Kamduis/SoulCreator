@@ -1,0 +1,896 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>SoulCreator: src.Config.Config Klassenreferenz</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+$(document).ready(initResizable);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Erzeugt von Doxygen 1.7.4 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
+--></script>
+<script type="text/javascript">
+function hasClass(ele,cls) {
+  return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function addClass(ele,cls) {
+  if (!this.hasClass(ele,cls)) ele.className += " "+cls;
+}
+
+function removeClass(ele,cls) {
+  if (hasClass(ele,cls)) {
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    ele.className=ele.className.replace(reg,' ');
+  }
+}
+
+function toggleVisibility(linkObj) {
+ var base = linkObj.getAttribute('id');
+ var summary = document.getElementById(base + '-summary');
+ var content = document.getElementById(base + '-content');
+ var trigger = document.getElementById(base + '-trigger');
+ if ( hasClass(linkObj,'closed') ) {
+   summary.style.display = 'none';
+   content.style.display = 'block';
+   trigger.src = 'open.png';
+   removeClass(linkObj,'closed');
+   addClass(linkObj,'opened');
+ } else if ( hasClass(linkObj,'opened') ) {
+   summary.style.display = 'block';
+   content.style.display = 'none';
+   trigger.src = 'closed.png';
+   removeClass(linkObj,'opened');
+   addClass(linkObj,'closed');
+ }
+ return false;
+}
+</script>
+<div id="top">
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="WoD.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">SoulCreator</div>
+   <div id="projectbrief">Charaktergenerator für die World of Darkness</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Hauptseite</span></a></li>
+      <li><a href="pages.html"><span>Zusätzliche&#160;Informationen</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klassen</span></a></li>
+      <li><a href="files.html"><span>Dateien</span></a></li>
+      <li><a href="dirs.html"><span>Verzeichnisse</span></a></li>
+      <li id="searchli">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Suchen" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Auflistung&#160;der&#160;Klassen</span></a></li>
+      <li><a href="classes.html"><span>Klassen-Verzeichnis</span></a></li>
+      <li><a href="inherits.html"><span>Klassenhierarchie</span></a></li>
+      <li><a href="functions.html"><span>Klassen-Elemente</span></a></li>
+    </ul>
+  </div>
+</div>
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+  initNavTree('classsrc_1_1_config_1_1_config.html','');
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Öffentliche Methoden</a> &#124;
+<a href="#pub-static-attribs">Statische öffentliche Attribute</a>  </div>
+  <div class="headertitle">
+<div class="title">src.Config.Config Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="src::Config::Config" --><!-- doxytag: inherits="object" -->
+<p>Konfigurationsklasse des Programms.  
+ <a href="classsrc_1_1_config_1_1_config.html#details">Mehr ...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png"/> Klassendiagramm für src.Config.Config:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_config_1_1_config__inherit__graph.svg" width="139" height="118" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png"/> Zusammengehörigkeiten von src.Config.Config:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe src="classsrc_1_1_config_1_1_config__coll__graph.svg" width="739" height="310" frameborder="0" scrolling="no"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">Legende</a>]</span></center></div>
+
+<p><a href="classsrc_1_1_config_1_1_config-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Öffentliche Methoden</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32a2bc6d9c92357868758e620d8852e2"></a><!-- doxytag: member="src::Config::Config::getAge" ref="a32a2bc6d9c92357868758e620d8852e2" args="" -->
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a32a2bc6d9c92357868758e620d8852e2">getAge</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#ac4ef8239a212089d7bc3bf24c663a42e">version</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a8c65c6f15c4811184131162ca8a9afee">versionDetail</a></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
+Statische öffentliche Attribute</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a2b81d8a1aeac1fb1a0e947875fdcfcf9">adultAge</a> = 13</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#ac87ae0e678f0c8c199604e3fb12ac7b7">ages</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a295d380f8cfc653ced36aa396a93695b">attributes</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a071b168cdc2fa107c30daf12c4e1e7d8"></a><!-- doxytag: member="src::Config::Config::attributeSorts" ref="a071b168cdc2fa107c30daf12c4e1e7d8" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>attributeSorts</b> = ( u&quot;Power&quot;, u&quot;Finesse&quot;, u&quot;Resistance&quot;, )</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#af3c4097766b2c218e4bca672049bcd1a">calendarForAgeCalculation</a> = True</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee66788e979cedab51852a708f6a6ff0"></a><!-- doxytag: member="src::Config::Config::configFile" ref="aee66788e979cedab51852a708f6a6ff0" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>configFile</b> = &quot;config.ini&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#ac9f62146f317a372050c1a15045ce12e">creationTraitDouble</a> = 4</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a653c84cf8bf58345b74b1124a8e41c"></a><!-- doxytag: member="src::Config::Config::dateFormat" ref="a0a653c84cf8bf58345b74b1124a8e41c" args="" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>dateFormat</b> = Qt.ISODate</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5176d14b7c69102b93be559bb8fd806"></a><!-- doxytag: member="src::Config::Config::deactivatedTextColor" ref="aa5176d14b7c69102b93be559bb8fd806" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#aa5176d14b7c69102b93be559bb8fd806">deactivatedTextColor</a> = &quot;darkgrey&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a24d72c5e50a540af47dc813938ea7d4c">derangementMoralityTraitMax</a> = 7</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a0077da1154b3ffc381c97f4f50a6d2c6">eras</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a9286041be927ccd307103ca1f25cdea7">flawCategories</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a15040b913d5199670819183cd8860498">genders</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af28f7e48336536ff92cca4f69f5160a6"></a><!-- doxytag: member="src::Config::Config::importantTextColor" ref="af28f7e48336536ff92cca4f69f5160a6" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#af28f7e48336536ff92cca4f69f5160a6">importantTextColor</a> = &quot;darkBlue&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c601ba0e9953fdc13b9bf3ba6e55952"></a><!-- doxytag: member="src::Config::Config::initialAge" ref="a3c601ba0e9953fdc13b9bf3ba6e55952" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a3c601ba0e9953fdc13b9bf3ba6e55952">initialAge</a> = 21</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#aa075ff62ff6e9cda146bbe478a6c9037">initialSpecies</a> = &quot;Human&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a96e84cfe445e6dee8a2dafd8b1ca6d62">inlineWidgetHeightMax</a> = 18</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a0d66e66a709584888f041c0b22885e46">mainCategories</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a4777a6c91c89e56ed82e0a31138d586f">meritCategories</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a6486d006a6f607182f2c7ce38aa84eff">moralityIdentifier</a> = &quot;Morality&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a99c474067508fd7cca9a15a9d4cc346b">moralityTraitDefaultValue</a> = 7</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#aaff145f0c60cdcbedf7b83ec20e73e03">moralityTraitMax</a> = 10</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ce19d851f1658dd7a715053093236c9"></a><!-- doxytag: member="src::Config::Config::organization" ref="a8ce19d851f1658dd7a715053093236c9" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>organization</b> = &quot;Caern&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a5b3e4b76e04fbb73309fe7b530114ffa">pictureFormat</a> = &quot;png&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2d421962faf32536bfeee6363843ae6"></a><!-- doxytag: member="src::Config::Config::pictureHeightMax" ref="af2d421962faf32536bfeee6363843ae6" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>pictureHeightMax</b> = 800</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#af1238a2ce5a994e1c10edb20fbf4b4df">pictureWidthMax</a> = 800</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a12760a3d36172e0ff3d92330b113d325">pointsNegativeColor</a> = &quot;orangered&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a83c468ca9c6553c85997488221a6813d">pointsPositiveColor</a> = &quot;chartreuse&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a52a6ed7085c4fcc27105e75e08291af5">powerstatDefaultValue</a> = 1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d5fddcf63ab5dedffe713a7668c1377"></a><!-- doxytag: member="src::Config::Config::powerstatIdentifier" ref="a3d5fddcf63ab5dedffe713a7668c1377" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a3d5fddcf63ab5dedffe713a7668c1377">powerstatIdentifier</a> = &quot;Powerstat&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#ac8d820c3c35283c01a1c9767afe2b735">powerstatMax</a> = 10</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a711cebde6cd44155da212a16318f8e37">powerstatMin</a> = 1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a944311e112d586937430b6d2791c72fb"></a><!-- doxytag: member="src::Config::Config::programAuthor" ref="a944311e112d586937430b6d2791c72fb" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>programAuthor</b> = &quot;Victor&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0520dfa07a20c38a2336a83c40ad9976"></a><!-- doxytag: member="src::Config::Config::programDescription" ref="a0520dfa07a20c38a2336a83c40ad9976" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>programDescription</b> = &quot;Charaktergenerator für die World of Darkness.&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a443bde46d177fb0bc3ed8308960ed5ab"></a><!-- doxytag: member="src::Config::Config::programName" ref="a443bde46d177fb0bc3ed8308960ed5ab" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>programName</b> = &quot;SoulCreator&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65c45b9ba94b4d34e828a306d4d30fd8"></a><!-- doxytag: member="src::Config::Config::programVersionChange" ref="a65c45b9ba94b4d34e828a306d4d30fd8" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>programVersionChange</b> = 0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7637a8f71e864e10503a78a078d37f81"></a><!-- doxytag: member="src::Config::Config::programVersionMajor" ref="a7637a8f71e864e10503a78a078d37f81" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>programVersionMajor</b> = 0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac09ce27f1d9113c73f4d68bc7fb16b18"></a><!-- doxytag: member="src::Config::Config::programVersionMinor" ref="ac09ce27f1d9113c73f4d68bc7fb16b18" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>programVersionMinor</b> = 9</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a466aaa006938a2723b891cf7e8c73e10"></a><!-- doxytag: member="src::Config::Config::resourceDir" ref="a466aaa006938a2723b891cf7e8c73e10" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>resourceDir</b> = &quot;resources&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d403430c65ed5e8e21bda413285f558"></a><!-- doxytag: member="src::Config::Config::saveDir" ref="a2d403430c65ed5e8e21bda413285f558" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>saveDir</b> = &quot;save&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a9cbc8210c8462378d8ab9472aa4e8f"></a><!-- doxytag: member="src::Config::Config::selectIconSize" ref="a3a9cbc8210c8462378d8ab9472aa4e8f" args="" -->
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>selectIconSize</b> = QSize(50,50)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1beb2b0ab4039e5aebb0bb9f2c38839a"></a><!-- doxytag: member="src::Config::Config::selectWidgetWidth" ref="a1beb2b0ab4039e5aebb0bb9f2c38839a" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>selectWidgetWidth</b> = 150</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bff3a4a9f948b365fca74009b311a55"></a><!-- doxytag: member="src::Config::Config::sepChar" ref="a6bff3a4a9f948b365fca74009b311a55" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>sepChar</b> = &quot;;&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a3e548ecedfdead341d3039ba9d3c4d64">severeDerangementsColor</a> = &quot;sandybrown&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#aae33a4ccc38a60d5efd354e27d3253ea">shapesWerewolf</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a794468c3dc1e1ea8683d8b3b703cb164">spinBoxNoTextWidth</a> = 30</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a6f69c575f6ffbc8159f2f549e8a432"></a><!-- doxytag: member="src::Config::Config::textDateFormat" ref="a4a6f69c575f6ffbc8159f2f549e8a432" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>textDateFormat</b> = &quot;dd.MM.yyyy&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#abb18f9247557d402436755b141c50fc4">traitCategorySpace</a> = 10</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a77757de5c66307b7f69952222b47177f">traitCustomTextWidthMin</a> = 100</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a9c23d6c4bcba4279f4b9173a8e2ce91e">traitLineWidthMin</a> = 320</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a555fed58cba356bef72ac1bfffaca303">traitMultipleMax</a> = 4</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#af79de067a95f6bcab473a91c74cd29d9">typs</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b23f72b01bf2aadaa9e4e8cadfe2058"></a><!-- doxytag: member="src::Config::Config::uiDir" ref="a5b23f72b01bf2aadaa9e4e8cadfe2058" args="" -->
+string&#160;</td><td class="memItemRight" valign="bottom"><b>uiDir</b> = &quot;ui&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a15329e05b7b819f6d6b11f21ca80347b">vSpace</a> = 5</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">dictionary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a04e71b5e8fb9585842a94896b5d5076b">weaponIcons</a> = {}</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">dictionary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#a4b0244d1b93da21f28d0c00e7fb03bb9">weaponsColor</a> = {}</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsrc_1_1_config_1_1_config.html#ae8d7fb3c073f5f3dd02f25d95141275a">willpowerMax</a> = 10</td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Konfigurationsklasse des Programms. </p>
+<p>Hier werden die Konfigurationseinstellungen gespeichert. </p>
+</div><hr/><h2>Dokumentation der Elementfunktionen</h2>
+<a class="anchor" id="ac4ef8239a212089d7bc3bf24c663a42e"></a><!-- doxytag: member="src::Config::Config::version" ref="ac4ef8239a212089d7bc3bf24c663a42e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Config.Config.version </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die aktuelle Version des Programms ausschließlich der Change-Nummer. </p>
+<p>Programme mit unterschieldicher Versionsnummer sind zueinander nicht notwendigerweise kompatibel. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8c65c6f15c4811184131162ca8a9afee"></a><!-- doxytag: member="src::Config::Config::versionDetail" ref="a8c65c6f15c4811184131162ca8a9afee" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def src.Config.Config.versionDetail </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die aktuelle Version des Programms einschließlich der Change-Nummer. </p>
+<p>Unterscheiden sich Programme in ihrer Change-Nummer, aber der Rest ihrer Versionsnummer ist gleich, sollten eigentlich keine Kompatibilitätsprobleme mit den Template-Dateien und den gespeicherten Charakteren auftreten. </p>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Datenelemente</h2>
+<a class="anchor" id="a2b81d8a1aeac1fb1a0e947875fdcfcf9"></a><!-- doxytag: member="src::Config::Config::adultAge" ref="a2b81d8a1aeac1fb1a0e947875fdcfcf9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a2b81d8a1aeac1fb1a0e947875fdcfcf9">src.Config.Config.adultAge</a> = 13<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Das Alter ab welchem der Charakter /kein/ Kind mehr ist. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac87ae0e678f0c8c199604e3fb12ac7b7"></a><!-- doxytag: member="src::Config::Config::ages" ref="ac87ae0e678f0c8c199604e3fb12ac7b7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#ac87ae0e678f0c8c199604e3fb12ac7b7">src.Config.Config.ages</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        <span class="stringliteral">&quot;Adult&quot;</span>,
+        <span class="stringliteral">&quot;Kid&quot;</span>,
+    )
+</pre></div>
+<p>Sämtliche Eras, welcher ein Charakter angehören kann. </p>
+
+</div>
+</div>
+<a class="anchor" id="a295d380f8cfc653ced36aa396a93695b"></a><!-- doxytag: member="src::Config::Config::attributes" ref="a295d380f8cfc653ced36aa396a93695b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#a295d380f8cfc653ced36aa396a93695b">src.Config.Config.attributes</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        ( <span class="stringliteral">&quot;Mental&quot;</span>, ( <span class="stringliteral">&quot;Intelligence&quot;</span>, <span class="stringliteral">&quot;Wits&quot;</span>, <span class="stringliteral">&quot;Resolve&quot;</span>, ), ),
+        ( <span class="stringliteral">&quot;Physical&quot;</span>, ( <span class="stringliteral">&quot;Strength&quot;</span>, <span class="stringliteral">&quot;Dexterity&quot;</span>, <span class="stringliteral">&quot;Stamina&quot;</span>, ), ),
+        ( <span class="stringliteral">&quot;Social&quot;</span>, ( <span class="stringliteral">&quot;Presence&quot;</span>, <span class="stringliteral">&quot;Manipulation&quot;</span>, <span class="stringliteral">&quot;Composure&quot;</span>, ), ),
+    )
+</pre></div>
+<p>Die Reihenfolge der Attribute ist derart wichtig, daß ich sie nicht automatisch bestimmen kann. </p>
+
+</div>
+</div>
+<a class="anchor" id="af3c4097766b2c218e4bca672049bcd1a"></a><!-- doxytag: member="src::Config::Config::calendarForAgeCalculation" ref="af3c4097766b2c218e4bca672049bcd1a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classsrc_1_1_config_1_1_config.html#af3c4097766b2c218e4bca672049bcd1a">src.Config.Config.calendarForAgeCalculation</a> = True<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Folgende Werte können über den Einstellungsdialog verändert werden und sollten beim Beenden des Programms gespeichert und beim Starten geladen werden. </p>
+<p>Die übergebenen Werte sind die Standartwerte, wenn im Einstellungsdialog nichts verändert wird. Zur Altersberechnung Kalender verwenden </p>
+
+</div>
+</div>
+<a class="anchor" id="ac9f62146f317a372050c1a15045ce12e"></a><!-- doxytag: member="src::Config::Config::creationTraitDouble" ref="ac9f62146f317a372050c1a15045ce12e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#ac9f62146f317a372050c1a15045ce12e">src.Config.Config.creationTraitDouble</a> = 4<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Über wievielen Punkten die Eigenschaften 2 Erschaffungspunkte kosten. </p>
+<p>Alle Punkte bis einschließelich dieser Zahl kosten nur 1 Punkt pro Punkt, aber alle darüber kosten das Doppelte. </p>
+
+</div>
+</div>
+<a class="anchor" id="a24d72c5e50a540af47dc813938ea7d4c"></a><!-- doxytag: member="src::Config::Config::derangementMoralityTraitMax" ref="a24d72c5e50a540af47dc813938ea7d4c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a24d72c5e50a540af47dc813938ea7d4c">src.Config.Config.derangementMoralityTraitMax</a> = 7<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Höchstwert der Moral bei der ein Charakter eine Geistesstörung haben kann. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0077da1154b3ffc381c97f4f50a6d2c6"></a><!-- doxytag: member="src::Config::Config::eras" ref="a0077da1154b3ffc381c97f4f50a6d2c6" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#a0077da1154b3ffc381c97f4f50a6d2c6">src.Config.Config.eras</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        <span class="stringliteral">&quot;Modern&quot;</span>,
+        <span class="stringliteral">&quot;Ancient&quot;</span>,
+    )
+</pre></div>
+<p>Sämtliche Eras, welcher ein Charakter angehören kann. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9286041be927ccd307103ca1f25cdea7"></a><!-- doxytag: member="src::Config::Config::flawCategories" ref="a9286041be927ccd307103ca1f25cdea7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#a9286041be927ccd307103ca1f25cdea7">src.Config.Config.flawCategories</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        <span class="stringliteral">&quot;Mental&quot;</span>,
+        <span class="stringliteral">&quot;Physical&quot;</span>,
+        <span class="stringliteral">&quot;Social&quot;</span>,
+        <span class="comment">#&quot;Extraordinary&quot;,</span>
+    )
+</pre></div>
+<p>Die Kategorien von Flaws sollen in einer gewissen Reihenfolge dargestellt werden. </p>
+<p>Alle Kategorien die nicht in dieser Liste stehen, werden nach den hier aufgeführten Kategorien dargestellt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a15040b913d5199670819183cd8860498"></a><!-- doxytag: member="src::Config::Config::genders" ref="a15040b913d5199670819183cd8860498" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#a15040b913d5199670819183cd8860498">src.Config.Config.genders</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        (<span class="stringliteral">&quot;Male&quot;</span>, <span class="stringliteral">&quot;:/icons/images/male.png&quot;</span>),
+        (<span class="stringliteral">&quot;Female&quot;</span>, <span class="stringliteral">&quot;:/icons/images/female.png&quot;</span>),
+    )
+</pre></div>
+<p>Sämtliche Geschlechter einschließlich der zugehörigen Symbole. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa075ff62ff6e9cda146bbe478a6c9037"></a><!-- doxytag: member="src::Config::Config::initialSpecies" ref="aa075ff62ff6e9cda146bbe478a6c9037" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classsrc_1_1_config_1_1_config.html#aa075ff62ff6e9cda146bbe478a6c9037">src.Config.Config.initialSpecies</a> = &quot;Human&quot;<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Schriftgröße für den normalen Text auf dem ausdruckbaren Charakterbogen. </p>
+<p>const qreal Config.textSizeFactorPrintNormal = 0.45 Schriftgröße für den kleinen Text auf dem ausdruckbaren Charakterbogen. const qreal Config.textSizeFactorPrintSmall = 0.33 Die Schriftart, welche für das Programm verwendet wird. QFont Config.windowFont = QFont() Standardspezies eines neuen Charakters </p>
+
+</div>
+</div>
+<a class="anchor" id="a96e84cfe445e6dee8a2dafd8b1ca6d62"></a><!-- doxytag: member="src::Config::Config::inlineWidgetHeightMax" ref="a96e84cfe445e6dee8a2dafd8b1ca6d62" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a96e84cfe445e6dee8a2dafd8b1ca6d62">src.Config.Config.inlineWidgetHeightMax</a> = 18<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die größtmögliche Höhe von Widgets, welche sich in einer Textzeile befinden. </p>
+<p>Diese Höhe wurde gewählt, um vertikalen Raum zu sparen. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0d66e66a709584888f041c0b22885e46"></a><!-- doxytag: member="src::Config::Config::mainCategories" ref="a0d66e66a709584888f041c0b22885e46" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#a0d66e66a709584888f041c0b22885e46">src.Config.Config.mainCategories</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        <span class="stringliteral">&quot;Mental&quot;</span>,
+        <span class="stringliteral">&quot;Physical&quot;</span>,
+        <span class="stringliteral">&quot;Social&quot;</span>,
+    )
+</pre></div>
+<p>Die Kategorien von Attributen und Fertigkeiten sollen in einer gewissen Reihenfolge dargestellt werden. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4777a6c91c89e56ed82e0a31138d586f"></a><!-- doxytag: member="src::Config::Config::meritCategories" ref="a4777a6c91c89e56ed82e0a31138d586f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#a4777a6c91c89e56ed82e0a31138d586f">src.Config.Config.meritCategories</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        <span class="stringliteral">&quot;Mental&quot;</span>,
+        <span class="stringliteral">&quot;Physical&quot;</span>,
+        <span class="stringliteral">&quot;Social&quot;</span>,
+        <span class="stringliteral">&quot;Fighting Style&quot;</span>,
+        <span class="stringliteral">&quot;Debate Style&quot;</span>,
+        <span class="stringliteral">&quot;Extraordinary&quot;</span>,
+        <span class="stringliteral">&quot;Item&quot;</span>,
+    )
+</pre></div>
+<p>Die Kategorien von Merits sollen in einer gewissen Reihenfolge dargestellt werden. </p>
+<p>Alle Kategorien die nicht in dieser Liste stehen, werden nach den hier aufgeführten Kategorien dargestellt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6486d006a6f607182f2c7ce38aa84eff"></a><!-- doxytag: member="src::Config::Config::moralityIdentifier" ref="a6486d006a6f607182f2c7ce38aa84eff" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classsrc_1_1_config_1_1_config.html#a6486d006a6f607182f2c7ce38aa84eff">src.Config.Config.moralityIdentifier</a> = &quot;Morality&quot;<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die Breite einer einfachen vertikalen Eigenschaftsliste. </p>
+<p>const int Config.traitVerticalListWidth = 300 Eigenschaftshöchstwert. const int Config.traitMax = 5 Bezeichnung der Moral für alle Spezies </p>
+
+</div>
+</div>
+<a class="anchor" id="a99c474067508fd7cca9a15a9d4cc346b"></a><!-- doxytag: member="src::Config::Config::moralityTraitDefaultValue" ref="a99c474067508fd7cca9a15a9d4cc346b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a99c474067508fd7cca9a15a9d4cc346b">src.Config.Config.moralityTraitDefaultValue</a> = 7<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Startwert der Moral. </p>
+
+</div>
+</div>
+<a class="anchor" id="aaff145f0c60cdcbedf7b83ec20e73e03"></a><!-- doxytag: member="src::Config::Config::moralityTraitMax" ref="aaff145f0c60cdcbedf7b83ec20e73e03" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#aaff145f0c60cdcbedf7b83ec20e73e03">src.Config.Config.moralityTraitMax</a> = 10<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Höchstwert der Moral. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5b3e4b76e04fbb73309fe7b530114ffa"></a><!-- doxytag: member="src::Config::Config::pictureFormat" ref="a5b3e4b76e04fbb73309fe7b530114ffa" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classsrc_1_1_config_1_1_config.html#a5b3e4b76e04fbb73309fe7b530114ffa">src.Config.Config.pictureFormat</a> = &quot;png&quot;<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Das Charakterbild wird in dem hier festgelegten Format gespeichert. </p>
+
+</div>
+</div>
+<a class="anchor" id="af1238a2ce5a994e1c10edb20fbf4b4df"></a><!-- doxytag: member="src::Config::Config::pictureWidthMax" ref="af1238a2ce5a994e1c10edb20fbf4b4df" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#af1238a2ce5a994e1c10edb20fbf4b4df">src.Config.Config.pictureWidthMax</a> = 800<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Minimale Breite für textEdit-Felder, in denen mehrzeiliger Text eingegeben werden soll. </p>
+<p>textEditWidthMin = 200 Das Charakterbild darf höchstens die hier festgelegte Größe annehmen. </p>
+
+</div>
+</div>
+<a class="anchor" id="a12760a3d36172e0ff3d92330b113d325"></a><!-- doxytag: member="src::Config::Config::pointsNegativeColor" ref="a12760a3d36172e0ff3d92330b113d325" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classsrc_1_1_config_1_1_config.html#a12760a3d36172e0ff3d92330b113d325">src.Config.Config.pointsNegativeColor</a> = &quot;orangered&quot;<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Warnfarbe, wenn zuviele Punkte vergeben wurden. </p>
+
+</div>
+</div>
+<a class="anchor" id="a83c468ca9c6553c85997488221a6813d"></a><!-- doxytag: member="src::Config::Config::pointsPositiveColor" ref="a83c468ca9c6553c85997488221a6813d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classsrc_1_1_config_1_1_config.html#a83c468ca9c6553c85997488221a6813d">src.Config.Config.pointsPositiveColor</a> = &quot;chartreuse&quot;<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Warnfarbe, wenn zuwenige Punkte vergeben wurden. </p>
+
+</div>
+</div>
+<a class="anchor" id="a52a6ed7085c4fcc27105e75e08291af5"></a><!-- doxytag: member="src::Config::Config::powerstatDefaultValue" ref="a52a6ed7085c4fcc27105e75e08291af5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a52a6ed7085c4fcc27105e75e08291af5">src.Config.Config.powerstatDefaultValue</a> = 1<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Startwert der besonderen übernatürlichen Eigenschaft. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac8d820c3c35283c01a1c9767afe2b735"></a><!-- doxytag: member="src::Config::Config::powerstatMax" ref="ac8d820c3c35283c01a1c9767afe2b735" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#ac8d820c3c35283c01a1c9767afe2b735">src.Config.Config.powerstatMax</a> = 10<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Höchstwert der besonderen übernatürlichen Eigenschaft. </p>
+
+</div>
+</div>
+<a class="anchor" id="a711cebde6cd44155da212a16318f8e37"></a><!-- doxytag: member="src::Config::Config::powerstatMin" ref="a711cebde6cd44155da212a16318f8e37" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a711cebde6cd44155da212a16318f8e37">src.Config.Config.powerstatMin</a> = 1<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Mindestwert der besonderen übernatürlichen Eigenschaft. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3e548ecedfdead341d3039ba9d3c4d64"></a><!-- doxytag: member="src::Config::Config::severeDerangementsColor" ref="a3e548ecedfdead341d3039ba9d3c4d64" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="classsrc_1_1_config_1_1_config.html#a3e548ecedfdead341d3039ba9d3c4d64">src.Config.Config.severeDerangementsColor</a> = &quot;sandybrown&quot;<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die Hintergrundfarbe für ernste Geistesstörungen in der Auswahlliste. </p>
+
+</div>
+</div>
+<a class="anchor" id="aae33a4ccc38a60d5efd354e27d3253ea"></a><!-- doxytag: member="src::Config::Config::shapesWerewolf" ref="aae33a4ccc38a60d5efd354e27d3253ea" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#aae33a4ccc38a60d5efd354e27d3253ea">src.Config.Config.shapesWerewolf</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        <span class="stringliteral">&quot;Hishu&quot;</span>,
+        <span class="stringliteral">&quot;Dalu&quot;</span>,
+        <span class="stringliteral">&quot;Gauru&quot;</span>,
+        <span class="stringliteral">&quot;Urshul&quot;</span>,
+        <span class="stringliteral">&quot;Urhan&quot;</span>,
+    )
+</pre></div>
+<p>Die unterschiedlichen Gestalten der Werwölfe. </p>
+
+</div>
+</div>
+<a class="anchor" id="a794468c3dc1e1ea8683d8b3b703cb164"></a><!-- doxytag: member="src::Config::Config::spinBoxNoTextWidth" ref="a794468c3dc1e1ea8683d8b3b703cb164" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a794468c3dc1e1ea8683d8b3b703cb164">src.Config.Config.spinBoxNoTextWidth</a> = 30<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die Breite der Armor-Spinboxes. </p>
+
+</div>
+</div>
+<a class="anchor" id="abb18f9247557d402436755b141c50fc4"></a><!-- doxytag: member="src::Config::Config::traitCategorySpace" ref="abb18f9247557d402436755b141c50fc4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#abb18f9247557d402436755b141c50fc4">src.Config.Config.traitCategorySpace</a> = 10<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Der Pixelabstand zwischen Eigenschaftsblöcken. </p>
+<p>Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien. </p>
+
+</div>
+</div>
+<a class="anchor" id="a77757de5c66307b7f69952222b47177f"></a><!-- doxytag: member="src::Config::Config::traitCustomTextWidthMin" ref="a77757de5c66307b7f69952222b47177f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a77757de5c66307b7f69952222b47177f">src.Config.Config.traitCustomTextWidthMin</a> = 100<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die Minimale Breite für Textfelder für zusätzlichen Text von Eigenschaften. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9c23d6c4bcba4279f4b9173a8e2ce91e"></a><!-- doxytag: member="src::Config::Config::traitLineWidthMin" ref="a9c23d6c4bcba4279f4b9173a8e2ce91e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a9c23d6c4bcba4279f4b9173a8e2ce91e">src.Config.Config.traitLineWidthMin</a> = 320<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen. </p>
+<p>const int Config.displayTimeout = 10000 Die minimale Breite für Widgets wie Fertigkeiten, Merits, Flaws etc. </p>
+
+</div>
+</div>
+<a class="anchor" id="a555fed58cba356bef72ac1bfffaca303"></a><!-- doxytag: member="src::Config::Config::traitMultipleMax" ref="a555fed58cba356bef72ac1bfffaca303" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a555fed58cba356bef72ac1bfffaca303">src.Config.Config.traitMultipleMax</a> = 4<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen. </p>
+
+</div>
+</div>
+<a class="anchor" id="af79de067a95f6bcab473a91c74cd29d9"></a><!-- doxytag: member="src::Config::Config::typs" ref="af79de067a95f6bcab473a91c74cd29d9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple <a class="el" href="classsrc_1_1_config_1_1_config.html#af79de067a95f6bcab473a91c74cd29d9">src.Config.Config.typs</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<b>Initialisierung:</b><div class="fragment"><pre class="fragment">(
+        <span class="stringliteral">&quot;Attribute&quot;</span>,
+        <span class="stringliteral">&quot;Skill&quot;</span>,
+        <span class="stringliteral">&quot;Merit&quot;</span>,
+        <span class="stringliteral">&quot;Flaw&quot;</span>,
+        <span class="stringliteral">&quot;Power&quot;</span>,
+    )
+</pre></div>
+<p>Sämtliche Eigenschaftstypen. </p>
+
+</div>
+</div>
+<a class="anchor" id="a15329e05b7b819f6d6b11f21ca80347b"></a><!-- doxytag: member="src::Config::Config::vSpace" ref="a15329e05b7b819f6d6b11f21ca80347b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#a15329e05b7b819f6d6b11f21ca80347b">src.Config.Config.vSpace</a> = 5<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Normaler vertikaler Abstand. </p>
+<p>Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen. </p>
+
+</div>
+</div>
+<a class="anchor" id="a04e71b5e8fb9585842a94896b5d5076b"></a><!-- doxytag: member="src::Config::Config::weaponIcons" ref="a04e71b5e8fb9585842a94896b5d5076b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">dictionary <a class="el" href="classsrc_1_1_config_1_1_config.html#a04e71b5e8fb9585842a94896b5d5076b">src.Config.Config.weaponIcons</a> = {}<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Symbole für die verschiedenen Waffencategorien. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4b0244d1b93da21f28d0c00e7fb03bb9"></a><!-- doxytag: member="src::Config::Config::weaponsColor" ref="a4b0244d1b93da21f28d0c00e7fb03bb9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">dictionary <a class="el" href="classsrc_1_1_config_1_1_config.html#a4b0244d1b93da21f28d0c00e7fb03bb9">src.Config.Config.weaponsColor</a> = {}<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Hintergrundfarbe für die unterschiedlichen Waffenkategorien. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae8d7fb3c073f5f3dd02f25d95141275a"></a><!-- doxytag: member="src::Config::Config::willpowerMax" ref="ae8d7fb3c073f5f3dd02f25d95141275a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classsrc_1_1_config_1_1_config.html#ae8d7fb3c073f5f3dd02f25d95141275a">src.Config.Config.willpowerMax</a> = 10<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Höchstwert der Willenskraft. </p>
+
+</div>
+</div>
+</div>
+</div>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>src</b>      </li>
+      <li class="navelem"><b>Config</b>      </li>
+      <li class="navelem"><a class="el" href="classsrc_1_1_config_1_1_config.html">Config</a>      </li>
+      <li class="footer">Erzeugt am Thu Jan 26 2012 18:51:17 für SoulCreator von&#160;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Alle</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klassen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Dateien</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Funktionen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variablen</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Propertys</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+</body>
+</html>

@@ -1,8 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_storage_character.html#a2093dc6b7f575513846c3e8cd2fa0985" title="StorageCharacter::addTrait" alt="" coords="253,5,448,35"/>
-<area shape="rect" id="node5" href="$class_exception.html#a7cb124af6ec64ad88a8721b60c7932fb" title="Exception::description" alt="" coords="269,59,432,88"/>
-<area shape="rect" id="node7" href="$classcv___abstract_trait.html#a2c71206d61498c443d25cab1051a546f" title="cv_AbstractTrait::getCategoryList" alt="" coords="235,112,467,141"/>
-<area shape="rect" id="node9" href="$class_exception.html#aeaf3a81717287d50938bc72ed67bacd8" title="Exception::message" alt="" coords="276,165,425,195"/>
-<area shape="rect" id="node11" href="$classcv___abstract_trait.html#add050d72e281131d1591bbf24e87bb15" title="cv_AbstractTrait::toString" alt="" coords="260,219,441,248"/>
-<area shape="rect" id="node13" href="$class_storage_template.html#a75022d10255d8f09b675d8c01d2295f3" title="StorageTemplate::traits" alt="" coords="265,272,436,301"/>
-</map>
