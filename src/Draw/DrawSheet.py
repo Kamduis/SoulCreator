@@ -276,6 +276,10 @@ class DrawSheet(QObject):
 			posY += lengthY + self.__posSep
 			lengthY = 300
 			self._drawMagicalTool(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+		if self.__character.species == "Changeling":
+			posY += lengthY + self.__posSep
+			lengthY = 300
+			self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY, short=True)
 
 		posX += lengthX + self.__posSep
 		posX_spalte2 = posX
@@ -428,20 +432,21 @@ class DrawSheet(QObject):
 		if GlobalState.isDebug:
 			self.__drawGrid()
 
-		posX = 700
-		posY = 0
-		lengthX = self.__pageWidth - posX
-		lengthY = 1000
-		if ( self.__character.species == "Changeling" ):
-			pass
-		elif ( self.__character.species == "Mage" ):
-			pass
-		elif ( self.__character.species == "Vampire" ):
-			posX = 750
+		if self.__character.species != "Changeling":
+			posX = 700
+			posY = 0
 			lengthX = self.__pageWidth - posX
-		elif ( self.__character.species == "Werewolf" ):
-			pass
-		self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+			lengthY = 1000
+			if ( self.__character.species == "Changeling" ):
+				pass
+			elif ( self.__character.species == "Mage" ):
+				pass
+			elif ( self.__character.species == "Vampire" ):
+				posX = 750
+				lengthX = self.__pageWidth - posX
+			elif ( self.__character.species == "Werewolf" ):
+				pass
+			self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posY_zeile3 = 2500
 		if ( self.__character.species == "Changeling" ):
@@ -927,9 +932,11 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def _drawSubPowers(self, offsetH=0, offsetV=0, width=None, height=None):
+	def _drawSubPowers(self, offsetH=0, offsetV=0, width=None, height=None, short=False):
 		"""
 		Bannt die übernatürlichen Unterkräfte auf den Charakterbogen.
+
+		\param short Ist dieser Parameter "True" werden nur die Namen der Unterkräfte aufgezählt.
 		"""
 
 		self.__painter.save()
@@ -943,47 +950,59 @@ class DrawSheet(QObject):
 
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()
-		numOfTraits = 0
-		for item in self.__character.traits["Subpower"].values():
-			for subitem in item.values():
-				if subitem.value > 0:
-					numOfTraits += 1
 
-		widths = [
-			300,
-			50,
-			50,
-			500,
-		]
-		widths.insert(0, width - sum(widths) - len(widths) * self.__textDotSep)
+		if short:
+			listOfSubpowers = []
+			for item in self.__character.traits["Subpower"]:
+				tmpListOfSubpowers = []
+				for trait in self.__character.traits["Subpower"][item].values():
+					if trait.value > 0 and trait.species == self.__character.species:
+						tmpListOfSubpowers.append(trait.name)
+				tmpListOfSubpowers.sort()
+				listOfSubpowers.extend(tmpListOfSubpowers)
+			self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height - self.__fontHeadingHeight, Qt.AlignLeft | Qt.TextWordWrap, ", ".join(listOfSubpowers))
+		else:
+			numOfTraits = 0
+			for item in self.__character.traits["Subpower"].values():
+				for subitem in item.values():
+					if subitem.value > 0:
+						numOfTraits += 1
 
-		i = 0
-		for item in self.__character.traits["Subpower"]:
-			traits = self.__character.traits["Subpower"][item].items()
-			traits.sort()
-			#Debug.debug(traits)
-			for subitem in traits:
-				if subitem[1].isAvailable and subitem[1].value > 0 and subitem[1].species == self.__character.species:
-					posY = offsetV + self.__fontHeadingHeight + i * fontHeight
-					self.__painter.drawText(offsetH, posY, widths[0], fontHeight, Qt.AlignLeft, subitem[1].name)
-					j = 1
-					if self.__storage.traits["Subpower"][item][subitem[0]]["powers"]:
-						j = 0
-						for power in self.__storage.traits["Subpower"][item][subitem[0]]["powers"].items():
-							#Debug.debug(subitem[0], power)
-							self.__drawTrait(offsetH + self.__textDotSep + widths[0], posY + j * fontHeight, width=widths[1], name=power[0], value=power[1])
-							j += 1
-					self.__painter.drawText(offsetH + 2 * self.__textDotSep + sum(widths[:2]), posY, widths[2], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["costWill"])
-					self.__painter.drawText(offsetH + 3 * self.__textDotSep + sum(widths[:3]), posY, widths[3], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["costFuel"])
-					self.__painter.drawText(offsetH + 4 * self.__textDotSep + sum(widths[:4]), posY, widths[4], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["roll"])
-					i += j
+			widths = [
+				300,
+				50,
+				50,
+				500,
+			]
+			widths.insert(0, width - sum(widths) - len(widths) * self.__textDotSep)
 
-		### Den freien Platz füllen wir mit leeren Zeilen, die der Spieler dann per Stift ausfüllen kann. Natürlich nur, wenn die Kräfte nicht zweispaltig aufgeführt sind.
-		#if height:
-			#usedSpace = self.__fontHeadingHeight + numOfTraits * fontHeight
-			#while usedSpace < height - (.75 * fontHeight):
-				#self.__drawTrait(offsetH, offsetV + usedSpace, width=width, name="", value=0)
-				#usedSpace += fontHeight
+			i = 0
+			for item in self.__character.traits["Subpower"]:
+				traits = self.__character.traits["Subpower"][item].items()
+				traits.sort()
+				#Debug.debug(traits)
+				for subitem in traits:
+					if subitem[1].isAvailable and subitem[1].value > 0 and subitem[1].species == self.__character.species:
+						posY = offsetV + self.__fontHeadingHeight + i * fontHeight
+						self.__painter.drawText(offsetH, posY, widths[0], fontHeight, Qt.AlignLeft, subitem[1].name)
+						j = 1
+						if self.__storage.traits["Subpower"][item][subitem[0]]["powers"]:
+							j = 0
+							for power in self.__storage.traits["Subpower"][item][subitem[0]]["powers"].items():
+								#Debug.debug(subitem[0], power)
+								self.__drawTrait(offsetH + self.__textDotSep + widths[0], posY + j * fontHeight, width=widths[1], name=power[0], value=power[1])
+								j += 1
+						self.__painter.drawText(offsetH + 2 * self.__textDotSep + sum(widths[:2]), posY, widths[2], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["costWill"])
+						self.__painter.drawText(offsetH + 3 * self.__textDotSep + sum(widths[:3]), posY, widths[3], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["costFuel"])
+						self.__painter.drawText(offsetH + 4 * self.__textDotSep + sum(widths[:4]), posY, widths[4], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["roll"])
+						i += j
+
+			### Den freien Platz füllen wir mit leeren Zeilen, die der Spieler dann per Stift ausfüllen kann. Natürlich nur, wenn die Kräfte nicht zweispaltig aufgeführt sind.
+			#if height:
+				#usedSpace = self.__fontHeadingHeight + numOfTraits * fontHeight
+				#while usedSpace < height - (.75 * fontHeight):
+					#self.__drawTrait(offsetH, offsetV + usedSpace, width=width, name="", value=0)
+					#usedSpace += fontHeight
 
 		if GlobalState.isDebug:
 			if not height:

@@ -147,7 +147,7 @@
 					</trait>
 				</Category>
 			</Power>
-			<Subpower name="Gifts">
+			<Subpower name="Gifts &#38; Rites">
 				<Category name="Father Wolf">
 					<trait name="Wolf-Blood's Lure" level="1" costFuel="0" costWill="0" roll="">
 						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>

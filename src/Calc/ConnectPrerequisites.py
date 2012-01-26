@@ -68,11 +68,11 @@ class ConnectPrerequisites(object):
 								for subitem in categories:
 									for subsubitem in character.traits[item][subitem].values():
 										## Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-										traitResource = "{}.{}".format(item, subsubitem.identifier)
+										traitResource = u"{}.{}".format(item, subsubitem.identifier)
 										if traitResource in traitPrerequisites:
 											# Überprüfen ob diese Eigenschaft tatsächlich in den Voraussetzungen enthalten ist. Bei dieser Überprüfung ist es wichtig, auf den ganuen Namen zu prüfen: "Status" != "Status: Camarilla"
 											# Diese Überprüfung wird aber nur durchgeführt, wenn die Chance besteht, daß dieser String identisch ist.
-											matchList = re.findall(r"(\w+\.[\w:\s]+[\w]+)", traitPrerequisites)
+											matchList = re.findall(r"(\w+\.[\w:\s]+[\w]+)", traitPrerequisites, re.UNICODE)
 											if traitResource in matchList:
 												## Vor <typ>.<trait> darf kein anderes Wort außer "and", "or" und "(" stehen.
 												idxA = traitPrerequisites.index(traitResource)
@@ -90,7 +90,7 @@ class ConnectPrerequisites(object):
 													#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, trait.name))
 													subsubitem.traitChanged.connect(trait.checkPrerequisites)
 													## Sind alle Voraussetzungen mit Verweisen ersetzt, kann man die Schleife hier abbrechen.
-													traitString = re.search(r"(?<!ptr)\w+\.\w+", trait.prerequisitesText)
+													traitString = re.search(r"(?<!ptr)\w+\.\w+", trait.prerequisitesText, re.UNICODE)
 													if not traitString:
 														#Debug.debug("Abbruch der Schleife")
 														stopLoop = True
@@ -130,9 +130,9 @@ class ConnectPrerequisites(object):
 							special = traitWithSpecial.group(1)
 							#Debug.debug(traitPrerequisites, special)
 							if special in item.specialties:
-								traitPrerequisites = traitPrerequisites.replace(".{}".format(special), "")
+								traitPrerequisites = traitPrerequisites.replace(u".{}".format(special), "")
 							else:
-								traitPrerequisites = traitPrerequisites.replace("{}.{}".format(literalReference, special), "0")
+								traitPrerequisites = traitPrerequisites.replace(u"{}.{}".format(literalReference, special), "0")
 						traitPrerequisites = traitPrerequisites.replace(literalReference, unicode(item.value))
 				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen ...
 				if Config.powerstatIdentifier in traitPrerequisites:
@@ -147,7 +147,7 @@ class ConnectPrerequisites(object):
 					result = eval(traitPrerequisites)
 					#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
 				except (NameError, SyntaxError) as e:
-					Debug.debug("Error: {}".format(traitPrerequisites))
+					Debug.debug(u"Error bei {}: {}".format(trait.name, traitPrerequisites))
 					result = False
 
 				#Debug.debug("Eigenschaft {} wird verfügbar? {}".format(trait.name, result))

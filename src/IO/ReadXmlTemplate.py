@@ -223,7 +223,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					for traitSubElement in traitElement.getiterator("prerequisites"):
 						listOfPrerequisites.append(traitSubElement.text)
 					if not listOfPrerequisites:
-						listOfPrerequisites = ["Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()]
+						listOfPrerequisites = [u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()]
 					#Debug.debug(prerequisitePowers)
 					subPowerData = {
 						"name": traitElement.attrib["name"],

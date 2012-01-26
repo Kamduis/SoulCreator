@@ -322,7 +322,7 @@
 				<Category name="Blood Sorcery">
 					<trait name="Abjurism">
 					</trait>
-					<trait name="Cruac">
+					<trait name="Crúac">
 					</trait>
 					<trait name="Veneficia">
 					</trait>
@@ -340,130 +340,130 @@
 					</trait>
 				</Category>
 			</Power>
-			<Subpower name="Rituals">
-				<Category name="Cruac Rituals">
+			<Subpower name="Devotions &#38; Rituals">
+				<Category name="Crúac Rituals">
 					<trait name="Balancing the Four Humors" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Confidence in Adversity" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Drops of Destiny" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Fires of Inspiration" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Pangs of Proserpina" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Pythian Renewal" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Rigor Mortis" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Taste of Knowledge" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Visage of the Crone" level="1" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="1">Cruac</power>
+						<power value="1">Crúac</power>
 					</trait>
 					<trait name="Rex Sanguis Sacrorum" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="Cheval" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="Imperious Call" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="Maiden Skin" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="Path of Thorns" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
-					<trait name="Soul s Work" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+					<trait name="Soul's Work" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="Succulent Buboes" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="The Heliolater's Warning" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="The Hydra's Vitae" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="Wisdom of the Soul" level="2" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="2">Cruac</power>
+						<power value="2">Crúac</power>
 					</trait>
 					<trait name="Beloved Deodand" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="3">Cruac</power>
+						<power value="3">Crúac</power>
 					</trait>
 					<trait name="Deflection of Wooden Doom" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="3">Cruac</power>
+						<power value="3">Crúac</power>
 					</trait>
 					<trait name="Rain" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="3">Cruac</power>
+						<power value="3">Crúac</power>
 					</trait>
 					<trait name="Servant from the Hidden Realms" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="3">Cruac</power>
+						<power value="3">Crúac</power>
 					</trait>
 					<trait name="Song of the Blood" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="3">Cruac</power>
+						<power value="3">Crúac</power>
 					</trait>
 					<trait name="Taste of Destiny" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="3">Cruac</power>
+						<power value="3">Crúac</power>
 					</trait>
 					<trait name="Ti'amat's Offspring" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="3">Cruac</power>
+						<power value="3">Crúac</power>
 					</trait>
 					<trait name="Touch of the Morrigan" level="3" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="3">Cruac</power>
+						<power value="3">Crúac</power>
 					</trait>
 					<trait name="Bleeding the Tarantula" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="4">Cruac</power>
+						<power value="4">Crúac</power>
 					</trait>
 					<trait name="Blood Price" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="4">Cruac</power>
+						<power value="4">Crúac</power>
 					</trait>
 					<trait name="Eye of the Norn" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="4">Cruac</power>
+						<power value="4">Crúac</power>
 					</trait>
 					<trait name="Fount of Wisdom" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="4">Cruac</power>
+						<power value="4">Crúac</power>
 					</trait>
 					<trait name="Mask of Blood" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="4">Cruac</power>
+						<power value="4">Crúac</power>
 					</trait>
 					<trait name="Sacrifice of Odin" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="4">Cruac</power>
+						<power value="4">Crúac</power>
 					</trait>
 					<trait name="Willful Vitae" level="4" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="4">Cruac</power>
+						<power value="4">Crúac</power>
 					</trait>
 					<trait name="A Child from the Stones" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="5">Cruac</power>
+						<power value="5">Crúac</power>
 					</trait>
 					<trait name="As One" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="5">Cruac</power>
+						<power value="5">Crúac</power>
 					</trait>
 					<trait name="Blood Blight" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="5">Cruac</power>
+						<power value="5">Crúac</power>
 					</trait>
 					<trait name="Crone's Renewal" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="5">Cruac</power>
+						<power value="5">Crúac</power>
 					</trait>
 					<trait name="Curse of Ahasverus" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="5">Cruac</power>
+						<power value="5">Crúac</power>
 					</trait>
 					<trait name="Feeding the Crone" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="5">Cruac</power>
+						<power value="5">Crúac</power>
 					</trait>
 					<trait name="Roving Hut" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
-						<power value="5">Cruac</power>
+						<power value="5">Crúac</power>
 					</trait>
 				</Category>
 				<Category name="Veneficia Rituals">
@@ -624,6 +624,141 @@
 					</trait>
 					<trait name="Rain of Blood" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
 						<power value="5">Theban Sorcery</power>
+					</trait>
+				</Category>
+				<Category name="Devotions">
+					<trait name="Undiminished Rage" level="" costFuel="0" costWill="1" roll="Intelligence+Empathy+Animalism">
+						<power value="5">Animalism</power>
+						<power value="1">Protean</power>
+					</trait>
+					<trait name="Quicken Sight" level="" costFuel="1" costWill="0" roll="">
+						<power value="1">Auspex</power>
+						<power value="1">Celerity</power>
+					</trait>
+					<trait name="Night Sight" level="" costFuel="1" costWill="0" roll="">
+						<power value="1">Auspex</power>
+						<power value="1">Obtenebration</power>
+					</trait>
+					<trait name="Unflinching Eye" level="" costFuel="1" costWill="0" roll="">
+						<power value="1">Auspex</power>
+						<power value="1">Resilience</power>
+					</trait>
+					<trait name="Arcane Sight" level="" costFuel="1" costWill="0" roll="Wits+Occult+Auspex">
+						<power value="2">Auspex</power>
+						<power value="1">Crúac</power>
+					</trait>
+					<trait name="Scent of the Beast" level="" costFuel="1" costWill="0" roll="Wits+Survival+Auspex">
+						<power value="3">Auspex</power>
+						<power value="3">Animalism</power>
+					</trait>
+					<trait name="Touch of Deprivation" level="" costFuel="1" costWill="0" roll="Intelligence+Medicine+Auspex">
+						<power value="4">Auspex</power>
+						<power value="2">Dominate</power>
+					</trait>
+					<trait name="Stone Cling" level="" costFuel="1" costWill="0" roll="">
+						<power value="1">Celerity</power>
+						<power value="1">Vigor</power>
+					</trait>
+					<trait name="Searing Wind" level="" costFuel="1" costWill="0" roll="Strength+Athletics+Celerity">
+						<power value="3">Celerity</power>
+						<power value="3">Nightmare</power>
+					</trait>
+					<trait name="Predatory Growl" level="" costFuel="1" costWill="0" roll="Intelligence+Animal Ken+Dominate">
+						<power value="2">Dominate</power>
+						<power value="1">Animalism</power>
+					</trait>
+					<trait name="Stalwart Servant" level="" costFuel="1" costWill="0" roll="">
+						<power value="4">Dominate</power>
+						<power value="1">Animalism</power>
+					</trait>
+					<trait name="Veridical Tongue" level="" costFuel="1" costWill="0" roll="Presence+Subterfuge+Majesty">
+						<power value="2">Majesty</power>
+						<power value="2">Dominate</power>
+					</trait>
+					<trait name="Sanctum of Fear" level="" costFuel="1" costWill="0" roll="Manipulation+Empathy+Nightmare">
+						<power value="2">Nightmare</power>
+						<power value="2">Protean</power>
+					</trait>
+					<trait name="Mask Aura" level="" costFuel="0" costWill="0" roll="Intelligence+Stealth+Obfuscate">
+						<power value="2">Obfuscate</power>
+						<power value="2">Auspex</power>
+					</trait>
+					<trait name="Iron Façade" level="" costFuel="1" costWill="0" roll="Intelligence+Survival+Obfuscate">
+						<power value="2">Obfuscate</power>
+						<power value="2">Resilience</power>
+					</trait>
+					<trait name="Mark of Shadows" level="" costFuel="1" costWill="0" roll="Wits+Larceny+Obfuscate">
+						<power value="2">Obfuscate</power>
+						<power value="1">Resilience</power>
+						<power value="2">Vigor</power>
+					</trait>
+					<trait name="Cloak of Ignorance" level="" costFuel="0" costWill="1" roll="Intelligence+Stealth+Obfuscate">
+						<power value="3">Obfuscate</power>
+						<power value="3">Nightmare</power>
+					</trait>
+					<trait name="Mask of the Beast" level="" costFuel="1" costWill="0" roll="Manipulation+Animal Ken+Obfuscate">
+						<power value="4">Obfuscate</power>
+						<power value="1">Animalism</power>
+					</trait>
+					<trait name="The Loathsome Foe" level="" costFuel="1" costWill="0" roll="Presence+Subterfuge+Obfuscate">
+						<power value="4">Obfuscate</power>
+						<power value="3">Nightmare</power>
+					</trait>
+					<trait name="Shadow Form" level="" costFuel="1" costWill="0" roll="Wits+Subterfuge+Obtenebration">
+						<power value="1">Obtenebration</power>
+						<power value="5">Protean</power>
+					</trait>
+					<trait name="Shadow Kill" level="" costFuel="1" costWill="0" roll="Strength+Weaponry">
+						<power value="4">Obtenebration</power>
+						<power value="2">Vigor</power>
+					</trait>
+<!--					<trait name="Hair-Thin Dodge" level="" costFuel="1" costWill="0" roll="">
+						<power value="2">Praestantia</power>
+						<power value="2">Auspex</power>
+					</trait>-->
+					<trait name="Bobcat Climbing" level="" costFuel="1" costWill="0" roll="">
+						<power value="1">Protean</power>
+						<power value="1">Animalism</power>
+					</trait>
+					<trait name="Trackless Step" level="" costFuel="1" costWill="0" roll="Dexterity+Survival+Protean">
+						<power value="2">Protean</power>
+						<power value="2">Celerity</power>
+					</trait>
+					<trait name="Flesh of Iron" level="" costFuel="1" costWill="0" roll="">
+						<power value="3">Protean</power>
+						<power value="1">Resilience</power>
+					</trait>
+					<trait name="Instantaneous Transformation" level="" costFuel="1" costWill="0" roll="Stamina+Survival+Protean">
+						<power value="4">Protean</power>
+						<power value="2">Celerity</power>
+					</trait>
+					<trait name="Partial Transformation" level="" costFuel="1" costWill="0" roll="">
+						<power value="4">Protean</power>
+						<power value="1">Resilience</power>
+					</trait>
+					<trait name="Unnatural Contortion" level="" costFuel="1" costWill="0" roll="Dexterity+Athletics+Protean">
+						<power value="4">Protean</power>
+						<power value="1">Resilience</power>
+					</trait>
+					<trait name="Repulsive Vapor" level="" costFuel="1" costWill="0" roll="Presence+Intimidation+Protean">
+						<power value="5">Protean</power>
+						<power value="1">Nightmare</power>
+					</trait>
+					<trait name="Ghost Walk" level="" costFuel="1" costWill="0" roll="">
+						<power value="5">Protean</power>
+						<power value="2">Obfuscate</power>
+					</trait>
+					<trait name="Lessons in the Steel" level="" costFuel="1" costWill="0" roll="Resolve+Investigation+Resilience">
+						<power value="3">Resilience</power>
+						<power value="1">Auspex</power>
+					</trait>
+					<trait name="Body of Will" level="" costFuel="1" costWill="0" roll="Composure+Athletics+Resilience">
+						<power value="3">Resilience</power>
+						<power value="1">Vigor</power>
+					</trait>
+					<trait name="The Rejected Malady" level="" costFuel="1" costWill="1" roll="Resolve+Medicine+Vigor">
+						<power value="2">Vigor</power>
+						<power value="1">Resilience</power>
 					</trait>
 				</Category>
 			</Subpower>
