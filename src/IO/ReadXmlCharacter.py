@@ -42,14 +42,14 @@ except ImportError:
 	try:
 		# Python 2.5
 		import xml.etree.cElementTree as etree
-		Debug.debug("running with cElementTree on Python 2.5+")
+		#Debug.debug("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
 			# Python 2.5
 			import xml.etree.ElementTree as etree
-			Debug.debug("running with ElementTree on Python 2.5+")
+			#Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
-			Debug.debug("Failed to import ElementTree from any known place")
+			print("Failed to import ElementTree from any known place")
 
 
 
@@ -218,11 +218,12 @@ class ReadXmlCharacter(QObject, ReadXml):
 		Liest die Waffen des Charakters aus.
 		"""
 
-		for categoryElement in root.getiterator("Category"):
-			categoryName = categoryElement.attrib["name"]
-			for weaponElement in categoryElement.getiterator("weapon"):
-				weaponName = weaponElement.text
-				self.__character.addWeapon(categoryName, weaponName)
+		if root is not None:
+			for categoryElement in root.getiterator("Category"):
+				categoryName = categoryElement.attrib["name"]
+				for weaponElement in categoryElement.getiterator("weapon"):
+					weaponName = weaponElement.text
+					self.__character.addWeapon(categoryName, weaponName)
 
 
 	def readArmor(self, root):
@@ -230,9 +231,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 		Liest die Rüstung des Charakters aus.
 		"""
 
-		armorDedicated = ast.literal_eval(root.attrib["dedicated"])
-		armorName = root.text
-		self.__character.setArmor(armorName, armorDedicated)
+		if root is not None:
+			armorDedicated = ast.literal_eval(root.attrib["dedicated"])
+			armorName = root.text
+			self.__character.setArmor(armorName, armorDedicated)
 
 
 	def readEquipment(self, root):
@@ -240,12 +242,13 @@ class ReadXmlCharacter(QObject, ReadXml):
 		Liest die Besitztümer des Charakters.
 		"""
 
-		for equipmentElement in root.getiterator("equipment"):
-			equipmentName = equipmentElement.text
-			self.__character.addEquipment(equipmentName)
-		for magicalToolElement in root.getiterator("magicalTool"):
-			toolName = magicalToolElement.text
-			self.__character.setMagicalTool(toolName)
+		if root is not None:
+			for equipmentElement in root.getiterator("equipment"):
+				equipmentName = equipmentElement.text
+				self.__character.addEquipment(equipmentName)
+			for magicalToolElement in root.getiterator("magicalTool"):
+				toolName = magicalToolElement.text
+				self.__character.setMagicalTool(toolName)
 
 
 	def readPicture(self, tree):

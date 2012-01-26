@@ -93,7 +93,7 @@ class DrawSheet(QObject):
 		#self.__fontSans_small = copy.copy(self.__fontSans)
 		#self.__fontSans_small.setPointSize(25)
 		## Mit dieser Schriftart werden Werte eingetragen, die normalerweise der Spier einträgt.
-		self.__fontScript = QFont("Blokletters Balpen", 18 )
+		self.__fontScript = QFont("Blokletters Balpen", 24 )
 		self.__headingSep = 12.5
 		self.__posSep = 30
 
@@ -107,19 +107,19 @@ class DrawSheet(QObject):
 		"""
 
 		if self.__character.species == "Human":
-			self.__fontHeading = QFont("Architects Daughter", 40, QFont.Bold )
-			self.__fontSubHeading = QFont("Architects Daughter", 35, QFont.Bold )
+			self.__fontHeading = QFont("Architects Daughter", 40, QFont.Normal )
+			self.__fontSubHeading = QFont("Architects Daughter", 35, QFont.Normal )
 		elif self.__character.species == "Changeling":
-			self.__fontHeading = QFont("Mutlu", 47, QFont.Bold )
-			self.__fontSubHeading = QFont("Mutlu", 40, QFont.Bold )
+			self.__fontHeading = QFont("Mutlu", 47, QFont.Normal )
+			self.__fontSubHeading = QFont("Mutlu", 40, QFont.Normal )
 			# Der Rahmen macht es notwendig, daß Wechselbälger einen breiteren Rahmen haben, der für die Charakterwerte nicht zur Verfügung steht.
 			self.__borderFrameWest = 172
 			self.__borderFrameEast = self.__borderFrameWest
 			self.__borderFrameNorth = self.__borderFrameWest
 			self.__borderFrameSouth = self.__borderFrameWest
 		elif self.__character.species == "Mage":
-			self.__fontHeading = QFont("Tangerine", 65, QFont.DemiBold )
-			self.__fontSubHeading = QFont("Tangerine", 56, QFont.DemiBold )
+			self.__fontHeading = QFont("Tangerine", 65, QFont.Normal )
+			self.__fontSubHeading = QFont("Tangerine", 56, QFont.Normal )
 		elif self.__character.species == "Vampire":
 			self.__fontHeading = QFont("Cloister Black", 47, QFont.Bold )
 			self.__fontSubHeading = QFont("Cloister Black", 40, QFont.Bold )
@@ -244,6 +244,10 @@ class DrawSheet(QObject):
 		lengthY = 150
 		if self.__character.species == "Changeling":
 			lengthY = 160
+		elif self.__character.species == "Mage":
+			lengthY = 180
+		elif self.__character.species == "Werewolf":
+			lengthY = 170
 		self._drawInfo(offsetV=posY)
 
 		posY += lengthY + self.__posSep
@@ -890,7 +894,7 @@ class DrawSheet(QObject):
 		numOfTraits = 0
 		for item in self.__character.traits["Power"].values():
 			for subitem in item.values():
-				if subitem.value > 0 or (self.__character.species == subitem.species and (self.__character.species == "Mage" or self.__character.species == "Werewolf")):
+				if subitem.isAvailable and self.__character.species == subitem.species and (subitem.value > 0 or self.__character.species == "Mage" or self.__character.species == "Werewolf"):
 					numOfTraits += 1
 
 		traitWidth = width
@@ -905,7 +909,7 @@ class DrawSheet(QObject):
 			traits.sort()
 			#Debug.debug(traits)
 			for subitem in traits:
-				if (subitem[1].isAvailable and (subitem[1].value > 0 or (self.__character.species == subitem[1].species and (self.__character.species == "Mage" or self.__character.species == "Werewolf")))):
+				if subitem[1].isAvailable and self.__character.species == subitem[1].species and (subitem[1].value > 0 or self.__character.species == "Mage" or self.__character.species == "Werewolf"):
 					if twocolumn:
 						self.__drawTrait(offsetH + i * (width - traitWidth), offsetV + self.__fontHeadingHeight + j * textHeight, width=traitWidth, name=subitem[1].name, value=subitem[1].value, mirrored=secondRow)
 						j += 1
@@ -969,10 +973,10 @@ class DrawSheet(QObject):
 						numOfTraits += 1
 
 			widths = [
-				300,
+				350,
 				50,
 				50,
-				500,
+				600,
 			]
 			widths.insert(0, width - sum(widths) - len(widths) * self.__textDotSep)
 
