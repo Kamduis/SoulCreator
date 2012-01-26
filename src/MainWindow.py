@@ -84,6 +84,28 @@ class MainWindow(QMainWindow):
 	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
 
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
+
+	\bug Alter kann negativ werden.
+
+	\todo SoulCreator sollte sich Virtues und Vices "merken", wenn das Alter so niedrig gewählt wird, daß auf Asset und Fault umgestellt wird, für den Fall, daß man den Charakter wieder älter macht.
+
+	\todo Warnen, bevor aus einem Erwachsenen Ein Kind wird und umgekehrt.
+
+	\todo Wird aus dem Charakter ein Kind muß Asset und Fault anstatt Virtue und Vice dabei stehen.
+
+	\todo Knopf für Charakterbild beschriften.
+
+	\todo Ändert man die Körpergröße über gewisse Schwell werte, sollte der Charaktergenerator Den Flaw/Merit Tiny bzw Giant vorschlagen. Und bei einem gewissen Wert einfach mal Unter- und Obergrenze festlegen.
+
+	\todo Benutzer kann eigene Spezialisierungen festlegen.
+
+	\todo Erschaffungspunkte durch einen Wizard ersetzen.
+
+	\todo Merits sollten sich der Alterskategorie anpassen.
+
+	\todo Items sollten sich der Alterskategorie anpassen.
+
+	\todo "Leere" Felder auf dem Charakterbogen mit Leerzeilen zum händischen Ausfüllen versehen.
 	"""
 
 
