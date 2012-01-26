@@ -56,7 +56,7 @@ class Creation(QObject):
 		self.__availablePoints = copy.deepcopy(self.__creationPoints)
 
 		self.pointsChanged.connect(self.controlPoints)
-		#connect( character, SIGNAL( speciesChanged(cv_Species::SpeciesFlag)), this, SLOT( controlPoints() ) );
+		self.__character.speciesChanged.connect(self.controlPoints)
 
 
 	@property
@@ -81,7 +81,7 @@ class Creation(QObject):
 		stopLoop = False
 		for item in self.__storage.traits:
 			for subitem in self.__storage.traits[item]:
-				if trait.name in self.__storage.traits[item][subitem]:
+				if trait.identifier in self.__storage.traits[item][subitem]:
 					typ = item
 					stopLoop = True
 					break
@@ -125,8 +125,18 @@ class Creation(QObject):
 			ans = sum(pointList)
 			pointList = [ans]
 
-		self.__availablePoints[self.__character.species][typ] = [x - y for x, y in zip(self.__creationPoints[self.__character.species][typ], pointList)]
-		#Debug.debug("{} {}: {} ({})".format(self.__character.species, typ, self.__availablePoints[self.__character.species], self.__creationPoints[self.__character.species]))
+		## Attribute, Fertigkeiten und Merits sind für alle Spezies gleich.
+		identicalTyps = (
+			"Attribute",
+			"Skill",
+			"Merit",
+		)
+		if typ in identicalTyps:
+			for species in self.__storage.species:
+				self.__availablePoints[species][typ] = [x - y for x, y in zip(self.__creationPoints[species][typ], pointList)]
+		else:
+			self.__availablePoints[self.__character.species][typ] = [x - y for x, y in zip(self.__creationPoints[self.__character.species][typ], pointList)]
+			#Debug.debug("{} {}: {} ({})".format(self.__character.species, typ, self.__availablePoints[self.__character.species], self.__creationPoints[self.__character.species]))
 
 		self.pointsChanged.emit(self.__availablePoints)
 

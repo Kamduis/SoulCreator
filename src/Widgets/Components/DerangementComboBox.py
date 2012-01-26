@@ -37,8 +37,6 @@ class DerangementComboBox(QComboBox):
 	@brief Eine Combobox für Geistesstörungen.
 
 	Diese ComboBox zeigt milde und schwere Geistesstörungen in unterschiedlichen Farben an und bietet spezielle Signale.
-
-	\todo Die Anzeige unterscheidet noch nicht zwischen milden und ernsten Störungen.
 	"""
 
 

@@ -30,7 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 from src.Config import Config
 #from src import Error
 from src.Tools import ListTools
-from src.Widgets.Components.CharaTrait import CharaTrait
+from src.Widgets.Components.TraitLine import CharaTrait
 from src.Debug import Debug
 
 
@@ -99,7 +99,7 @@ class MeritWidget(QWidget):
 
 				# Bei Merits sind nur bestimmte Werte erlaubt.
 				#Debug.debug(self.__storage.traits[self.__typ][item][merit[0]])
-				traitWidget.setPossibleValues(self.__storage.traits[self.__typ][item][merit[1].name]["value"])
+				traitWidget.setPossibleValues(self.__storage.traits[self.__typ][item][merit[1].identifier]["values"])
 
 				layoutMeritCategory.addWidget( traitWidget )
 
@@ -111,6 +111,8 @@ class MeritWidget(QWidget):
 			layoutMeritCategory.addStretch()
 
 		self.setMinimumWidth(Config.traitLineWidthMin)
+
+		self.__character.speciesChanged.connect(self.countMerits)
 
 	#// 	dialog = new SelectMeritsDialog( this );
 	#//
@@ -131,12 +133,14 @@ class MeritWidget(QWidget):
 		Zält die Merits in einer Kategorie, deren Wert größer 0 ist. Dieser Wert wird dann in die Überschrift der einzelnen ToolBox-Seiten angezeigt, um dem Benutzer die Übersicht zu bewahren.
 
 		Es wird nur dann etwas angezeigt, wenn der Weert größer 0 ist.
+
+		Versteckte Eigenschaften. also solche, die der Spezies nicht zur Verfügung stehen, können einen Wert > 0 haben, sollten aber nicht mitgezählt werden.
 		"""
 
 		for item in self.__character.traits[self.__typ]:
 			numberInCategory = 0
 			for subitem in self.__character.traits[self.__typ][item].values():
-				if subitem.value > 0:
+				if subitem.value > 0 and (not subitem.species or subitem.species == self.__character.species):
 					numberInCategory += 1
 
 			# ToolBox-Seite des entsprechenden Kategorie mit der Anzahl gewählter Merits beschriften.

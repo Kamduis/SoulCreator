@@ -22,15 +22,14 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#import traceback
+import os
 
 from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
+from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup, QScrollArea, QGroupBox
 
 from src.Config import Config
 #from src import Error
-#from ReadXml import ReadXml
-from src.Widgets.Components.CharaTrait import CharaTrait
+from src.Widgets.Components.TraitLine import CharaTrait
 from src.Debug import Debug
 
 
@@ -64,4 +63,248 @@ class TraitWidget(QWidget):
 
 		maxTrait = self._storage.maxTrait(self._character.species, self._character.powerstat)
 		self.maxTraitChanged.emit(maxTrait)
+
+
+
+
+class AttributeWidget(TraitWidget):
+	"""
+	@brief Das Widget, in welchem sämtliche Attribute angeordnet sind.
+
+	Die Attribute werden in diesem Widget angeordnet.
+
+	\todo Bonusattribut als tatsächlichen Attributspunkt einfügen.
+	"""
+
+	def __init__(self, template, character, parent=None):
+		TraitWidget.__init__(self, template, character, parent)
+
+		self.__layout = QVBoxLayout()
+		self.setLayout( self.__layout )
+
+		self.__layoutAttributes = QGridLayout()
+		self.__layout.addLayout( self.__layoutAttributes )
+
+		#// 	QFrame* frame = new QFrame( self )
+		#// 	layout.addWidget( frame )
+		#//
+		#// 	QVBoxLayout* layoutHeader = new QVBoxLayout()
+		#// 	frame.setLayout( layoutHeader )
+
+		self.__labelPower = QLabel( "<b>" + self.tr( "Power" ) + "</b>" )
+		self.__labelPower.setAlignment( Qt.AlignRight )
+
+		self.__labelFinesse = QLabel( "<b>" + self.tr( "Finesse" ) + "</b>" )
+		self.__labelFinesse.setAlignment( Qt.AlignRight )
+
+		self.__labelResistance = QLabel( "<b>" + self.tr( "Resistance" ) + "</b>" )
+		self.__labelResistance.setAlignment( Qt.AlignRight )
+
+		actualRow = 1
+		actualColumn = 0
+
+		self.__layoutAttributes.addWidget( self.__labelPower, actualRow, actualColumn )
+		actualRow += 1
+		self.__layoutAttributes.addWidget( self.__labelFinesse, actualRow, actualColumn )
+		actualRow += 1
+		self.__layoutAttributes.addWidget( self.__labelResistance, actualRow, actualColumn )
+
+		self.__labelStr = QLabel( self )
+		self.__labelDex = QLabel( self )
+		self.__labelSta = QLabel( self )
+		self.__labelMan = QLabel( self )
+
+		#connect( self, SIGNAL( speciesChanged( bool ) ), labelStr, SLOT( setHidden( bool ) ) )
+		#connect( self, SIGNAL( speciesChanged( bool ) ), labelDex, SLOT( setHidden( bool ) ) )
+		#connect( self, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) )
+		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) )
+
+		for item in Config.attributes:
+			#Debug.debug(self._character.traits)
+
+			actualColumn += 1
+
+			vLine = QFrame( self )
+			vLine.setFrameStyle( QFrame.VLine)
+			self.__layoutAttributes.addWidget( vLine, 1, actualColumn, len(item[1]), 1, Qt.AlignHCenter )
+
+			#// 		layout.setColumnMinimumWidth(actualColumn, Config::traitCategorySpace)
+			self.__layoutAttributes.setColumnStretch( actualColumn, 1 )
+
+			# Jetzt sind wir in der Spalte für die tatsächlchen Attribute
+			actualColumn += 1
+
+			# Aber zuerst kommt die Überschrift für die einzelnen Kategorien.
+			header = QLabel()
+			header.setAlignment( Qt.AlignHCenter )
+			header.setText( "<b>" + item[0] + "</b>" )
+			self.__layoutAttributes.addWidget( header, 0, actualColumn )
+
+			# Einfügen der tatsächlichen Attribute
+			i = 0
+			for subitem in item[1]:
+				attrib = self._character.traits["Attribute"][item[0]][subitem]
+				#Debug.debug(attrib)
+				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
+				traitWidget = CharaTrait( attrib, self )
+				traitWidget.setSpecialtiesHidden( True )
+				traitWidget.setDescriptionHidden( True )
+
+				# An welcher Position sitzt dieses Attribut in der Config.attributes-Liste?
+
+				self.__layoutAttributes.addWidget( traitWidget, i + 1, actualColumn )
+
+				self.maxTraitChanged.connect(traitWidget.setMaximum)
+
+				#if ( item == "Physical" ):
+					#if ( attrib["name"] == "Strength" ):
+						#self.__layoutAttributes.addWidget( self.__labelStr, j + 1, actualColumn + 1 )
+						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesStr( int ) ) )
+					#} else if ( trait.name() == "Dexterity" ) {
+						#layoutAttributes.addWidget( self.__labelDex, j + 1, actualColumn + 1 )
+						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesDex( int ) ) )
+					#} else if ( trait.name() == "Stamina" ) {
+						#layoutAttributes.addWidget( self.__labelSta, j + 1, actualColumn + 1 )
+						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesSta( int ) ) )
+				#} else if ( trait.category() == cv_AbstractTrait::Social ) {
+					#if ( self.__trait.name() == "Manipulation" ) {
+						#layoutAttributes.addWidget( labelMan, j + 1, actualColumn + 1 )
+						#connect( trait, SIGNAL( valueChanged( int ) ), self, SLOT( updateshapeValuesMan( int ) ) )
+
+				i += 1
+
+			# Bei Werwölfen erscheint hier Zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
+			actualColumn += 1
+
+		self.__layout.addSpacing( Config.vSpace )
+
+		self.__layoutBonus = QGridLayout()
+		self.__layout.addLayout( self.__layoutBonus )
+
+		self.__labelBonus = QLabel( self )
+		self.__labelBonus.setText( self.tr( "Bonus Attribute:" ) )
+
+		self.__layoutButtonsBonus = QVBoxLayout()
+
+		self.__buttonsBonus = QButtonGroup( self )
+
+		self.__layoutBonus.addWidget( self.__labelBonus, 0, 0, Qt.AlignTop | Qt.AlignLeft )
+		self.__layoutBonus.addLayout( self.__layoutButtonsBonus, 0, 1 )
+	#// 	layoutBonus.addItem(new QSpacerItem(0,0), 0, 2)
+		self.__layoutBonus.addWidget( QWidget( self ), 0, 2 )
+		self.__layoutBonus.setColumnStretch( 2, 1 )
+
+
+
+
+class SkillWidget(TraitWidget):
+	"""
+	@brief Das Widget, in welchem sämtliche Fertigkeiten angeordnet sind.
+
+	Wird bei irgendeiner Fertigkeit der Spazialisierungen-Knopf gedrückt, werden alle anderen Spezialisierungs-Knöpfe ausgeschalten.
+	"""
+
+
+	specialtiesActivated = Signal(bool, object)
+	hideReasonChanged = Signal(str, str)
+
+
+	def __init__(self, template, character, parent=None):
+		TraitWidget.__init__(self, template, character, parent)
+
+		self.__layout = QVBoxLayout()
+		self.setLayout( self.__layout )
+
+		self.__scrollArea = QScrollArea()
+		## Die Auflistung der Fertigkeiten soll auch unter Windows einen transparenten Hintergrund haben.
+		self.__scrollArea.setObjectName("transparentWidget")
+		## \todo Sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
+		if os.name == "nt":
+			self.__scrollArea.setStyleSheet( "QWidget#transparentWidget { background: transparent; }" )
+		self.__layout.addWidget( self.__scrollArea)
+
+		self.__scrollLayout = QVBoxLayout()
+
+		self.__scrollWidget = QWidget()
+		## Die Auflistung der Fertigkeiten soll auch unter Windows einen transparenten Hintergrund haben. Indem ich den selben Namen wie zuvor vergebe, wirkt auch das Stylsheet auf dieses Widget.
+		self.__scrollWidget.setObjectName("transparentWidget")
+		#self.__scrollWidget.setStyleSheet( "QWidget#transparentWidget { background-color:transparent; }" )
+		#scrollWidget.setMinimumSize(this.width(), 400);
+		self.__scrollWidget.setLayout(self.__scrollLayout)
+
+		typ = "Skill"
+
+		## Eine Liste, in der alle Eigenschafts-Widgets aufgelistet werden.
+		self.__traitWidgets = []
+
+		for item in Config.mainCategories:
+			#Debug.debug(self._character.traits)
+
+			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.
+			widgetSkillCategory = QGroupBox()
+			widgetSkillCategory.setTitle(item)
+			widgetSkillCategory.setFlat(True)
+
+			layoutSkillCategory = QVBoxLayout()
+			widgetSkillCategory.setLayout( layoutSkillCategory );
+
+			self.__scrollLayout.addWidget( widgetSkillCategory )
+
+			__list = self._character.traits[typ][item].items()
+			__list.sort()
+			for skill in __list:
+				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
+				traitWidget = CharaTrait( skill[1], self )
+				traitWidget.buttonText = 0
+				traitWidget.setDescriptionHidden( True )
+				traitWidget.enableButton(0)	# Zu Beginn sollen die Spezailisierungen nicht enabled sein.
+
+				# Dieses Widget auch an Liste anhängen, damit ich einfacher darauf zugreifen kann.
+				traitListItem = traitWidget
+				self.__traitWidgets.append(traitListItem)
+
+				# Fertigkeiten haben Spezialisierungen.
+				self._character.eraChanged.connect(self.emitHideReasonChanged)
+				self._character.ageChanged.connect(self.emitHideReasonChanged)
+				self.hideReasonChanged.connect(traitWidget.hideOrShowTrait)
+				traitWidget.specialtiesClicked.connect(self.uncheckOtherButtons)
+				traitWidget.specialtiesClicked.connect(self.specialtiesActivated.emit)
+				## Wenn sich die Spezialisierungen ändern, sollen die veränderten Spezialisierungen auch angezeigt werden. Das wird so gelöst, als wäre der Knopf für die Spezialisierungen erneut gedrückt worden.
+				#skill.specialtiesChanged.connect(self.emitSpecialtiesActivated)
+
+				layoutSkillCategory.addWidget( traitWidget )
+
+				self.maxTraitChanged.connect(traitWidget.setMaximum)
+
+			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
+			self.__scrollLayout.addStretch()
+
+		self.__scrollArea.setWidget(self.__scrollWidget)
+		self.__scrollArea.setWidgetResizable(True)
+		self.__scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+		self.__scrollArea.setMinimumWidth(self.__scrollArea.viewport().minimumWidth())
+
+
+	def uncheckOtherButtons( self, sw, trait ):
+		"""
+		Über diese Funktion werden alle anderen Spezialisierungs-Knöpfe deaktiviert, sobald einer aktiviert wird.
+		"""
+
+		#Debug.debug("Drücke {}".format(skillName))
+		if sw:
+			for item in self.__traitWidgets:
+				if item.name != trait.name:
+					item.setSpecialtyButtonChecked(False)
+
+
+	def emitHideReasonChanged(self):
+		ageStr = Config.ages[0]
+		if self._character.age < Config.adultAge:
+			ageStr = Config.ages[1]
+		eraStr = self._character.era
+		self.hideReasonChanged.emit(ageStr, eraStr)
+
+
+	#def emitSpecialtiesActivated(self, specialties):
+		#self.specialtiesActivated.emit(True, specialties)
 

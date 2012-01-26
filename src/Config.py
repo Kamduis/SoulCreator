@@ -40,7 +40,7 @@ class Config(object):
 	programName = "SoulCreator"
 	programAuthor = "Victor"
 	programVersionMajor = 0
-	programVersionMinor = 8
+	programVersionMinor = 9
 	programVersionChange = 0
 	programDescription = "Charaktergenerator für die World of Darkness."
 	organization = "Caern"
@@ -50,6 +50,12 @@ class Config(object):
 
 	# Verzeichnisname für gespeicherte Charaktere
 	saveDir = "save"
+
+	# Verzeichnisname für Ressourcen
+	resourceDir = "resources"
+
+	# Verzeichnisname für Uis
+	uiDir = "ui"
 
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"
@@ -80,10 +86,10 @@ class Config(object):
 	severeDerangementsColor = "sandybrown"
 
 	## Warnfarbe, wenn zuviele Punkte vergeben wurden.
-	pointsNegativeColor = "red"
+	pointsNegativeColor = "orangered"
 
 	## Warnfarbe, wenn zuwenige Punkte vergeben wurden.
-	pointsPositiveColor = "blue"
+	pointsPositiveColor = "chartreuse"
 
 	##  Deaktivierte textabschnitte
 	deactivatedTextColor = "darkgrey"
@@ -96,9 +102,9 @@ class Config(object):
 
 	## Symbole für die verschiedenen Waffencategorien.
 	weaponIcons = {}
-	weaponIcons["melee"] = ":/weaponCategories/images/svg/machete.svg"
-	weaponIcons["thrown"] = ":/weaponCategories/images/svg/shuriken.svg"
-	weaponIcons["ranged"] = ":/weaponCategories/images/svg/uzi.svg"
+	weaponIcons["melee"] = ":/items/images/svg/machete.svg"
+	weaponIcons["thrown"] = ":/items/images/svg/shuriken.svg"
+	weaponIcons["ranged"] = ":/items/images/svg/uzi.svg"
 
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
 	vSpace = 5
@@ -131,6 +137,9 @@ class Config(object):
 
 	## Eigenschaftshöchstwert.
 	#const int Config::traitMax = 5
+
+	## Bezeichnung der Moral für alle Spezies
+	moralityIdentifier = "Morality"
 
 	## Höchstwert der Moral.
 	moralityTraitMax = 10
@@ -219,7 +228,7 @@ class Config(object):
 		"Mental",
 		"Physical",
 		"Social",
-		"Extraordinary",
+		#"Extraordinary",
 	)
 
 	## Sämtliche Eras, welcher ein Charakter angehören kann.

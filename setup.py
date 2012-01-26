@@ -47,36 +47,10 @@ if __name__ == "__main__":
 	path = []
 
 	## Resourcen bauen
-	cmd_strings = [
-		["pyside-rcc", "-o", "resources/rc_resource.py", "resources/rc_resource.qrc"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_MainWindow.py", "ui/ui_MainWindow.ui"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_InfoWidget.py", "ui/ui_InfoWidget.ui"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_AdvantagesWidget.py", "ui/ui_AdvantagesWidget.ui"],
-		["pyside-uic", "-i", "0", "-o", "ui/ui_NameDialog.py", "ui/ui_NameDialog.ui"],
-	]
-	buildResources = True
-	if os.name == "nt":
-		## Unter Windows sind pyside-rcc und pyside-uic nicht ohne absolute Pfadangabe aufrufbar. Dieser Pfad wird hier ermittelt.
-		pathToRcc = os.path.join(os.path.dirname(sys.executable), "Lib", "site-packages", "PySide")
-		if os.path.exists(pathToRcc):
-			cmd_strings[0][0] = os.path.join(pathToRcc, cmd_strings[0][0])
-		else:
-			buildResources = False
-		pathToUic = os.path.join(os.path.dirname(sys.executable), "Scripts")
-		if os.path.exists(pathToUic):
-			for item in cmd_strings[1:]:
-				item[0] = os.path.join(pathToUic, item[0])
-		else:
-			buildResources = False
-	if buildResources:
-		print("Generate resource files...")
-		for cmd in cmd_strings:
-			retcode = subprocess.call(cmd, shell=False)
-			if retcode != 0:
-				sys.exit(retcode)
-		print("Done.")
-	else:
-		print("Warning: Resources not built. Old resource files used. Inconsistencies may occur.")
+	cmd_string = ("python", "createResources.py")
+	retcode = subprocess.call(cmd_string, shell=False)
+	if retcode != 0:
+		sys.exit(retcode)
 
 	if os.name == "nt":
 		## Unter Windows müssen noch zwei Ordner kopiert und eine Datei erzeugt werden, damit auch SVG-Dateien korrekt dargestellt werden.

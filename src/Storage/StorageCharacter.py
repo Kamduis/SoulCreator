@@ -22,12 +22,17 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import ast
+import copy
+
 from PySide.QtCore import QObject, QDate, Signal, Slot
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
-from src.Datatypes.Trait import Trait
+from src.Datatypes.StandardTrait import StandardTrait
+from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
+from src.Calc.ConnectPrerequisites import ConnectPrerequisites
 from src.Error import ErrListLength
 from src.Debug import Debug
 
@@ -59,7 +64,6 @@ class StorageCharacter(QObject):
 	powerstatChanged = Signal(int)
 	moralityChanged = Signal(int)
 	derangementChanged = Signal(int, str)
-	armorChanged = Signal(object)
 	#traitChanged = Signal(object)
 	#traitsChanged = Signal(object)
 	ageChanged = Signal(int)
@@ -73,6 +77,9 @@ class StorageCharacter(QObject):
 	weaponAdded = Signal(str, str)
 	weaponRemoved = Signal(str, str)
 	weaponsChanged = Signal()
+	armorChanged = Signal(str, bool)
+	equipmentChanged = Signal(object)
+	magicalToolChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -106,6 +113,10 @@ class StorageCharacter(QObject):
 
 
 	def __init__(self, template, parent=None):
+		"""
+		\todo Eigentlich benötigt Subpower keinen eigenen Datentyp. Da die ganzen Zusatzinformationen ja nur im Template zu stehen haben und nicht auch für den Charakter bekannt sein müssen. Der Wert "level" ist aber interessant und gilt für andere Klassen nicht.
+		"""
+		
 		QObject.__init__(self, parent)
 
 		self.__storage = template
@@ -131,9 +142,14 @@ class StorageCharacter(QObject):
 		self.__description = ""
 		self.__powerstat = 0
 		self.__morality = 0
-		self.__armor = [0, 0]
 		self.__era = ""
 		self.__picture = None
+		self.__armor = {
+			"name": "",
+			"dedicated": False,
+		}
+		self.__equipment = []
+		self.__magicalTool = ""
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -149,32 +165,39 @@ class StorageCharacter(QObject):
 
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
-		# Eigenscahften setzen.
-		for typ in Config.typs:
+		# Eigenschaften setzen.
+		for typ in self.__storage.traits.keys():
 			self.__traits.setdefault(typ, {})
 			for item in template.traits[typ]:
 				self.__traits[typ].setdefault(item, {})
 				for subitem in template.traits[typ][item].items():
 					#Debug.debug(subitem)
-					val = 0
+					val = 2	# Dies mache ich, damit beim initialen Charakter-Reset, auch alle Voraussetzungen überprüft werden.
 					# Eigenschaften, die Zusaztext erhalten können (bspw. Language), werden mehrfach in das Dictionary eingefügt. Aber da ein Dictonary immer nur einen Eintrag desselben Namens haben kann, muß selbiger um ein numerisches Suffix erweitert werden.
 					loop = 1
 					custom = False
 					customText = None
-					if subitem[1]["custom"]:
+					if typ != "Subpower" and subitem[1]["custom"]:
 						loop = Config.traitMultipleMax
 						custom = True
 
 					for i in xrange(loop):
-						trait = Trait(self, subitem[0], val)
-						trait.age = subitem[1]["age"]
-						trait.era = subitem[1]["era"]
+						trait = None
+						if typ == "Subpower":
+							trait = SubPowerTrait(self, subitem[1]["name"], val)
+							trait.level = subitem[1]["level"]
+							trait.powers = subitem[1]["powers"]
+						else:
+							trait = StandardTrait(self, subitem[1]["name"], val)
+							trait.age = subitem[1]["age"]
+							trait.era = subitem[1]["era"]
+							trait.custom = custom
+							trait.customText = customText
+						trait.identifier = subitem[0]
 						trait.species = subitem[1]["species"]
-						trait.custom = custom
-						trait.customText = customText
-						if "prerequisite" in subitem[1]:
+						if "prerequisites" in subitem[1] and subitem[1]["prerequisites"]:
 							trait.hasPrerequisites = True
-							trait.prerequisitesText = subitem[1]["prerequisite"]
+							trait.prerequisitesText = subitem[1]["prerequisites"]
 						# In der Eigenschaft steht der richtige Name aber im Dictionary der Name mit einem numerischen Suffix, damit die Eigenschaft häufiger auftauchen kann.
 						dictKey = subitem[0]
 						if custom:
@@ -183,8 +206,10 @@ class StorageCharacter(QObject):
 
 						# Wenn sich eine Eigenschaft ändert, gilt der Charakter als modifiziert.
 						trait.traitChanged.connect(self.setModified)
+				#if typ == "Subpower":
+					#Debug.debug(self.__traits[typ][item])
 
-					
+
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
@@ -205,9 +230,11 @@ class StorageCharacter(QObject):
 		self.powerstatChanged.connect(self.setModified)
 		self.moralityChanged.connect(self.setModified)
 		self.derangementChanged.connect(self.setModified)
-		self.armorChanged.connect(self.setModified)
 		self.pictureChanged.connect(self.setModified)
 		self.weaponsChanged.connect(self.setModified)
+		self.armorChanged.connect(self.setModified)
+		self.equipmentChanged.connect(self.setModified)
+		self.magicalToolChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -299,14 +326,14 @@ class StorageCharacter(QObject):
 		"""
 		Gibt die Spezies des Charakters aus.
 		"""
-		
+
 		return self.__species
 
 	def setSpecies( self, species ):
 		"""
 		Legt die Spezies des Charakters fest.
 		"""
-		
+
 		if ( self.__species != species ):
 			self.__species = species
 			#Debug.debug("Spezies in Speicher verändert zu {}!".format(species))
@@ -367,7 +394,7 @@ class StorageCharacter(QObject):
 		"""
 		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
 		"""
-		
+
 		return self.__identities
 
 
@@ -416,11 +443,67 @@ class StorageCharacter(QObject):
 			self.weaponRemoved.emit(category, weapon)
 
 
+	@property
+	def armor(self):
+		"""
+		Die Rüstung (Name) des Charakters
+		"""
+
+		return self.__armor
+
+	def setArmor(self, name, dedicated=False):
+		if self.__armor["name"] != name or self.__armor["dedicated"] != dedicated:
+			self.__armor["name"] = name
+			self.__armor["dedicated"] = dedicated
+			self.armorChanged.emit(name, dedicated)
+
+
+	@property
+	def equipment(self):
+		"""
+		Gegenstände im Besitz des Charakters.
+		"""
+
+		return self.__equipment
+
+	def addEquipment(self, item):
+		if item not in self.__equipment:
+			self.__equipment.append(item)
+			self.equipmentChanged.emit(self.__equipment)
+
+	def delEquipment(self, item):
+		if item in self.__equipment:
+			self.__equipment.remove(item)
+			self.equipmentChanged.emit(self.__equipment)
+
+	def clearEquipment(self):
+		if self.__equipment:
+			self.__equipment = []
+			self.equipmentChanged.emit(self.__equipment)
+
+
+	def __getMagicalTool(self):
+		"""
+		Magisches Werkzeug.
+		"""
+
+		return self.__magicalTool
+		
+	def setMagicalTool(self, tool):
+
+		if self.__magicalTool != tool:
+			self.__magicalTool = tool
+			self.magicalToolChanged.emit(tool)
+
+	magicalTool = property(__getMagicalTool, setMagicalTool)
+
+
+
 	#def insertIdentity( self, index, identity ):
 		#"""
 		#Fügt eine neue Identität an der angegebenen Stelle ein.
 		#"""
-		
+
 		#self.__identities.insert( index, identity )
 		#self.identityChanged.emit( identity )
 
@@ -428,14 +511,14 @@ class StorageCharacter(QObject):
 		#"""
 		#Hängt eine neue Identität an die Liste aller Identitäten des Charkaters an.
 		#"""
-		
+
 		#self.__identities.append( identity )
 		#self.identityChanged.emit( identity )
 
 	#def setRealIdentity( self, identity ):
 		#"""
 		#Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer Index 0 in der \ref self.__identities -Liste
-		
+
 		#\todo Momentan ist dies die einzige identität, die von diesem Programm genutzt wird.
 		#"""
 
@@ -445,7 +528,8 @@ class StorageCharacter(QObject):
 			#self.realIdentityChanged.emit( identity )
 
 
-	def __getTraits(self):
+	@property
+	def traits(self):
 		return self.__traits
 
 	#def __setTraits(self, traits):
@@ -453,7 +537,10 @@ class StorageCharacter(QObject):
 			#self.__traits = traits
 			#self.traitsChanged.emit(traits)
 
-	traits = property(__getTraits)
+
+	@property
+	def subPowers(self):
+		return self.__subPowers
 
 
 	def __calcAge(self):
@@ -482,73 +569,6 @@ class StorageCharacter(QObject):
 		if self.__ageBecoming != age:
 			self.__ageBecoming = age
 			self.ageBecomingChanged.emit(age)
-
-
-	#def addTrait( self, typ, category, trait ):
-		#"""
-		#Fügt dem Speicher eine neue Eigenschaft hinzu.
-		 
-		#\note Doppelte Eigenschaften werden mit dem neuen Wert überschrieben.
-		 
-		#\todo Eigenschaften mit Zusatztext werden nur gespeichert, wenn dieser Text auch vorhanden ist.
-		#"""
-
-		#if typ not in self.__traits:
-			#self.__traits.setdefault(typ,{})
-
-		#if category not in self.__traits[typ]:
-			#self.__traits[typ].setdefault(category,[])
-
-		#self.__traits[typ][category].append(trait)
-
-		#return self.__traits[typ][category][:-1]
-
-
-	#def modifyTrait( self, typ, category, trait ):
-		#"""
-		#Ändert eine Eigenschaft im Speicher.
-		#"""
-
-		#for item in self.__traits[typ][category]:
-			#if trait["name"] == item["name"]:
-				#if item["value"] != trait["value"]:
-					#item["value"] = trait["value"]
-					#self.traitChanged.emit(item)
-				## Es fehlen noch "customText" und "Details"
-				#break
-
-
-#QList< cv_Derangement >* StorageCharacter::derangements() const {
-	#return &v_derangements;
-#}
-
-#QList< cv_Derangement* > StorageCharacter::derangements( cv_AbstractTrait::Category category ) const {
-	#QList< cv_Derangement* > list;
-
-	#for ( int i = 0; i < v_derangements.count(); ++i ) {
-		#if ( v_derangements.at( i ).category() == category ) {
-			#list.append( &v_derangements[i] );
-		#}
-	#}
-
-	#return list;
-#}
-
-#void StorageCharacter::addDerangement( cv_Derangement derang ) {
-	#if ( !derang.name().isEmpty() && !v_derangements.contains( derang ) ) {
-#// 		qDebug() << Q_FUNC_INFO << derang.name << derang.morality;
-		#v_derangements.append( derang );
-
-		#emit derangementsChanged();
-	#}
-#}
-
-#void StorageCharacter::removeDerangement( cv_Derangement derang ) {
-	#if ( v_derangements.contains( derang ) ) {
-		#v_derangements.removeAll( derang );
-		#emit derangementsChanged();
-	#}
-#}
 
 
 	def __getVirtue(self):
@@ -771,7 +791,7 @@ class StorageCharacter(QObject):
 	def setPowerstat( self, value ):
 		"""
 		Verändert den Wert des Super-Attributs.
-		
+
 		Bei einer Veränderung wird das Signal powerstatChanged() ausgesandt.
 		"""
 
@@ -792,7 +812,7 @@ class StorageCharacter(QObject):
 	def setMorality( self, value ):
 		"""
 		Verändert den Wert der Moral.
-		
+
 		Bei einer Veränderung wird das Signal moralityChanged() ausgesandt.
 		"""
 
@@ -802,36 +822,6 @@ class StorageCharacter(QObject):
 			self.moralityChanged.emit( value )
 
 	morality = property(__getMorality, setMorality)
-
-
-	def __getArmor(self):
-		"""
-		Gibt den Wert der getragenen Rüstung aus. Zurückgegeben wird eine Liste mit zwei EInträgen.
-		
-		Die erste Zahl stellt den Rüstungswert gegen alle Angriffe mit Ausnahme von Schußwaffen und Bögen dar.
-
-		Die zweite Zahl stellt dagegen den Rüstungswert gegen Schußwaffen und Bögen dar.
-		"""
-
-		return self.__armor
-
-	def __setArmor( self, armor ):
-		"""
-		Verändert den Wert der Rüstung.
-
-		Es muß eine Liste mit zwei Elementen übergeben werden.
-		
-		Bei einer Veränderung wird das Signal armorChanged() ausgesandt.
-		"""
-
-		if len(armor) == 2:
-			if self.__armor != armor:
-				self.__armor = armor
-				self.armorChanged.emit( self.__armor )
-		else:
-			raise ErrListLength(len(self.__armor), len(armor))
-
-	armor = property(__getArmor, __setArmor)
 
 
 	def resetCharacter(self):
@@ -853,6 +843,9 @@ class StorageCharacter(QObject):
 		#Debug.debug(self.__storage.virtues[0]["name"])
 		self.virtue = self.__storage.virtues[0]["name"]
 		self.vice = self.__storage.vices[0]["name"]
+		self.faction = ""
+		self.height = 1.60
+		self.weight = 60
 		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
 		#self.breed = self.__storage.breeds(Config.initialSpecies)[0]
 		self.__derangements = {}
@@ -882,6 +875,11 @@ class StorageCharacter(QObject):
 		for category in self.__weapons:
 			for weapon in self.__weapons[category]:
 				self.deleteWeapon(category, weapon)
+		self.setArmor(name="")
+		self.clearEquipment()
+		self.magicalTool = ""
+
+		self.picture = QPixmap()
 
 
 	def isModifed(self):
@@ -912,48 +910,13 @@ class StorageCharacter(QObject):
 
 	def checkPrerequisites(self, trait):
 		"""
-		Diese Funktion überprüft, ob die Voraussetzungen der Eigenscahft "trait" erfüllt sind ode rnicht.
+		Diese Funktion überprüft, ob die Voraussetzungen der Eigenschaft "trait" erfüllt sind oder nicht.
+
+		\todo Den SyntaxError sollte ich nicht verstecken!
 		"""
 
-		if type(trait) != Trait:
-			Debug.debug("Error!")
-		else:
-			if trait.hasPrerequisites:
-				traitPrerequisites = trait.prerequisitesText[0]
-				for item in Config.typs:
-					categories = self.__storage.categories(item)
-					for subitem in categories:
-						for subsubitem in self.traits[item][subitem].values():
-							# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-							if subsubitem.name in traitPrerequisites:
-								# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
-								idxA = traitPrerequisites.index(subsubitem.name)
-								strBefore = traitPrerequisites[:idxA]
-								strBefore = strBefore.rstrip()
-								strBeforeList = strBefore.split(" ")
-								if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
-									# Wenn Spezialisierungen vorausgesetzt werden.
-									if "." in traitPrerequisites and "{}.".format(subsubitem.name) in traitPrerequisites:
-										idx =[0,0]
-										idx[0] = traitPrerequisites.index("{}.".format(subsubitem.name))
-										idx[1] = traitPrerequisites.index(" ", idx[0])
-										specialty = traitPrerequisites[idx[0]:idx[1]].replace("{}.".format(subsubitem.name), "")
-										if specialty in subsubitem.specialties:
-											traitPrerequisites = traitPrerequisites.replace(".{}".format(specialty), "")
-										else:
-											traitPrerequisites = traitPrerequisites.replace("{}.{}".format(subsubitem.name, specialty), "0")
-									traitPrerequisites = traitPrerequisites.replace(subsubitem.name, unicode(subsubitem.value))
-				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
-				if Config.powerstatIdentifier in traitPrerequisites:
-					traitPrerequisites = traitPrerequisites.replace(Config.powerstatIdentifier, unicode(self.__powerstat))
+		ConnectPrerequisites.checkPrerequisites(trait, self.__storage, self)
 
-				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
-				try:
-					result = eval(traitPrerequisites)
-					#print("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
-				except (NameError, SyntaxError) as e:
-					Debug.debug("Error: {}".format(traitPrerequisites))
-					result = False
 
-				trait.setAvailable(result)
+
 

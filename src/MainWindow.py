@@ -40,12 +40,13 @@ from Storage.StorageCharacter import StorageCharacter
 from Storage.StorageTemplate import StorageTemplate
 from Calc.CalcAdvantages import CalcAdvantages
 from Calc.Creation import Creation
+from Calc.ConnectPrerequisites import ConnectPrerequisites
 from Widgets.InfoWidget import InfoWidget
-from Widgets.AttributeWidget import AttributeWidget
-from Widgets.SkillWidget import SkillWidget
+from Widgets.TraitWidget import AttributeWidget, SkillWidget
+from Widgets.PowerWidget import PowerWidget
+from Widgets.SubPowerWidget import SubPowerWidget
 from Widgets.Specialties import Specialties
 from Widgets.MeritWidget import MeritWidget
-from Widgets.PowerWidget import PowerWidget
 from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.AdvantagesWidget import AdvantagesWidget
@@ -60,11 +61,6 @@ from ui.ui_MainWindow import Ui_MainWindow
 
 
 
-
-
-
-
-
 class MainWindow(QMainWindow):
 	"""
 	@brief Das Hauptfenster der Anwendung.
@@ -73,21 +69,15 @@ class MainWindow(QMainWindow):
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 
-	\todo Beim Wechseln zwischen den Spezies eine Warnung ausgeben, wenn Powers und Merits gelöscht würden. Bzw. Powers und Merits nicht löschen, allerdings beim Speichern nicht beachten.
-
 	\todo Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.
 
 	\todo Sonderkräfte der Spezies fehlen. Bei Werwölfen müssen z.B. noch die Gaben/Riten berücksichtigt werden.
 
-	\todo Nutze eine qchecksum, um die Integrität der XML-Dateien zu überprüfen. Ist nicht ganz einfach, wenn ich das Ergebnis der checksum in der selben xml-Datei stehen haben möchte, die ich überprüfe. Aber somit merkt SoulCreator, wenn die gespeicherten Charaktere korrupt sind. Es dürfte am besten sein, sie trotzdem zu laden, aber eine Warnung auszugeben. -- So könnte es gehen: Erzeuge die XML-Datei mit einem leeren Feld für die Checksumme. Dann berechne die Chacksumme für diese Datei und füge sie anschließend in das leere Feld ein. Beim Laden verfahre genau andersherum! Lade die DAtei, hole die Checksumme, erzeuge eine temporäre Datei, in der alles identisch ist, bis auf die Checksumme, deren Feld nun leer ist. Berechne die Checksumme auf diese temporäre Datei und vergleiche sie mit der zuvor gelesenen Checksumme. Tadaa!
-
-	\todo Zwischen den Kategorien (bei Attributen zumindest) Vertikale Striche als optischen Trenner einfügen. Diese können ja auch als Bilder realisiert werden und je nach Spezies unterschiedlich sein (Dornen, Krallenspuren etc.).
+	\todo Speicherdateien komprimieren.
 
 	\todo Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.
 
-	\todo Waffen einbauen.
-
-	\todo Charakterbeschreibung einbauen.
+	\todo Kosten von Gegenständen berücksichtigen.
 
 	\todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
 
@@ -101,7 +91,7 @@ class MainWindow(QMainWindow):
 	#pageChanged = Signal(int)
 
 
-	def __init__(self, parent=None):
+	def __init__(self, fileName=None, parent=None):
 		QMainWindow.__init__(self, parent)
 
 		self.ui = Ui_MainWindow()
@@ -122,6 +112,7 @@ class MainWindow(QMainWindow):
 		self.__storage = StorageTemplate( self )
 		self.storeTemplateData()
 		self.__character = StorageCharacter(self.__storage)
+		## Später sollte ich mich für einen entscheiden!!
 		self.__readCharacter = ReadXmlCharacter(self.__character)
 		self.__writeCharacter = WriteXmlCharacter(self.__character)
 
@@ -151,6 +142,11 @@ class MainWindow(QMainWindow):
 		self.ui.actionExport.triggered.connect(self.exportCharacter)
 		self.ui.actionPrint.triggered.connect(self.printCharacter)
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
+
+		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
+		if fileName:
+			self.openCharacter(fileName)
+
 
 
 	def closeEvent( self, event ):
@@ -197,25 +193,37 @@ class MainWindow(QMainWindow):
 		self.ui.actionQuit.setIcon(QIcon(":/icons/images/actions/exit.png"))
 
 		self.info = InfoWidget(self.__storage, self.__character, self)
-		attributes = AttributeWidget( self.__storage, self.__character, self )
-		skills = SkillWidget( self.__storage, self.__character, self )
-		specialties = Specialties( self.__storage.traits["Skill"], self )
-		merits = MeritWidget( self.__storage, self.__character, self )
-		morality = MoralityWidget( self.__storage, self.__character, self )
-		powers = PowerWidget( self.__storage, self.__character, self )
-		flaws = FlawWidget( self.__storage, self.__character, self )
-		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
-		items = ItemWidget( self.__storage, self.__character, self )
-
 		self.ui.layout_info.addWidget( self.info )
+
+		attributes = AttributeWidget( self.__storage, self.__character, self )
 		self.ui.layout_attributes.addWidget( attributes )
+
+		skills = SkillWidget( self.__storage, self.__character, self )
 		self.ui.layout_skills.addWidget( skills )
+
+		specialties = Specialties( self.__storage.traits["Skill"], self )
 		self.ui.layout_specialties.addWidget( specialties )
+
+		merits = MeritWidget( self.__storage, self.__character, self )
 		self.ui.layout_merits.addWidget( merits )
+
+		morality = MoralityWidget( self.__storage, self.__character, self )
 		self.ui.layout_morality.addWidget( morality )
-		self.ui.layout_powers.addWidget( powers )
+
+		if "Power" in self.__storage.traits.keys():
+			powers = PowerWidget( self.__storage, self.__character, self )
+			self.ui.layout_powers.addWidget( powers )
+
+			subPowers = SubPowerWidget( self.__storage, self.__character, self )
+			self.ui.layout_subPowers.addWidget( subPowers )
+
+		flaws = FlawWidget( self.__storage, self.__character, self )
 		self.ui.layout_flaws.addWidget( flaws )
+
+		self.__advantages = AdvantagesWidget( self.__storage, self.__character, self )
 		self.ui.layout_advantages.addWidget( self.__advantages )
+
+		items = ItemWidget( self.__storage, self.__character, self )
 		self.ui.layout_items.addWidget( items )
 
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
@@ -224,17 +232,7 @@ class MainWindow(QMainWindow):
 		### Wird eine neue Seite angewählt, muß das Info-Widget den Beschreibungstext speichern.
 		#self.pageChanged.connect(self.info.saveDescription)
 
-		#/**
-		#* \todo Überprüfen, ob das wirklich eine so gute Idee ist, die Breite händisch festzulegen.
-		#**/
-		#ui.frame_merits.setMinimumWidth( Config.traitListVertivalWidth );
-		#ui.frame_merits.setMaximumWidth( self.ui.frame_merits.minimumWidth() );
-		#ui.frame_powers.setMinimumWidth( Config.traitListVertivalWidth );
-		#ui.frame_powers.setMaximumWidth( self.ui.frame_powers.minimumWidth() );
-		#ui.frame_flaws.setMinimumWidth( Config.traitListVertivalWidth );
-		#ui.frame_flaws.setMaximumWidth( self.ui.frame_powers.minimumWidth() );
-
-		# Die Spazialisierungen einer Fertigkeit sollen angezeigt werden.
+		# Die Spezialisierungen einer Fertigkeit sollen angezeigt werden.
 		skills.specialtiesActivated.connect(specialties.showSpecialties)
 
 		# Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
@@ -255,32 +253,8 @@ class MainWindow(QMainWindow):
 		Diese Funktion "aktiviert" SoulCreator. Hier werden beispielsweise Merits mit allen anderen Eigenschaften verknüpft, die in ihren Voraussetzungen vorkommen. und bei einem ändern dieser Eigenschaft, wird neu geprüft, ob der Merit verfügbar ist, oder nicht.
 		"""
 
-		# Merits müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
-		typ = "Merit"
-		categoriesMerits = self.__storage.categories(typ)
-		for category in categoriesMerits:
-			for merit in self.__character.traits[typ][category].values():
-				if merit.hasPrerequisites:
-					meritPrerequisites = merit.prerequisitesText[0]
-					for item in Config.typs:
-						categories = self.__storage.categories(item)
-						for subitem in categories:
-							for subsubitem in self.__character.traits[item][subitem].values():
-								# Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-								if subsubitem.name in meritPrerequisites:
-									# Vor dem Fertigkeitsnamen darf kein anderes Wort außer "and", "or" und "(" stehen.
-									idxA = meritPrerequisites.index(subsubitem.name)
-									strBefore = meritPrerequisites[:idxA]
-									strBefore = strBefore.rstrip()
-									strBeforeList = strBefore.split(" ")
-									if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
-										# \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
-										# Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
-										#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, merit.name))
-										subsubitem.traitChanged.connect(merit.checkPrerequisites)
-					# Es kann auch die Supereigenschaft als Voraussetzung vorkommen.
-					if Config.powerstatIdentifier in meritPrerequisites:
-						self.__character.powerstatChanged.connect(merit.checkPrerequisites)
+		## Merits und Subpowers müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
+		ConnectPrerequisites.buildConnection(self.__storage, self.__character)
 
 		# Bei der Änderung gewisser Eigenschaften müssen die Advantages neu berechnet werden. Die Verknüpfung dazu werden hier festgelegt.
 		calc = CalcAdvantages( self.__character, self )
@@ -422,13 +396,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.item( 1 ).setForeground( QColor() )
+			self.ui.selectWidget_select.resetItemColor( 1 )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.item( 2 ).setForeground( QColor() )
+			self.ui.selectWidget_select.resetItemColor( 2 )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.item( 3 ).setForeground( QColor() )
+			self.ui.selectWidget_select.resetItemColor( 3 )
 		elif typ == "Power":
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor() )
+			self.ui.selectWidget_select.resetItemColor( 5 )
 
 
 	def warnCreationPointsPositive( self, typ ):
@@ -439,13 +413,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.item( 1 ).setForeground( QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( 1, QColor(Config.pointsPositiveColor))
 		elif typ == "Skill":
-			self.ui.selectWidget_select.item( 2 ).setForeground( QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( 2, QColor(Config.pointsPositiveColor) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.item( 3 ).setForeground( QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( 3, QColor(Config.pointsPositiveColor) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( 5, QColor(Config.pointsPositiveColor) )
 
 
 	def warnCreationPointsNegative( self, typ ):
@@ -456,13 +430,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.item( 1 ).setForeground( QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( 1, QColor(Config.pointsNegativeColor) )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.item( 2 ).setForeground( QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( 2, QColor(Config.pointsNegativeColor) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.item( 3 ).setForeground( QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( 3, QColor(Config.pointsNegativeColor) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( 5, QColor(Config.pointsNegativeColor) )
 
 
 	def aboutApp(self):
@@ -515,7 +489,7 @@ class MainWindow(QMainWindow):
 			self.__character.setModified( False )
 
 
-	def openCharacter(self):
+	def openCharacter(self, fileName=None):
 		"""
 		Über diese Funktion wird der Dialog aufgerufen, um einen gespeicherten Charakter in das Programm laden zu können.
 		"""
@@ -524,38 +498,39 @@ class MainWindow(QMainWindow):
 		if ( self.maybeSave() ):
 			#Debug.debug("Open")
 
-			appPath = PathTools.getPath()
+			filePath = ""
+			if fileName:
+				filePath = fileName
+			else:
+				appPath = PathTools.getPath()
 
-			# Pfad zum Speicherverzeichnis
-			savePath = "{}/{}".format(appPath, Config.saveDir)
+				# Pfad zum Speicherverzeichnis
+				savePath = "{}/{}".format(appPath, Config.saveDir)
 
-			# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
-			if ( not os.path.exists( savePath ) ):
-				savePath = appPath
+				# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
+				if ( not os.path.exists( savePath ) ):
+					savePath = appPath
 
-			filePath = QFileDialog.getOpenFileName(
-				self,
-				self.tr( "Select Character File" ),
-				savePath,
-				self.tr( "WoD Characters (*.chr)" )
-			)
+				fileData = QFileDialog.getOpenFileName(
+					self,
+					self.tr( "Select Character File" ),
+					savePath,
+					self.tr( "WoD Characters (*.chr)" )
+				)
+				filePath = fileData[0]
 
-			if ( filePath[0] ):
+			if ( filePath ):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
-				f = QFile( filePath[0] )
-
 				try:
-					self.__readCharacter.read( f )
+					self.__readCharacter.read(filePath)
 				except ErrXmlVersion as e:
 					MessageBox.exception( self, e.message, e.description )
 				except ErrXmlParsing as e:
 					MessageBox.exception( self, e.message, e.description )
 				except ErrFileNotOpened as e:
 					MessageBox.exception( self, e.message, e.description )
-
-				f.close()
 
 				# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 				self.__character.setModified( False )
@@ -580,20 +555,15 @@ class MainWindow(QMainWindow):
 		#Debug.debug(filePath)
 
 		# Nur Speichern, wenn ein Name eingegeben wurde.
-		if filePath:
-			f = QFile( filePath[0] )
-
+		if filePath[0]:
 			try:
-				self.__writeCharacter.write( f )
+				self.__writeCharacter.write( filePath[0] )
 			except ErrXmlVersion as e:
 				MessageBox.exception( self, e.message(), e.description() )
 			except ErrXmlParsing as e:
 				MessageBox.exception( self, e.message(), e.description() )
 			except ErrFileNotOpened as e:
 				MessageBox.exception( self, e.message(), e.description() )
-
-			#Debug.debug()
-			f.close()
 
 			# Unmittelbar nach dem Speichern ist der Charkter natürlich nicht mehr 'geändert'.
 			self.__character.setModified( False )
@@ -605,11 +575,9 @@ class MainWindow(QMainWindow):
 		"""
 
 		if species == "Human":
-			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.NoItemFlags )
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor(Config.deactivatedTextColor) )
+			self.ui.selectWidget_select.setItemEnabled(5, False)
 		else:
-			self.ui.selectWidget_select.item( 5 ).setFlags( Qt.ItemIsEnabled | Qt.ItemIsSelectable )
-			self.ui.selectWidget_select.item( 5 ).setForeground( QColor() )
+			self.ui.selectWidget_select.setItemEnabled(5, True)
 
 
 	def exportCharacter(self):
@@ -622,21 +590,14 @@ class MainWindow(QMainWindow):
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.saveDir)
 
-		#if GlobalState.isDebug:
-			## Lädt automatisch den Charakter aus testExport.chr
-			#self.__readCharacter.read( QFile("{}/testExport.chr".format(savePath) ))
-			##self.__readCharacter.read( QFile("{}/untitled.chr".format(savePath) ))
-			#self.__character.setModified( False )
-
 		# Wenn Unterverzeichnis nicht existiert, erstelle es
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		#if GlobalState.isDebug:
-			#filePath = ["{}/untitled.pdf".format(savePath), ""]
-		#else:
-			#filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
+		if GlobalState.isDevelop:
+			filePath = ["{}/untitled.pdf".format(savePath), ""]
+		else:
+			filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
@@ -734,9 +695,11 @@ class MainWindow(QMainWindow):
 
 		if ( self.__character.isModifed() ):
 			ret = QMessageBox.warning(
-				self, self.tr( "Application" ),
+				self,
+				self.tr( "Application" ),
 				self.tr( "The character has been modified.\nDo you want to save your changes?" ),
-				QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel )
+				QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel
+			)
 
 			if ( ret == QMessageBox.Save ):
 				self.saveCharacter()

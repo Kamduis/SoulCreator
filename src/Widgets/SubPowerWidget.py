@@ -25,26 +25,25 @@ from __future__ import division, print_function
 import os
 
 #from PySide.QtCore import Qt, Signal
-#from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
+from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 
 #from src.Config import Config
 #from src import Error
 from src.Widgets.CategoryWidget import CategoryWidget
+#from src.Widgets.Components.CheckTrait import CheckTrait
 from src.Debug import Debug
 
 
 
 
-class PowerWidget(CategoryWidget):
+class SubPowerWidget(CategoryWidget):
 	"""
-	@brief Das Widget, in welchem sämtliche Übernatürlichen Kräfte angeordnet sind.
-
-	Hier tauchen die nur die übergeordneten Powers auf, in dem anderen Widget dann die speziellen Kräfte (Vampire-Rituale, Werwolf-Gaben + Rituale, Mage-Rotes, Changeling-???)
+	@brief Dieses Widget kann in Kategorien aufgeteilte Widgets aufnehmen. Es werden nur jene Kategorien angezeigt, welche auch ein anzuzeigendes Widget enthalten.
 	"""
 
 
 	def __init__(self, template, character, parent=None):
-		CategoryWidget.__init__(self, template, character, typ="Power", isCheckable=False, parent=parent)
+		CategoryWidget.__init__(self, template, character, typ="Subpower", isCheckable=True, parent=parent)
 
 
 

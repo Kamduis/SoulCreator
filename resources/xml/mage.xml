@@ -1,37 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.8">
-	<creation species="Mage">
-		<Attribute>
-			<points value="5"/>
-			<points value="4"/>
-			<points value="3"/>
-		</Attribute>
-		<Skill>
-			<points value="11"/>
-			<points value="7"/>
-			<points value="4"/>
-			<points value="3"/>
-		</Skill>
-		<Merit>
-			<points value="7"/>
-		</Merit>
-		<Power>
-			<points value="9"/>
-		</Power>
-	</creation>
-	<traits species="Mage" morale="Wisdom" powerstat="Gnosis" fuel="Mana">
-		<Super>
-			<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
-			<powerstat fuelMax="11" fuelPerTurn="2" traitMax="5">2</powerstat>
-			<powerstat fuelMax="12" fuelPerTurn="3" traitMax="5">3</powerstat>
-			<powerstat fuelMax="13" fuelPerTurn="4" traitMax="5">4</powerstat>
-			<powerstat fuelMax="14" fuelPerTurn="5" traitMax="5">5</powerstat>
-			<powerstat fuelMax="15" fuelPerTurn="6" traitMax="6">6</powerstat>
-			<powerstat fuelMax="20" fuelPerTurn="7" traitMax="7">7</powerstat>
-			<powerstat fuelMax="30" fuelPerTurn="8" traitMax="8">8</powerstat>
-			<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
-			<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
-		</Super>
+<SoulCreator version="0.9">
+	<Template species="Mage">
+		<Creation>
+			<Type name="Attribute">
+				<points value="5"/>
+				<points value="4"/>
+				<points value="3"/>
+			</Type>
+			<Type name="Skill">
+				<points value="11"/>
+				<points value="7"/>
+				<points value="4"/>
+				<points value="3"/>
+			</Type>
+			<Type name="Merit">
+				<points value="7"/>
+			</Type>
+			<Type name="Power">
+				<points value="9"/>
+			</Type>
+		</Creation>
 		<Group>
 			<Breed name="Path">
 				<item name="Acanthus">
@@ -85,179 +73,319 @@
 			</Organisation>
 			<Party name="Cabal"/>
 		</Group>
-		<Merit>
-			<Category name="Mental">
-				<trait name="High Speech" source="Mage Core">
-					<value>1</value>
-				</trait>
-				<trait name="Atlantean Hesychia" source="Mage Secrets of the ruined Temple">
-					<value>1</value>
-					<prerequisite>High Speech > 0</prerequisite>
-				</trait>
-				<trait name="Glyph Lore" source="Mage Tome of the Mysteries">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisite>High Speech > 0 and Intelligence > 2 and Occult > 2</prerequisite>
-				</trait>
-			</Category>
-			<Category name="Social">
-				<trait name="Sleepwalker Retainer" custom="true" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Thrall" custom="true" source="Mage Core">
-					<value>3</value>
-				</trait>
-			</Category>
-			<Category name="Extraordinary">
-				<trait name="Destiny" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Familiar" source="Mage Core">
-					<value>3</value>
-					<value>4</value>
-				</trait>
-				<trait name="Gesture Lore" source="Mage Tome of the Mysteries">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Dexterity > 2 and Occult > 2</prerequisite>
-				</trait>
-				<trait name="Ghost Familiar" source="Mage Summoners">
-					<value>3</value>
-				</trait>
-				<trait name="Goetic Familiar" source="Mage Grimoire of Grimoires">
-					<value>3</value>
-					<value>4</value>
-				</trait>
-				<trait name="Occultation" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<prerequisite><![CDATA[Fame < 1]]></prerequisite>
-				</trait>
-				<trait name="Ritual Synergy" source="Mage Tome of the Mysteries">
-					<value>3</value>
-					<value>5</value>
-					<prerequisite>Powerstat > 2 or Powerstat > 4</prerequisite>
-				</trait>
-				<trait name="Sanctum: Size" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Sanctum: Security" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-				</trait>
-				<trait name="Alchemical Lab" source="Mage Tome of the Mysteries">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
-				</trait>
-				<trait name="Guardian Ghost" source="Mage Sanctum and Sigil">
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
-				</trait>
-				<trait name="Guardian Spirit" source="Mage Sanctum and Sigil">
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
-				</trait>
-				<trait name="Hallow" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
-				</trait>
-				<trait name="Library" source="Mage Core">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
-				</trait>
-				<trait name="Sanctum Gauntlet" source="Mage Sanctum and Sigil">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<value>5</value>
-					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
-				</trait>
-				<trait name="Summoning Circle" source="Mage Summoners">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<prerequisite>Sanctum: Size > 0 or Sanctum: Security > 0</prerequisite>
-				</trait>
-			</Category>
-		</Merit>
-		<Power name="Arcana">
-			<Category name="Arcana">
-				<trait name="Death">
-					<cheap>Moros</cheap>
-				</trait>
-				<trait name="Fate">
-					<cheap>Acanthus</cheap>
-				</trait>
-				<trait name="Forces">
-					<cheap>Obrimos</cheap>
-				</trait>
-				<trait name="Life">
-					<cheap>Thyrsus</cheap>
-				</trait>
-				<trait name="Matter">
-					<cheap>Moros</cheap>
-				</trait>
-				<trait name="Mind">
-					<cheap>Mastigos</cheap>
-				</trait>
-				<trait name="Prime">
-					<cheap>Obrimos</cheap>
-				</trait>
-				<trait name="Space">
-					<cheap>Mastigos</cheap>
-				</trait>
-				<trait name="Spirit">
-					<cheap>Thyrsus</cheap>
-				</trait>
-				<trait name="Time">
-					<cheap>Acanthus</cheap>
-				</trait>
-			</Category>
-		</Power>
-		<Flaw>
-			<Category name="Extraordinary">
-				<trait name="Abyss-Marked"/>
-			</Category>
-		</Flaw>
-	</traits>
+		<Traits morale="Wisdom" powerstat="Gnosis" fuel="Mana">
+			<Powerstat>
+				<powerstat fuelMax="10" fuelPerTurn="1" traitMax="5">1</powerstat>
+				<powerstat fuelMax="11" fuelPerTurn="2" traitMax="5">2</powerstat>
+				<powerstat fuelMax="12" fuelPerTurn="3" traitMax="5">3</powerstat>
+				<powerstat fuelMax="13" fuelPerTurn="4" traitMax="5">4</powerstat>
+				<powerstat fuelMax="14" fuelPerTurn="5" traitMax="5">5</powerstat>
+				<powerstat fuelMax="15" fuelPerTurn="6" traitMax="6">6</powerstat>
+				<powerstat fuelMax="20" fuelPerTurn="7" traitMax="7">7</powerstat>
+				<powerstat fuelMax="30" fuelPerTurn="8" traitMax="8">8</powerstat>
+				<powerstat fuelMax="50" fuelPerTurn="10" traitMax="9">9</powerstat>
+				<powerstat fuelMax="100" fuelPerTurn="15" traitMax="10">10</powerstat>
+			</Powerstat>
+			<Merit>
+				<Category name="Mental">
+					<trait name="High Speech" source="Mage Core">
+						<value>1</value>
+					</trait>
+					<trait name="Atlantean Hesychia" source="Mage Secrets of the ruined Temple">
+						<value>1</value>
+						<prerequisites>Merit.High Speech > 0</prerequisites>
+					</trait>
+					<trait name="Glyph Lore" source="Mage Tome of the Mysteries">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisites>Merit.High Speech > 0 and Attribute.Intelligence > 2 and Skill.Occult > 2</prerequisites>
+					</trait>
+				</Category>
+				<Category name="Social">
+					<trait name="Sleepwalker Retainer" custom="true" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Thrall" custom="true" source="Mage Core">
+						<value>3</value>
+					</trait>
+				</Category>
+				<Category name="Extraordinary">
+					<trait name="Destiny" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Familiar" source="Mage Core">
+						<value>3</value>
+						<value>4</value>
+					</trait>
+					<trait name="Gesture Lore" source="Mage Tome of the Mysteries">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisites>Attribute.Dexterity > 2 and Skill.Occult > 2</prerequisites>
+					</trait>
+					<trait name="Ghost Familiar" source="Mage Summoners">
+						<value>3</value>
+					</trait>
+					<trait name="Goetic Familiar" source="Mage Grimoire of Grimoires">
+						<value>3</value>
+						<value>4</value>
+					</trait>
+					<trait name="Occultation" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<prerequisites><![CDATA[Merit.Fame < 1]]></prerequisites>
+					</trait>
+					<trait name="Ritual Synergy" source="Mage Tome of the Mysteries">
+						<value>3</value>
+						<value>5</value>
+						<prerequisites>Powerstat > 2 or Powerstat > 4</prerequisites>
+					</trait>
+					<trait name="Sanctum: Size" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Sanctum: Security" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+					</trait>
+					<trait name="Alchemical Lab" source="Mage Tome of the Mysteries">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
+					</trait>
+					<trait name="Guardian Ghost" source="Mage Sanctum and Sigil">
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
+					</trait>
+					<trait name="Guardian Spirit" source="Mage Sanctum and Sigil">
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
+					</trait>
+					<trait name="Hallow" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
+					</trait>
+					<trait name="Library" source="Mage Core">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
+					</trait>
+					<trait name="Sanctum Gauntlet" source="Mage Sanctum and Sigil">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<value>5</value>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
+					</trait>
+					<trait name="Summoning Circle" source="Mage Summoners">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<prerequisites>Merit.Sanctum: Size > 0 or Merit.Sanctum: Security > 0</prerequisites>
+					</trait>
+				</Category>
+			</Merit>
+			<Power name="Arcana">
+				<Category name="Arcana">
+					<trait name="Death">
+						<cheap>Moros</cheap>
+					</trait>
+					<trait name="Fate">
+						<cheap>Acanthus</cheap>
+					</trait>
+					<trait name="Forces">
+						<cheap>Obrimos</cheap>
+					</trait>
+					<trait name="Life">
+						<cheap>Thyrsus</cheap>
+					</trait>
+					<trait name="Matter">
+						<cheap>Moros</cheap>
+					</trait>
+					<trait name="Mind">
+						<cheap>Mastigos</cheap>
+					</trait>
+					<trait name="Prime">
+						<cheap>Obrimos</cheap>
+					</trait>
+					<trait name="Space">
+						<cheap>Mastigos</cheap>
+					</trait>
+					<trait name="Spirit">
+						<cheap>Thyrsus</cheap>
+					</trait>
+					<trait name="Time">
+						<cheap>Acanthus</cheap>
+					</trait>
+				</Category>
+			</Power>
+			<Subpower name="Rotes">
+				<Category name="Death">
+					<trait name="Ectoplasmic Shaping" level="1" costFuel="0" costWill="0" roll="Presence+Occult+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Eye for Destruction" level="1" costFuel="0" costWill="0" roll="Wits+Crafts+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Forensic Gaze" level="1" costFuel="0" costWill="0" roll="Intelligence+Medicine+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Grim Sight" level="1" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Otherworldly Instrument" level="1" costFuel="0" costWill="0" roll="Dexterity+Crafts+Death">
+						<power value="1">Death</power>
+						<power value="1">Spirit</power>
+					</trait>
+					<trait name="Sense the Living Dead" level="1" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Shadow Sculpting" level="1" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Soul Marks" level="1" costFuel="0" costWill="0" roll="Intelligence+Medicine+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Speak with the Dead" level="1" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Unsettling Visage" level="1" costFuel="0" costWill="0" roll="Presence+Subterfuge+Death">
+						<power value="1">Death</power>
+					</trait>
+					<trait name="Animate Shadows" level="2" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Corpse Mask" level="2" costFuel="0" costWill="0" roll="Intelligence+Subterfuge+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Corpse Unmasking" level="2" costFuel="0" costWill="0" roll="Intelligence+Occult+Death">
+						<power value="2">Death</power>
+						<power value="1">Prime</power>
+					</trait>
+					<trait name="Decay" level="2" costFuel="0" costWill="0" roll="Stamina+Intimidation+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Ectoplasm" level="2" costFuel="0" costWill="0" roll="Stamina+Occult+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Entropic Guard" level="2" costFuel="(1)" costWill="0" roll="Wits+Occult+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Final Sight" level="2" costFuel="0" costWill="0" roll="Manipulation+Occult+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Ghost Summons" level="2" costFuel="0" costWill="0" roll="Presence+Persuasion+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Grant the Grim Sight" level="2" costFuel="0" costWill="0" roll="Manipulation+Persuasion+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Lighten Anchor" level="2" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Soul Jar" level="2" costFuel="0" costWill="0" roll="Presence+Crafts+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Suppress Aura" level="2" costFuel="0" costWill="0" roll="Manipulation+Subterfuge+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Touch of the Grave" level="2" costFuel="0" costWill="0" roll="Dexterity+Survival+Death">
+						<power value="2">Death</power>
+					</trait>
+					<trait name="Quiet Grave" level="3" costFuel="0" costWill="0" roll="Presence+Academics+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Test2" level="3" costFuel="0" costWill="0" roll="">
+						<power value="3">Death</power>
+					</trait>
+				</Category>
+				<Category name="Fate">
+					<trait name="Test1" level="1">
+						<power value="1">Fate</power>
+					</trait>
+				</Category>
+				<Category name="Forces">
+					<trait name="Test1" level="1">
+						<power value="1">Forces</power>
+					</trait>
+				</Category>
+				<Category name="Life">
+					<trait name="Test1" level="1">
+						<power value="1">Life</power>
+					</trait>
+				</Category>
+				<Category name="Matter">
+					<trait name="Test1" level="1">
+						<power value="1">Matter</power>
+					</trait>
+				</Category>
+				<Category name="Mind">
+					<trait name="Test1" level="1">
+						<power value="1">Mind</power>
+					</trait>
+				</Category>
+				<Category name="Prime">
+					<trait name="Test1" level="1">
+						<power value="1">Prime</power>
+					</trait>
+				</Category>
+				<Category name="Space">
+					<trait name="Test1" level="1">
+						<power value="1">Space</power>
+					</trait>
+				</Category>
+				<Category name="Spirit">
+					<trait name="Test1" level="1">
+						<power value="1">Spirit</power>
+					</trait>
+				</Category>
+				<Category name="Time">
+					<trait name="Test1" level="1">
+						<power value="1">Time</power>
+					</trait>
+				</Category>
+			</Subpower>
+			<Flaw>
+				<Category name="Extraordinary">
+					<trait name="Abyss-Marked"/>
+				</Category>
+			</Flaw>
+		</Traits>
+	</Template>
 </SoulCreator>

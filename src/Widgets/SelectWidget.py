@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import Qt, QSize
-from PySide.QtGui import QListWidget, QListWidgetItem, QIcon
+from PySide.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
 from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.Config import Config
@@ -52,6 +52,8 @@ class SelectWidget(QListWidget):
 		QListWidgetItem(QIcon(":types/images/svg/bolt.svg"), self.tr("Powers"), self)
 		QListWidgetItem(QIcon(":types/images/svg/tail.svg"), self.tr("Flaws"), self)
 		QListWidgetItem(QIcon(":types/images/svg/flail.svg"), self.tr("Items"), self)
+
+		self.__stdBackgroundRole = self.item( 0 ).data(Qt.BackgroundRole)
 
 		for i in xrange(self.count()):
 			self.item(i).setTextAlignment(Qt.AlignVCenter)
@@ -85,3 +87,35 @@ class SelectWidget(QListWidget):
 					self.selectNext()
 				else:
 					self.selectPrevious()
+
+
+	def setItemEnabled(self, row, sw):
+		"""
+		Aktiviert oder deaktiviert das Item in Zeile row.
+		"""
+
+		if sw:
+			self.item( row ).setFlags( Qt.ItemIsEnabled | Qt.ItemIsSelectable )
+			self.item( row ).setData(Qt.ForegroundRole, QColor())
+		else:
+			self.item( row ).setFlags( Qt.NoItemFlags )
+			self.item( row ).setData(Qt.ForegroundRole, QColor(Config.deactivatedTextColor))
+
+
+	def setItemColor( self, row, color ):
+		"""
+		Färbt dieses Item ein.
+		"""
+
+		self.item( row ).setData(Qt.BackgroundRole, color)
+
+
+	def resetItemColor( self, row ):
+		"""
+		Stellt die ursprüngliche Färbung wieder her.
+
+		\note Die durch enabled-hervorgerufene Farbe bleibt hiervon unberührt.
+		"""
+
+		self.item( row ).setData(Qt.BackgroundRole, self.__stdBackgroundRole)
+

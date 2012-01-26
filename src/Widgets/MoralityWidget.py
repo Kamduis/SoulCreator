@@ -38,8 +38,6 @@ class MoralityWidget(QWidget):
 	@brief Dieses Widget stellt die Moral-Tabelle dar.
 
 	Diese Tabelle zeigt die aktuelle Moralstufe an und bietet Platz für das Eintragen von Geistesstörungen.
-
-	\bug Wird die Spezies geändert, verschwinden alle Geistesstörungen.
 	"""
 
 
@@ -195,12 +193,37 @@ class MoralityWidget(QWidget):
 		mild.insert(0, "")
 		#Debug.debug(mild)
 		#Debug.debug(severe)
+		lostDerangements = []
 		for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
+			## Speichern der alten Auswahl.
+			oldSelection = self.__derangementBoxList[i].currentText()
 			## Erst löschen
 			self.__derangementBoxList[i].clear()
 			## Dann wieder füllen
 			self.__derangementBoxList[i].addItems(mild)
 			self.__derangementBoxList[i].addItems(severe, severe=True)
+			## Und wenn möglich, alte Auswahl wiederherstellen.
+			oldIndex = self.__derangementBoxList[i].findText(oldSelection)
+			if oldIndex < 0:
+				lostDerangements.append(oldSelection)
+			else:
+				self.__derangementBoxList[i].setCurrentIndex(oldIndex)
+
+		if lostDerangements:
+			derangements = ""
+			infoText = ""
+			if len(lostDerangements) > 1:
+				derangements = ", ".join(lostDerangements[:-1])
+				derangements = "{} and {}".format(derangements, lostDerangements[-1])
+				infoText = self.tr( "The derangements \"{derangements}\" are not available for a {species}. The character lost these deragnements.".format(derangements=derangements, species=species) )
+			else:
+				derangements = "".join(lostDerangements)
+				infoText = self.tr( "The derangement \"{derangements}\" is not available for a {species}. The character lost this deragnement.".format(derangements=derangements, species=species) )
+			QMessageBox.information(
+				self,
+				self.tr( "Lost Derangement" ),
+				infoText
+			)
 
 
 	def enableDerangementBox( self, value ):
@@ -278,8 +301,6 @@ class MoralityWidget(QWidget):
 	def updateDerangementBoxes(self, moralityValue, derangement):
 		"""
 		Wählt in den derangementBoxen die jeweils übergebenen Geistesstörungen aus.
-
-		\bug aus irgendeinem grund nimmt moralityValue manchmal den Wert -1 an. Weiß aber nicht, woher.
 		"""
 
 		#Debug.debug(derangement, moralityValue)

@@ -90,7 +90,7 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.__character.setOrganisation)
 		self.ui.lineEdit_party.textEdited.connect(self.__character.setParty)
 		self.ui.doubleSpinBox_height.valueChanged[float].connect(self.__character.setHeight)
-		self.ui.doubleSpinBox_weight.valueChanged[float].connect(self.__character.setWeight)
+		self.ui.spinBox_weight.valueChanged[int].connect(self.__character.setWeight)
 		self.ui.lineEdit_eyes.textEdited.connect(self.__character.setEyes)
 		self.ui.lineEdit_hair.textEdited.connect(self.__character.setHair)
 		self.ui.lineEdit_nationality.textEdited.connect(self.__character.setNationality)
@@ -123,7 +123,7 @@ class InfoWidget(QWidget):
 		self.__character.partyChanged.connect(self.ui.lineEdit_party.setText)
 		self.__character.speciesChanged.connect(self.updatePartyTitle)
 		self.__character.heightChanged.connect(self.ui.doubleSpinBox_height.setValue)
-		self.__character.weightChanged.connect(self.ui.doubleSpinBox_weight.setValue)
+		self.__character.weightChanged.connect(self.ui.spinBox_weight.setValue)
 		self.__character.eyesChanged.connect(self.ui.lineEdit_eyes.setText)
 		self.__character.hairChanged.connect(self.ui.lineEdit_hair.setText)
 		self.__character.nationalityChanged.connect(self.ui.lineEdit_nationality.setText)
@@ -229,6 +229,7 @@ class InfoWidget(QWidget):
 		Aktualisiert die Anzeige der Fraktion.
 		"""
 
+		self.ui.lineEdit_faction.setText(faction)
 		self.ui.comboBox_faction.setCurrentIndex( self.ui.comboBox_faction.findText( faction ) )
 
 
@@ -344,7 +345,11 @@ class InfoWidget(QWidget):
 		appPath = PathTools.getPath()
 
 		# Pfad zum Speicherverzeichnis
-		savePath = os.environ['HOME']
+		savePath = ""
+		if os.name == "nt":
+			savePath = os.environ['HOMEPATH']
+		else:
+			savePath = os.environ['HOME']
 
 		# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
 		if ( not os.path.exists( savePath ) ):

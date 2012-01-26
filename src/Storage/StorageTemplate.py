@@ -104,15 +104,27 @@ class StorageTemplate(QObject):
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
 	#
+	# Eigenschaften haben folgende Parameter:
+	#
+	# "name" 			Name der Eigenschaft (alle)
+	# "level"			Stufe der Eigenschaft (Subpowers)
+	# "values"			Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
+	# "species"			Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
+	# "age"				Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
+	# "era"				Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
+	# "custom"			Handelt es sich um eine Kraft mit Zusatztext?
+	# "specialties"		Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
+	# "prerequisites"	Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
+	#
 	# {
 	# 	Typ1: {
 	# 		Kategorie1: {
-	# 			Name1: { "species": Species1, "age": Alter1, ... },
-	# 			Name2: { "species": Species2, "age": Alter2, ... },
+	# 			Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 			Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
 	# 			...
 	# 		},
 	# 		Kategorie2: {
-	# 			Name1: { "species": Species1, "age": Alter1, ... },
+	# 			Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
 	# 			...
 	# 		},
 	# 		...
@@ -120,6 +132,22 @@ class StorageTemplate(QObject):
 	# 	...
 	# }
 	__traits = {}
+
+	# Eine Liste der Unterkräfte.
+	#
+	# {
+	# 	Kategorie1: {
+	# 		Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 		Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
+	# 		...
+	# 	},
+	# 	Kategorie2: {
+	# 		Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 		...
+	# 	},
+	# 	...
+	# }
+	__subPowers = {}
 
 	## Eine Liste aller Tugenden.
 	#
@@ -229,6 +257,31 @@ class StorageTemplate(QObject):
 	# }
 	__weapons = {}
 
+	# Eine Liste der Rüstungen.
+	#
+	# {
+	# 	armor1: {
+	# 		"general": value,
+	# 		"firearms": value,
+	# 		"defense": value,
+	# 		"speed": value
+	# 	},
+	# 	...
+	# }
+	__armor = {}
+
+	# Eine Liste vorgeschlagenen Equipments
+	#
+	# {
+	# 	equipment1: {
+	# 		"durability": value,
+	# 		"size": value,
+	# 		"cost": value
+	# 	},
+	# 	...
+	# }
+	__equipment = {}
+
 #QList< cv_Species > StorageTemplate::v_species;
 #QList< cv_SpeciesTitle > StorageTemplate::v_titles;
 #QList< Trait* > StorageTemplate::v_traits;
@@ -247,7 +300,9 @@ class StorageTemplate(QObject):
 
 
 	def categories(self, typ):
-		return self.__traits[typ].keys()
+		listOfCategories = self.__traits[typ].keys()
+		listOfCategories.sort()
+		return listOfCategories
 
 
 	def __getSpecies(self):
@@ -366,25 +421,34 @@ class StorageTemplate(QObject):
 	traits = property(__getTraits, __setTraits)
 
 
-#QList< Trait* > StorageTemplate::traits( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
-	#QList< Trait* > traitsPtr;
+	def addTrait( self, typ, category, identifier, data):
+		"""
+		Fügt eine Eigenschaft zu der entsprechenden Liste hinzu.
 
-#// 	qDebug() << Q_FUNC_INFO << "Wird aufgerufen!";
+		Ist diese Eigenschaft schon vorhanden, werden die Daten der Eigenschaft um die neuen Daten erweitert. Das gilt ausschließlich für die Spezialisierungen. Die restlichen Daten werden überschrieben.
 
-	#for( int i = 0; i < v_traits.count(); ++i ) {
-		#if( v_traits.at( i )->type() == type && v_traits.at( i )->species().testFlag( species ) ) {
-			#traitsPtr.append( v_traits[i] );
-#// 			qDebug() << Q_FUNC_INFO << "Füge hinzu:" << v_traits.at(i)->name();
-		#}
-	#}
+		Die Eigenschaft sollte im Format eines dict daherkommen.
 
-	#if( traitsPtr.isEmpty() ) {
-#// 		qDebug() << Q_FUNC_INFO << "Trait Typ" << cv_AbstractTrait::toString( type ) << "mit Kategorie" << cv_AbstractTrait::toString( category ) << "existiert nicht!";
-		#throw eTraitNotExisting();
-	#}
+		Eigenschaften des Typs "Subpower" haben abweichende Attribute und werden deswegen gesondert behandelt.
 
-	#return traitsPtr;
-#}
+		\param identifier Die einzigartige Identität der Eigenschaft, meist identisch mit ihrem Namen.
+		
+		\param data Alle Informationen über die Eigenschaft außer der Identität.
+		"""
+
+		if typ not in self.__traits:
+			self.__traits.setdefault(typ,{})
+
+		if category not in self.__traits[typ]:
+			self.__traits[typ].setdefault(category,{})
+
+		if identifier not in self.__traits[typ][category]:
+			self.__traits[typ][category][identifier] = data
+		elif (typ != "Subpower"):
+			specialties = self.__traits[typ][category][identifier]["specialty"]
+			specialties.extend(data["specialty"])
+			self.__traits[typ][category][identifier] = data
+			self.__traits[typ][category][identifier]["specialty"] = specialties
 
 
 	def traitNames( self, typ, category, era=None, age=None ):
@@ -402,90 +466,62 @@ class StorageTemplate(QObject):
 		return result
 
 
-	def powerName(self, species, power):
-		return self.__powerNames[species][power]
+	def powerName(self, species):
+		return self.__powerNames[species]["Power"]
 
-	def setPowerName(self, species, power, name):
+	def setPowerName(self, species, name):
 		if species not in self.__powerNames:
 			self.__powerNames.setdefault(species,{})
 
-			self.__powerNames[species][power] = name
+		self.__powerNames[species]["Power"] = name
 
 
-#// cv_Trait StorageTemplate::trait( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, QString name ) {
-#// 	bool trait_exists = false;
-#//
-#// 	cv_Trait trait;
-#//
-#// 	for ( int i = 0; i < v_traits.count(); ++i ) {
-#// 		if ( v_traits.at( i ).type() == type && v_traits.at( i ).category() == category && v_traits.at( i ).name() == name ) {
-#// 			trait = v_traits.at( i );
-#// 			trait_exists = true;
-#//
-#// 			break;
-#// 		}
-#// 	}
-#//
-#// 	if ( !trait_exists ) {
-#// // 		qDebug() << Q_FUNC_INFO << "Trait" << type << category << name << "existiert nicht!";
-#// // 		throw eTraitNotExisting();
-#// 	}
-#//
-#// 	return trait;
-#// }
+	def subPowerName(self, species):
+		return self.__powerNames[species]["Subpower"]
+
+	def setSubPowerName(self, species, name):
+		if species not in self.__powerNames:
+			self.__powerNames.setdefault(species,{})
+
+		self.__powerNames[species]["Subpower"] = name
 
 
-#QList< TraitBonus* > StorageTemplate::traitsBonus( cv_AbstractTrait::Type type, cv_Species::SpeciesFlag species ) const {
-	#QList< TraitBonus* > traitsPtr;
-
-	#for( int i = 0; i < v_traitsBonus.count(); ++i ) {
-		#if( v_traitsBonus.at( i )->type() == type && v_traitsBonus.at( i )->species().testFlag( species ) ) {
-			#traitsPtr.append( v_traitsBonus[i] );
+	#@property
+	#def subPowers(self):
+		#"""Eine Liste der Unterkräfte.
+		
+		#{
+			#Kategorie1: {
+				#Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+				#Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
+				#...
+			#},
+			#Kategorie2: {
+				#Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+				#...
+			#},
+			#...
 		#}
-	#}
+		#"""
 
-	#// Es wird eine leere Liste ausgegeben, wenn keine entsprechende Einträge gefunden werden.
-#// 	if ( traitsPtr.isEmpty() ) {
-#// 		throw eTraitNotExisting();
-#// 	}
+		#return self.__subPowers
 
-	#return traitsPtr;
-#}
+	#def addSubPower(self, category, identifier, data):
+		#"""
+		#Fügt eine Unterkraft zur Liste hinzu.
+		#"""
 
+		##Debug.debug(category, identifier, data)
 
-#// void StorageTemplate::setTraits( QList< cv_Trait > traits ) {
-#// 	v_traits = traits;
-#// }
+		#if category not in self.__subPowers:
+			#self.__subPowers.setdefault(category,{})
+
+		#self.__subPowers[category][identifier] = data
+
 
 	def appendSpecies( self, species, speciesData ):
-		if species not in self.__species:
+		if species and species not in self.__species:
 			self.__species.setdefault(species, speciesData )
-
-
-
-#void StorageTemplate::appendTrait( cv_Trait trait ) {
-	#bool exists = false;
-
-	#// Unterschiedliche Klassen für die einzelnen Eigenschafts-Typen:
-	#Trait* lcl_trait;
-	#if( trait.type() == cv_AbstractTrait::Attribute ) {
-		#lcl_trait = new AttributeTrait( trait );
-	#} else if( trait.type() == cv_AbstractTrait::Skill ) {
-		#lcl_trait = new SkillTrait( trait );
-	#} else {
-		#lcl_trait = new Trait( trait );
-	#}
-
-	#for( int i = 0; i < v_traits.count(); ++i ) {
-		#if( v_traits.at( i )->type() == lcl_trait->type() && v_traits.at( i )->name() == lcl_trait->name() ) {
-			#exists = true;
-			#break;
-		#}
-	#}
-	#if( !exists ) {
-		#v_traits.append( lcl_trait );
-	#}
-#}
 
 
 	def __getVirtues(self):
@@ -643,7 +679,7 @@ class StorageTemplate(QObject):
 
 		Die Eigenschaft sollte im Format eines dict daherkommen.
 		"""
-		
+
 		if typ not in self.__traits:
 			self.__traits.setdefault(typ,{})
 
@@ -758,41 +794,51 @@ class StorageTemplate(QObject):
 
 	def addWeapon( self, category, name, weaponData ):
 		"""
-		Fügt eine Waffe hinzu. Falls eine Waffe dieses Namens in der angebenen Kategorie (melee, thrown, ranged) schon vorhanden wird, werden die DAten der vorhandenen Waffe überschrieben.
+		Fügt eine Waffe hinzu. Falls eine Waffe dieses Namens in der angebenen Kategorie (melee, thrown, ranged) schon vorhanden ist, werden die Daten der vorhandenen Waffe überschrieben.
 		"""
-		
-		# {
-		# 	"melee": {
-		# 		weapon1: {
-		# 			"damage": value,
-		# 			"size": value,
-		# 			"durability": value,
-		# 		},
-		# 		...
-		# 	},
-		# 	"thrown": {
-		# 		weapon1: {
-		# 			"damage": value,
-		# 			"size": value,
-		# 			"durability": value,
-		# 		},
-		# 		...
-		# 	"ranged": {
-		# 		weapon1: {
-		# 			"damage": value,
-		# 			"range": value,
-		# 			"capacity": value,
-		# 			"strength": value,
-		# 			"size": value,
-		# 			"durability": value,
-		# 		},
-		# 		...
-		# 	},
-		# }
+
 		if category not in self.__weapons:
 			self.__weapons.setdefault(category, {})
 
 		self.__weapons[category][name] = weaponData
 
 		#Debug.debug(self.__weapons)
+
+
+	@property
+	def armor(self):
+		"""
+		Gibt eine Liste aller Rüstungen zurück.
+		"""
+
+		return self.__armor
+
+
+	def addArmor( self, name, armorData ):
+		"""
+		Fügt eine Rüstung hinzu. Falls eine Rüstung dieses Namens schon vorhanden ist, werden die Daten der vorhandenen Rüstung überschrieben.
+		"""
+
+		self.__armor[name] = armorData
+
+		#Debug.debug(self.__armor)
+
+
+	@property
+	def equipment(self):
+		"""
+		Vorgeschlagene Ausrüstung.
+		"""
+
+		return self.__equipment
+
+
+	def addEquipment( self, name, data ):
+		"""
+		Fügt einen Ausrüstungsgegenstand hinzu. Falls ein Gegenstand dieses Namens schon vorhanden ist, werden die Daten überschrieben.
+		"""
+
+		self.__equipment[name] = data
+
+		#Debug.debug(self.__equipment)
 

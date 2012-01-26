@@ -1,80 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.8">
-	<creation species="Human">
-		<Attribute>
-			<points value="5"/>
-			<points value="4"/>
-			<points value="3"/>
-		</Attribute>
-		<Skill>
-			<points value="11"/>
-			<points value="7"/>
-			<points value="4"/>
-			<points value="3"/>
-		</Skill>
-		<Merit>
-			<points value="7"/>
-		</Merit>
-		<Power>
-			<points value="0"/>
-		</Power>
-	</creation>
-	<traits species="Human" morale="Morality" supertrait="None" fuel="None">
-		<Super>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">1</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">2</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">3</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">4</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">5</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">6</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">7</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">8</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">9</powerstat>
-			<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">10</powerstat>
-		</Super>
+<SoulCreator version="0.9">
+	<Template species="Human">
+		<Creation>
+			<Type name="Attribute">
+				<points value="5"/>
+				<points value="4"/>
+				<points value="3"/>
+			</Type>
+			<Type name="Skill">
+				<points value="11"/>
+				<points value="7"/>
+				<points value="4"/>
+				<points value="3"/>
+			</Type>
+			<Type name="Merit">
+				<points value="7"/>
+			</Type>
+			<Type name="Power">
+				<points value="0"/>
+			</Type>
+		</Creation>
 		<Group>
 			<Breed name="Breed"/>
 			<Faction name="Faction"/>
 			<Organisation name="Organisation"/>
 			<Party name="Party"/>
 		</Group>
-		<Merit>
-			<Category name="Extraordinary">
-				<trait name="Enchanted Mortal" source="Changeling The Equinox Road">
-					<value>2</value>
-				</trait>
-				<trait name="Locus Drinker" source="WoD Book of Spirits">
-					<value>3</value>
-				</trait>
-				<trait name="Residual Spirit Energy" source="WoD Book of Spirits">
-					<value>2</value>
-				</trait>
-				<trait name="Unseen Sense" custom="true" source="WoD Core">
-					<value>3</value>
-					<value>4</value>
-					<prerequisites>Wits > 1</prerequisites>
-				</trait>
-				<trait name="Unseen Sense (Spirits)" source="WoD Book of Spirits">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-					<value>4</value>
-					<prerequisites>Wits > 1</prerequisites>
-				</trait>
-				<!--<trait name="AntiPsi" source="WoD Second Sight">
-					<value>5</value>
-					<prerequisites>No other Merits that confer psychic powers</prerequisites>
-				</trait>-->
-				<!--<trait name="Doubting Thomas" source="WoD Second Sight">
-					<value>1</value>
-					<prerequisites>No other Merits that confer psychic powers</prerequisites>
-				</trait>-->
-				<trait name="Psychic Resistance" source="WoD Second Sight">
-					<value>1</value>
-					<value>2</value>
-					<value>3</value>
-				</trait>
-			</Category>
-		</Merit>
-	</traits>
+		<Traits morale="Morality" supertrait="None" fuel="None">
+			<Powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">1</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">2</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">3</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">4</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">5</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">6</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">7</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">8</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">9</powerstat>
+				<powerstat fuelMax="0" fuelPerTurn="0" traitMax="5">10</powerstat>
+			</Powerstat>
+			<Merit>
+				<Category name="Extraordinary">
+					<trait name="Enchanted Mortal" source="Changeling The Equinox Road">
+						<value>2</value>
+					</trait>
+					<trait name="Locus Drinker" source="WoD Book of Spirits">
+						<value>3</value>
+					</trait>
+					<trait name="Residual Spirit Energy" source="WoD Book of Spirits">
+						<value>2</value>
+					</trait>
+					<trait name="Unseen Sense" custom="true" source="WoD Core">
+						<value>3</value>
+						<value>4</value>
+						<prerequisites>Attribute.Wits > 1</prerequisites>
+					</trait>
+					<trait name="Unseen Sense (Spirits)" source="WoD Book of Spirits">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<value>4</value>
+						<prerequisites>Attribute.Wits > 1</prerequisites>
+					</trait>
+					<!--<trait name="AntiPsi" source="WoD Second Sight">
+						<value>5</value>
+						<prerequisites>No other Merits that confer psychic powers</prerequisites>
+					</trait>-->
+					<!--<trait name="Doubting Thomas" source="WoD Second Sight">
+						<value>1</value>
+						<prerequisites>No other Merits that confer psychic powers</prerequisites>
+					</trait>-->
+					<trait name="Psychic Resistance" source="WoD Second Sight">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+					</trait>
+				</Category>
+			</Merit>
+		</Traits>
+	</Template>
 </SoulCreator>
