@@ -23,10 +23,10 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from src.Config import Config
-from src.Error import ErrXmlOldVersion
+import src.Error as Error
 from src.Debug import Debug
 
-## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
+## Fallback to normal ElementTree, if lxml not installed.
 lxmlLoadad = False
 try:
 	from lxml import etree
@@ -36,14 +36,17 @@ except ImportError:
 	try:
 		# Python 2.5
 		import xml.etree.cElementTree as etree
-		Debug.debug("running with cElementTree on Python 2.5+")
+		#Debug.debug("running with cElementTree on Python 2.5+")
+		#print("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
 			# Python 2.5
 			import xml.etree.ElementTree as etree
-			Debug.debug("running with ElementTree on Python 2.5+")
+			#Debug.debug("running with ElementTree on Python 2.5+")
+			#print("running with ElementTree on Python 2.5+")
 		except ImportError:
-			Debug.debug("Failed to import ElementTree from any known place")
+			#Debug.debug("Failed to import ElementTree from any known place")
+			print("Failed to import ElementTree from any known place")
 
 
 

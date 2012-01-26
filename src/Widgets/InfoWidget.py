@@ -345,7 +345,11 @@ class InfoWidget(QWidget):
 		appPath = PathTools.getPath()
 
 		# Pfad zum Speicherverzeichnis
-		savePath = os.environ['HOME']
+		savePath = ""
+		if os.name == "nt":
+			savePath = os.environ['HOMEPATH']
+		else:
+			savePath = os.environ['HOME']
 
 		# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
 		if ( not os.path.exists( savePath ) ):

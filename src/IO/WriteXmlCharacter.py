@@ -38,14 +38,14 @@ except ImportError:
 	try:
 		# Python 2.5
 		import xml.etree.cElementTree as etree
-		Debug.debug("running with cElementTree on Python 2.5+")
+		#Debug.debug("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
 			# Python 2.5
 			import xml.etree.ElementTree as etree
-			Debug.debug("running with ElementTree on Python 2.5+")
+			#Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
-			Debug.debug("Failed to import ElementTree from any known place")
+			print("Failed to import ElementTree from any known place")
 
 
 
