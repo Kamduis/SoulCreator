@@ -745,8 +745,7 @@ class DrawSheet(QObject):
 
 		for i in xrange(len(textCharacter)):
 			for j in xrange(len(textCharacter[i])):
-				textWidth = fontScriptMetrics.boundingRect(textCharacter[i][j]).width()
-				self.__painter.drawText(i * distanceH + width[i], offsetV - fontSubHeadingHeightDiff + fontScriptHeightDiff + j * (self.__fontSubHeadingHeight + distanceV), textWidth, fontScriptHeight, Qt.AlignLeft, textCharacter[i][j])
+				self.__painter.drawText(i * distanceH + width[i] + self.__textDotSep, offsetV - fontSubHeadingHeightDiff + fontScriptHeightDiff - fontScriptHeight + j * (self.__fontSubHeadingHeight + distanceV), distanceH - width[i] - self.__textDotSep, 2 * fontScriptHeight, Qt.AlignLeft | Qt.AlignBottom | Qt.TextWordWrap, textCharacter[i][j])
 
 		if GlobalState.isDebug:
 			self.__drawBB(0, offsetV, self.__pageWidth, len(text[0]) * self.__fontSubHeadingHeight + (len(text[0]) - 1) * distanceV)
