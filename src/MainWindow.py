@@ -99,8 +99,6 @@ class MainWindow(QMainWindow):
 
 	\bug Beim Zurücksetzen des Charakters bleibt der Name bestehen.
 
-	\bug Geburtsdatum nicht vor 1752 (QDate-Limit)! Durch python-Klasse ersetzen und eigenes Widget schreiben. ;_;
-
 	\todo Changeling: Ich vermisse das Feld für Kith und beim Aussehen die Unterscheidung zwischen Mask und Mien
 
 	\todo Changeling: Broken Mirror

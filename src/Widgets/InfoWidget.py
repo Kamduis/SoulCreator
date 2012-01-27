@@ -72,6 +72,10 @@ class InfoWidget(QWidget):
 
 		self.ui.comboBox_era.addItems( Config.eras )
 
+		self.ui.dateEdit_dateBirth.setMinimumDate(QDate(100, 1, 1))
+		self.ui.dateEdit_dateBecoming.setMinimumDate(QDate(100, 1, 1))
+		self.ui.dateEdit_dateGame.setMinimumDate(QDate(100, 1, 1))
+
 
 		self.ui.pushButton_pictureClear.setIcon(QIcon(":/icons/images/actions/cancel.png"))
 		self.ui.pushButton_pictureClear.setText("")
