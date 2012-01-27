@@ -133,7 +133,9 @@ class InfoWidget(QWidget):
 		self.__character.speciesChanged.connect(self.hideShowWidgets_species)
 
 		## Ändert sich das Alter, gibt es andere Virtues und Vices.
+		self.__character.ageChanged.connect(self.updateVirtueTitle)
 		self.__character.ageChanged.connect(self.repopulateVirtues)
+		self.__character.ageChanged.connect(self.updateViceTitle)
 		self.__character.ageChanged.connect(self.repopulateVices)
 
 
@@ -267,6 +269,30 @@ class InfoWidget(QWidget):
 		self.ui.label_party.setText( "{}:".format(self.__storage.partyTitle(species)) )
 
 
+	def updateVirtueTitle( self, age ):
+		"""
+		Wenn die Alterskategorie sich ändert, ändert sich auch der Bezeichner für die Tugenden.
+		"""
+
+		label = self.tr("Virtue")
+		if age < Config.adultAge:
+			label = self.tr("Asset")
+		if self.ui.label_virtue.text() != label:
+			self.ui.label_virtue.setText( "{}:".format(label) )
+
+
+	def updateViceTitle( self, age ):
+		"""
+		Wenn die Alterskategorie sich ändert, ändert sich auch der Bezeichner für die Laster.
+		"""
+
+		label = self.tr("Vice")
+		if age < Config.adultAge:
+			label = self.tr("Fault")
+		if self.ui.label_vice.text() != label:
+			self.ui.label_vice.setText( "{}:".format(label) )
+
+
 	def repopulateVirtues(self, age):
 		ageStr = Config.ages[0]
 		if age < Config.adultAge:
@@ -277,8 +303,10 @@ class InfoWidget(QWidget):
 			if item["age"] == ageStr:
 				virtueList.append(item["name"])
 
-		self.ui.comboBox_virtue.clear()
-		self.ui.comboBox_virtue.addItems(virtueList)
+		## Die Liste soll nur aktualisiert werden, wenn eine neue Alterskategorie erreicht wird.
+		if self.ui.comboBox_virtue.itemText(0) not in virtueList:
+			self.ui.comboBox_virtue.clear()
+			self.ui.comboBox_virtue.addItems(virtueList)
 
 
 	def repopulateVices(self, age):
@@ -291,8 +319,10 @@ class InfoWidget(QWidget):
 			if item["age"] == ageStr:
 				viceList.append(item["name"])
 
-		self.ui.comboBox_vice.clear()
-		self.ui.comboBox_vice.addItems(viceList)
+		## Die Liste soll nur aktualisiert werden, wenn eine neue Alterskategorie erreicht wird.
+		if self.ui.comboBox_vice.itemText(0) not in viceList:
+			self.ui.comboBox_vice.clear()
+			self.ui.comboBox_vice.addItems(viceList)
 
 
 	def repopulateBreeds(self, species):
