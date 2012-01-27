@@ -846,6 +846,9 @@ class StorageCharacter(QObject):
 		self.faction = ""
 		self.height = 1.60
 		self.weight = 60
+		self.eyes = ""
+		self.hair = ""
+		self.nationality = ""
 		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
 		#self.breed = self.__storage.breeds(Config.initialSpecies)[0]
 		self.__derangements = {}
