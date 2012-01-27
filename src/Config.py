@@ -183,10 +183,12 @@ class Config(object):
 	initialSpecies = "Human"
 
 	## Das Standardalter eines neuen Charakters
-	initialAge = 21
+	ageInitial = 21
+
+	ageMin = 6
 
 	## Das Alter ab welchem der Charakter /kein/ Kind mehr ist.
-	adultAge = 13
+	ageAdult = 13
 
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (

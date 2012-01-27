@@ -116,7 +116,7 @@ class StorageCharacter(QObject):
 		"""
 		\todo Eigentlich benötigt Subpower keinen eigenen Datentyp. Da die ganzen Zusatzinformationen ja nur im Template zu stehen haben und nicht auch für den Charakter bekannt sein müssen. Der Wert "level" ist aber interessant und gilt für andere Klassen nicht.
 		"""
-		
+
 		QObject.__init__(self, parent)
 
 		self.__storage = template
@@ -158,8 +158,8 @@ class StorageCharacter(QObject):
 
 		self.dateBirthChanged.connect(self.__calcAge)
 		self.dateGameChanged.connect(self.__calcAge)
+		self.dateBirthChanged.connect(self.__calcAgeBecoming)
 		self.dateBecomingChanged.connect(self.__calcAgeBecoming)
-		self.dateGameChanged.connect(self.__calcAgeBecoming)
 		self.weaponAdded.connect(self.weaponsChanged)
 		self.weaponRemoved.connect(self.weaponsChanged)
 
@@ -488,7 +488,7 @@ class StorageCharacter(QObject):
 		"""
 
 		return self.__magicalTool
-		
+
 	def setMagicalTool(self, tool):
 
 		if self.__magicalTool != tool:
@@ -830,8 +830,8 @@ class StorageCharacter(QObject):
 
 		## Anfangsdatum setzen.
 		self.dateGame = QDate.currentDate()
-		self.dateBirth = QDate(self.dateGame.year() - Config.initialAge, self.dateGame.month(), self.dateGame.day())
-		self.dateBecoming = QDate(self.dateGame.year() - Config.adultAge, self.dateGame.month(), self.dateGame.day())
+		self.dateBirth = QDate(self.dateGame.year() - Config.ageInitial, self.dateGame.month(), self.dateGame.day())
+		self.dateBecoming = QDate(self.dateGame.year() - Config.ageAdult, self.dateGame.month(), self.dateGame.day())
 
 		# Löschen aller Identitäten.
 		self.__identity.reset()
