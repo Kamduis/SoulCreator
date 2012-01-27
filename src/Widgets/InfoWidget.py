@@ -56,7 +56,7 @@ class InfoWidget(QWidget):
 
 		self.ui = Ui_InfoWidget()
 		self.ui.setupUi(self)
-		
+
 		self.__storage = template
 		self.__character = character
 
@@ -69,7 +69,7 @@ class InfoWidget(QWidget):
 
 		self.ui.comboBox_era.addItems( Config.eras )
 
-		
+
 		self.ui.pushButton_pictureClear.setIcon(QIcon(":/icons/images/actions/cancel.png"))
 		self.ui.pushButton_pictureClear.setText("")
 		self.ui.pushButton_pictureClear.setEnabled(False)
@@ -132,16 +132,25 @@ class InfoWidget(QWidget):
 		# Menschen können ihre Fraktion selbst eintragen und haben einige Angaben einfach nicht nötig.
 		self.__character.speciesChanged.connect(self.hideShowWidgets_species)
 
+		## Das Alter darf nie negativ werden können
+		self.ui.dateEdit_dateBirth.dateChanged.connect(self.ui.dateEdit_dateBecoming.setMinimumDate)
+		self.ui.dateEdit_dateGame.dateChanged.connect(self.setMaxBirthday)
+
 		## Ändert sich das Alter, gibt es andere Virtues und Vices.
+		self.__character.ageChanged.connect(self.updateVirtueTitle)
 		self.__character.ageChanged.connect(self.repopulateVirtues)
+		self.__character.ageChanged.connect(self.updateViceTitle)
 		self.__character.ageChanged.connect(self.repopulateVices)
+
+		## Zu Beginn sollte kein Bild gealden sein.
+		#self.clearImage()
 
 
 	def openNameDialog(self):
 		"""
 		Ruft einen Dialog auf, in welchem die zahlreichen Namen des Charakters eingetragen werden können.
 		"""
-		
+
 		dialog = NameDialog( self.__character, self )
 		dialog.exec_()
 
@@ -267,9 +276,33 @@ class InfoWidget(QWidget):
 		self.ui.label_party.setText( "{}:".format(self.__storage.partyTitle(species)) )
 
 
+	def updateVirtueTitle( self, age ):
+		"""
+		Wenn die Alterskategorie sich ändert, ändert sich auch der Bezeichner für die Tugenden.
+		"""
+
+		label = self.tr("Virtue")
+		if age < Config.ageAdult:
+			label = self.tr("Asset")
+		if self.ui.label_virtue.text() != label:
+			self.ui.label_virtue.setText( "{}:".format(label) )
+
+
+	def updateViceTitle( self, age ):
+		"""
+		Wenn die Alterskategorie sich ändert, ändert sich auch der Bezeichner für die Laster.
+		"""
+
+		label = self.tr("Vice")
+		if age < Config.ageAdult:
+			label = self.tr("Fault")
+		if self.ui.label_vice.text() != label:
+			self.ui.label_vice.setText( "{}:".format(label) )
+
+
 	def repopulateVirtues(self, age):
 		ageStr = Config.ages[0]
-		if age < Config.adultAge:
+		if age < Config.ageAdult:
 			ageStr = Config.ages[1]
 
 		virtueList = []
@@ -277,13 +310,15 @@ class InfoWidget(QWidget):
 			if item["age"] == ageStr:
 				virtueList.append(item["name"])
 
-		self.ui.comboBox_virtue.clear()
-		self.ui.comboBox_virtue.addItems(virtueList)
+		## Die Liste soll nur aktualisiert werden, wenn eine neue Alterskategorie erreicht wird.
+		if self.ui.comboBox_virtue.itemText(0) not in virtueList:
+			self.ui.comboBox_virtue.clear()
+			self.ui.comboBox_virtue.addItems(virtueList)
 
 
 	def repopulateVices(self, age):
 		ageStr = Config.ages[0]
-		if age < Config.adultAge:
+		if age < Config.ageAdult:
 			ageStr = Config.ages[1]
 
 		viceList = []
@@ -291,8 +326,10 @@ class InfoWidget(QWidget):
 			if item["age"] == ageStr:
 				viceList.append(item["name"])
 
-		self.ui.comboBox_vice.clear()
-		self.ui.comboBox_vice.addItems(viceList)
+		## Die Liste soll nur aktualisiert werden, wenn eine neue Alterskategorie erreicht wird.
+		if self.ui.comboBox_vice.itemText(0) not in viceList:
+			self.ui.comboBox_vice.clear()
+			self.ui.comboBox_vice.addItems(viceList)
 
 
 	def repopulateBreeds(self, species):
@@ -376,19 +413,33 @@ class InfoWidget(QWidget):
 		"""
 		Löscht das Charakterbild.
 		"""
-		
+
 		self.__character.picture = QPixmap()
-		self.ui.pushButton_picture.setIcon(QIcon())
-		self.ui.pushButton_picture.setText("Open Picture")
-		self.ui.pushButton_pictureClear.setEnabled(False)
 
 
 	def updatePicture(self, image):
 		"""
 		Stellt das Charakterbild dar.
 		"""
-		
-		self.ui.pushButton_picture.setText("")
-		self.ui.pushButton_picture.setIcon(image)
 
-		self.ui.pushButton_pictureClear.setEnabled(True)
+		if image.isNull():
+			self.ui.pushButton_picture.setIcon(QIcon())
+			self.ui.pushButton_picture.setText("Open Picture")
+			self.ui.pushButton_pictureClear.setEnabled(False)
+		else:
+			self.ui.pushButton_picture.setText("")
+			self.ui.pushButton_picture.setIcon(image)
+			self.ui.pushButton_pictureClear.setEnabled(True)
+
+
+	def setMaxBirthday(self):
+		"""
+		Ändert sich die Zeit im Spiel, ändert sich das maximal einzustellende Geburtsdatum, so daß der Charakter nicht jünger sein kann als der vorgegebene Minimalwert.
+		"""
+
+		maxDateBirth = self.ui.dateEdit_dateGame.date().addYears(-1 * Config.ageMin)
+		self.ui.dateEdit_dateBirth.setMaximumDate(maxDateBirth)
+		self.ui.dateEdit_dateBecoming.setMaximumDate(self.ui.dateEdit_dateGame.date())
+
+
+

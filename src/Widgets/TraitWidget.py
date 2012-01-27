@@ -299,7 +299,7 @@ class SkillWidget(TraitWidget):
 
 	def emitHideReasonChanged(self):
 		ageStr = Config.ages[0]
-		if self._character.age < Config.adultAge:
+		if self._character.age < Config.ageAdult:
 			ageStr = Config.ages[1]
 		eraStr = self._character.era
 		self.hideReasonChanged.emit(ageStr, eraStr)

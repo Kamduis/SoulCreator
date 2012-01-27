@@ -189,6 +189,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readTraits( self, root, species ):
 		"""
 		Lese die Eigenschaften aus den Template-Dateien.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		if root is not None:
@@ -208,6 +210,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 		Lese die Unterkräfte aus den Template-Dateien.
 
 		Diese werden zwar auch im trait-Dictionary gespeichert, haben aber andere Attribute als die normalen Eigenschaften.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		if root is not None:
@@ -246,6 +250,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readCreationPoints( self, root, species ):
 		"""
 		Lese die Erschaffungspunkte aus, die den jeweiligen Spezies zur Verfügung stehen.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		if root is not None:
@@ -267,11 +273,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 			groupCategory = root.tag
 			groupCategoryName = root.attrib["name"]
 			self.__storage.appendTitle( species, groupCategory, groupCategoryName )
-			for element in root.getiterator("item"):
+			for element in list(root):
 				groupName = element.attrib["name"]
 				self.__storage.appendTitle( species, groupCategory, groupCategoryName, element.attrib["name"] )
 
-				# Einzelne Gruppen bieten noch zusätzliche Informationen wie beispielsweise die Bonuseigenschaften der Vampir-Clans etc. Die Ermittlung dieser informationen beginnt hier.
 
 				#while( not self.atEnd() ):
 					#self.readNext()
@@ -290,6 +295,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readPowerstat( self, root, species ):
 		"""
 		Lese die Informationen über die Auswirkungen der Supereigenschaft.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		if root is not None:
@@ -307,6 +314,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readDerangements( self, root, species ):
 		"""
 		Liest die Geistesstörungen aus den Template-Dateien.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		if root is not None:
@@ -330,6 +339,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readWeapons(self, root):
 		"""
 		Einlesen der Waffen.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		for Weapons in root:
@@ -354,6 +365,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readArmor(self, root):
 		"""
 		Einlesen der Rüstungen.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		for Armor in root:
@@ -372,6 +385,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 	def readEquipment(self, root):
 		"""
 		Einlesen der Ausrüstung.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		for Equipment in root:
@@ -396,7 +411,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 			"typ": <Typ der ausgelsenen Eigenschaften>,
 			"traits" [<Liste der Eigenschaftsdaten der gefundenen Eigenschaften>]
 		}
+		
 		\todo Eine Eigenschaft kann mehrfach vorkommen, da andere Spezies andere Spezialisierungen mitbringen mögen.
+
+		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		listOfTraits = []
@@ -440,49 +458,5 @@ class ReadXmlTemplate(QObject, ReadXml):
 			return element.attrib[attribute]
 		else:
 			return ""
-
-
-
-
-	#def readBonusTraits( self, species, breed ):
-		#"""
-		#Es werden die Bonus-Eigenschaften ausgelesen.
-		#"""
-
-		#while( not self.atEnd() ):
-			#self.readNext()
-
-			#if( self.isEndElement() ):
-				#break
-
-			#if( self.isStartElement() ):
-				## Es können Bonuseiegnschaften verschiedener Typen gewährt werden.
-				#traitTyp = self.name()
-				#self.readBonusTraitsDetails( species, breed, traitTyp )
-
-
-
-	#def readBonusTraitsDetails(self, species, breed, typ):
-		#"""
-		#Die tatsächlichen Eigenscahften werden in dieser Funktion ermittelt.
-		#"""
-
-		#while( not self.atEnd() ):
-			#self.readNext()
-
-			#if( self.isEndElement() ):
-				#break
-
-			#if( self.isStartElement() ):
-				#if( self.name() == "trait" ):
-					#traitName = self.attributes().value( "name" )
-					#traitData = {
-						#"name": traitName,
-						#"typ": typ,
-					#}
-					#self.__storage.appendBonusTrait( species, breed, traitData )
-					#self.readUnknownElement()
-				#else:
-					#self.readUnknownElement()
 
 
