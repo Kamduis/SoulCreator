@@ -142,6 +142,9 @@ class InfoWidget(QWidget):
 		self.__character.ageChanged.connect(self.updateViceTitle)
 		self.__character.ageChanged.connect(self.repopulateVices)
 
+		## Zu Beginn sollte kein Bild gealden sein.
+		#self.clearImage()
+
 
 	def openNameDialog(self):
 		"""
@@ -412,9 +415,6 @@ class InfoWidget(QWidget):
 		"""
 
 		self.__character.picture = QPixmap()
-		self.ui.pushButton_picture.setIcon(QIcon())
-		self.ui.pushButton_picture.setText("Open Picture")
-		self.ui.pushButton_pictureClear.setEnabled(False)
 
 
 	def updatePicture(self, image):
@@ -422,10 +422,14 @@ class InfoWidget(QWidget):
 		Stellt das Charakterbild dar.
 		"""
 
-		self.ui.pushButton_picture.setText("")
-		self.ui.pushButton_picture.setIcon(image)
-
-		self.ui.pushButton_pictureClear.setEnabled(True)
+		if image.isNull():
+			self.ui.pushButton_picture.setIcon(QIcon())
+			self.ui.pushButton_picture.setText("Open Picture")
+			self.ui.pushButton_pictureClear.setEnabled(False)
+		else:
+			self.ui.pushButton_picture.setText("")
+			self.ui.pushButton_picture.setIcon(image)
+			self.ui.pushButton_pictureClear.setEnabled(True)
 
 
 	def setMaxBirthday(self):
