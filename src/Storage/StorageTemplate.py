@@ -447,6 +447,7 @@ class StorageTemplate(QObject):
 		elif (typ != "Subpower"):
 			specialties = self.__traits[typ][category][identifier]["specialty"]
 			specialties.extend(data["specialty"])
+			specialties.sort()
 			self.__traits[typ][category][identifier] = data
 			self.__traits[typ][category][identifier]["specialty"] = specialties
 

@@ -173,7 +173,7 @@ class InfoWidget(QWidget):
 		Aktualisiert die Anzeige des Namens.
 		"""
 
-		nameStr = Identity.displayNameDisplay(self.__character.identities[0].surename, self.__character.identities[0].firstname, self.__character.identities[0].nickname)
+		nameStr = Identity.displayNameDisplay(self.__character.identities[0].surname, self.__character.identities[0].firstname, self.__character.identities[0].nickname)
 		nameDisplay = nameStr
 		if not nameStr:
 			nameStr = self.tr("Name")

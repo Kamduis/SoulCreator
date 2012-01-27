@@ -653,7 +653,7 @@ class DrawSheet(QObject):
 		]
 		textCharacter = [
 			[
-				Identity.displayNameDisplay(self.__character.identities[0].surename, self.__character.identities[0].firstname, self.__character.identities[0].nickname),
+				Identity.displayNameDisplay(self.__character.identities[0].surname, self.__character.identities[0].firstname, self.__character.identities[0].nickname),
 				u"",
 			],
 			[

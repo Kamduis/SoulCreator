@@ -54,17 +54,6 @@ class Specialties(CheckedList):
 		self.itemStateChanged.connect(self.modifyTrait)
 
 
-	## Wird vielleicht garnicht gebraucht
-	#def __getSkill(self):
-		#return self.__skill
-	
-	#def __setSkill( self, skill ):
-		#if ( self.___skill != skill ):
-			#self.__skill = skill
-
-	#skill = property(__getSkill, __setSkill)
-
-
 	def setSpecialties( self, specialties ):
 		for item in specialties:
 			state = Qt.Unchecked
@@ -72,38 +61,6 @@ class Specialties(CheckedList):
 				state = Qt.Checked
 
 			self.addCheckableItem( item, state )
-
-
-#CharaSpecialties::CharaSpecialties( QWidget* parent ) : TraitSpecialties( parent ) {
-	#character = StorageCharacter::getInstance();
-
-	#connect( this, SIGNAL( checkedSpecialtiesChanged( QStringList ) ), this, SLOT( saveSpecialties( QStringList ) ) );
-	#connect(character, SIGNAL(characterResetted()), this, SLOT(clear()) );
-
-	#setMinimumWidth(150);
-#}
-
-
-#void CharaSpecialties::saveSpecialties( QStringList list ) {
-	"""
-	Speichert die mit Haken versehenen Spezialisierungen bei den Charakterwerten im Speicher.
-	"""
-	
-	#QList< cv_TraitDetail > specialties;
-
-	#for ( int i = 0; i < list.count(); ++i ) {
-		#cv_TraitDetail detail;
-		#detail.name = list.at( i );
-		#detail.value = true;
-
-		#// Kann ich nicht machen, da ja dann keine Spezialisierungen mehr gelöscht werden.
-#// 		character->addSkillSpecialties(skill(), detail);
-
-		#specialties.append(detail);
-	#}
-
-	#character->setSkillSpecialties(skill(), specialties);
-#}
 
 
 	def showSpecialties(self, sw, trait):

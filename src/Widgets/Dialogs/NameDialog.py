@@ -51,7 +51,7 @@ class NameDialog(QDialog):
 
 		self.ui.lineEdit_firstName.textChanged.connect(self.showNames)
 		self.ui.lineEdit_additionalForenames.textChanged.connect(self.showNames)
-		self.ui.lineEdit_surename.textChanged.connect(self.showNames)
+		self.ui.lineEdit_surname.textChanged.connect(self.showNames)
 		self.ui.lineEdit_honorificName.textChanged.connect(self.showNames)
 		self.ui.lineEdit_nickname.textChanged.connect(self.showNames)
 		self.ui.lineEdit_specialName.textChanged.connect(self.showNames)
@@ -73,7 +73,7 @@ class NameDialog(QDialog):
 
 		self.ui.lineEdit_firstName.setText( self.__character.identities[0].firstname )
 		self.ui.lineEdit_additionalForenames.setText( foreNames )
-		self.ui.lineEdit_surename.setText( self.__character.identities[0].surename )
+		self.ui.lineEdit_surname.setText( self.__character.identities[0].surname )
 		self.ui.lineEdit_honorificName.setText( self.__character.identities[0].honorname )
 		self.ui.lineEdit_nickname.setText( self.__character.identities[0].nickname )
 		self.ui.lineEdit_specialName.setText( self.__character.identities[0].supername )
@@ -89,8 +89,8 @@ class NameDialog(QDialog):
 		forenames = self.ui.lineEdit_additionalForenames.text().split( " " )
 		forenames.insert( 0, self.ui.lineEdit_firstName.text() )
 
-		self.ui.label_displayFull.setText( Identity.displayNameFull( self.ui.lineEdit_surename.text(), forenames ) )
-		self.ui.label_displayDisplay.setText( Identity.displayNameDisplay( self.ui.lineEdit_surename.text(), self.ui.lineEdit_firstName.text(), self.ui.lineEdit_nickname.text() ) )
+		self.ui.label_displayFull.setText( Identity.displayNameFull( self.ui.lineEdit_surname.text(), forenames ) )
+		self.ui.label_displayDisplay.setText( Identity.displayNameDisplay( self.ui.lineEdit_surname.text(), self.ui.lineEdit_firstName.text(), self.ui.lineEdit_nickname.text() ) )
 		self.ui.label_displayHonorific.setText( Identity.displayNameHonor( self.ui.lineEdit_firstName.text(), self.ui.lineEdit_honorificName.text() ) )
 		self.ui.label_displaySuper.setText( self.ui.lineEdit_specialName.text() )
 
@@ -112,10 +112,10 @@ class NameDialog(QDialog):
 		else:
 			self.__character.identities[0].forenames = [""]
 
-		if not self.ui.lineEdit_surename.text().isspace():
-			self.__character.identities[0].surename = self.ui.lineEdit_surename.text()
+		if not self.ui.lineEdit_surname.text().isspace():
+			self.__character.identities[0].surname = self.ui.lineEdit_surname.text()
 		else:
-			self.__character.identities[0].surename = ""
+			self.__character.identities[0].surname = ""
 
 		if not self.ui.lineEdit_honorificName.text().isspace():
 			self.__character.identities[0].honorname = self.ui.lineEdit_honorificName.text()

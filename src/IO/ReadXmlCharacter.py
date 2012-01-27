@@ -124,12 +124,12 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 		Lese die Identitäten des Charkaters aus.
 
-		\note Derzeit gibt es nur eine. forenames="" surename="" honorname="" nickname="" supername="" gender="Male"
+		\note Derzeit gibt es nur eine. forenames="" surname="" honorname="" nickname="" supername="" gender="Male"
 		"""
 
 		identity = tree.find("identities/identity")
 		self.__character.identities[0].forenames = identity.attrib["forenames"].split(" ")
-		self.__character.identities[0].surename = identity.attrib["surename"]
+		self.__character.identities[0].surname = identity.attrib["surname"]
 		self.__character.identities[0].honorname = identity.attrib["honorname"]
 		self.__character.identities[0].nickname = identity.attrib["nickname"]
 		self.__character.identities[0].supername = identity.attrib["supername"]

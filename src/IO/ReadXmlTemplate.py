@@ -423,6 +423,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				listOfSpecialties = []
 				for traitSubElement in traitElement.getiterator("specialty"):
 					listOfSpecialties.append(traitSubElement.text)
+				listOfSpecialties.sort()
 				listOfPrerequisites = []
 				for traitSubElement in traitElement.getiterator("prerequisites"):
 					listOfPrerequisites.append(traitSubElement.text)

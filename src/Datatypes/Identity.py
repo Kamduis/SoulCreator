@@ -50,14 +50,14 @@ class Identity(QObject):
 	identityChanged = Signal()
 
 
-	def __init__( self, surename="", firstname="", parent=None ):
+	def __init__( self, surname="", firstname="", parent=None ):
 		QObject.__init__(self, parent)
 		
 		# Liste zur Speicherung von Namen.
 		#
 		# {
 		# 	"forenames": [Name1, Name2, Name3, ...],
-		# 	"surename": Name,
+		# 	"surname": Name,
 		# 	"honorname": Name,
 		# 	"nickame": Name,
 		# 	"supername": Name,
@@ -74,7 +74,7 @@ class Identity(QObject):
 			## Nachname
 			#
 			# Der Familienname der Eltern.
-			"surename": surename,
+			"surname": surname,
 			# Ein Beinahme, den der Charakter entweder durch ehrenvolle Taten, durch körperliche Besonderheiten oder durch Mißgeschick erworben hat.
 			#
 			# - der Starke
@@ -128,19 +128,19 @@ class Identity(QObject):
 	firstname = property(__getFirstName)
 
 
-	def __getSurename(self):
+	def __getSurname(self):
 		"""
 		Nachname
 		"""
 		
-		return self.__name["surename"]
+		return self.__name["surname"]
 
-	def __setSurename(self, name):
-		if self.__name["surename"] != name:
-			self.__name["surename"] = name
+	def __setSurname(self, name):
+		if self.__name["surname"] != name:
+			self.__name["surname"] = name
 			self.nameChanged.emit()
 
-	surename = property(__getSurename, __setSurename)
+	surname = property(__getSurname, __setSurname)
 
 
 	def __getRealname(self):
@@ -152,11 +152,11 @@ class Identity(QObject):
 		\note Die Kenntnis dieses Namens erleichtert Magiern sympathische Magie.
 		"""
 		
-		if (not self.firstname or not self.surename):
+		if (not self.firstname or not self.surname):
 			# In diesem Fall benötige ich keinen Abstand zwischen den Namen, da je einer leer ist.
-			return "{}{}".format(firstname, surename)
+			return "{}{}".format(firstname, surname)
 		else:
-			return "{} {}".format(firstname, surename)
+			return "{} {}".format(firstname, surname)
 
 	realname = property(__getRealname)
 

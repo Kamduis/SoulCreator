@@ -78,7 +78,7 @@ class WriteXmlCharacter(QObject):
 		forenames = " ".join(self.__character.identities[0].forenames)
 		etree.SubElement(identities, "identity",
 			forenames=forenames,
-			surename=self.__character.identities[0].surename,
+			surname=self.__character.identities[0].surname,
 			honorname=self.__character.identities[0].honorname,
 			nickname=self.__character.identities[0].nickname,
 			supername=self.__character.identities[0].supername,
