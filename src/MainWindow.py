@@ -106,6 +106,8 @@ class MainWindow(QMainWindow):
 	\todo Items sollten sich der Alterskategorie anpassen.
 
 	\todo "Leere" Felder auf dem Charakterbogen mit Leerzeilen zum händischen Ausfüllen versehen.
+
+	\todo Bei Reset werden Augen, Haar und Nationalität nicht zurückgesetzt.
 	"""
 
 

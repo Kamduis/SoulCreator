@@ -186,7 +186,7 @@ class Config(object):
 	initialAge = 21
 
 	## Das Alter ab welchem der Charakter /kein/ Kind mehr ist.
-	adultAge = 13
+	ageAdult = 13
 
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (
@@ -294,7 +294,7 @@ class Config(object):
 		Gibt die Alterskategorie zurück.
 		"""
 
-		if age < Config.adultAge:
+		if age < Config.ageAdult:
 			return Config.ages[1]
 		else:
 			return Config.ages[0]

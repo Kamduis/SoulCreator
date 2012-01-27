@@ -57,7 +57,11 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QDateEdit" name="dateEdit_dateBirth"/>
+          <widget class="DateEdit" name="dateEdit_dateBirth">
+           <property name="displayFormat">
+            <string>dd.MM.yyyy</string>
+           </property>
+          </widget>
          </item>
          <item row="4" column="0">
           <widget class="QLabel" name="label_2">
@@ -87,7 +91,11 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QDateEdit" name="dateEdit_dateBecoming"/>
+          <widget class="DateEdit" name="dateEdit_dateBecoming">
+           <property name="displayFormat">
+            <string>dd.MM.yyyy</string>
+           </property>
+          </widget>
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="label_ageBecoming_label">
@@ -268,7 +276,11 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QDateEdit" name="dateEdit_dateGame"/>
+          <widget class="DateEdit" name="dateEdit_dateGame">
+           <property name="displayFormat">
+            <string>dd.MM.yyyy</string>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_10">
@@ -457,6 +469,11 @@
    <class>DefocusableTextEdit</class>
    <extends>QTextEdit</extends>
    <header>src/Widgets/Components/DefocusableTextEdit</header>
+  </customwidget>
+  <customwidget>
+   <class>DateEdit</class>
+   <extends>QDateEdit</extends>
+   <header>src.Widgets.Components.DateEdit</header>
   </customwidget>
  </customwidgets>
  <tabstops>

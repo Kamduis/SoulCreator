@@ -25,10 +25,11 @@ from __future__ import division, print_function
 import os
 
 from PySide.QtCore import Qt, QSize, QFile, QDate, Signal
-from PySide.QtGui import QWidget, QIcon, QLabel, QPixmap, QFileDialog
+from PySide.QtGui import QWidget, QIcon, QLabel, QPixmap, QFileDialog, QMessageBox
 
 from src.Config import Config
 from src.Tools import PathTools
+from src.Calc.Calc import Calc
 from src.Datatypes.Identity import Identity
 from src.Widgets.Dialogs.NameDialog import NameDialog
 from src.Debug import Debug
@@ -60,6 +61,8 @@ class InfoWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
+		self.__age = 0
+
 		for item in Config.genders:
 			self.ui.comboBox_gender.addItem( QIcon(item[1]), item[0] )
 
@@ -78,9 +81,11 @@ class InfoWidget(QWidget):
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
 		self.ui.comboBox_era.currentIndexChanged[str].connect(self.__character.setEra)
 		self.ui.comboBox_gender.currentIndexChanged[str].connect(self.__character.identities[0].setGender)
-		self.ui.dateEdit_dateBirth.dateChanged.connect(self.__character.setDateBirth)
+		#self.ui.dateEdit_dateBirth.dateChanged.connect(self.setCharacterDateBirth)
+		self.ui.dateEdit_dateBirth.dateEdited.connect(self.setCharacterDateBirth)
 		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.__character.setDateBecoming)
-		self.ui.dateEdit_dateGame.dateChanged.connect(self.__character.setDateGame)
+		#self.ui.dateEdit_dateGame.dateChanged.connect(self.setCharacterDateGame)
+		self.ui.dateEdit_dateGame.dateEdited.connect(self.setCharacterDateGame)
 		self.ui.comboBox_species.currentIndexChanged[str].connect(self.__character.setSpecies)
 		self.ui.comboBox_virtue.currentIndexChanged[str].connect(self.__character.setVirtue)
 		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.__character.setVice)
@@ -135,6 +140,8 @@ class InfoWidget(QWidget):
 		## Ändert sich das Alter, gibt es andere Virtues und Vices.
 		self.__character.ageChanged.connect(self.repopulateVirtues)
 		self.__character.ageChanged.connect(self.repopulateVices)
+
+		self.__character.ageChanged.connect(self.setAge)
 
 
 	def openNameDialog(self):
@@ -269,7 +276,7 @@ class InfoWidget(QWidget):
 
 	def repopulateVirtues(self, age):
 		ageStr = Config.ages[0]
-		if age < Config.adultAge:
+		if age < Config.ageAdult:
 			ageStr = Config.ages[1]
 
 		virtueList = []
@@ -283,7 +290,7 @@ class InfoWidget(QWidget):
 
 	def repopulateVices(self, age):
 		ageStr = Config.ages[0]
-		if age < Config.adultAge:
+		if age < Config.ageAdult:
 			ageStr = Config.ages[1]
 
 		viceList = []
@@ -392,3 +399,62 @@ class InfoWidget(QWidget):
 		self.ui.pushButton_picture.setIcon(image)
 
 		self.ui.pushButton_pictureClear.setEnabled(True)
+
+
+	def setAge(self, age):
+		if self.__age != age:
+			self.__age = age
+
+
+	def setCharacterDateBirth(self, date):
+		"""
+		Speichert das Geburtsdatum des Charakters im Speicher.
+
+		Allerdings muß zuvor möglicherweise um Erlaubnis gefragt werden.
+		"""
+
+		years = Calc.years(self.ui.dateEdit_dateGame.date(), self.ui.dateEdit_dateBirth.date())
+		if self.__age != years:
+			if (self.__age < Config.ageAdult <= years or years < Config.ageAdult <= self.__age) and not self.warnAgeChange(years, self.__age):
+				self.ui.dateEdit_dateBirth.setDate(self.ui.dateEdit_dateGame.date().addYears(-1 * self.__age))
+			else:
+				self.__character.setDateBirth(date)
+
+
+	def setCharacterDateGame(self, date):
+		"""
+		Speichert das Geburtsdatum des Charakters im Speicher.
+
+		Allerdings muß zuvor möglicherweise um Erlaubnis gefragt werden.
+		"""
+
+		years = Calc.years(self.ui.dateEdit_dateGame.date(), self.ui.dateEdit_dateBirth.date())
+		if self.__age != years:
+			if (self.__age < Config.ageAdult <= years or years < Config.ageAdult <= self.__age) and not self.warnAgeChange(years, self.__age):
+				self.ui.dateEdit_dateGame.setDate(self.ui.dateEdit_dateBirth.date().addYears(self.__age))
+			else:
+				self.__character.setDateGame(date)
+
+
+	def warnAgeChange(self, newAge, oldAge):
+		"""
+		Wird der Charakter vom Erwachsenen zum Kind (oder umgekehrt), sollte eine Bestätigung eingefordert werden.
+
+		Wird auf "No" geklickt, wird das Geburtsdatum wieder so verändert, daß das alte Alter beibehalten bleibt.
+
+		\bug Aber dadurch wird automatisch die Frage erneut gestellt, nur diesmal andersherum. Wie ändere ich das.
+		"""
+
+		text = self.tr("Your character is going to be an adult.")
+		if newAge < Config.ageAdult:
+			text = self.tr("Your character is going to be a child.")
+		ret = QMessageBox.warning(
+			self,
+			self.tr( "Age category changed" ),
+			self.tr( "{} Do you want that to happen?".format(text) ),
+			QMessageBox.Yes | QMessageBox.No
+		)
+		if ret == QMessageBox.StandardButton.No:
+			return False
+		else:
+			return True

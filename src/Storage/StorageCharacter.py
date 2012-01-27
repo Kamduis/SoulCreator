@@ -32,6 +32,7 @@ from src.Config import Config
 from src.Datatypes.StandardTrait import StandardTrait
 from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
+from src.Calc.Calc import Calc
 from src.Calc.ConnectPrerequisites import ConnectPrerequisites
 from src.Error import ErrListLength
 from src.Debug import Debug
@@ -68,6 +69,7 @@ class StorageCharacter(QObject):
 	#traitsChanged = Signal(object)
 	ageChanged = Signal(int)
 	ageBecomingChanged = Signal(int)
+	#ageCategoryChanged = Signal(str, int, int)	# (<Child|Adult>, <neues Alter>, <altes Alter>)
 	heightChanged = Signal(float)
 	weightChanged = Signal(float)
 	eyesChanged = Signal(str)
@@ -548,13 +550,15 @@ class StorageCharacter(QObject):
 		Zur Berechnung des Alters werden Geburtstag und Datum im Spiel herangezogen.
 		"""
 
-		age = self.dateGame.year() - self.dateBirth.year()
-		if self.dateGame.month() < self.dateBirth.month() or (self.dateGame.month() == self.dateBirth.month() and self.dateGame.day() < self.dateBirth.day()):
-			age -= 1
+		age = Calc.years(self.dateGame, self.dateBirth)
 
 		if self.__age != age:
+			oldAge = self.__age
 			self.__age = age
 			self.ageChanged.emit(age)
+
+			#if age < Config.ageAdult <= oldAge or oldAge < Config.ageAdult <= age:
+				#self.ageCategoryChanged.emit(Config.getAge(age), age, oldAge)
 
 
 	def __calcAgeBecoming(self):
@@ -562,9 +566,7 @@ class StorageCharacter(QObject):
 		Zur Berechnung des Alters zum Zeitpunkt der Veränderung (Erwachen, Kuß, erste Verwandlung etc.) werden Geburtsdatum und Datum der Veränderung genutzt.
 		"""
 
-		age = self.dateBecoming.year() - self.dateBirth.year()
-		if self.dateBecoming.month() < self.dateBirth.month() or (self.dateBecoming.month() == self.dateBirth.month() and self.dateBecoming.day() < self.dateBirth.day()):
-			age -= 1
+		age = Calc.years(self.dateBecoming, self.dateBirth)
 
 		if self.__ageBecoming != age:
 			self.__ageBecoming = age
@@ -831,7 +833,7 @@ class StorageCharacter(QObject):
 		## Anfangsdatum setzen.
 		self.dateGame = QDate.currentDate()
 		self.dateBirth = QDate(self.dateGame.year() - Config.initialAge, self.dateGame.month(), self.dateGame.day())
-		self.dateBecoming = QDate(self.dateGame.year() - Config.adultAge, self.dateGame.month(), self.dateGame.day())
+		self.dateBecoming = QDate(self.dateGame.year() - Config.ageAdult, self.dateGame.month(), self.dateGame.day())
 
 		# Löschen aller Identitäten.
 		self.__identity.reset()

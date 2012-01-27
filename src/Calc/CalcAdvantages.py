@@ -123,7 +123,7 @@ class CalcAdvantages(QObject):
 		"""
 
 		result = 5
-		if self.__character.age < Config.adultAge:
+		if self.__character.age < Config.ageAdult:
 			result -= 1
 
 		if ( self.__meritGiant.value > 0 ):
