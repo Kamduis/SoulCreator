@@ -394,6 +394,13 @@ class DrawSheet(QObject):
 			lengthY = self.__pageHeight - posY
 			self._drawXP(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
+		if self.__character.species == "Mage":
+			posX = posX_spalte3
+			posY = posY_zeile4
+			lengthX = self.__pageWidth - posX
+			lengthY = self.__pageHeight - posY
+			self._drawNimbus(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		if self.__character.species == "Werewolf":
 			posX = 0
 			posY = posY_zeile4
@@ -1313,6 +1320,42 @@ class DrawSheet(QObject):
 			self.__painter.drawEllipse(offsetH + width - self.__dotDiameterH, lcl_height + fontMetrics.ascent() - self.__dotDiameterV, self.__dotDiameterH, self.__dotDiameterV)
 			self.__painter.restore()
 		self.__painter.restore()
+
+		self.__painter.restore()
+
+
+	def _drawNimbus(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Zeichnet die Werte aller fünf Gestalten von Werwölfen auf den Charakterbogen.
+
+		\param offsetH Der horizontale Abstand zur linken Kante des nutzbaren Charakterbogens.
+		\param offsetV Der vertikale Abstand zur Oberkante des nutzbaren Charakterbogens.
+		\param width Die Breite.
+		\param height Die Höhe.
+
+		\bug Da ich als Argument von self.tr() keine unicode-String nutzen kann, sind manche minus-Zeichen als "-" und nicht als "−" genutzt worden.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth
+
+		self.__painter.setFont(self.__fontMain)
+
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Nimbus"))
+
+		self.__painter.drawText(
+			offsetH,
+			offsetV + self.__fontHeadingHeight + self.__headingSep,
+			width,
+			height - self.__fontHeadingHeight - self.__headingSep,
+			Qt.AlignLeft | Qt.TextWordWrap,
+			self.__character.nimbus
+		)
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 

@@ -126,7 +126,6 @@ class ItemWidget(QWidget):
 		self.__character.equipmentChanged.connect(self.checkButtonEnabledEquipment)
 
 		## Magical Tool
-
 		self.__character.speciesChanged.connect(self.hideShowMagicalTool)
 		self.ui.lineEdit_magicalTool.textEdited.connect(self.__character.setMagicalTool)
 		self.__character.magicalToolChanged.connect(self.ui.lineEdit_magicalTool.setText)

@@ -68,7 +68,9 @@ class InfoWidget(QWidget):
 
 		speciesList = self.__storage.species.keys()
 		speciesList.sort()
-		self.ui.comboBox_species.addItems(speciesList)
+		#self.ui.comboBox_species.addItems(speciesList)
+		for species in speciesList:
+			self.ui.comboBox_species.addItem(QIcon(":/icons/images/Skull-{}.png".format(species)), species)
 
 		self.ui.comboBox_era.addItems( Config.eras )
 

@@ -82,6 +82,7 @@ class StorageCharacter(QObject):
 	armorChanged = Signal(str, bool)
 	equipmentChanged = Signal(object)
 	magicalToolChanged = Signal(str)
+	nimbusChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -152,6 +153,7 @@ class StorageCharacter(QObject):
 		}
 		self.__equipment = []
 		self.__magicalTool = ""
+		self.__nimbus = ""
 
 		self.__identity = Identity()
 		self.__identities = [self.__identity]
@@ -237,6 +239,7 @@ class StorageCharacter(QObject):
 		self.armorChanged.connect(self.setModified)
 		self.equipmentChanged.connect(self.setModified)
 		self.magicalToolChanged.connect(self.setModified)
+		self.nimbusChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -498,6 +501,22 @@ class StorageCharacter(QObject):
 			self.magicalToolChanged.emit(tool)
 
 	magicalTool = property(__getMagicalTool, setMagicalTool)
+
+
+	def __getNimbus(self):
+		"""
+		Der Nimbus eines Magiers.
+		"""
+
+		return self.__nimbus
+
+	def setNimbus(self, nimbus):
+
+		if self.__nimbus != nimbus:
+			self.__nimbus = nimbus
+			self.nimbusChanged.emit(nimbus)
+
+	nimbus = property(__getNimbus, setNimbus)
 
 
 
@@ -883,6 +902,7 @@ class StorageCharacter(QObject):
 		self.setArmor(name="")
 		self.clearEquipment()
 		self.magicalTool = ""
+		self.nimbus = ""
 
 		self.picture = QPixmap()
 

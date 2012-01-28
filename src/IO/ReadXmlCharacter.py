@@ -94,6 +94,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.readDerangements(xmlContent)
 		self.readTraits(xmlContent)
 		self.readItems(xmlContent)
+		self.readSpeciesSpecials(xmlContent)
 		self.readPicture(xmlContent)
 
 
@@ -249,6 +250,16 @@ class ReadXmlCharacter(QObject, ReadXml):
 			for magicalToolElement in root.getiterator("magicalTool"):
 				toolName = magicalToolElement.text
 				self.__character.setMagicalTool(toolName)
+
+
+	def readSpeciesSpecials(self, tree):
+		"""
+		Lese die Spezialeigenschaften der Spezies aus.
+		"""
+
+		elem = tree.find("nimbus")
+		if elem is not None:
+			self.__character.nimbus = elem.text
 
 
 	def readPicture(self, tree):

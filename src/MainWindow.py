@@ -51,6 +51,7 @@ from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.AdvantagesWidget import AdvantagesWidget
 from Widgets.ItemWidget import ItemWidget
+from Widgets.SpecialsWidget import SpecialsWidget
 from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
 from Draw.DrawSheet import DrawSheet
@@ -242,6 +243,9 @@ class MainWindow(QMainWindow):
 
 		items = ItemWidget( self.__storage, self.__character, self )
 		self.ui.layout_items.addWidget( items )
+
+		speciesSpecials = SpecialsWidget(self.__storage, self.__character, self)
+		self.ui.layout_specials.addWidget( speciesSpecials )
 
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
 		self.info.nameChanged.connect(self.setTitle)

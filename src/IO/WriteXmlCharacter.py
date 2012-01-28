@@ -171,6 +171,10 @@ class WriteXmlCharacter(QObject):
 			if self.__character.magicalTool:
 				etree.SubElement(equipment, "magicalTool").text = self.__character.magicalTool
 
+		## Spezialseigenschaften der Spezies
+		if self.__character.nimbus:
+			etree.SubElement(root, "nimbus").text = self.__character.nimbus
+
 		if self.__character.picture:
 			imageData = QByteArray()
 			imageBuffer = QBuffer(imageData)
