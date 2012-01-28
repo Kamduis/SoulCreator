@@ -107,10 +107,10 @@
 					<trait name="Arcadian Metabolism" source="Changeling Rites of Spring">
 						<value>4</value>
 					</trait>
-					<!--<trait name="Broken Mirror" custom="true" source="Changeling Core">
+					<trait name="Broken Mirror" source="Changeling Core">
 						<value>1</value>
-						<prerequisites>Killing one's fetch</prerequisites>
-					</trait>-->
+<!-- 						<prerequisites>Killing one's fetch</prerequisites> -->
+					</trait>
 					<trait name="Brownie's Boon" source="Changeling Rites of Spring">
 						<value>1</value>
 					</trait>

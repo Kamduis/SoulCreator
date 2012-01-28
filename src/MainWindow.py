@@ -100,8 +100,6 @@ class MainWindow(QMainWindow):
 	\bug Beim Zurücksetzen des Charakters bleibt der Name bestehen.
 
 	\todo Changeling: Ich vermisse das Feld für Kith und beim Aussehen die Unterscheidung zwischen Mask und Mien
-
-	\todo Changeling: Broken Mirror
 	"""
 
 
@@ -139,6 +137,7 @@ class MainWindow(QMainWindow):
 		self.ui.selectWidget_select.currentRowChanged.connect(self.ui.stackedWidget_traits.setCurrentIndex)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.setTabButtonState)
 		#self.ui.selectWidget_select.currentRowChanged.connect(self.pageChanged.emit)
+		self.__character.speciesChanged.connect(self.ui.selectWidget_select.changeIcons)
 
 		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
 
@@ -254,7 +253,7 @@ class MainWindow(QMainWindow):
 		skills.specialtiesActivated.connect(specialties.showSpecialties)
 
 		# Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
-		self.__character.speciesChanged.connect(self.disablePowerItem)
+		self.__character.speciesChanged.connect(self.ui.selectWidget_select.disableItems)
 
 		# Hintergrundbild ändert sich je nach Spezies
 		self.__character.speciesChanged.connect(self.showBackround)
@@ -319,8 +318,8 @@ class MainWindow(QMainWindow):
 
 		# Wir wollen zu Beginn immer die Informationen sehen.
 		self.ui.selectWidget_select.setCurrentRow(0)
-		# Am Anfang stehen Menschen, aber das speciesChanged-Signal wurde nicht gesendet.
-		self.disablePowerItem(Config.initialSpecies)
+		## Am Anfang stehen Menschen, aber das speciesChanged-Signal wurde nicht gesendet.
+		#self.ui.selectWidget_select.disableItems(Config.initialSpecies)
 
 
 	def showSettingsDialog(self):
@@ -585,17 +584,6 @@ class MainWindow(QMainWindow):
 
 			# Unmittelbar nach dem Speichern ist der Charkter natürlich nicht mehr 'geändert'.
 			self.__character.setModified( False )
-
-
-	def disablePowerItem( self, species ):
-		"""
-		Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
-		"""
-
-		if species == "Human":
-			self.ui.selectWidget_select.setItemEnabled(5, False)
-		else:
-			self.ui.selectWidget_select.setItemEnabled(5, True)
 
 
 	def exportCharacter(self):

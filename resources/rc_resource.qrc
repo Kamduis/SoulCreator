@@ -57,14 +57,19 @@
     <file>images/sheet/Werewolf-Shapes.jpg</file>
   </qresource>
   <qresource prefix="types">
+    <file>images/svg/humans.svg</file>
+    <file>images/svg/maleprofile.svg</file>
+    <file>images/svg/high_jump.svg</file>
     <file>images/svg/karate.svg</file>
     <file>images/svg/knife.svg</file>
-    <file>images/svg/tail.svg</file>
     <file>images/svg/bolt.svg</file>
-    <file>images/svg/high_jump.svg</file>
-    <file>images/svg/maleprofile.svg</file>
-    <file>images/svg/humans.svg</file>
+    <file>images/svg/tail.svg</file>
     <file>images/svg/flail.svg</file>
+    <file>images/svg/oldwitch.svg</file>
+    <file>images/svg/fairy.svg</file>
+    <file>images/svg/pentagram.svg</file>
+    <file>images/svg/teeth.svg</file>
+    <file>images/svg/wolfhead.svg</file>
   </qresource>
   <qresource prefix="items">
     <file>images/svg/machete.svg</file>

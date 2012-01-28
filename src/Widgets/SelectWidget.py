@@ -52,6 +52,7 @@ class SelectWidget(QListWidget):
 		QListWidgetItem(QIcon(":types/images/svg/bolt.svg"), self.tr("Powers"), self)
 		QListWidgetItem(QIcon(":types/images/svg/tail.svg"), self.tr("Flaws"), self)
 		QListWidgetItem(QIcon(":types/images/svg/flail.svg"), self.tr("Items"), self)
+		QListWidgetItem(QIcon(":types/images/svg/fairy.svg"), self.tr("Specials"), self)
 
 		self.__stdBackgroundRole = self.item( 0 ).data(Qt.BackgroundRole)
 
@@ -68,7 +69,6 @@ class SelectWidget(QListWidget):
 		if ( self.currentRow() > 0 ):
 			self.setCurrentRow( self.currentRow() - 1 )
 
-			#if ( not self.item( self.currentRow() ).flags().testFlag(Qt.ItemIsEnabled) ):
 			if ( not self.item( self.currentRow() ).flags() & Qt.ItemIsEnabled ):
 				if ( self.currentRow() > 0 ):
 					self.selectPrevious()
@@ -81,7 +81,6 @@ class SelectWidget(QListWidget):
 			self.setCurrentRow( self.currentRow() + 1 )
 
 			# Ist die neue Seite disabled, müssen wir noch eine Seite weiter springen.
-			#if ( not self.item( self.currentRow() ).flags().testFlag( Qt.ItemIsEnabled ) ):
 			if ( not self.item( self.currentRow() ).flags() & Qt.ItemIsEnabled ):
 				if ( self.currentRow() < self.count() - 1 ):
 					self.selectNext()
@@ -118,4 +117,38 @@ class SelectWidget(QListWidget):
 		"""
 
 		self.item( row ).setData(Qt.BackgroundRole, self.__stdBackgroundRole)
+
+
+	def disableItems( self, species ):
+		"""
+		Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen.
+		"""
+
+		rowsToChange = (
+			5,
+			8,
+		)
+		for row in rowsToChange:
+			if species == "Human":
+				self.setItemEnabled(row, False)
+			else:
+				self.setItemEnabled(row, True)
+
+
+	def changeIcons(self, species):
+		"""
+		Ändert die Icons abhängig von der Spezies des Charakters.
+		"""
+
+		rowsToChange = 8
+		if species == "Changeling":
+			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/fairy.svg"))
+		elif species == "Mage":
+			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/pentagram.svg"))
+		elif species == "Vampire":
+			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/teeth.svg"))
+		elif species == "Werewolf":
+			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/wolfhead.svg"))
+		else:
+			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/oldwitch.svg"))
 
