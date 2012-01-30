@@ -760,6 +760,62 @@
 						<power value="2">Vigor</power>
 						<power value="1">Resilience</power>
 					</trait>
+					<trait name="Brute Cannot Betray" level="" costFuel="1" costWill="" roll="Intelligence+Occult+Obfuscate">
+						<power value="4">Animalism</power>
+						<power value="2">Obfuscate</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Guardian Vigil" level="" costFuel="1" costWill="" roll="">
+						<power value="1">Auspex</power>
+						<power value="1">Celerity</power>
+						<power value="1">Resilience</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Message in a Bottle" level="" costFuel="1" costWill="" roll="Wits+Occult+Dominate">
+						<power value="3">Auspex</power>
+						<power value="2">Dominate</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Cleansing Impression" level="" costFuel="" costWill="1" roll="Intelligence+Stealth+Auspex">
+						<power value="3">Auspex</power>
+						<power value="2">Obfuscate</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Army of One" level="" costFuel="1" costWill="" roll="Intelligence+Subterfuge+Auspex">
+						<power value="4">Auspex</power>
+						<power value="4">Obfuscate</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Husk" level="" costFuel="1" costWill="" roll="">
+						<power value="1">Celerity</power>
+						<power value="1">Vigor</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Forced March" level="" costFuel="" costWill="" roll="">
+						<power value="2">Celerity</power>
+						<power value="2">Resilience</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Immutable Mind" level="" costFuel="" costWill="1" roll="Resolve+Composure+Resilience">
+						<power value="1">Dominate</power>
+						<power value="1">Resilience</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Aversion Curse" level="" costFuel="1" costWill="" roll="Manipulation+Expression+Nightmare">
+						<power value="2">Dominate</power>
+						<power value="2">Nightmare</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Unseen Master" level="" costFuel="" costWill="1" roll="Intelligence+Occult+Obfuscate">
+						<power value="5">Dominate</power>
+						<power value="2">Obfuscate</power>
+						<only>Carthian Movement</only>
+					</trait>
+					<trait name="Stalwart Heart" level="" costFuel="" costWill="1" roll="Resolve+Composure+Resilience">
+						<power value="1">Majesty</power>
+						<power value="1">Resilience</power>
+						<only>Carthian Movement</only>
+					</trait>
 				</Category>
 			</Subpower>
 			<Flaw>

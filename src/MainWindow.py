@@ -101,6 +101,10 @@ class MainWindow(QMainWindow):
 	\bug Beim Zurücksetzen des Charakters bleibt der Name bestehen.
 
 	\todo Changeling: Ich vermisse das Feld für Kith und beim Aussehen die Unterscheidung zwischen Mask und Mien
+
+	\todo Attribute der Werewolf-Gestalten anzeigen
+
+	\todo Auf dem Charakterbogen auch den Namen der Gabenliste bei den Gaben angeben.
 	"""
 
 
