@@ -75,21 +75,33 @@ class WriteXmlCharacter(QObject):
 
 		## Identitäten
 		identities = etree.SubElement(root, "identities")
-		forenames = " ".join(self.__character.identities[0].forenames)
-		etree.SubElement(identities, "identity",
-			forenames=forenames,
-			surname=self.__character.identities[0].surname,
-			honorname=self.__character.identities[0].honorname,
-			nickname=self.__character.identities[0].nickname,
-			supername=self.__character.identities[0].supername,
-			gender=self.__character.identities[0].gender,
+		forenames = " ".join(self.__character.realIdentity.forenames)
+		etree.SubElement(
+			identities, "realIdentity",
+			forenames = forenames,
+			surname = self.__character.realIdentity.surname,
+			honorname = self.__character.realIdentity.honorname,
+			nickname = self.__character.realIdentity.nickname,
+			supername = self.__character.realIdentity.supername,
+			gender = self.__character.realIdentity.gender,
 		)
+		for identity in self.__character.falseIdentities:
+			forenames = " ".join(identity.forenames)
+			etree.SubElement(
+				identities, "identity",
+				forenames = forenames,
+				surname = identity.surname,
+				honorname = identity.honorname,
+				nickname = identity.nickname,
+				supername = identity.supername,
+				gender = identity.gender,
+			)
 		
 		## Daten
 		etree.SubElement(root, "dates",
-			birth=self.__character.dateBirth.toString(Config.dateFormat),
-			becoming=self.__character.dateBecoming.toString(Config.dateFormat),
-			game=self.__character.dateGame.toString(Config.dateFormat),
+			birth = self.__character.dateBirth.toString(Config.dateFormat),
+			becoming = self.__character.dateBecoming.toString(Config.dateFormat),
+			game = self.__character.dateGame.toString(Config.dateFormat),
 		)
 
 		etree.SubElement(root, "virtue").text = self.__character.virtue

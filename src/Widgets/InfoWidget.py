@@ -63,9 +63,6 @@ class InfoWidget(QWidget):
 
 		self.__age = 0
 
-		for item in Config.genders:
-			self.ui.comboBox_gender.addItem( QIcon(item[1]), item[0] )
-
 		speciesList = self.__storage.species.keys()
 		speciesList.sort()
 		#self.ui.comboBox_species.addItems(speciesList)
@@ -78,7 +75,6 @@ class InfoWidget(QWidget):
 		self.ui.dateEdit_dateBecoming.setMinimumDate(QDate(100, 1, 1))
 		self.ui.dateEdit_dateGame.setMinimumDate(QDate(100, 1, 1))
 
-
 		self.ui.pushButton_pictureClear.setIcon(QIcon(":/icons/images/actions/cancel.png"))
 		self.ui.pushButton_pictureClear.setText("")
 		self.ui.pushButton_pictureClear.setEnabled(False)
@@ -86,7 +82,6 @@ class InfoWidget(QWidget):
 		## Speichern der vom Benutzer veränderten Werte
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
 		self.ui.comboBox_era.currentIndexChanged[str].connect(self.__character.setEra)
-		self.ui.comboBox_gender.currentIndexChanged[str].connect(self.__character.identities[0].setGender)
 		#self.ui.dateEdit_dateBirth.dateChanged.connect(self.setCharacterDateBirth)
 		self.ui.dateEdit_dateBirth.dateEdited.connect(self.setCharacterDateBirth)
 		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.__character.setDateBecoming)
@@ -112,8 +107,7 @@ class InfoWidget(QWidget):
 		self.ui.textEdit_description.focusLost.connect(self.changeDescription)
 
 		## Aktualisieren der Darstellung der im Charakter veränderten Werte.
-		self.__character.identities[0].nameChanged.connect(self.updateName)
-		self.__character.identities[0].genderChanged[str].connect(self.updateGender)
+		self.__character.realIdentity.nameChanged.connect(self.updateName)
 		self.__character.eraChanged.connect(self.updateEra)
 		self.__character.dateBirthChanged.connect(self.ui.dateEdit_dateBirth.setDate)
 		self.__character.dateBecomingChanged.connect(self.ui.dateEdit_dateBecoming.setDate)
@@ -183,11 +177,16 @@ class InfoWidget(QWidget):
 		Aktualisiert die Anzeige des Namens.
 		"""
 
-		nameStr = Identity.displayNameDisplay(self.__character.identities[0].surname, self.__character.identities[0].firstname, self.__character.identities[0].nickname)
+		nameStr = Identity.displayNameDisplay(self.__character.realIdentity.surname, self.__character.realIdentity.firstname, self.__character.realIdentity.nickname)
 		nameDisplay = nameStr
 		if not nameStr:
 			nameStr = self.tr("Name")
 		self.ui.pushButton_name.setText( nameStr )
+		genderIcon = QIcon()
+		for item in Config.genders:
+			if self.__character.realIdentity.gender == item[0]:
+				self.ui.pushButton_name.setIcon(QIcon(item[1]))
+				break
 		self.nameChanged.emit(nameDisplay)
 
 
@@ -198,14 +197,6 @@ class InfoWidget(QWidget):
 
 		#Debug.debug("Verändere Anzeige der Ära auf {}".format(era))
 		self.ui.comboBox_era.setCurrentIndex(self.ui.comboBox_era.findText(era))
-
-
-	def updateGender( self, gender ):
-		"""
-		Aktualisiert die Anzeige des Geschlechts.
-		"""
-
-		self.ui.comboBox_gender.setCurrentIndex( self.ui.comboBox_gender.findText(gender))
 
 
 	def updateSpecies( self, species ):

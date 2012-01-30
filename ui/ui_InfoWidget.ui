@@ -20,6 +20,29 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Identity:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButton_name">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
@@ -34,19 +57,6 @@
           <widget class="QComboBox" name="comboBox_species"/>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Gender:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QComboBox" name="comboBox_gender"/>
-         </item>
-         <item row="3" column="0">
           <widget class="QLabel" name="label_dateBirth">
            <property name="text">
             <string>Birthday:</string>
@@ -56,14 +66,14 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="2" column="1">
           <widget class="DateEdit" name="dateEdit_dateBirth">
            <property name="displayFormat">
             <string>dd.MM.yyyy</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
             <string>Age:</string>
@@ -73,14 +83,14 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="3" column="1">
           <widget class="QLabel" name="label_age">
            <property name="text">
             <string>00</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="label_dateBecoming">
            <property name="text">
             <string>Becoming:</string>
@@ -90,14 +100,14 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="4" column="1">
           <widget class="DateEdit" name="dateEdit_dateBecoming">
            <property name="displayFormat">
             <string>dd.MM.yyyy</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="5" column="0">
           <widget class="QLabel" name="label_ageBecoming_label">
            <property name="text">
             <string>Age at Becoming:</string>
@@ -107,14 +117,14 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="5" column="1">
           <widget class="QLabel" name="label_ageBecoming">
            <property name="text">
             <string>00</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="label_virtue">
            <property name="text">
             <string>Virtue:</string>
@@ -124,7 +134,10 @@
            </property>
           </widget>
          </item>
-         <item row="8" column="0">
+         <item row="6" column="1">
+          <widget class="QComboBox" name="comboBox_virtue"/>
+         </item>
+         <item row="7" column="0">
           <widget class="QLabel" name="label_vice">
            <property name="text">
             <string>Vice:</string>
@@ -134,10 +147,10 @@
            </property>
           </widget>
          </item>
-         <item row="8" column="1">
+         <item row="7" column="1">
           <widget class="QComboBox" name="comboBox_vice"/>
          </item>
-         <item row="9" column="0">
+         <item row="8" column="0">
           <widget class="QLabel" name="label_breed">
            <property name="text">
             <string>Breed:</string>
@@ -147,10 +160,23 @@
            </property>
           </widget>
          </item>
-         <item row="9" column="1">
+         <item row="8" column="1">
           <widget class="QComboBox" name="comboBox_breed"/>
          </item>
-         <item row="11" column="0">
+         <item row="9" column="0">
+          <widget class="QLabel" name="label_kith">
+           <property name="text">
+            <string>Kith:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="1">
+          <widget class="QComboBox" name="comboBox_kith"/>
+         </item>
+         <item row="10" column="0">
           <widget class="QLabel" name="label_faction">
            <property name="text">
             <string>Faction:</string>
@@ -160,7 +186,7 @@
            </property>
           </widget>
          </item>
-         <item row="11" column="1">
+         <item row="10" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout">
            <property name="spacing">
             <number>0</number>
@@ -173,7 +199,7 @@
            </item>
           </layout>
          </item>
-         <item row="12" column="0">
+         <item row="11" column="0">
           <widget class="QLabel" name="label_organisation">
            <property name="text">
             <string>Organisation:</string>
@@ -183,10 +209,10 @@
            </property>
           </widget>
          </item>
-         <item row="12" column="1">
+         <item row="11" column="1">
           <widget class="QComboBox" name="comboBox_organisation"/>
          </item>
-         <item row="13" column="0">
+         <item row="12" column="0">
           <widget class="QLabel" name="label_party">
            <property name="text">
             <string>Party:</string>
@@ -196,37 +222,8 @@
            </property>
           </widget>
          </item>
-         <item row="13" column="1">
+         <item row="12" column="1">
           <widget class="QLineEdit" name="lineEdit_party"/>
-         </item>
-         <item row="7" column="1">
-          <widget class="QComboBox" name="comboBox_virtue"/>
-         </item>
-         <item row="0" column="0" colspan="2">
-          <widget class="QPushButton" name="pushButton_name">
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Name</string>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="0">
-          <widget class="QLabel" name="label_kith">
-           <property name="text">
-            <string>Kith:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="1">
-          <widget class="QComboBox" name="comboBox_kith"/>
          </item>
         </layout>
        </item>
@@ -476,6 +473,7 @@
    </item>
   </layout>
   <zorder></zorder>
+  <zorder>verticalSpacer_2</zorder>
  </widget>
  <customwidgets>
   <customwidget>

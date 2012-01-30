@@ -28,6 +28,7 @@ from PySide.QtCore import QObject, QDate, QByteArray, Signal
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
+from src. Datatypes.Identity import Identity
 from src.Error import ErrXmlOldVersion
 from src.IO.ReadXml import ReadXml
 from src.Debug import Debug
@@ -130,13 +131,27 @@ class ReadXmlCharacter(QObject, ReadXml):
 		\note Derzeit gibt es nur eine. forenames="" surname="" honorname="" nickname="" supername="" gender="Male"
 		"""
 
-		identity = tree.find("identities/identity")
-		self.__character.identities[0].forenames = identity.attrib["forenames"].split(" ")
-		self.__character.identities[0].surname = identity.attrib["surname"]
-		self.__character.identities[0].honorname = identity.attrib["honorname"]
-		self.__character.identities[0].nickname = identity.attrib["nickname"]
-		self.__character.identities[0].supername = identity.attrib["supername"]
-		self.__character.identities[0].gender = identity.attrib["gender"]
+		realIdentityElement = tree.find("identities/realIdentity")
+		self.__character.realIdentity.forenames = realIdentityElement.attrib["forenames"].split(" ")
+		self.__character.realIdentity.surname = self.getElementAttribute(realIdentityElement, "surname")
+		self.__character.realIdentity.honorname = realIdentityElement.attrib["honorname"]
+		self.__character.realIdentity.nickname = realIdentityElement.attrib["nickname"]
+		self.__character.realIdentity.supername = realIdentityElement.attrib["supername"]
+		self.__character.realIdentity.gender = realIdentityElement.attrib["gender"]
+		
+		identities = tree.findall("identities/identity")
+		identityList = []
+		for identityElement in identities:
+			newIdentity = Identity()
+			newIdentity.forenames = identityElement.attrib["forenames"].split(" ")
+			newIdentity.surname = self.getElementAttribute(identityElement, "surname")
+			newIdentity.honorname = identityElement.attrib["honorname"]
+			newIdentity.nickname = identityElement.attrib["nickname"]
+			newIdentity.supername = identityElement.attrib["supername"]
+			newIdentity.gender = identityElement.attrib["gender"]
+			identityList.append(newIdentity)
+		#Debug.debug(identityList)
+		self.__character.falseIdentities = identityList
 
 
 	def readDates(self, tree):

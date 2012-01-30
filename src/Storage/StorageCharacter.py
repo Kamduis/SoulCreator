@@ -396,13 +396,34 @@ class StorageCharacter(QObject):
 			self.derangementChanged.emit(moralityValue, derangement)
 
 
+	#@property
+	#def identities(self):
+		#"""
+		#Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
+		#"""
+
+		#return self.__identities
+
 	@property
-	def identities(self):
+	def realIdentity(self):
 		"""
-		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
+		Gibt die echte Identität zurück.
 		"""
 
-		return self.__identities
+		return self.__identities[0]
+
+	@property
+	def falseIdentities(self):
+		"""
+		Gibt eine Liste der falschen Identitäten zurück.
+		"""
+
+		#Debug.debug(self.__identities[1:])
+		return self.__identities[1:]
+
+	@falseIdentities.setter
+	def falseIdentities(self, identities):
+		self.__identities[1:] = identities
 
 
 	@property
@@ -877,6 +898,7 @@ class StorageCharacter(QObject):
 
 		# Löschen aller Identitäten.
 		self.__identity.reset()
+		del self.__identities[1:]
 
 		# Standardspezies ist der Mensch.
 		self.species = Config.initialSpecies

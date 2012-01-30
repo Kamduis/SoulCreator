@@ -28,6 +28,7 @@ from PySide.QtCore import QObject, Signal
 from src.Config import Config
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 #from src.Widgets.Dialogs.NameDialog import NameDialog
+from src.Debug import Debug
 
 
 
@@ -93,10 +94,21 @@ class Identity(QObject):
 		}
 		
 		## Geschlecht
-		self.__gender = ""
+		self.__gender = "Male"
 
 		self.nameChanged.connect(self.identityChanged.emit)
 		self.genderChanged.connect(self.identityChanged.emit)
+
+
+	def __eq__(self, other):
+		return (
+			self.forenames == other.forenames and
+			self.surname == other.surname and
+			self.honorname == other.honorname and
+			self.nickname == other.nickname and
+			self.supername == other.supername and
+			self.gender == other.gender
+		)
 
 
 	def __getForenames(self):
@@ -207,14 +219,12 @@ class Identity(QObject):
 
 
 	def reset(self):
-		for item in self.__name:
-			if type(item) == list:
-				item = []
-			else:
-				item = ""
-
+		self.forenames = [""]
+		self.surname = ""
+		self.nickname = ""
+		self.honorname = ""
+		self.supername = ""
 		self.gender = Config.genders[0][0]
-		self.nameChanged.emit()
 
 
 	@staticmethod
