@@ -58,6 +58,7 @@ class StorageCharacter(QObject):
 	virtueChanged = Signal(str)
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
+	kithChanged = Signal(str)
 	factionChanged = Signal(str)
 	organisationChanged = Signal(str)
 	partyChanged = Signal(str)
@@ -134,6 +135,7 @@ class StorageCharacter(QObject):
 		self.__virtue = ""
 		self.__vice = ""
 		self.__breed = ""
+		self.__kith = ""
 		self.__faction = ""
 		self.__organisation = ""
 		self.__party = ""
@@ -653,6 +655,25 @@ class StorageCharacter(QObject):
 			self.breedChanged.emit( breed)
 
 	breed = property(__getBreed, setBreed)
+
+
+	def __getKith(self ):
+		"""
+		Kith der Wechselbälger
+		"""
+
+		return self.__kith
+
+	def setKith( self, kith ):
+		"""
+		Verändert das Kith.
+		"""
+
+		if ( self.__kith != kith ):
+			self.__kith = kith
+			self.kithChanged.emit( kith )
+
+	kith = property(__getKith, setKith)
 
 
 	def __getFaction(self):

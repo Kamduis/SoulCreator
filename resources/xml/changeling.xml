@@ -22,12 +22,32 @@
 		</Creation>
 		<Group>
 			<Breed name="Seeming">
-				<item name="Beast"/>
-				<item name="Darkling"/>
-				<item name="Elemental"/>
-				<item name="Fairest"/>
-				<item name="Oger"/>
-				<item name="Wizened"/>
+				<item name="Beast">
+					<kith name="Broadback"/>
+					<kith name="Runnerswift"/>
+					<kith name="Swimmerskin"/>
+				</item>
+				<item name="Darkling">
+					<kith name="Mirrorskin"/>
+					<kith name="Leechfinger"/>
+				</item>
+				<item name="Elemental">
+					<kith name="Fireheart"/>
+					<kith name="Waterborn"/>
+					<kith name="Earthbone"/>
+				</item>
+				<item name="Fairest">
+					<kith name="Dancer"/>
+					<kith name="Treasured"/>
+				</item>
+				<item name="Oger">
+					<kith name="Waterdweller"/>
+					<kith name="Gristlegrinder"/>
+				</item>
+				<item name="Wizened">
+					<kith name="Brewer"/>
+					<kith name="Smith"/>
+				</item>
 			</Breed>
 			<Faction name="Court">
 				<item name="Courtless"/>

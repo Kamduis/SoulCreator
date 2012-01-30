@@ -107,7 +107,9 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.__character.era = tree.find("era").text
 		self.__character.virtue = tree.find("virtue").text
 		self.__character.vice = tree.find("vice").text
-		self.__character.breed = tree.find("breed").text
+		breedElement = tree.find("breed")
+		self.__character.breed = breedElement.text
+		self.__character.kith = self.getElementAttribute(breedElement, "kith")
 		self.__character.faction = tree.find("faction").text
 		self.__character.organisation = tree.find("organisation").text
 		self.__character.party = tree.find("party").text

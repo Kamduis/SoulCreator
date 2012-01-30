@@ -710,7 +710,7 @@ class DrawSheet(QObject):
 
 			if self.__character.species == "Changeling":
 				text[2][0] = "{} ({}):".format(self.__storage.breedTitle(self.__character.species), "Kith")
-				textCharacter[2][0] ="{} ({}):".format(self.__character.breed, "???")
+				textCharacter[2][0] ="{} ({})".format(self.__character.breed, self.__character.kith)
 			elif self.__character.species == "Mage":
 				text[0][1] = "Shadow Name:"
 

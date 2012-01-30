@@ -61,6 +61,7 @@ class StorageTemplate(QObject):
 	__species = {}
 
 	# Eine Liste sämtlicher verfügbaren Gruppierungsnamen der einzelnen Spezies.
+	# Changelings haben für jede Brut noch eine Subliste: die Kiths.
 	#
 	# {
 	# 	Spezies1: {
@@ -83,6 +84,14 @@ class StorageTemplate(QObject):
 	# 	...
 	# }
 	__speciesGroupNames = {}
+
+	# Changelings haben für jede Brut noch eine Subliste: die Kiths.
+	#
+	# {
+	# 	Brut1: [ Kith1, Kith2, ... ],
+	# 	...
+	# }
+	__kiths = {}
 
 
 	# Die Bezeichner der Kräfte.
@@ -575,6 +584,35 @@ class StorageTemplate(QObject):
 
 	def breedTitle(self, species):
 		return self.__speciesGroupNames[species]["Breed"][0]
+
+
+	def kiths(self, seeming):
+		"""
+		Gibt eine Liste aller möglichen Kiths für das angegebene Seeming zurück.
+
+		\note Nur für Changelings von Bedeutung.
+		"""
+		
+		return self.__kiths[seeming]
+
+	def addKith(self, seeming, kith):
+		"""
+		Fügt dem Seeming seeming ein zusätlzichen Kith hinzu.
+
+		\param kith Kann entweder ein String oder eine Liste von Strings sein.
+		"""
+
+		if seeming not in self.__kiths:
+			self.__kiths.setdefault(seeming, [])
+
+		if type(kith) == list:
+			self.__kiths[seeming].extend(kith)
+		else:
+			self.__kiths[seeming].append(kith)
+
+		self.__kiths[seeming].sort()
+
+		#Debug.debug(self.__kiths)
 
 
 	def factions(self, species):

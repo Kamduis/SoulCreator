@@ -96,6 +96,7 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_virtue.currentIndexChanged[str].connect(self.__character.setVirtue)
 		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.__character.setVice)
 		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.__character.setBreed)
+		self.ui.comboBox_kith.currentIndexChanged[str].connect(self.__character.setKith)
 		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.__character.setFaction)
 		self.ui.lineEdit_faction.textEdited.connect(self.__character.setFaction)
 		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.__character.setOrganisation)
@@ -123,6 +124,9 @@ class InfoWidget(QWidget):
 		self.__character.virtueChanged.connect(self.updateVirtue)
 		self.__character.viceChanged.connect(self.updateVice)
 		self.__character.breedChanged.connect(self.updateBreed)
+		self.__character.breedChanged.connect(self.repopulateKiths)
+		#self.__character.speciesChanged.connect(self.repopulateKiths)
+		self.__character.kithChanged.connect(self.updateKith)
 		self.__character.speciesChanged.connect(self.updateBreedTitle)
 		self.__character.speciesChanged.connect(self.repopulateBreeds)
 		self.__character.factionChanged.connect(self.updateFaction)
@@ -244,6 +248,14 @@ class InfoWidget(QWidget):
 		self.ui.label_breed.setText( "{}:".format(self.__storage.breedTitle(species)) )
 
 
+	def updateKith( self, kith ):
+		"""
+		Aktualisiert die Anzeige des Kith.
+		"""
+
+		self.ui.comboBox_kith.setCurrentIndex( self.ui.comboBox_kith.findText( kith ) )
+
+
 	def updateFaction( self, faction ):
 		"""
 		Aktualisiert die Anzeige der Fraktion.
@@ -349,6 +361,17 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_breed.addItems(self.__storage.breeds(species))
 
 
+	def repopulateKiths(self, breed):
+		"""
+		Jedes Seeming hat eine Reihe möglicher Kiths. Kiths stehen nur Changelings offen.
+		"""
+
+		self.ui.comboBox_kith.clear()
+		if breed and self.__character.species == "Changeling":
+			#Debug.debug(breed)
+			self.ui.comboBox_kith.addItems(self.__storage.kiths(breed))
+
+
 	def repopulateFactions(self, species):
 
 		self.ui.comboBox_faction.clear()
@@ -381,6 +404,14 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_faction.setVisible( visible )
 		self.ui.lineEdit_faction.setVisible( not visible )
 		self.ui.lineEdit_faction.clear()
+
+		## Das Kith ist nur für Changelings interessant
+		if species == "Changeling":
+			self.ui.label_kith.setVisible(True)
+			self.ui.comboBox_kith.setVisible(True)
+		else:
+			self.ui.label_kith.setVisible(False)
+			self.ui.comboBox_kith.setVisible(False)
 
 
 	def openImage(self ):

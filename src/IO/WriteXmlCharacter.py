@@ -96,7 +96,10 @@ class WriteXmlCharacter(QObject):
 
 		etree.SubElement(root, "vice").text = self.__character.vice
 
-		etree.SubElement(root, "breed").text = self.__character.breed
+		breedElement = etree.SubElement(root, "breed")
+		breedElement.text = self.__character.breed
+		if self.__character.species == "Changeling":
+			breedElement.attrib["kith"] = self.__character.kith
 
 		etree.SubElement(root, "faction").text = self.__character.faction
 
