@@ -45,7 +45,7 @@ from Widgets.InfoWidget import InfoWidget
 from Widgets.TraitWidget import AttributeWidget, SkillWidget
 from Widgets.PowerWidget import PowerWidget
 from Widgets.SubPowerWidget import SubPowerWidget
-from Widgets.Specialties import Specialties
+from Widgets.SpecialtiesWidget import SpecialtiesWidget
 from Widgets.MeritWidget import MeritWidget
 from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
@@ -87,8 +87,6 @@ class MainWindow(QMainWindow):
 	\todo SoulCreator sollte sich Virtues und Vices "merken", wenn das Alter so niedrig gewählt wird, daß auf Asset und Fault umgestellt wird, für den Fall, daß man den Charakter wieder älter macht.
 
 	\todo Ändert man die Körpergröße über gewisse Schwell werte, sollte der Charaktergenerator Den Flaw/Merit Tiny bzw Giant vorschlagen. Und bei einem gewissen Wert einfach mal Unter- und Obergrenze festlegen.
-
-	\todo Benutzer kann eigene Spezialisierungen festlegen.
 
 	\todo Erschaffungspunkte durch einen Wizard ersetzen.
 
@@ -221,7 +219,8 @@ class MainWindow(QMainWindow):
 		skills = SkillWidget( self.__storage, self.__character, self )
 		self.ui.layout_skills.addWidget( skills )
 
-		specialties = Specialties( self.__storage.traits["Skill"], self )
+		#specialties = Specialties( self.__storage.traits["Skill"], self )
+		specialties = SpecialtiesWidget( self.__storage.traits["Skill"], self )
 		self.ui.layout_specialties.addWidget( specialties )
 
 		merits = MeritWidget( self.__storage, self.__character, self )
