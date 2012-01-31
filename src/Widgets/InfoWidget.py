@@ -159,6 +159,12 @@ class InfoWidget(QWidget):
 
 		self.__character.ageChanged.connect(self.setAge)
 
+		#self.ui.comboBox_breed.currentIndexChanged[str].connect(self.test)
+
+
+	#def test(self, txt):
+		#Debug.debug(u"Brut verändert zu {}".format(txt))
+
 
 
 	def openNameDialog(self):

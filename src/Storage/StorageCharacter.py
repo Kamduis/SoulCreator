@@ -201,6 +201,10 @@ class StorageCharacter(QObject):
 							trait.customText = customText
 						trait.identifier = subitem[0]
 						trait.species = subitem[1]["species"]
+						trait.cheap = subitem[1]["cheap"]
+						#if typ == "Subpower" and trait.species == "Werewolf":
+							#Debug.debug(subitem[1]["name"], subitem[1]["only"])
+						trait.only = subitem[1]["only"]
 						if "prerequisites" in subitem[1] and subitem[1]["prerequisites"]:
 							trait.hasPrerequisites = True
 							trait.prerequisitesText = subitem[1]["prerequisites"]
@@ -650,9 +654,9 @@ class StorageCharacter(QObject):
 		Bei einer Veränderung wird das Signal breedChanged() ausgesandt.
 		"""
 
-		if ( self.__breed != breed ):
+		if self.__breed != breed:
 			self.__breed = breed
-			self.breedChanged.emit( breed)
+			self.breedChanged.emit(breed)
 
 	breed = property(__getBreed, setBreed)
 

@@ -64,6 +64,10 @@ class BasicTrait(QObject):
 		self.__prerequisites = False
 		self.__prerequisitesText = ""
 		self.__available = True
+		## Die Breeds, Factions für welche diese Unterkraft besonders günstig ist.
+		self.cheap = []
+		## Die Breeds, Factions welche diese Unterkraft überhaupt erwerben dürfen.
+		self.only = []
 
 		# In dieser Liste werden Verweise auf alle Eigenschaften gespeichert, die in den Voraussetzungen erwähnung finden.
 		self.__prerequisiteTraits = []

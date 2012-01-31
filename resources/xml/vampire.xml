@@ -255,6 +255,9 @@
 					<trait name="Dominate">
 						<cheap>Ventrue</cheap>
 					</trait>
+					<trait name="Majesty">
+						<cheap>Daeva</cheap>
+					</trait>
 					<trait name="Nightmare">
 						<cheap>Nosferatu</cheap>
 					</trait>
@@ -465,6 +468,7 @@
 					<trait name="Roving Hut" level="5" costFuel="1" costWill="0" roll="Manipulation+Occult+Crúac">
 						<power value="5">Crúac</power>
 					</trait>
+					<only>Circle of the Crone</only>
 				</Category>
 				<Category name="Veneficia Rituals">
 					<trait name="Apollonian Sight" level="1" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
@@ -506,6 +510,7 @@
 					<trait name="Typhon's Maw" level="5" costFuel="1" costWill="0" roll="Intelligence+Religion+Veneficia">
 						<power value="5">Veneficia</power>
 					</trait>
+					<only>Cult of Augurs</only>
 				</Category>
 				<Category name="Theban Sorcery Rituals">
 					<trait name="Blood Scourge" level="1" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
@@ -625,6 +630,7 @@
 					<trait name="Rain of Blood" level="5" costFuel="0" costWill="1" roll="Intelligence+Academics+Theban Sorcery">
 						<power value="5">Theban Sorcery</power>
 					</trait>
+					<only>Lancea Sancta</only>
 				</Category>
 				<Category name="Devotions">
 					<trait name="Undiminished Rage" level="" costFuel="0" costWill="1" roll="Intelligence+Empathy+Animalism">
@@ -760,62 +766,125 @@
 						<power value="2">Vigor</power>
 						<power value="1">Resilience</power>
 					</trait>
+				</Category>
+				<Category name="Carthian Devotions">
 					<trait name="Brute Cannot Betray" level="" costFuel="1" costWill="" roll="Intelligence+Occult+Obfuscate">
 						<power value="4">Animalism</power>
 						<power value="2">Obfuscate</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Guardian Vigil" level="" costFuel="1" costWill="" roll="">
 						<power value="1">Auspex</power>
 						<power value="1">Celerity</power>
 						<power value="1">Resilience</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Message in a Bottle" level="" costFuel="1" costWill="" roll="Wits+Occult+Dominate">
 						<power value="3">Auspex</power>
 						<power value="2">Dominate</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Cleansing Impression" level="" costFuel="" costWill="1" roll="Intelligence+Stealth+Auspex">
 						<power value="3">Auspex</power>
 						<power value="2">Obfuscate</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Army of One" level="" costFuel="1" costWill="" roll="Intelligence+Subterfuge+Auspex">
 						<power value="4">Auspex</power>
 						<power value="4">Obfuscate</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Husk" level="" costFuel="1" costWill="" roll="">
 						<power value="1">Celerity</power>
 						<power value="1">Vigor</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Forced March" level="" costFuel="" costWill="" roll="">
 						<power value="2">Celerity</power>
 						<power value="2">Resilience</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Immutable Mind" level="" costFuel="" costWill="1" roll="Resolve+Composure+Resilience">
 						<power value="1">Dominate</power>
 						<power value="1">Resilience</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Aversion Curse" level="" costFuel="1" costWill="" roll="Manipulation+Expression+Nightmare">
 						<power value="2">Dominate</power>
 						<power value="2">Nightmare</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Unseen Master" level="" costFuel="" costWill="1" roll="Intelligence+Occult+Obfuscate">
 						<power value="5">Dominate</power>
 						<power value="2">Obfuscate</power>
-						<only>Carthian Movement</only>
 					</trait>
 					<trait name="Stalwart Heart" level="" costFuel="" costWill="1" roll="Resolve+Composure+Resilience">
 						<power value="1">Majesty</power>
 						<power value="1">Resilience</power>
-						<only>Carthian Movement</only>
 					</trait>
+					<trait name="Behind the Throne" level="" costFuel="1" costWill="" roll="Manipulation+Expression+Majesty">
+						<power value="2">Majesty</power>
+						<power value="2">Obfuscate</power>
+					</trait>
+					<trait name="Dauntless Spirit" level="" costFuel="" costWill="1" roll="Resolve+Composure+Resilience">
+						<power value="1">Nightmare</power>
+						<power value="1">Resilience</power>
+					</trait>
+					<trait name="Vitae Bloat" level="" costFuel="" costWill="1" roll="">
+						<power value="2">Protean</power>
+						<power value="1">Resilience</power>
+					</trait>
+					<trait name="Rhino's Hide" level="" costFuel="" costWill="1" roll="Stamina+Protean+Resilience">
+						<power value="4">Protean</power>
+						<power value="2">Resilience</power>
+					</trait>
+					<trait name="Regeneration" level="" costFuel="5" costWill="" roll="">
+						<power value="4">Protean</power>
+						<power value="4">Resilience</power>
+					</trait>
+					<trait name="Shout" level="" costFuel="(1)" costWill="" roll="">
+						<power value="1">Celerity</power>
+						<power value="2">Dominate</power>
+					</trait>
+					<trait name="Instant Adoration" level="" costFuel="1" costWill="" roll="">
+						<power value="1">Celerity</power>
+						<power value="3">Majesty</power>
+					</trait>
+					<only>Carthian Movement</only>
+				</Category>
+				<Category name="Invictus Blood Oaths">
+					<trait name="Blood-Tell Oath" level="" costFuel="" costWill="" roll="">
+					</trait>
+					<trait name="Oath of Blood Knives" level="" costFuel="1" costWill="" roll="Presence+Intimiadtion+Dominate">
+						<power value="2">Auspex</power>
+						<power value="2">Dominate</power>
+					</trait>
+					<trait name="Oath Unsworn" level="" costFuel="1" costWill="" roll="Presence+Intimidation+Dominate">
+						<power value="3">Auspex</power>
+						<power value="2">Dominate</power>
+						<power value="2">Protean</power>
+					</trait>
+					<trait name="Oath of Burning Blood" level="" costFuel="1" costWill="" roll="Presence+Intimidation+Dominate">
+						<power value="3">Auspex</power>
+						<power value="2">Dominate</power>
+						<power value="2">Nightmare</power>
+					</trait>
+					<trait name="Oath of the Bloody Hand" level="" costFuel="1" costWill="" roll="">
+						<prerequisites>Powerstat > 2 and Status: Covenant > 0</prerequisites>
+					</trait>
+					<trait name="Oath of Blood Focus" level="" costFuel="" costWill="1" roll="Presence+Intimidation+Dominate">
+						<prerequisites>Powerstat > 2 and Status: Covenant > 0</prerequisites>
+					</trait>
+					<trait name="Oath of Blood Alliance" level="" costFuel="" costWill="1+" roll="">
+						<prerequisites>Status: Covenant > 0</prerequisites>
+					</trait>
+					<trait name="Oath of Blood Service" level="" costFuel="1" costWill="" roll="Presence+Empathy+Majesty">
+						<power value="3">Auspex</power>
+						<power value="3">Majesty</power>
+					</trait>
+					<trait name="Oath of Blood Loyalty" level="" costFuel="1" costWill="1" roll="Presence+Expression+Majesty">
+						<power value="3">Auspex</power>
+						<power value="4">Majesty</power>
+					</trait>
+					<trait name="Oath of Welcome Return" level="" costFuel="1" costWill="1" roll="Presence+Expression+Majesty">
+						<prerequisites>Powerstat > 2 and Status: Covenant > 0</prerequisites>
+					</trait>
+					<trait name="Oath of Sanguine Compliment" level="" costFuel="1" costWill="" roll="">
+						<power value="1">Majesty</power>
+						<prerequisites>Status: Covenant > 0</prerequisites>
+					</trait>
+					<only>Invictus</only>
 				</Category>
 			</Subpower>
 			<Flaw>

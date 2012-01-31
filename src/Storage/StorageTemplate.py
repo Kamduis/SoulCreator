@@ -142,22 +142,6 @@ class StorageTemplate(QObject):
 	# }
 	__traits = {}
 
-	# Eine Liste der Unterkräfte.
-	#
-	# {
-	# 	Kategorie1: {
-	# 		Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-	# 		Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
-	# 		...
-	# 	},
-	# 	Kategorie2: {
-	# 		Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-	# 		...
-	# 	},
-	# 	...
-	# }
-	__subPowers = {}
-
 	## Eine Liste aller Tugenden.
 	#
 	# [
@@ -494,39 +478,6 @@ class StorageTemplate(QObject):
 			self.__powerNames.setdefault(species,{})
 
 		self.__powerNames[species]["Subpower"] = name
-
-
-	#@property
-	#def subPowers(self):
-		#"""Eine Liste der Unterkräfte.
-		
-		#{
-			#Kategorie1: {
-				#Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-				#Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
-				#...
-			#},
-			#Kategorie2: {
-				#Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-				#...
-			#},
-			#...
-		#}
-		#"""
-
-		#return self.__subPowers
-
-	#def addSubPower(self, category, identifier, data):
-		#"""
-		#Fügt eine Unterkraft zur Liste hinzu.
-		#"""
-
-		##Debug.debug(category, identifier, data)
-
-		#if category not in self.__subPowers:
-			#self.__subPowers.setdefault(category,{})
-
-		#self.__subPowers[category][identifier] = data
 
 
 	def appendSpecies( self, species, speciesData ):

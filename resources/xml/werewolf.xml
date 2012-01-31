@@ -422,6 +422,42 @@
 					<cheap>Irraka</cheap>
 					<only>Irraka</only>
 				</Category>
+				<Category name="Alpha">
+					<trait name="Sense Guilt" level="1" costFuel="" costWill="" roll="Intelligence+Empathy+Honor">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Alpha's Aura" level="2" costFuel="" costWill="1" roll="Composure+Intimidation+Honor">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Taste of Flaws" level="3" costFuel="1" costWill="" roll="Wits+Empathy+Wisdom">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Lordly Will" level="4" costFuel="2" costWill="" roll="">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Alpha's Howl" level="5" costFuel="3" costWill="" roll="Presence+Intimidation+Glory">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Storm Lords</cheap>
+				</Category>
+				<Category name="Battle">
+					<trait name="Visage of Fenris" level="1" costFuel="" costWill="1" roll="Presence+Intimidation+Glory">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Worry the Prey's Heels" level="2" costFuel="1" costWill="" roll="Presence+Intimidation+Honor">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Savaging" level="3" costFuel="2" costWill="" roll="">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Primal Anger" level="4" costFuel="2" costWill="" roll="">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Heartstopping Howl" level="5" costFuel="2" costWill="" roll="Presence+Intimidation+Glory">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Blood Talons</cheap>
+				</Category>
 <!--
 				<Category name="">
 					<trait name="" level="1" costFuel="" costWill="" roll="">

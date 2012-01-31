@@ -210,41 +210,63 @@ class ReadXmlTemplate(QObject, ReadXml):
 		Lese die Unterkräfte aus den Template-Dateien.
 
 		Diese werden zwar auch im trait-Dictionary gespeichert, haben aber andere Attribute als die normalen Eigenschaften.
-
-		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		if root is not None:
 			self.__storage.setSubPowerName(species, self.getElementAttribute(root, "name"))
-			for categoryElement in root.getiterator("Category"):
-				categoryName = categoryElement.attrib["name"]
-
-				for traitElement in categoryElement.getiterator("trait"):
-					listOfPowers = {}
-					for traitSubElement in traitElement.getiterator("power"):
-						listOfPowers.setdefault(traitSubElement.text, int(traitSubElement.attrib["value"]))
-					listOfPrerequisites = []
-					for traitSubElement in traitElement.getiterator("prerequisites"):
-						listOfPrerequisites.append(traitSubElement.text)
-					if not listOfPrerequisites:
-						listOfPrerequisites = [u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()]
-					#Debug.debug(prerequisitePowers)
-					subPowerData = {
-						"name": traitElement.attrib["name"],
-						"level": self.getElementAttribute(traitElement, "level"),
-						"species": species,
-						"costFuel": self.getElementAttribute(traitElement, "costFuel"),
-						"costWill": self.getElementAttribute(traitElement, "costWill"),
-						"roll": self.getElementAttribute(traitElement, "roll"),
-						"powers": listOfPowers,
-						"prerequisites": " and ".join(listOfPrerequisites),
-					}
-					identifier = self.getElementAttribute(traitElement, "id")
-					if not identifier:
-						identifier = subPowerData["name"]
-					#if species == "Werewolf":
-						#Debug.debug(root.tag, categoryName, identifier, subPowerData)
-					self.__storage.addTrait( root.tag, categoryName, identifier, subPowerData )
+			#Debug.debug(list(root))
+			for categoryElement in list(root):
+				if categoryElement.tag == "Category":
+					categoryName = categoryElement.attrib["name"]
+					## In diese Liste werden alle Unterkräfte geschrieben und erst wenn die gesamte Kategorie ausgelesen ist, werden selbige in den Speicher geschrieben.
+					subPowerList = []
+					cheap = []
+					only = []
+					for element in list(categoryElement):
+						if element.tag == "trait":
+							listOfPowers = {}
+							listOfPrerequisites = []
+							for subelement in list(element):
+								if subelement.tag == "power":
+									listOfPowers.setdefault(subelement.text, int(subelement.attrib["value"]))
+								elif subelement.tag == "prerequisites":
+									listOfPrerequisites.append(u"({})".format(subelement.text))
+							powerPrerequisites = u" and ".join([u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()])
+							if powerPrerequisites:
+								powerPrerequisites = u"({})".format(powerPrerequisites)
+								listOfPrerequisites.append(powerPrerequisites)
+							subPowerData = {
+								"name": element.attrib["name"],
+								"level": self.getElementAttribute(element, "level"),
+								"species": species,
+								"costFuel": self.getElementAttribute(element, "costFuel"),
+								"costWill": self.getElementAttribute(element, "costWill"),
+								"roll": self.getElementAttribute(element, "roll"),
+								"powers": listOfPowers,
+								"prerequisites": " and ".join(listOfPrerequisites),
+								"cheap": [],
+								"only": [],
+							}
+							#Debug.debug(subPowerData["name"], subPowerData["prerequisites"])
+							identifier = self.getElementAttribute(element, "id")
+							if not identifier:
+								identifier = subPowerData["name"]
+							subPowerList.append([
+								categoryName,
+								identifier,
+								subPowerData,
+							])
+						elif element.tag == "cheap":
+							cheap.append(element.text)
+						elif element.tag == "only":
+							only.append(element.text)
+					#Debug.debug(subPowerList)
+					for item in subPowerList:
+						if cheap:
+							item[2]["cheap"] = cheap
+						if only:
+							item[2]["only"] = only
+						self.__storage.addTrait( root.tag, item[0], item[1], item[2] )
 
 
 	def readCreationPoints( self, root, species ):
@@ -419,6 +441,8 @@ class ReadXmlTemplate(QObject, ReadXml):
 		\todo Eine Eigenschaft kann mehrfach vorkommen, da andere Spezies andere Spezialisierungen mitbringen mögen.
 
 		\todo Ersetze getiterator durch list(elem) oder Element.iter()
+
+		\todo Dictionary-keys "cheap" und "only" werden nicht ausgelesen sondern nur als [] gesetzt.
 		"""
 
 		listOfTraits = []
@@ -444,7 +468,9 @@ class ReadXmlTemplate(QObject, ReadXml):
 					"era": self.getElementAttribute(traitElement, "era"),			# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
 					"custom": self.getElementAttribute(traitElement, "custom"),	# Handelt es sich um eine Kraft mit Zusatztext?
 					"specialties": listOfSpecialties,									# Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
-					"prerequisites": " and ".join(listOfPrerequisites)				# Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
+					"prerequisites": " and ".join(listOfPrerequisites),				# Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
+					"cheap": [],
+					"only": [],
 				}
 				if not traitData["id"]:
 					traitData["id"] = traitData["name"]
