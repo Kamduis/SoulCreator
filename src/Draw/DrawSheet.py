@@ -389,7 +389,7 @@ class DrawSheet(QObject):
 		lengthY = 620
 		if self.__character.species == "Human":
 			self._drawImage(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
-			
+
 			posY += lengthY + self.__posSep
 			lengthY = self.__pageHeight - posY
 			self._drawXP(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
@@ -979,7 +979,7 @@ class DrawSheet(QObject):
 						numOfTraits += 1
 
 			widths = [
-				350,
+				400,
 				50,
 				50,
 				600,
@@ -996,15 +996,21 @@ class DrawSheet(QObject):
 						posY = offsetV + self.__fontHeadingHeight + i * fontHeight
 						self.__painter.drawText(offsetH, posY, widths[0], fontHeight, Qt.AlignLeft, subitem[1].name)
 						j = 1
+						#Debug.debug(self.__storage.traits["Subpower"][item][subitem[0]]["powers"])
 						if self.__storage.traits["Subpower"][item][subitem[0]]["powers"]:
 							j = 0
 							for power in self.__storage.traits["Subpower"][item][subitem[0]]["powers"].items():
 								#Debug.debug(subitem[0], power)
 								self.__drawTrait(offsetH + self.__textDotSep + widths[0], posY + j * fontHeight, width=widths[1], name=power[0], value=power[1])
 								j += 1
+						elif self.__character.species == "Werewolf":
+							self.__drawTrait(offsetH + self.__textDotSep + widths[0], posY, width=widths[1], name=item, value=int(subitem[1].level))
 						self.__painter.drawText(offsetH + 2 * self.__textDotSep + sum(widths[:2]), posY, widths[2], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["costWill"])
 						self.__painter.drawText(offsetH + 3 * self.__textDotSep + sum(widths[:3]), posY, widths[3], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["costFuel"])
+						#self.__painter.save()
+						#self.__painter.setFont(self.__fontMain_small)
 						self.__painter.drawText(offsetH + 4 * self.__textDotSep + sum(widths[:4]), posY, widths[4], fontHeight, Qt.AlignLeft, self.__storage.traits["Subpower"][item][subitem[0]]["roll"])
+						#self.__painter.restore()
 						i += j
 
 			### Den freien Platz füllen wir mit leeren Zeilen, die der Spieler dann per Stift ausfüllen kann. Natürlich nur, wenn die Kräfte nicht zweispaltig aufgeführt sind.
@@ -1599,7 +1605,7 @@ class DrawSheet(QObject):
 		for category in self.__character.weapons:
 			for weapon in self.__character.weapons[category]:
 				self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight, nameWidth, fontHeight, Qt.AlignLeft, weapon)
-				
+
 				self.__painter.save()
 				self.__painter.setFont(self.__fontMain_small)
 				self.__painter.drawText(offsetH + colSep + nameWidth, offsetV + self.__fontHeadingHeight + i * fontHeight, dmgWidth, fontHeight, Qt.AlignHCenter, self.__storage.weapons[category][weapon]["damage"])

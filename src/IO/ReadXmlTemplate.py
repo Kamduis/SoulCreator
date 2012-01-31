@@ -415,7 +415,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			"typ": <Typ der ausgelsenen Eigenschaften>,
 			"traits" [<Liste der Eigenschaftsdaten der gefundenen Eigenschaften>]
 		}
-		
+
 		\todo Eine Eigenschaft kann mehrfach vorkommen, da andere Spezies andere Spezialisierungen mitbringen mögen.
 
 		\todo Ersetze getiterator durch list(elem) oder Element.iter()

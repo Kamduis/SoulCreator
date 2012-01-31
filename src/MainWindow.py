@@ -103,8 +103,6 @@ class MainWindow(QMainWindow):
 	\todo Changeling: Ich vermisse beim Aussehen die Unterscheidung zwischen Mask und Mien
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
-
-	\todo Auf dem Charakterbogen auch den Namen der Gabenliste bei den Gaben angeben.
 	"""
 
 
