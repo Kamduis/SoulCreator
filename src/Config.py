@@ -116,7 +116,7 @@ class Config(object):
 	traitMultipleMax = 4
 
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
-	#const int Config::displayTimeout = 10000
+	displayTimeout = 10000
 
 	## Die minimale Breite für Widgets wie Fertigkeiten, Merits, Flaws etc.
 	traitLineWidthMin = 320
@@ -189,6 +189,23 @@ class Config(object):
 
 	## Das Alter ab welchem der Charakter /kein/ Kind mehr ist.
 	ageAdult = 13
+
+	heightGiant = {
+		"Adult": 2.01,
+		"Kid": 1.51,
+	}
+	heightDwarf = {
+		"Adult": 1.39,
+		"Kid": 0.89,
+	}
+	heightMax = {
+		"Adult": 2.30,
+		"Kid": 1.80,
+	}
+	heightMin = {
+		"Adult": 1.10,
+		"Kid": 0.70,
+	}
 
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (

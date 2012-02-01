@@ -50,6 +50,7 @@ class InfoWidget(QWidget):
 
 
 	nameChanged = Signal(str)
+	notificationSent = Signal(str)
 
 
 	def __init__(self, template, character, parent=None):
@@ -62,6 +63,7 @@ class InfoWidget(QWidget):
 		self.__character = character
 
 		self.__age = 0
+		self.__height = 0
 
 		speciesList = self.__storage.species.keys()
 		speciesList.sort()
@@ -96,7 +98,7 @@ class InfoWidget(QWidget):
 		self.ui.lineEdit_faction.textEdited.connect(self.__character.setFaction)
 		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.__character.setOrganisation)
 		self.ui.lineEdit_party.textEdited.connect(self.__character.setParty)
-		self.ui.doubleSpinBox_height.valueChanged[float].connect(self.__character.setHeight)
+		self.ui.doubleSpinBox_height.valueChanged[float].connect(self.setCharacterHeight)
 		self.ui.spinBox_weight.valueChanged[int].connect(self.__character.setWeight)
 		self.ui.lineEdit_eyes.textEdited.connect(self.__character.setEyes)
 		self.ui.lineEdit_hair.textEdited.connect(self.__character.setHair)
@@ -152,6 +154,8 @@ class InfoWidget(QWidget):
 		self.__character.ageChanged.connect(self.repopulateVices)
 
 		self.__character.ageChanged.connect(self.setAge)
+		self.__character.ageChanged.connect(self.setHeightMinMax)
+		self.__character.heightChanged.connect(self.setHeight)
 
 
 
@@ -470,6 +474,11 @@ class InfoWidget(QWidget):
 			self.__age = age
 
 
+	def setHeight(self, height):
+		if self.__height != height:
+			self.__height = height
+
+
 	def setCharacterDateBirth(self, date):
 		"""
 		Speichert das Geburtsdatum des Charakters im Speicher.
@@ -505,8 +514,6 @@ class InfoWidget(QWidget):
 		Wird der Charakter vom Erwachsenen zum Kind (oder umgekehrt), sollte eine Bestätigung eingefordert werden.
 
 		Wird auf "No" geklickt, wird das Geburtsdatum wieder so verändert, daß das alte Alter beibehalten bleibt.
-
-		\bug Aber dadurch wird automatisch die Frage erneut gestellt, nur diesmal andersherum. Wie ändere ich das.
 		"""
 
 		text = self.tr("Your character is going to be an adult.")
@@ -515,6 +522,66 @@ class InfoWidget(QWidget):
 		ret = QMessageBox.warning(
 			self,
 			self.tr( "Age category changed" ),
+			self.tr( "{} Do you want that to happen?".format(text) ),
+			QMessageBox.Yes | QMessageBox.No
+		)
+		if ret == QMessageBox.StandardButton.No:
+			return False
+		else:
+			return True
+
+
+	def setHeightMinMax(self, age):
+		self.ui.doubleSpinBox_height.setMinimum(Config.heightMin[Config.getAge(age)])
+		self.ui.doubleSpinBox_height.setMaximum(Config.heightMax[Config.getAge(age)])
+
+
+	def setCharacterHeight(self, height):
+		"""
+		Ändert sich die Körpergröße zu sehr, sollautomatisch der Merit Giant bzw. der Flaw Dwarf vorgeschlagen werden.
+
+		\todo Bei Kindern heißt der Dwarf-Flaw "Tiny"
+		"""
+
+		ageText = Config.getAge(self.__character.age)
+
+		if height >= Config.heightGiant[ageText]:
+			if self.__character.traits["Merit"]["Physical"]["Giant"].value > 0:
+				self.__character.height = height
+			elif self.warnHeightChange(height, self.__height):
+				self.__character.traits["Merit"]["Physical"]["Giant"].value = 4
+				self.notificationSent.emit(self.tr("Added the Giant Merit."))
+			else:
+				self.ui.doubleSpinBox_height.setValue(self.__height)
+		elif height <= Config.heightDwarf[ageText]:
+			if self.__character.traits["Flaw"]["Physical"]["Dwarf"].value > 0:
+				self.__character.height = height
+			elif self.warnHeightChange(height, self.__height):
+				self.__character.traits["Flaw"]["Physical"]["Dwarf"].value = 2
+				self.notificationSent.emit(self.tr("Added the Dwarf Flaw."))
+			else:
+				self.ui.doubleSpinBox_height.setValue(self.__height)
+		elif self.__character.traits["Merit"]["Physical"]["Giant"].value:
+			self.__character.traits["Merit"]["Physical"]["Giant"].value = 0
+			self.notificationSent.emit(self.tr("Removed the Giant Merit."))
+		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value:
+			self.__character.traits["Flaw"]["Physical"]["Dwarf"].value = 0
+			self.notificationSent.emit(self.tr("Removed the Dwarf Flaw."))
+
+
+	def warnHeightChange(self, newHeight, oldHeight):
+		"""
+		Ändert sich die Körpergröße zu sehr, sollautomatisch der Merit Giant bzw. der Flaw Dwarf vorgeschlagen werden.
+		"""
+
+		title = self.tr("Too big")
+		text = self.tr("To be this big, the character needs to purchase the Giant Merit.")
+		if newHeight <= Config.heightDwarf[Config.getAge(self.__character.age)]:
+			title = self.tr("Too small")
+			text = self.tr("To be this small, the character needs to get the Dwarf Flaw.")
+		ret = QMessageBox.warning(
+			self,
+			title,
 			self.tr( "{} Do you want that to happen?".format(text) ),
 			QMessageBox.Yes | QMessageBox.No
 		)

@@ -82,10 +82,6 @@ class MainWindow(QMainWindow):
 
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
 
-	\todo SoulCreator sollte sich Virtues und Vices "merken", wenn das Alter so niedrig gewählt wird, daß auf Asset und Fault umgestellt wird, für den Fall, daß man den Charakter wieder älter macht.
-
-	\todo Ändert man die Körpergröße über gewisse Schwell werte, sollte der Charaktergenerator Den Flaw/Merit Tiny bzw Giant vorschlagen. Und bei einem gewissen Wert einfach mal Unter- und Obergrenze festlegen.
-
 	\todo Erschaffungspunkte durch einen Wizard ersetzen.
 
 	\todo Merits sollten sich der Alterskategorie anpassen.
@@ -297,6 +293,8 @@ class MainWindow(QMainWindow):
 		calc.defenseChanged.connect(self.__advantages.setDefense)
 		calc.healthChanged.connect(self.__advantages.setHealth)
 		calc.willpowerChanged.connect(self.__advantages.setWillpower)
+
+		self.info.notificationSent.connect(self.showStatusBarMessage)
 
 		self.__creation = Creation( self.__storage, self.__character, self )
 		for typ in self.__creation.creationPoints[Config.initialSpecies]:
@@ -714,6 +712,16 @@ class MainWindow(QMainWindow):
 				return False
 
 		return True
+
+
+	def showStatusBarMessage( self, message, timeout=Config.displayTimeout ):
+		"""
+		Zeigt eien Nachricht auf der Statusleiste an.
+		"""
+
+		#if timeout is None:
+			#timeout = Config.displayTimeout
+		self.statusBar().showMessage(message, timeout)
 
 
 	def showExceptionMessage( self, message, critical=True ):

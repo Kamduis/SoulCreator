@@ -47,7 +47,7 @@ class ConnectPrerequisites(object):
 		Merits und Subpowers müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
 		"""
 		
-		typs = [ "Merit", "Subpower", ]
+		typs = [ "Merit", "Flaw", "Subpower", ]
 		#typs = [ "Merit" ]
 		stopLoop = False
 		for typ in typs:

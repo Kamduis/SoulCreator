@@ -458,6 +458,42 @@
 					</trait>
 					<cheap>Blood Talons</cheap>
 				</Category>
+				<Category name="Blending">
+					<trait name="Shadow Coat" level="1" costFuel="1" costWill="" roll="">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Manytongues" level="2" costFuel="1+" costWill="" roll="">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Resist Toxin" level="3" costFuel="1" costWill="" roll="">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Mask the Hunter" level="4" costFuel="3" costWill="" roll="">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Hide the Curse" level="5" costFuel="3" costWill="" roll="Harmony">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Iron Masters</cheap>
+				</Category>
+				<Category name="Blood">
+					<trait name="Blood Omen" level="1" costFuel="" costWill="" roll="Resolve+Occult+Wisdom">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Shark's Scent" level="2" costFuel="" costWill="" roll="Wits+Composure+Purity">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Clot" level="3" costFuel="1" costWill="" roll="Stamina+Medicine+Honor">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Scent Weakness" level="4" costFuel="1" costWill="" roll="Wits+Survival+Cunning">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Sacrifice" level="5" costFuel="" costWill="" roll="">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Blood Talons</cheap>
+				</Category>
 <!--
 				<Category name="">
 					<trait name="" level="1" costFuel="" costWill="" roll="">
@@ -515,12 +551,6 @@
 						<cheap>Irraka</cheap>
 						<cheap>Hunters in Darkness</cheap>
 					</trait>
-					<trait name="Battle">
-						<cheap>Blood Talons</cheap>
-					</trait>
-					<trait name="Blood">
-						<cheap>Blood Talons</cheap>
-					</trait>
 					<trait name="Rage">
 						<cheap>Blood Talons</cheap>
 					</trait>
@@ -541,9 +571,6 @@
 					</trait>
 					<trait name="Stalking">
 						<cheap>Hunters in Darkness</cheap>
-					</trait>
-					<trait name="Blending">
-						<cheap>Iron Masters</cheap>
 					</trait>
 					<trait name="Knowledge">
 						<cheap>Iron Masters</cheap>

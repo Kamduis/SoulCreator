@@ -504,6 +504,7 @@
 					</trait>
 					<trait name="Giant" creationOnly="true" source="WoD Core">
 						<value>4</value>
+						<prerequisites>Flaw.Dwarf &lt; 1</prerequisites>
 					</trait>
 					<trait name="Gunslinger" source="WoD Core">
 						<value>3</value>
@@ -989,7 +990,9 @@
 				<Category name="Physical">
 					<trait name="Crippled"/>
 					<trait name="Cumbersome"/>
-					<trait name="Dwarf"/>
+					<trait name="Dwarf">
+						<prerequisites>Merit.Giant &lt; 1</prerequisites>
+					</trait>
 					<trait name="Hard of Hearing"/>
 					<trait name="Lame"/>
 					<trait name="Mute"/>
