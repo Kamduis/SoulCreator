@@ -54,40 +54,6 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <layout class="QHBoxLayout" name="layout_newIdentity">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>New Identity:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="TraitDots" name="widget" native="true"/>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_delete">
-          <property name="text">
-           <string>Delete Identity</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
        <widget class="QLabel" name="label_displayDisplay">
         <property name="text">
          <string/>
@@ -232,6 +198,55 @@ p, li { white-space: pre-wrap; }
          <widget class="QComboBox" name="comboBox_gender"/>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_falseIdentity" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>New Identity:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="TraitDots" name="widget" native="true"/>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>99</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_delete">
+           <property name="text">
+            <string>Delete Identity</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>

@@ -107,7 +107,7 @@ class InfoWidget(QWidget):
 		self.ui.textEdit_description.focusLost.connect(self.changeDescription)
 
 		## Aktualisieren der Darstellung der im Charakter veränderten Werte.
-		self.__character.realIdentity.nameChanged.connect(self.updateName)
+		self.__character.realIdentity.identityChanged.connect(self.updateButtonText)
 		self.__character.eraChanged.connect(self.updateEra)
 		self.__character.dateBirthChanged.connect(self.ui.dateEdit_dateBirth.setDate)
 		self.__character.dateBecomingChanged.connect(self.ui.dateEdit_dateBecoming.setDate)
@@ -172,7 +172,7 @@ class InfoWidget(QWidget):
 		self.__character.description = self.ui.textEdit_description.toPlainText()
 
 
-	def updateName( self ):
+	def updateButtonText( self ):
 		"""
 		Aktualisiert die Anzeige des Namens.
 		"""

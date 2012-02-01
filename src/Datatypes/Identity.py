@@ -65,7 +65,7 @@ class Identity(QObject):
 		# }
 		#
 		# \sa firstName
-		self.__name = {
+		self._name = {
 			## Vorname.
 			#
 			# Dieser Name wurde dem Charakter von seinen Eltern gegeben. Es besteht die Möglichkeit, mehr als einen Vornamen zu besitzen, wesewegen diese Variable vom Typ StringList ist. Der erste Vorname in dieser Liste ist immer auch der Rufname.
@@ -94,7 +94,7 @@ class Identity(QObject):
 		}
 		
 		## Geschlecht
-		self.__gender = "Male"
+		self._gender = "Male"
 
 		self.nameChanged.connect(self.identityChanged.emit)
 		self.genderChanged.connect(self.identityChanged.emit)
@@ -112,7 +112,7 @@ class Identity(QObject):
 
 
 	def __getForenames(self):
-		return self.__name["forenames"]
+		return self._name["forenames"]
 
 	def __setForenames(self, names):
 		"""
@@ -121,8 +121,8 @@ class Identity(QObject):
 		Das Argument wird nur dann übernommen, wenn wenigstens ein Vorname in der Liste nicht aus Whitespace besteht. Leer darf die Liste allerdings sein.
 		"""
 		
-		if self.__name["forenames"] != names:
-			self.__name["forenames"] = names
+		if self._name["forenames"] != names:
+			self._name["forenames"] = names
 			self.nameChanged.emit()
 
 	forenames = property(__getForenames, __setForenames)
@@ -135,7 +135,7 @@ class Identity(QObject):
 		Bei Personen mit nur einem Vornamen entspricht \ref firstName dem \ref foreName. Bei Personen mit mehreren Vornamen ist \ref firstName immer der allererste \ref foreName.
 		"""
 		
-		return self.__name["forenames"][0]
+		return self._name["forenames"][0]
 
 	firstname = property(__getFirstName)
 
@@ -145,11 +145,11 @@ class Identity(QObject):
 		Nachname
 		"""
 		
-		return self.__name["surname"]
+		return self._name["surname"]
 
 	def __setSurname(self, name):
-		if self.__name["surname"] != name:
-			self.__name["surname"] = name
+		if self._name["surname"] != name:
+			self._name["surname"] = name
 			self.nameChanged.emit()
 
 	surname = property(__getSurname, __setSurname)
@@ -174,44 +174,44 @@ class Identity(QObject):
 
 	
 	def __getHonorname(self):
-		return self.__name["honorname"]
+		return self._name["honorname"]
 
 	def __setHonorname(self, name):
-		if self.__name["honorname"] != name:
-			self.__name["honorname"] = name
+		if self._name["honorname"] != name:
+			self._name["honorname"] = name
 			self.nameChanged.emit()
 
 	honorname = property(__getHonorname, __setHonorname)
 
 
 	def __getNickname(self):
-		return self.__name["nickname"]
+		return self._name["nickname"]
 
 	def __setNickname(self, name):
-		if self.__name["nickname"] != name:
-			self.__name["nickname"] = name
+		if self._name["nickname"] != name:
+			self._name["nickname"] = name
 			self.nameChanged.emit()
 
 	nickname = property(__getNickname, __setNickname)
 
 
 	def __getSupername(self):
-		return self.__name["supername"]
+		return self._name["supername"]
 
 	def __setSupername(self, name):
-		if self.__name["supername"] != name:
-			self.__name["supername"] = name
+		if self._name["supername"] != name:
+			self._name["supername"] = name
 			self.nameChanged.emit()
 
 	supername = property(__getSupername, __setSupername)
 
 
 	def __getGender(self):
-		return self.__gender
+		return self._gender
 
 	def setGender(self, gender):
-		if self.__gender != gender:
-			self.__gender = gender
+		if self._gender != gender:
+			self._gender = gender
 			self.genderChanged[str].emit(gender)
 			self.genderChanged.emit()
 

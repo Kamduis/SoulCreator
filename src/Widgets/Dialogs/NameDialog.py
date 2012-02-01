@@ -22,6 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import copy
+
 from PySide.QtCore import Signal
 from PySide.QtGui import QDialog, QIcon, QListWidgetItem
 
@@ -67,11 +69,25 @@ class NameDialog(QDialog):
 			"Werewolf": "Deed Name",
 		}
 
+		## Die Identitäten werden nur kopiert. Überschrieben werden sie erst, wenn man den Dialog bestätigt.
+		## Unschöner Hack, da deepcopy zum Programmabsturz führt.
+		#realIdentity = copy.deepcopy(self.__character.realIdentity)
+		realIdentity = Identity()
+		realIdentity._name = copy.deepcopy(self.__character.realIdentity._name)
+		realIdentity._gender = copy.deepcopy(self.__character.realIdentity._gender)
+		#falseIdentities = copy.deepcopy(self.__character.falseIdentities)
+		falseIdentities = []
+		for identity in self.__character.falseIdentities:
+			falseIdentity = Identity()
+			falseIdentity._name = copy.deepcopy(identity._name)
+			falseIdentity._gender = copy.deepcopy(identity._gender)
+			falseIdentities.append(falseIdentity)
+			
 		self.identities = [
-			self.__character.realIdentity,
+			realIdentity,
 		]
-		self.identities.extend(self.__character.falseIdentities)
-		for i in xrange(len(self.__character.falseIdentities)):
+		self.identities.extend(falseIdentities)
+		for i in xrange(len(falseIdentities)):
 			## Alle Identitäten außer der echten in Combobox einfügen
 			self.ui.comboBox_identities.addItem("#{}".format(i + 1))
 
@@ -114,8 +130,10 @@ class NameDialog(QDialog):
 
 		if index == 0:
 			self.ui.groupBox_id.setTitle("Real Identity")
+			self.ui.widget_falseIdentity.setVisible(False)
 		else:
 			self.ui.groupBox_id.setTitle("False Identity")
+			self.ui.widget_falseIdentity.setVisible(True)
 
 		#Debug.debug(index, self.identities[index].forenames)
 
@@ -128,6 +146,7 @@ class NameDialog(QDialog):
 		self.ui.lineEdit_honorificName.setText( self.identities[index].honorname )
 		self.ui.lineEdit_nickname.setText( self.identities[index].nickname )
 		self.ui.lineEdit_specialName.setText( self.identities[index].supername )
+		self.ui.comboBox_gender.setCurrentIndex(self.ui.comboBox_gender.findText(self.identities[index].gender))
 
 		self.showNames()
 
@@ -151,13 +170,15 @@ class NameDialog(QDialog):
 			self.ui.comboBox_identities.setCurrentIndex(len(self.identities) - 1)
 
 
-	def deleteIdentity(self, index):
+	def deleteIdentity(self):
 		"""
 		Löscht die Identität an der angegebenen Indexposition.
 		"""
 
+		index = self.ui.comboBox_identities.currentIndex()
 		if 0 < index < len(self.identities):
 			self.ui.comboBox_identities.setCurrentIndex(0)
+			self.ui.comboBox_identities.removeItem(index)
 			del self.identities[index]
 
 

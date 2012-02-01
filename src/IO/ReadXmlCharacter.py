@@ -132,23 +132,24 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 
 		realIdentityElement = tree.find("identities/realIdentity")
-		self.__character.realIdentity.forenames = realIdentityElement.attrib["forenames"].split(" ")
-		self.__character.realIdentity.surname = self.getElementAttribute(realIdentityElement, "surname")
-		self.__character.realIdentity.honorname = realIdentityElement.attrib["honorname"]
-		self.__character.realIdentity.nickname = realIdentityElement.attrib["nickname"]
-		self.__character.realIdentity.supername = realIdentityElement.attrib["supername"]
-		self.__character.realIdentity.gender = realIdentityElement.attrib["gender"]
+		if realIdentityElement is not None:
+			self.__character.realIdentity.forenames = self.getElementAttribute(realIdentityElement, "forenames").split(" ")
+			self.__character.realIdentity.surname = self.getElementAttribute(realIdentityElement, "surname")
+			self.__character.realIdentity.honorname = self.getElementAttribute(realIdentityElement, "honorname")
+			self.__character.realIdentity.nickname = self.getElementAttribute(realIdentityElement, "nickname")
+			self.__character.realIdentity.supername = self.getElementAttribute(realIdentityElement, "supername")
+			self.__character.realIdentity.gender = self.getElementAttribute(realIdentityElement, "gender")
 		
 		identities = tree.findall("identities/identity")
 		identityList = []
 		for identityElement in identities:
 			newIdentity = Identity()
-			newIdentity.forenames = identityElement.attrib["forenames"].split(" ")
+			newIdentity.forenames = self.getElementAttribute(identityElement, "forenames").split(" ")
 			newIdentity.surname = self.getElementAttribute(identityElement, "surname")
-			newIdentity.honorname = identityElement.attrib["honorname"]
-			newIdentity.nickname = identityElement.attrib["nickname"]
-			newIdentity.supername = identityElement.attrib["supername"]
-			newIdentity.gender = identityElement.attrib["gender"]
+			newIdentity.honorname = self.getElementAttribute(identityElement, "honorname")
+			newIdentity.nickname = self.getElementAttribute(identityElement, "nickname")
+			newIdentity.supername = self.getElementAttribute(identityElement, "supername")
+			newIdentity.gender = self.getElementAttribute(identityElement, "gender")
 			identityList.append(newIdentity)
 		#Debug.debug(identityList)
 		self.__character.falseIdentities = identityList
