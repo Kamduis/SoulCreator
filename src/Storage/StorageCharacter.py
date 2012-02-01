@@ -50,6 +50,7 @@ class StorageCharacter(QObject):
 	"""
 
 
+	identityChanged = Signal()
 	eraChanged = Signal(str)
 	dateBirthChanged = Signal(object)
 	dateBecomingChanged = Signal(object)
@@ -162,6 +163,7 @@ class StorageCharacter(QObject):
 
 		self.__derangements = {}
 
+		self.realIdentity.identityChanged.connect(self.identityChanged)
 		self.dateBirthChanged.connect(self.__calcAge)
 		self.dateGameChanged.connect(self.__calcAge)
 		self.dateBirthChanged.connect(self.__calcAgeBecoming)
@@ -219,7 +221,7 @@ class StorageCharacter(QObject):
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
-		self.__identity.identityChanged.connect(self.setModified)
+		self.identityChanged.connect(self.setModified)
 		self.eraChanged.connect(self.setModified)
 		self.dateBirthChanged.connect(self.setModified)
 		self.dateBecomingChanged.connect(self.setModified)
@@ -423,7 +425,23 @@ class StorageCharacter(QObject):
 
 	@falseIdentities.setter
 	def falseIdentities(self, identities):
-		self.__identities[1:] = identities
+		"""
+		\todo ich mache hier eine Schleife, um jede einzelne falsche Identität zu verlgiechen. Da gibt es vielleicht eine bessere Methode.
+		"""
+
+		i = 1
+		areEqual = True
+		if len(self.__identities[1:]) != len(identities):
+			areEqual = False
+		if areEqual:
+			for identity in identities:
+				if self.__identities[i] != identity:
+					areEqual = False
+					break
+				i += 1
+		if not areEqual:
+			self.__identities[1:] = identities
+			self.identityChanged.emit()
 
 
 	@property

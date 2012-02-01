@@ -40,6 +40,8 @@ class Identity(QObject):
 	Jede Person besitzt eine Vielzahl von Namen, die über diese Klasse leicht zu verwalten sind.
 
 	Bei Personen mit mehreren Identitäten, sollte eine Liste dieser Klasse angelegt werden, in welcher für jede Identität ein Eintrag vorgenommen wird. Auch ein Künstlername fällt unter diese Kategorie, solta also mit einem weiteren Listeneintrag realisiert werden.
+
+	\bug Wendet man copy.deepcopy auf diese Klasse an, stürzt das programm ab.
 	"""
 
 
@@ -52,6 +54,10 @@ class Identity(QObject):
 
 
 	def __init__( self, surname="", firstname="", parent=None ):
+		"""
+		\note Als Umgehung des deepcopy-Bugs mit dieser Klasse sind die eigentlich provaten Attribute dieser Klasse nur als protected gekennzeichnet. Um eine saubere Kopie durchführen zu können, muß ich schließlich auf sie zugreifen können.
+		"""
+		
 		QObject.__init__(self, parent)
 		
 		# Liste zur Speicherung von Namen.
@@ -96,6 +102,9 @@ class Identity(QObject):
 		## Geschlecht
 		self._gender = "Male"
 
+		## Wert des Merits, fals es sich um eine Falsche Identität handelt
+		self._value = 0
+
 		self.nameChanged.connect(self.identityChanged.emit)
 		self.genderChanged.connect(self.identityChanged.emit)
 
@@ -107,8 +116,13 @@ class Identity(QObject):
 			self.honorname == other.honorname and
 			self.nickname == other.nickname and
 			self.supername == other.supername and
-			self.gender == other.gender
+			self.gender == other.gender and
+			self.value == other.value
 		)
+
+
+	def __ne__(self, other):
+	    return not self.__eq__(other)
 
 
 	def __getForenames(self):
@@ -216,6 +230,16 @@ class Identity(QObject):
 			self.genderChanged.emit()
 
 	gender = property(__getGender, setGender)
+
+	@property
+	def value(self):
+		return self._value
+
+	@value.setter
+	def value(self, val):
+		if self._value != val:
+			self._value = val
+			self.identityChanged.emit()
 
 
 	def reset(self):

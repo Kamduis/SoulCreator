@@ -150,6 +150,11 @@ class ReadXmlCharacter(QObject, ReadXml):
 			newIdentity.nickname = self.getElementAttribute(identityElement, "nickname")
 			newIdentity.supername = self.getElementAttribute(identityElement, "supername")
 			newIdentity.gender = self.getElementAttribute(identityElement, "gender")
+			## Es kann vorkommen,d aß das Attribut nicht existiert. Das muß beachtet werden.
+			value = self.getElementAttribute(identityElement, "value")
+			if value:
+				newIdentity.value = int(value)
+				#Debug.debug(newIdentity.surname, newIdentity.value)
 			identityList.append(newIdentity)
 		#Debug.debug(identityList)
 		self.__character.falseIdentities = identityList

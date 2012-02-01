@@ -129,7 +129,7 @@ class AdvantagesWidget(QWidget):
 
 
 	def setHealth(self, value):
-		if self.ui.dots_health.value() != value:
+		if self.ui.dots_health.value != value:
 			self.ui.dots_health.setMaximum(value)
 			self.ui.dots_health.setValue(value)
 			self.healthChanged.emit(value)

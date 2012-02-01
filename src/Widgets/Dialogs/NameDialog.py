@@ -53,12 +53,13 @@ class NameDialog(QDialog):
 	identityIndexChanged = Signal(int)
 
 
-	def __init__(self, character, parent=None):
+	def __init__(self, template, character, parent=None):
 		QDialog.__init__(self, parent)
 
 		self.ui = Ui_NameDialog()
 		self.ui.setupUi(self)
 
+		self.__storage = template
 		self.__character = character
 
 		self.nameDict = {
@@ -75,12 +76,14 @@ class NameDialog(QDialog):
 		realIdentity = Identity()
 		realIdentity._name = copy.deepcopy(self.__character.realIdentity._name)
 		realIdentity._gender = copy.deepcopy(self.__character.realIdentity._gender)
+		realIdentity._value = copy.deepcopy(self.__character.realIdentity._value)
 		#falseIdentities = copy.deepcopy(self.__character.falseIdentities)
 		falseIdentities = []
 		for identity in self.__character.falseIdentities:
 			falseIdentity = Identity()
 			falseIdentity._name = copy.deepcopy(identity._name)
 			falseIdentity._gender = copy.deepcopy(identity._gender)
+			falseIdentity._value = copy.deepcopy(identity._value)
 			falseIdentities.append(falseIdentity)
 			
 		self.identities = [
@@ -93,6 +96,9 @@ class NameDialog(QDialog):
 
 		for item in Config.genders:
 			self.ui.comboBox_gender.addItem( QIcon(item[1]), item[0] )
+
+		# Einschränkungen der möglichen Meritpunkte
+		self.ui.traitDots_newIdentity.setAllowedValues(self.__storage.traits["Merit"]["Social"]["New Identity"]["values"])
 
 		self.ui.comboBox_identities.currentIndexChanged[int].connect(self.selectIdentity)
 		self.ui.pushButton_add.clicked.connect(self.addIdentity)
@@ -109,6 +115,7 @@ class NameDialog(QDialog):
 		self.ui.lineEdit_honorificName.textChanged.connect(self.showNames)
 		self.ui.lineEdit_nickname.textChanged.connect(self.showNames)
 		self.ui.lineEdit_specialName.textChanged.connect(self.showNames)
+		self.ui.traitDots_newIdentity.valueChanged.connect(self.updateMeritValue)
 		self.ui.pushButton_delete.clicked.connect(self.deleteIdentity)
 		self.ui.buttonBox.accepted.connect(self.saveNames)
 		self.ui.buttonBox.rejected.connect(self.reject)
@@ -148,6 +155,9 @@ class NameDialog(QDialog):
 		self.ui.lineEdit_specialName.setText( self.identities[index].supername )
 		self.ui.comboBox_gender.setCurrentIndex(self.ui.comboBox_gender.findText(self.identities[index].gender))
 
+		#Debug.debug(self.identities[index].surname, self.identities[index].value)
+		self.ui.traitDots_newIdentity.value = self.identities[index].value
+
 		self.showNames()
 
 
@@ -168,6 +178,10 @@ class NameDialog(QDialog):
 			self.identities.append(emptyIdentity)
 			self.ui.comboBox_identities.addItem("#{}".format(len(self.identities) - 1))
 			self.ui.comboBox_identities.setCurrentIndex(len(self.identities) - 1)
+
+
+	def updateMeritValue(self, value):
+		self.identities[self.ui.comboBox_identities.currentIndex()].value = value
 
 
 	def deleteIdentity(self):

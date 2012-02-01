@@ -198,34 +198,7 @@ class TraitDots(QWidget):
 			self.__readOnly = sw
 
 
-	### Ist anatomisch nicht sehr sinnvoll
-	##### Doppelklick soll den Wert entweder auf 0 setzen, wenn er vorher nicht 0 war oder ihn auf das Maximum setzen.
-	###void TraitDots::mouseDoubleClickEvent(QMouseEvent *event){
-	###	if (value() == 0)
-	###		setValue( maximum() );
-	###	else
-	###		setValue( 0 );
-	###
-	###	## Neu zeichnen
-	###	update();
-	###}
-
-
-
-#QColor TraitDots::colorEmpty() const {
-	#return v_colorEmpty;
-#}
-
-#QColor TraitDots::colorFull() const {
-	#return v_colorFull;
-#}
-
-#QColor TraitDots::colorFrame() const {
-	#return v_colorFrame;
-#}
-
-
-	def value(self):
+	def __getValue(self):
 		return self.__value
 
 	def setValue( self, value ):
@@ -264,6 +237,8 @@ class TraitDots(QWidget):
 				self.update()
 
 			# Signal aussenden
+
+	value = property(__getValue, setValue)
 
 
 	def minimum(self):
@@ -332,47 +307,6 @@ class TraitDots(QWidget):
 		self.setMinimumWidth( sizeX * self.__minimumSizeY)
 
 
-
-##### Verändere die Breite des Seperators
-###void TraitDots::setSeperatorWidth( int valueArg ){
-###	MySeperatorWidth = valueArg;
-###}
-###
-###
-##### Verändere die Anzahl Punkte, ehe ein Seperator gesetzt wird
-###void TraitDots::setSeperatorWidth( int valueArg ){
-###	MySeperatorStep = valueArg;
-###}
-
-
-### Verändert die FÜllfarbe
-#void TraitDots::setColorEmpty( const QColor & color ) {
-	#v_colorEmpty = color;
-
-	### Neu zeichnen
-	#update();
-#}
-
-
-### Verändert die FÜllfarbe
-#void TraitDots::setColorFull( const QColor & color ) {
-	#v_colorFull = color;
-
-	### Neu zeichnen
-	#update();
-#}
-
-
-### Verändert die Randfarbe
-#void TraitDots::setColorFrame( const QColor & color ) {
-	#v_colorFrame
-	#= color;
-
-	### Neu zeichnen
-	#update();
-#}
-
-
 	def setForbiddenValues( sel, values ):
 		"""
 		Über diese Funktion wird eine Liste der verbotenen Werte gesetzt.
@@ -439,25 +373,3 @@ class TraitDots(QWidget):
 
 			# Liste wieder sortieren
 			self.__forbiddenValues.sort()
-
-
-	#void TraitDots::forbidAll() {
-		#"""
-		#Verbiete alle Werte.
-		
-		#\note Es werden alle Werte verboten. Und zwar jeder Einzelne Wert zwischen minimum() und maximum() (einschließlich beider).
-		
-		#\warning Gefährlich, da bei einer Veränderung von minimum() und maximum() die Verbotenen Werte nicht verändert werden.
-		#"""
-		
-		#for ( int i = minimum(); i < maximum() + 1; ++i ) {
-			#addForbiddenValue( i );
-		#}
-	#}
-
-	#void TraitDots::allowAll() {
-		#"""
-		#Erlaubt alle Werte zwischen und einschließlich Minimum und Maximum.
-		#"""
-		#v_forbiddenValues.clear();
-	#}

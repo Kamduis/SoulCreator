@@ -87,14 +87,14 @@ class WriteXmlCharacter(QObject):
 		)
 		for identity in self.__character.falseIdentities:
 			forenames = " ".join(identity.forenames)
-			etree.SubElement(
-				identities, "identity",
+			etree.SubElement(identities, "identity",
 				forenames = forenames,
 				surname = identity.surname,
 				honorname = identity.honorname,
 				nickname = identity.nickname,
 				supername = identity.supername,
 				gender = identity.gender,
+				value = unicode(identity.value),
 			)
 		
 		## Daten

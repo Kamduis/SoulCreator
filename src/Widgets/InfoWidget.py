@@ -160,7 +160,7 @@ class InfoWidget(QWidget):
 		Ruft einen Dialog auf, in welchem die zahlreichen Namen des Charakters eingetragen werden können.
 		"""
 
-		dialog = NameDialog( self.__character, self )
+		dialog = NameDialog( self.__storage, self.__character, self )
 		dialog.exec_()
 
 

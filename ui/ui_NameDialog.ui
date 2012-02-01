@@ -205,12 +205,12 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>New Identity:</string>
+            <string>Merit: New Identity</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="TraitDots" name="widget" native="true"/>
+          <widget class="TraitDots" name="traitDots_newIdentity" native="true"/>
          </item>
          <item>
           <spacer name="horizontalSpacer_3">
@@ -219,7 +219,7 @@ p, li { white-space: pre-wrap; }
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>99</width>
+             <width>66</width>
              <height>20</height>
             </size>
            </property>
