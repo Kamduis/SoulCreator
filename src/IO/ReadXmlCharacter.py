@@ -131,12 +131,13 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 
 		identity = tree.find("identities/identity")
-		self.__character.identities[0].forenames = identity.attrib["forenames"].split(" ")
-		self.__character.identities[0].surname = identity.attrib["surname"]
-		self.__character.identities[0].honorname = identity.attrib["honorname"]
-		self.__character.identities[0].nickname = identity.attrib["nickname"]
-		self.__character.identities[0].supername = identity.attrib["supername"]
-		self.__character.identities[0].gender = identity.attrib["gender"]
+		if identity is not None:
+			self.__character.identity.forenames = self.getElementAttribute(identity, "forenames").split(" ")
+			self.__character.identity.surname = self.getElementAttribute(identity, "surname")
+			self.__character.identity.honorname = self.getElementAttribute(identity, "honorname")
+			self.__character.identity.nickname = self.getElementAttribute(identity, "nickname")
+			self.__character.identity.supername = self.getElementAttribute(identity, "supername")
+			self.__character.identity.gender = self.getElementAttribute(identity, "gender")
 
 
 	def readDates(self, tree):

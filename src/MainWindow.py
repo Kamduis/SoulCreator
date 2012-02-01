@@ -94,8 +94,6 @@ class MainWindow(QMainWindow):
 
 	\todo "Leere" Felder auf dem Charakterbogen mit Leerzeilen zum händischen Ausfüllen versehen.
 
-	\bug Beim Zurücksetzen des Charakters bleibt der Name bestehen.
-
 	\todo Changeling: Ich vermisse beim Aussehen die Unterscheidung zwischen Mask und Mien
 
 	\todo Attribute der Werewolf-Gestalten anzeigen

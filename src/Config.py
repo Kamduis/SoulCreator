@@ -192,8 +192,9 @@ class Config(object):
 
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (
-		("Male", ":/icons/images/male.png"),
-		("Female", ":/icons/images/female.png"),
+		("Hermaphrodite", ":/icons/images/svg/symbolHermaphrodite.svg"),
+		("Male", ":/icons/images/svg/symbolMale.svg"),
+		("Female", ":/icons/images/svg/symbolFemale.svg"),
 	)
 
 	## Sämtliche Eigenschaftstypen.

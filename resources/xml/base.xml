@@ -632,7 +632,7 @@
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="New Identity" source="Changeling Core">
+					<trait name="New Identity" custom="true" source="Changeling Core">
 						<value>1</value>
 						<value>2</value>
 						<value>4</value>

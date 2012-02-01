@@ -157,8 +157,7 @@ class StorageCharacter(QObject):
 		self.__magicalTool = ""
 		self.__nimbus = ""
 
-		self.__identity = Identity()
-		self.__identities = [self.__identity]
+		self.identity = Identity()
 
 		self.__derangements = {}
 
@@ -223,7 +222,7 @@ class StorageCharacter(QObject):
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
-		self.__identity.identityChanged.connect(self.setModified)
+		self.identity.identityChanged.connect(self.setModified)
 		self.eraChanged.connect(self.setModified)
 		self.dateBirthChanged.connect(self.setModified)
 		self.dateBecomingChanged.connect(self.setModified)
@@ -401,15 +400,6 @@ class StorageCharacter(QObject):
 
 
 	@property
-	def identities(self):
-		"""
-		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
-		"""
-
-		return self.__identities
-
-
-	@property
 	def picture(self):
 		"""
 		Charakterbild.
@@ -523,36 +513,6 @@ class StorageCharacter(QObject):
 			self.nimbusChanged.emit(nimbus)
 
 	nimbus = property(__getNimbus, setNimbus)
-
-
-
-	#def insertIdentity( self, index, identity ):
-		#"""
-		#Fügt eine neue Identität an der angegebenen Stelle ein.
-		#"""
-
-		#self.__identities.insert( index, identity )
-		#self.identityChanged.emit( identity )
-
-	#def addIdentity( self, identity ):
-		#"""
-		#Hängt eine neue Identität an die Liste aller Identitäten des Charkaters an.
-		#"""
-
-		#self.__identities.append( identity )
-		#self.identityChanged.emit( identity )
-
-	#def setRealIdentity( self, identity ):
-		#"""
-		#Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer Index 0 in der \ref self.__identities -Liste
-
-		#\todo Momentan ist dies die einzige identität, die von diesem Programm genutzt wird.
-		#"""
-
-		#if self.__identities[0] != identity:
-			#self.__identities[0] = identity
-			#self.identityChanged.emit( identity )
-			#self.realIdentityChanged.emit( identity )
 
 
 	@property
@@ -880,7 +840,7 @@ class StorageCharacter(QObject):
 		self.dateBecoming = QDate(self.dateGame.year() - Config.ageAdult, self.dateGame.month(), self.dateGame.day())
 
 		# Löschen aller Identitäten.
-		self.__identity.reset()
+		self.identity.reset()
 
 		# Standardspezies ist der Mensch.
 		self.species = Config.initialSpecies

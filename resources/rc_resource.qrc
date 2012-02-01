@@ -7,8 +7,9 @@
     <file>images/Skull-Mage.png</file>
     <file>images/Skull-Vampire.png</file>
     <file>images/Skull-Werewolf.png</file>
-    <file>images/female.png</file>
-    <file>images/male.png</file>
+    <file>images/svg/symbolFemale.svg</file>
+    <file>images/svg/symbolMale.svg</file>
+    <file>images/svg/symbolHermaphrodite.svg</file>
     <file>images/actions/1leftarrow.png</file>
     <file>images/actions/1rightarrow.png</file>
     <file>images/actions/filesave.png</file>

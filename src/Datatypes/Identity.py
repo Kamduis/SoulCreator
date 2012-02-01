@@ -28,6 +28,7 @@ from PySide.QtCore import QObject, Signal
 from src.Config import Config
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 #from src.Widgets.Dialogs.NameDialog import NameDialog
+from src.Debug import Debug
 
 
 
@@ -39,6 +40,8 @@ class Identity(QObject):
 	Jede Person besitzt eine Vielzahl von Namen, die über diese Klasse leicht zu verwalten sind.
 
 	Bei Personen mit mehreren Identitäten, sollte eine Liste dieser Klasse angelegt werden, in welcher für jede Identität ein Eintrag vorgenommen wird. Auch ein Künstlername fällt unter diese Kategorie, solta also mit einem weiteren Listeneintrag realisiert werden.
+
+	\bug Wendet man copy.deepcopy auf diese Klasse an, stürzt das programm ab.
 	"""
 
 
@@ -51,6 +54,10 @@ class Identity(QObject):
 
 
 	def __init__( self, surname="", firstname="", parent=None ):
+		"""
+		\note Als Umgehung des deepcopy-Bugs mit dieser Klasse sind die eigentlich provaten Attribute dieser Klasse nur als protected gekennzeichnet. Um eine saubere Kopie durchführen zu können, muß ich schließlich auf sie zugreifen können.
+		"""
+		
 		QObject.__init__(self, parent)
 		
 		# Liste zur Speicherung von Namen.
@@ -64,7 +71,7 @@ class Identity(QObject):
 		# }
 		#
 		# \sa firstName
-		self.__name = {
+		self._name = {
 			## Vorname.
 			#
 			# Dieser Name wurde dem Charakter von seinen Eltern gegeben. Es besteht die Möglichkeit, mehr als einen Vornamen zu besitzen, wesewegen diese Variable vom Typ StringList ist. Der erste Vorname in dieser Liste ist immer auch der Rufname.
@@ -93,14 +100,29 @@ class Identity(QObject):
 		}
 		
 		## Geschlecht
-		self.__gender = ""
+		self._gender = "Male"
 
 		self.nameChanged.connect(self.identityChanged.emit)
 		self.genderChanged.connect(self.identityChanged.emit)
 
 
+	def __eq__(self, other):
+		return (
+			self.forenames == other.forenames and
+			self.surname == other.surname and
+			self.honorname == other.honorname and
+			self.nickname == other.nickname and
+			self.supername == other.supername and
+			self.gender == other.gender
+		)
+
+
+	def __ne__(self, other):
+	    return not self.__eq__(other)
+
+
 	def __getForenames(self):
-		return self.__name["forenames"]
+		return self._name["forenames"]
 
 	def __setForenames(self, names):
 		"""
@@ -109,8 +131,8 @@ class Identity(QObject):
 		Das Argument wird nur dann übernommen, wenn wenigstens ein Vorname in der Liste nicht aus Whitespace besteht. Leer darf die Liste allerdings sein.
 		"""
 		
-		if self.__name["forenames"] != names:
-			self.__name["forenames"] = names
+		if self._name["forenames"] != names:
+			self._name["forenames"] = names
 			self.nameChanged.emit()
 
 	forenames = property(__getForenames, __setForenames)
@@ -123,7 +145,7 @@ class Identity(QObject):
 		Bei Personen mit nur einem Vornamen entspricht \ref firstName dem \ref foreName. Bei Personen mit mehreren Vornamen ist \ref firstName immer der allererste \ref foreName.
 		"""
 		
-		return self.__name["forenames"][0]
+		return self._name["forenames"][0]
 
 	firstname = property(__getFirstName)
 
@@ -133,11 +155,11 @@ class Identity(QObject):
 		Nachname
 		"""
 		
-		return self.__name["surname"]
+		return self._name["surname"]
 
 	def __setSurname(self, name):
-		if self.__name["surname"] != name:
-			self.__name["surname"] = name
+		if self._name["surname"] != name:
+			self._name["surname"] = name
 			self.nameChanged.emit()
 
 	surname = property(__getSurname, __setSurname)
@@ -162,59 +184,67 @@ class Identity(QObject):
 
 	
 	def __getHonorname(self):
-		return self.__name["honorname"]
+		return self._name["honorname"]
 
 	def __setHonorname(self, name):
-		if self.__name["honorname"] != name:
-			self.__name["honorname"] = name
+		if self._name["honorname"] != name:
+			self._name["honorname"] = name
 			self.nameChanged.emit()
 
 	honorname = property(__getHonorname, __setHonorname)
 
 
 	def __getNickname(self):
-		return self.__name["nickname"]
+		return self._name["nickname"]
 
 	def __setNickname(self, name):
-		if self.__name["nickname"] != name:
-			self.__name["nickname"] = name
+		if self._name["nickname"] != name:
+			self._name["nickname"] = name
 			self.nameChanged.emit()
 
 	nickname = property(__getNickname, __setNickname)
 
 
 	def __getSupername(self):
-		return self.__name["supername"]
+		return self._name["supername"]
 
 	def __setSupername(self, name):
-		if self.__name["supername"] != name:
-			self.__name["supername"] = name
+		if self._name["supername"] != name:
+			self._name["supername"] = name
 			self.nameChanged.emit()
 
 	supername = property(__getSupername, __setSupername)
 
 
 	def __getGender(self):
-		return self.__gender
+		return self._gender
 
 	def setGender(self, gender):
-		if self.__gender != gender:
-			self.__gender = gender
+		if self._gender != gender:
+			self._gender = gender
 			self.genderChanged[str].emit(gender)
 			self.genderChanged.emit()
 
 	gender = property(__getGender, setGender)
 
+	@property
+	def value(self):
+		return self._value
+
+	@value.setter
+	def value(self, val):
+		if self._value != val:
+			self._value = val
+			self.identityChanged.emit()
+
 
 	def reset(self):
-		for item in self.__name:
-			if type(item) == list:
-				item = []
-			else:
-				item = ""
-
+		self.forenames = [""]
+		self.surname = ""
+		self.nickname = ""
+		self.honorname = ""
+		self.supername = ""
 		self.gender = Config.genders[0][0]
-		self.nameChanged.emit()
 
 
 	@staticmethod
