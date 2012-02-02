@@ -156,6 +156,8 @@ class InfoWidget(QWidget):
 		self.__character.ageChanged.connect(self.setAge)
 		self.__character.ageChanged.connect(self.setHeightMinMax)
 		self.__character.heightChanged.connect(self.setHeight)
+		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(self.updateHeight)
+		self.__character.traits["Flaw"]["Physical"]["Dwarf"].valueChanged.connect(self.updateHeight)
 
 
 
@@ -589,6 +591,29 @@ class InfoWidget(QWidget):
 			return False
 		else:
 			return True
+
+
+	def updateHeight(self):
+		"""
+		Werden der Giant-Merit oder der Dwarf-Flaw verändert, muß die Körpergröße angepaßt werden.
+		"""
+
+		Debug.debug("Hier")
+		ageText = Config.getAge(self.__character.age)
+		if self.__character.traits["Merit"]["Physical"]["Giant"].value > 0 and self.ui.doubleSpinBox_height.value() < Config.heightGiant[ageText]:
+			self.ui.doubleSpinBox_height.setValue(Config.heightGiant[ageText])
+			self.notificationSent.emit(self.tr("Height changed to {} meters".format(Config.heightGiant[ageText])))
+		elif self.__character.traits["Merit"]["Physical"]["Giant"].value < 1 and self.ui.doubleSpinBox_height.value() >= Config.heightGiant[ageText]:
+			newHeight = Config.heightGiant[ageText] - 0.01
+			self.ui.doubleSpinBox_height.setValue(newHeight)
+			self.notificationSent.emit(self.tr("Height changed to {} meters".format(newHeight)))
+		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value > 0 and self.ui.doubleSpinBox_height.value() > Config.heightDwarf[ageText]:
+			self.ui.doubleSpinBox_height.setValue(Config.heightDwarf[ageText])
+			self.notificationSent.emit(self.tr("Height changed to {} meters".format(Config.heightDwarf[ageText])))
+		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value < 1 and self.ui.doubleSpinBox_height.value() <= Config.heightDwarf[ageText]:
+			newHeight = Config.heightDwarf[ageText] + 0.01
+			self.ui.doubleSpinBox_height.setValue(newHeight)
+			self.notificationSent.emit(self.tr("Height changed to {} meters".format(newHeight)))
 
 
 	def setMaxBirthday(self):
