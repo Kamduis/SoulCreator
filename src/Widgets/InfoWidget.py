@@ -43,7 +43,7 @@ class InfoWidget(QWidget):
 	"""
 	@brief Das Widget, in welchem wichtige Informationen dargestellt werden.
 
-	Spezies, Namen etc. des Charakters werden hier dargestellt.
+	Namen, Alter, Nationalität etc. des Charakters werden hier dargestellt.
 
 	\note Der Beschreibungstext wird nur gespeichert, wenn das Textfeld, indem er eingetragen wird, den Fokus verliert. Müßte aber ausreichen, da ihm bspw. schon das Speichern den Fokus raubt.
 	"""
@@ -65,16 +65,9 @@ class InfoWidget(QWidget):
 		self.__age = 0
 		self.__height = 0
 
-		speciesList = self.__storage.species.keys()
-		speciesList.sort()
-		#self.ui.comboBox_species.addItems(speciesList)
-		for species in speciesList:
-			self.ui.comboBox_species.addItem(QIcon(":/icons/images/Skull-{}.png".format(species)), species)
-
 		self.ui.comboBox_era.addItems( Config.eras )
 
 		self.ui.dateEdit_dateBirth.setMinimumDate(QDate(100, 1, 1))
-		self.ui.dateEdit_dateBecoming.setMinimumDate(QDate(100, 1, 1))
 		self.ui.dateEdit_dateGame.setMinimumDate(QDate(100, 1, 1))
 
 		self.ui.pushButton_pictureClear.setIcon(QIcon(":/icons/images/actions/cancel.png"))
@@ -86,18 +79,11 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_era.currentIndexChanged[str].connect(self.__character.setEra)
 		#self.ui.dateEdit_dateBirth.dateChanged.connect(self.setCharacterDateBirth)
 		self.ui.dateEdit_dateBirth.dateEdited.connect(self.setCharacterDateBirth)
-		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.__character.setDateBecoming)
+		#self.ui.dateEdit_dateBecoming.dateChanged.connect(self.__character.setDateBecoming)
 		#self.ui.dateEdit_dateGame.dateChanged.connect(self.setCharacterDateGame)
 		self.ui.dateEdit_dateGame.dateEdited.connect(self.setCharacterDateGame)
-		self.ui.comboBox_species.currentIndexChanged[str].connect(self.__character.setSpecies)
 		self.ui.comboBox_virtue.currentIndexChanged[str].connect(self.__character.setVirtue)
 		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.__character.setVice)
-		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.__character.setBreed)
-		self.ui.comboBox_kith.currentIndexChanged[str].connect(self.__character.setKith)
-		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.__character.setFaction)
-		self.ui.lineEdit_faction.textEdited.connect(self.__character.setFaction)
-		self.ui.comboBox_organisation.currentIndexChanged[str].connect(self.__character.setOrganisation)
-		self.ui.lineEdit_party.textEdited.connect(self.__character.setParty)
 		self.ui.doubleSpinBox_height.valueChanged[float].connect(self.setCharacterHeight)
 		self.ui.spinBox_weight.valueChanged[int].connect(self.__character.setWeight)
 		self.ui.lineEdit_eyes.textEdited.connect(self.__character.setEyes)
@@ -112,27 +98,12 @@ class InfoWidget(QWidget):
 		self.__character.identity.identityChanged.connect(self.updateButtonText)
 		self.__character.eraChanged.connect(self.updateEra)
 		self.__character.dateBirthChanged.connect(self.ui.dateEdit_dateBirth.setDate)
-		self.__character.dateBecomingChanged.connect(self.ui.dateEdit_dateBecoming.setDate)
+		#self.__character.dateBecomingChanged.connect(self.ui.dateEdit_dateBecoming.setDate)
 		self.__character.dateGameChanged.connect(self.ui.dateEdit_dateGame.setDate)
 		self.__character.ageChanged.connect(self.ui.label_age.setNum)
-		self.__character.ageBecomingChanged.connect(self.ui.label_ageBecoming.setNum)
-		self.__character.speciesChanged.connect(self.updateSpecies)
+		#self.__character.ageBecomingChanged.connect(self.ui.label_ageBecoming.setNum)
 		self.__character.virtueChanged.connect(self.updateVirtue)
 		self.__character.viceChanged.connect(self.updateVice)
-		self.__character.breedChanged.connect(self.updateBreed)
-		self.__character.breedChanged.connect(self.repopulateKiths)
-		#self.__character.speciesChanged.connect(self.repopulateKiths)
-		self.__character.kithChanged.connect(self.updateKith)
-		self.__character.speciesChanged.connect(self.updateBreedTitle)
-		self.__character.speciesChanged.connect(self.repopulateBreeds)
-		self.__character.factionChanged.connect(self.updateFaction)
-		self.__character.speciesChanged.connect(self.updateFactionTitle)
-		self.__character.speciesChanged.connect(self.repopulateFactions)
-		self.__character.organisationChanged.connect(self.updateOrganisation)
-		self.__character.speciesChanged.connect(self.updateOrganisationTitle)
-		self.__character.speciesChanged.connect(self.repopulateOrganisations)
-		self.__character.partyChanged.connect(self.ui.lineEdit_party.setText)
-		self.__character.speciesChanged.connect(self.updatePartyTitle)
 		self.__character.heightChanged.connect(self.ui.doubleSpinBox_height.setValue)
 		self.__character.weightChanged.connect(self.ui.spinBox_weight.setValue)
 		self.__character.eyesChanged.connect(self.ui.lineEdit_eyes.setText)
@@ -140,11 +111,9 @@ class InfoWidget(QWidget):
 		self.__character.nationalityChanged.connect(self.ui.lineEdit_nationality.setText)
 		self.__character.pictureChanged.connect(self.updatePicture)
 		self.__character.descriptionChanged.connect(self.ui.textEdit_description.setPlainText)
-		# Menschen können ihre Fraktion selbst eintragen und haben einige Angaben einfach nicht nötig.
-		self.__character.speciesChanged.connect(self.hideShowWidgets_species)
 
 		## Das Alter darf nie negativ werden können
-		self.ui.dateEdit_dateBirth.dateChanged.connect(self.ui.dateEdit_dateBecoming.setMinimumDate)
+		#self.ui.dateEdit_dateBirth.dateChanged.connect(self.ui.dateEdit_dateBecoming.setMinimumDate)
 		self.ui.dateEdit_dateGame.dateChanged.connect(self.setMaxBirthday)
 
 		## Ändert sich das Alter, gibt es andere Virtues und Vices.
@@ -205,14 +174,6 @@ class InfoWidget(QWidget):
 		self.ui.comboBox_era.setCurrentIndex(self.ui.comboBox_era.findText(era))
 
 
-	def updateSpecies( self, species ):
-		"""
-		Aktualisiert die Anzeige der Spezies.
-		"""
-
-		self.ui.comboBox_species.setCurrentIndex( self.ui.comboBox_species.findText( species ) )
-
-
 	def updateVirtue( self, virtue ):
 		"""
 		Aktualisiert die Anzeige der Tugend.
@@ -227,73 +188,6 @@ class InfoWidget(QWidget):
 		"""
 
 		self.ui.comboBox_vice.setCurrentIndex( self.ui.comboBox_vice.findText( vice ) )
-
-
-	def updateBreed( self, breed ):
-		"""
-		Aktualisiert die Anzeige der Brut.
-		"""
-
-		self.ui.comboBox_breed.setCurrentIndex( self.ui.comboBox_breed.findText( breed ) )
-
-
-	def updateBreedTitle( self, species ):
-		"""
-		Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Bruten.
-		"""
-
-		self.ui.label_breed.setText( "{}:".format(self.__storage.breedTitle(species)) )
-
-
-	def updateKith( self, kith ):
-		"""
-		Aktualisiert die Anzeige des Kith.
-		"""
-
-		self.ui.comboBox_kith.setCurrentIndex( self.ui.comboBox_kith.findText( kith ) )
-
-
-	def updateFaction( self, faction ):
-		"""
-		Aktualisiert die Anzeige der Fraktion.
-		"""
-
-		self.ui.lineEdit_faction.setText(faction)
-		self.ui.comboBox_faction.setCurrentIndex( self.ui.comboBox_faction.findText( faction ) )
-
-
-	def updateFactionTitle( self, species ):
-		"""
-		Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Fraktionen
-		"""
-
-		self.ui.label_faction.setText( "{}:".format(self.__storage.factionTitle(species)) )
-
-
-	def updateOrganisation( self, organisation ):
-		"""
-		Aktualisiert die Anzeige der Organisation (Ritterorden, Legate, Blutlinien, etc.).
-
-		\todo Um einer Organisation beizutreten sind gewisse Anforderungen zu erfüllen. Diese sollten in das programm irgendwie eingebaut werden.
-		"""
-
-		self.ui.comboBox_organisation.setCurrentIndex( self.ui.comboBox_organisation.findText( organisation ) )
-
-
-	def updateOrganisationTitle( self, species ):
-		"""
-		Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Fraktionen
-		"""
-
-		self.ui.label_organisation.setText( "{}:".format(self.__storage.organisationTitle(species)) )
-
-
-	def updatePartyTitle( self, species ):
-		"""
-		Wenn die Spezies sich ändert, ändert sich auch der Bezeichner für die Freundesgruppe.
-		"""
-
-		self.ui.label_party.setText( "{}:".format(self.__storage.partyTitle(species)) )
 
 
 	def updateVirtueTitle( self, age ):
@@ -350,65 +244,6 @@ class InfoWidget(QWidget):
 		if self.ui.comboBox_vice.itemText(0) not in viceList:
 			self.ui.comboBox_vice.clear()
 			self.ui.comboBox_vice.addItems(viceList)
-
-
-	def repopulateBreeds(self, species):
-
-		self.ui.comboBox_breed.clear()
-		self.ui.comboBox_breed.addItems(self.__storage.breeds(species))
-
-
-	def repopulateKiths(self, breed):
-		"""
-		Jedes Seeming hat eine Reihe möglicher Kiths. Kiths stehen nur Changelings offen.
-		"""
-
-		self.ui.comboBox_kith.clear()
-		if breed and self.__character.species == "Changeling":
-			#Debug.debug(breed)
-			self.ui.comboBox_kith.addItems(self.__storage.kiths(breed))
-
-
-	def repopulateFactions(self, species):
-
-		self.ui.comboBox_faction.clear()
-		self.ui.comboBox_faction.addItems(self.__storage.factions(species))
-
-
-	def repopulateOrganisations(self, species):
-
-		self.ui.comboBox_organisation.clear()
-		self.ui.comboBox_organisation.addItems(self.__storage.organisations(species))
-
-
-	def hideShowWidgets_species(self, species):
-
-		visible = True
-		if species == "Human":
-			visible = False
-
-		## Menschen haben keinen Tag der Verwandlung.
-		self.ui.label_dateBecoming.setVisible(visible)
-		self.ui.dateEdit_dateBecoming.setVisible(visible)
-		self.ui.label_ageBecoming_label.setVisible(visible)
-		self.ui.label_ageBecoming.setVisible(visible)
-
-		self.ui.label_breed.setVisible(visible)
-		self.ui.comboBox_breed.setVisible(visible)
-		self.ui.label_organisation.setVisible(visible)
-		self.ui.comboBox_organisation.setVisible(visible)
-
-		self.ui.comboBox_faction.setVisible( visible )
-		self.ui.lineEdit_faction.setVisible( not visible )
-		self.ui.lineEdit_faction.clear()
-
-		## Das Kith ist nur für Changelings interessant
-		if species == "Changeling":
-			self.ui.label_kith.setVisible(True)
-			self.ui.comboBox_kith.setVisible(True)
-		else:
-			self.ui.label_kith.setVisible(False)
-			self.ui.comboBox_kith.setVisible(False)
 
 
 	def openImage(self ):
@@ -598,7 +433,6 @@ class InfoWidget(QWidget):
 		Werden der Giant-Merit oder der Dwarf-Flaw verändert, muß die Körpergröße angepaßt werden.
 		"""
 
-		Debug.debug("Hier")
 		ageText = Config.getAge(self.__character.age)
 		if self.__character.traits["Merit"]["Physical"]["Giant"].value > 0 and self.ui.doubleSpinBox_height.value() < Config.heightGiant[ageText]:
 			self.ui.doubleSpinBox_height.setValue(Config.heightGiant[ageText])
@@ -623,4 +457,3 @@ class InfoWidget(QWidget):
 
 		maxDateBirth = self.ui.dateEdit_dateGame.date().addYears(-1 * Config.ageMin)
 		self.ui.dateEdit_dateBirth.setMaximumDate(maxDateBirth)
-		self.ui.dateEdit_dateBecoming.setMaximumDate(self.ui.dateEdit_dateGame.date())

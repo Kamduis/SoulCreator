@@ -44,15 +44,21 @@ class SelectWidget(QListWidget):
 	def __init__(self, parent=None):
 		QListWidget.__init__(self, parent)
 
-		QListWidgetItem(QIcon(":types/images/svg/humans.svg"), self.tr("Information"), self)
-		QListWidgetItem(QIcon(":types/images/svg/maleprofile.svg"), self.tr("Attributes"), self)
-		QListWidgetItem(QIcon(":types/images/svg/high_jump.svg"), self.tr("Skills"), self)
-		QListWidgetItem(QIcon(":types/images/svg/karate.svg"), self.tr("Merits"), self)
-		QListWidgetItem(QIcon(":types/images/svg/knife.svg"), self.tr("Morality"), self)
-		QListWidgetItem(QIcon(":types/images/svg/bolt.svg"), self.tr("Powers"), self)
-		QListWidgetItem(QIcon(":types/images/svg/tail.svg"), self.tr("Flaws"), self)
-		QListWidgetItem(QIcon(":types/images/svg/flail.svg"), self.tr("Items"), self)
-		QListWidgetItem(QIcon(":types/images/svg/fairy.svg"), self.tr("Specials"), self)
+		self.pageList = [
+			[ "Information", ":types/images/svg/humans.svg", ],
+			[ "Attributes", ":types/images/svg/maleprofile.svg", ],
+			[ "Skills", ":types/images/svg/high_jump.svg", ],
+			[ "Merits", ":types/images/svg/karate.svg", ],
+			[ "Morality", ":types/images/svg/knife.svg", ],
+			[ "Template", ":types/images/svg/evolution.svg", ],
+			[ "Powers", ":types/images/svg/bolt.svg", ],
+			[ "Flaws", ":types/images/svg/tail.svg", ],
+			[ "Items", ":types/images/svg/flail.svg", ],
+			[ "Specials", ":types/images/svg/fairy.svg", ],
+		]
+
+		for page in self.pageList:
+			QListWidgetItem(QIcon(page[1]), self.tr(page[0]), self)
 
 		self.__stdBackgroundRole = self.item( 0 ).data(Qt.BackgroundRole)
 
@@ -101,21 +107,41 @@ class SelectWidget(QListWidget):
 			self.item( row ).setData(Qt.ForegroundRole, QColor(Config.deactivatedTextColor))
 
 
-	def setItemColor( self, row, color ):
+	def setItemColor( self, item, color ):
 		"""
 		Färbt dieses Item ein.
+
+		\param item Hier kann entweder der Index der Zeile oder aber der Name der Seite angegeben werden.
 		"""
 
+		row = None
+		if type(item) == int:
+			row = item
+		else:
+			for i in xrange(len(self.pageList)):
+				if self.pageList[i][0] == item:
+					row = i
+					break
 		self.item( row ).setData(Qt.BackgroundRole, color)
 
 
-	def resetItemColor( self, row ):
+	def resetItemColor( self, item ):
 		"""
 		Stellt die ursprüngliche Färbung wieder her.
+
+		\param item Hier kann entweder der Index der Zeile oder aber der Name der Seite angegeben werden.
 
 		\note Die durch enabled-hervorgerufene Farbe bleibt hiervon unberührt.
 		"""
 
+		row = None
+		if type(item) == int:
+			row = item
+		else:
+			for i in xrange(len(self.pageList)):
+				if self.pageList[i][0] == item:
+					row = i
+					break
 		self.item( row ).setData(Qt.BackgroundRole, self.__stdBackgroundRole)
 
 
@@ -124,15 +150,12 @@ class SelectWidget(QListWidget):
 		Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen.
 		"""
 
-		rowsToChange = (
-			5,
-			8,
-		)
-		for row in rowsToChange:
-			if species == "Human":
-				self.setItemEnabled(row, False)
-			else:
-				self.setItemEnabled(row, True)
+		for i in xrange(len(self.pageList)):
+			if self.pageList[i][0] == "Powers" or self.pageList[i][0] == "Specials":
+				if species == "Human":
+					self.setItemEnabled(i, False)
+				else:
+					self.setItemEnabled(i, True)
 
 
 	def changeIcons(self, species):
@@ -140,15 +163,16 @@ class SelectWidget(QListWidget):
 		Ändert die Icons abhängig von der Spezies des Charakters.
 		"""
 
-		rowsToChange = 8
-		if species == "Changeling":
-			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/fairy.svg"))
-		elif species == "Mage":
-			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/pentagram.svg"))
-		elif species == "Vampire":
-			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/teeth.svg"))
-		elif species == "Werewolf":
-			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/wolfhead.svg"))
-		else:
-			self.item(rowsToChange).setIcon(QIcon(":types/images/svg/oldwitch.svg"))
+		for i in xrange(len(self.pageList)):
+			if self.pageList[i][0] == "Specials":
+				if species == "Changeling":
+					self.item(i).setIcon(QIcon(":types/images/svg/fairy.svg"))
+				elif species == "Mage":
+					self.item(i).setIcon(QIcon(":types/images/svg/pentagram.svg"))
+				elif species == "Vampire":
+					self.item(i).setIcon(QIcon(":types/images/svg/teeth.svg"))
+				elif species == "Werewolf":
+					self.item(i).setIcon(QIcon(":types/images/svg/wolfhead.svg"))
+				else:
+					self.item(i).setIcon(QIcon(":types/images/svg/oldwitch.svg"))
 

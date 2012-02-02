@@ -660,7 +660,7 @@ class DrawSheet(QObject):
 		]
 		textCharacter = [
 			[
-				Identity.displayNameDisplay(self.__character.identities[0].surname, self.__character.identities[0].firstname, self.__character.identities[0].nickname),
+				Identity.displayNameDisplay(self.__character.identity.surname, self.__character.identity.firstname, self.__character.identity.nickname),
 				u"",
 			],
 			[
@@ -693,7 +693,7 @@ class DrawSheet(QObject):
 			textCharacter = [
 				[
 					textCharacter[0][0],
-					self.__character.identities[0].supername,
+					self.__character.identity.supername,
 					textCharacter[0][1],
 				],
 				[
@@ -709,7 +709,7 @@ class DrawSheet(QObject):
 			]
 
 			if self.__character.species == "Changeling":
-				text[2][0] = "{} ({}):".format(self.__storage.breedTitle(self.__character.species), "Kith")
+				text[2][0] = "{}:".format(self.__storage.breedTitle(self.__character.species))
 				textCharacter[2][0] ="{} ({})".format(self.__character.breed, self.__character.kith)
 			elif self.__character.species == "Mage":
 				text[0][1] = "Shadow Name:"
@@ -1737,7 +1737,7 @@ class DrawSheet(QObject):
 		text = [
 			[ "Birthday:", self.__character.dateBirth.toString(Config.textDateFormat), ],
 			[ "Age:", self.__character.age, ],
-			[ "Sex:", ImageTools.genderSymbol(self.__character.identities[0].gender), ],
+			[ "Sex:", ImageTools.genderSymbol(self.__character.identity.gender), ],
 			[ "Eyes:", self.__character.eyes, ],
 			[ "Height:", "{} {}".format(self.__character.height, "m"), ],
 			[ "Weight:", "{} {}".format(self.__character.weight, "kg"), ],

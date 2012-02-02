@@ -43,6 +43,7 @@ from Calc.Creation import Creation
 from Calc.ConnectPrerequisites import ConnectPrerequisites
 from Widgets.InfoWidget import InfoWidget
 from Widgets.TraitWidget import AttributeWidget, SkillWidget
+from Widgets.TemplateWidget import TemplateWidget
 from Widgets.PowerWidget import PowerWidget
 from Widgets.SubPowerWidget import SubPowerWidget
 from Widgets.SpecialtiesWidget import SpecialtiesWidget
@@ -220,6 +221,9 @@ class MainWindow(QMainWindow):
 
 		morality = MoralityWidget( self.__storage, self.__character, self )
 		self.ui.layout_morality.addWidget( morality )
+
+		self.template = TemplateWidget(self.__storage, self.__character, self)
+		self.ui.layout_template.addWidget( self.template )
 
 		if "Power" in self.__storage.traits.keys():
 			powers = PowerWidget( self.__storage, self.__character, self )
@@ -412,13 +416,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.resetItemColor( 1 )
+			self.ui.selectWidget_select.resetItemColor( "Attributes" )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.resetItemColor( 2 )
+			self.ui.selectWidget_select.resetItemColor( "Skills" )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.resetItemColor( 3 )
+			self.ui.selectWidget_select.resetItemColor( "Merits" )
 		elif typ == "Power":
-			self.ui.selectWidget_select.resetItemColor( 5 )
+			self.ui.selectWidget_select.resetItemColor( "Powers" )
 
 
 	def warnCreationPointsPositive( self, typ ):
@@ -429,13 +433,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.setItemColor( 1, QColor(Config.pointsPositiveColor))
+			self.ui.selectWidget_select.setItemColor( "Attributes", QColor(Config.pointsPositiveColor))
 		elif typ == "Skill":
-			self.ui.selectWidget_select.setItemColor( 2, QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Skills", QColor(Config.pointsPositiveColor) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.setItemColor( 3, QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Merits", QColor(Config.pointsPositiveColor) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.setItemColor( 5, QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Powers", QColor(Config.pointsPositiveColor) )
 
 
 	def warnCreationPointsNegative( self, typ ):
