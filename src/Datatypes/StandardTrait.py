@@ -40,6 +40,7 @@ class StandardTrait(BasicTrait):
 	"""
 
 
+	customTextChanged = Signal(str)
 	specialtiesChanged = Signal(object)
 
 

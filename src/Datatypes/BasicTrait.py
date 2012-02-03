@@ -25,14 +25,14 @@ from __future__ import division, print_function
 from PySide.QtCore import QObject, Signal
 
 #from src.Config import Config
-#from ReadXml import ReadXml
+from src.Datatypes.AbstractTrait import AbstractTrait
 from src.Debug import Debug
 #from src.Error import ErrTraitType
 
 
 
 
-class BasicTrait(QObject):
+class BasicTrait(AbstractTrait):
 	"""
 	@brief Speichert alle Eigenschaften einer einzigen Charaktereigenschaft.
 
@@ -41,9 +41,7 @@ class BasicTrait(QObject):
 
 
 	valueChanged = Signal(int)
-	customTextChanged = Signal(str)
 	availableChanged = Signal(bool)
-	traitChanged = Signal(object)
 
 
 	def __init__(self, character, name="", value=0, parent=None):
@@ -53,14 +51,10 @@ class BasicTrait(QObject):
 		\ref checkPrerequisites
 		"""
 		
-		QObject.__init__(self, parent)
+		AbstractTrait.__init__(self, name, value, parent)
 
 		self.__character = character
-
-		self.__identifier = name
-		self.__name = name
 		self.__species = ""
-		self.__value = value
 		self.__prerequisites = False
 		self.__prerequisitesText = ""
 		self.__available = True
@@ -73,24 +67,6 @@ class BasicTrait(QObject):
 		self.__prerequisiteTraits = []
 
 
-	@property
-	def identifier(self):
-		return self.__identifier
-
-	@identifier.setter
-	def identifier(self, identifier):
-		self.__identifier = identifier
-
-
-	@property
-	def name(self):
-		return self.__name
-
-	@name.setter
-	def name(self, name):
-		self.__name = name
-
-
 	def __getSpecies(self):
 		return self.__species
 
@@ -98,23 +74,6 @@ class BasicTrait(QObject):
 		self.__species = species
 
 	species = property(__getSpecies, __setSpecies)
-
-
-	def __getValue(self):
-		return self.__value
-
-	def setValue(self, value):
-		"""
-		Verändert den Wert der Eigenschaft.
-		"""
-		
-		if self.__value != value:
-			self.__value = value
-			#Debug.debug("Ändere Eigenschaft {} zu {}".format(self.name, self.value))
-			self.valueChanged.emit(value)
-			self.traitChanged.emit(self)
-
-	value = property(__getValue, setValue)
 
 
 	def __getPrerequisites(self):

@@ -207,11 +207,11 @@ class DrawSheet(QObject):
 			if ( self.__character.species == "Human" ):
 				pass
 			elif ( self.__character.species == "Changeling" ):
-				image = QImage( ":/characterSheets/images/Charactersheet-Changeling-1.jpg" )
+				pass
 			elif ( self.__character.species == "Mage" ):
 				image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
 			elif ( self.__character.species == "Vampire" ):
-				image = QImage( ":/characterSheets/images/Charactersheet-Vampire-1.jpg" )
+				pass
 			elif ( self.__character.species == "Werewolf" ):
 				pass
 			else:
@@ -276,14 +276,18 @@ class DrawSheet(QObject):
 			lengthY = 1940
 		self._drawSkills(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
-		if self.__character.species == "Mage":
-			posY += lengthY + self.__posSep
-			lengthY = 300
-			self._drawMagicalTool(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 		if self.__character.species == "Changeling":
 			posY += lengthY + self.__posSep
 			lengthY = 300
 			self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY, short=True)
+		elif self.__character.species == "Mage":
+			posY += lengthY + self.__posSep
+			lengthY = 300
+			self._drawMagicalTool(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+		elif self.__character.species == "Vampire":
+			posY += lengthY + self.__posSep
+			lengthY = 300
+			self._drawVinculi(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posX += lengthX + self.__posSep
 		posX_spalte2 = posX
@@ -394,12 +398,39 @@ class DrawSheet(QObject):
 			lengthY = self.__pageHeight - posY
 			self._drawXP(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
+		if self.__character.species == "Changeling":
+			posX = 0
+			posY = posY_zeile4
+			lengthX = (self.__pageWidth - 2 * posX) / 3
+			lengthY = self.__pageHeight - posY
+			self._drawBlessing(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+			posX += lengthX + self.__posSep
+			lengthY = self.__pageHeight - posY
+			self._drawBreedCurse(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+			posX += lengthX + self.__posSep
+			lengthX = self.__pageWidth - posX
+			lengthY = self.__pageHeight - posY
+			self._drawKithAbility(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		if self.__character.species == "Mage":
 			posX = posX_spalte3
 			posY = posY_zeile4
 			lengthX = self.__pageWidth - posX
 			lengthY = self.__pageHeight - posY
 			self._drawNimbus(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+		if self.__character.species == "Vampire":
+			posX = 0
+			posY = posY_zeile4
+			lengthX = (self.__pageWidth - 2 * posX) / 3
+			lengthY = self.__pageHeight - posY
+			self._drawBreedCurse(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+			posX += lengthX + self.__posSep
+			lengthY = self.__pageHeight - posY
+			self._drawOrganisationCurse(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		if self.__character.species == "Werewolf":
 			posX = 0
@@ -1330,6 +1361,102 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
+	def _drawBlessing(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		"""
+
+		self.__drawText(
+			self.tr("{} Blessing".format(self.__storage.breedTitle(self.__character.species))),
+			self.__storage.breedBlessing(self.__character.species, self.__character.breed),
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
+
+
+	def _drawBreedCurse(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		"""
+
+		weaknessText = "Weakness"
+		if self.__character.species == "Changeling":
+			weaknessText = "Curse"
+		self.__drawText(
+			self.tr("{} {}".format(self.__storage.breedTitle(self.__character.species), weaknessText)),
+			self.__storage.breedCurse(self.__character.species, self.__character.breed),
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
+
+
+	def _drawOrganisationCurse(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		"""
+
+		weaknessText = "Weakness"
+		self.__drawText(
+			self.tr("{} {}".format(self.__storage.organisationTitle(self.__character.species), weaknessText)),
+			self.__storage.organisationCurse(self.__character.species, self.__character.organisation),
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
+
+
+	def _drawKithAbility(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		"""
+
+		self.__drawText(
+			self.tr("Kith Ability"),
+			self.__storage.kithAbility(self.__character.breed, self.__character.kith),
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
+
+
+	def __drawText(self, heading, text, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt einen Textblock.
+
+		\param offsetH Der horizontale Abstand zur linken Kante des nutzbaren Charakterbogens.
+		\param offsetV Der vertikale Abstand zur Oberkante des nutzbaren Charakterbogens.
+		\param width Die Breite.
+		\param height Die Höhe.
+
+		\bug Da ich als Argument von self.tr() keine unicode-String nutzen kann, sind manche minus-Zeichen als "-" und nicht als "−" genutzt worden.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth
+
+		self.__painter.setFont(self.__fontMain)
+
+		self.__drawHeading(offsetH, offsetV, width, heading)
+
+		self.__painter.drawText(
+			offsetH,
+			offsetV + self.__fontHeadingHeight + self.__headingSep,
+			width,
+			height - self.__fontHeadingHeight - self.__headingSep,
+			Qt.AlignLeft | Qt.TextWordWrap,
+			text
+		)
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
 	def _drawNimbus(self, offsetH=0, offsetV=0, width=None, height=None):
 		"""
 		Zeichnet die Werte aller fünf Gestalten von Werwölfen auf den Charakterbogen.
@@ -1871,16 +1998,44 @@ class DrawSheet(QObject):
 		\param height Höhe dieser Spalte
 		"""
 
+		self.__drawText(
+			self.tr("Magical Tool"),
+			self.__character.magicalTool,
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
+
+
+	def _drawVinculi(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Blutsbande
+		"""
+
 		self.__painter.save()
 
 		if width == None:
 			width = self.__pageWidth / 3
 
-		self.__drawHeading(offsetH, offsetV, width, self.tr("Magical Tool"))
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Vinculi"))
 
 		self.__painter.setFont(self.__fontMain)
 
-		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep, Qt.AlignLeft, self.__character.magicalTool)
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		i = 0
+		for vinculum in self.__character.vinculi:
+			self.__drawTrait(
+				offsetH,
+				offsetV + self.__fontHeadingHeight + self.__headingSep + i * fontHeight,
+				width=width,
+				name=vinculum.name,
+				value=vinculum.value,
+				maxValue=Config.vinculumLevelMax
+			)
+			i += 1
 
 		if GlobalState.isDebug:
 			self.__drawBB(offsetH, offsetV, width, height)

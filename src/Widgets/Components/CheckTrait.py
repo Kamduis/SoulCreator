@@ -27,7 +27,7 @@ from PySide.QtGui import QWidget, QHBoxLayout, QCheckBox, QLineEdit
 
 from src.Config import Config
 #from src.Tools import ListTools
-#from src.Widgets.Components.CharaTrait import CharaTrait
+from src.Datatypes.StandardTrait import StandardTrait
 from src.Debug import Debug
 
 
@@ -65,7 +65,8 @@ class CheckTrait(QWidget):
 		self.__checkBox.stateChanged.connect(self.setTraitValue)
 		self.__lineEdit.textChanged.connect(self.setTraitCustomText)
 		self.__trait.valueChanged.connect(self.setValue)
-		self.__trait.customTextChanged.connect(self.setText)
+		if type(self.__trait) == StandardTrait:
+			self.__trait.customTextChanged.connect(self.setText)
 		self.__trait.availableChanged.connect(self.setEnabled)
 
 

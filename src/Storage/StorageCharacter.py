@@ -29,6 +29,7 @@ from PySide.QtCore import QObject, QDate, Signal, Slot
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
+from src.Datatypes.AbstractTrait import AbstractTrait
 from src.Datatypes.StandardTrait import StandardTrait
 from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
@@ -155,11 +156,18 @@ class StorageCharacter(QObject):
 		}
 		self.__equipment = []
 		self.__magicalTool = ""
-		self.__nimbus = ""
 
 		self.identity = Identity()
 
 		self.__derangements = {}
+
+		self.__nimbus = ""
+
+		self.__vinculi = []
+		for i in xrange(Config.vinculiCount):
+			vinculum = AbstractTrait()
+			self.__vinculi.append(vinculum)
+			vinculum.traitChanged.connect(self.setModified)
 
 		self.dateBirthChanged.connect(self.__calcAge)
 		self.dateGameChanged.connect(self.__calcAge)
@@ -513,6 +521,16 @@ class StorageCharacter(QObject):
 			self.nimbusChanged.emit(nimbus)
 
 	nimbus = property(__getNimbus, setNimbus)
+
+
+	def __getVinculi(self):
+		"""
+		Die Vinculi eines Vampirs
+		"""
+
+		return self.__vinculi
+
+	vinculi = property(__getVinculi)
 
 
 	@property
@@ -888,6 +906,9 @@ class StorageCharacter(QObject):
 		self.clearEquipment()
 		self.magicalTool = ""
 		self.nimbus = ""
+		for vinculum in self.__vinculi:
+			vinculum.name = ""
+			vinculum.value = 0
 
 		self.picture = QPixmap()
 

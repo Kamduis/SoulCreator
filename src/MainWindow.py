@@ -503,10 +503,7 @@ class MainWindow(QMainWindow):
 
 		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 		if ( self.maybeSave() ):
-			self.__character.resetCharacter()
-
-			# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
-			self.__character.setModified( False )
+			self.reset()
 
 
 	def openCharacter(self, fileName=None):

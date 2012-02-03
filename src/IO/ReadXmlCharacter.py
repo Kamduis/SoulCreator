@@ -264,6 +264,15 @@ class ReadXmlCharacter(QObject, ReadXml):
 		if elem is not None:
 			self.__character.nimbus = elem.text
 
+		elem = tree.find("vinculi")
+		if elem is not None:
+			i = 0
+			for element in list(elem):
+				if element.tag == "vinculum" and i < Config.vinculiCount:
+					self.__character.vinculi[i].name = element.text
+					self.__character.vinculi[i].value = int(element.attrib["value"])
+					i += 1
+
 
 	def readPicture(self, tree):
 		"""

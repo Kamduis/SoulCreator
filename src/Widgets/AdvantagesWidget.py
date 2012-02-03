@@ -129,7 +129,7 @@ class AdvantagesWidget(QWidget):
 
 
 	def setHealth(self, value):
-		if self.ui.dots_health.value() != value:
+		if self.ui.dots_health.value != value:
 			self.ui.dots_health.setMaximum(value)
 			self.ui.dots_health.setValue(value)
 			self.healthChanged.emit(value)
@@ -198,7 +198,7 @@ class AdvantagesWidget(QWidget):
 
 	def setShapeHealth(self):
 		if self.__character.species == "Werewolf":
-			value = self.ui.dots_health.value()
+			value = self.ui.dots_health.value
 			self.ui.label_healthShapes.setHidden(False)
 			self.ui.label_healthShapes.setText("{}, {}, {}, {}".format(
 				CalcShapes.health(value, Config.shapesWerewolf[1]),

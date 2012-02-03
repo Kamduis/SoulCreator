@@ -165,6 +165,10 @@ class Config(object):
 	## Bezeichnung der Übernatürlichen Grundeigenschaft für alle Spezies
 	powerstatIdentifier = "Powerstat"
 
+	## Wieviele Vinculi sollen auf dem Vampir-Charakterbogen angezeigt werden.
+	vinculiCount = 5
+	vinculumLevelMax = 3
+
 	## Über wievielen Punkten die Eigenschaften 2 Erschaffungspunkte kosten.
 	#
 	# Alle Punkte bis einschließelich dieser Zahl kosten nur 1 Punkt pro Punkt, aber alle darüber kosten das Doppelte.

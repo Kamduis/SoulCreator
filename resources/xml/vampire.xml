@@ -29,6 +29,7 @@
 							<item name="Manipulation"/>
 						</Attribute>
 					</bonus>
+					<weakness>Loses 2 Willpower whenever not following the vice.</weakness>
 				</item>
 				<item name="Gangrel">
 					<bonus>
@@ -37,6 +38,7 @@
 							<item name="Composure"/>
 						</Attribute>
 					</bonus>
+					<weakness>Do not reroll 10s and subtract 1s when rolling on Intelligence or Wits. Except perception rolls.</weakness>
 				</item>
 				<item name="Mekhet">
 					<bonus>
@@ -45,6 +47,7 @@
 							<item name="Wits"/>
 						</Attribute>
 					</bonus>
+					<weakness>Sunlight and Fire deal 1 extra Damage.</weakness>
 				</item>
 				<item name="Nosferatu">
 					<bonus>
@@ -53,6 +56,7 @@
 							<item name="Composure"/>
 						</Attribute>
 					</bonus>
+					<weakness>Do not reroll 10s and subtract 1s when rolling on Presence or Manipulation. Except for rolls involving Intimidation.</weakness>
 				</item>
 				<item name="Ventrue">
 					<bonus>
@@ -61,6 +65,7 @@
 							<item name="Composure"/>
 						</Attribute>
 					</bonus>
+					<weakness>When rolling to avoid getting a derangement subtract 2 dice.</weakness>
 				</item>
 			</Breed>
 			<Faction name="Covenant">
@@ -73,8 +78,12 @@
 			</Faction>
 			<Organisation name="Bloodline">
 				<item name="None"/>
-				<item name="Toreador"/>
-				<item name="Brujah"/>
+				<item name="Toreador">
+					<weakness>???</weakness>
+				</item>
+				<item name="Brujah">
+					<weakness>???</weakness>
+				</item>
 			</Organisation>
 			<Party name="Coterie"/>
 		</Group>

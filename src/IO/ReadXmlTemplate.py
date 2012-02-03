@@ -296,26 +296,22 @@ class ReadXmlTemplate(QObject, ReadXml):
 			groupCategoryName = root.attrib["name"]
 			self.__storage.appendTitle( species, groupCategory, groupCategoryName )
 			for element in list(root):
-				#Debug.debug(element.tag, element.attrib["name"])
-				groupName = element.attrib["name"]
-				self.__storage.appendTitle( species, groupCategory, groupCategoryName, element.attrib["name"] )
-				for subElement in list(element):
-					if subElement.tag == "kith":
-						self.__storage.addKith(groupName, subElement.attrib["name"])
-
-
-				#while( not self.atEnd() ):
-					#self.readNext()
-
-					#if self.isEndElement():
-						#break
-
-					#if( self.isStartElement() ):
-						#name = self.name()
-						#if( name == "bonus" ):
-							#self.readBonusTraits(species, title)
-						#else:
-							#self.readUnknownElement()
+				if element.tag == "item":
+					#Debug.debug(element.tag, element.attrib["name"])
+					groupName = element.attrib["name"]
+					infos = {}
+					for subElement in list(element):
+						if subElement.tag == "kith":
+							abilityList = []
+							for subsubElement in list(subElement):
+								if subsubElement.tag == "ability":
+									abilityList.append(subsubElement.text)
+							self.__storage.addKith(groupName, subElement.attrib["name"], " ".join(abilityList))
+						elif subElement.tag == "weakness":
+							infos["weakness"] = subElement.text
+						elif subElement.tag == "blessing":
+							infos["blessing"] = subElement.text
+					self.__storage.appendTitle( species, groupCategory, groupCategoryName, element.attrib["name"], infos )
 
 
 	def readPowerstat( self, root, species ):

@@ -23,30 +23,70 @@
 		<Group>
 			<Breed name="Seeming">
 				<item name="Beast">
-					<kith name="Broadback"/>
-					<kith name="Runnerswift"/>
-					<kith name="Swimmerskin"/>
+					<kith name="Broadback">
+						<ability>???</ability>
+					</kith>
+					<kith name="Runnerswift">
+						<ability>???</ability>
+					</kith>
+					<kith name="Swimmerskin">
+						<ability>???</ability>
+					</kith>
+					<weakness>???</weakness>
+					<blessing>???</blessing>
 				</item>
 				<item name="Darkling">
-					<kith name="Mirrorskin"/>
-					<kith name="Leechfinger"/>
+					<kith name="Mirrorskin">
+						<ability>???</ability>
+					</kith>
+					<kith name="Leechfinger">
+						<ability>???</ability>
+					</kith>
+					<weakness>Subtract 1 die whenver activating a contract during the day.</weakness>
+					<blessing>???</blessing>
 				</item>
 				<item name="Elemental">
-					<kith name="Fireheart"/>
-					<kith name="Waterborn"/>
-					<kith name="Earthbone"/>
+					<kith name="Fireheart">
+						<ability>???</ability>
+					</kith>
+					<kith name="Waterborn">
+						<ability>???</ability>
+					</kith>
+					<kith name="Earthbone">
+						<ability>???</ability>
+					</kith>
+					<weakness>???</weakness>
+					<blessing>???</blessing>
 				</item>
 				<item name="Fairest">
-					<kith name="Dancer"/>
-					<kith name="Treasured"/>
+					<kith name="Dancer">
+						<ability>???</ability>
+					</kith>
+					<kith name="Treasured">
+						<ability>???</ability>
+					</kith>
+					<weakness>Subtract 1 die whenver activating a contract during the day.</weakness>
+					<blessing>???</blessing>
 				</item>
 				<item name="Oger">
-					<kith name="Waterdweller"/>
-					<kith name="Gristlegrinder"/>
+					<kith name="Waterdweller">
+						<ability>???</ability>
+					</kith>
+					<kith name="Gristlegrinder">
+						<ability>???</ability>
+					</kith>
+					<weakness>Do not reroll 10s and subtract 1s when rolling on Intelligence or Resolve. Except for Resolve+Composure rolls.</weakness>
+					<blessing>???</blessing>
 				</item>
 				<item name="Wizened">
-					<kith name="Brewer"/>
-					<kith name="Smith"/>
+					<kith name="Brewer">
+						<ability>???</ability>
+					</kith>
+					<kith name="Smith">
+						<ability>???</ability>
+					</kith>
+					<weakness>???</weakness>
+					<blessing>???</blessing>
 				</item>
 			</Breed>
 			<Faction name="Court">

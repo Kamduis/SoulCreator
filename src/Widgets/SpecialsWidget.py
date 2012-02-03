@@ -25,13 +25,10 @@ from __future__ import division, print_function
 import os
 
 from PySide.QtCore import Qt
-from PySide.QtGui import QWidget
+from PySide.QtGui import QWidget, QHBoxLayout, QLineEdit, QMessageBox
 
 from src.Config import Config
-#from src.Tools import PathTools
-#from src.Calc.Calc import Calc
-#from src.Datatypes.Identity import Identity
-#from src.Widgets.Dialogs.NameDialog import NameDialog
+from src.Widgets.Components.TraitDots import TraitDots
 from src.Debug import Debug
 
 from ui.ui_SpecialsWidget import Ui_SpecialsWidget
@@ -60,6 +57,26 @@ class SpecialsWidget(QWidget):
 		self.ui.textEdit_nimbus.focusLost.connect(self.changeNimbus)
 		self.__character.nimbusChanged.connect(self.ui.textEdit_nimbus.setPlainText)
 
+		## Vampir
+		## Liste aller Vinculum-Widgets
+		self.__vinculumWidgets = []
+		for trait in self.__character.vinculi:
+			vinculumLayout = QHBoxLayout()
+			lineEdit = QLineEdit()
+			lineEdit.textChanged.connect(trait.setName)
+			traitDots = TraitDots()
+			traitDots.setMaximum(Config.vinculumLevelMax)
+			traitDots.valueChanged.connect(trait.setValue)
+			vinculumLayout.addWidget(lineEdit)
+			vinculumLayout.addWidget(traitDots)
+			self.ui.layout_vinculi.addLayout(vinculumLayout)
+			
+			self.__vinculumWidgets.append([ lineEdit, traitDots ])
+
+			trait.nameChanged.connect(lineEdit.setText)
+			trait.valueChanged.connect(traitDots.setValue)
+			traitDots.valueChanged.connect(self.checkMaxVinculum)
+
 
 	def setPage(self, species):
 		"""
@@ -78,4 +95,46 @@ class SpecialsWidget(QWidget):
 		"""
 
 		self.__character.nimbus = self.ui.textEdit_nimbus.toPlainText()
+
+
+	def checkMaxVinculum( self, value ):
+		"""
+		Erreicht ein Vinculum Stufe 3 werden alle anderen Vinculi gelöscht.
+		"""
+
+		if value > 2:
+			## Nur warnen, wenn mehr als 1 vinculum vorhanden ist.
+			numberOfVinculi = 0
+			doProceed = True
+			for vinculum in self.__vinculumWidgets:
+				if vinculum[1].value > 0:
+					numberOfVinculi += 1
+					if numberOfVinculi > 1:
+						doProceed = False
+						break
+			if not doProceed:
+				ret = QMessageBox.warning(
+					self,
+					self.tr( "Maximal Vinculum level!" ),
+					self.tr( "Maximzing a single Vinculum will reset all partial vinculums. Do you want to proceed?" ),
+					QMessageBox.Yes | QMessageBox.No
+				)
+			if doProceed or ret == QMessageBox.StandardButton.Yes:
+				for vinculum in self.__vinculumWidgets:
+					if vinculum[1].value < 3:
+						vinculum[0].setText("")
+						vinculum[0].setEnabled(False)
+						vinculum[1].value = 0
+						vinculum[1].setEnabled(False)
+			else:
+				for vinculum in self.__vinculumWidgets:
+					if vinculum[1] == self.sender():
+						vinculum[1].value = 2
+						break
+		elif not any(x[1].value > 2 for x in self.__vinculumWidgets):
+			for vinculum in self.__vinculumWidgets:
+				vinculum[0].setEnabled(True)
+				vinculum[1].setEnabled(True)
+
+
 
