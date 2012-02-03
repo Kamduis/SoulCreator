@@ -282,6 +282,7 @@ class StorageCharacter(QObject):
 		Geburtsdatum des Charakters.
 		"""
 
+		#Debug.debug(self.__dateBirth)
 		return self.__dateBirth
 
 	def setDateBirth( self, date ):
@@ -553,15 +554,13 @@ class StorageCharacter(QObject):
 		Zur Berechnung des Alters werden Geburtstag und Datum im Spiel herangezogen.
 		"""
 
-		age = Calc.years(self.dateGame, self.dateBirth)
+		#Debug.debug(self.dateGame, self.dateBirth)
+		age = Calc.years(self.dateBirth, self.dateGame)
+		Debug.debug(self.dateGame, self.dateBirth, age)
 
 		if self.__age != age:
-			oldAge = self.__age
 			self.__age = age
 			self.ageChanged.emit(age)
-
-			#if age < Config.ageAdult <= oldAge or oldAge < Config.ageAdult <= age:
-				#self.ageCategoryChanged.emit(Config.getAge(age), age, oldAge)
 
 
 	def __calcAgeBecoming(self):
@@ -569,7 +568,7 @@ class StorageCharacter(QObject):
 		Zur Berechnung des Alters zum Zeitpunkt der Veränderung (Erwachen, Kuß, erste Verwandlung etc.) werden Geburtsdatum und Datum der Veränderung genutzt.
 		"""
 
-		age = Calc.years(self.dateBecoming, self.dateBirth)
+		age = Calc.years(self.dateBirth, self.dateBecoming)
 
 		if self.__ageBecoming != age:
 			self.__ageBecoming = age
