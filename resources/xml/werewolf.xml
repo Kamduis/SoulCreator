@@ -494,6 +494,98 @@
 					</trait>
 					<cheap>Blood Talons</cheap>
 				</Category>
+				<Category name="Darkness">
+					<trait name="Darksight" level="1" costFuel="" costWill="" roll="Wits+Composure+Wisdom">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Aura of Dread" level="2" costFuel="1" costWill="" roll="Presence+Empathy+Purity">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Moonlit Talons" level="3" costFuel="" costWill="1" roll="Strength+Stealth+Cunning">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Nightblind" level="4" costFuel="2" costWill="1" roll="Wits+Occult+Honor">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Shadow Pack" level="5" costFuel="1+" costWill="" roll="Resolve+Intimidation+Glory">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Hunters in Darkness</cheap>
+				</Category>
+				<Category name="Death">
+					<trait name="Death Sight" level="1" costFuel="" costWill="" roll="">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Death Knife" level="2" costFuel="1" costWill="" roll="">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Corpse Witness" level="3" costFuel="1" costWill="" roll="Manipulation+Occult+Purity">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Word of Quiet" level="4" costFuel="" costWill="1" roll="Presence+Occult+Honor">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Vengeance of the Slain" level="5" costFuel="1" costWill="" roll="Stamina+Occult+Wisdom">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Bone Shadows</cheap>
+				</Category>
+				<Category name="Dominance">
+					<trait name="Warning Growl" level="1" costFuel="" costWill="1" roll="Presence+Intimidation+Glory">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Luna's Dictum" level="2" costFuel="" costWill="1" roll="Presence+Intimidation+Glory">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Voice of Command" level="3" costFuel="1" costWill="" roll="Manipulation+Intimidation+Honor">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Break the Defiant" level="4" costFuel="1" costWill="" roll="">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Tug the Soul's Strings" level="5" costFuel="1" costWill="" roll="Manipulation+Persuasion+Cunning">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Rahu</cheap>
+					<cheap>Storm Lords</cheap>
+				</Category>
+				<Category name="Elemental">
+					<trait name="Call Water" level="1" costFuel="" costWill="" roll="Stamina+Survival+Purity">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Manipulate Earth" level="2" costFuel="1" costWill="" roll="Dexterity+Crafts+Cunning">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Command Fire" level="3" costFuel="1" costWill="" roll="Strength+Survival+Glory">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Invoke the Wind's Wrath" level="4" costFuel="2" costWill="" roll="Strength+Empathy+Honor">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Lament of the River" level="5" costFuel="3" costWill="" roll="Stamina+Intimidation+Wisdom">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Ithaeur</cheap>
+					<cheap>Hunters in Darkness</cheap>
+				</Category>
+				<Category name="Ending">
+					<trait name="Fear of Death" level="1" costFuel="" costWill="1" roll="Wits+Empathy+Wisdom">
+						<prerequisites>Power.Purity > 0 or Power.Glory > 0 or Power.Honor > 0 or Power.Wisdom > 0 or Power.Cunning > 0</prerequisites>
+					</trait>
+					<trait name="Eyes of the Slain" level="2" costFuel="1" costWill="" roll="Intelligence+Empathy+Honor">
+						<prerequisites>Power.Purity > 1 or Power.Glory > 1 or Power.Honor > 1 or Power.Wisdom > 1 or Power.Cunning > 1</prerequisites>
+					</trait>
+					<trait name="Death Masque" level="3" costFuel="1" costWill="" roll="Intelligence+Survival+Wisdom">
+						<prerequisites>Power.Purity > 2 or Power.Glory > 2 or Power.Honor > 2 or Power.Wisdom > 2 or Power.Cunning > 2</prerequisites>
+					</trait>
+					<trait name="Bone Hex" level="4" costFuel="1" costWill="" roll="Presence+Occult+Glory">
+						<prerequisites>Power.Purity > 3 or Power.Glory > 3 or Power.Honor > 3 or Power.Wisdom > 3 or Power.Cunning > 3</prerequisites>
+					</trait>
+					<trait name="Images of Death" level="5" costFuel="1" costWill="" roll="Wits+Intimidation+Purity">
+						<prerequisites>Power.Purity > 4 or Power.Glory > 4 or Power.Honor > 4 or Power.Wisdom > 4 or Power.Cunning > 4</prerequisites>
+					</trait>
+					<cheap>Bone Shadows</cheap>
+				</Category>
 <!--
 				<Category name="">
 					<trait name="" level="1" costFuel="" costWill="" roll="">
@@ -514,10 +606,6 @@
 					<cheap></cheap>
 					<only></only>
 				</Category>
-					<trait name="Dominance">
-						<cheap>Rahu</cheap>
-						<cheap>Storm Lords</cheap>
-					</trait>
 					<trait name="Strength">
 						<cheap>Rahu</cheap>
 						<cheap>Blood Talons</cheap>
@@ -535,10 +623,6 @@
 						<cheap>Elodoth</cheap>
 						<cheap>Bone Shadows</cheap>
 					</trait>
-					<trait name="Elemental">
-						<cheap>Ithaeur</cheap>
-						<cheap>Hunters in Darkness</cheap>
-					</trait>
 					<trait name="Shaping">
 						<cheap>Ithaeur</cheap>
 						<cheap>Iron Masters</cheap>
@@ -553,9 +637,6 @@
 					</trait>
 					<trait name="Rage">
 						<cheap>Blood Talons</cheap>
-					</trait>
-					<trait name="Death">
-						<cheap>Bone Shadows</cheap>
 					</trait>
 					<trait name="Ending">
 						<cheap>Bone Shadows</cheap>

@@ -202,26 +202,6 @@ class DrawSheet(QObject):
 
 		self._drawBackground()
 
-		if GlobalState.isDebug:
-			image  = QImage()
-			if ( self.__character.species == "Human" ):
-				pass
-			elif ( self.__character.species == "Changeling" ):
-				pass
-			elif ( self.__character.species == "Mage" ):
-				image = QImage( ":/characterSheets/images/Charactersheet-Mage-1.jpg" )
-			elif ( self.__character.species == "Vampire" ):
-				pass
-			elif ( self.__character.species == "Werewolf" ):
-				pass
-			else:
-				raise ErrSpeciesNotExisting( self.__character.species )
-
-			## Damit ich weiß, Wo ich meine Sachen platzieren muß kommt erstmal das Bild dahinter.
-			source = QRectF ( 0.0, 0.0, float( image.width() ), float( image.height() ) )
-			target = QRectF( 0.0 - self.__borderFrameWest, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
-			self.__painter.drawImage(target, image, source)
-
 		if GlobalState.isDevelop:
 			self.__drawGrid()
 
@@ -299,7 +279,7 @@ class DrawSheet(QObject):
 				lengthY = 500
 			elif self.__character.species == "Mage":
 				lengthX = 870
-				lengthY = 340
+				lengthY = 290
 			elif self.__character.species == "Vampire":
 				lengthX = 750
 				lengthY = 430
@@ -368,6 +348,8 @@ class DrawSheet(QObject):
 		posY += lengthY + self.__posSep
 		if self.__character.species != "Human":
 			lengthY = 160
+			if self.__character.species == "Mage":
+				lengthY = 300
 			self._drawFuel(offsetH=posX, offsetV=posY, width=lengthX)
 
 		if self.__character.species != "Human":
@@ -397,8 +379,7 @@ class DrawSheet(QObject):
 			posY += lengthY + self.__posSep
 			lengthY = self.__pageHeight - posY
 			self._drawXP(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
-
-		if self.__character.species == "Changeling":
+		elif self.__character.species == "Changeling":
 			posX = 0
 			posY = posY_zeile4
 			lengthX = (self.__pageWidth - 2 * posX) / 3
@@ -413,15 +394,20 @@ class DrawSheet(QObject):
 			lengthX = self.__pageWidth - posX
 			lengthY = self.__pageHeight - posY
 			self._drawKithAbility(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
-
-		if self.__character.species == "Mage":
-			posX = posX_spalte3
+		elif self.__character.species == "Mage":
+			posX = 0
 			posY = posY_zeile4
-			lengthX = self.__pageWidth - posX
+			lengthX = (self.__pageWidth - 2 * self.__posSep) / 3
 			lengthY = self.__pageHeight - posY
-			self._drawNimbus(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+			self.__drawLineBox(self.tr("Active Spells"), offsetH=posX, offsetV=posY, width=lengthX, height=lengthY, description=self.tr("Max: {} +3".format(self.__storage.powerstatName(self.__character.species))))
 
-		if self.__character.species == "Vampire":
+			posX += lengthX + self.__posSep
+			self.__drawLineBox(self.tr("Spells Cast Upon Self"), offsetH=posX, offsetV=posY, width=lengthX, height=lengthY, description=self.tr("Spell Tolerance: Stamina; -1 die per extra spell"))
+
+			posX += lengthX + self.__posSep
+			lengthX = self.__pageWidth - posX
+			self._drawNimbus(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+		elif self.__character.species == "Vampire":
 			posX = 0
 			posY = posY_zeile4
 			lengthX = (self.__pageWidth - 2 * posX) / 3
@@ -431,8 +417,7 @@ class DrawSheet(QObject):
 			posX += lengthX + self.__posSep
 			lengthY = self.__pageHeight - posY
 			self._drawOrganisationCurse(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
-
-		if self.__character.species == "Werewolf":
+		elif self.__character.species == "Werewolf":
 			posX = 0
 			posY = posY_zeile4
 			lengthX = self.__pageWidth
@@ -1457,6 +1442,56 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
+	def __drawLineBox(self, heading, offsetH=0, offsetV=0, width=None, height=None, description=None):
+		"""
+		Schreibt einen Blick mit Überschrift, einem kurzem erklärenden Text und füllt sie dann mit Linien, um handschriftlich ausgefüllt werden zu können.
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth
+
+		self.__painter.setFont(self.__fontMain)
+
+		self.__drawHeading(offsetH, offsetV, width, heading)
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		posY = self.__fontHeadingHeight + self.__headingSep
+
+		if description:
+			self.__painter.save()
+			self.__painter.setFont(self.__fontMain_small)
+			fontSmallMetrics = QFontMetrics(self.__painter.font())
+			fontSmallHeight = fontSmallMetrics.height()
+			self.__painter.drawText(
+				offsetH,
+				offsetV + posY,
+				width,
+				fontHeight,
+				Qt.AlignHCenter | Qt.TextWordWrap,
+				description
+			)
+			posY += fontSmallHeight
+			self.__painter.restore()
+
+		while posY + fontHeight <= height:
+			posY += fontHeight
+			self.__painter.drawLine(
+				offsetH,
+				offsetV + posY,
+				offsetH + width,
+				offsetV + posY
+			)
+
+		if GlobalState.isDebug:
+			self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
 	def _drawNimbus(self, offsetH=0, offsetV=0, width=None, height=None):
 		"""
 		Zeichnet die Werte aller fünf Gestalten von Werwölfen auf den Charakterbogen.
@@ -1973,14 +2008,23 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth / 3
 
-		self.__drawHeading(offsetH, offsetV, width, self.tr("XP"))
+		halfWidth = width / 2 - self.__posSep / 2
+		if self.__character.species == "Mage":
+			self.__drawHeading(offsetH, offsetV, halfWidth, self.tr("XP"))
+			self.__drawHeading(offsetH + width - halfWidth, offsetV, halfWidth, self.tr("Arcane XP"))
+		else:
+			self.__drawHeading(offsetH, offsetV, width, self.tr("XP"))
 
 		pen = self.__painter.pen()
 		pen.setWidth(self.__lineWidthBox)
 		self.__painter.setPen(pen)
 		self.__painter.setBrush(self.__colorEmpty)
 
-		self.__painter.drawRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
+		if self.__character.species == "Mage":
+			self.__painter.drawRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, halfWidth, height - self.__fontHeadingHeight - self.__headingSep)
+			self.__painter.drawRect(offsetH + width - halfWidth, offsetV + self.__fontHeadingHeight + self.__headingSep, halfWidth, height - self.__fontHeadingHeight - self.__headingSep)
+		else:
+			self.__painter.drawRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
 
 		if GlobalState.isDebug:
 			self.__drawBB(offsetH, offsetV, width, height)

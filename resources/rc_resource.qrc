@@ -89,7 +89,6 @@
   </qresource>
   <qresource prefix="characterSheets">
     <file>images/Charactersheet-Changeling-2.jpg</file>
-    <file>images/Charactersheet-Mage-1.jpg</file>
     <file>images/Charactersheet-Mage-2.jpg</file>
     <file>images/Charactersheet-Vampire-2.jpg</file>
     <file>images/Charactersheet-Werewolf-2.jpg</file>

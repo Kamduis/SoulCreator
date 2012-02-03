@@ -177,7 +177,7 @@ class WriteXmlCharacter(QObject):
 		## Spezialseigenschaften der Spezies
 		if self.__character.nimbus:
 			etree.SubElement(root, "nimbus").text = self.__character.nimbus
-		if any((x.name and x.value > 0) for x in self.__character.vinculi):
+		if self.__character.species == "Vampire" and any((x.name and x.value > 0) for x in self.__character.vinculi):
 			vinculi = etree.SubElement(root, "vinculi")
 			for item in self.__character.vinculi:
 				if item.name and item.value > 0:
