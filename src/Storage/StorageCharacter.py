@@ -554,9 +554,7 @@ class StorageCharacter(QObject):
 		Zur Berechnung des Alters werden Geburtstag und Datum im Spiel herangezogen.
 		"""
 
-		#Debug.debug(self.dateGame, self.dateBirth)
 		age = Calc.years(self.dateBirth, self.dateGame)
-		Debug.debug(self.dateGame, self.dateBirth, age)
 
 		if self.__age != age:
 			self.__age = age

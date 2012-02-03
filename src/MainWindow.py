@@ -385,26 +385,28 @@ class MainWindow(QMainWindow):
 
 		self.ui.label_pointsLeft.setHidden( True )
 
-		pagesWithPoints = [1, 2, 3, 5]
+		typ = None
 
-		if self.ui.stackedWidget_traits.currentIndex() in pagesWithPoints:
+		if ( self.ui.selectWidget_select.currentPage() == "Attributes" ):
+			typ = "Attribute"
+		elif ( self.ui.selectWidget_select.currentPage() == "Skills" ):
+			typ = "Skill"
+		elif ( self.ui.selectWidget_select.currentPage() == "Merits" ):
+			typ = "Merit"
+		elif ( self.ui.selectWidget_select.currentPage() == "Powers" ):
+			typ = "Power"
+
+		if typ:
 			self.ui.label_pointsLeft.setHidden( False )
-
-			if ( self.ui.stackedWidget_traits.currentIndex() == 1 ):
-				typ = "Attribute"
-			elif ( self.ui.stackedWidget_traits.currentIndex() == 2 ):
-				typ = "Skill"
-			elif ( self.ui.stackedWidget_traits.currentIndex() == 3 ):
-				typ = "Merit"
-			elif ( self.ui.stackedWidget_traits.currentIndex() == 5 ):
-				typ = "Power"
-
+			textList = [unicode(item) for item in self.__creation.creationPointsAvailable[self.__character.species][typ]]
 			text = "Creation Points: "
-			if typ != None:
-				textList = [unicode(item) for item in self.__creation.creationPointsAvailable[self.__character.species][typ]]
+			if typ == "Skill":
+				text += "/".join(textList[1:])
+				text += " Specialties: {}".format(textList[0])
+			else:
 				text += "/".join(textList)
-				if any(x < 0 for x in self.__creation.creationPointsAvailable[self.__character.species][typ]):
-					text = "<span style='color:{color}'>{text}</span>".format(color=Config.pointsNegativeColor, text=text)
+			if any(x < 0 for x in self.__creation.creationPointsAvailable[self.__character.species][typ]):
+				text = "<span style='color:{color}'>{text}</span>".format(color=Config.pointsNegativeColor, text=text)
 			self.ui.label_pointsLeft.setText( text )
 
 
@@ -450,13 +452,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.setItemColor( 1, QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Attributes", QColor(Config.pointsNegativeColor) )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.setItemColor( 2, QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Skills", QColor(Config.pointsNegativeColor) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.setItemColor( 3, QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Merits", QColor(Config.pointsNegativeColor) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.setItemColor( 5, QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Powers", QColor(Config.pointsNegativeColor) )
 
 
 	def aboutApp(self):

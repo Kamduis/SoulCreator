@@ -71,6 +71,26 @@ class SelectWidget(QListWidget):
 		self.setMaximumWidth(Config.selectWidgetWidth)
 
 
+	def currentPage(self):
+		"""
+		Gibt den Namen der aktuellen Seite zurück.
+		"""
+
+		return self.pageList[self.currentRow()][0]
+
+
+	def indexOf(self, page):
+		"""
+		Gibt den Index der Seite mit dem angegebenen Titel zurück.
+		"""
+
+		i = 0
+		for item in self.pageList:
+			if item[0] == page:
+				return i
+			i += 1
+
+
 	def selectPrevious(self):
 		if ( self.currentRow() > 0 ):
 			self.setCurrentRow( self.currentRow() - 1 )

@@ -319,7 +319,6 @@ class InfoWidget(QWidget):
 		if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
 			self.ui.dateEdit_dateBirth.setDate(self.__character.dateBirth)
 		else:
-			Debug.debug(date)
 			self.__character.setDateBirth(date)
 
 
@@ -331,12 +330,9 @@ class InfoWidget(QWidget):
 		"""
 
 		years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
-		#Debug.debug(self.ui.dateEdit_dateGame.date(), self.ui.dateEdit_dateBirth.date(), years)
 		if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
-			#Debug.debug(self.__character.dateGame, self.__character.dateBirth, self.__character.age)
 			self.ui.dateEdit_dateGame.setDate(self.__character.dateGame)
 		else:
-			#Debug.debug(date)
 			self.__character.setDateGame(date)
 
 
