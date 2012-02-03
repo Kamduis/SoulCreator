@@ -226,11 +226,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 						if element.tag == "trait":
 							listOfPowers = {}
 							listOfPrerequisites = []
+							listOfOnlys = []
 							for subelement in list(element):
 								if subelement.tag == "power":
 									listOfPowers.setdefault(subelement.text, int(subelement.attrib["value"]))
 								elif subelement.tag == "prerequisites":
 									listOfPrerequisites.append(u"({})".format(subelement.text))
+								elif subelement.tag == "only":
+									listOfOnlys.append(u"({})".format(subelement.text))
 							powerPrerequisites = u" and ".join([u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()])
 							if powerPrerequisites:
 								powerPrerequisites = u"({})".format(powerPrerequisites)
@@ -245,7 +248,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 								"powers": listOfPowers,
 								"prerequisites": " and ".join(listOfPrerequisites),
 								"cheap": [],
-								"only": [],
+								"only": listOfOnlys,
 							}
 							#Debug.debug(subPowerData["name"], subPowerData["prerequisites"])
 							identifier = self.getElementAttribute(element, "id")
