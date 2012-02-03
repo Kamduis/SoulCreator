@@ -22,6 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import os
+
 from PySide.QtCore import Qt
 from PySide.QtGui import QWidget, QColor, QIcon, QListWidgetItem, QRadioButton, QButtonGroup
 
@@ -50,6 +52,11 @@ class ItemWidget(QWidget):
 
 		self.__character = character
 		self.__storage = template
+
+		## \todo Sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
+		self.ui.tabWidget_items.setObjectName("transparentWidget")
+		if os.name == "nt":
+			self.ui.tabWidget_items.setStyleSheet( "QWidget#transparentWidget { background: transparent; }" )
 
 		## Resources
 
@@ -108,6 +115,7 @@ class ItemWidget(QWidget):
 		## Equipment
 
 		self.ui.pushButton_equipmentAdd.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
+		self.ui.pushButton_equipmentRemove.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
 		
 		for item in self.__storage.equipment:
 			listItem = QListWidgetItem()
