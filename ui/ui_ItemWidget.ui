@@ -160,8 +160,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>239</width>
-            <height>516</height>
+            <width>36</width>
+            <height>16</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -276,7 +276,7 @@
            <item>
             <widget class="QPushButton" name="pushButton_equipmentRemove">
              <property name="text">
-              <string>Remove</string>
+              <string/>
              </property>
             </widget>
            </item>

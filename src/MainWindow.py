@@ -94,6 +94,8 @@ class MainWindow(QMainWindow):
 	\todo Changeling: Ich vermisse beim Aussehen die Unterscheidung zwischen Mask und Mien
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
+
+	\todo Unter "Specials" Werden auch für Werwölfe die Vinculi angezeigt.
 	"""
 
 

@@ -58,6 +58,8 @@ class ItemWidget(QWidget):
 		if os.name == "nt":
 			self.ui.tabWidget_items.setStyleSheet( "QWidget#transparentWidget { background: transparent; }" )
 
+		self.ui.tabWidget_items.setCurrentIndex(0)
+
 		## Resources
 
 		self.ui.traitDots_resources.valueChanged.connect(self.__character.traits["Merit"]["Social"]["Resources"].setValue)

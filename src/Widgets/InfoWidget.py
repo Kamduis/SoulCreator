@@ -62,8 +62,6 @@ class InfoWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
-		self.__height = 0
-
 		self.ui.comboBox_era.addItems( Config.eras )
 
 		self.ui.dateEdit_dateBirth.setMinimumDate(QDate(100, 1, 1))
@@ -121,7 +119,6 @@ class InfoWidget(QWidget):
 		self.__character.ageChanged.connect(self.repopulateVices)
 
 		self.__character.ageChanged.connect(self.setHeightMinMax)
-		self.__character.heightChanged.connect(self.setHeight)
 		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(self.updateHeight)
 		self.__character.traits["Flaw"]["Physical"]["Dwarf"].valueChanged.connect(self.updateHeight)
 
@@ -303,11 +300,6 @@ class InfoWidget(QWidget):
 			self.ui.pushButton_pictureClear.setEnabled(True)
 
 
-	def setHeight(self, height):
-		if self.__height != height:
-			self.__height = height
-
-
 	def setCharacterDateBirth(self, date):
 		"""
 		Speichert das Geburtsdatum des Charakters im Speicher.
@@ -386,20 +378,20 @@ class InfoWidget(QWidget):
 
 		if height >= Config.heightGiant[ageText]:
 			if self.__character.traits["Merit"]["Physical"]["Giant"].value > 0:
-				self.__character.height = height
-			elif self.warnHeightChange(height, self.__height):
+				pass
+			elif self.warnHeightChange(height):
 				self.__character.traits["Merit"]["Physical"]["Giant"].value = 4
 				self.notificationSent.emit(self.tr("Added the Giant Merit."))
 			else:
-				self.ui.doubleSpinBox_height.setValue(self.__height)
+				self.ui.doubleSpinBox_height.setValue(self.__character.height)
 		elif height <= Config.heightDwarf[ageText]:
 			if self.__character.traits["Flaw"]["Physical"]["Dwarf"].value > 0:
-				self.__character.height = height
-			elif self.warnHeightChange(height, self.__height):
+				pass
+			elif self.warnHeightChange(height):
 				self.__character.traits["Flaw"]["Physical"]["Dwarf"].value = 2
 				self.notificationSent.emit(self.tr("Added the Dwarf Flaw."))
 			else:
-				self.ui.doubleSpinBox_height.setValue(self.__height)
+				self.ui.doubleSpinBox_height.setValue(self.__character.height)
 		elif self.__character.traits["Merit"]["Physical"]["Giant"].value:
 			self.__character.traits["Merit"]["Physical"]["Giant"].value = 0
 			self.notificationSent.emit(self.tr("Removed the Giant Merit."))
@@ -407,8 +399,10 @@ class InfoWidget(QWidget):
 			self.__character.traits["Flaw"]["Physical"]["Dwarf"].value = 0
 			self.notificationSent.emit(self.tr("Removed the Dwarf Flaw."))
 
+		self.__character.height = height
 
-	def warnHeightChange(self, newHeight, oldHeight):
+
+	def warnHeightChange(self, newHeight):
 		"""
 		Ändert sich die Körpergröße zu sehr, sollautomatisch der Merit Giant bzw. der Flaw Dwarf vorgeschlagen werden.
 		"""
