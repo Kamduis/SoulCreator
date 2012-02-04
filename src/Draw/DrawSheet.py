@@ -350,6 +350,12 @@ class DrawSheet(QObject):
 			lengthY = 160
 			if self.__character.species == "Mage":
 				lengthY = 300
+			elif self.__character.species == "Changeling":
+				lengthY = 250
+			elif self.__character.species == "Vampire":
+				lengthY = 280
+			elif self.__character.species == "Werewolf":
+				lengthY = 170
 			self._drawFuel(offsetH=posX, offsetV=posY, width=lengthX)
 
 		if self.__character.species != "Human":
@@ -436,7 +442,7 @@ class DrawSheet(QObject):
 
 		self._drawBackground()
 
-		if GlobalState.isDebug:
+		if GlobalState.isDevelop:
 			image  = QImage()
 			if ( self.__character.species == "Human" ):
 				pass
@@ -456,7 +462,7 @@ class DrawSheet(QObject):
 			target = QRectF( 0.0 - self.__borderFrameWest, 0.0 - self.__borderFrameNorth, float( self.__paperWidth_defined ), float( self.__paperHeight_defined ) )
 			self.__painter.drawImage(target, image, source)
 
-		if GlobalState.isDebug:
+		if GlobalState.isDevelop:
 			self.__drawGrid()
 
 		if self.__character.species != "Changeling":
@@ -607,14 +613,12 @@ class DrawSheet(QObject):
 			rect = QRect(0 - self.__borderFrameWest, 0 - self.__borderFrameNorth, (self.__pageWidth + self.__borderFrameWest + self.__borderFrameEast) / 7, self.__pageHeight + self.__borderFrameNorth + self.__borderFrameSouth)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-BackgroundL.png")
 			self.__painter.drawImage(rect, image)
-			#if GlobalState.isDebug:
-				#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())
+			#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())
 
 			rect = QRect(self.__pageWidth + self.__borderFrameWest - (self.__pageWidth + self.__borderFrameWest + self.__borderFrameEast) / 7, 0 - self.__borderFrameNorth, (self.__pageWidth + self.__borderFrameNorth + self.__borderFrameSouth) / 7, self.__pageHeight + self.__borderFrameNorth + self.__borderFrameSouth)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-BackgroundR.png")
 			self.__painter.drawImage(rect, image)
-			#if GlobalState.isDebug:
-				#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())
+			#self.__drawBB(rect.x(), rect.y(), rect.width(), rect.height())
 
 		self.__painter.restore()
 
@@ -646,8 +650,7 @@ class DrawSheet(QObject):
 			pass
 		self.__painter.drawImage(rect, image)
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -734,7 +737,7 @@ class DrawSheet(QObject):
 				text[0][1] ="Sire:"
 				textCharacter[0][1] =""
 			elif self.__character.species == "Werewolf":
-				text[0][1] = "Pack Name:"
+				text[0][1] = "Deed Name:"
 				text[0][2] ="Totem:"
 				textCharacter[0][2] = ""
 
@@ -770,8 +773,7 @@ class DrawSheet(QObject):
 			for j in xrange(len(textCharacter[i])):
 				self.__painter.drawText(i * distanceH + width[i] + self.__textDotSep, offsetV - fontSubHeadingHeightDiff + fontScriptHeightDiff - fontScriptHeight + j * (self.__fontSubHeadingHeight + distanceV), distanceH - width[i] - self.__textDotSep, 2 * fontScriptHeight, Qt.AlignLeft | Qt.AlignBottom | Qt.TextWordWrap, textCharacter[i][j])
 
-		if GlobalState.isDebug:
-			self.__drawBB(0, offsetV, self.__pageWidth, len(text[0]) * self.__fontSubHeadingHeight + (len(text[0]) - 1) * distanceV)
+		self.__drawBB(0, offsetV, self.__pageWidth, len(text[0]) * self.__fontSubHeadingHeight + (len(text[0]) - 1) * distanceV)
 
 		self.__painter.restore()
 
@@ -819,8 +821,7 @@ class DrawSheet(QObject):
 				j += 1
 			i += 1
 
-		if GlobalState.isDebug:
-			self.__drawBB(0, offsetV, self.__pageWidth, len(Config.attributeSorts) * self.__fontHeadingHeight)
+		self.__drawBB(0, offsetV, self.__pageWidth, len(Config.attributeSorts) * self.__fontHeadingHeight)
 
 		self.__painter.restore()
 
@@ -880,8 +881,7 @@ class DrawSheet(QObject):
 				j += 1
 			i += 1
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -950,10 +950,9 @@ class DrawSheet(QObject):
 				self.__drawTrait(offsetH, offsetV + usedSpace, width=width, name="", value=0)
 				usedSpace += textHeight
 
-		if GlobalState.isDebug:
-			if not height:
-				height = self.__fontHeadingHeight + numOfTraits * textHeight
-			self.__drawBB(offsetH, offsetV, width, height)
+		if not height:
+			height = self.__fontHeadingHeight + numOfTraits * textHeight
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1036,10 +1035,9 @@ class DrawSheet(QObject):
 					#self.__drawTrait(offsetH, offsetV + usedSpace, width=width, name="", value=0)
 					#usedSpace += fontHeight
 
-		if GlobalState.isDebug:
-			if not height:
-				height = self.__fontHeadingHeight + numOfTraits * fontHeight
-			self.__drawBB(offsetH, offsetV, width, height)
+		if not height:
+			height = self.__fontHeadingHeight + numOfTraits * fontHeight
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1090,10 +1088,9 @@ class DrawSheet(QObject):
 				self.__drawTrait(offsetH, offsetV + usedSpace, width=width, name="", value=0)
 				usedSpace += textHeight
 
-		if GlobalState.isDebug:
-			if not height:
-				height = self.__fontHeadingHeight + numOfTraits * textHeight
-			self.__drawBB(offsetH, offsetV, width, height)
+		if not height:
+			height = self.__fontHeadingHeight + numOfTraits * textHeight
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1106,20 +1103,6 @@ class DrawSheet(QObject):
 		\param width Die Breite der Merit-Spalte.
 		"""
 
-		self.__painter.save()
-
-		if width == None:
-			width = self.__pageWidth / 3
-
-		mainFont = copy.copy(self.__fontMain)
-		mainFont.setWeight(QFont.Normal)
-		self.__painter.setFont(mainFont)
-
-		fontMetrics = QFontMetrics(self.__painter.font())
-		textHeight = fontMetrics.height() - 3
-
-		self.__drawHeading(offsetH, offsetV, width, self.tr("Flaws"))
-
 		flaws = []
 		for item in self.__character.traits["Flaw"]:
 			traits = self.__character.traits["Flaw"][item].values()
@@ -1130,14 +1113,16 @@ class DrawSheet(QObject):
 					if subitem.customText:
 						text += " ({})".format(subitem.customText)
 					flaws.append(text)
-		flawsLine = ", ".join(flaws)
-		rect = QRect(offsetH, offsetV + self.__fontHeadingHeight, width, height)
-		self.__painter.drawText(rect, Qt.AlignLeft | Qt.TextWordWrap, flawsLine)
+		text = ", ".join(flaws)
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
-
-		self.__painter.restore()
+		self.__drawText(
+			self.tr("Flaws"),
+			text,
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
 
 
 	def _drawAdvantages(self, offsetH=0, offsetV=0, width=None):
@@ -1185,8 +1170,7 @@ class DrawSheet(QObject):
 
 		self.__painter.restore()
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, verticalPos - offsetV)
+		self.__drawBB(offsetH, offsetV, width, verticalPos - offsetV)
 
 		self.__painter.restore()
 
@@ -1436,8 +1420,7 @@ class DrawSheet(QObject):
 			text
 		)
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1486,8 +1469,7 @@ class DrawSheet(QObject):
 				offsetV + posY
 			)
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1522,8 +1504,7 @@ class DrawSheet(QObject):
 			self.__character.nimbus
 		)
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1716,8 +1697,7 @@ class DrawSheet(QObject):
 
 		self.__painter.restore()
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1786,8 +1766,7 @@ class DrawSheet(QObject):
 
 		self.__painter.restore()
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1802,31 +1781,16 @@ class DrawSheet(QObject):
 		\param height Die Höhe des Kastens.
 		"""
 
-		self.__painter.save()
+		equipment = "; ".join(self.__character.equipment)
 
-		if width == None:
-			width = self.__pageWidth / 3
-
-		self.__drawHeading(offsetH, offsetV, width, self.tr("Inventory"))
-
-		self.__painter.setFont(self.__fontMain)
-		fontMetrics = QFontMetrics(self.__painter.font())
-		fontHeight = fontMetrics.height()
-
-		fontSmallMetrics = QFontMetrics(self.__fontMain_tiny)
-		fontSmallHeight = fontSmallMetrics.height()
-
-		#i = 0
-		#for item in self.__character.equipment:
-			#self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight + i * fontHeight, width, fontHeight, Qt.AlignLeft, item)
-			#i += 1
-		equipment = ", ".join(self.__character.equipment)
-		self.__painter.drawText(offsetH, offsetV + self.__fontHeadingHeight, width, height, Qt.AlignLeft | Qt.TextWordWrap, equipment)
-
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
-
-		self.__painter.restore()
+		self.__drawText(
+			self.tr("Inventory"),
+			equipment,
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
 
 
 	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):
@@ -1868,8 +1832,7 @@ class DrawSheet(QObject):
 			if self.__fontHeadingHeight + i * fontHeight + 4 * fontHeight > height:
 				break
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1957,8 +1920,7 @@ class DrawSheet(QObject):
 					self.__painter.drawText(posX, posY + j * fontHeight, lengthX, fontHeight, Qt.AlignHCenter, item[j])
 				i += 1
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -1970,6 +1932,8 @@ class DrawSheet(QObject):
 		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
 		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
 		\param width Die Breite der Spalte.
+
+		\note Das Bild wird stets auf den zur Verfügung stehenden Raum skaliert.
 		"""
 
 		self.__painter.save()
@@ -1983,13 +1947,12 @@ class DrawSheet(QObject):
 			boxRect = QRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
 			image = self.__character.picture
 			#Debug.debug(image.width(), image.height())
-			if image.width() > boxRect.width() or image.height() > boxRect.height():
+			if True or image.width() > boxRect.width() or image.height() > boxRect.height():
 				image = image.scaled(boxRect.width(), boxRect.height(), Qt.KeepAspectRatio)
-				Debug.debug(image.width(), image.height())
+				#Debug.debug(image.width(), image.height())
 			self.__painter.drawPixmap(boxRect.x() + (boxRect.width() - image.width()) / 2, boxRect.y(), image)
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -2026,8 +1989,7 @@ class DrawSheet(QObject):
 		else:
 			self.__painter.drawRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -2081,8 +2043,7 @@ class DrawSheet(QObject):
 			)
 			i += 1
 
-		if GlobalState.isDebug:
-			self.__drawBB(offsetH, offsetV, width, height)
+		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
 
@@ -2373,16 +2334,17 @@ class DrawSheet(QObject):
 
 
 	def __drawBB(self, posX, posY, width, height):
-		self.__painter.save()
+		if GlobalState.isDevelop:
+			self.__painter.save()
 
-		pen = QPen(Qt.DashDotDotLine)
-		pen.setColor(QColor(255,0,0))
-		pen.setWidthF(1)
-		self.__painter.setPen(pen)
-		self.__painter.setBrush(Qt.NoBrush)
-		self.__painter.drawRect(posX, posY, width, height)
+			pen = QPen(Qt.DashDotDotLine)
+			pen.setColor(QColor(255,0,0))
+			pen.setWidthF(1)
+			self.__painter.setPen(pen)
+			self.__painter.setBrush(Qt.NoBrush)
+			self.__painter.drawRect(posX, posY, width, height)
 
-		self.__painter.restore()
+			self.__painter.restore()
 
 
 

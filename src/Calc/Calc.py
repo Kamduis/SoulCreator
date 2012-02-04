@@ -29,7 +29,7 @@ from __future__ import division, print_function
 #from src import Error
 #from ReadXml import ReadXml
 #from src.Widgets.Components.CharaTrait import CharaTrait
-#from src.Debug import Debug
+from src.Debug import Debug
 
 
 
@@ -46,13 +46,15 @@ class Calc(object):
 		Berechnet die Anzahl der Jahre zwischen den beiden Daten.
 		"""
 
-		if date1 > date2:
-			cache = date1
-			date1 = date2
-			date2 = cache
+		#if date1 > date2:
+			#cache = date1
+			#date1 = date2
+			#date2 = cache
 
 		years = date2.year() - date1.year()
 		if date2.month() < date1.month() or (date2.month() == date1.month() and date2.day() < date1.day()):
 			years -= 1
+
+		#Debug.debug(date1, date2, years)
 
 		return years

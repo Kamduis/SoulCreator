@@ -17,23 +17,10 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
-     <widget class="QWidget" name="page_changeling">
-      <widget class="QLabel" name="label_2">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>20</y>
-         <width>59</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Contracts</string>
-       </property>
-      </widget>
-     </widget>
+     <widget class="QWidget" name="page_human"/>
+     <widget class="QWidget" name="page_changeling"/>
      <widget class="QWidget" name="page_mage">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
@@ -83,6 +70,7 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="page_werewolf"/>
     </widget>
    </item>
   </layout>

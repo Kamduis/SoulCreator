@@ -84,7 +84,7 @@ class SpecialtiesWidget(QWidget):
 		## Neue Spezialisierungen nicht nur der Liste, sondern auch der Eigenschaft hinzufügen.
 		if newSpecialty not in self.__trait.specialties:
 			self.__trait.appendSpecialty(newSpecialty)
-		Debug.debug(self.__trait.specialties)
+		#Debug.debug(self.__trait.specialties)
 		## Ist die neue Spezialisierung hinzugefügt, wird die Zeile wieder geleert.
 		self.ui.lineEdit_newSpecialty.setText("")
 
@@ -132,7 +132,7 @@ class SpecialtiesWidget(QWidget):
 
 
 	def modifyTrait(self, name, state):
-		Debug.debug("Test")
+		#Debug.debug("Test")
 		if state == Qt.Checked:
 			if name not in self.__trait.specialties:
 				self.__trait.appendSpecialty(name)

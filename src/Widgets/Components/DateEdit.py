@@ -50,6 +50,18 @@ class DateEdit(QDateEdit):
 		self.dateEdited.emit(self.date())
 
 
+	def mouseReleaseEvent(self, event):
+		QDateEdit.mouseReleaseEvent(self, event)
+		#Debug.debug(self.date())
+		self.dateEdited.emit(self.date())
+
+
+	def wheelEvent(self, event):
+		QDateEdit.wheelEvent(self, event)
+		#Debug.debug(self.date())
+		self.dateEdited.emit(self.date())
+
+
 	def keyPressEvent(self, event):
 		QDateEdit.keyPressEvent(self, event)
 		#Debug.debug(self.date())

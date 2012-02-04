@@ -83,10 +83,16 @@ class SpecialsWidget(QWidget):
 		Zeit die der gewählten Spezies zugehörige Seite an.
 		"""
 
-		if species == "Changeling":
+		if species == "Human":
+			self.ui.stackedWidget.setCurrentWidget(self.ui.page_changeling)
+		elif species == "Changeling":
 			self.ui.stackedWidget.setCurrentWidget(self.ui.page_changeling)
 		elif species == "Mage":
 			self.ui.stackedWidget.setCurrentWidget(self.ui.page_mage)
+		elif species == "Vampire":
+			self.ui.stackedWidget.setCurrentWidget(self.ui.page_vampire)
+		elif species == "Mage":
+			self.ui.stackedWidget.setCurrentWidget(self.ui.page_werewolf)
 
 
 	def changeNimbus( self ):
