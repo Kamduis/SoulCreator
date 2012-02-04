@@ -1983,7 +1983,7 @@ class DrawSheet(QObject):
 			boxRect = QRect(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep, width, height - self.__fontHeadingHeight - self.__headingSep)
 			image = self.__character.picture
 			#Debug.debug(image.width(), image.height())
-			if image.width() > boxRect.width() or image.height() > boxRect.height():
+			if True or image.width() > boxRect.width() or image.height() > boxRect.height():
 				image = image.scaled(boxRect.width(), boxRect.height(), Qt.KeepAspectRatio)
 				Debug.debug(image.width(), image.height())
 			self.__painter.drawPixmap(boxRect.x() + (boxRect.width() - image.width()) / 2, boxRect.y(), image)
