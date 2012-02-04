@@ -94,6 +94,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.readDerangements(xmlContent)
 		self.readTraits(xmlContent)
 		self.readItems(xmlContent)
+		self.readSpeciesSpecials(xmlContent)
 		self.readPicture(xmlContent)
 
 
@@ -106,7 +107,9 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.__character.era = tree.find("era").text
 		self.__character.virtue = tree.find("virtue").text
 		self.__character.vice = tree.find("vice").text
-		self.__character.breed = tree.find("breed").text
+		breedElement = tree.find("breed")
+		self.__character.breed = breedElement.text
+		self.__character.kith = self.getElementAttribute(breedElement, "kith")
 		self.__character.faction = tree.find("faction").text
 		self.__character.organisation = tree.find("organisation").text
 		self.__character.party = tree.find("party").text
@@ -124,16 +127,17 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 		Lese die Identitäten des Charkaters aus.
 
-		\note Derzeit gibt es nur eine. forenames="" surename="" honorname="" nickname="" supername="" gender="Male"
+		\note Derzeit gibt es nur eine. forenames="" surname="" honorname="" nickname="" supername="" gender="Male"
 		"""
 
 		identity = tree.find("identities/identity")
-		self.__character.identities[0].forenames = identity.attrib["forenames"].split(" ")
-		self.__character.identities[0].surename = identity.attrib["surename"]
-		self.__character.identities[0].honorname = identity.attrib["honorname"]
-		self.__character.identities[0].nickname = identity.attrib["nickname"]
-		self.__character.identities[0].supername = identity.attrib["supername"]
-		self.__character.identities[0].gender = identity.attrib["gender"]
+		if identity is not None:
+			self.__character.identity.forenames = self.getElementAttribute(identity, "forenames").split(" ")
+			self.__character.identity.surname = self.getElementAttribute(identity, "surname")
+			self.__character.identity.honorname = self.getElementAttribute(identity, "honorname")
+			self.__character.identity.nickname = self.getElementAttribute(identity, "nickname")
+			self.__character.identity.supername = self.getElementAttribute(identity, "supername")
+			self.__character.identity.gender = self.getElementAttribute(identity, "gender")
 
 
 	def readDates(self, tree):
@@ -249,6 +253,25 @@ class ReadXmlCharacter(QObject, ReadXml):
 			for magicalToolElement in root.getiterator("magicalTool"):
 				toolName = magicalToolElement.text
 				self.__character.setMagicalTool(toolName)
+
+
+	def readSpeciesSpecials(self, tree):
+		"""
+		Lese die Spezialeigenschaften der Spezies aus.
+		"""
+
+		elem = tree.find("nimbus")
+		if elem is not None:
+			self.__character.nimbus = elem.text
+
+		elem = tree.find("vinculi")
+		if elem is not None:
+			i = 0
+			for element in list(elem):
+				if element.tag == "vinculum" and i < Config.vinculiCount:
+					self.__character.vinculi[i].name = element.text
+					self.__character.vinculi[i].value = int(element.attrib["value"])
+					i += 1
 
 
 	def readPicture(self, tree):

@@ -42,7 +42,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="tabWidget_items">
      <property name="currentIndex">
       <number>2</number>
      </property>
@@ -160,8 +160,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>239</width>
-            <height>516</height>
+            <width>36</width>
+            <height>16</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -246,13 +246,6 @@
            <item row="1" column="0" colspan="2">
             <widget class="QListWidget" name="listWidget_equipmentInventory"/>
            </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton_equipmentRemove">
-             <property name="text">
-              <string>Remove</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
          <item>
@@ -275,6 +268,13 @@
              <property name="toolTip">
               <string>Take in inventory.</string>
              </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_equipmentRemove">
              <property name="text">
               <string/>
              </property>

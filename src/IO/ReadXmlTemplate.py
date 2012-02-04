@@ -167,9 +167,9 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		speciesData = {
-			"morale": self.__getElementAttribute(root, "morale"),
-			"powerstat": self.__getElementAttribute(root, "powerstat"),
-			"fuel": self.__getElementAttribute(root, "fuel"),
+			"morale": self.getElementAttribute(root, "morale"),
+			"powerstat": self.getElementAttribute(root, "powerstat"),
+			"fuel": self.getElementAttribute(root, "fuel"),
 		}
 
 		self.__storage.appendSpecies( species, speciesData )
@@ -195,7 +195,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		if root is not None:
 			if root.tag == "Power":
-				self.__storage.setPowerName(species, self.__getElementAttribute(root, "name"))
+				self.__storage.setPowerName(species, self.getElementAttribute(root, "name"))
 			for category in root.getiterator("Category"):
 				categoryName = category.attrib["name"]
 				traits = self.__readTraitData(category, species)
@@ -210,41 +210,66 @@ class ReadXmlTemplate(QObject, ReadXml):
 		Lese die Unterkräfte aus den Template-Dateien.
 
 		Diese werden zwar auch im trait-Dictionary gespeichert, haben aber andere Attribute als die normalen Eigenschaften.
-
-		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
 		if root is not None:
-			self.__storage.setSubPowerName(species, self.__getElementAttribute(root, "name"))
-			for categoryElement in root.getiterator("Category"):
-				categoryName = categoryElement.attrib["name"]
-
-				for traitElement in categoryElement.getiterator("trait"):
-					listOfPowers = {}
-					for traitSubElement in traitElement.getiterator("power"):
-						listOfPowers.setdefault(traitSubElement.text, int(traitSubElement.attrib["value"]))
-					listOfPrerequisites = []
-					for traitSubElement in traitElement.getiterator("prerequisites"):
-						listOfPrerequisites.append(traitSubElement.text)
-					if not listOfPrerequisites:
-						listOfPrerequisites = [u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()]
-					#Debug.debug(prerequisitePowers)
-					subPowerData = {
-						"name": traitElement.attrib["name"],
-						"level": self.__getElementAttribute(traitElement, "level"),
-						"species": species,
-						"costFuel": self.__getElementAttribute(traitElement, "costFuel"),
-						"costWill": self.__getElementAttribute(traitElement, "costWill"),
-						"roll": self.__getElementAttribute(traitElement, "roll"),
-						"powers": listOfPowers,
-						"prerequisites": " and ".join(listOfPrerequisites),
-					}
-					identifier = self.__getElementAttribute(traitElement, "id")
-					if not identifier:
-						identifier = subPowerData["name"]
-					#if species == "Werewolf":
-						#Debug.debug(root.tag, categoryName, identifier, subPowerData)
-					self.__storage.addTrait( root.tag, categoryName, identifier, subPowerData )
+			self.__storage.setSubPowerName(species, self.getElementAttribute(root, "name"))
+			#Debug.debug(list(root))
+			for categoryElement in list(root):
+				if categoryElement.tag == "Category":
+					categoryName = categoryElement.attrib["name"]
+					## In diese Liste werden alle Unterkräfte geschrieben und erst wenn die gesamte Kategorie ausgelesen ist, werden selbige in den Speicher geschrieben.
+					subPowerList = []
+					cheap = []
+					only = []
+					for element in list(categoryElement):
+						if element.tag == "trait":
+							listOfPowers = {}
+							listOfPrerequisites = []
+							listOfOnlys = []
+							for subelement in list(element):
+								if subelement.tag == "power":
+									listOfPowers.setdefault(subelement.text, int(subelement.attrib["value"]))
+								elif subelement.tag == "prerequisites":
+									listOfPrerequisites.append(u"({})".format(subelement.text))
+								elif subelement.tag == "only":
+									listOfOnlys.append(u"({})".format(subelement.text))
+							powerPrerequisites = u" and ".join([u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()])
+							if powerPrerequisites:
+								powerPrerequisites = u"({})".format(powerPrerequisites)
+								listOfPrerequisites.append(powerPrerequisites)
+							subPowerData = {
+								"name": element.attrib["name"],
+								"level": self.getElementAttribute(element, "level"),
+								"species": species,
+								"costFuel": self.getElementAttribute(element, "costFuel"),
+								"costWill": self.getElementAttribute(element, "costWill"),
+								"roll": self.getElementAttribute(element, "roll"),
+								"powers": listOfPowers,
+								"prerequisites": " and ".join(listOfPrerequisites),
+								"cheap": [],
+								"only": listOfOnlys,
+							}
+							#Debug.debug(subPowerData["name"], subPowerData["prerequisites"])
+							identifier = self.getElementAttribute(element, "id")
+							if not identifier:
+								identifier = subPowerData["name"]
+							subPowerList.append([
+								categoryName,
+								identifier,
+								subPowerData,
+							])
+						elif element.tag == "cheap":
+							cheap.append(element.text)
+						elif element.tag == "only":
+							only.append(element.text)
+					#Debug.debug(subPowerList)
+					for item in subPowerList:
+						if cheap:
+							item[2]["cheap"] = cheap
+						if only:
+							item[2]["only"] = only
+						self.__storage.addTrait( root.tag, item[0], item[1], item[2] )
 
 
 	def readCreationPoints( self, root, species ):
@@ -274,22 +299,22 @@ class ReadXmlTemplate(QObject, ReadXml):
 			groupCategoryName = root.attrib["name"]
 			self.__storage.appendTitle( species, groupCategory, groupCategoryName )
 			for element in list(root):
-				groupName = element.attrib["name"]
-				self.__storage.appendTitle( species, groupCategory, groupCategoryName, element.attrib["name"] )
-
-
-				#while( not self.atEnd() ):
-					#self.readNext()
-
-					#if self.isEndElement():
-						#break
-
-					#if( self.isStartElement() ):
-						#name = self.name()
-						#if( name == "bonus" ):
-							#self.readBonusTraits(species, title)
-						#else:
-							#self.readUnknownElement()
+				if element.tag == "item":
+					#Debug.debug(element.tag, element.attrib["name"])
+					groupName = element.attrib["name"]
+					infos = {}
+					for subElement in list(element):
+						if subElement.tag == "kith":
+							abilityList = []
+							for subsubElement in list(subElement):
+								if subsubElement.tag == "ability":
+									abilityList.append(subsubElement.text)
+							self.__storage.addKith(groupName, subElement.attrib["name"], " ".join(abilityList))
+						elif subElement.tag == "weakness":
+							infos["weakness"] = subElement.text
+						elif subElement.tag == "blessing":
+							infos["blessing"] = subElement.text
+					self.__storage.appendTitle( species, groupCategory, groupCategoryName, element.attrib["name"], infos )
 
 
 	def readPowerstat( self, root, species ):
@@ -344,20 +369,20 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for Weapons in root:
-			if GlobalState.isFallback or not self.__getElementAttribute(Weapons, "fallback") == "True":
+			if GlobalState.isFallback or not self.getElementAttribute(Weapons, "fallback") == "True":
 				for typElement in Weapons.getiterator("Type"):
-					typeName = self.__getElementAttribute(typElement, "name")
+					typeName = self.getElementAttribute(typElement, "name")
 					for categoryElement in typElement.getiterator("Category"):
 						for weaponElement in typElement.getiterator("weapon"):
 							#Debug.debug(weaponElement.attrib["name"])
 							weaponName = weaponElement.attrib["name"]
 							weaponData = {
-								"damage": self.__getElementAttribute(weaponElement, "damage"),
-								"ranges": self.__getElementAttribute(weaponElement, "ranges"),
-								"capacity": self.__getElementAttribute(weaponElement, "capacity"),
-								"strength": self.__getElementAttribute(weaponElement, "strength"),
-								"size": self.__getElementAttribute(weaponElement, "size"),
-								"durability": self.__getElementAttribute(weaponElement, "durability"),
+								"damage": self.getElementAttribute(weaponElement, "damage"),
+								"ranges": self.getElementAttribute(weaponElement, "ranges"),
+								"capacity": self.getElementAttribute(weaponElement, "capacity"),
+								"strength": self.getElementAttribute(weaponElement, "strength"),
+								"size": self.getElementAttribute(weaponElement, "size"),
+								"durability": self.getElementAttribute(weaponElement, "durability"),
 							}
 							self.__storage.addWeapon( typeName, weaponName, weaponData )
 
@@ -370,14 +395,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for Armor in root:
-			if GlobalState.isFallback or not self.__getElementAttribute(Armor, "fallback") == "True":
+			if GlobalState.isFallback or not self.getElementAttribute(Armor, "fallback") == "True":
 				for armorElement in Armor.getiterator("armor"):
 					armorName = armorElement.attrib["name"]
 					armorData = {
-						"general": int(self.__getElementAttribute(armorElement, "general")),
-						"firearms": int(self.__getElementAttribute(armorElement, "firearms")),
-						"defense": int(self.__getElementAttribute(armorElement, "defense")),
-						"speed": int(self.__getElementAttribute(armorElement, "speed")),
+						"general": int(self.getElementAttribute(armorElement, "general")),
+						"firearms": int(self.getElementAttribute(armorElement, "firearms")),
+						"defense": int(self.getElementAttribute(armorElement, "defense")),
+						"speed": int(self.getElementAttribute(armorElement, "speed")),
 					}
 					self.__storage.addArmor( armorName, armorData )
 
@@ -390,13 +415,13 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for Equipment in root:
-			if GlobalState.isFallback or not self.__getElementAttribute(Equipment, "fallback") == "True":
+			if GlobalState.isFallback or not self.getElementAttribute(Equipment, "fallback") == "True":
 				for equipmentElement in Equipment.getiterator("equipment"):
 					equipmentName = equipmentElement.attrib["name"]
 					equipmentData = {
-						"durability": int(self.__getElementAttribute(equipmentElement, "durability")),
-						"size": int(self.__getElementAttribute(equipmentElement, "size")),
-						"cost": int(self.__getElementAttribute(equipmentElement, "cost")),
+						"durability": int(self.getElementAttribute(equipmentElement, "durability")),
+						"size": int(self.getElementAttribute(equipmentElement, "size")),
+						"cost": int(self.getElementAttribute(equipmentElement, "cost")),
 					}
 					self.__storage.addEquipment( equipmentName, equipmentData )
 
@@ -411,10 +436,12 @@ class ReadXmlTemplate(QObject, ReadXml):
 			"typ": <Typ der ausgelsenen Eigenschaften>,
 			"traits" [<Liste der Eigenschaftsdaten der gefundenen Eigenschaften>]
 		}
-		
+
 		\todo Eine Eigenschaft kann mehrfach vorkommen, da andere Spezies andere Spezialisierungen mitbringen mögen.
 
 		\todo Ersetze getiterator durch list(elem) oder Element.iter()
+
+		\todo Dictionary-keys "cheap" und "only" werden nicht ausgelesen sondern nur als [] gesetzt.
 		"""
 
 		listOfTraits = []
@@ -423,6 +450,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				listOfSpecialties = []
 				for traitSubElement in traitElement.getiterator("specialty"):
 					listOfSpecialties.append(traitSubElement.text)
+				listOfSpecialties.sort()
 				listOfPrerequisites = []
 				for traitSubElement in traitElement.getiterator("prerequisites"):
 					listOfPrerequisites.append(traitSubElement.text)
@@ -430,16 +458,18 @@ class ReadXmlTemplate(QObject, ReadXml):
 				for traitSubElement in traitElement.getiterator("value"):
 					listOfValues.append(int(traitSubElement.text))
 				traitData = {
-					"id": self.__getElementAttribute(traitElement, "id"),			# Einzigartiger Identifier der Eigenschaft. Ist meist identisch mit dem Namen.
+					"id": self.getElementAttribute(traitElement, "id"),			# Einzigartiger Identifier der Eigenschaft. Ist meist identisch mit dem Namen.
 					"name": traitElement.attrib["name"],							# Name der Eigenschaft (alle)
-					"level": self.__getElementAttribute(traitElement, "level"),		# Stufe der Eigenschaft (Subpowers)
+					"level": self.getElementAttribute(traitElement, "level"),		# Stufe der Eigenschaft (Subpowers)
 					"values": [0],													# Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
 					"species": species,												# Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
-					"age": self.__getElementAttribute(traitElement, "age"),			# Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
-					"era": self.__getElementAttribute(traitElement, "era"),			# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
-					"custom": self.__getElementAttribute(traitElement, "custom"),	# Handelt es sich um eine Kraft mit Zusatztext?
+					"age": self.getElementAttribute(traitElement, "age"),			# Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
+					"era": self.getElementAttribute(traitElement, "era"),			# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
+					"custom": self.getElementAttribute(traitElement, "custom"),	# Handelt es sich um eine Kraft mit Zusatztext?
 					"specialties": listOfSpecialties,									# Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
-					"prerequisites": " and ".join(listOfPrerequisites)				# Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
+					"prerequisites": " and ".join(listOfPrerequisites),				# Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
+					"cheap": [],
+					"only": [],
 				}
 				if not traitData["id"]:
 					traitData["id"] = traitData["name"]
@@ -447,16 +477,5 @@ class ReadXmlTemplate(QObject, ReadXml):
 				listOfTraits.append(traitData)
 
 		return listOfTraits
-
-
-	def __getElementAttribute(self, element, attribute):
-		"""
-		Gibt den Wert des Attributs aus oder, sollte es nicht esxistieren, einen leeren String.
-		"""
-
-		if attribute in element.attrib:
-			return element.attrib[attribute]
-		else:
-			return ""
 
 

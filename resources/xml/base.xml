@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.9">
+<SoulCreator version="0.10">
 	<Template species="">
 		<Traits>
 			<Virtue>
@@ -504,6 +504,7 @@
 					</trait>
 					<trait name="Giant" creationOnly="true" source="WoD Core">
 						<value>4</value>
+						<prerequisites>Flaw.Dwarf &lt; 1</prerequisites>
 					</trait>
 					<trait name="Gunslinger" source="WoD Core">
 						<value>3</value>
@@ -632,7 +633,7 @@
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="New Identity" source="Changeling Core">
+					<trait name="New Identity" custom="true" source="Changeling Core">
 						<value>1</value>
 						<value>2</value>
 						<value>4</value>
@@ -989,7 +990,9 @@
 				<Category name="Physical">
 					<trait name="Crippled"/>
 					<trait name="Cumbersome"/>
-					<trait name="Dwarf"/>
+					<trait name="Dwarf">
+						<prerequisites>Merit.Giant &lt; 1</prerequisites>
+					</trait>
 					<trait name="Hard of Hearing"/>
 					<trait name="Lame"/>
 					<trait name="Mute"/>

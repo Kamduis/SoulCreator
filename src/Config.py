@@ -40,8 +40,8 @@ class Config(object):
 	programName = "SoulCreator"
 	programAuthor = "Victor"
 	programVersionMajor = 0
-	programVersionMinor = 9
-	programVersionChange = 1
+	programVersionMinor = 10
+	programVersionChange = 0
 	programDescription = "Charaktergenerator für die World of Darkness."
 	organization = "Caern"
 
@@ -116,7 +116,7 @@ class Config(object):
 	traitMultipleMax = 4
 
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
-	#const int Config::displayTimeout = 10000
+	displayTimeout = 10000
 
 	## Die minimale Breite für Widgets wie Fertigkeiten, Merits, Flaws etc.
 	traitLineWidthMin = 320
@@ -165,6 +165,10 @@ class Config(object):
 	## Bezeichnung der Übernatürlichen Grundeigenschaft für alle Spezies
 	powerstatIdentifier = "Powerstat"
 
+	## Wieviele Vinculi sollen auf dem Vampir-Charakterbogen angezeigt werden.
+	vinculiCount = 5
+	vinculumLevelMax = 3
+
 	## Über wievielen Punkten die Eigenschaften 2 Erschaffungspunkte kosten.
 	#
 	# Alle Punkte bis einschließelich dieser Zahl kosten nur 1 Punkt pro Punkt, aber alle darüber kosten das Doppelte.
@@ -190,10 +194,28 @@ class Config(object):
 	## Das Alter ab welchem der Charakter /kein/ Kind mehr ist.
 	ageAdult = 13
 
+	heightGiant = {
+		"Adult": 2.01,
+		"Kid": 1.51,
+	}
+	heightDwarf = {
+		"Adult": 1.39,
+		"Kid": 0.89,
+	}
+	heightMax = {
+		"Adult": 2.30,
+		"Kid": 1.80,
+	}
+	heightMin = {
+		"Adult": 1.10,
+		"Kid": 0.70,
+	}
+
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (
-		("Male", ":/icons/images/male.png"),
-		("Female", ":/icons/images/female.png"),
+		("Hermaphrodite", ":/icons/images/svg/symbolHermaphrodite.svg"),
+		("Male", ":/icons/images/svg/symbolMale.svg"),
+		("Female", ":/icons/images/svg/symbolFemale.svg"),
 	)
 
 	## Sämtliche Eigenschaftstypen.
@@ -296,7 +318,7 @@ class Config(object):
 		Gibt die Alterskategorie zurück.
 		"""
 
-		if age < Config.adultAge:
+		if age < Config.ageAdult:
 			return Config.ages[1]
 		else:
 			return Config.ages[0]

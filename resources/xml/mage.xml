@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.9">
+<SoulCreator version="0.10">
 	<Template species="Mage">
 		<Creation>
 			<Type name="Attribute">
@@ -257,87 +257,388 @@
 			</Power>
 			<Subpower name="Rotes">
 				<Category name="Death">
-					<trait name="Ectoplasmic Shaping" level="1" costFuel="0" costWill="0" roll="Presence+Occult+Death">
+					<trait name="Ectoplasmic Shaping" level="1" costFuel="" costWill="" roll="Presence+Occult+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Eye for Destruction" level="1" costFuel="0" costWill="0" roll="Wits+Crafts+Death">
+					<trait name="Eye for Destruction" level="1" costFuel="" costWill="" roll="Wits+Crafts+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Forensic Gaze" level="1" costFuel="0" costWill="0" roll="Intelligence+Medicine+Death">
+					<trait name="Forensic Gaze" level="1" costFuel="" costWill="" roll="Intelligence+Medicine+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Grim Sight" level="1" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+					<trait name="Grim Sight" level="1" costFuel="" costWill="" roll="Wits+Occult+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Otherworldly Instrument" level="1" costFuel="0" costWill="0" roll="Dexterity+Crafts+Death">
+					<trait name="Otherworldly Instrument" level="1" costFuel="" costWill="" roll="Dexterity+Crafts+Death">
 						<power value="1">Death</power>
 						<power value="1">Spirit</power>
 					</trait>
-					<trait name="Sense the Living Dead" level="1" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+					<trait name="Sense the Living Dead" level="1" costFuel="" costWill="" roll="Wits+Occult+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Shadow Sculpting" level="1" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+					<trait name="Shadow Sculpting" level="1" costFuel="" costWill="" roll="Wits+Occult+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Soul Marks" level="1" costFuel="0" costWill="0" roll="Intelligence+Medicine+Death">
+					<trait name="Soul Marks" level="1" costFuel="" costWill="" roll="Intelligence+Medicine+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Speak with the Dead" level="1" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+					<trait name="Speak with the Dead" level="1" costFuel="" costWill="" roll="Wits+Occult+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Unsettling Visage" level="1" costFuel="0" costWill="0" roll="Presence+Subterfuge+Death">
+					<trait name="Unsettling Visage" level="1" costFuel="" costWill="" roll="Presence+Subterfuge+Death">
 						<power value="1">Death</power>
 					</trait>
-					<trait name="Animate Shadows" level="2" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+					<trait name="Animate Shadows" level="2" costFuel="" costWill="" roll="Wits+Occult+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Corpse Mask" level="2" costFuel="0" costWill="0" roll="Intelligence+Subterfuge+Death">
+					<trait name="Corpse Mask" level="2" costFuel="" costWill="" roll="Intelligence+Subterfuge+Death">
 						<power value="2">Death</power>
+						<only>Guardians of the Veil</only>
 					</trait>
-					<trait name="Corpse Unmasking" level="2" costFuel="0" costWill="0" roll="Intelligence+Occult+Death">
+					<trait name="Corpse Unmasking" level="2" costFuel="" costWill="" roll="Intelligence+Occult+Death">
 						<power value="2">Death</power>
 						<power value="1">Prime</power>
+						<only>Guardians of the Veil</only>
 					</trait>
-					<trait name="Decay" level="2" costFuel="0" costWill="0" roll="Stamina+Intimidation+Death">
+					<trait name="Decay" level="2" costFuel="" costWill="" roll="Stamina+Intimidation+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Ectoplasm" level="2" costFuel="0" costWill="0" roll="Stamina+Occult+Death">
+					<trait name="Ectoplasm" level="2" costFuel="" costWill="" roll="Stamina+Occult+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Entropic Guard" level="2" costFuel="(1)" costWill="0" roll="Wits+Occult+Death">
+					<trait name="Entropic Guard" level="2" costFuel="(1)" costWill="" roll="Wits+Occult+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Final Sight" level="2" costFuel="0" costWill="0" roll="Manipulation+Occult+Death">
+					<trait name="Final Sight" level="2" costFuel="" costWill="" roll="Manipulation+Occult+Death">
+						<power value="2">Death</power>
+						<only>Guardians of the Veil</only>
+					</trait>
+					<trait name="Ghost Summons" level="2" costFuel="" costWill="" roll="Presence+Persuasion+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Ghost Summons" level="2" costFuel="0" costWill="0" roll="Presence+Persuasion+Death">
+					<trait name="Grant the Grim Sight" level="2" costFuel="" costWill="" roll="Manipulation+Persuasion+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Grant the Grim Sight" level="2" costFuel="0" costWill="0" roll="Manipulation+Persuasion+Death">
+					<trait name="Lighten Anchor" level="2" costFuel="" costWill="" roll="Wits+Occult+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Lighten Anchor" level="2" costFuel="0" costWill="0" roll="Wits+Occult+Death">
+					<trait name="Soul Jar" level="2" costFuel="" costWill="" roll="Presence+Crafts+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Soul Jar" level="2" costFuel="0" costWill="0" roll="Presence+Crafts+Death">
+					<trait name="Suppress Aura" level="2" costFuel="" costWill="" roll="Manipulation+Subterfuge+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Suppress Aura" level="2" costFuel="0" costWill="0" roll="Manipulation+Subterfuge+Death">
+					<trait name="Touch of the Grave" level="2" costFuel="" costWill="" roll="Dexterity+Survival+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Touch of the Grave" level="2" costFuel="0" costWill="0" roll="Dexterity+Survival+Death">
+					<trait name="Quiet Grave" level="2" costFuel="" costWill="" roll="Presence+Academics+Death">
 						<power value="2">Death</power>
 					</trait>
-					<trait name="Quiet Grave" level="3" costFuel="0" costWill="0" roll="Presence+Academics+Death">
+					<trait name="Arm Ghost" level="3" costFuel="1" costWill="" roll="Intelligence+Occult+Death">
+						<power value="3">Death</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Control Ghost" level="3" costFuel="" costWill="" roll="Presence+Intimidation+Death">
 						<power value="3">Death</power>
 					</trait>
-					<trait name="Test2" level="3" costFuel="0" costWill="0" roll="">
+					<trait name="Corpse Flesh" level="3" costFuel="" costWill="" roll="Resolve+Medicine+Death">
 						<power value="3">Death</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Destroy Ephemera" level="3" costFuel="" costWill="" roll="Resolve+Occult+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Destroy Object" level="3" costFuel="" costWill="" roll="Resolve+Crafts/Science+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Devouring the Slain" level="3" costFuel="1" costWill="" roll="Manipulation+Persuasion+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Dissipate Unreal Construct" level="3" costFuel="" costWill="" roll="Intelligence+Crafts+Death">
+						<power value="3">Death</power>
+						<power value="3">Prime</power>
+					</trait>
+					<trait name="Entropic Shroud" level="3" costFuel="(1)" costWill="" roll="Wits+Occult+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Ghost Gate" level="3" costFuel="" costWill="" roll="Resolve+Occult+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Ghostly Object" level="3" costFuel="" costWill="" roll="Resolve+Occult/Science+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Harm Ghost" level="3" costFuel="" costWill="" roll="Presence+Persuasion+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Healing the Dead Mind" level="3" costFuel="" costWill="" roll="Manipulation+Empathy+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Quicken Corpse" level="3" costFuel="" costWill="" roll="Presence+Persuasion+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Restore Corps" level="3" costFuel="1" costWill="" roll="Presence+Occult/Science+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Restore Corpus" level="3" costFuel="1" costWill="" roll="Manipulation+Occult/Science+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Sculpt Ephemera" level="3" costFuel="" costWill="" roll="Dexterity+Crafts+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Self-Repairing Zombie" level="3" costFuel="1+" costWill="" roll="Presence+Occult+Death">
+						<power value="3">Death</power>
+						<power value="3">Matter</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Sever the Sleeping Soul" level="3" costFuel="1" costWill="" roll="Presence+Intimidation+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Shadow-Forged" level="3" costFuel="1+" costWill="" roll="Wits+Crafts+Death">
+						<power value="3">Death</power>
+						<power value="3">Matter</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Summon Shadows" level="3" costFuel="" costWill="" roll="Wits+Occult+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Suppress Own Life" level="3" costFuel="" costWill="" roll="Composure+Subterfuge+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Torch The Fields" level="3" costFuel="" costWill="" roll="Resolve+Intimidation+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Touch of Death" level="3" costFuel="" costWill="" roll="Intelligence+Intimidation+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Transfer Anchor" level="3" costFuel="1" costWill="" roll="Presence+Larceny+Death">
+						<power value="3">Death</power>
+					</trait>
+					<trait name="Cloak of Decay" level="4" costFuel="1" costWill="" roll="Resolve+Crafts/Science+Death">
+						<power value="4">Death</power>
+						<power value="2">Fate</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Enervation" level="4" costFuel="" costWill="" roll="Presence+Occult+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Ghost Familiar Pact" level="4" costFuel="1" costWill="" roll="Wits+Occult+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Haunting" level="4" costFuel="1" costWill="" roll="Presence+Persuasion+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Revenant" level="4" costFuel="" costWill="" roll="Manipulation+Persuasion+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Rotting Flesh" level="4" costFuel="1" costWill="" roll="Strength+Intimidation+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Scourge Ghost" level="4" costFuel="" costWill="" roll="Presence+Occult+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Shadow Flesh" level="4" costFuel="" costWill="" roll="Stamina+Occult+Death">
+						<power value="4">Death</power>
+						<power value="4">Life</power>
+						<only>Seers of the Throne</only>
+					</trait>
+					<trait name="Slay Own Aura" level="4" costFuel="" costWill="" roll="Intelligence+Subterfuge+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Soul Binding" level="4" costFuel="" costWill="" roll="Composure+Empathy+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Suppress Other's Life" level="4" costFuel="" costWill="" roll="Manipulation+Subterfuge+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Twilight Shift" level="4" costFuel="1" costWill="" roll="Stamina+Occult+Death">
+						<power value="4">Death</power>
+					</trait>
+					<trait name="Atonement" level="5" costFuel="" costWill="" roll="">
+						<power value="5">Death</power>
+						<power value="2">Fate</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Create Ghost" level="5" costFuel="1" costWill="" roll="Presence+Academics+Death">
+						<power value="5">Death</power>
+						<power value="4">Mind</power>
+						<power value="2">Time</power>
+						<only>Mysterium</only>
+					</trait>
+					<trait name="Devouring the Living" level="5" costFuel="1" costWill="" roll="Manipulation+Intimidation+Death">
+						<power value="5">Death</power>
+					</trait>
+					<trait name="Destroy Mana" level="5" costFuel="" costWill="" roll="Strength+Intimidation+Death">
+						<power value="5">Death</power>
+					</trait>
+					<trait name="Grant Ghost Familiar" level="5" costFuel="" costWill="" roll="">
+						<power value="5">Death</power>
+					</trait>
+					<trait name="Presence+Persuasion+Death" level="5" costFuel="" costWill="" roll="">
+						<power value="5">Death</power>
+					</trait>
+					<trait name="Grant Lifespan" level="5" costFuel="1" costWill="" roll="Intelligence+Medicine+Death">
+						<power value="5">Death</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Quell the Spark" level="5" costFuel="" costWill="" roll="Resolve+Occult+Death">
+						<power value="5">Death</power>
+					</trait>
+					<trait name="Quicken Ghost" level="5" costFuel="" costWill="" roll="Manipulation+Occult+Death">
+						<power value="5">Death</power>
+					</trait>
+					<trait name="Steal Body" level="5" costFuel="2" costWill="" roll="Wits+Science+Death">
+						<power value="5">Death</power>
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Steal Lifespan" level="5" costFuel="1" costWill="" roll="Manipulation+Subterfuge+Death">
+						<power value="5">Death</power>
+					</trait>
+					<trait name="Steal Life" level="5" costFuel="1" costWill="" roll="Manipulation+Medicine+Death">
+						<power value="5">Death</power>
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Summon the Dead" level="5" costFuel="" costWill="" roll="Presence+Persuasion+Death">
+						<power value="5">Death</power>
 					</trait>
 				</Category>
 				<Category name="Fate">
-					<trait name="Test1" level="1">
+					<trait name="Interconnections" level="1" costFuel="" costWill="" roll="Intelligence+Investigation+Fate">
 						<power value="1">Fate</power>
+					</trait>
+					<trait name="Quantum Flux" level="1" costFuel="" costWill="" roll="Wits+Occult+Fate">
+						<power value="1">Fate</power>
+					</trait>
+					<trait name="Reading the Outmost Eddies" level="1" costFuel="" costWill="" roll="Wits+Investigation+Fate">
+						<power value="1">Fate</power>
+					</trait>
+					<trait name="Sharpshooter's Eye" level="1" costFuel="" costWill="" roll="Composure+Firearms+Fate">
+						<power value="1">Fate</power>
+						<power value="1">Space</power>
+						<prerequisites>Power.Life > 1 or Power.Matter > 1</prerequisites>
+					</trait>
+					<trait name="Sybil's Sight" level="1" costFuel="" costWill="" roll="Wits+Occult+Fate">
+						<power value="1">Fate</power>
+					</trait>
+					<trait name="Synchronicity" level="1" costFuel="" costWill="" roll="Wits+Streetwise+Fate">
+						<power value="1">Fate</power>
+						<only value="1">Free Council</only>
+					</trait>
+					<trait name="Winds of Chance" level="1" costFuel="" costWill="" roll="Wits+Subterfuge+Fate">
+						<power value="1">Fate</power>
+					</trait>
+					<trait name="Dialing the Lucky Number" level="2" costFuel="" costWill="" roll="Wits+Crafts+Space">
+						<power value="2">Fate</power>
+						<power value="2">Forces</power>
+						<power value="2">Space</power>
+						<only value="1">Free Council</only>
+					</trait>
+					<trait name="Exceptional Luck" level="2" costFuel="1" costWill="" roll="Manipulation+Occult+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Evil Eye" level="2" costFuel="1" costWill="" roll="Manipulation+Persuasion+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Fortune's Protection" level="2" costFuel="(1)" costWill="" roll="Composure+Athletics+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Fortunate Timing" level="2" costFuel="" costWill="" roll="Wits+Persuasion+Fate">
+						<power value="2">Fate</power>
+						<power value="1">Time</power>
+						<only value="1">Free Council</only>
+					</trait>
+					<trait name="Granting the Sybil's Sight" level="2" costFuel="" costWill="" roll="Manipulation+Occult+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Heroic Effort" level="2" costFuel="" costWill="" roll="Wits+Occult+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Loyal Possession" level="2" costFuel="1" costWill="" roll="Intelligence+Persuasion+Fate">
+						<power value="2">Fate</power>
+						<power value="2">Mind</power>
+					</trait>
+					<trait name="Perfect Moment" level="2" costFuel="" costWill="" roll="Wits+Occult+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Platonic Mechanism" level="2" costFuel="" costWill="" roll="Intelligence+Occult/Science+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Querulous Minds" level="2" costFuel="" costWill="" roll="Wits+Investigation+Fate">
+						<power value="2">Fate</power>
+						<power value="1">Prime</power>
+						<only>Guardians of the Veil</only>
+					</trait>
+					<trait name="Reveal Enigmas" level="2" costFuel="" costWill="" roll="Wits+Investigation+Fate">
+						<power value="2">Fate</power>
+						<power value="2">Mind</power>
+						<only>Mysterium</only>
+					</trait>
+					<trait name="Reverse Entropy" level="2" costFuel="" costWill="" roll="Intelligence+Occult+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Shifting the Odds" level="2" costFuel="1" costWill="" roll="Wits+Occult/Science+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Sniffing the Winds of Fate" level="2" costFuel="" costWill="" roll="Composure+Investigation+Death">
+						<power value="2">Fate</power>
+						<power value="2">Death</power>
+						<only>Guardians of the Veil</only>
+					</trait>
+					<trait name="Swearing an Oath" level="2" costFuel="" costWill="" roll="Presence+Persuasion+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Zone of Extremity" level="2" costFuel="" costWill="" roll="Presence+Occult+Fate">
+						<power value="2">Fate</power>
+					</trait>
+					<trait name="Alter Oath" level="3" costFuel="" costWill="" roll="Manipulation+Politics+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Bestow Exceptional Luck" level="3" costFuel="1" costWill="" roll="Manipulation+Persuasion+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Blessing" level="3" costFuel="" costWill="" roll="Manipulation+Subterfuge+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Bulwark of Fate" level="3" costFuel="(1)" costWill="" roll="Resolve+Occult+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Fabricate Fortune" level="3" costFuel="" costWill="" roll="Intelligence+Subterfuge+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Grant Fortune's Protection" level="3" costFuel="(1)" costWill="" roll="Presence+Persuasion+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Lucky Coin" level="3" costFuel="" costWill="" roll="Wits+Occult/Science+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Monkey's Paw" level="3" costFuel="" costWill="" roll="Wits+Occult/Science+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Occlude Destiny" level="3" costFuel="" costWill="" roll="Intelligence+Subterfuge+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Shared Fate" level="3" costFuel="1" costWill="" roll="Presence+Persuasion+Fate">
+						<power value="3">Fate</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Superlative Luck" level="3" costFuel="1" costWill="" roll="Resolve+Occult+Fate">
+						<power value="3">Fate</power>
+					</trait>
+					<trait name="Tangle the Threads" level="3" costFuel="" costWill="" roll="Wits+Occult+Fate">
+						<power value="3">Fate</power>
+						<power value="2">Mind</power>
+						<power value="2">Prime</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Technology Curse" level="3" costFuel="1" costWill="" roll="Wits+Science+Fate">
+						<power value="3">Fate</power>
+						<power value="2">Forces</power>
+						<only>Seers of the Throne</only>
+					</trait>
+					<trait name="" level="4" costFuel="" costWill="" roll="">
+						<power value="4">Fate</power>
+					</trait>
+					<trait name="" level="5" costFuel="" costWill="" roll="">
+						<power value="5">Fate</power>
 					</trait>
 				</Category>
 				<Category name="Forces">

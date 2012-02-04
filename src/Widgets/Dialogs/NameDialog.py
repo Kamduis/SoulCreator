@@ -22,12 +22,16 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import Signal
-from PySide.QtGui import QDialog
+import copy
 
-##from src.Config import Config
+from PySide.QtCore import Signal
+from PySide.QtGui import QDialog, QIcon, QListWidgetItem
+
+from src.Config import Config
+from src.Error import ErrListLength
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Datatypes.Identity import Identity
+from src.Debug import Debug
 
 from ui.ui_NameDialog import Ui_NameDialog
 
@@ -39,7 +43,15 @@ class NameDialog(QDialog):
 	@brief Dialog zur Auswahl der darzustellenden Merits.
 
 	Alle Merits darzustellen ist wohl etwas viel. Über diesen Dialog kann der Benutzer auswählen, welche und im Falle von Merits mit Zusatztext, wieviele er angezeigt haben möchte.
+
+	\note Für jeden Merit "New Identity steht dem Charkater von Anfang an eine falsche Identität zu. Er kann mehr haben, aber diese haben alle New Identity 0"
+
+	\todo Die Abhängigkeit vom New Identity-Merit fehlt.
 	"""
+
+
+	identityIndexChanged = Signal(int)
+
 
 	def __init__(self, character, parent=None):
 		QDialog.__init__(self, parent)
@@ -49,48 +61,145 @@ class NameDialog(QDialog):
 
 		self.__character = character
 
+		self.nameDict = {
+			"Human": "",
+			"Changeling": "AKA",
+			"Mage": "Shadow Name",
+			"Vampire": "AKA",
+			"Werewolf": "Deed Name",
+		}
+
+		## Die Identitäten werden nur kopiert. Überschrieben werden sie erst, wenn man den Dialog bestätigt.
+		## Unschöner Hack, da deepcopy zum Programmabsturz führt.
+		#realIdentity = copy.deepcopy(self.__character.realIdentity)
+		self.identityLcl = Identity()
+		self.identityLcl._name = copy.deepcopy(self.__character.identity._name)
+		self.identityLcl._gender = copy.deepcopy(self.__character.identity._gender)
+		#falseIdentities = copy.deepcopy(self.__character.falseIdentities)
+
+		for item in Config.genders[1:]:
+			self.ui.comboBox_gender.addItem( QIcon(item[1]), item[0] )
+
+		self.ui.lineEdit_firstName.textChanged.connect(self.updateForenames)
+		self.ui.lineEdit_additionalForenames.textChanged.connect(self.updateForenames)
+		self.ui.lineEdit_surname.textChanged.connect(self.updateSurname)
+		self.ui.lineEdit_honorificName.textChanged.connect(self.updateHonorificName)
+		self.ui.lineEdit_nickname.textChanged.connect(self.updateNickname)
+		self.ui.lineEdit_specialName.textChanged.connect(self.updateSpecialName)
+		self.ui.comboBox_gender.currentIndexChanged[str].connect(self.updateGender)
 		self.ui.lineEdit_firstName.textChanged.connect(self.showNames)
 		self.ui.lineEdit_additionalForenames.textChanged.connect(self.showNames)
-		self.ui.lineEdit_surename.textChanged.connect(self.showNames)
+		self.ui.lineEdit_surname.textChanged.connect(self.showNames)
 		self.ui.lineEdit_honorificName.textChanged.connect(self.showNames)
 		self.ui.lineEdit_nickname.textChanged.connect(self.showNames)
 		self.ui.lineEdit_specialName.textChanged.connect(self.showNames)
 		self.ui.buttonBox.accepted.connect(self.saveNames)
 		self.ui.buttonBox.rejected.connect(self.reject)
 
-		self.getNames()
+		#self.__character.speciesChanged.connect(self.renameSpecialNameLabel)
+		self.renameSpecialNameLabel(self.__character.species)
 
-	def getNames(self):
+		self.selectIdentity()
+
+
+	def selectIdentity(self):
 		"""
-		Liest die Namen des Charakters aus und zeigt sie gleich an.
-
-		Besteht ein Namen nur aus Whitespace, wird er nicht beachtet. Leer darf er allerdings sein.
-
-		\note Momentan wird nur die echte Identität berücksichtigt, also immer nur die Identität an INdexposition 0.
+		Eine andere Identität wird angezeigt.
 		"""
 
-		foreNames = " ".join(self.__character.identities[0].forenames[1:])
+		additionalForenames = ""
+		additionalForenames = " ".join(self.identityLcl.forenames[1:])
 
-		self.ui.lineEdit_firstName.setText( self.__character.identities[0].firstname )
-		self.ui.lineEdit_additionalForenames.setText( foreNames )
-		self.ui.lineEdit_surename.setText( self.__character.identities[0].surename )
-		self.ui.lineEdit_honorificName.setText( self.__character.identities[0].honorname )
-		self.ui.lineEdit_nickname.setText( self.__character.identities[0].nickname )
-		self.ui.lineEdit_specialName.setText( self.__character.identities[0].supername )
+		self.ui.lineEdit_firstName.setText( self.identityLcl.firstname )
+		self.ui.lineEdit_additionalForenames.setText( additionalForenames )
+		self.ui.lineEdit_surname.setText( self.identityLcl.surname )
+		self.ui.lineEdit_honorificName.setText( self.identityLcl.honorname )
+		self.ui.lineEdit_nickname.setText( self.identityLcl.nickname )
+		self.ui.lineEdit_specialName.setText( self.identityLcl.supername )
+		self.ui.comboBox_gender.setCurrentIndex(self.ui.comboBox_gender.findText(self.identityLcl.gender))
 
 		self.showNames()
+
+
+	def updateForenames(self):
+		"""
+		Aktualisiert die Vornamen in der gewählten Identität.
+		"""
+
+		if not (self.ui.lineEdit_additionalForenames.text() + self.ui.lineEdit_firstName.text()).isspace():
+			foreNames = self.ui.lineEdit_additionalForenames.text()
+			if foreNames:
+				foreNames = foreNames.split(" ")
+			else:
+				foreNames = []
+			foreNames.insert(0, self.ui.lineEdit_firstName.text())
+			self.identityLcl.forenames = foreNames
+		else:
+			self.identityLcl.forenames = [""]
+
+
+	def updateSurname(self):
+		"""
+		Aktualisiert den Nachnamen in der gewählten Identität.
+		"""
+
+		if not self.ui.lineEdit_surname.text().isspace():
+			self.identityLcl.surname = self.ui.lineEdit_surname.text()
+		else:
+			self.identityLcl.surname = ""
+
+
+	def updateHonorificName(self):
+		"""
+		Aktualisiert den Ehrennamen in der gewählten Identität.
+		"""
+
+		if not self.ui.lineEdit_honorificName.text().isspace():
+			self.identityLcl.honorname = self.ui.lineEdit_honorificName.text()
+		else:
+			self.identityLcl.honorname = ""
+
+
+	def updateNickname(self):
+		"""
+		Aktualisiert den Rufnamen in der gewählten Identität.
+		"""
+
+		if not self.ui.lineEdit_nickname.text().isspace():
+			self.identityLcl.nickname = self.ui.lineEdit_nickname.text()
+		else:
+			self.identityLcl.nickname = ""
+
+
+	def updateSpecialName(self):
+		"""
+		Aktualisiert den Besonderen Namen in der gewählten Identität.
+		"""
+
+		if not self.ui.lineEdit_specialName.text().isspace():
+			self.identityLcl.supername = self.ui.lineEdit_specialName.text()
+		else:
+			self.identityLcl.supername = ""
+
+
+	def updateGender(self, text):
+		"""
+		Aktualisiert das Geschlecht in der gewählten Identität.
+		"""
+
+		self.identityLcl.gender = text
 
 
 	def showNames(self):
 		"""
 		Zeigt den resultierenden Namen an. Einmal der Name, wie er später auf der Schaltfläche zu sehen sein wird, die diesen Dialog aufruft, einmal den vollständigen Namen mit allen Bestandteilen.
 		"""
-		
+
 		forenames = self.ui.lineEdit_additionalForenames.text().split( " " )
 		forenames.insert( 0, self.ui.lineEdit_firstName.text() )
 
-		self.ui.label_displayFull.setText( Identity.displayNameFull( self.ui.lineEdit_surename.text(), forenames ) )
-		self.ui.label_displayDisplay.setText( Identity.displayNameDisplay( self.ui.lineEdit_surename.text(), self.ui.lineEdit_firstName.text(), self.ui.lineEdit_nickname.text() ) )
+		self.ui.label_displayFull.setText( Identity.displayNameFull( self.ui.lineEdit_surname.text(), forenames ) )
+		self.ui.label_displayDisplay.setText( Identity.displayNameDisplay( self.ui.lineEdit_surname.text(), self.ui.lineEdit_firstName.text(), self.ui.lineEdit_nickname.text() ) )
 		self.ui.label_displayHonorific.setText( Identity.displayNameHonor( self.ui.lineEdit_firstName.text(), self.ui.lineEdit_honorificName.text() ) )
 		self.ui.label_displaySuper.setText( self.ui.lineEdit_specialName.text() )
 
@@ -98,39 +207,28 @@ class NameDialog(QDialog):
 	def saveNames(self):
 		"""
 		Speichert die eingegebenen Namen im Charakter-Speicher.
-
-		\note Derzeit wird nur /eine/, die echte Identität unterstüzt. Also wird immer nur die Identität an Indexposition 0 überschrieben.
-
-		Ein Textfeld, das nur aus Whitespace besteht, wird als leer betrachtet.
 		"""
 
-		if not (self.ui.lineEdit_additionalForenames.text() + self.ui.lineEdit_firstName.text()).isspace():
-			foreNames = self.ui.lineEdit_additionalForenames.text()
-			foreNames = foreNames.split(" ")
-			foreNames.insert(0, self.ui.lineEdit_firstName.text())
-			self.__character.identities[0].forenames = foreNames
-		else:
-			self.__character.identities[0].forenames = [""]
-
-		if not self.ui.lineEdit_surename.text().isspace():
-			self.__character.identities[0].surename = self.ui.lineEdit_surename.text()
-		else:
-			self.__character.identities[0].surename = ""
-
-		if not self.ui.lineEdit_honorificName.text().isspace():
-			self.__character.identities[0].honorname = self.ui.lineEdit_honorificName.text()
-		else:
-			self.__character.identities[0].honorname = ""
-
-		if not self.ui.lineEdit_nickname.text().isspace():
-			self.__character.identities[0].nickname = self.ui.lineEdit_nickname.text()
-		else:
-			self.__character.identities[0].nickname = ""
-
-		if not self.ui.lineEdit_specialName.text().isspace():
-			self.__character.identities[0].supername = self.ui.lineEdit_specialName.text()
-		else:
-			self.__character.identities[0].supername = ""
+		self.__character.identity.forenames = self.identityLcl.forenames
+		self.__character.identity.surname = self.identityLcl.surname
+		self.__character.identity.honorname = self.identityLcl.honorname
+		self.__character.identity.nickname = self.identityLcl.nickname
+		self.__character.identity.supername = self.identityLcl.supername
+		self.__character.identity.gender = self.identityLcl.gender
 
 		self.accept()
+
+
+	def renameSpecialNameLabel(self, species):
+		"""
+		Der Bezeichner für den Spezialnamen ist von Spezies zu Spezies unterschiedlich.
+		"""
+
+		if species == "Human":
+			self.ui.label_specialName.setVisible(False)
+			self.ui.lineEdit_specialName.setVisible(False)
+		else:
+			self.ui.label_specialName.setVisible(True)
+			self.ui.lineEdit_specialName.setVisible(True)
+			self.ui.label_specialName.setText("{}:".format(self.nameDict[species]))
 

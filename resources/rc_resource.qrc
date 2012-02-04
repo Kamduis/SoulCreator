@@ -7,8 +7,9 @@
     <file>images/Skull-Mage.png</file>
     <file>images/Skull-Vampire.png</file>
     <file>images/Skull-Werewolf.png</file>
-    <file>images/female.png</file>
-    <file>images/male.png</file>
+    <file>images/svg/symbolFemale.svg</file>
+    <file>images/svg/symbolMale.svg</file>
+    <file>images/svg/symbolHermaphrodite.svg</file>
     <file>images/actions/1leftarrow.png</file>
     <file>images/actions/1rightarrow.png</file>
     <file>images/actions/filesave.png</file>
@@ -57,14 +58,20 @@
     <file>images/sheet/Werewolf-Shapes.jpg</file>
   </qresource>
   <qresource prefix="types">
+    <file>images/svg/humans.svg</file>
+    <file>images/svg/maleprofile.svg</file>
+    <file>images/svg/high_jump.svg</file>
     <file>images/svg/karate.svg</file>
     <file>images/svg/knife.svg</file>
-    <file>images/svg/tail.svg</file>
+    <file>images/svg/evolution.svg</file>
     <file>images/svg/bolt.svg</file>
-    <file>images/svg/high_jump.svg</file>
-    <file>images/svg/maleprofile.svg</file>
-    <file>images/svg/humans.svg</file>
+    <file>images/svg/tail.svg</file>
     <file>images/svg/flail.svg</file>
+    <file>images/svg/oldwitch.svg</file>
+    <file>images/svg/fairy.svg</file>
+    <file>images/svg/pentagram.svg</file>
+    <file>images/svg/teeth.svg</file>
+    <file>images/svg/wolfhead.svg</file>
   </qresource>
   <qresource prefix="items">
     <file>images/svg/machete.svg</file>
@@ -81,11 +88,8 @@
     <file>xml/werewolf.xml</file>
   </qresource>
   <qresource prefix="characterSheets">
-    <file>images/Charactersheet-Changeling-1.jpg</file>
     <file>images/Charactersheet-Changeling-2.jpg</file>
-    <file>images/Charactersheet-Mage-1.jpg</file>
     <file>images/Charactersheet-Mage-2.jpg</file>
-    <file>images/Charactersheet-Vampire-1.jpg</file>
     <file>images/Charactersheet-Vampire-2.jpg</file>
     <file>images/Charactersheet-Werewolf-2.jpg</file>
   </qresource>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SoulCreator version="0.9">
+<SoulCreator version="0.10">
 	<Template species="Changeling">
 		<Creation>
 			<Type name="Attribute">
@@ -22,12 +22,72 @@
 		</Creation>
 		<Group>
 			<Breed name="Seeming">
-				<item name="Beast"/>
-				<item name="Darkling"/>
-				<item name="Elemental"/>
-				<item name="Fairest"/>
-				<item name="Oger"/>
-				<item name="Wizened"/>
+				<item name="Beast">
+					<kith name="Broadback">
+						<ability>???</ability>
+					</kith>
+					<kith name="Runnerswift">
+						<ability>???</ability>
+					</kith>
+					<kith name="Swimmerskin">
+						<ability>???</ability>
+					</kith>
+					<weakness>???</weakness>
+					<blessing>???</blessing>
+				</item>
+				<item name="Darkling">
+					<kith name="Mirrorskin">
+						<ability>???</ability>
+					</kith>
+					<kith name="Leechfinger">
+						<ability>???</ability>
+					</kith>
+					<weakness>Subtract 1 die whenver activating a contract during the day.</weakness>
+					<blessing>???</blessing>
+				</item>
+				<item name="Elemental">
+					<kith name="Fireheart">
+						<ability>???</ability>
+					</kith>
+					<kith name="Waterborn">
+						<ability>???</ability>
+					</kith>
+					<kith name="Earthbone">
+						<ability>???</ability>
+					</kith>
+					<weakness>???</weakness>
+					<blessing>???</blessing>
+				</item>
+				<item name="Fairest">
+					<kith name="Dancer">
+						<ability>???</ability>
+					</kith>
+					<kith name="Treasured">
+						<ability>???</ability>
+					</kith>
+					<weakness>Subtract 1 die whenver activating a contract during the day.</weakness>
+					<blessing>???</blessing>
+				</item>
+				<item name="Oger">
+					<kith name="Waterdweller">
+						<ability>???</ability>
+					</kith>
+					<kith name="Gristlegrinder">
+						<ability>???</ability>
+					</kith>
+					<weakness>Do not reroll 10s and subtract 1s when rolling on Intelligence or Resolve. Except for Resolve+Composure rolls.</weakness>
+					<blessing>???</blessing>
+				</item>
+				<item name="Wizened">
+					<kith name="Brewer">
+						<ability>???</ability>
+					</kith>
+					<kith name="Smith">
+						<ability>???</ability>
+					</kith>
+					<weakness>???</weakness>
+					<blessing>???</blessing>
+				</item>
 			</Breed>
 			<Faction name="Court">
 				<item name="Courtless"/>
@@ -107,10 +167,10 @@
 					<trait name="Arcadian Metabolism" source="Changeling Rites of Spring">
 						<value>4</value>
 					</trait>
-					<!--<trait name="Broken Mirror" custom="true" source="Changeling Core">
+					<trait name="Broken Mirror" source="Changeling Core">
 						<value>1</value>
-						<prerequisites>Killing one's fetch</prerequisites>
-					</trait>-->
+<!-- 						<prerequisites>Killing one's fetch</prerequisites> -->
+					</trait>
 					<trait name="Brownie's Boon" source="Changeling Rites of Spring">
 						<value>1</value>
 					</trait>

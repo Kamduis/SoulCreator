@@ -61,13 +61,26 @@ class StorageTemplate(QObject):
 	__species = {}
 
 	# Eine Liste sämtlicher verfügbaren Gruppierungsnamen der einzelnen Spezies.
+	# Changelings haben für jede Brut noch eine Subliste: die Kiths.
 	#
 	# {
 	# 	Spezies1: {
-	# 		Breed: [Name, [Bla, Blub, ...]],
-	# 		Faction: [Name, [Bla, Blub, ...]],
-	# 		Organisation: [Name [Bla, Blub, ...]],
-	# 		Party: [Name [Bla, Blub, ...]],
+	# 		Breed: [
+	# 			Name, {
+	# 				Bla: {
+	# 					"weakness": text,
+	# 					"blessing": text,
+	# 				},
+	# 				Blub: {
+	# 					"weakness": text,
+	# 					"blessing": text,
+	# 				}
+	# 				...
+	# 			}
+	# 		],
+	# 		Faction: [Name, {Bla: {}, Blub: {}, ...}],
+	# 		Organisation: [Name, {Bla: {}, Blub: {}, ...}],
+	# 		Party: [Name, {Bla: {}, Blub: {}, ...}],
 	# 	},
 	# 	...
 	# }
@@ -75,7 +88,17 @@ class StorageTemplate(QObject):
 	# Am Beispiel der Vampire:
 	# {
 	# 	Vampire: {
-	# 		Breed: [Clan, [Daeva, Gangrel, Mekhet, Nosferatu, Ventrue]],
+	# 		Breed: [
+	# 			Clan, {
+	# 				"Daeva": {
+	# 					"weakness": blablubb,
+	# 				}
+	# 				"Gangrel": {
+	# 					"weakness": blablubb,
+	# 				},
+	# 				...
+	# 			}
+	# 		],
 	# 		Faction: [Covenant, [Cartian Movement, Circle of the Crone, Invictus, Lancea Sancta, Ordo Dracul]],
 	# 		Organisation: [Bloodline, [Toreador, Brujah, ...]],
 	# 		Party: [Coterie],
@@ -83,6 +106,22 @@ class StorageTemplate(QObject):
 	# 	...
 	# }
 	__speciesGroupNames = {}
+
+	# Changelings haben für jede Brut noch eine Subliste: die Kiths.
+	#
+	# {
+	# 	Brut1: {
+	# 		Kith1: {
+	# 			"ability": blablubb,
+	# 		},
+	# 		Kith2: {
+	# 			"ability": blablubb,
+	# 		},
+	# 		...
+	# 	},
+	# 	...
+	# }
+	__kiths = {}
 
 
 	# Die Bezeichner der Kräfte.
@@ -132,22 +171,6 @@ class StorageTemplate(QObject):
 	# 	...
 	# }
 	__traits = {}
-
-	# Eine Liste der Unterkräfte.
-	#
-	# {
-	# 	Kategorie1: {
-	# 		Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-	# 		Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
-	# 		...
-	# 	},
-	# 	Kategorie2: {
-	# 		Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-	# 		...
-	# 	},
-	# 	...
-	# }
-	__subPowers = {}
 
 	## Eine Liste aller Tugenden.
 	#
@@ -447,6 +470,7 @@ class StorageTemplate(QObject):
 		elif (typ != "Subpower"):
 			specialties = self.__traits[typ][category][identifier]["specialty"]
 			specialties.extend(data["specialty"])
+			specialties.sort()
 			self.__traits[typ][category][identifier] = data
 			self.__traits[typ][category][identifier]["specialty"] = specialties
 
@@ -484,39 +508,6 @@ class StorageTemplate(QObject):
 			self.__powerNames.setdefault(species,{})
 
 		self.__powerNames[species]["Subpower"] = name
-
-
-	#@property
-	#def subPowers(self):
-		#"""Eine Liste der Unterkräfte.
-		
-		#{
-			#Kategorie1: {
-				#Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-				#Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
-				#...
-			#},
-			#Kategorie2: {
-				#Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-				#...
-			#},
-			#...
-		#}
-		#"""
-
-		#return self.__subPowers
-
-	#def addSubPower(self, category, identifier, data):
-		#"""
-		#Fügt eine Unterkraft zur Liste hinzu.
-		#"""
-
-		##Debug.debug(category, identifier, data)
-
-		#if category not in self.__subPowers:
-			#self.__subPowers.setdefault(category,{})
-
-		#self.__subPowers[category][identifier] = data
 
 
 	def appendSpecies( self, species, speciesData ):
@@ -569,15 +560,63 @@ class StorageTemplate(QObject):
 
 
 	def breeds(self, species):
-		return self.__speciesGroupNames[species]["Breed"][1]
+		return self.__speciesGroupNames[species]["Breed"][1].keys()
 
 
 	def breedTitle(self, species):
 		return self.__speciesGroupNames[species]["Breed"][0]
 
 
+	def breedBlessing(self, species, breed):
+		return self.__speciesGroupNames[species]["Breed"][1][breed]["blessing"]
+
+
+	def breedCurse(self, species, breed):
+		return self.__speciesGroupNames[species]["Breed"][1][breed]["weakness"]
+
+
+	def kiths(self, seeming):
+		"""
+		Gibt eine Liste aller möglichen Kiths für das angegebene Seeming zurück.
+
+		\note Nur für Changelings von Bedeutung.
+		"""
+
+		result = self.__kiths[seeming].keys()
+		result.sort()
+		return result
+
+
+	def kithAbility(self, seeming, kith):
+		"""
+		Kibt die Kith Ability des speziellen Kiths zurück.
+
+		\note Nur für Changelings von Bedeutung.
+		"""
+
+		return self.__kiths[seeming][kith]["ability"]
+
+
+	def addKith(self, seeming, kith, kithAbility=None):
+		"""
+		Fügt dem Seeming seeming ein zusätlzichen Kith hinzu.
+
+		\param kith Kann entweder ein String oder eine Liste von Strings sein.
+		"""
+
+		if seeming not in self.__kiths:
+			self.__kiths.setdefault(seeming, {})
+
+		if kithAbility:
+			self.__kiths[seeming][kith] = { "ability": kithAbility, }
+		else:
+			self.__kiths[seeming][kith] = {}
+
+		#Debug.debug(self.__kiths)
+
+
 	def factions(self, species):
-		return self.__speciesGroupNames[species]["Faction"][1]
+		return self.__speciesGroupNames[species]["Faction"][1].keys()
 
 
 	def factionTitle(self, species):
@@ -585,11 +624,15 @@ class StorageTemplate(QObject):
 
 
 	def organisations(self, species):
-		return self.__speciesGroupNames[species]["Organisation"][1]
+		return self.__speciesGroupNames[species]["Organisation"][1].keys()
 
 
 	def organisationTitle(self, species):
 		return self.__speciesGroupNames[species]["Organisation"][0]
+
+
+	def organisationCurse(self, species, organisation):
+		return self.__speciesGroupNames[species]["Organisation"][1][organisation]["weakness"]
 
 
 	def partyTitle(self, species):
@@ -731,7 +774,7 @@ class StorageTemplate(QObject):
 		#print(self.__bonusTraits)
 
 
-	def appendTitle( self, species, typ, group,  names=None):
+	def appendTitle( self, species, typ, group, names=None, infos=None):
 		"""
 		Fügt die Gruppierungsnamen der entsprechenden Spezies hinzu.
 		"""
@@ -748,15 +791,22 @@ class StorageTemplate(QObject):
 
 		if group not in self.__speciesGroupNames[species][typ]:
 			self.__speciesGroupNames[species][typ].append(group)
-			self.__speciesGroupNames[species][typ].append([])
+			self.__speciesGroupNames[species][typ].append({})
 		#else:
 			#Debug.debug("Gruppe schon vorhanden.")
 
 		if names != None:
 			if type(names) == list:
-				self.__speciesGroupNames[species][typ].append(names)
+				for name in names:
+					if infos:
+						self.__speciesGroupNames[species][typ].setdefault(name, infos)
+					else:
+						self.__speciesGroupNames[species][typ].setdefault(name, {})
 			else:
-				self.__speciesGroupNames[species][typ][1].append(names)
+				if infos:
+					self.__speciesGroupNames[species][typ][1].setdefault(names, infos)
+				else:
+					self.__speciesGroupNames[species][typ][1].setdefault(names, {})
 
 		#Debug.debug(self.__speciesGroupNames)
 

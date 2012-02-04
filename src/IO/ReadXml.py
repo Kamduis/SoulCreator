@@ -63,6 +63,17 @@ class ReadXml(object):
 		pass
 
 
+	def getElementAttribute(self, element, attribute):
+		"""
+		Gibt den Wert des Attributs aus oder, sollte es nicht esxistieren, einen leeren String.
+		"""
+
+		if attribute in element.attrib:
+			return element.attrib[attribute]
+		else:
+			return ""
+
+
 	def checkXmlVersion(self, name, version ):
 		"""
 		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.

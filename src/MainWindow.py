@@ -43,14 +43,16 @@ from Calc.Creation import Creation
 from Calc.ConnectPrerequisites import ConnectPrerequisites
 from Widgets.InfoWidget import InfoWidget
 from Widgets.TraitWidget import AttributeWidget, SkillWidget
+from Widgets.TemplateWidget import TemplateWidget
 from Widgets.PowerWidget import PowerWidget
 from Widgets.SubPowerWidget import SubPowerWidget
-from Widgets.Specialties import Specialties
+from Widgets.SpecialtiesWidget import SpecialtiesWidget
 from Widgets.MeritWidget import MeritWidget
 from Widgets.FlawWidget import FlawWidget
 from Widgets.MoralityWidget import MoralityWidget
 from Widgets.AdvantagesWidget import AdvantagesWidget
 from Widgets.ItemWidget import ItemWidget
+from Widgets.SpecialsWidget import SpecialsWidget
 from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
 from Draw.DrawSheet import DrawSheet
@@ -69,21 +71,31 @@ class MainWindow(QMainWindow):
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 
-	\todo Bei den Werwölfen müssen die Kräfte, welche je nach Vorzeichen nicht erlaubt sind, ausgegraut werden.
-
-	\todo Sonderkräfte der Spezies fehlen. Bei Werwölfen müssen z.B. noch die Gaben/Riten berücksichtigt werden.
-
 	\todo Speicherdateien komprimieren.
 
 	\todo Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.
 
 	\todo Kosten von Gegenständen berücksichtigen.
 
-	\todo Benutzer sollen ihre eigenen Spezialisierungen, Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
+	\todo Benutzer sollen ihre eigenen Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
 
 	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
 
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
+
+	\todo Erschaffungspunkte durch einen Wizard ersetzen.
+
+	\todo Merits sollten sich der Alterskategorie anpassen.
+
+	\todo Items sollten sich der Alterskategorie anpassen.
+
+	\todo "Leere" Felder auf dem Charakterbogen mit Leerzeilen zum händischen Ausfüllen versehen.
+
+	\todo Changeling: Ich vermisse beim Aussehen die Unterscheidung zwischen Mask und Mien
+
+	\todo Attribute der Werewolf-Gestalten anzeigen
+
+	\todo Körpergröße läßt beim Laden möglicherweise  dazu auffordern, daß man den Giant-Merit bzw. Dwarf Flaw benötige, obwohl selbiger Merit/Flaw im Charakter bereits gespeichert wurde.
 	"""
 
 
@@ -121,6 +133,7 @@ class MainWindow(QMainWindow):
 		self.ui.selectWidget_select.currentRowChanged.connect(self.ui.stackedWidget_traits.setCurrentIndex)
 		self.ui.selectWidget_select.currentRowChanged.connect(self.setTabButtonState)
 		#self.ui.selectWidget_select.currentRowChanged.connect(self.pageChanged.emit)
+		self.__character.speciesChanged.connect(self.ui.selectWidget_select.changeIcons)
 
 		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
 
@@ -201,7 +214,8 @@ class MainWindow(QMainWindow):
 		skills = SkillWidget( self.__storage, self.__character, self )
 		self.ui.layout_skills.addWidget( skills )
 
-		specialties = Specialties( self.__storage.traits["Skill"], self )
+		#specialties = Specialties( self.__storage.traits["Skill"], self )
+		specialties = SpecialtiesWidget( self.__storage.traits["Skill"], self )
 		self.ui.layout_specialties.addWidget( specialties )
 
 		merits = MeritWidget( self.__storage, self.__character, self )
@@ -209,6 +223,9 @@ class MainWindow(QMainWindow):
 
 		morality = MoralityWidget( self.__storage, self.__character, self )
 		self.ui.layout_morality.addWidget( morality )
+
+		self.template = TemplateWidget(self.__storage, self.__character, self)
+		self.ui.layout_template.addWidget( self.template )
 
 		if "Power" in self.__storage.traits.keys():
 			powers = PowerWidget( self.__storage, self.__character, self )
@@ -226,6 +243,9 @@ class MainWindow(QMainWindow):
 		items = ItemWidget( self.__storage, self.__character, self )
 		self.ui.layout_items.addWidget( items )
 
+		speciesSpecials = SpecialsWidget(self.__storage, self.__character, self)
+		self.ui.layout_specials.addWidget( speciesSpecials )
+
 		## Wenn sich der Name im InfoWidget ändert, soll sich auch die Titelzeile des Programms ändern
 		self.info.nameChanged.connect(self.setTitle)
 
@@ -236,7 +256,7 @@ class MainWindow(QMainWindow):
 		skills.specialtiesActivated.connect(specialties.showSpecialties)
 
 		# Menschen haben keine übernatürlichen Kräfte, also zeige ich sie auch nicht an.
-		self.__character.speciesChanged.connect(self.disablePowerItem)
+		self.__character.speciesChanged.connect(self.ui.selectWidget_select.disableItems)
 
 		# Hintergrundbild ändert sich je nach Spezies
 		self.__character.speciesChanged.connect(self.showBackround)
@@ -280,6 +300,8 @@ class MainWindow(QMainWindow):
 		calc.healthChanged.connect(self.__advantages.setHealth)
 		calc.willpowerChanged.connect(self.__advantages.setWillpower)
 
+		self.info.notificationSent.connect(self.showStatusBarMessage)
+
 		self.__creation = Creation( self.__storage, self.__character, self )
 		for typ in self.__creation.creationPoints[Config.initialSpecies]:
 			for category in self.__storage.categories(typ):
@@ -301,8 +323,8 @@ class MainWindow(QMainWindow):
 
 		# Wir wollen zu Beginn immer die Informationen sehen.
 		self.ui.selectWidget_select.setCurrentRow(0)
-		# Am Anfang stehen Menschen, aber das speciesChanged-Signal wurde nicht gesendet.
-		self.disablePowerItem(Config.initialSpecies)
+		## Am Anfang stehen Menschen, aber das speciesChanged-Signal wurde nicht gesendet.
+		#self.ui.selectWidget_select.disableItems(Config.initialSpecies)
 
 
 	def showSettingsDialog(self):
@@ -365,26 +387,28 @@ class MainWindow(QMainWindow):
 
 		self.ui.label_pointsLeft.setHidden( True )
 
-		pagesWithPoints = [1, 2, 3, 5]
+		typ = None
 
-		if self.ui.stackedWidget_traits.currentIndex() in pagesWithPoints:
+		if ( self.ui.selectWidget_select.currentPage() == "Attributes" ):
+			typ = "Attribute"
+		elif ( self.ui.selectWidget_select.currentPage() == "Skills" ):
+			typ = "Skill"
+		elif ( self.ui.selectWidget_select.currentPage() == "Merits" ):
+			typ = "Merit"
+		elif ( self.ui.selectWidget_select.currentPage() == "Powers" ):
+			typ = "Power"
+
+		if typ:
 			self.ui.label_pointsLeft.setHidden( False )
-
-			if ( self.ui.stackedWidget_traits.currentIndex() == 1 ):
-				typ = "Attribute"
-			elif ( self.ui.stackedWidget_traits.currentIndex() == 2 ):
-				typ = "Skill"
-			elif ( self.ui.stackedWidget_traits.currentIndex() == 3 ):
-				typ = "Merit"
-			elif ( self.ui.stackedWidget_traits.currentIndex() == 5 ):
-				typ = "Power"
-
+			textList = [unicode(item) for item in self.__creation.creationPointsAvailable[self.__character.species][typ]]
 			text = "Creation Points: "
-			if typ != None:
-				textList = [unicode(item) for item in self.__creation.creationPointsAvailable[self.__character.species][typ]]
+			if typ == "Skill":
+				text += "/".join(textList[1:])
+				text += " Specialties: {}".format(textList[0])
+			else:
 				text += "/".join(textList)
-				if any(x < 0 for x in self.__creation.creationPointsAvailable[self.__character.species][typ]):
-					text = "<span style='color:{color}'>{text}</span>".format(color=Config.pointsNegativeColor, text=text)
+			if any(x < 0 for x in self.__creation.creationPointsAvailable[self.__character.species][typ]):
+				text = "<span style='color:{color}'>{text}</span>".format(color=Config.pointsNegativeColor, text=text)
 			self.ui.label_pointsLeft.setText( text )
 
 
@@ -396,13 +420,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.resetItemColor( 1 )
+			self.ui.selectWidget_select.resetItemColor( "Attributes" )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.resetItemColor( 2 )
+			self.ui.selectWidget_select.resetItemColor( "Skills" )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.resetItemColor( 3 )
+			self.ui.selectWidget_select.resetItemColor( "Merits" )
 		elif typ == "Power":
-			self.ui.selectWidget_select.resetItemColor( 5 )
+			self.ui.selectWidget_select.resetItemColor( "Powers" )
 
 
 	def warnCreationPointsPositive( self, typ ):
@@ -413,13 +437,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.setItemColor( 1, QColor(Config.pointsPositiveColor))
+			self.ui.selectWidget_select.setItemColor( "Attributes", QColor(Config.pointsPositiveColor))
 		elif typ == "Skill":
-			self.ui.selectWidget_select.setItemColor( 2, QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Skills", QColor(Config.pointsPositiveColor) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.setItemColor( 3, QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Merits", QColor(Config.pointsPositiveColor) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.setItemColor( 5, QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Powers", QColor(Config.pointsPositiveColor) )
 
 
 	def warnCreationPointsNegative( self, typ ):
@@ -430,13 +454,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.setItemColor( 1, QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Attributes", QColor(Config.pointsNegativeColor) )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.setItemColor( 2, QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Skills", QColor(Config.pointsNegativeColor) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.setItemColor( 3, QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Merits", QColor(Config.pointsNegativeColor) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.setItemColor( 5, QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Powers", QColor(Config.pointsNegativeColor) )
 
 
 	def aboutApp(self):
@@ -483,10 +507,7 @@ class MainWindow(QMainWindow):
 
 		# Warnen, wenn der vorherige Charakter noch nicht gespeichert wurde!
 		if ( self.maybeSave() ):
-			self.__character.resetCharacter()
-
-			# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
-			self.__character.setModified( False )
+			self.reset()
 
 
 	def openCharacter(self, fileName=None):
@@ -567,17 +588,6 @@ class MainWindow(QMainWindow):
 
 			# Unmittelbar nach dem Speichern ist der Charkter natürlich nicht mehr 'geändert'.
 			self.__character.setModified( False )
-
-
-	def disablePowerItem( self, species ):
-		"""
-		Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen. Dadurch bleibt mehr Platz für die Merits.
-		"""
-
-		if species == "Human":
-			self.ui.selectWidget_select.setItemEnabled(5, False)
-		else:
-			self.ui.selectWidget_select.setItemEnabled(5, True)
 
 
 	def exportCharacter(self):
@@ -707,6 +717,16 @@ class MainWindow(QMainWindow):
 				return False
 
 		return True
+
+
+	def showStatusBarMessage( self, message, timeout=Config.displayTimeout ):
+		"""
+		Zeigt eien Nachricht auf der Statusleiste an.
+		"""
+
+		#if timeout is None:
+			#timeout = Config.displayTimeout
+		self.statusBar().showMessage(message, timeout)
 
 
 	def showExceptionMessage( self, message, critical=True ):

@@ -225,7 +225,7 @@ class TraitDots(QWidget):
 #}
 
 
-	def value(self):
+	def __getValue(self):
 		return self.__value
 
 	def setValue( self, value ):
@@ -264,6 +264,8 @@ class TraitDots(QWidget):
 				self.update()
 
 			# Signal aussenden
+
+	value = property(__getValue, setValue)
 
 
 	def minimum(self):

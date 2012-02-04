@@ -30,6 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 #from src.Config import Config
 #from src import Error
 from src.Datatypes.StandardTrait import StandardTrait
+#from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Widgets.Components.TraitLine import CharaTrait
 from src.Widgets.Components.CheckTrait import CheckTrait
 from src.Debug import Debug
@@ -65,6 +66,9 @@ class CategoryWidget(QWidget):
 		categories = self.__storage.categories(self._typ)
 
 		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
+		# {
+		# 	Index: [Widget, Eigenschaft1, Eigenschaft2, ...]
+		# }
 		self._toolBoxPageList = {}
 
 		for item in categories:
@@ -103,11 +107,13 @@ class CategoryWidget(QWidget):
 			layoutCategory.addStretch()
 		#Debug.debug(self._toolBoxPageList)
 		self.__character.speciesChanged.connect(self.hideOrShowToolPage)
+		self.__character.breedChanged.connect(self.hideOrShowToolPage)
+		self.__character.factionChanged.connect(self.hideOrShowToolPage)
 
 
-	def hideOrShowToolPage(self, species):
+	def hideOrShowToolPage(self, res):
 		"""
-		Verbirgt eine Seite der ToolBox, wenn alle darin enthaltenen Widgets versteckt sind. Ansonsten wird sie dargestellt.
+		Verbirgt eine Seite der ToolBox, wenn alle darin enthaltenen Widgets versteckt sind oder diese Kategorie für die ausgewählte Brut/Fraktion nicht zur Verfügung steht. Ansonsten wird sie dargestellt.
 		"""
 
 		# Damit die Kategorien auch nach dem Entfernen und Hinzufügen von Eigenschaften alphapetisch sortiert bleiben.
@@ -117,15 +123,19 @@ class CategoryWidget(QWidget):
 		for item in keys:
 			available = False
 			for subitem in self._toolBoxPageList[item][1:]:
-				if (not subitem.species or subitem.species == species):
+				## Alles ausblenden, was nicht zur Spezies paßt.
+				#if (not subitem.species or subitem.species == self.__character.species):
+				if (not subitem.species or subitem.species == self.__character.species) and (not subitem.only or self.__character.breed in subitem.only or self.__character.faction in subitem.only):
 					available = True
 					break
 			if available:
-				self._toolBox.addItem(self._toolBoxPageList[item][0], item)
-				self._toolBoxPageList[item][0].setVisible(True)
+				# Nicht hinzufügen, was schon in der Liste steht.
+				if self._toolBox.indexOf(self._toolBoxPageList[item][0]) < 0:
+					self._toolBox.addItem(self._toolBoxPageList[item][0], item)
+					self._toolBoxPageList[item][0].setVisible(True)
 			else:
 				indexOfWidget = self._toolBox.indexOf(self._toolBoxPageList[item][0])
-				if indexOfWidget != -1:
+				if indexOfWidget >= 0:
 					self._toolBox.removeItem(indexOfWidget)
 				self._toolBoxPageList[item][0].setVisible(False)
 

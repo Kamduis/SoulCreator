@@ -29,9 +29,11 @@ from PySide.QtCore import QObject, QDate, Signal, Slot
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
+from src.Datatypes.AbstractTrait import AbstractTrait
 from src.Datatypes.StandardTrait import StandardTrait
 from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
+from src.Calc.Calc import Calc
 from src.Calc.ConnectPrerequisites import ConnectPrerequisites
 from src.Error import ErrListLength
 from src.Debug import Debug
@@ -57,6 +59,7 @@ class StorageCharacter(QObject):
 	virtueChanged = Signal(str)
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
+	kithChanged = Signal(str)
 	factionChanged = Signal(str)
 	organisationChanged = Signal(str)
 	partyChanged = Signal(str)
@@ -68,6 +71,7 @@ class StorageCharacter(QObject):
 	#traitsChanged = Signal(object)
 	ageChanged = Signal(int)
 	ageBecomingChanged = Signal(int)
+	#ageCategoryChanged = Signal(str, int, int)	# (<Child|Adult>, <neues Alter>, <altes Alter>)
 	heightChanged = Signal(float)
 	weightChanged = Signal(float)
 	eyesChanged = Signal(str)
@@ -80,6 +84,7 @@ class StorageCharacter(QObject):
 	armorChanged = Signal(str, bool)
 	equipmentChanged = Signal(object)
 	magicalToolChanged = Signal(str)
+	nimbusChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -131,6 +136,7 @@ class StorageCharacter(QObject):
 		self.__virtue = ""
 		self.__vice = ""
 		self.__breed = ""
+		self.__kith = ""
 		self.__faction = ""
 		self.__organisation = ""
 		self.__party = ""
@@ -151,10 +157,17 @@ class StorageCharacter(QObject):
 		self.__equipment = []
 		self.__magicalTool = ""
 
-		self.__identity = Identity()
-		self.__identities = [self.__identity]
+		self.identity = Identity()
 
 		self.__derangements = {}
+
+		self.__nimbus = ""
+
+		self.__vinculi = []
+		for i in xrange(Config.vinculiCount):
+			vinculum = AbstractTrait()
+			self.__vinculi.append(vinculum)
+			vinculum.traitChanged.connect(self.setModified)
 
 		self.dateBirthChanged.connect(self.__calcAge)
 		self.dateGameChanged.connect(self.__calcAge)
@@ -195,6 +208,10 @@ class StorageCharacter(QObject):
 							trait.customText = customText
 						trait.identifier = subitem[0]
 						trait.species = subitem[1]["species"]
+						trait.cheap = subitem[1]["cheap"]
+						#if typ == "Subpower" and trait.species == "Werewolf":
+							#Debug.debug(subitem[1]["name"], subitem[1]["only"])
+						trait.only = subitem[1]["only"]
 						if "prerequisites" in subitem[1] and subitem[1]["prerequisites"]:
 							trait.hasPrerequisites = True
 							trait.prerequisitesText = subitem[1]["prerequisites"]
@@ -213,7 +230,7 @@ class StorageCharacter(QObject):
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
-		self.__identity.identityChanged.connect(self.setModified)
+		self.identity.identityChanged.connect(self.setModified)
 		self.eraChanged.connect(self.setModified)
 		self.dateBirthChanged.connect(self.setModified)
 		self.dateBecomingChanged.connect(self.setModified)
@@ -235,6 +252,7 @@ class StorageCharacter(QObject):
 		self.armorChanged.connect(self.setModified)
 		self.equipmentChanged.connect(self.setModified)
 		self.magicalToolChanged.connect(self.setModified)
+		self.nimbusChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -264,6 +282,7 @@ class StorageCharacter(QObject):
 		Geburtsdatum des Charakters.
 		"""
 
+		#Debug.debug(self.__dateBirth)
 		return self.__dateBirth
 
 	def setDateBirth( self, date ):
@@ -390,15 +409,6 @@ class StorageCharacter(QObject):
 
 
 	@property
-	def identities(self):
-		"""
-		Eine Liste aller Identitäten des Charkaters. Die Identität an Indexposition 0 ist die echte Identität.
-		"""
-
-		return self.__identities
-
-
-	@property
 	def picture(self):
 		"""
 		Charakterbild.
@@ -498,34 +508,30 @@ class StorageCharacter(QObject):
 	magicalTool = property(__getMagicalTool, setMagicalTool)
 
 
+	def __getNimbus(self):
+		"""
+		Der Nimbus eines Magiers.
+		"""
 
-	#def insertIdentity( self, index, identity ):
-		#"""
-		#Fügt eine neue Identität an der angegebenen Stelle ein.
-		#"""
+		return self.__nimbus
 
-		#self.__identities.insert( index, identity )
-		#self.identityChanged.emit( identity )
+	def setNimbus(self, nimbus):
 
-	#def addIdentity( self, identity ):
-		#"""
-		#Hängt eine neue Identität an die Liste aller Identitäten des Charkaters an.
-		#"""
+		if self.__nimbus != nimbus:
+			self.__nimbus = nimbus
+			self.nimbusChanged.emit(nimbus)
 
-		#self.__identities.append( identity )
-		#self.identityChanged.emit( identity )
+	nimbus = property(__getNimbus, setNimbus)
 
-	#def setRealIdentity( self, identity ):
-		#"""
-		#Legt die \emph{echte} Identität des Charakters fest. Diese Identität hat immer Index 0 in der \ref self.__identities -Liste
 
-		#\todo Momentan ist dies die einzige identität, die von diesem Programm genutzt wird.
-		#"""
+	def __getVinculi(self):
+		"""
+		Die Vinculi eines Vampirs
+		"""
 
-		#if self.__identities[0] != identity:
-			#self.__identities[0] = identity
-			#self.identityChanged.emit( identity )
-			#self.realIdentityChanged.emit( identity )
+		return self.__vinculi
+
+	vinculi = property(__getVinculi)
 
 
 	@property
@@ -548,9 +554,7 @@ class StorageCharacter(QObject):
 		Zur Berechnung des Alters werden Geburtstag und Datum im Spiel herangezogen.
 		"""
 
-		age = self.dateGame.year() - self.dateBirth.year()
-		if self.dateGame.month() < self.dateBirth.month() or (self.dateGame.month() == self.dateBirth.month() and self.dateGame.day() < self.dateBirth.day()):
-			age -= 1
+		age = Calc.years(self.dateBirth, self.dateGame)
 
 		if self.__age != age:
 			self.__age = age
@@ -562,9 +566,7 @@ class StorageCharacter(QObject):
 		Zur Berechnung des Alters zum Zeitpunkt der Veränderung (Erwachen, Kuß, erste Verwandlung etc.) werden Geburtsdatum und Datum der Veränderung genutzt.
 		"""
 
-		age = self.dateBecoming.year() - self.dateBirth.year()
-		if self.dateBecoming.month() < self.dateBirth.month() or (self.dateBecoming.month() == self.dateBirth.month() and self.dateBecoming.day() < self.dateBirth.day()):
-			age -= 1
+		age = Calc.years(self.dateBirth, self.dateBecoming)
 
 		if self.__ageBecoming != age:
 			self.__ageBecoming = age
@@ -627,11 +629,30 @@ class StorageCharacter(QObject):
 		Bei einer Veränderung wird das Signal breedChanged() ausgesandt.
 		"""
 
-		if ( self.__breed != breed ):
+		if self.__breed != breed:
 			self.__breed = breed
-			self.breedChanged.emit( breed)
+			self.breedChanged.emit(breed)
 
 	breed = property(__getBreed, setBreed)
+
+
+	def __getKith(self ):
+		"""
+		Kith der Wechselbälger
+		"""
+
+		return self.__kith
+
+	def setKith( self, kith ):
+		"""
+		Verändert das Kith.
+		"""
+
+		if ( self.__kith != kith ):
+			self.__kith = kith
+			self.kithChanged.emit( kith )
+
+	kith = property(__getKith, setKith)
 
 
 	def __getFaction(self):
@@ -834,7 +855,7 @@ class StorageCharacter(QObject):
 		self.dateBecoming = QDate(self.dateGame.year() - Config.ageAdult, self.dateGame.month(), self.dateGame.day())
 
 		# Löschen aller Identitäten.
-		self.__identity.reset()
+		self.identity.reset()
 
 		# Standardspezies ist der Mensch.
 		self.species = Config.initialSpecies
@@ -881,6 +902,10 @@ class StorageCharacter(QObject):
 		self.setArmor(name="")
 		self.clearEquipment()
 		self.magicalTool = ""
+		self.nimbus = ""
+		for vinculum in self.__vinculi:
+			vinculum.name = ""
+			vinculum.value = 0
 
 		self.picture = QPixmap()
 

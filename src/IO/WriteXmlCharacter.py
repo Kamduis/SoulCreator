@@ -73,16 +73,16 @@ class WriteXmlCharacter(QObject):
 
 		etree.SubElement(root, "era").text = self.__character.era
 
-		## Identitäten
+		## Identität
 		identities = etree.SubElement(root, "identities")
-		forenames = " ".join(self.__character.identities[0].forenames)
+		forenames = " ".join(self.__character.identity.forenames)
 		etree.SubElement(identities, "identity",
 			forenames=forenames,
-			surename=self.__character.identities[0].surename,
-			honorname=self.__character.identities[0].honorname,
-			nickname=self.__character.identities[0].nickname,
-			supername=self.__character.identities[0].supername,
-			gender=self.__character.identities[0].gender,
+			surname=self.__character.identity.surname,
+			honorname=self.__character.identity.honorname,
+			nickname=self.__character.identity.nickname,
+			supername=self.__character.identity.supername,
+			gender=self.__character.identity.gender,
 		)
 		
 		## Daten
@@ -96,7 +96,10 @@ class WriteXmlCharacter(QObject):
 
 		etree.SubElement(root, "vice").text = self.__character.vice
 
-		etree.SubElement(root, "breed").text = self.__character.breed
+		breedElement = etree.SubElement(root, "breed")
+		breedElement.text = self.__character.breed
+		if self.__character.species == "Changeling":
+			breedElement.attrib["kith"] = self.__character.kith
 
 		etree.SubElement(root, "faction").text = self.__character.faction
 
@@ -170,6 +173,15 @@ class WriteXmlCharacter(QObject):
 				etree.SubElement(equipment, "equipment").text = item
 			if self.__character.magicalTool:
 				etree.SubElement(equipment, "magicalTool").text = self.__character.magicalTool
+
+		## Spezialseigenschaften der Spezies
+		if self.__character.nimbus:
+			etree.SubElement(root, "nimbus").text = self.__character.nimbus
+		if self.__character.species == "Vampire" and any((x.name and x.value > 0) for x in self.__character.vinculi):
+			vinculi = etree.SubElement(root, "vinculi")
+			for item in self.__character.vinculi:
+				if item.name and item.value > 0:
+					etree.SubElement(vinculi, "vinculum", value=unicode(item.value)).text = item.name
 
 		if self.__character.picture:
 			imageData = QByteArray()

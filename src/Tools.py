@@ -139,3 +139,12 @@ class ListTools():
 			result.append(item)
 		return result
 
+
+	@staticmethod
+	def findKey(dictionary, item):
+		"""
+		Gibt den key des dictionarys zurück, wenn man das Item angibt.
+		"""
+
+		return [k for k, v in dictionary.iteritems() if v == item][0]
+
