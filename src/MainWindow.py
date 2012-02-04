@@ -95,7 +95,7 @@ class MainWindow(QMainWindow):
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
 
-	\todo Unter "Specials" Werden auch für Werwölfe die Vinculi angezeigt.
+	\todo Körpergröße läßt beim Laden möglicherweise  dazu auffordern, daß man den Giant-Merit bzw. Dwarf Flaw benötige, obwohl selbiger Merit/Flaw im Charakter bereits gespeichert wurde.
 	"""
 
 
