@@ -77,7 +77,6 @@
 				<item name="Carthian Movement"/>
 			</Faction>
 			<Organisation name="Bloodline">
-				<item name="None"/>
 				<item name="Toreador">
 					<weakness>???</weakness>
 				</item>
