@@ -29,7 +29,7 @@
 							<item name="Manipulation"/>
 						</Attribute>
 					</bonus>
-					<weakness>Loses 2 Willpower whenever not following the vice.</weakness>
+					<weakness>Any time a Daeva has an opportunity to ndulge his Vice but does not do so, he loses 2 points of Willpower.</weakness>
 				</item>
 				<item name="Gangrel">
 					<bonus>
@@ -38,7 +38,7 @@
 							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-					<weakness>Do not reroll 10s and subtract 1s when rolling on Intelligence or Wits. Except perception rolls.</weakness>
+					<weakness>Do not reroll 10s and subtract 1's if Intelligence or Wits is part of the dice pool. This weakness does not affect pools involving perception or reaction to surprise.</weakness>
 				</item>
 				<item name="Mekhet">
 					<bonus>
@@ -47,7 +47,7 @@
 							<item name="Wits"/>
 						</Attribute>
 					</bonus>
-					<weakness>Sunlight and Fire deal 1 extra Damage.</weakness>
+					<weakness>Whenever Mekhet suffer damage from sunlight or fire, they takle an additional point of aggravated damage.</weakness>
 				</item>
 				<item name="Nosferatu">
 					<bonus>
@@ -56,7 +56,7 @@
 							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-					<weakness>Do not reroll 10s and subtract 1s when rolling on Presence or Manipulation. Except for rolls involving Intimidation.</weakness>
+					<weakness>Do not reroll 10s and subtract 1's if Presence or Manipulation is part of the dice pool. This weakness does not affect pools involving Intimidation or Composure.</weakness>
 				</item>
 				<item name="Ventrue">
 					<bonus>
@@ -65,7 +65,16 @@
 							<item name="Composure"/>
 						</Attribute>
 					</bonus>
-					<weakness>When rolling to avoid getting a derangement subtract 2 dice.</weakness>
+					<weakness>Ventrue suffer a -2 penalty to Humanity rolls to avoid acquiring derangements after a failed degeneration roll.</weakness>
+				</item>
+				<item name="Julii">
+					<bonus>
+						<Attribute>
+							<item name="Prensence"/>
+							<item name="Resolve"/>
+						</Attribute>
+					</bonus>
+					<weakness>Julii sufer a -2 penalty on degeneration rolls to avoid losing Humanity.</weakness>
 				</item>
 			</Breed>
 			<Faction name="Covenant">
@@ -77,12 +86,20 @@
 				<item name="Carthian Movement"/>
 			</Faction>
 			<Organisation name="Bloodline">
-				<item name="None"/>
-				<item name="Toreador">
-					<weakness>???</weakness>
-				</item>
 				<item name="Brujah">
-					<weakness>???</weakness>
+					<weakness>Brujah suffer a -3 penalty on rolls to resist the Wassail (hunger frenzy).</weakness>
+				</item>
+				<item name="Burakumin">
+					<weakness>They cannot mimic the appearance of vital life with the expenditure of Vitae.</weakness>
+				</item>
+				<item name="Malkovians">
+					<weakness>Malkovians must take a core derangement that is theirs for eternity.</weakness>
+				</item>
+				<item name="Morbus">
+					<weakness>Only the blood of diseased and dying mortals sustains the Morbus (though they may take Kindred Vitae and be nourished by it as normal).</weakness>
+				</item>
+				<item name="Toreador">
+					<weakness>When a Toreador is exposed to a work of art in a particular style, he becomes intensely fascinated with it. Spend a Willpower point or succeed at a reflexive Resolve roll to break the spell.</weakness>
 				</item>
 			</Organisation>
 			<Party name="Coterie"/>

@@ -24,69 +24,144 @@
 			<Breed name="Seeming">
 				<item name="Beast">
 					<kith name="Broadback">
-						<ability>???</ability>
+						<ability>Spend 1 Glamour to add 2 to all dice pools involving Stamina for the rest of the scene.</ability>
+					</kith>
+					<kith name="Hunterheart">
+						<ability>You can inflict lethel instead of bashing damage when fighting unarmed.</ability>
 					</kith>
 					<kith name="Runnerswift">
-						<ability>???</ability>
+						<ability>Add two points to Speed.</ability>
+					</kith>
+					<kith name="Skitterskulk">
+						<ability>When dodging, triple your Defense instead of doubling it.</ability>
+					</kith>
+					<kith name="Steepscrambler">
+						<ability>Add +3 to dice pools when trying to climb any surface and may try to climb impossible slick surfaces.</ability>
 					</kith>
 					<kith name="Swimmerskin">
-						<ability>???</ability>
+						<ability>Under water you can hold your breath for 30 min. You may also swim as fast as you can run.</ability>
 					</kith>
-					<weakness>???</weakness>
-					<blessing>???</blessing>
+					<kith name="Venombite">
+						<ability>Once per scene you may spend 1 Glamour and make a normal Brawl attack. This attack causes no damage but delivers a lethal poison with Toxicity equal to Your Wyrd. Victim can't avoid takng the damage with a Stamina + Resolve roll.</ability>
+					</kith>
+					<kith name="Windwing">
+						<ability>You may spend 1 Glamour to glide in the air for 1 min perpoint of Wyrd. You take only 1 bashing damage for everey 15 yards fallen and begin to take lethal damage only if you fall more than 150 yards.</ability>
+					</kith>
+					<weakness>Suffer a -4 untrained penalty when trying to use a Mental skill in which you have no dots. You do not re-roll 10s when using a dice pool involving Intelligence.</weakness>
+					<blessing>8-again when using the Animal Ken Skill and 1 free Specialty for the animal the character reflects. A Beast may spend Glamour to add to dice pools involving Presence and Composure at a one-for-one base.</blessing>
 				</item>
 				<item name="Darkling">
-					<kith name="Mirrorskin">
-						<ability>???</ability>
+					<kith name="Antiquarian">
+						<ability>You receive the benefit of the 9-again rule on dice pools involving Academics and Investigation. You may spend Glamour to get the benefit of the Encyclopedic Knowledge Merit for one question. If you possess this Merit, add 3 dice to the roll instead.</ability>
+					</kith>
+					<kith name="Gravewight">
+						<ability>For 1 Glamour you can see the ghost for the rest of the scene.</ability>
 					</kith>
 					<kith name="Leechfinger">
-						<ability>???</ability>
+						<ability>You can touch a target and spend 1 Glamour to inflict 1 lethal damage to your victim and heal 1 point of lethal or bashing damage yourself. You choose to downgrad a point of aggravated damage to lethal damage instead. Can be used once per scene per dot of Wyrd.</ability>
 					</kith>
-					<weakness>Subtract 1 die whenver activating a contract during the day.</weakness>
-					<blessing>???</blessing>
+					<kith name="Mirrorskin">
+						<ability>You can change your features to resemble anyone you have met. This gives you a +3 bonus to Wits + Subterfuge disguise attempts. This bonus applies to both, Mask and Mien.</ability>
+					</kith>
+					<kith name="Tunnelgrub">
+						<ability>Spend 1 Glamour to get through spaces, that are too narrow for you. Roll Dexterity + Athletics to wriggle out of ropes or handcuffs.</ability>
+					</kith>
+					<weakness>Darklings suffer a -1 panalty to all rolls to enact contracts during daylight hours. The penalty increases to -2 if the sun is directly visible to them.Subtract 1 die whenver activating a contract during the day.</weakness>
+					<blessing>You can spend Glamour to increase dice pools including Wits, Subterfuge and Stealth at a one-for-one basis. You also gain the benefit of the 9-again rule on Stealth dice pools.</blessing>
 				</item>
 				<item name="Elemental">
+					<kith name="Airtouched">
+						<ability>Spend 1 Glamour to add your Wyrd to your Speed or Initiative for the rest of the scene. Can be invoked once for each Trait per scene.</ability>
+					</kith>
 					<kith name="Fireheart">
-						<ability>???</ability>
+						<ability>Spend Glamour to add to Wits-based dice pools on a one-for-one basis.</ability>
+					</kith>
+					<kith name="Manikin">
+						<ability>You learn Contracts of Artifice for x5 XP rather than the usual cost. You also make untrained Crafts rolls at a -1 die penalty.</ability>
+					</kith>
+					<kith name="Snowskin">
+						<ability>You gain the benefit of the 9-again rule on Intimidation and Subterfuge rolls. You also can spend 1 Glamour to reroll a failed Intimidation roll.</ability>
 					</kith>
 					<kith name="Waterborn">
-						<ability>???</ability>
+						<ability>Spend 1 Glamour to be able to breath under water and swim as fast as you can run for the rest of the scene. You cannot leave the water or breath air until this power wears off or until you spend another Glamour. If you are removed from the water, you take 1 lethal damage each turn until you are returned to the water or you die.</ability>
 					</kith>
-					<kith name="Earthbone">
-						<ability>???</ability>
+					<kith name="Woodblood">
+						<ability>In aly outdoors area where plants are growing from the earth you gain the benefit of the 9-again rule on dice pools involving Strength and Survival. You can also spend 1 Glamour to hide in such a place, even if no hideout seems to be available.</ability>
 					</kith>
-					<weakness>???</weakness>
-					<blessing>???</blessing>
+					<weakness>You don't benefit from the 10-again rule on dice pools involving Manipulation, Empathy, Expression, Persuasion or Socialize, save to activate seeming-affinity Contracts.</weakness>
+					<blessing>Once per day you can spend 1 Glamour to add your Wyrd rating to your Health dots for the rest of the scene.</blessing>
 				</item>
 				<item name="Fairest">
+					<kith name="Bright One">
+						<ability>You can at will illuminate am area the size of a smallish room with a soft palish light for the rest of the scene. Spend 1 Glamour to make the light oainfully intense. This gives you concealment and attackers suffer a -2 die penalty to target you (-1 if attacker is wearing sunglasses).</ability>
+					</kith>
 					<kith name="Dancer">
-						<ability>???</ability>
+						<ability>You benefit from the 9-again roll on any Expression or Socialize rolls involving agility. You also add 1 to your Dodge total when dodging attacks.</ability>
+					</kith>
+					<kith name="Draconic">
+						<ability>You gain +1 on Brawl rolls. Spend 1 Glamour to retake a failed Brawl roll once per scene.</ability>
+					</kith>
+					<kith name="Flowering">
+						<ability>You gain the benefit of the 9-again roll on dice pool sincluding Persuasion, Socialize ans Subterfuge.</ability>
+					</kith>
+					<kith name="Muse">
+						<ability>Spend Glamour to add +2 dice to a Humans dice pool involving Expression, Persuasion, Socialize or Subterfuge at a one-for-one basis.</ability>
 					</kith>
 					<kith name="Treasured">
 						<ability>???</ability>
 					</kith>
-					<weakness>Subtract 1 die whenver activating a contract during the day.</weakness>
-					<blessing>???</blessing>
+					<weakness>You suffer a-1 die penalty on dice pools to avoid losing Clarity.</weakness>
+					<blessing>You can spend Glamour to add to dice pools involving Presence, Manipulation and Persuasion at a one-for-one basis. You also suffer no untrained penalty for using Social skills in which you have no point.</blessing>
 				</item>
 				<item name="Oger">
-					<kith name="Waterdweller">
-						<ability>???</ability>
+					<kith name="Cyclopedian">
+						<ability>You gain the benefit of the 8-again rule on Wits-based perception rolls.</ability>
+					</kith>
+					<kith name="Farwalker">
+						<ability>You gain the benefit of the 9-again rule on Stealth and Survival dice pools. Spend 1 Glamour to retake a failed Stealth or Survival roll.</ability>
+					</kith>
+					<kith name="Gargantum">
+						<ability>Once a day you can spend1 Glamour and add your Wyrd to your Size for the rest of the scene. When returning to normal height, you take 1 point of lethal damage.</ability>
 					</kith>
 					<kith name="Gristlegrinder">
-						<ability>???</ability>
+						<ability>Your bite is a 2 lethal atteck, though it does require you to grapple the opponent first.</ability>
 					</kith>
-					<weakness>Do not reroll 10s and subtract 1s when rolling on Intelligence or Resolve. Except for Resolve+Composure rolls.</weakness>
-					<blessing>???</blessing>
+					<kith name="Stonebones">
+						<ability>Once per day spend 1 Glamour and use your Wyrd as armor rating for the rest of the scene. Under the effect of this power you suffer a -1 die penalty to all Dexterity-based dice pools. YOur Defense is reduced by 1 for every 2 points of Wyrd past the first. This blessing doesn't stack with mundane forms of armor.</ability>
+					</kith>
+					<kith name="Waterdweller">
+						<ability>You suffer no penalties to sight-based perception rolles when underwater.</ability>
+					</kith>
+					<weakness>You do not benefit from the 10-again roll on dice pools involving Composure with the exception on perception rolls. You also suffer a -1 die penalty to Composure when using it as a Defense Trait.</weakness>
+					<blessing>Spend Glamour to improve dice pools involving Strength, Brawl and Intimidation one a one-for-one basis.</blessing>
 				</item>
 				<item name="Wizened">
+					<kith name="Artist">
+						<ability>You benefit from the 8-again rule on Crafts rolls and can spend 1 Glamour to re-roll any failed die on a Crafts roll. This blessing can be used only once per roll.</ability>
+					</kith>
 					<kith name="Brewer">
-						<ability>???</ability>
+						<ability>You can instantly ferment 1 pint of any drink into a powerful intoxinating brew. Roll Wits + Crafts while touching the container of the drink. If the roll is successful spend 1 Glamour to invest the drink with a Potency rating equal to your Wyrd plus your successes. If the Potency is higher then the Health of the drinker, he fgets really drunk.</ability>
+					</kith>
+					<kith name="Chatelaine">
+						<ability>You gain the benefit of the 9-again rule on all Social rolls which depend on manners, etiquette or proper social practive.. You also can spend 1 Glamour to gain +2 to dice pools involving Manipulation and Presence for the rest of the scene.</ability>
+					</kith>
+					<kith name="Chirurgeon">
+						<ability>You gain the benefit of the 9-again rule on Medicine dice pools and never suffer penelaties from using poor equipment as long as you have something able to be jury-rigged to serve as medical tool. Your patients benefit from your skills as if they were in a hospital intensive care unit.</ability>
+					</kith>
+					<kith name="Oracle">
+						<ability>You can tell fortunes once per chapter and are allowed to make a Wits+Composure roll if you are about to make a disastrous choice or are completly stumped for ideas. If the roll is successful the Storyteller may point out the risk or suggest possible actions.</ability>
 					</kith>
 					<kith name="Smith">
-						<ability>???</ability>
+						<ability>Spend 1 Glamour and make an extended Dexterity + Crafts roll (each roll representing 30 min. of tinkering and hammering. With 4 successes gatheredyou can alter a toll so that it gives a +1 equipment bonus. The item has to mostly made of metal and the magic wears off after a day. No item can can be improved this way more than 3 times.</ability>
 					</kith>
-					<weakness>???</weakness>
-					<blessing>???</blessing>
+					<kith name="Soldier">
+						<ability>You are considered to have a Weaponry specialization with any weapon tha carries an edge.</ability>
+					</kith>
+					<kith name="Woodwalker">
+						<ability>You benefit from the 8-again rule on Survival rolls. You also can survive by eating any plant, no matter how poisonous.</ability>
+					</kith>
+					<weakness>You don't benefit from the 10-again roll on dice pools involvingPresence. You also suffer a untrained penalty of -2 when using a Social skill in which you have no dots.</weakness>
+					<blessing>Spend 1 Glamour to benefit from the 9-again roll on rolls involving Dexterity for the rest of the scene. You can also spend 1 Glamour to add your Wyrd to your Dodge total for the rest of the scene.</blessing>
 				</item>
 			</Breed>
 			<Faction name="Court">
