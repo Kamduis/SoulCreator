@@ -201,6 +201,7 @@ class TemplateWidget(QWidget):
 	def repopulateOrganisations(self, species):
 
 		self.ui.comboBox_organisation.clear()
+		self.ui.comboBox_organisation.addItem("")
 		self.ui.comboBox_organisation.addItems(self.__storage.organisations(species))
 
 

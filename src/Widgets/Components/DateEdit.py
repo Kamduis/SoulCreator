@@ -44,10 +44,10 @@ class DateEdit(QDateEdit):
 		QDateEdit.__init__(self, date, parent)
 
 
-	def mousePressEvent(self, event):
-		QDateEdit.mousePressEvent(self, event)
-		#Debug.debug(self.date())
-		self.dateEdited.emit(self.date())
+	#def mousePressEvent(self, event):
+		#QDateEdit.mousePressEvent(self, event)
+		##Debug.debug(self.date())
+		#self.dateEdited.emit(self.date())
 
 
 	def mouseReleaseEvent(self, event):
