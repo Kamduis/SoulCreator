@@ -68,9 +68,12 @@ class CalcAdvantages(QObject):
 		self.__attrDex = self.__character.traits["Attribute"]["Physical"]["Dexterity"]
 		self.__attrSta = self.__character.traits["Attribute"]["Physical"]["Stamina"]
 		self.__attrCom = self.__character.traits["Attribute"]["Social"]["Composure"]
-		self.__meritGiant = self.__character.traits["Merit"]["Physical"]["Giant"]
 		self.__meritFleetOfFoot = self.__character.traits["Merit"]["Physical"]["Fleet of Foot"]
 		self.__meritFastReflexes = self.__character.traits["Merit"]["Physical"]["Fast Reflexes"]
+		self.__giantTrait = self.__character.traits["Merit"]["Physical"]["Giant"]
+		self.__giantTraitKid = self.__character.traits["Merit"]["Physical"]["GiantKid"]
+		self.__smallTrait = self.__character.traits["Flaw"]["Physical"]["Dwarf"]
+		self.__smallTraitKid = self.__character.traits["Merit"]["Physical"]["Tiny"]
 
 		self.sizeChanged.connect(self.calcHealth)
 
@@ -122,12 +125,20 @@ class CalcAdvantages(QObject):
 		Berechnung der Größe des Charakters.
 		"""
 
+		giantTrait = self.__giantTrait
+		smallTrait = self.__smallTrait
+		if self.__character.age < Config.ageAdult:
+			giantTrait = self.__giantTraitKid
+			smallTrait = self.__smallTraitKid
+
 		result = 5
 		if self.__character.age < Config.ageAdult:
 			result -= 1
 
-		if ( self.__meritGiant.value > 0 ):
+		if ( giantTrait.value > 0 ):
 			result += 1
+		elif ( smallTrait.value > 0 ):
+			result -= 1
 
 		if ( self.__size != result ):
 			self.__size = result
