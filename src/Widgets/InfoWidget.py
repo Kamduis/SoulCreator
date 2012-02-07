@@ -122,7 +122,9 @@ class InfoWidget(QWidget):
 
 		self.__character.ageChanged.connect(self.setHeightMinMax)
 		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(self.updateHeight)
+		self.__character.traits["Merit"]["Physical"]["GiantKid"].valueChanged.connect(self.updateHeight)
 		self.__character.traits["Flaw"]["Physical"]["Dwarf"].valueChanged.connect(self.updateHeight)
+		self.__character.traits["Merit"]["Physical"]["Tiny"].valueChanged.connect(self.updateHeight)
 
 
 
@@ -455,28 +457,38 @@ class InfoWidget(QWidget):
 
 		ageText = Config.getAge(self.__character.age)
 
+		giantTrait = self.__character.traits["Merit"]["Physical"]["Giant"]
+		smallTrait = self.__character.traits["Flaw"]["Physical"]["Dwarf"]
+		smallAddNotification = self.tr("Added the Dwarf Flaw.")
+		smallRemoveNotification = self.tr("Removed the Dwarf Flaw.")
+		if self.__character.age < Config.ageAdult:
+			giantTrait = self.__character.traits["Merit"]["Physical"]["GiantKid"]
+			smallTrait = self.__character.traits["Merit"]["Physical"]["Tiny"]
+			smallAddNotification = self.tr("Added the Tiny Merit.")
+			smallRemoveNotification = self.tr("Removed the Tiny Merit.")
+
 		if height >= Config.heightGiant[ageText]:
-			if self.__character.traits["Merit"]["Physical"]["Giant"].value > 0:
+			if giantTrait.value > 0:
 				pass
 			elif self.warnHeightChange(height):
-				self.__character.traits["Merit"]["Physical"]["Giant"].value = 4
+				giantTrait.value = 5
 				self.notificationSent.emit(self.tr("Added the Giant Merit."))
 			else:
 				self.ui.doubleSpinBox_height.setValue(self.__character.height)
 		elif height <= Config.heightDwarf[ageText]:
-			if self.__character.traits["Flaw"]["Physical"]["Dwarf"].value > 0:
+			if smallTrait.value > 0:
 				pass
 			elif self.warnHeightChange(height):
-				self.__character.traits["Flaw"]["Physical"]["Dwarf"].value = 2
-				self.notificationSent.emit(self.tr("Added the Dwarf Flaw."))
+				smallTrait.value = 2
+				self.notificationSent.emit(smallAddNotification)
 			else:
 				self.ui.doubleSpinBox_height.setValue(self.__character.height)
-		elif self.__character.traits["Merit"]["Physical"]["Giant"].value:
-			self.__character.traits["Merit"]["Physical"]["Giant"].value = 0
+		elif giantTrait.value:
+			giantTrait.value = 0
 			self.notificationSent.emit(self.tr("Removed the Giant Merit."))
-		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value:
-			self.__character.traits["Flaw"]["Physical"]["Dwarf"].value = 0
-			self.notificationSent.emit(self.tr("Removed the Dwarf Flaw."))
+		elif smallTrait.value:
+			smallTrait.value = 0
+			self.notificationSent.emit(smallRemoveNotification)
 
 		self.__character.height = height
 
@@ -486,11 +498,15 @@ class InfoWidget(QWidget):
 		Ändert sich die Körpergröße zu sehr, sollautomatisch der Merit Giant bzw. der Flaw Dwarf vorgeschlagen werden.
 		"""
 
+		smallTrait = "Dwarf Flaw"
+		if self.__character.age < Config.ageAdult:
+			smallTrait = "Tiny Merit"
+
 		title = self.tr("Too big")
 		text = self.tr("To be this big, the character needs to purchase the Giant Merit.")
 		if newHeight <= Config.heightDwarf[Config.getAge(self.__character.age)]:
 			title = self.tr("Too small")
-			text = self.tr("To be this small, the character needs to get the Dwarf Flaw.")
+			text = self.tr("To be this small, the character needs to get the {}.".format(smallTrait))
 		ret = QMessageBox.warning(
 			self,
 			title,
@@ -508,18 +524,24 @@ class InfoWidget(QWidget):
 		Werden der Giant-Merit oder der Dwarf-Flaw verändert, muß die Körpergröße angepaßt werden.
 		"""
 
+		giantTrait = self.__character.traits["Merit"]["Physical"]["Giant"]
+		smallTrait = self.__character.traits["Flaw"]["Physical"]["Dwarf"]
+		if self.__character.age < Config.ageAdult:
+			giantTrait = self.__character.traits["Merit"]["Physical"]["GiantKid"]
+			smallTrait = self.__character.traits["Merit"]["Physical"]["Tiny"]
+
 		ageText = Config.getAge(self.__character.age)
-		if self.__character.traits["Merit"]["Physical"]["Giant"].value > 0 and self.ui.doubleSpinBox_height.value() < Config.heightGiant[ageText]:
+		if giantTrait.value > 0 and self.ui.doubleSpinBox_height.value() < Config.heightGiant[ageText]:
 			self.ui.doubleSpinBox_height.setValue(Config.heightGiant[ageText])
 			self.notificationSent.emit(self.tr("Height changed to {} meters".format(Config.heightGiant[ageText])))
-		elif self.__character.traits["Merit"]["Physical"]["Giant"].value < 1 and self.ui.doubleSpinBox_height.value() >= Config.heightGiant[ageText]:
+		elif giantTrait.value < 1 and self.ui.doubleSpinBox_height.value() >= Config.heightGiant[ageText]:
 			newHeight = Config.heightGiant[ageText] - 0.01
 			self.ui.doubleSpinBox_height.setValue(newHeight)
 			self.notificationSent.emit(self.tr("Height changed to {} meters".format(newHeight)))
-		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value > 0 and self.ui.doubleSpinBox_height.value() > Config.heightDwarf[ageText]:
+		elif smallTrait.value > 0 and self.ui.doubleSpinBox_height.value() > Config.heightDwarf[ageText]:
 			self.ui.doubleSpinBox_height.setValue(Config.heightDwarf[ageText])
 			self.notificationSent.emit(self.tr("Height changed to {} meters".format(Config.heightDwarf[ageText])))
-		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value < 1 and self.ui.doubleSpinBox_height.value() <= Config.heightDwarf[ageText]:
+		elif smallTrait.value < 1 and self.ui.doubleSpinBox_height.value() <= Config.heightDwarf[ageText]:
 			newHeight = Config.heightDwarf[ageText] + 0.01
 			self.ui.doubleSpinBox_height.setValue(newHeight)
 			self.notificationSent.emit(self.tr("Height changed to {} meters".format(newHeight)))
