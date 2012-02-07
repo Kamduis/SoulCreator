@@ -42,7 +42,8 @@ from Calc.CalcAdvantages import CalcAdvantages
 from Calc.Creation import Creation
 from Calc.ConnectPrerequisites import ConnectPrerequisites
 from Widgets.InfoWidget import InfoWidget
-from Widgets.TraitWidget import AttributeWidget, SkillWidget
+from Widgets.AttributeWidget import AttributeWidget
+from Widgets.SkillWidget import SkillWidget
 from Widgets.TemplateWidget import TemplateWidget
 from Widgets.PowerWidget import PowerWidget
 from Widgets.SubPowerWidget import SubPowerWidget

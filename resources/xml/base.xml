@@ -414,17 +414,17 @@
 						<value>2</value>
 						<description>You have a near-photographic memory, being able to recall vast amounts of observed detail with astonishing accuracy.</description>
 					</trait>
-					<trait name="Encyclopedic Knowledge" source="WoD Core">
+					<trait name="Encyclopedic Knowledge" age="Adult" source="WoD Core">
 						<value>4</value>
 					</trait>
-					<trait name="EOD" source="WoD Armory">
+					<trait name="EOD" age="Adult" source="WoD Armory">
 						<value>2</value>
 						<prerequisites>(Attribute.Wits > 2 or Attribute.Dexterity > 2) and Skill.Crafts.Demolitions > 2</prerequisites>
 					</trait>
-					<trait name="Holistic Awareness" source="WoD Core">
+					<trait name="Holistic Awareness" age="Adult" source="WoD Core">
 						<value>3</value>
 					</trait>
-					<trait name="Hypnotic Voice" source="WoD Second Sight">
+					<trait name="Hypnotic Voice" age="Adult" source="WoD Second Sight">
 						<value>4</value>
 						<prerequisites>Skill.Persuasion > 2 or Skill.Science.Hypnotherapy > 2</prerequisites>
 					</trait>
@@ -436,10 +436,13 @@
 						<value>2</value>
 						<prerequisites>Attribute.Resolve > 2</prerequisites>
 					</trait>
-					<trait name="Meditative Mind" source="WoD Core">
+					<trait name="Meditative Mind" age="Adult" source="WoD Core">
 						<value>1</value>
 					</trait>
-					<trait name="Technophile" source="WoD Armory">
+					<trait name="Prized Possession" age="Kid" source="WoD Innocents">
+						<value>1</value>
+					</trait>
+					<trait name="Technophile" age="Adult" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 					</trait>
@@ -448,12 +451,15 @@
 						<value>2</value>
 						<value>3</value>
 					</trait>
+					<trait name="Trivia Hound" age="Kid" source="WoD Innocents">
+						<value>4</value>
+					</trait>
 				</Category>
 				<Category name="Physical">
 					<trait name="Ambidextrous" source="WoD Core">
 						<value>3</value>
 					</trait>
-					<trait name="Armored Fighting" source="WoD Armory Reloaded">
+					<trait name="Armored Fighting" age="Adult" source="WoD Armory Reloaded">
 						<value>2</value>
 						<value>4</value>
 						<prerequisites>Attribute.Strength > 1 and Attribute.Stamina > 2</prerequisites>
@@ -469,15 +475,15 @@
 					<trait name="Direction Sense" source="WoD Core">
 						<value>1</value>
 					</trait>
-					<trait name="Disarm" source="WoD Core">
+					<trait name="Disarm" age="Adult" source="WoD Core">
 						<value>2</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 1</prerequisites>
 					</trait>
-					<trait name="Entering Strike" source="WoD Armory Reloaded">
+					<trait name="Entering Strike" age="Adult" source="WoD Armory Reloaded">
 						<value>2</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Brawl > 2</prerequisites>
 					</trait>
-					<trait name="Equipped Grappling" source="WoD Armory Reloaded">
+					<trait name="Equipped Grappling" age="Adult" source="WoD Armory Reloaded">
 						<value>2</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Brawl > 1 and Skill.Weaponry > 1</prerequisites>
 					</trait>
@@ -487,11 +493,11 @@
 						<prerequisites>Attribute.Dexterity > 2</prerequisites>
 						<effect value="+value">Initiative</effect>
 					</trait>
-					<trait name="Fighting Finesse" source="WoD Core" custom="true">
+					<trait name="Fighting Finesse" age="Adult" source="WoD Core" custom="true">
 						<value>2</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 1</prerequisites>
 					</trait>
-					<trait name="Firearm Retention" source="WoD Armory Reloaded">
+					<trait name="Firearm Retention" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<prerequisites>Attribute.Wits > 1 and Attribute.Dexterity > 1 and Skill.Brawl > 1 and Skill.Firearms > 1</prerequisites>
 					</trait>
@@ -502,22 +508,35 @@
 						<prerequisites>Attribute.Strength > 1</prerequisites>
 						<effect value="+value">Speed</effect>
 					</trait>
-					<trait name="Giant" creationOnly="true" source="WoD Core">
+					<trait name="Fresh Start" age="Kid" source="WoD Innocents">
+						<value>3</value>
+						<prerequisites>Merit.Fast Reflexes > 1</prerequisites>
+						<effect value="+value">Initiative</effect>
+					</trait>
+					<trait name="Giant" creationOnly="true" age="Adult" source="WoD Core">
 						<value>4</value>
 						<prerequisites>Flaw.Dwarf &lt; 1</prerequisites>
 					</trait>
-					<trait name="Gunslinger" source="WoD Core">
+					<trait name="Giant" id="GiantKid" creationOnly="true" age="Kid" source="WoD Innocents">
+						<value>3</value>
+						<prerequisites>Flaw.Dwarf &lt; 1 or Merit.Tiny &lt; 1</prerequisites>
+					</trait>
+					<trait name="Gunslinger" age="Adult" source="WoD Core">
 						<value>3</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Firearms > 2</prerequisites>
 					</trait>
-					<trait name="High Performance Driving" source="WoD Midnight Roads">
+					<trait name="Hard Head" age="Kid" source="WoD Innocents">
+						<value>2</value>
+						<prerequisites>Attribute.Strength > 1</prerequisites>
+					</trait>
+					<trait name="High Performance Driving" age="Adult" source="WoD Midnight Roads">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Dexterity > 2 and Attribute.Resolve > 1 and Skill.Drive > 1</prerequisites>
 					</trait>
-					<trait name="Iron Stamina" source="WoD Core">
+					<trait name="Iron Stamina" age="Adult" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -531,7 +550,7 @@
 						<value>4</value>
 						<prerequisites>Attribute.Stamina > 1</prerequisites>
 					</trait>
-					<trait name="Parkour" source="Promethean Strange Alchemies">
+					<trait name="Parkour" age="Adult" source="Promethean Strange Alchemies">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -547,7 +566,7 @@
 						<value>4</value>
 						<prerequisites>Attribute.Stamina > 3</prerequisites>
 					</trait>
-					<trait name="Shield Bearer" source="WoD Armory Reloaded">
+					<trait name="Shield Bearer" age="Adult" source="WoD Armory Reloaded">
 						<value>4</value>
 						<prerequisites>Attribute.Strength > 1</prerequisites>
 					</trait>
@@ -559,17 +578,27 @@
 						<value>3</value>
 						<prerequisites>Skill.Athletics > 2</prerequisites>
 					</trait>
-					<trait name="Stunt Driver" source="WoD Core">
+					<trait name="Stunt Driver" age="Adult" source="WoD Core">
 						<value>3</value>
 						<prerequisites>Attribute.Dexterity > 2</prerequisites>
 					</trait>
-					<trait name="Stunt Rider" source="Vampire Requiem for Rome">
+					<trait name="Stunt Rider" age="Adult" source="Vampire Requiem for Rome">
 						<value>3</value>
 						<prerequisites>Attribute.Dexterity > 2</prerequisites>
 					</trait>
-					<trait name="Student of the Blade" source="WoD Armory Reloaded">
+					<trait name="Student of the Blade" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<prerequisites>Merit.Aggressive Light Sword > 0 or Merit.Defensive Light Sword > 0</prerequisites>
+					</trait>
+					<trait name="Tiny" source="WoD Innocents">
+						<value>1</value>
+						<prerequisites>Merit.Giant &lt; 1 or Merit.GiantKid &lt; 1</prerequisites>
+					</trait>
+					<trait name="Tough" source="WoD Innocents">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<prerequisites>Attribute.Stamina > 2 or Attribute.Resolve > 2</prerequisites>
 					</trait>
 					<trait name="Toxin Resistance" source="WoD Core">
 						<value>2</value>

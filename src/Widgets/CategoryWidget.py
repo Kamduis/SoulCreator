@@ -31,7 +31,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 #from src import Error
 from src.Datatypes.StandardTrait import StandardTrait
 #from src.Datatypes.SubPowerTrait import SubPowerTrait
-from src.Widgets.Components.TraitLine import CharaTrait
+from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Widgets.Components.CheckTrait import CheckTrait
 from src.Debug import Debug
 
