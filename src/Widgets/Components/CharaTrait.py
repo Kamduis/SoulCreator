@@ -105,8 +105,6 @@ class CharaTrait(TraitLine):
 		Versteckt oder zeigt diese Eigenschaft.
 		"""
 
-		Debug.debug(era, self.__trait.era)
-
 		visible = True
 		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
 		if (age and self.__trait.age and self.__trait.age != age) or (era and self.__trait.era and era not in self.__trait.era) or (self.__trait.species and self.__trait.species != species):

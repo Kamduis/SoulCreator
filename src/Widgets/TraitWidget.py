@@ -70,7 +70,7 @@ class TraitWidget(QWidget):
 
 
 	def emitHideReasonChanged(self):
-		Debug.debug(Config.getAge(self._character.age), self._character.era)
+		#Debug.debug(Config.getAge(self._character.age), self._character.era)
 		#ageStr = Config.ages[0]
 		#if self._character.age < Config.ageAdult:
 			#ageStr = Config.ages[1]

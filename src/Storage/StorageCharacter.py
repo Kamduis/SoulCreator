@@ -855,7 +855,7 @@ class StorageCharacter(QObject):
 		# Standardspezies ist der Mensch.
 		self.species = Config.initialSpecies
 		# Zeitalter festlegen.
-		self.era = Config.eras[0]
+		self.era = Config.initialEra
 		## Anfangsdatum setzen.
 		self.dateGame = QDate.currentDate()
 		self.dateBirth = QDate(self.dateGame.year() - Config.ageInitial, self.dateGame.month(), self.dateGame.day())

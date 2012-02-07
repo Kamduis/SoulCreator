@@ -255,12 +255,14 @@ class Config(object):
 		#"Extraordinary",
 	)
 
-	## Sämtliche Eras, welcher ein Charakter angehören kann.
-	eras = (
-		"Modern",
-		"Renaissance",
-		"Ancient",
-	)
+	initialEra = "Modern"
+
+	## Sämtliche Eras, welcher ein Charakter angehören kann und mit welchem jahr sie beginnen.
+	eras = {
+		"Modern": 1950,
+		"Renaissance": 1500,
+		"Ancient": 0,
+	}
 
 	## Sämtliche Eras, welcher ein Charakter angehören kann.
 	ages = (

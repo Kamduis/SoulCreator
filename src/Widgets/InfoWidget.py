@@ -62,7 +62,7 @@ class InfoWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
-		self.ui.comboBox_era.addItems( Config.eras )
+		self.ui.comboBox_era.addItems( Config.eras.keys() )
 
 		self.ui.dateEdit_dateBirth.setMinimumDate(QDate(100, 1, 1))
 		self.ui.dateEdit_dateGame.setMinimumDate(QDate(100, 1, 1))
@@ -73,11 +73,13 @@ class InfoWidget(QWidget):
 
 		## Speichern der vom Benutzer veränderten Werte
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
-		self.ui.comboBox_era.currentIndexChanged[str].connect(self.__character.setEra)
-		self.ui.dateEdit_dateBirth.dateEdited.connect(self.setCharacterDateBirth)
-		#self.ui.dateEdit_dateBirth.dateChanged.connect(self.__character.setDateBirth)
-		self.ui.dateEdit_dateGame.dateEdited.connect(self.setCharacterDateGame)
-		#self.ui.dateEdit_dateGame.dateChanged.connect(self.__character.setDateGame)
+		self.ui.comboBox_era.currentIndexChanged[str].connect(self.updateDateGame_era)
+		#self.ui.dateEdit_dateBirth.dateEdited.connect(self.setCharacterDateBirth)
+		#self.ui.dateEdit_dateGame.dateEdited.connect(self.setCharacterDateGame)
+		#self.ui.dateEdit_dateGame.dateEdited.connect(self.setCharacterEra)
+		self.ui.dateEdit_dateBirth.dateChanged.connect(self.setCharacterDateBirth)
+		self.ui.dateEdit_dateGame.dateChanged.connect(self.setCharacterDateGame)
+		self.ui.dateEdit_dateGame.dateChanged.connect(self.setCharacterEra)
 		self.ui.comboBox_virtue.currentIndexChanged[str].connect(self.__character.setVirtue)
 		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.__character.setVice)
 		self.ui.doubleSpinBox_height.valueChanged[float].connect(self.setCharacterHeight)
@@ -300,18 +302,88 @@ class InfoWidget(QWidget):
 			self.ui.pushButton_pictureClear.setEnabled(True)
 
 
+	def updateDateGame_era(self, era):
+		"""
+		Der Ära des Spiels verändert das maximale Datum des Spiels.
+		"""
+
+		Debug.debug(era)
+
+		eraBeginDates = Config.eras.values()
+		eraBeginDates.sort()
+
+		beginYear = Config.eras[era]
+		endYear = QDate.currentDate()
+		endYear = endYear.year()
+		for year in eraBeginDates:
+			if year > beginYear:
+				endYear = year - 1
+				break
+
+		dateEraBegins = QDate(beginYear, 1, 1)
+		dateEraEnds = QDate(endYear, 12, 31)
+
+		eraModified = True
+		newDate = None
+		if self.ui.dateEdit_dateGame.date() < dateEraBegins:
+			newDate = dateEraBegins
+		elif self.ui.dateEdit_dateGame.date() > dateEraEnds:
+			newDate = dateEraEnds
+		else:
+			eraModified = False
+
+		if eraModified:
+			self.ui.dateEdit_dateGame.setDate(newDate)
+			text = self.tr("Date of game is set to {day}. {month}. {year} to be in the {era} era".format(day=newDate.day(), month=newDate.month(), year=newDate.year(), era=era))
+			self.notificationSent.emit(text)
+
+
+	def setCharacterEra(self, date):
+		"""
+		Der Ära des Spiels läßt sich entweder direkt einstellen, was die Zeit ändert oder über die Zeit.
+		"""
+
+		eraBeginDates = Config.eras.values()
+		eraBeginDates.sort()
+
+		#Debug.debug(eraBeginDates[::-1])
+
+		beginYear = None
+		for year in eraBeginDates[::-1]:
+			if year <= date.year():
+				beginYear = year
+				break
+
+		actualEra = None
+		for era in Config.eras.items():
+			if era[1] == beginYear:
+				actualEra = era[0]
+
+		if self.__character.era != actualEra:
+			self.__character.era = actualEra
+			text = self.tr("Era changed to {era}".format(era=era))
+			self.notificationSent.emit(text)
+
+
 	def setCharacterDateBirth(self, date):
 		"""
 		Speichert das Geburtsdatum des Charakters im Speicher.
 
 		Allerdings muß zuvor möglicherweise um Erlaubnis gefragt werden.
+
+		\todo Momentan wird keine Frage gestellt, da das nervt.
 		"""
 
-		years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
-		if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
-			self.ui.dateEdit_dateBirth.setDate(self.__character.dateBirth)
-		else:
-			self.__character.setDateBirth(date)
+		#years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
+		#if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
+			#self.ui.dateEdit_dateBirth.setDate(self.__character.dateBirth)
+		#else:
+			#self.__character.setDateBirth(date)
+		self.__character.setDateBirth(date)
+		text = self.tr("Character is an adult now (following the normal rules).")
+		if self.__character.age < Config.ageAdult:
+			text = self.tr("Character is a kid now (following the rules for Innocents).")
+		self.notificationSent.emit(text)
 
 
 	def setCharacterDateGame(self, date):
@@ -319,13 +391,20 @@ class InfoWidget(QWidget):
 		Speichert das Geburtsdatum des Charakters im Speicher.
 
 		Allerdings muß zuvor möglicherweise um Erlaubnis gefragt werden.
+
+		\todo Momentan wird keine Frage gestellt, da das nervt.
 		"""
 
-		years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
-		if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
-			self.ui.dateEdit_dateGame.setDate(self.__character.dateGame)
-		else:
-			self.__character.setDateGame(date)
+		#years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
+		#if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
+			#self.ui.dateEdit_dateGame.setDate(self.__character.dateGame)
+		#else:
+			#self.__character.setDateGame(date)
+		self.__character.setDateGame(date)
+		text = self.tr("Character is an adult now (following the normal rules).")
+		if self.__character.age < Config.ageAdult:
+			text = self.tr("Character is a kid now (following the rules for Innocents).")
+		self.notificationSent.emit(text)
 
 
 	def setMaxBirthday(self):
@@ -340,26 +419,26 @@ class InfoWidget(QWidget):
 			self.__character.dateBirth = maxDateBirth
 
 
-	def warnAgeChange(self, newAge):
-		"""
-		Wird der Charakter vom Erwachsenen zum Kind (oder umgekehrt), sollte eine Bestätigung eingefordert werden.
+	#def warnAgeChange(self, newAge):
+		#"""
+		#Wird der Charakter vom Erwachsenen zum Kind (oder umgekehrt), sollte eine Bestätigung eingefordert werden.
 
-		Wird auf "No" geklickt, wird das Geburtsdatum wieder so verändert, daß das alte Alter beibehalten bleibt.
-		"""
+		#Wird auf "No" geklickt, wird das Geburtsdatum wieder so verändert, daß das alte Alter beibehalten bleibt.
+		#"""
 
-		text = self.tr("Your character is going to be an adult.")
-		if newAge < Config.ageAdult:
-			text = self.tr("Your character is going to be a child.")
-		ret = QMessageBox.warning(
-			self,
-			self.tr( "Age category changed" ),
-			self.tr( "{} Do you want that to happen?".format(text) ),
-			QMessageBox.Yes | QMessageBox.No
-		)
-		if ret == QMessageBox.StandardButton.No:
-			return False
-		else:
-			return True
+		#text = self.tr("Your character is going to be an adult.")
+		#if newAge < Config.ageAdult:
+			#text = self.tr("Your character is going to be a child.")
+		#ret = QMessageBox.warning(
+			#self,
+			#self.tr( "Age category changed" ),
+			#self.tr( "{} Do you want that to happen?".format(text) ),
+			#QMessageBox.Yes | QMessageBox.No
+		#)
+		#if ret == QMessageBox.StandardButton.No:
+			#return False
+		#else:
+			#return True
 
 
 	def setHeightMinMax(self, age):
