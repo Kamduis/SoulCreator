@@ -165,7 +165,7 @@
 						<specialty>State</specialty>
 						<specialty>Scandals</specialty>
 					</trait>
-					<trait name="Religion" era="Ancient">
+					<trait name="Religion" era="Ancient;Renaissance">
 						<specialty>Dogma (Christian)</specialty>
 						<specialty>Dogma (Islamic)</specialty>
 						<specialty>Dogma (Jewish)</specialty>
@@ -176,7 +176,7 @@
 						<specialty>Pantheon (Roman)</specialty>
 						<specialty>Rituals</specialty>
 					</trait>
-					<trait name="Science" age="Adult" era="Modern">
+					<trait name="Science" age="Adult" era="Modern;Renaissance">
 						<specialty>Biology</specialty>
 						<specialty>Chemistry</specialty>
 						<specialty>Geology</specialty>
@@ -248,7 +248,7 @@
 						<specialty>Tails</specialty>
 						<specialty>Stunts</specialty>
 					</trait>
-					<trait name="Firearms" era="Modern">
+					<trait name="Firearms" era="Modern;Renaissance">
 						<specialty>Assault rifles</specialty>
 						<specialty>Autofire</specialty>
 						<specialty>Close Range</specialty>
@@ -270,7 +270,7 @@
 						<specialty>Shoplifting</specialty>
 						<specialty>Sleight of Hand</specialty>
 					</trait>
-					<trait name="Ride" age="Adult" era="Ancient">
+					<trait name="Ride" age="Adult" era="Ancient;Renaissance">
 						<specialty>Chariot</specialty>
 						<specialty>Dangerous Conditions</specialty>
 						<specialty>Pursuit</specialty>

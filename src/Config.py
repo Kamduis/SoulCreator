@@ -258,6 +258,7 @@ class Config(object):
 	## Sämtliche Eras, welcher ein Charakter angehören kann.
 	eras = (
 		"Modern",
+		"Renaissance",
 		"Ancient",
 	)
 

@@ -464,13 +464,16 @@ class ReadXmlTemplate(QObject, ReadXml):
 					"values": [0],													# Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
 					"species": species,												# Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
 					"age": self.getElementAttribute(traitElement, "age"),			# Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
-					"era": self.getElementAttribute(traitElement, "era"),			# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
+					"era": [],														# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
 					"custom": self.getElementAttribute(traitElement, "custom"),	# Handelt es sich um eine Kraft mit Zusatztext?
 					"specialties": listOfSpecialties,									# Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
 					"prerequisites": " and ".join(listOfPrerequisites),				# Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
 					"cheap": [],
 					"only": [],
 				}
+				eraText = self.getElementAttribute(traitElement, "era")
+				if eraText:
+					traitData["era"] = eraText.split(Config.sepChar)
 				if not traitData["id"]:
 					traitData["id"] = traitData["name"]
 				traitData["values"].extend(listOfValues)

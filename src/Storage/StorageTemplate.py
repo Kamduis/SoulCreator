@@ -150,7 +150,7 @@ class StorageTemplate(QObject):
 	# "values"			Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
 	# "species"			Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
 	# "age"				Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
-	# "era"				Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
+	# "era"				Eine Liste der Zeitalter, für welche diese Eigenschaft zur Verfügung steht.
 	# "custom"			Handelt es sich um eine Kraft mit Zusatztext?
 	# "specialties"		Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
 	# "prerequisites"	Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
