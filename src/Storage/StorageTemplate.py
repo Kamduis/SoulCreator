@@ -633,7 +633,10 @@ class StorageTemplate(QObject):
 
 
 	def organisationCurse(self, species, organisation):
-		return self.__speciesGroupNames[species]["Organisation"][1][organisation]["weakness"]
+		if organisation in self.__speciesGroupNames[species]["Organisation"][1] and "weakness" in self.__speciesGroupNames[species]["Organisation"][1][organisation]:
+			return self.__speciesGroupNames[species]["Organisation"][1][organisation]["weakness"]
+		else:
+			return ""
 
 
 	def partyTitle(self, species):
