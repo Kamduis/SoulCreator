@@ -41,6 +41,7 @@ class TraitWidget(QWidget):
 
 
 	maxTraitChanged = Signal(int)
+	hideReasonChanged = Signal(str, str, str)
 
 
 	def __init__(self, template, character, parent=None):
@@ -52,6 +53,10 @@ class TraitWidget(QWidget):
 		# Wenn sich Spezies oder Powerstat ändert, kann sich der erlaubte Maximalwert ändern.
 		self._character.powerstatChanged.connect(self.emitMaxTraitChanged)
 		self._character.speciesChanged.connect(self.emitMaxTraitChanged)
+		# Ändert sich alterskategorie oder die Ära, Wird ein paasendes Signal gesandt.
+		self._character.eraChanged.connect(self.emitHideReasonChanged)
+		self._character.ageChanged[str].connect(self.emitHideReasonChanged)
+		self._character.speciesChanged.connect(self.emitHideReasonChanged)
 
 
 
@@ -62,4 +67,14 @@ class TraitWidget(QWidget):
 
 		maxTrait = self._storage.maxTrait(self._character.species, self._character.powerstat)
 		self.maxTraitChanged.emit(maxTrait)
+
+
+	def emitHideReasonChanged(self):
+		Debug.debug(Config.getAge(self._character.age), self._character.era)
+		#ageStr = Config.ages[0]
+		#if self._character.age < Config.ageAdult:
+			#ageStr = Config.ages[1]
+		ageStr = Config.getAge(self._character.age)
+		eraStr = self._character.era
+		self.hideReasonChanged.emit(self._character.species, ageStr, eraStr)
 

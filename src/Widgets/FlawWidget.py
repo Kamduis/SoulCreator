@@ -93,7 +93,7 @@ class FlawWidget(QWidget):
 				layoutFlawCategory.addWidget( traitWidget )
 
 				flaw[1].valueChanged.connect(self.countItems)
-				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
+				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait)
 
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.

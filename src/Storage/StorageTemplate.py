@@ -468,6 +468,7 @@ class StorageTemplate(QObject):
 		if identifier not in self.__traits[typ][category]:
 			self.__traits[typ][category][identifier] = data
 		elif (typ != "Subpower"):
+			#Debug.debug(data["name"])
 			specialties = self.__traits[typ][category][identifier]["specialty"]
 			specialties.extend(data["specialty"])
 			specialties.sort()

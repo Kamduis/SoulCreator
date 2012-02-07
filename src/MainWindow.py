@@ -143,7 +143,6 @@ class MainWindow(QMainWindow):
 
 		self.populateUi()
 		self.activate()
-		self.reset()
 
 		self.ui.selectWidget_select.currentRowChanged.connect(self.showCreationPoints)
 
@@ -156,6 +155,8 @@ class MainWindow(QMainWindow):
 		self.ui.actionExport.triggered.connect(self.exportCharacter)
 		self.ui.actionPrint.triggered.connect(self.printCharacter)
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
+
+		self.reset()
 
 		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
 		if fileName:

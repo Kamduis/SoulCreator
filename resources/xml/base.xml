@@ -519,7 +519,7 @@
 					</trait>
 					<trait name="Giant" id="GiantKid" creationOnly="true" age="Kid" source="WoD Innocents">
 						<value>3</value>
-						<prerequisites>Flaw.Dwarf &lt; 1 or Merit.Tiny &lt; 1</prerequisites>
+						<prerequisites>Merit.Tiny &lt; 1</prerequisites>
 					</trait>
 					<trait name="Gunslinger" age="Adult" source="WoD Core">
 						<value>3</value>
@@ -590,11 +590,11 @@
 						<value>1</value>
 						<prerequisites>Merit.Aggressive Light Sword > 0 or Merit.Defensive Light Sword > 0</prerequisites>
 					</trait>
-					<trait name="Tiny" source="WoD Innocents">
+					<trait name="Tiny" age="Kid" source="WoD Innocents">
 						<value>1</value>
-						<prerequisites>Merit.Giant &lt; 1 or Merit.GiantKid &lt; 1</prerequisites>
+						<prerequisites>Merit.Giant &lt; 1 and Merit.GiantKid &lt; 1</prerequisites>
 					</trait>
-					<trait name="Tough" source="WoD Innocents">
+					<trait name="Tough" age="Kid" source="WoD Innocents">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -604,7 +604,7 @@
 						<value>2</value>
 						<prerequisites>Attribute.Stamina > 2</prerequisites>
 					</trait>
-					<trait name="Weaponry Dodge" source="WoD Core">
+					<trait name="Weaponry Dodge" age="Adult" source="WoD Core">
 						<value>1</value>
 						<prerequisites>Attribute.Strength > 1 and Skill.Weaponry > 0</prerequisites>
 					</trait>
@@ -614,14 +614,19 @@
 					</trait>-->
 				</Category>
 				<Category name="Social">
-					<trait name="Allies" source="WoD Core">
+					<trait name="Allies" age="Adult" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="Anonymity" source="Werewolf Blood of the Wolf">
+					<trait name="Allies" id="AlliesKid" age="Kid" source="WoD Innocents">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+					</trait>
+					<trait name="Anonymity" age="Adult" source="Werewolf Blood of the Wolf">
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
@@ -630,12 +635,20 @@
 					<!--<trait name="Barfly" source="WoD Core">
 						<value>1</value>
 					</trait>-->
-					<trait name="Contacts" source="WoD Core">
+					<trait name="Contacts" age="Adult" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
+					</trait>
+					<trait name="Contacts" id="ContactsKid" age="Kid" source="WoD Innocents">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+					</trait>
+					<trait name="Deep Pockets" age="Kid" source="WoD Innocents">
+						<value>2</value>
 					</trait>
 					<trait name="Fame" cutom="true" source="WoD Core">
 						<value>1</value>
@@ -647,11 +660,22 @@
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="Inspiring" source="WoD Core">
+					<trait name="Guardian" age="Kid" source="WoD Innocents">
+						<value>1</value>
+						<value>3</value>
+					</trait>
+					<trait name="Guardian Angel" age="Kid" source="WoD Innocents">
+						<value>4</value>
+					</trait>
+					<trait name="Inspiring" age="Adult" source="WoD Core">
 						<value>4</value>
 						<prerequisites>Attribute.Presence > 3</prerequisites>
 					</trait>
-					<trait name="Luxury" source="Mage Seers of the Throne">
+					<trait name="Inspiring" id="InspiringKid" age="Kid" source="WoD Innocents">
+						<value>3</value>
+						<prerequisites>Attribute.Presence > 2</prerequisites>
+					</trait>
+					<trait name="Luxury" age="Adult" source="Mage Seers of the Throne">
 						<value>2</value>
 						<value>4</value>
 					</trait>
@@ -662,6 +686,9 @@
 						<value>4</value>
 						<value>5</value>
 					</trait>
+					<trait name="Odd Jobs" age="Kid" source="WoD Innocents">
+						<value>1</value>
+					</trait>
 					<trait name="New Identity" custom="true" source="Changeling Core">
 						<value>1</value>
 						<value>2</value>
@@ -671,7 +698,12 @@
 						<value>2</value>
 						<value>4</value>
 					</trait>
-					<trait name="Resources" source="WoD Core">
+					<trait name="Pet" age="Kid" source="WoD Innocents">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+					</trait>
+					<trait name="Resources" age="Adult" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -699,9 +731,15 @@
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="Striking Looks" source="WoD Core">
+					<trait name="Striking Looks" age="Adult" source="WoD Core">
 						<value>2</value>
 						<value>4</value>
+					</trait>
+					<trait name="Striking Looks" id="Striking LooksKid" age="Kid" source="WoD Innocents">
+						<value>2</value>
+					</trait>
+					<trait name="Team Player" age="Kid" source="WoD Innocents">
+						<value>2</value>
 					</trait>
 					<trait name="Dream" source="Mage Core">
 						<value>1</value>
@@ -761,7 +799,7 @@
 					</trait>
 				</Category>
 				<Category name="Fighting Style">
-					<trait name="Aggressive Striking" source="WoD Armory Reloaded">
+					<trait name="Aggressive Striking" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -769,7 +807,7 @@
 						<value>5</value>
 						<prerequisites>Attribute.Strength > 2 and Attribute.Stamina > 1 and Skill.Brawl > 1</prerequisites>
 					</trait>
-					<trait name="Aikido" source="WoD Armory Reloaded">
+					<trait name="Aikido" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -777,14 +815,14 @@
 						<value>5</value>
 						<prerequisites>Attribute.Wits > 1 and Attribute.Dexterity > 1 and Skill.Brawl > 1</prerequisites>
 					</trait>
-					<trait name="Brute Force" source="Promethean Strange Alchemies">
+					<trait name="Brute Force" age="Adult" source="Promethean Strange Alchemies">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Strength > 2 and Skill.Brawl > 2</prerequisites>
 					</trait>
-					<trait name="Defensive Striking" source="WoD Armory Reloaded">
+					<trait name="Defensive Striking" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -792,7 +830,7 @@
 						<value>5</value>
 						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 1 and Attribute.Stamina > 1 and Skill.Brawl > 1</prerequisites>
 					</trait>
-					<trait name="Grappling" source="WoD Armory Reloaded">
+					<trait name="Grappling" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -800,7 +838,7 @@
 						<value>5</value>
 						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 2 and Attribute.Stamina > 2 and Skill.Brawl > 1</prerequisites>
 					</trait>
-					<trait name="Judo" source="WoD Armory Reloaded">
+					<trait name="Judo" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -808,7 +846,7 @@
 						<value>5</value>
 						<prerequisites>Attribute.Wits > 1 and Attribute.Dexterity > 1 and Skill.Athletics > 1 and Skill.Brawl > 1</prerequisites>
 					</trait>
-					<trait name="Krav Maga" source="WoD Armory Reloaded">
+					<trait name="Krav Maga" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -816,7 +854,7 @@
 						<value>5</value>
 						<prerequisites>Attribute.Wits > 2 and Attribute.Strength > 1 and Attribute.Dexterity > 2 and Skill.Brawl > 2</prerequisites>
 					</trait>
-					<trait name="Oinna" source="WoD Armory Reloaded">
+					<trait name="Oinna" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -824,14 +862,26 @@
 						<value>5</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Brawl > 1</prerequisites>
 					</trait>
-					<trait name="Aggressive Light Sword" source="WoD Armory Reloaded">
+					<trait name="Karate" id="KarateKid" age="Kid" source="WoD Innocents">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<prerequisites>Attribute.Dexterity > 1 and Attribute.Stamina > 1 and Skill.Brawl > 1</prerequisites>
+					</trait>
+					<trait name="Playground Dogpile" age="Kid" source="WoD Innocents">
+						<value>1</value>
+						<value>2</value>
+						<value>3</value>
+						<prerequisites>Attribute.Strength > 1 and Attribute.Stamina > 1 and Skill.Brawl > 1</prerequisites>
+					</trait>
+					<trait name="Aggressive Light Sword" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
-					<trait name="Defensive Light Sword" source="WoD Armory Reloaded">
+					<trait name="Defensive Light Sword" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -839,14 +889,14 @@
 						<value>5</value>
 						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 2 and Attribute.Composure > 2 and Skill.Weaponry > 2 and Merit.Quick Draw > 0</prerequisites>
 					</trait>
-					<trait name="Flexible Weapons" source="WoD Armory Reloaded">
+					<trait name="Flexible Weapons" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Strength > 2 and Attribute.Dexterity > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
-					<trait name="Formation Tactics" source="Vampire Requiem for Rome">
+					<trait name="Formation Tactics" age="Adult" source="Vampire Requiem for Rome">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -854,21 +904,21 @@
 						<value>5</value>
 						<prerequisites>Attribute.Strength > 1 and Attribute.Stamina > 2 and Skill.Weaponry > 1</prerequisites>
 					</trait>
-					<trait name="Gladiatorial" source="Vampire Requiem for Rome">
+					<trait name="Gladiatorial" age="Adult" source="Vampire Requiem for Rome">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Strength > 2 and Attribute.Presence > 1 and Skill.Weaponry > 2</prerequisites>
 					</trait>
-					<trait name="Knife Fighting" source="WoD Armory">
+					<trait name="Knife Fighting" age="Adult" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 1</prerequisites>
 					</trait>
-					<trait name="Langschwert" source="WoD Armory Reloaded">
+					<trait name="Langschwert" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -876,35 +926,35 @@
 						<value>5</value>
 						<prerequisites>Attribute.Strength > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
-					<trait name="Shurikenjutsu" source="WoD Armory Reloaded">
+					<trait name="Shurikenjutsu" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Athletics > 1</prerequisites>
 					</trait>
-					<trait name="Spear and Bayonet Fighting" source="WoD Armory Reloaded">
+					<trait name="Spear and Bayonet Fighting" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Strength > 2 and Attribute.Dexterity > 1 and Skill.Weaponry > 2</prerequisites>
 					</trait>
-					<trait name="Staff Fighting" source="WoD Armory">
+					<trait name="Staff Fighting" age="Adult" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Strength > 2 and Attribute.Dexterity > 1 and Skill.Weaponry > 1</prerequisites>
 					</trait>
-					<trait name="Stick Fighting" source="WoD Armory Reloaded">
+					<trait name="Stick Fighting" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
-					<trait name="Sword and Shield" source="WoD Armory Reloaded">
+					<trait name="Sword and Shield" age="Adult" source="WoD Armory Reloaded">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -912,21 +962,21 @@
 						<value>5</value>
 						<prerequisites>Attribute.Strength > 2 and Attribute.Dexterity > 1 and Attribute.Stamina > 1 and Skill.Weaponry > 1</prerequisites>
 					</trait>
-					<trait name="Two Weapons" source="WoD Core">
+					<trait name="Two Weapons" age="Adult" source="WoD Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Dexterity > 2 and Skill.Weaponry > 2</prerequisites>
 					</trait>
-					<trait name="Archery" source="WoD Armory">
+					<trait name="Archery" age="Adult" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 1 and Skill.Athletics > 1</prerequisites>
 					</trait>
-					<trait name="Combat Marksmanship" source="WoD Armory">
+					<trait name="Combat Marksmanship" age="Adult" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -934,7 +984,7 @@
 						<value>5</value>
 						<prerequisites>Attribute.Strength > 1 and Attribute.Dexterity > 1 and Attribute.Composure > 2 and Skill.Firearms > 1</prerequisites>
 					</trait>
-					<trait name="Sniping" source="WoD Armory">
+					<trait name="Sniping" age="Adult" source="WoD Armory">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -943,7 +993,7 @@
 					</trait>
 				</Category>
 				<Category name="Debate Style">
-					<trait name="Reason" source="Vampire Requiem for Rome">
+					<trait name="Reason" age="Adult" source="Vampire Requiem for Rome">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -951,7 +1001,7 @@
 						<value>5</value>
 						<prerequisites>Attribute.Intelligence > 2 and Skill.Academics > 0</prerequisites>
 					</trait>
-					<trait name="Rhetoric" source="Vampire Requiem for Rome">
+					<trait name="Rhetoric" age="Adult" source="Vampire Requiem for Rome">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -959,7 +1009,7 @@
 						<value>5</value>
 						<prerequisites>Attribute.Presence > 2 and Skill.Expression > 0</prerequisites>
 					</trait>
-					<trait name="Theology" source="Vampire Requiem for Rome" era="Ancient">
+					<trait name="Theology" age="Adult" source="Vampire Requiem for Rome" era="Ancient">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -1019,7 +1069,7 @@
 				<Category name="Physical">
 					<trait name="Crippled"/>
 					<trait name="Cumbersome"/>
-					<trait name="Dwarf">
+					<trait name="Dwarf" age="Adult">
 						<prerequisites>Merit.Giant &lt; 1</prerequisites>
 					</trait>
 					<trait name="Hard of Hearing"/>

@@ -101,7 +101,7 @@ class CategoryWidget(QWidget):
 
 				layoutCategory.addWidget( traitWidget )
 
-				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
+				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait)
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutCategory.addStretch()

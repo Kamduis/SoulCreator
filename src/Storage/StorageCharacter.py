@@ -69,7 +69,8 @@ class StorageCharacter(QObject):
 	derangementChanged = Signal(int, str)
 	#traitChanged = Signal(object)
 	#traitsChanged = Signal(object)
-	ageChanged = Signal(int)
+	#ageChanged = Signal(int)
+	ageChanged = Signal((int,), (str,))
 	ageBecomingChanged = Signal(int)
 	#ageCategoryChanged = Signal(str, int, int)	# (<Child|Adult>, <neues Alter>, <altes Alter>)
 	heightChanged = Signal(float)
@@ -557,8 +558,13 @@ class StorageCharacter(QObject):
 		age = Calc.years(self.dateBirth, self.dateGame)
 
 		if self.__age != age:
+			ageCtagoryChanged = False
+			if Config.getAge(self.__age) != Config.getAge(age):
+				ageCtagoryChanged = True
 			self.__age = age
 			self.ageChanged.emit(age)
+			if ageCtagoryChanged:
+				self.ageChanged[str].emit(Config.getAge(age))
 
 
 	def __calcAgeBecoming(self):
@@ -846,9 +852,10 @@ class StorageCharacter(QObject):
 
 
 	def resetCharacter(self):
+		# Standardspezies ist der Mensch.
+		self.species = Config.initialSpecies
 		# Zeitalter festlegen.
 		self.era = Config.eras[0]
-
 		## Anfangsdatum setzen.
 		self.dateGame = QDate.currentDate()
 		self.dateBirth = QDate(self.dateGame.year() - Config.ageInitial, self.dateGame.month(), self.dateGame.day())
@@ -856,9 +863,6 @@ class StorageCharacter(QObject):
 
 		# Löschen aller Identitäten.
 		self.identity.reset()
-
-		# Standardspezies ist der Mensch.
-		self.species = Config.initialSpecies
 
 		#Debug.debug(self.__storage.virtues[0])
 		#Debug.debug(self.__storage.virtues[0]["name"])

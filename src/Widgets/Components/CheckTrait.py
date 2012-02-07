@@ -123,7 +123,7 @@ class CheckTrait(QWidget):
 			self.__lineEdit.show()
 
 
-	def hideOrShowTrait_species(self, species):
+	def hideOrShowTrait(self, species):
 		"""
 		Versteckt oder zeigt diese Eigenschaft, je nach gewählter Spezies.
 		"""
