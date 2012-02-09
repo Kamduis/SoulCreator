@@ -817,12 +817,25 @@ class DrawSheet(QObject):
 
 		distanceH = (self.__pageWidth - headingWidth) / 3
 
+		## Bonusattribut erhält einen Extra-Punkt.
+		bonusList = self.__storage.bonusTraits(self.__character.species, self.__character.breed)
+		bonusTrait = None
+		if len(bonusList) > 1:
+			for bonus in bonusList:
+				if bonus["name"] == self.__character.bonus:
+					bonusTrait = bonus
+		elif len(bonusList) > 0:
+			bonusTrait = bonusList[0]
+
 		i = 0
 		for item in Config.attributes:
 			j = 0
 			for subitem in item[1]:
 				attrib = self.__character.traits["Attribute"][item[0]][subitem]
-				self.__drawTrait(headingWidth + i * distanceH, offsetV - fontSubHeadingHeightDiff + fontHeightDiff + j * self.__fontSubHeadingHeight, width=distanceH, name=attrib.name, value=attrib.value, maxValue=self.__traitMax, align=Qt.AlignRight)
+				attributeValue = attrib.value
+				if bonusTrait and bonusTrait["type"] == "Attribute" and bonusTrait["name"] == attrib.name:
+					attributeValue += 1
+				self.__drawTrait(headingWidth + i * distanceH, offsetV - fontSubHeadingHeightDiff + fontHeightDiff + j * self.__fontSubHeadingHeight, width=distanceH, name=attrib.name, value=attributeValue, maxValue=self.__traitMax, align=Qt.AlignRight)
 				j += 1
 			i += 1
 

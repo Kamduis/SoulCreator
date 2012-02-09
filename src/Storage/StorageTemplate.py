@@ -700,7 +700,7 @@ class StorageTemplate(QObject):
 
 
 	def bonusTraits(self, species, breed):
-		if breed:
+		if species in self.__bonusTraits and breed in self.__bonusTraits[species]:
 			return self.__bonusTraits[species][breed]
 		else:
 			return []
