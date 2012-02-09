@@ -86,8 +86,6 @@ class MainWindow(QMainWindow):
 
 	\todo Erschaffungspunkte durch einen Wizard ersetzen.
 
-	\todo Merits sollten sich der Alterskategorie anpassen.
-
 	\todo Items sollten sich der Alterskategorie anpassen.
 
 	\todo "Leere" Felder auf dem Charakterbogen mit Leerzeilen zum händischen Ausfüllen versehen.
@@ -95,10 +93,6 @@ class MainWindow(QMainWindow):
 	\todo Changeling: Ich vermisse beim Aussehen die Unterscheidung zwischen Mask und Mien
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
-
-	\todo Körpergröße läßt beim Laden möglicherweise  dazu auffordern, daß man den Giant-Merit bzw. Dwarf Flaw benötige, obwohl selbiger Merit/Flaw im Charakter bereits gespeichert wurde.
-
-	\todo Benachrichtung, daß der Charakter ein Erwachsener/Kind ist, nicht bei jeder Datumsändeung einblenden.
 	"""
 
 

@@ -63,6 +63,7 @@ class TemplateWidget(QWidget):
 		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.__character.setDateBecoming)
 		self.ui.comboBox_species.currentIndexChanged[str].connect(self.__character.setSpecies)
 		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.__character.setBreed)
+		self.ui.comboBox_bonus.currentIndexChanged[str].connect(self.__character.setBonus)
 		self.ui.comboBox_kith.currentIndexChanged[str].connect(self.__character.setKith)
 		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.__character.setFaction)
 		self.ui.lineEdit_faction.textEdited.connect(self.__character.setFaction)
@@ -70,15 +71,13 @@ class TemplateWidget(QWidget):
 		self.ui.lineEdit_party.textEdited.connect(self.__character.setParty)
 
 		## Aktualisieren der Darstellung der im Charakter veränderten Werte.
-		#self.__character.dateBirthChanged.connect(self.ui.dateEdit_dateBirth.setDate)
 		self.__character.dateBecomingChanged.connect(self.ui.dateEdit_dateBecoming.setDate)
-		#self.__character.dateGameChanged.connect(self.ui.dateEdit_dateGame.setDate)
-		#self.__character.ageChanged.connect(self.ui.label_age.setNum)
 		self.__character.ageBecomingChanged.connect(self.ui.label_ageBecoming.setNum)
 		self.__character.speciesChanged.connect(self.updateSpecies)
 		self.__character.breedChanged.connect(self.updateBreed)
+		self.__character.breedChanged.connect(self.repopulateBonus)
 		self.__character.breedChanged.connect(self.repopulateKiths)
-		#self.__character.speciesChanged.connect(self.repopulateKiths)
+		self.__character.bonusChanged.connect(self.updateBonus)
 		self.__character.kithChanged.connect(self.updateKith)
 		self.__character.speciesChanged.connect(self.updateBreedTitle)
 		self.__character.speciesChanged.connect(self.repopulateBreeds)
@@ -122,6 +121,14 @@ class TemplateWidget(QWidget):
 		"""
 
 		self.ui.label_breed.setText( "{}:".format(self.__storage.breedTitle(species)) )
+
+
+	def updateBonus( self, bonus ):
+		"""
+		Aktualisiert die Anzeige der Bonuseigenschaft.
+		"""
+
+		self.ui.comboBox_bonus.setCurrentIndex( self.ui.comboBox_bonus.findText( bonus ) )
 
 
 	def updateKith( self, kith ):
@@ -181,6 +188,22 @@ class TemplateWidget(QWidget):
 		self.ui.comboBox_breed.addItems(self.__storage.breeds(species))
 
 
+	def repopulateBonus(self, breed):
+		"""
+		Die Bonuseigenschaften neu festlegen.
+
+		\todo Nach Ende der Erschaffung muß die Bonus-Eigenschaft unveränderlich gemacht werden.
+		"""
+
+		self.ui.comboBox_bonus.clear()
+		__list = self.__storage.bonusTraits(self.__character.species, breed)
+		if __list:
+			bonusList = [ bonus["name"] for bonus in __list ]
+			bonusList.sort()
+			self.ui.comboBox_bonus.addItems( bonusList )
+			self.ui.label_bonus2.setText(__list[0]["name"])
+
+
 	def repopulateKiths(self, breed):
 		"""
 		Jedes Seeming hat eine Reihe möglicher Kiths. Kiths stehen nur Changelings offen.
@@ -233,3 +256,18 @@ class TemplateWidget(QWidget):
 		else:
 			self.ui.label_kith.setVisible(False)
 			self.ui.comboBox_kith.setVisible(False)
+
+		## Nur Magier und Vampire haben Bonus-Attribute
+		affectedSpecies = ("Mage", "Vampire")
+		if species in affectedSpecies:
+			self.ui.label_bonus.setVisible(True)
+			if species == "Mage":
+				self.ui.comboBox_bonus.setVisible(False)
+				self.ui.label_bonus2.setVisible(True)
+			else:
+				self.ui.comboBox_bonus.setVisible(True)
+				self.ui.label_bonus2.setVisible(False)
+		else:
+			self.ui.label_bonus.setVisible(False)
+			self.ui.comboBox_bonus.setVisible(False)
+			self.ui.label_bonus2.setVisible(False)

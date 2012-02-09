@@ -59,6 +59,7 @@ class StorageCharacter(QObject):
 	virtueChanged = Signal(str)
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
+	bonusChanged = Signal(str)
 	kithChanged = Signal(str)
 	factionChanged = Signal(str)
 	organisationChanged = Signal(str)
@@ -138,6 +139,7 @@ class StorageCharacter(QObject):
 		self.__virtue = ""
 		self.__vice = ""
 		self.__breed = ""
+		self.__bonus = ""
 		self.__kith = ""
 		self.__faction = ""
 		self.__organisation = ""
@@ -244,6 +246,8 @@ class StorageCharacter(QObject):
 		self.virtueChanged.connect(self.setModified)
 		self.viceChanged.connect(self.setModified)
 		self.breedChanged.connect(self.setModified)
+		self.kithChanged.connect(self.setModified)
+		self.bonusChanged.connect(self.setModified)
 		self.factionChanged.connect(self.setModified)
 		self.partyChanged.connect(self.setModified)
 		self.descriptionChanged.connect(self.setModified)
@@ -661,6 +665,25 @@ class StorageCharacter(QObject):
 	breed = property(__getBreed, setBreed)
 
 
+	def __getBonus(self ):
+		"""
+		Bonuseigenschaft
+		"""
+
+		return self.__bonus
+
+	def setBonus( self, bonus ):
+		"""
+		Verändert die Bonuseigenschaft.
+		"""
+
+		if ( self.__bonus != bonus ):
+			self.__bonus = bonus
+			self.bonusChanged.emit( bonus )
+
+	bonus = property(__getBonus, setBonus)
+
+
 	def __getKith(self ):
 		"""
 		Kith der Wechselbälger
@@ -887,6 +910,9 @@ class StorageCharacter(QObject):
 		#Debug.debug(self.__storage.virtues[0]["name"])
 		self.virtue = self.__storage.virtues[0]["name"]
 		self.vice = self.__storage.vices[0]["name"]
+		self.breed = ""
+		self.bonus= ""
+		self.kith = ""
 		self.faction = ""
 		self.height = 1.60
 		self.weight = 60
