@@ -80,12 +80,12 @@
     <file>images/svg/shield.svg</file>
   </qresource>
   <qresource prefix="template">
-    <file>xml/base.xml</file>
-    <file>xml/changeling.xml</file>
-    <file>xml/human.xml</file>
-    <file>xml/mage.xml</file>
-    <file>xml/vampire.xml</file>
-    <file>xml/werewolf.xml</file>
+    <file>xml/base.scd</file>
+    <file>xml/changeling.scd</file>
+    <file>xml/human.scd</file>
+    <file>xml/mage.scd</file>
+    <file>xml/vampire.scd</file>
+    <file>xml/werewolf.scd</file>
   </qresource>
   <qresource prefix="characterSheets">
     <file>images/Charactersheet-Changeling-2.jpg</file>

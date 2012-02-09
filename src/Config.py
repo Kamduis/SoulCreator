@@ -53,9 +53,13 @@ class Config(object):
 
 	# Verzeichnisname für Ressourcen
 	resourceDir = "resources"
+	resourceDirXml = "resources/xml"
 
 	# Verzeichnisname für Uis
 	uiDir = "ui"
+
+	# Dateiendung komprimierter Dateien.
+	fileSuffixCompressed = "scd"
 
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"

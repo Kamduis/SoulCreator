@@ -25,9 +25,29 @@ from __future__ import division, print_function
 import os
 import sys
 import subprocess
+import zlib
 
 from src.Config import Config
 from src.Tools import PathTools
+
+
+
+
+def compressFile(fileName, fileSuffix):
+	"""
+	Komprimiert eine Datei.
+	"""
+
+	fileNameUncompressed = "{}.{}".format(fileName, fileSuffix)
+	fileNameCompressed = "{}.{}".format(fileName, Config.fileSuffixCompressed)
+
+	## In die Datei schreiben.
+	fileContentCmpr = None
+	with open(fileNameUncompressed, "r") as f:
+		fileContentCmpr = zlib.compress(f.read())
+
+	with open(fileNameCompressed, "wb") as f:
+		f.write(fileContentCmpr)
 
 
 
@@ -37,6 +57,11 @@ if __name__ == "__main__":
 	"""
 	Erzeugt die notwendigen ui-Dateien und Resourcen, um SoulCreator verwenden zu können.
 	"""
+
+	for f in os.listdir(Config.resourceDirXml):
+		if f.endswith(".xml"):
+			nameWOSuffix = f.split(".xml")[0]
+			compressFile("{}/{}/{}".format(PathTools.getPath(), Config.resourceDirXml, nameWOSuffix), "xml")
 
 	## Resourcen bauen
 	cmd_string_rcc = ["pyside-rcc", "-o", ]
