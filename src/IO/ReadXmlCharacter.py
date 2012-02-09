@@ -264,6 +264,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 		if elem is not None:
 			self.__character.nimbus = elem.text
 
+		elem = tree.find("paradoxMarks")
+		if elem is not None:
+			self.__character.paradoxMarks = elem.text
+
 		elem = tree.find("vinculi")
 		if elem is not None:
 			i = 0

@@ -97,6 +97,10 @@ class MainWindow(QMainWindow):
 	\todo Attribute der Werewolf-Gestalten anzeigen
 
 	\todo Körpergröße läßt beim Laden möglicherweise  dazu auffordern, daß man den Giant-Merit bzw. Dwarf Flaw benötige, obwohl selbiger Merit/Flaw im Charakter bereits gespeichert wurde.
+
+	\todo Benachrichtung, daß der Charakter ein Erwachsener/Kind ist, nicht bei jeder Datumsändeung einblenden.
+
+	\todo Merits mit Spezialisierungen als Voraussetzungen werden nciht korrekt beachtet.
 	"""
 
 

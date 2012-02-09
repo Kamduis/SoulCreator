@@ -86,6 +86,7 @@ class StorageCharacter(QObject):
 	equipmentChanged = Signal(object)
 	magicalToolChanged = Signal(str)
 	nimbusChanged = Signal(str)
+	paradoxMarksChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -163,6 +164,7 @@ class StorageCharacter(QObject):
 		self.__derangements = {}
 
 		self.__nimbus = ""
+		self.__paradoxMarks = ""
 
 		self.__vinculi = []
 		for i in xrange(Config.vinculiCount):
@@ -254,6 +256,7 @@ class StorageCharacter(QObject):
 		self.equipmentChanged.connect(self.setModified)
 		self.magicalToolChanged.connect(self.setModified)
 		self.nimbusChanged.connect(self.setModified)
+		self.paradoxMarksChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -523,6 +526,22 @@ class StorageCharacter(QObject):
 			self.nimbusChanged.emit(nimbus)
 
 	nimbus = property(__getNimbus, setNimbus)
+
+
+	def __getParadoxMarks(self):
+		"""
+		Die Paradoxzeichen eines Magiers.
+		"""
+
+		return self.__paradoxMarks
+
+	def setParadoxMarks(self, paradoxMarks):
+
+		if self.__paradoxMarks != paradoxMarks:
+			self.__paradoxMarks = paradoxMarks
+			self.paradoxMarksChanged.emit(paradoxMarks)
+
+	paradoxMarks = property(__getParadoxMarks, setParadoxMarks)
 
 
 	def __getVinculi(self):
@@ -907,6 +926,7 @@ class StorageCharacter(QObject):
 		self.clearEquipment()
 		self.magicalTool = ""
 		self.nimbus = ""
+		self.paradoxMarks = ""
 		for vinculum in self.__vinculi:
 			vinculum.name = ""
 			vinculum.value = 0

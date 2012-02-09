@@ -90,7 +90,7 @@ class InfoWidget(QWidget):
 		self.ui.pushButton_picture.clicked.connect(self.openImage)
 		self.ui.pushButton_pictureClear.clicked.connect(self.clearImage)
 		#self.ui.textEdit_description.textChanged.connect(self.saveDescription)	## Kann ich nicht nutzen, da sonst der Curser bei jeder änderung an den Angang springt.
-		self.ui.textEdit_description.focusLost.connect(self.changeDescription)
+		self.ui.textEdit_description.textChanged.connect(self.changeDescription)
 
 		## Aktualisieren der Darstellung der im Charakter veränderten Werte.
 		self.__character.identity.identityChanged.connect(self.updateButtonText)
@@ -142,7 +142,13 @@ class InfoWidget(QWidget):
 		Verändert den Beschreibungstext im Speicher.
 		"""
 
+		cursor = self.ui.textEdit_description.textCursor()
+		cursorPosition = cursor.position()
+
 		self.__character.description = self.ui.textEdit_description.toPlainText()
+
+		cursor.setPosition(cursorPosition)
+		self.ui.textEdit_description.setTextCursor(cursor)
 
 
 	def updateButtonText( self ):

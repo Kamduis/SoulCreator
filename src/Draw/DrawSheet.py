@@ -412,7 +412,12 @@ class DrawSheet(QObject):
 
 			posX += lengthX + self.__posSep
 			lengthX = self.__pageWidth - posX
+			lengthY = lengthY / 2 - self.__posSep / 2
 			self._drawNimbus(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+			
+			posY += lengthY + self.__posSep
+			lengthY = self.__pageHeight - posY
+			self._drawParadoxMarks(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 		elif self.__character.species == "Vampire":
 			posX = 0
 			posY = posY_zeile4
@@ -1475,38 +1480,25 @@ class DrawSheet(QObject):
 
 
 	def _drawNimbus(self, offsetH=0, offsetV=0, width=None, height=None):
-		"""
-		Zeichnet die Werte aller fünf Gestalten von Werwölfen auf den Charakterbogen.
-
-		\param offsetH Der horizontale Abstand zur linken Kante des nutzbaren Charakterbogens.
-		\param offsetV Der vertikale Abstand zur Oberkante des nutzbaren Charakterbogens.
-		\param width Die Breite.
-		\param height Die Höhe.
-
-		\bug Da ich als Argument von self.tr() keine unicode-String nutzen kann, sind manche minus-Zeichen als "-" und nicht als "−" genutzt worden.
-		"""
-
-		self.__painter.save()
-
-		if width == None:
-			width = self.__pageWidth
-
-		self.__painter.setFont(self.__fontMain)
-
-		self.__drawHeading(offsetH, offsetV, width, self.tr("Nimbus"))
-
-		self.__painter.drawText(
+		self.__drawText(
+			self.tr("Nimbus"),
+			self.__character.nimbus,
 			offsetH,
-			offsetV + self.__fontHeadingHeight + self.__headingSep,
+			offsetV,
 			width,
-			height - self.__fontHeadingHeight - self.__headingSep,
-			Qt.AlignLeft | Qt.TextWordWrap,
-			self.__character.nimbus
+			height
 		)
 
-		self.__drawBB(offsetH, offsetV, width, height)
 
-		self.__painter.restore()
+	def _drawParadoxMarks(self, offsetH=0, offsetV=0, width=None, height=None):
+		self.__drawText(
+			self.tr("Paradox Marks"),
+			self.__character.paradoxMarks,
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
 
 
 	def _drawShapes(self, offsetH=0, offsetV=0, width=None, height=None):

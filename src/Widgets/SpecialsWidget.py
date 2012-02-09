@@ -54,8 +54,10 @@ class SpecialsWidget(QWidget):
 		self.__character.speciesChanged.connect(self.setPage)
 
 		## Magier
-		self.ui.textEdit_nimbus.focusLost.connect(self.changeNimbus)
+		self.ui.textEdit_nimbus.textChanged.connect(self.changeNimbus)
 		self.__character.nimbusChanged.connect(self.ui.textEdit_nimbus.setPlainText)
+		self.ui.textEdit_paradoxMarks.textChanged.connect(self.changeParadoxMarks)
+		self.__character.paradoxMarksChanged.connect(self.ui.textEdit_paradoxMarks.setPlainText)
 
 		## Vampir
 		## Liste aller Vinculum-Widgets
@@ -100,7 +102,27 @@ class SpecialsWidget(QWidget):
 		Verändert den Nimbustext im Speicher.
 		"""
 
+		cursor = self.ui.textEdit_nimbus.textCursor()
+		cursorPosition = cursor.position()
+
 		self.__character.nimbus = self.ui.textEdit_nimbus.toPlainText()
+
+		cursor.setPosition(cursorPosition)
+		self.ui.textEdit_nimbus.setTextCursor(cursor)
+
+
+	def changeParadoxMarks( self ):
+		"""
+		Verändert den Text der Paradox-Zeichen im Speicher.
+		"""
+
+		cursor = self.ui.textEdit_paradoxMarks.textCursor()
+		cursorPosition = cursor.position()
+
+		self.__character.paradoxMarks = self.ui.textEdit_paradoxMarks.toPlainText()
+
+		cursor.setPosition(cursorPosition)
+		self.ui.textEdit_paradoxMarks.setTextCursor(cursor)
 
 
 	def checkMaxVinculum( self, value ):
