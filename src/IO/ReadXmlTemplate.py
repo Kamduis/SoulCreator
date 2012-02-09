@@ -78,7 +78,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		## Die Template-Dateien alle für das Laden vorbereiten.
 		self.__templateFiles = []
-		pathToTemplates = ":/template/xml"
+		pathToTemplates = ":/template/{}".format(Config.resourceDirTemplates)
 		templateDir = QDir(pathToTemplates)
 		for templateFile in templateDir.entryList():
 			if templateFile.endswith(".{}".format(Config.fileSuffixCompressed)):
@@ -107,7 +107,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			fileContent = qrcFile.readAll()
 			qrcFile.close()
 
-			## Erzeuge eine Temporäre Datei, mit der etree umgehen kann und schreibe den Inhalt aus der Qt-Resource in selbige hinein.
+			## Erzeuge eine temporäre Datei, mit der etree umgehen kann und schreibe den Inhalt aus der Qt-Resource in selbige hinein.
 			fileLike = tempfile.TemporaryFile()
 			fileLike.write(zlib.decompress(fileContent))
 			fileLike.seek(0)

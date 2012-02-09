@@ -53,7 +53,7 @@ class Config(object):
 
 	# Verzeichnisname für Ressourcen
 	resourceDir = "resources"
-	resourceDirXml = "resources/xml"
+	resourceDirTemplates = "templates"
 
 	# Verzeichnisname für Uis
 	uiDir = "ui"

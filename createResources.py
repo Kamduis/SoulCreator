@@ -58,10 +58,10 @@ if __name__ == "__main__":
 	Erzeugt die notwendigen ui-Dateien und Resourcen, um SoulCreator verwenden zu können.
 	"""
 
-	for f in os.listdir(Config.resourceDirXml):
+	for f in os.listdir("{}/{}".format(Config.resourceDir, Config.resourceDirTemplates)):
 		if f.endswith(".xml"):
 			nameWOSuffix = f.split(".xml")[0]
-			compressFile("{}/{}/{}".format(PathTools.getPath(), Config.resourceDirXml, nameWOSuffix), "xml")
+			compressFile("{}/{}/{}/{}".format(PathTools.getPath(), Config.resourceDir, Config.resourceDirTemplates, nameWOSuffix), "xml")
 
 	## Resourcen bauen
 	cmd_string_rcc = ["pyside-rcc", "-o", ]
