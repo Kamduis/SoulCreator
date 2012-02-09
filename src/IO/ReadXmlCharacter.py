@@ -23,6 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 import ast
+import gzip
 
 from PySide.QtCore import QObject, QDate, QByteArray, Signal
 from PySide.QtGui import QPixmap
@@ -75,9 +76,18 @@ class ReadXmlCharacter(QObject, ReadXml):
 	def read( self, fileName ):
 		"""
 		Startet den Lesevorgang.
+
+		\note Diese Funktion kann sowohl normale xml-Dateien als auch mittels gzip komprimierte xml-Dateien laden.
 		"""
 
-		xmlContent = etree.parse(fileName)
+		## Mittels lxml kann diese Funktion normale XML-Dateien und offenbar auch mittels gzip komprimierte XML-Dateien laden.
+		## Das normale ElementTree-Modul kann das aber nicht.
+		xmlContent = None
+		try:
+			xmlContent = etree.parse(fileName)
+		except etree.ParseError:
+			## Möglicherweise eine komprimierte Datei und lxml wurde nicht verwendet?
+			xmlContent = etree.parse(gzip.GzipFile(fileName))
 		xmlRootElement = xmlContent.getroot()
 
 		versionSource = xmlRootElement.attrib["version"]

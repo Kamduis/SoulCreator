@@ -24,7 +24,8 @@ from __future__ import division, print_function
 
 import os
 import ast
-import StringIO
+import tempfile
+import zlib
 
 from PySide.QtCore import QObject, QDir, QFile, QIODevice, QResource, Signal
 
@@ -77,10 +78,11 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		## Die Template-Dateien alle für das Laden vorbereiten.
 		self.__templateFiles = []
-		pathToTemplates = ":/template/xml"
+		pathToTemplates = ":/template/{}".format(Config.resourceDirTemplates)
 		templateDir = QDir(pathToTemplates)
 		for templateFile in templateDir.entryList():
-			self.__templateFiles.append("{}/{}".format(pathToTemplates, templateFile))
+			if templateFile.endswith(".{}".format(Config.fileSuffixCompressed)):
+				self.__templateFiles.append("{}/{}".format(pathToTemplates, templateFile))
 
 
 	def read(self):
@@ -96,17 +98,22 @@ class ReadXmlTemplate(QObject, ReadXml):
 		\exception ErrXmlParsing Beim Parsen der XML-Datei ist ein Fehler aufgetreten.
 		"""
 
+		#dbgStart = Debug.timehook()
 		for item in self.__templateFiles:
 			#Debug.debug("Lese aus Datei: {}".format(item))
 			qrcFile = QFile(item)
 			if not qrcFile.open(QIODevice.ReadOnly):
 				raise ErrFileNotOpened(item, qrcFile.errorString())
-			fileContent = ""
-			while not qrcFile.atEnd():
-				fileContent += qrcFile.readLine()
+			fileContent = qrcFile.readAll()
 			qrcFile.close()
-			fileLike = StringIO.StringIO(str(fileContent))
+
+			## Erzeuge eine temporäre Datei, mit der etree umgehen kann und schreibe den Inhalt aus der Qt-Resource in selbige hinein.
+			fileLike = tempfile.TemporaryFile()
+			fileLike.write(zlib.decompress(fileContent))
+			fileLike.seek(0)
 			xmlContent = etree.parse(fileLike)
+			fileLike.close()
+
 			xmlRootElement = xmlContent.getroot()
 
 			versionSource = xmlRootElement.attrib["version"]
@@ -120,6 +127,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			species = self.readSpecies(xmlContent)
 			self.readTemplate(xmlContent, species)
+		#Debug.timesince(dbgStart)
 
 
 	def readSpecies(self, tree):

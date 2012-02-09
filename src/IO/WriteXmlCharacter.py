@@ -24,6 +24,8 @@ from __future__ import division, print_function
 
 from PySide.QtCore import QObject, Qt, QIODevice, QByteArray, QBuffer
 
+import gzip
+
 from src.Config import Config
 from src.Error import ErrTraitType, ErrTraitCategory
 from src.Debug import Debug
@@ -67,6 +69,15 @@ class WriteXmlCharacter(QObject):
 		Startet den Schreibvorgang.
 		"""
 
+		tree = self.buildXmlTree()
+		self.writeFile(tree, fileName)
+
+
+	def buildXmlTree(self):
+		"""
+		Erzeugt den Element-Baum, der später in eine XML-Datei geschrieben werden kann.
+		"""
+
 		root = etree.Element(Config.programName, version=Config.version())
 
 		etree.SubElement(root, "species").text = self.__character.species
@@ -84,7 +95,7 @@ class WriteXmlCharacter(QObject):
 			supername=self.__character.identity.supername,
 			gender=self.__character.identity.gender,
 		)
-		
+
 		## Daten
 		etree.SubElement(root, "dates",
 			birth=self.__character.dateBirth.toString(Config.dateFormat),
@@ -193,9 +204,28 @@ class WriteXmlCharacter(QObject):
 			imageData = imageData.toBase64()
 			etree.SubElement(root, "picture").text = unicode(imageData)
 
+		return root
+
+
+	def __writeTreeToFile(self, fileObject, tree):
+		if lxmlLoadad:
+			fileObject.write(etree.tostring(tree, pretty_print=True, encoding='UTF-8', xml_declaration=True))
+		else:
+			fileObject.write(etree.tostring(tree, encoding='UTF-8'))
+
+
+
+	def writeFile(self, tree, fileName):
+		"""
+		Schreibt den Elementbaum in eine Datei.
+
+		Die Charaktere werden als komprimierte Datei gespeichert.
+		"""
+
 		## In die Datei schreiben.
-		with open(fileName, "w") as f:
-			if lxmlLoadad:
-				f.write(etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True))
-			else:
-				f.write(etree.tostring(root, encoding='UTF-8'))
+		if Config.compressSaves:
+			with gzip.open(fileName, "w") as fileObject:
+				self.__writeTreeToFile(fileObject, tree)
+		else:
+			with open(fileName, "w") as fileObject:
+				self.__writeTreeToFile(fileObject, tree)

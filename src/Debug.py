@@ -23,6 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 import inspect
+import time
 
 from src.GlobalState import GlobalState
 
@@ -59,3 +60,20 @@ class Debug():
 		#if GlobalState.isDebug:
 			#for item in inspect.stack():
 				#print("{}\t{:<78}\t{}".format(item[0], item[1], item[3]))
+
+
+	@staticmethod
+	def timehook():
+		return time.time()
+
+
+	@classmethod
+	def timer(cls, start, end):
+		cls.debug('Code time %.3f seconds' % (end - start))
+
+
+	@classmethod
+	def timesince(cls, start):
+		end = time.time()
+		cls.timer(start, end)
+

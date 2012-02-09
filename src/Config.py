@@ -53,9 +53,15 @@ class Config(object):
 
 	# Verzeichnisname für Ressourcen
 	resourceDir = "resources"
+	resourceDirTemplates = "templates"
 
 	# Verzeichnisname für Uis
 	uiDir = "ui"
+
+	# Dateiendung komprimierter Dateien.
+	fileSuffixCompressed = "scd"
+	# Dateiendung der gespeicherten Charkatere
+	fileSuffixSave = "chr"
 
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"
@@ -290,7 +296,8 @@ class Config(object):
 
 	## Folgende Werte können über den Einstellungsdialog verändert werden und sollten beim Beenden des Programms gespeichert und beim Starten geladen werden. Die übergebenen Werte sind die Standartwerte, wenn im Einstellungsdialog nichts verändert wird.
 	# Zur Altersberechnung Kalender verwenden
-	calendarForAgeCalculation = True
+	#calendarForAgeCalculation = True
+	compressSaves = True
 
 
 	@staticmethod
