@@ -98,7 +98,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		\exception ErrXmlParsing Beim Parsen der XML-Datei ist ein Fehler aufgetreten.
 		"""
 
-		dbgStart = Debug.timehook()
+		#dbgStart = Debug.timehook()
 		for item in self.__templateFiles:
 			#Debug.debug("Lese aus Datei: {}".format(item))
 			qrcFile = QFile(item)
@@ -127,7 +127,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 			species = self.readSpecies(xmlContent)
 			self.readTemplate(xmlContent, species)
-		Debug.timesince(dbgStart)
+		#Debug.timesince(dbgStart)
 
 
 	def readSpecies(self, tree):

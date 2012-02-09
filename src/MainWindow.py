@@ -105,6 +105,7 @@ class MainWindow(QMainWindow):
 
 
 	def __init__(self, fileName=None, parent=None):
+		#dbgStart = Debug.timehook()
 		QMainWindow.__init__(self, parent)
 
 		self.ui = Ui_MainWindow()
@@ -157,10 +158,12 @@ class MainWindow(QMainWindow):
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
 
 		self.reset()
+		#Debug.timesince(dbgStart)
 
 		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
 		if fileName:
 			self.openCharacter(fileName)
+		#Debug.timesince(dbgStart)
 
 
 
@@ -541,7 +544,7 @@ class MainWindow(QMainWindow):
 					self,
 					self.tr( "Select Character File" ),
 					savePath,
-					self.tr( "WoD Characters (*.chr)" )
+					self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) )
 				)
 				filePath = fileData[0]
 
@@ -576,7 +579,7 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.chr".format(savePath), self.tr( "WoD Characters (*.chr)" ) )
+		filePath = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.{}".format(savePath, Config.fileSuffixSave), self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) ) )
 
 		#Debug.debug(filePath)
 
