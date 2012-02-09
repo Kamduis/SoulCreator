@@ -120,6 +120,9 @@ class InfoWidget(QWidget):
 		self.__character.ageChanged.connect(self.updateViceTitle)
 		self.__character.ageChanged.connect(self.repopulateVices)
 
+		## Benachrichtigung bei Änderung der Alterskategorie.
+		self.__character.ageChanged[str].connect(self.notifyOfAge)
+
 		self.__character.ageChanged.connect(self.setHeightMinMax)
 		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(self.updateHeight)
 		self.__character.traits["Merit"]["Physical"]["GiantKid"].valueChanged.connect(self.updateHeight)
@@ -315,8 +318,6 @@ class InfoWidget(QWidget):
 		Der Ära des Spiels verändert das maximale Datum des Spiels.
 		"""
 
-		Debug.debug(era)
-
 		eraBeginDates = Config.eras.values()
 		eraBeginDates.sort()
 
@@ -388,8 +389,11 @@ class InfoWidget(QWidget):
 		#else:
 			#self.__character.setDateBirth(date)
 		self.__character.setDateBirth(date)
+
+
+	def notifyOfAge(self, age):
 		text = self.tr("Character is an adult now (following the normal rules).")
-		if self.__character.age < Config.ageAdult:
+		if age == "Kid":
 			text = self.tr("Character is a kid now (following the rules for Innocents).")
 		self.notificationSent.emit(text)
 

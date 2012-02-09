@@ -419,7 +419,7 @@
 					</trait>
 					<trait name="EOD" age="Adult" source="WoD Armory">
 						<value>2</value>
-						<prerequisites>(Attribute.Wits > 2 or Attribute.Dexterity > 2) and Skill.Crafts.Demolitions > 2</prerequisites>
+						<prerequisites>(Attribute.Wits > 2 or Attribute.Dexterity > 2) and (Skill.Crafts.Demolitions > 2 or Skill.Crafts.Explosives > 2)</prerequisites>
 					</trait>
 					<trait name="Holistic Awareness" age="Adult" source="WoD Core">
 						<value>3</value>
