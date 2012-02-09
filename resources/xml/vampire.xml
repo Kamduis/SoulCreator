@@ -125,21 +125,21 @@
 					</trait>
 				</Category>
 				<Category name="Social">
-					<trait name="Status: City" id="vampireStatus:City" source="Vampire Core">
+					<trait name="Status: City" id="vampireStatus: City" source="Vampire Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="Status: Clan" id="vampireStatus:Clan" source="Vampire Core">
+					<trait name="Status: Clan" id="vampireStatus: Clan" source="Vampire Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
 						<value>4</value>
 						<value>5</value>
 					</trait>
-					<trait name="Status: Covenant" id="vampireStatus:Covenant" source="Vampire Core">
+					<trait name="Status: Covenant" id="vampireStatus: Covenant" source="Vampire Core">
 						<value>1</value>
 						<value>2</value>
 						<value>3</value>
@@ -887,13 +887,13 @@
 						<power value="2">Nightmare</power>
 					</trait>
 					<trait name="Oath of the Bloody Hand" level="" costFuel="1" costWill="" roll="">
-						<prerequisites>Powerstat > 2 and Status: Covenant > 0</prerequisites>
+						<prerequisites>Powerstat > 2 and Merit.vampireStatus: Covenant > 0</prerequisites>
 					</trait>
 					<trait name="Oath of Blood Focus" level="" costFuel="" costWill="1" roll="Presence+Intimidation+Dominate">
-						<prerequisites>Powerstat > 2 and Status: Covenant > 0</prerequisites>
+						<prerequisites>Powerstat > 2 and Merit.vampireStatus: Covenant > 0</prerequisites>
 					</trait>
 					<trait name="Oath of Blood Alliance" level="" costFuel="" costWill="1+" roll="">
-						<prerequisites>Status: Covenant > 0</prerequisites>
+						<prerequisites>Merit.vampireStatus: Covenant > 0</prerequisites>
 					</trait>
 					<trait name="Oath of Blood Service" level="" costFuel="1" costWill="" roll="Presence+Empathy+Majesty">
 						<power value="3">Auspex</power>
@@ -904,11 +904,11 @@
 						<power value="4">Majesty</power>
 					</trait>
 					<trait name="Oath of Welcome Return" level="" costFuel="1" costWill="1" roll="Presence+Expression+Majesty">
-						<prerequisites>Powerstat > 2 and Status: Covenant > 0</prerequisites>
+						<prerequisites>Powerstat > 2 and Merit.vampireStatus: Covenant > 0</prerequisites>
 					</trait>
 					<trait name="Oath of Sanguine Compliment" level="" costFuel="1" costWill="" roll="">
 						<power value="1">Majesty</power>
-						<prerequisites>Status: Covenant > 0</prerequisites>
+						<prerequisites>Merit.vampireStatus: Covenant > 0</prerequisites>
 					</trait>
 					<only>Invictus</only>
 				</Category>

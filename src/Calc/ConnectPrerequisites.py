@@ -71,12 +71,12 @@ class ConnectPrerequisites(object):
 									for subsubitem in character.traits[item][subitem].values():
 										## Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
 										traitResource = u"{}.{}".format(item, subsubitem.identifier)
+										if "Covenant" in traitResource or "Convenant" in traitPrerequisites:
+											Debug.debug(traitResource)
 										if traitResource in traitPrerequisites:
 											# Überprüfen ob diese Eigenschaft tatsächlich in den Voraussetzungen enthalten ist. Bei dieser Überprüfung ist es wichtig, auf den ganuen Namen zu prüfen: "Status" != "Status: Camarilla"
 											# Diese Überprüfung wird aber nur durchgeführt, wenn die Chance besteht, daß dieser String identisch ist.
-											matchList = re.findall(r"(\w+\.[\w:\s]*[\w]+)(?=[\s]*[><=]+)", traitPrerequisites, re.UNICODE)
-											if any("Kid" in thingy for thingy in matchList):
-												Debug.debug(matchList)
+											matchList = re.findall(r"(\w+\.[\w]+[:\s]*[\w]+)(?=[\s]*[><=.]+)", traitPrerequisites, re.UNICODE)
 											if traitResource in matchList:
 												## Vor <typ>.<trait> darf kein anderes Wort außer "and", "or" und "(" stehen.
 												idxA = traitPrerequisites.index(traitResource)
@@ -90,7 +90,11 @@ class ConnectPrerequisites(object):
 													# Ändere den prerequisitesText dahingehend, daß der Verweis dort steht.
 													# Ändert ohne viel Intelligenz. "Attribute.GiantKid > 1 and Attribute.Giant > 1" wird gnadenlos in "ptr00 > 1 and ptr00Kid > 1" verändert.
 													#trait.prerequisitesText = trait.prerequisitesText.replace(traitResource, "ptr{}".format(id(subsubitem)))
+													if trait.name == "Oath of Sanguine Compliment":
+														Debug.debug(trait.prerequisitesText)
 													trait.prerequisitesText = re.sub(ur"{}(?=[\s]*[><=.]+)".format(traitResource), "ptr{}".format(id(subsubitem)), trait.prerequisitesText)
+													if trait.name == "Oath of Sanguine Compliment":
+														Debug.debug(trait.prerequisitesText)
 													#Debug.debug(trait.prerequisiteTraits, trait.prerequisitesText)
 													## Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
 													#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, trait.name))
