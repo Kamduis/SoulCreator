@@ -26,6 +26,7 @@ import os
 import sys
 import subprocess
 import zlib
+import gzip
 
 from src.Config import Config
 from src.Tools import PathTools
@@ -43,11 +44,9 @@ def compressFile(fileName, fileSuffix):
 
 	## In die Datei schreiben.
 	fileContentCmpr = None
-	with open(fileNameUncompressed, "r") as f:
-		fileContentCmpr = zlib.compress(f.read())
-
-	with open(fileNameCompressed, "wb") as f:
-		f.write(fileContentCmpr)
+	with open(fileNameUncompressed, "r") as fileUncompressed:
+		with gzip.open(fileNameCompressed, "wb") as fileCompressed:
+			fileCompressed.write(fileUncompressed.read())
 
 
 

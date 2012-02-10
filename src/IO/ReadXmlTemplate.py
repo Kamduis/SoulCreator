@@ -108,9 +108,12 @@ class ReadXmlTemplate(QObject, ReadXml):
 			qrcFile.close()
 
 			## Erzeuge eine temporäre Datei, mit der etree umgehen kann und schreibe den Inhalt aus der Qt-Resource in selbige hinein.
-			fileLike = tempfile.TemporaryFile()
-			fileLike.write(zlib.decompress(fileContent))
+			fileLike = tempfile.SpooledTemporaryFile()
+			## Dank dieser Einstellung kann ich zlib verwenden um Dateien zu dekomprimieren, welche mittels des gzip-Moduls komprimiert wurden.
+			decompressObject = zlib.decompressobj(16 + zlib.MAX_WBITS)
+			fileLike.write(decompressObject.decompress(fileContent))
 			fileLike.seek(0)
+
 			xmlContent = etree.parse(fileLike)
 			fileLike.close()
 
