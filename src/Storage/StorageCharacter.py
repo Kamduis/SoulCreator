@@ -720,11 +720,6 @@ class StorageCharacter(QObject):
 							#Debug.debug("Bonuseigenschaft {} verändert!".format(self.traits[bonus["type"]][category][bonus["name"]].name))
 					break
 
-		categories = ("Mental", "Physical", "Social",)
-		for category in categories:
-			for attribute in self.traits["Attribute"][category].values():
-				Debug.debug("{}: {} + {} = {}".format(attribute.name, attribute.value, attribute.bonusValue, attribute.totalvalue))
-
 
 	def __getKith(self ):
 		"""

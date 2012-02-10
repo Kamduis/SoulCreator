@@ -27,6 +27,7 @@ from PySide.QtCore import Signal
 
 from src.Config import Config
 from src.Widgets.Components.TraitLine import TraitLine
+from src.Datatypes.BonusTrait import BonusTrait
 from src.Debug import Debug
 
 
@@ -61,6 +62,8 @@ class CharaTrait(TraitLine):
 
 		#connect( character, SIGNAL( speciesChanged( cv_Species::SpeciesFlag ) ), this, SLOT( hideTraitIfNotAvailable( cv_Species::SpeciesFlag ) ) );
 		self.__trait.valueChanged.connect(self.setValue)
+		if type(self.__trait) == BonusTrait:
+			self.__trait.bonusValueChanged.connect(self.setBonusValue)
 		self.__trait.customTextChanged.connect(self.setText)
 		self.__trait.specialtiesChanged.connect(self.setSpecialtiesButtonText)
 

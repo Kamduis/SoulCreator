@@ -41,6 +41,7 @@ class TraitLine(QWidget):
 
 
 	valueChanged = Signal(int)
+	bonusValueChanged = Signal(int)
 	textChanged = Signal(str)
 	buttonToggled = Signal(bool)
 
@@ -67,6 +68,7 @@ class TraitLine(QWidget):
 
 		self.__traitDots.valueChanged.connect(self.valueChanged)
 		self.__traitDots.valueChanged.connect(self.enableButton)
+		self.__traitDots.bonusValueChanged.connect(self.bonusValueChanged)
 		self.__button.toggled.connect(self.buttonToggled)
 		self.__lineEdit.textChanged.connect(self.textChanged)
 
@@ -132,6 +134,21 @@ class TraitLine(QWidget):
 
 	## Der Wert, die hier dargestellten Eigenschaft.
 	value = property(__getValue, setValue)
+
+
+	def __getBonusValue(self):
+		return self.__traitDots.bonusBonusValue()
+
+	def setBonusValue( self, bonusBonusValue ):
+		"""
+		\note Diese Funktion ist nicht privat, da ich diese Funktion als Slot benötige.
+		"""
+
+		#Debug.debug("Hurra! Setze Eigenschaft {} auf Wert {}".format(self.name(), bonusBonusValue))
+		self.__traitDots.setBonusValue( bonusBonusValue )
+
+	## Der Wert, die hier dargestellten Eigenschaft.
+	bonusBonusValue = property(__getBonusValue, setBonusValue)
 
 
 	def setPossibleValues( self, values ):
