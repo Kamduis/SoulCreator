@@ -80,7 +80,7 @@ class MainWindow(QMainWindow):
 
 	\todo Benutzer sollen ihre eigenen Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
 
-	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
+	\todo Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten. Bei Magiern/Vampiren sollte das Bonus-Attribut optisch hervorgehoben werden.
 
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
 
@@ -93,6 +93,8 @@ class MainWindow(QMainWindow):
 	\todo Changeling: Ich vermisse beim Aussehen die Unterscheidung zwischen Mask und Mien
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
+
+	\todo Bonus-Eigenschaften werden noch nicht in Berechnungen berücksichtigt.
 	"""
 
 
@@ -278,21 +280,21 @@ class MainWindow(QMainWindow):
 		calc = CalcAdvantages( self.__character, self )
 		#Debug.debug(self.__character.traits[typ]["Mental"]["Resolve"].name)
 		self.__character.ageChanged.connect(calc.calcSize)
-		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(calc.calcSize)
-		self.__character.traits["Merit"]["Physical"]["GiantKid"].valueChanged.connect(calc.calcSize)
-		self.__character.traits["Merit"]["Physical"]["Tiny"].valueChanged.connect(calc.calcSize)
-		self.__character.traits["Flaw"]["Physical"]["Dwarf"].valueChanged.connect(calc.calcSize)
-		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcInitiative)
-		self.__character.traits["Attribute"]["Social"]["Composure"].valueChanged.connect(calc.calcInitiative)
-		self.__character.traits["Merit"]["Physical"]["Fast Reflexes"].valueChanged.connect(calc.calcInitiative)
-		self.__character.traits["Attribute"]["Physical"]["Strength"].valueChanged.connect(calc.calcSpeed)
-		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcSpeed)
-		self.__character.traits["Merit"]["Physical"]["Fleet of Foot"].valueChanged.connect(calc.calcSpeed)
-		self.__character.traits["Attribute"]["Mental"]["Wits"].valueChanged.connect(calc.calcDefense)
-		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcDefense)
-		self.__character.traits["Attribute"]["Physical"]["Stamina"].valueChanged.connect(calc.calcHealth)
-		self.__character.traits["Attribute"]["Mental"]["Resolve"].valueChanged.connect(calc.calcWillpower)
-		self.__character.traits["Attribute"]["Social"]["Composure"].valueChanged.connect(calc.calcWillpower)
+		self.__character.traits["Merit"]["Physical"]["Giant"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.traits["Merit"]["Physical"]["GiantKid"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.traits["Merit"]["Physical"]["Tiny"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.traits["Flaw"]["Physical"]["Dwarf"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].totalvalueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Attribute"]["Social"]["Composure"].totalvalueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Merit"]["Physical"]["Fast Reflexes"].totalvalueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Attribute"]["Physical"]["Strength"].totalvalueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].totalvalueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Merit"]["Physical"]["Fleet of Foot"].totalvalueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Attribute"]["Mental"]["Wits"].totalvalueChanged.connect(calc.calcDefense)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].totalvalueChanged.connect(calc.calcDefense)
+		self.__character.traits["Attribute"]["Physical"]["Stamina"].totalvalueChanged.connect(calc.calcHealth)
+		self.__character.traits["Attribute"]["Mental"]["Resolve"].totalvalueChanged.connect(calc.calcWillpower)
+		self.__character.traits["Attribute"]["Social"]["Composure"].totalvalueChanged.connect(calc.calcWillpower)
 
 		calc.sizeChanged.connect(self.__advantages.setSize)
 		calc.initiativeChanged.connect(self.__advantages.setInitiative)

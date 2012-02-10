@@ -63,7 +63,7 @@ class TemplateWidget(QWidget):
 		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.__character.setDateBecoming)
 		self.ui.comboBox_species.currentIndexChanged[str].connect(self.__character.setSpecies)
 		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.__character.setBreed)
-		self.ui.comboBox_bonus.currentIndexChanged[str].connect(self.__character.setBonus)
+		self.ui.comboBox_bonus.currentIndexChanged[str].connect(self.setCharacterBonus)
 		self.ui.comboBox_kith.currentIndexChanged[str].connect(self.__character.setKith)
 		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.__character.setFaction)
 		self.ui.lineEdit_faction.textEdited.connect(self.__character.setFaction)
@@ -128,7 +128,10 @@ class TemplateWidget(QWidget):
 		Aktualisiert die Anzeige der Bonuseigenschaft.
 		"""
 
-		self.ui.comboBox_bonus.setCurrentIndex( self.ui.comboBox_bonus.findText( bonus ) )
+		if bonus:
+			self.ui.comboBox_bonus.setCurrentIndex( self.ui.comboBox_bonus.findText( bonus["name"] ) )
+		else:
+			self.ui.comboBox_bonus.clear()
 
 
 	def updateKith( self, kith ):
@@ -202,6 +205,29 @@ class TemplateWidget(QWidget):
 			bonusList.sort()
 			self.ui.comboBox_bonus.addItems( bonusList )
 			self.ui.label_bonus2.setText(__list[0]["name"])
+
+		## Schonmal im Charakter speichern, da Magier nichts wählen können.
+		self.setCharacterBonus()
+
+
+	def setCharacterBonus(self):
+		"""
+		Legt die Bonuseigenschaft im Charkater fest.
+		"""
+
+		__list = self.__storage.bonusTraits(self.__character.species, self.__character.breed)
+		if len(__list) > 1:
+			bonusName = self.ui.comboBox_bonus.currentText()
+			for item in __list:
+				if item["name"] == bonusName:
+					self.__character.bonus = item
+					break
+		elif len(__list) > 0:
+			self.__character.bonus = __list[0]
+		else:
+			self.__character.bonus = {}
+
+		#Debug.debug(self.__character.bonus)
 
 
 	def repopulateKiths(self, breed):

@@ -31,6 +31,7 @@ from PySide.QtGui import QPixmap
 from src.Config import Config
 from src.Datatypes.AbstractTrait import AbstractTrait
 from src.Datatypes.StandardTrait import StandardTrait
+from src.Datatypes.BonusTrait import BonusTrait
 from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
 from src.Calc.Calc import Calc
@@ -59,7 +60,7 @@ class StorageCharacter(QObject):
 	virtueChanged = Signal(str)
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
-	bonusChanged = Signal(str)
+	bonusChanged = Signal(object)
 	kithChanged = Signal(str)
 	factionChanged = Signal(str)
 	organisationChanged = Signal(str)
@@ -139,7 +140,7 @@ class StorageCharacter(QObject):
 		self.__virtue = ""
 		self.__vice = ""
 		self.__breed = ""
-		self.__bonus = ""
+		self.__bonus = {}
 		self.__kith = ""
 		self.__faction = ""
 		self.__organisation = ""
@@ -206,7 +207,10 @@ class StorageCharacter(QObject):
 							trait.level = subitem[1]["level"]
 							trait.powers = subitem[1]["powers"]
 						else:
-							trait = StandardTrait(self, subitem[1]["name"], val)
+							if typ == "Attribute":
+								trait = BonusTrait(self, subitem[1]["name"], val)
+							else:
+								trait = StandardTrait(self, subitem[1]["name"], val)
 							trait.age = subitem[1]["age"]
 							trait.era = subitem[1]["era"]
 							trait.custom = custom
@@ -231,7 +235,7 @@ class StorageCharacter(QObject):
 				#if typ == "Subpower":
 					#Debug.debug(self.__traits[typ][item])
 
-
+		self.bonusChanged.connect(self.__changeBonusTrait)
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
@@ -675,13 +679,51 @@ class StorageCharacter(QObject):
 	def setBonus( self, bonus ):
 		"""
 		Verändert die Bonuseigenschaft.
+
+		Die Bonuseigenschaft wird folgendermaßen gespeichert.
+		{
+			"type": Typ,
+			"name": Name,
+		}
 		"""
 
+		#Debug.debug(bonus)
+
 		if ( self.__bonus != bonus ):
+			#Debug.debug(bonus)
 			self.__bonus = bonus
 			self.bonusChanged.emit( bonus )
 
 	bonus = property(__getBonus, setBonus)
+
+
+	def __changeBonusTrait(self, bonus):
+		"""
+		Ändert die Bonuseigenschaft.
+
+		\todo Wenn die Erschaffungsphase vorüber ist, sollte die Bonuseigenschaft nichtmehr verändert werden können und die davon betroffene Eigenscahft wie eine normale Eigenschaft mit erhöhtem Wert, zusätzlicher Spezialisierung betrachtet werden.
+		"""
+
+		## Alle bisherigen Bonuseigenschaften löschen, denn es kann immer nur eine solche geben.
+		for typ in self.traits:
+			for category in self.traits[typ]:
+				for identifier in self.traits[typ][category]:
+					if type(self.traits[typ][category][identifier]) == BonusTrait:
+						self.traits[typ][category][identifier].clearBonus()
+
+		if bonus:
+			for category in self.traits[bonus["type"]]:
+				if bonus["name"] in self.traits[bonus["type"]][category].keys():
+					if type(self.traits[bonus["type"]][category][bonus["name"]]) == BonusTrait:
+						if bonus["type"] == "Attribute":
+							self.traits[bonus["type"]][category][bonus["name"]].bonusValue = 1
+							#Debug.debug("Bonuseigenschaft {} verändert!".format(self.traits[bonus["type"]][category][bonus["name"]].name))
+					break
+
+		categories = ("Mental", "Physical", "Social",)
+		for category in categories:
+			for attribute in self.traits["Attribute"][category].values():
+				Debug.debug("{}: {} + {} = {}".format(attribute.name, attribute.value, attribute.bonusValue, attribute.totalvalue))
 
 
 	def __getKith(self ):

@@ -135,9 +135,9 @@ class CalcAdvantages(QObject):
 		if self.__character.age < Config.ageAdult:
 			result -= 1
 
-		if ( giantTrait.value > 0 ):
+		if ( giantTrait.totalvalue > 0 ):
 			result += 1
-		elif ( smallTrait.value > 0 ):
+		elif ( smallTrait.totalvalue > 0 ):
 			result -= 1
 
 		if ( self.__size != result ):
@@ -154,7 +154,7 @@ class CalcAdvantages(QObject):
 		\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
-		result = self.__attrDex.value + self.__attrCom.value + self.__meritFastReflexes.value
+		result = self.__attrDex.totalvalue + self.__attrCom.totalvalue + self.__meritFastReflexes.totalvalue
 
 		if ( self.__initiative != result ):
 			self.__initiative = result
@@ -170,7 +170,7 @@ class CalcAdvantages(QObject):
 		\todo Bislang nur von Strength und Dexterity abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
-		result = self.__attrStr.value + self.__attrDex.value + 5 + self.__meritFleetOfFoot.value;
+		result = self.__attrStr.totalvalue + self.__attrDex.totalvalue + 5 + self.__meritFleetOfFoot.totalvalue;
 
 		if ( self.__speed != result ):
 			self.__speed = result
@@ -186,7 +186,7 @@ class CalcAdvantages(QObject):
 		\todo Bislang nicht von der Spezies abhängig: Tiere sollten stets das größere von Dex und Wits als Defense haben.
 		"""
 
-		result = min( self.__attrWit.value, self.__attrDex.value )
+		result = min( self.__attrWit.totalvalue, self.__attrDex.totalvalue )
 
 		if ( self.__defense != result ):
 			self.__defense = result
@@ -203,9 +203,9 @@ class CalcAdvantages(QObject):
 		## Bevor ich die Gesundheit ausrechnen kann, muß erst die Größe feststehen.
 		size = self.calcSize()
 
-		result = self.__attrSta.value + size
+		result = self.__attrSta.totalvalue + size
 
-		#Debug.debug("Berechne {} + {} = {}".format(self.__attrSta.value, size, result))
+		#Debug.debug("Berechne {} + {} = {}".format(self.__attrSta.totalvalue, size, result))
 
 		if ( self.__health != result ):
 			self.__health = result
@@ -219,7 +219,7 @@ class CalcAdvantages(QObject):
 		Berechnung der Willenskraft.
 		"""
 
-		result = self.__attrRes.value + self.__attrCom.value
+		result = self.__attrRes.totalvalue + self.__attrCom.totalvalue
 
 		if ( self.__willpower != result ):
 			self.__willpower = result

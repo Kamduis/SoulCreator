@@ -40,7 +40,6 @@ class BasicTrait(AbstractTrait):
 	"""
 
 
-	valueChanged = Signal(int)
 	availableChanged = Signal(bool)
 
 
