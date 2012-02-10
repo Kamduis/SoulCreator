@@ -325,6 +325,16 @@ class ReadXmlTemplate(QObject, ReadXml):
 							infos["weakness"] = subElement.text
 						elif subElement.tag == "blessing":
 							infos["blessing"] = subElement.text
+						elif subElement.tag == "bonus":
+							for subsubElement in list(subElement):
+								for subsubsubElement in list(subsubElement):
+									if subsubsubElement.tag == "item":
+										bonusTraits = {
+											"type": subsubElement.tag,
+											"name": subsubsubElement.attrib["name"]
+										}
+										if bonusTraits:
+											self.__storage.appendBonusTrait( species, groupName, bonusTraits )
 					self.__storage.appendTitle( species, groupCategory, groupCategoryName, element.attrib["name"], infos )
 
 

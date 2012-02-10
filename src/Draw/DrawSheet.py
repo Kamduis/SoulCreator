@@ -822,7 +822,7 @@ class DrawSheet(QObject):
 			j = 0
 			for subitem in item[1]:
 				attrib = self.__character.traits["Attribute"][item[0]][subitem]
-				self.__drawTrait(headingWidth + i * distanceH, offsetV - fontSubHeadingHeightDiff + fontHeightDiff + j * self.__fontSubHeadingHeight, width=distanceH, name=attrib.name, value=attrib.value, maxValue=self.__traitMax, align=Qt.AlignRight)
+				self.__drawTrait(headingWidth + i * distanceH, offsetV - fontSubHeadingHeightDiff + fontHeightDiff + j * self.__fontSubHeadingHeight, width=distanceH, name=attrib.name, value=attrib.totalvalue, maxValue=self.__traitMax, align=Qt.AlignRight)
 				j += 1
 			i += 1
 
