@@ -96,10 +96,10 @@ class SpecialtiesWidget(QWidget):
 			if self.__trait != trait:
 				# Vorherige Verbindung lösen.
 				if self.__trait:
-					self.__trait.specialtiesChanged.disconnect(self.reshowSpecialties)
+					self.__trait.totalspecialtiesChanged.disconnect(self.reshowSpecialties)
 				self.__trait = trait
 				# Neue Verbindung aufbauen, damit beim Laden des Charakters die angezeigten Spezialisierungen automatisch richtig abgehakt werden.
-				self.__trait.specialtiesChanged.connect(self.reshowSpecialties)
+				self.__trait.totalspecialtiesChanged.connect(self.reshowSpecialties)
 			#Debug.debug(self.__trait)
 			for item in self.__storage:
 				for subitem in self.__storage[item].items():
