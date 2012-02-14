@@ -1048,7 +1048,7 @@ class DrawSheet(QObject):
 			width,
 			3 * fontHeight,
 			Qt.AlignLeft | Qt.TextWordWrap,
-			"Numina: {}".format(
+			u"Numina: {}".format(
 				", ".join(self.__character.companionNumina)
 			)
 		)
@@ -1060,7 +1060,7 @@ class DrawSheet(QObject):
 			width,
 			3 * fontHeight,
 			Qt.AlignLeft | Qt.TextWordWrap,
-			self.tr("Ban: {}".format(self.__character.companionBan))
+			u"Ban: {}".format(self.__character.companionBan)
 		)
 
 		self.__drawBB(offsetH, offsetV, width, height)

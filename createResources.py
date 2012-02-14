@@ -34,19 +34,20 @@ from src.Tools import PathTools
 
 
 
-def compressFile(fileName, fileSuffix):
-	"""
-	Komprimiert eine Datei.
-	"""
+## Ist nichtmehr notwendig, ich arbeite von Anfang an mit komürimierten Dateien.
+#def compressFile(fileName, fileSuffix):
+	#"""
+	#Komprimiert eine Datei.
+	#"""
 
-	fileNameUncompressed = "{}.{}".format(fileName, fileSuffix)
-	fileNameCompressed = "{}.{}".format(fileName, Config.fileSuffixCompressed)
+	#fileNameUncompressed = "{}.{}".format(fileName, fileSuffix)
+	#fileNameCompressed = "{}.{}".format(fileName, Config.fileSuffixCompressed)
 
-	## In die Datei schreiben.
-	fileContentCmpr = None
-	with open(fileNameUncompressed, "r") as fileUncompressed:
-		with gzip.open(fileNameCompressed, "wb") as fileCompressed:
-			fileCompressed.write(fileUncompressed.read())
+	### In die Datei schreiben.
+	#fileContentCmpr = None
+	#with open(fileNameUncompressed, "r") as fileUncompressed:
+		#with gzip.open(fileNameCompressed, "wb") as fileCompressed:
+			#fileCompressed.write(fileUncompressed.read())
 
 
 
@@ -57,10 +58,10 @@ if __name__ == "__main__":
 	Erzeugt die notwendigen ui-Dateien und Resourcen, um SoulCreator verwenden zu können.
 	"""
 
-	for f in os.listdir("{}/{}".format(Config.resourceDir, Config.resourceDirTemplates)):
-		if f.endswith(".xml"):
-			nameWOSuffix = f.split(".xml")[0]
-			compressFile("{}/{}/{}/{}".format(PathTools.getPath(), Config.resourceDir, Config.resourceDirTemplates, nameWOSuffix), "xml")
+	#for f in os.listdir("{}/{}".format(Config.resourceDir, Config.resourceDirTemplates)):
+		#if f.endswith(".xml"):
+			#nameWOSuffix = f.split(".xml")[0]
+			#compressFile("{}/{}/{}/{}".format(PathTools.getPath(), Config.resourceDir, Config.resourceDirTemplates, nameWOSuffix), "xml")
 
 	## Resourcen bauen
 	cmd_string_rcc = ["pyside-rcc", "-o", ]
