@@ -27,16 +27,16 @@
 						<Skill>
 							<item name="Brawl"/>
 							<item name="Intimidation"/>
-							<item name="Subterfuge"/>
+							<item name="Survival"/>
 						</Skill>
 					</bonus>
 				</item>
 				<item name="Cahalith">
 					<bonus>
 						<Skill>
+							<item name="Crafts"/>
 							<item name="Expression"/>
-							<item name="Streetwise"/>
-							<item name="Subterfuge"/>
+							<item name="Persuasion"/>
 						</Skill>
 					</bonus>
 				</item>
@@ -44,8 +44,8 @@
 					<bonus>
 						<Skill>
 							<item name="Investigation"/>
-							<item name="Persuasion"/>
-							<item name="Subterfuge"/>
+							<item name="Politics"/>
+							<item name="Empathy"/>
 						</Skill>
 					</bonus>
 				</item>
@@ -53,16 +53,16 @@
 					<bonus>
 						<Skill>
 							<item name="Medicine"/>
-							<item name="Streetwise"/>
-							<item name="Subterfuge"/>
+							<item name="Occult"/>
+							<item name="Animal Ken"/>
 						</Skill>
 					</bonus>
 				</item>
 				<item name="Irraka">
 					<bonus>
 						<Skill>
+							<item name="Larceny"/>
 							<item name="Stealth"/>
-							<item name="Streetwise"/>
 							<item name="Subterfuge"/>
 						</Skill>
 					</bonus>

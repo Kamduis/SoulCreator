@@ -93,8 +93,9 @@ class BonusTrait(StandardTrait):
 
 	@property
 	def totalspecialties(self):
-		result = self.specialties
-		return result.extend(self.bonusSpecialties)
+		result = self.specialties[:]
+		result.extend(self.bonusSpecialties)
+		return result
 
 
 	def emitTotalspecialtiesChanged(self, value):

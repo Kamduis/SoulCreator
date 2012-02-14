@@ -196,6 +196,8 @@ class TemplateWidget(QWidget):
 		"""
 		Die Bonuseigenschaften neu festlegen.
 
+		\todo Bei Werwölfen und Wechselbälgern sollten alle Spezialisierungen usgeblendet werden, die der Charkater nicht wählen kann weil die Fertigkeit einen Wert von 0 hat, oder selbige Spezialisierung schon besitzt.
+
 		\todo Nach Ende der Erschaffung muß die Bonus-Eigenschaft unveränderlich gemacht werden.
 		"""
 

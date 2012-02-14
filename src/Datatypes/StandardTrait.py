@@ -83,14 +83,15 @@ class StandardTrait(BasicTrait):
 
 	def removeSpecialty(self, name):
 		"""
-		Fügt der Liste von SPezialisierungen eine hinzu.
+		Entfernt eine Spezialisierung.
 
 		\note Diese Methode muß verwendet werden, wenn man das Signal \ref specialtyChanged nutzen möchte.
 		"""
 
-		self.__specialties.remove(name)
-		self.specialtiesChanged.emit(self.specialties)
-		self.traitChanged.emit(self)
+		if name in self.__specialties:
+			self.__specialties.remove(name)
+			self.specialtiesChanged.emit(self.specialties)
+			self.traitChanged.emit(self)
 
 
 	def __getEra(self):

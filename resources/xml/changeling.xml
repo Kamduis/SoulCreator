@@ -50,6 +50,7 @@
 					<bonus>
 						<Skill>
 							<item name="Athletics"/>
+							<item name="Brawl"/>
 							<item name="Stealth"/>
 						</Skill>
 					</bonus>
@@ -75,6 +76,7 @@
 					<bonus>
 						<Skill>
 							<item name="Athletics"/>
+							<item name="Brawl"/>
 							<item name="Stealth"/>
 						</Skill>
 					</bonus>
@@ -103,6 +105,7 @@
 					<bonus>
 						<Skill>
 							<item name="Athletics"/>
+							<item name="Brawl"/>
 							<item name="Stealth"/>
 						</Skill>
 					</bonus>
@@ -131,6 +134,7 @@
 					<bonus>
 						<Skill>
 							<item name="Athletics"/>
+							<item name="Brawl"/>
 							<item name="Stealth"/>
 						</Skill>
 					</bonus>
@@ -159,6 +163,7 @@
 					<bonus>
 						<Skill>
 							<item name="Athletics"/>
+							<item name="Brawl"/>
 							<item name="Stealth"/>
 						</Skill>
 					</bonus>
@@ -193,6 +198,7 @@
 					<bonus>
 						<Skill>
 							<item name="Athletics"/>
+							<item name="Brawl"/>
 							<item name="Stealth"/>
 						</Skill>
 					</bonus>

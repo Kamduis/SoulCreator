@@ -94,6 +94,9 @@ class Config(object):
 	##  Deaktivierte textabschnitte
 	deactivatedTextColor = "darkgrey"
 
+	## Kennzeichnung von Bonuseigenschaften.
+	bonusColor = "red"
+
 	## Hintergrundfarbe für die unterschiedlichen Waffenkategorien.
 	weaponsColor = {}
 	weaponsColor["melee"] = "white"

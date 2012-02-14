@@ -882,7 +882,15 @@ class DrawSheet(QObject):
 		for item in Config.mainCategories:
 			self.__drawHeading(offsetH, offsetV + i * (self.__fontHeadingHeight + self.__headingSep) + j * textHeight, width, item)
 			for subitem in traitsToDisplay[item]:
-				self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + i * (self.__fontHeadingHeight + self.__headingSep) + j * textHeight, width=width, name=subitem.name, value=subitem.value, maxValue=self.__traitMax, text=", ".join(subitem.specialties))
+				self.__drawTrait(
+					offsetH,
+					offsetV + self.__fontHeadingHeight + i * (self.__fontHeadingHeight + self.__headingSep) + j * textHeight,
+					width=width,
+					name=subitem.name,
+					value=subitem.value,
+					maxValue=self.__traitMax,
+					text=", ".join(subitem.totalspecialties)
+				)
 				j += 1
 			i += 1
 
