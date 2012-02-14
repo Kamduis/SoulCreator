@@ -29,6 +29,7 @@ from PySide.QtGui import QWidget, QHBoxLayout, QLineEdit, QMessageBox
 
 from src.Config import Config
 from src.Widgets.Components.TraitDots import TraitDots
+from src.Widgets.Components.CompanionWidget import CompanionWidget
 from src.Debug import Debug
 
 from ui.ui_SpecialsWidget import Ui_SpecialsWidget
@@ -59,6 +60,10 @@ class SpecialsWidget(QWidget):
 		self.ui.textEdit_paradoxMarks.textChanged.connect(self.changeParadoxMarks)
 		self.__character.paradoxMarksChanged.connect(self.ui.textEdit_paradoxMarks.setPlainText)
 
+		self.companionWidget = CompanionWidget(self.__character)
+		self.ui.layout_companion.addWidget(self.companionWidget)
+		self.companionWidget.ui.listWidget_numina.setCheckableItems(self.__storage.spiritNumina)
+
 		## Vampir
 		## Liste aller Vinculum-Widgets
 		self.__vinculumWidgets = []
@@ -72,12 +77,17 @@ class SpecialsWidget(QWidget):
 			vinculumLayout.addWidget(lineEdit)
 			vinculumLayout.addWidget(traitDots)
 			self.ui.layout_vinculi.addLayout(vinculumLayout)
-			
+
 			self.__vinculumWidgets.append([ lineEdit, traitDots ])
 
 			trait.nameChanged.connect(lineEdit.setText)
 			trait.valueChanged.connect(traitDots.setValue)
 			traitDots.valueChanged.connect(self.checkMaxVinculum)
+
+		## Werewolf
+		self.totemWidget = CompanionWidget(self.__character)
+		self.ui.layout_totem.addWidget(self.totemWidget)
+		self.totemWidget.ui.listWidget_numina.setCheckableItems(self.__storage.spiritNumina)
 
 
 	def setPage(self, species):
@@ -93,7 +103,7 @@ class SpecialsWidget(QWidget):
 			self.ui.stackedWidget.setCurrentWidget(self.ui.page_mage)
 		elif species == "Vampire":
 			self.ui.stackedWidget.setCurrentWidget(self.ui.page_vampire)
-		elif species == "Mage":
+		elif species == "Werewolf":
 			self.ui.stackedWidget.setCurrentWidget(self.ui.page_werewolf)
 
 

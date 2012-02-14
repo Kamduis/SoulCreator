@@ -633,25 +633,579 @@
 						<power value="2">Forces</power>
 						<only>Seers of the Throne</only>
 					</trait>
-					<trait name="" level="4" costFuel="" costWill="" roll="">
+					<trait name="Charm" level="4" costFuel="1" costWill="" roll="Intelligence+Crafts+Fate">
 						<power value="4">Fate</power>
 					</trait>
-					<trait name="" level="5" costFuel="" costWill="" roll="">
+					<trait name="Fool's Gold" level="4" costFuel="" costWill="" roll="anipulation+Occult+Fate">
+						<power value="4">Fate</power>
+					</trait>
+					<trait name="Coincidental Travel" level="4" costFuel="" costWill="" roll="Wits+Persuasion+Fate">
+						<power value="4">Fate</power>
+						<only>Silver Ladder</only>
+					</trait>
+					<trait name="Destroy Bindings" level="4" costFuel="" costWill="" roll="Resolve+Occult+Fate">
+						<power value="4">Fate</power>
+					</trait>
+					<trait name="Forbidden Fate" level="4" costFuel="1" costWill="" roll="Manipulation+Subterfuge+Fate">
+						<power value="4">Fate</power>
+						<only>Silver Ladder</only>
+					</trait>
+					<trait name="Fortune's Fool" level="4" costFuel="1" costWill="" roll="Wits+Occult+Fate">
+						<power value="4">Fate</power>
+						<only>Adamantine Arrow</only>
+					</trait>
+					<trait name="Gift of Fortune" level="4" costFuel="1" costWill="" roll="Intelligence+Investigation+Fate">
+						<power value="4">Fate</power>
+						<power value="1">Space</power>
+					</trait>
+					<trait name="Probable Cause" level="4" costFuel="1" costWill="" roll="Composure+Occult+Fate">
+						<power value="4">Fate</power>
+					</trait>
+					<trait name="Sanctify Oaths" level="4" costFuel="" costWill="" roll="Presence+Expression+Fate">
+						<power value="4">Fate</power>
+					</trait>
+					<trait name="Sever Oaths" level="4" costFuel="" costWill="" roll="Manipulation+Occult+Fate">
+						<power value="4">Fate</power>
+					</trait>
+					<trait name="Transfer Destiny" level="4" costFuel="1" costWill="" roll="Manipulation+Occult+Fate">
+						<power value="4">Fate</power>
+						<only>Seers of the Throne</only>
+					</trait>
+					<trait name="Break the Chains" level="5" costFuel="" costWill="" roll="Wits+Occult+Fate">
+						<power value="5">Fate</power>
+					</trait>
+					<trait name="Forge Destiny" level="5" costFuel="1" costWill="" roll="Manipulation+Persuasion+Fate">
+						<power value="5">Fate</power>
+					</trait>
+					<trait name="Forge Doom" level="5" costFuel="1" costWill="" roll="Resolve+Intimidation+Fate">
+						<power value="5">Fate</power>
+					</trait>
+					<trait name="Forge Godsend" level="5" costFuel="1" costWill="" roll="Composure+Survival+Fate">
+						<power value="5">Fate</power>
+					</trait>
+					<trait name="Geas" level="5" costFuel="" costWill="" roll="Presence+Expression+Fate">
+						<power value="5">Fate</power>
+					</trait>
+					<trait name="Great Curse" level="5" costFuel="1" costWill="" roll="Manipulation+Intimidation+Fate">
+						<power value="5">Fate</power>
+					</trait>
+					<trait name="Infectious Curse" level="5" costFuel="1" costWill="" roll="Resolve+Intimidation+Fate">
+						<power value="5">Fate</power>
+						<power value="2">Space</power>
+					</trait>
+					<trait name="Swarm of Locusts" level="5" costFuel="" costWill="" roll="Wits+Occult/Science+Fate">
 						<power value="5">Fate</power>
 					</trait>
 				</Category>
 				<Category name="Forces">
-					<trait name="Test1" level="1">
+					<trait name="Influence Heat" level="1" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
 						<power value="1">Forces</power>
+					</trait>
+					<trait name="Influence Light" level="1" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="1">Forces</power>
+					</trait>
+					<trait name="Influence Sound" level="1" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="1">Forces</power>
+					</trait>
+					<trait name="Nightsight" level="1" costFuel="" costWill="" roll="Wits+Composure+Forces">
+						<power value="1">Forces</power>
+					</trait>
+					<trait name="Read Matrices" level="1" costFuel="" costWill="" roll="Wits+Occult/Science+Forces">
+						<power value="1">Forces</power>
+					</trait>
+					<trait name="Receiver" level="1" costFuel="" costWill="" roll="Wits+Occult+Forces">
+						<power value="1">Forces</power>
+					</trait>
+					<trait name="Tune In" level="1" costFuel="" costWill="" roll="Intelligence+Science+Forces">
+						<power value="1">Forces</power>
+					</trait>
+					<trait name="Aether-Net" level="2" costFuel="" costWill="" roll="Manipulation+Science+Forces">
+						<power value="2">Forces</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Alter Frequency" level="2" costFuel="" costWill="" roll="Presence+Expression+Forces">
+						<power value="2">Forces</power>
+						<only>Guardians of the Veil</only>
+					</trait>
+					<trait name="Control Heat" level="2" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Control Light" level="2" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Control Sound" level="2" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Control Traffic" level="2" costFuel="" costWill="" roll="Wits+Science+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Electronic Eye" level="2" costFuel="" costWill="" roll="Intelligence+Computer+Forces">
+						<power value="2">Forces</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Eyes of the Matrix" level="2" costFuel="" costWill="" roll="Wits+Occult/Science+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Fireproofing" level="2" costFuel="" costWill="" roll="Stamina+Survival+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Friction Reduction" level="2" costFuel="" costWill="" roll="Wits+Science+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Influence Electricity" level="2" costFuel="" costWill="" roll="Dexterity+Athletics+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Influence Fire" level="2" costFuel="" costWill="" roll="Strength+Athletics+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Insulate" level="2" costFuel="" costWill="" roll="Stamina+Survival+Forces">
+						<power value="2">Forces</power>
+						<only>Seers of the Throne</only>
+					</trait>
+					<trait name="Invisible Object" level="2" costFuel="1" costWill="" roll="Manipulation+Subterfuge+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Invoke Password" level="2" costFuel="" costWill="" roll="Wits+Crafts+Forces">
+						<power value="2">Forces</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Kinetic Blow" level="2" costFuel="" costWill="" roll="Strength+Brawl/Weaponry+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Modulate Speech" level="2" costFuel="" costWill="" roll="Manipulation+Expression+Forces">
+						<power value="2">Forces</power>
+						<power value="1">Fate</power>
+						<only>Silver Ladder</only>
+					</trait>
+					<trait name="Nullify Combustion" level="2" costFuel="" costWill="" roll="Presence+Occult/Science+Forces">
+						<power value="2">Forces</power>
+						<power value="2">Death</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Recharge Battery" level="2" costFuel="" costWill="" roll="Presence+Crafts+Forces">
+						<power value="2">Forces</power>
+						<power value="2">Matter</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Transmission" level="2" costFuel="" costWill="" roll="Manipulation+Expression+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Unseen Shield" level="2" costFuel="(1)" costWill="" roll="Stamina+Occult/Science+Forces">
+						<power value="2">Forces</power>
+					</trait>
+					<trait name="Autonomous Servant" level="3" costFuel="" costWill="" roll="Intelligence+Investigation+Forces">
+						<power value="3">Forces</power>
+						<power value="1">Mind</power>
+					</trait>
+					<trait name="Bestow Unseen Shield" level="3" costFuel="(1)" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Call Lightning" level="3" costFuel="" costWill="" roll="Dexterity+Athletics+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Cloak of Force" level="3" costFuel="1" costWill="" roll="Resolve+Science/Occult+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Complex Transmission" level="3" costFuel="" costWill="" roll="Manipulation+Science+Forces">
+						<power value="3">Forces</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Control Electricity" level="3" costFuel="" costWill="" roll="Wits+Science+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Control Fire" level="3" costFuel="" costWill="" roll="Presence+Occult/Science+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Cutting Scream" level="3" costFuel="" costWill="" roll="Stamina+Expression+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Empowered Voice" level="3" costFuel="" costWill="" roll="Presence+Athletics+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Light Mastery" level="3" costFuel="" costWill="" roll="Composure+Occult/Science+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Invisibility" level="3" costFuel="1" costWill="" roll="Wits+Stealth+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Sound Mastery" level="3" costFuel="" costWill="" roll="Resolve+Occult/Science+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Stay the Invisible Fires" level="3" costFuel="" costWill="" roll="Strength+Science+Forces">
+						<power value="3">Forces</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Supernal Hack" level="3" costFuel="" costWill="" roll="Intelligence+Computer+Forces">
+						<power value="3">Forces</power>
+						<power value="3">Matter</power>
+						<only>Mysterium</only>
+					</trait>
+					<trait name="Telekinesis" level="3" costFuel="" costWill="" roll="Wits+Athletics/Larceny+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Telekinetic Strike" level="3" costFuel="" costWill="" roll="Presence+Athletics+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Turn Projectile" level="3" costFuel="" costWill="" roll="Dexterity+Athletics+Forces">
+						<power value="3">Forces</power>
+					</trait>
+					<trait name="Bestow Invisibility" level="4" costFuel="1" costWill="" roll="Manipulation+Stealth+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Burst of Speed" level="4" costFuel="1+" costWill="" roll="Wits+Athletics+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Change Weather" level="4" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Containment" level="4" costFuel="(1)" costWill="" roll="Wits+Craft+Forces">
+						<power value="4">Forces</power>
+						<only>Mysterium</only>
+					</trait>
+					<trait name="Control Velocity" level="4" costFuel="" costWill="" roll="Intelligence+Science+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Firebolt" level="4" costFuel="(1)" costWill="" roll="Dexterity+Athletics+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Firestarter" level="4" costFuel="1" costWill="" roll="Presence+Intimidation+Forces">
+						<power value="4">Forces</power>
+						<only>Adamantine Arrow</only>
+					</trait>
+					<trait name="Fiery Transformation" level="4" costFuel="(1)" costWill="" roll="Stamina+Intimidation+Forces">
+						<power value="4">Forces</power>
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Fiery Servant" level="4" costFuel="1" costWill="" roll="Manipulation+Expression+Forces">
+						<power value="4">Forces</power>
+						<power value="5">Mind</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Gravity Shift" level="4" costFuel="" costWill="" roll="Wits+Occult+Forces">
+						<power value="4">Forces</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Influence Magnet" level="4" costFuel="" costWill="" roll="Intelligence+Science+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Invisible Fire" level="4" costFuel="(1)" costWill="" roll="Wits+Science+Forces">
+						<power value="4">Forces</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Kinetic Ripple" level="4" costFuel="1" costWill="" roll="Stamina+Athletics+Forces">
+						<power value="4">Forces</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Levitation" level="4" costFuel="" costWill="" roll="Intelligence+Athletics+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Quench the Invisible Fires" level="4" costFuel="" costWill="" roll="Intelligence+Science+Forces">
+						<power value="4">Forces</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Sensory Deprivation" level="4" costFuel="" costWill="" roll="Manipulation+Intimidation+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Thunderbolt" level="4" costFuel="(1)" costWill="" roll="Stamina+Athletics+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Transform Energy" level="4" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Unseen Hand" level="4" costFuel="1" costWill="" roll="Wits+Brawl+Forces">
+						<power value="4">Forces</power>
+					</trait>
+					<trait name="Adverse Weather" level="5" costFuel="" costWill="" roll="Resolve+Intimidation+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Bestow Burst of Speed" level="5" costFuel="1+" costWill="" roll="Manipulation+Athletics+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Bestow Levitation" level="5" costFuel="1" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Complete Invisibility" level="5" costFuel="1" costWill="" roll="Wits+Stealth+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Control Gravity" level="5" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Create Sunlight" level="5" costFuel="1" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Earthquake" level="5" costFuel="" costWill="" roll="Resolve+Athletics+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Electromagnetic Pulse" level="5" costFuel="" costWill="" roll="Resolve+Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Eradicate Radiation" level="5" costFuel="" costWill="" roll="Resolve+Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Flight" level="5" costFuel="1" costWill="" roll="Dexterity+Athletics+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Increase Gravity" level="5" costFuel="" costWill="" roll="Resolve+Occult/Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Magnetize" level="5" costFuel="" costWill="" roll="Intelligence+Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Nullify Gravity" level="5" costFuel="" costWill="" roll="Intelligence+Occult/Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Radiation" level="5" costFuel="" costWill="" roll="Stamina+Occult/Science+Forces">
+						<power value="5">Forces</power>
+					</trait>
+					<trait name="Velocity Mastery" level="5" costFuel="" costWill="" roll="Resolve+Athletics+Forces">
+						<power value="5">Forces</power>
 					</trait>
 				</Category>
 				<Category name="Life">
-					<trait name="Test1" level="1">
+					<trait name="Analyze Life" level="1" costFuel="" costWill="" roll="Intelligence+Survival/Animal Ken/Medicine+Life">
 						<power value="1">Life</power>
+					</trait>
+					<trait name="Analyze Health" level="1" costFuel="" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="1">Life</power>
+					</trait>
+					<trait name="Cleanse the Body" level="1" costFuel="" costWill="" roll="Stamina+Medicine+Life">
+						<power value="1">Life</power>
+					</trait>
+					<trait name="Forgo Rest" level="1" costFuel="" costWill="" roll="Resolve+Crafts+Life">
+						<power value="1">Life</power>
+						<only>Free Council</only>
+					</trait>
+					<trait name="Pulse of the Living World" level="1" costFuel="" costWill="" roll="Wits+Medicine/Science+Life">
+						<power value="1">Life</power>
+					</trait>
+					<trait name="Sense Life" level="1" costFuel="" costWill="" roll="Wits+Animal Ken+Life">
+						<power value="1">Life</power>
+					</trait>
+					<trait name="Accelerated Growth" level="2" costFuel="" costWill="" roll="Manipulation+Survival+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Body Control" level="2" costFuel="" costWill="" roll="Wits+Athletics+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Bread Alone" level="2" costFuel="1" costWill="" roll="Wits+Survival+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Control Base Life" level="2" costFuel="" costWill="" roll="Manipulation+Animal Ken+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Evidence Shroud" level="2" costFuel="" costWill="" roll="Wits+Investigation+Life">
+						<power value="2">Life</power>
+						<power value="2">Matter</power>
+					</trait>
+					<trait name="Heal Flora and Fauna" level="2" costFuel="" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Hide Tracks" level="2" costFuel="" costWill="" roll="Presence+Survival+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Organic Resilience" level="2" costFuel="(1)" costWill="" roll="Stamina+Athletics+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Puissant Skill" level="2" costFuel="" costWill="" roll="Dexterity+Medicine+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Purify Bodies" level="2" costFuel="" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Self-Healing" level="2" costFuel="1" costWill="" roll="Dexterity+Medicine+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Self-Purging" level="2" costFuel="" costWill="" roll="Stamina+Medicine+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Transfer Base Features" level="2" costFuel="" costWill="" roll="Intelligence+Animal Ken/Survival+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Transform Base Life" level="2" costFuel="" costWill="" roll="Intelligence+Animal Ken/Survival+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Visions of the Living World" level="2" costFuel="" costWill="" roll="Intelligence+Animal Ken/Survival+Life">
+						<power value="2">Life</power>
+					</trait>
+					<trait name="Banish Plague" level="3" costFuel="" costWill="" roll="Wits+Medicine+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Body Mastery" level="3" costFuel="(1)" costWill="" roll="Stamina+Medicine+Life">
+						<power value="3">Life</power>
+						<only>Mysterium</only>
+					</trait>
+					<trait name="Chemical Imbalance" level="3" costFuel="" costWill="" roll="Manipulation+Empathy+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Control Median Life" level="3" costFuel="" costWill="" roll="Presence+Animal Ken+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Degrading the Form" level="3" costFuel="(1)" costWill="" roll="Stamina+Athletics+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Enforced Silence" level="3" costFuel="" costWill="" roll="Resolve+Medicine+Life">
+						<power value="3">Life</power>
+						<only>Guardians of the Veil</only>
+					</trait>
+					<trait name="Feral Reflex" level="3" costFuel="" costWill="" roll="Wits+Animal Ken+Life">
+						<power value="3">Life</power>
+						<power value="3">Mind</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Gaia's Hold" level="3" costFuel="" costWill="" roll="Wits+Science+Life">
+						<power value="3">Life</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Healing Heart" level="3" costFuel="1" costWill="" roll="Composure+Medicine+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Honing the Form" level="3" costFuel="1" costWill="" roll="Resolve+Athletics+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Image of Striking Beauty" level="3" costFuel="" costWill="" roll="Presence+Expression+Life">
+						<power value="3">Life</power>
+						<power value="2">Mind</power>
+						<only>Silver Ladder</only>
+					</trait>
+					<trait name="Inflict Agony" level="3" costFuel="" costWill="" roll="Strength+Intimidation+Life">
+						<power value="3">Life</power>
+						<only>Seers of the Throne</only>
+					</trait>
+					<trait name="Metabolic Suspension" level="3" costFuel="" costWill="" roll="Stamina+Survival+Life">
+						<power value="3">Life</power>
+						<power value="3">Time</power>
+						<only>Mysterium</only>
+					</trait>
+					<trait name="Organic Shield" level="3" costFuel="" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Palsy" level="3" costFuel="" costWill="" roll="Composure+Medicine+Life">
+						<power value="3">Life</power>
+						<only>Guardians of the Veil</only>
+					</trait>
+					<trait name="Physical Reconfiguration" level="3" costFuel="" costWill="" roll="Resolve+Subterfuge+Life">
+						<power value="3">Life</power>
+						<only>Silver Ladder</only>
+					</trait>
+					<trait name="Spasm" level="3" costFuel="" costWill="" roll="Manipulation+Medicine+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Transfer Median Features" level="3" costFuel="" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Transform Median Life" level="3" costFuel="" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Transform Self" level="3" costFuel="1" costWill="" roll="Stamina+Athletics+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Trigger Autonomic Function" level="3" costFuel="" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Two Faces" level="3" costFuel="" costWill="" roll="Wits+Subterfuge+Life">
+						<power value="3">Life</power>
+					</trait>
+					<trait name="Accelerate Healing" level="4" costFuel="special" costWill="" roll="Stamina+Medicine+Life">
+						<power value="4">Life</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Animal Degradation" level="4" costFuel="1" costWill="" roll="Resolve+Animal Ken+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Animal Minion" level="4" costFuel="" costWill="" roll="Presence+Persuasion+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Animate Plant" level="4" costFuel="" costWill="" roll="Wits+Survival+Life">
+						<power value="4">Life</power>
+						<only>Adamantine Arrows</only>
+					</trait>
+					<trait name="Contagion" level="4" costFuel="1" costWill="" roll="Resolve+Medicine+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Control Reactions" level="4" costFuel="" costWill="" roll="Manipulation+Empathy+Life">
+						<power value="4">Life</power>
+						<only>Guardians of the Veil</only>
+					</trait>
+					<trait name="Doppelgänger" level="4" costFuel="" costWill="" roll="Intelligence+Subterfuge+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Enfeeblement" level="4" costFuel="1" costWill="" roll="Strength+Intimidation+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Hone Another's Form" level="4" costFuel="1" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Life Force Assault" level="4" costFuel="" costWill="" roll="Dexterity+Athletics+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Many Faces" level="4" costFuel="" costWill="" roll="Manipulation+Subterfuge+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Perfect Mask" level="4" costFuel="" costWill="" roll="Manipulation+Stealth+Life">
+						<power value="4">Life</power>
+						<power value="3">Mind</power>
+						<only>Guardians of the Veil</only>
+					</trait>
+					<trait name="Petrifaction" level="4" costFuel="1" costWill="" roll="Manipulation+Crafts+Life">
+						<power value="4">Life</power>
+						<power value="5">Matter</power>
+					</trait>
+					<trait name="Shapechanging" level="4" costFuel="1" costWill="" roll="Stamina+Animal Ken+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Skilled Triumph" level="4" costFuel="1" costWill="" roll="Strength+Athletics+Life">
+						<power value="4">Life</power>
+						<only>Mysterium</only>
+					</trait>
+					<trait name="Supreme Honing" level="4" costFuel="1" costWill="" roll="Resolve+Athletics+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Transform Other" level="4" costFuel="" costWill="" roll="Presence+Animal Ken+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Trigger the Lizard Brain" level="4" costFuel="" costWill="" roll="Manipulation+Intimidation+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Uplift the Species" level="4" costFuel="" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="4">Life</power>
+					</trait>
+					<trait name="Create Life" level="5" costFuel="1" costWill="" roll="Resolve+Animal Ken+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Evolutionary Shift" level="5" costFuel="" costWill="" roll="Intelligence+Animal Ken+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Fantasia" level="5" costFuel="1" costWill="" roll="Intelligence+Academics+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Ghastly Metamorphosis" level="5" costFuel="1" costWill="" roll="Strength+Animal Ken+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Greater Shapechanging" level="5" costFuel="1" costWill="" roll="Stamina+Animal Ken+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Hereditary Change" level="5" costFuel="1" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Human Minion" level="5" costFuel="1" costWill="" roll="{Manipulation+Persuasion+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Regeneration" level="5" costFuel="1" costWill="" roll="Intelligence+Medicine+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Ultimate Degradation" level="5" costFuel="" costWill="" roll="Strength+Athletics+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Ultimate Honing" level="5" costFuel="1" costWill="" roll="Presence+Medicine+Life">
+						<power value="5">Life</power>
+					</trait>
+					<trait name="Vital Balance" level="5" costFuel="1" costWill="" roll="Intelligence+Occult+Life">
+						<power value="5">Life</power>
+						<power value="4">Death</power>
 					</trait>
 				</Category>
 				<Category name="Matter">
-					<trait name="Test1" level="1">
+					<trait name="" level="1" costFuel="" costWill="" roll="">
 						<power value="1">Matter</power>
 					</trait>
 				</Category>

@@ -89,6 +89,13 @@ class StorageCharacter(QObject):
 	magicalToolChanged = Signal(str)
 	nimbusChanged = Signal(str)
 	paradoxMarksChanged = Signal(str)
+	companionNameChanged = Signal(str)
+	companionPowerChanged = Signal(int)
+	companionFinesseChanged = Signal(int)
+	companionResistanceChanged = Signal(int)
+	companionSizeChanged = Signal(int)
+	companionSpeedFactorChanged = Signal(int)
+	companionNuminaChanged = Signal(object)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -174,6 +181,19 @@ class StorageCharacter(QObject):
 			vinculum = AbstractTrait()
 			self.__vinculi.append(vinculum)
 			vinculum.traitChanged.connect(self.setModified)
+
+		self.__companionName = ""
+		self.__companionPower = 0
+		self.__companionFinesse = 0
+		self.__companionResistance = 0
+		self.__companionSize = 0
+		self.__companionSpeedFactor = 0
+		self.__companionInfluences = []
+		for i in xrange(Config.companionInfluencesCount):
+			companionInfluence = AbstractTrait()
+			self.__companionInfluences.append(companionInfluence)
+			companionInfluence.traitChanged.connect(self.setModified)
+		self.__companionNumina = []
 
 		self.dateBirthChanged.connect(self.__calcAge)
 		self.dateGameChanged.connect(self.__calcAge)
@@ -552,14 +572,104 @@ class StorageCharacter(QObject):
 	paradoxMarks = property(__getParadoxMarks, setParadoxMarks)
 
 
-	def __getVinculi(self):
+	@property
+	def vinculi(self):
 		"""
 		Die Vinculi eines Vampirs
 		"""
 
 		return self.__vinculi
 
-	vinculi = property(__getVinculi)
+
+	def __getCompanionName(self):
+		return self.__companionName
+
+	def setCompanionName(self, name):
+		if self.__companionName != name:
+			self.__companionName = name
+			self.companionNameChanged.emit(name)
+
+	companionName = property(__getCompanionName, setCompanionName)
+
+
+	def __getCompanionPower(self):
+		return self.__companionPower
+
+	def setCompanionPower(self, power):
+		if self.__companionPower != power:
+			self.__companionPower = power
+			self.companionPowerChanged.emit(power)
+
+	companionPower = property(__getCompanionPower, setCompanionPower)
+
+
+	def __getCompanionFinesse(self):
+		return self.__companionFinesse
+
+	def setCompanionFinesse(self, finesse):
+		if self.__companionFinesse != finesse:
+			self.__companionFinesse = finesse
+			self.companionFinesseChanged.emit(finesse)
+
+	companionFinesse = property(__getCompanionFinesse, setCompanionFinesse)
+
+
+	def __getCompanionResistance(self):
+		return self.__companionResistance
+
+	def setCompanionResistance(self, resistance):
+		if self.__companionResistance != resistance:
+			self.__companionResistance = resistance
+			self.companionResistanceChanged.emit(resistance)
+
+	companionResistance = property(__getCompanionResistance, setCompanionResistance)
+
+
+	def __getCompanionSize(self):
+		return self.__companionSize
+
+	def setCompanionSize(self, size):
+		if self.__companionSize != size:
+			self.__companionSize = size
+			self.companionSizeChanged.emit(size)
+
+	companionSize = property(__getCompanionSize, setCompanionSize)
+
+
+	def __getCompanionSpeedFactor(self):
+		return self.__companionSpeedFactor
+
+	def setCompanionSpeedFactor(self, speedFactor):
+		if self.__companionSpeedFactor != speedFactor:
+			self.__companionSpeedFactor = speedFactor
+			self.companionSpeedFactorChanged.emit(speedFactor)
+
+	companionSpeedFactor = property(__getCompanionSpeedFactor, setCompanionSpeedFactor)
+
+
+	@property
+	def companionInfluences(self):
+		"""
+		Die Einflüsse eines Vertrauten-Geistes.
+		"""
+
+		return self.__companionInfluences
+
+	@property
+	def companionNumina(self):
+		return self.__companionNumina
+
+	@companionNumina.setter
+	def companionNumina(self, numina):
+		if self.__companionNumina != numina:
+			self.__companionNumina = numina
+			self.companionNuminaChanged.emit(numina)
+
+	def appendCompanionNumen(self, numen):
+		self.__companionNumina.append(numen)
+
+	def removeCompanionNumen(self, numen):
+		self.__companionNumina.remove(numen)
 
 
 	@property
@@ -993,6 +1103,17 @@ class StorageCharacter(QObject):
 		for vinculum in self.__vinculi:
 			vinculum.name = ""
 			vinculum.value = 0
+
+		self.companionName = ""
+		self.companionPower = 0
+		self.companionFinesse = 0
+		self.companionResistance = 0
+		self.companionSize = 0
+		self.companionSpeedFactor = 0
+		for companionInfluence in self.__companionInfluences:
+			companionInfluence.name = ""
+			companionInfluence.value = 0
+		self.companionNumina = []
 
 		self.picture = QPixmap()
 

@@ -198,6 +198,19 @@ class WriteXmlCharacter(QObject):
 			for item in self.__character.vinculi:
 				if item.name and item.value > 0:
 					etree.SubElement(vinculi, "vinculum", value=unicode(item.value)).text = item.name
+		companion = etree.SubElement(
+			root,
+			"companion",
+			name = self.__character.companionName,
+			power = unicode(self.__character.companionPower),
+			finesse = unicode(self.__character.companionFinesse),
+			resistance = unicode(self.__character.companionResistance),
+			size = unicode(self.__character.companionSize),
+			speedFactor = unicode(self.__character.companionSpeedFactor),
+		)
+		for item in self.__character.companionNumina:
+			etree.SubElement(companion, "numen").text = item
+		
 
 		if self.__character.picture:
 			imageData = QByteArray()

@@ -72,8 +72,6 @@ class MainWindow(QMainWindow):
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 
-	\todo Speicherdateien komprimieren.
-
 	\todo Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.
 
 	\todo Kosten von Gegenständen berücksichtigen.

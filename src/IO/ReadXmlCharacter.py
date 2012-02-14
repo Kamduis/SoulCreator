@@ -292,6 +292,20 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.vinculi[i].value = int(element.attrib["value"])
 					i += 1
 
+		elem = tree.find("companion")
+		if elem is not None:
+			self.__character.companionName = elem.attrib["name"]
+			self.__character.companionPower = int(elem.attrib["power"])
+			self.__character.companionFinesse = int(elem.attrib["finesse"])
+			self.__character.companionResistance = int(elem.attrib["resistance"])
+			self.__character.companionSize = int(elem.attrib["size"])
+			self.__character.companionSpeedFactor = int(elem.attrib["speedFactor"])
+			companionNumina = []
+			for element in list(elem):
+				if element.tag == "numen":
+					companionNumina.append(element.text)
+			self.__character.companionNumina = companionNumina
+
 
 	def readPicture(self, tree):
 		"""

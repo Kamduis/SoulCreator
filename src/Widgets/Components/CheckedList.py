@@ -71,7 +71,7 @@ class CheckedList(QListWidget):
 		self.insertItem( index, item )
 
 
-	def setCheckableItems( self, labels, state ):
+	def setCheckableItems( self, labels, state=Qt.Unchecked ):
 		"""
 		Setzt alle Einträge.
 		
