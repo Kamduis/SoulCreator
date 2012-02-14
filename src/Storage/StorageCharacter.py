@@ -96,6 +96,7 @@ class StorageCharacter(QObject):
 	companionSizeChanged = Signal(int)
 	companionSpeedFactorChanged = Signal(int)
 	companionNuminaChanged = Signal(object)
+	companionBanChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -194,6 +195,7 @@ class StorageCharacter(QObject):
 			self.__companionInfluences.append(companionInfluence)
 			companionInfluence.traitChanged.connect(self.setModified)
 		self.__companionNumina = []
+		self.__companionBan = ""
 
 		self.dateBirthChanged.connect(self.__calcAge)
 		self.dateGameChanged.connect(self.__calcAge)
@@ -672,6 +674,17 @@ class StorageCharacter(QObject):
 		self.__companionNumina.remove(numen)
 
 
+	def __getCompanionBan(self):
+		return self.__companionBan
+
+	def setCompanionBan(self, ban):
+		if self.__companionBan != ban:
+			self.__companionBan = ban
+			self.companionBanChanged.emit(ban)
+
+	companionBan = property(__getCompanionBan, setCompanionBan)
+
+
 	@property
 	def traits(self):
 		return self.__traits
@@ -1114,6 +1127,7 @@ class StorageCharacter(QObject):
 			companionInfluence.name = ""
 			companionInfluence.value = 0
 		self.companionNumina = []
+		self.companionBan = ""
 
 		self.picture = QPixmap()
 

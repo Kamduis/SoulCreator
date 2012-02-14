@@ -210,6 +210,11 @@ class WriteXmlCharacter(QObject):
 		)
 		for item in self.__character.companionNumina:
 			etree.SubElement(companion, "numen").text = item
+		for item in self.__character.companionInfluences:
+			if item.name and item.value > 0:
+				etree.SubElement(companion, "influence", value=unicode(item.value)).text = item.name
+		if self.__character.companionBan:
+			etree.SubElement(companion, "ban").text = self.__character.companionBan
 		
 
 		if self.__character.picture:

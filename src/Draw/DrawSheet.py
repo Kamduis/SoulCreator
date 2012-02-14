@@ -262,7 +262,7 @@ class DrawSheet(QObject):
 			self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY, short=True)
 		elif self.__character.species == "Mage":
 			posY += lengthY + self.__posSep
-			lengthY = 300
+			lengthY = 250
 			self._drawMagicalTool(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 		elif self.__character.species == "Vampire":
 			posY += lengthY + self.__posSep
@@ -470,9 +470,15 @@ class DrawSheet(QObject):
 		if GlobalState.isDevelop:
 			self.__drawGrid()
 
+		posX = 0
+		posY = 0
+		lengthX = 700
+		lengthY = 1000
+		if self.__character.species == "Mage" or self.__character.species == "Werewolf":
+			self._drawCompanion(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		if self.__character.species != "Changeling":
-			posX = 700
-			posY = 0
+			posX += lengthX + self.__posSep
 			lengthX = self.__pageWidth - posX
 			lengthY = 1000
 			if ( self.__character.species == "Changeling" ):
@@ -957,6 +963,98 @@ class DrawSheet(QObject):
 
 		if not height:
 			height = self.__fontHeadingHeight + numOfTraits * textHeight
+		self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
+	def _drawCompanion(self, offsetH=0, offsetV=0, width=None, height=None, short=False):
+		"""
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__painter.setFont(self.__fontMain)
+
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Companion"))
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		verticalPos = offsetV + self.__fontHeadingHeight 
+		self.__drawTextWithValue(
+			offsetH, verticalPos, width, self.tr("Name:"), self.__character.companionName
+		)
+		verticalPos += fontHeight
+
+		traits = (
+			( "Power", self.__character.companionPower, ),
+			( "Finesse", self.__character.companionFinesse, ),
+			( "Resistance", self.__character.companionResistance, ),
+		)
+		i = 0
+		for trait in traits:
+			self.__drawTrait(
+				offsetH,
+				verticalPos + i * fontHeight,
+				width=width / 2 - self.__textDotSep,
+				name=trait[0],
+				value=trait[1]
+			)
+			i += 1
+
+		advantages = (
+			( "Size", self.__character.companionSize, ),
+			( "Speed", self.__character.companionSpeedFactor, ),
+		)
+		i = 0
+		for trait in advantages:
+			self.__drawTextWithValue(
+				offsetH + width - width / 2 - self.__textDotSep,
+				verticalPos + i * fontHeight,
+				width / 2 - self.__textDotSep,
+				trait[0],
+				trait[1]
+			)
+			i += 1
+		verticalPos += fontHeight * max(len(traits), len(advantages))
+
+		i = 0
+		for influence in self.__character.companionInfluences:
+			self.__drawTrait(
+				offsetH,
+				verticalPos + i * fontHeight,
+				width=width,
+				name=influence.name,
+				value=influence.value
+			)
+			i += 1
+		verticalPos += fontHeight * i
+
+		self.__painter.drawText(
+			offsetH,
+			verticalPos,
+			width,
+			3 * fontHeight,
+			Qt.AlignLeft | Qt.TextWordWrap,
+			"Numina: {}".format(
+				", ".join(self.__character.companionNumina)
+			)
+		)
+		verticalPos += fontHeight * 3
+
+		self.__painter.drawText(
+			offsetH,
+			verticalPos,
+			width,
+			3 * fontHeight,
+			Qt.AlignLeft | Qt.TextWordWrap,
+			self.tr("Ban: {}".format(self.__character.companionBan))
+		)
+
 		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()

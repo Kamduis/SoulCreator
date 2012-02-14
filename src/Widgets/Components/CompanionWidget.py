@@ -40,6 +40,10 @@ from ui.ui_CompanionWidget import Ui_CompanionWidget
 class CompanionWidget(QGroupBox):
 	"""
 	@brief Ein Widget mit allen nötigen Feldern für einen Companion.
+
+	\todo Es fehlen noch die Rudelboni, welche das Totem vergeben kann.
+
+	\todo Das Totem wird noch nicht berechnet, bzw. die Eingaben nicht überprüft.
 	"""
 
 
@@ -63,6 +67,7 @@ class CompanionWidget(QGroupBox):
 		self.ui.spinBox_size.valueChanged[int].connect(self.__character.setCompanionSize)
 		self.ui.spinBox_speedFactor.valueChanged[int].connect(self.__character.setCompanionSpeedFactor)
 		self.ui.listWidget_numina.itemStateChanged.connect(self.modifyNumen)
+		self.ui.textEdit_ban.textChanged.connect(self.changeBan)
 
 		self.__character.companionNameChanged.connect(self.ui.lineEdit_name.setText)
 		self.__character.companionPowerChanged.connect(self.ui.traitDots_power.setValue)
@@ -71,6 +76,7 @@ class CompanionWidget(QGroupBox):
 		self.__character.companionSizeChanged.connect(self.ui.spinBox_size.setValue)
 		self.__character.companionSpeedFactorChanged.connect(self.ui.spinBox_speedFactor.setValue)
 		self.__character.companionNuminaChanged.connect(self.updateNumina)
+		self.__character.companionBanChanged.connect(self.ui.textEdit_ban.setPlainText)
 
 		self.ui.traitDots_power.minimum = Config.traitSpiritMin
 		self.ui.traitDots_finesse.minimum = Config.traitSpiritMin
@@ -118,4 +124,18 @@ class CompanionWidget(QGroupBox):
 				item.setCheckState(Qt.Checked)
 			else:
 				item.setCheckState(Qt.Unchecked)
+
+
+	def changeBan(self):
+		"""
+		Verändert den Tabu-Text im Speicher.
+		"""
+
+		cursor = self.ui.textEdit_ban.textCursor()
+		cursorPosition = cursor.position()
+
+		self.__character.companionBan = self.ui.textEdit_ban.toPlainText()
+
+		cursor.setPosition(cursorPosition)
+		self.ui.textEdit_ban.setTextCursor(cursor)
 

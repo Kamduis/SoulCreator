@@ -301,9 +301,16 @@ class ReadXmlCharacter(QObject, ReadXml):
 			self.__character.companionSize = int(elem.attrib["size"])
 			self.__character.companionSpeedFactor = int(elem.attrib["speedFactor"])
 			companionNumina = []
+			i = 0
 			for element in list(elem):
 				if element.tag == "numen":
 					companionNumina.append(element.text)
+				if element.tag == "influence" and i < Config.companionInfluencesCount:
+					self.__character.companionInfluences[i].name = element.text
+					self.__character.companionInfluences[i].value = int(element.attrib["value"])
+					i += 1
+				if element.tag == "ban":
+					self.__character.companionBan = element.text
 			self.__character.companionNumina = companionNumina
 
 

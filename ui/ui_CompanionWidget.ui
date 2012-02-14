@@ -168,7 +168,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_10">
            <item>
-            <widget class="QPlainTextEdit" name="plainTextEdit_ban"/>
+            <widget class="QPlainTextEdit" name="textEdit_ban"/>
            </item>
           </layout>
          </widget>
