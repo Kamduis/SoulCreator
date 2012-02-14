@@ -112,6 +112,8 @@ class WriteXmlCharacter(QObject):
 		if self.__character.bonus:
 			breedElement.attrib["bonusType"] = self.__character.bonus["type"]
 			breedElement.attrib["bonusName"] = self.__character.bonus["name"]
+			if "specialty" in self.__character.bonus:
+				breedElement.attrib["bonusSpecialty"] = self.__character.bonus["specialty"]
 		if self.__character.species == "Changeling":
 			breedElement.attrib["kith"] = self.__character.kith
 

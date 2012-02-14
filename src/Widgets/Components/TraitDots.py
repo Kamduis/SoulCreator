@@ -25,7 +25,7 @@ from __future__ import division, print_function
 from PySide.QtCore import QPoint, Signal
 from PySide.QtGui import QColor, QPainter, QPen, QBrush#, QSizePolicy
 
-#from src.Config import Config
+from src.Config import Config
 from src.Widgets.Components.AbstractTraitDots import AbstractTraitDots
 from src.Debug import Debug
 
@@ -45,8 +45,6 @@ class TraitDots(AbstractTraitDots):
 		AbstractTraitDots.__init__(self, parent)
 
 		self.__bonusValue = 0
-
-		self._colorFullBonus = QColor( 255, 0, 0 )
 
 
 	# Das automatisch ausgelöste paintEvent, das das Widget bei jeder Fensterveränderung neu zeichnet.
@@ -92,7 +90,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.restore()
 
-		painter.setBrush( self._colorFullBonus )
+		painter.setBrush( QColor(Config.bonusColor) )
 
 		painter.save()
 

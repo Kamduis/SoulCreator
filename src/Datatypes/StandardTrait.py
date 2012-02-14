@@ -42,6 +42,7 @@ class StandardTrait(BasicTrait):
 
 	customTextChanged = Signal(str)
 	specialtiesChanged = Signal(object)
+	totalspecialtiesChanged = Signal(object)
 
 
 	def __init__(self, character, name="", value=0, parent=None):
@@ -52,6 +53,8 @@ class StandardTrait(BasicTrait):
 		self.__era = ""
 		self.__custom = False
 		self.__customText = ""
+
+		self.specialtiesChanged.connect(self.totalspecialtiesChanged)
 
 
 	def __getSpecialties(self):
@@ -64,6 +67,8 @@ class StandardTrait(BasicTrait):
 			self.traitChanged.emit(self)
 
 	specialties = property(__getSpecialties, __setSpecialties)
+
+	totalspecialties = property(__getSpecialties)
 
 	def appendSpecialty(self, name):
 		"""
@@ -78,14 +83,15 @@ class StandardTrait(BasicTrait):
 
 	def removeSpecialty(self, name):
 		"""
-		Fügt der Liste von SPezialisierungen eine hinzu.
+		Entfernt eine Spezialisierung.
 
 		\note Diese Methode muß verwendet werden, wenn man das Signal \ref specialtyChanged nutzen möchte.
 		"""
 
-		self.__specialties.remove(name)
-		self.specialtiesChanged.emit(self.specialties)
-		self.traitChanged.emit(self)
+		if name in self.__specialties:
+			self.__specialties.remove(name)
+			self.specialtiesChanged.emit(self.specialties)
+			self.traitChanged.emit(self)
 
 
 	def __getEra(self):

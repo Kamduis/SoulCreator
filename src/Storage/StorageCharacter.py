@@ -229,7 +229,7 @@ class StorageCharacter(QObject):
 							trait.level = subitem[1]["level"]
 							trait.powers = subitem[1]["powers"]
 						else:
-							if typ == "Attribute":
+							if typ == "Attribute" or typ == "Skill":
 								trait = BonusTrait(self, subitem[1]["name"], val)
 							else:
 								trait = StandardTrait(self, subitem[1]["name"], val)
@@ -803,10 +803,11 @@ class StorageCharacter(QObject):
 		"""
 		Verändert die Bonuseigenschaft.
 
-		Die Bonuseigenschaft wird folgendermaßen gespeichert.
+		Die Bonuseigenschaft wird folgendermaßen gespeichert. Der Eintrag für die Spezialisierung ist optional.
 		{
 			"type": Typ,
 			"name": Name,
+			"specialty": Gewählte Spezialisierung,
 		}
 		"""
 
@@ -840,6 +841,9 @@ class StorageCharacter(QObject):
 					if type(self.traits[bonus["type"]][category][bonus["name"]]) == BonusTrait:
 						if bonus["type"] == "Attribute":
 							self.traits[bonus["type"]][category][bonus["name"]].bonusValue = 1
+							#Debug.debug("Bonuseigenschaft {} verändert!".format(self.traits[bonus["type"]][category][bonus["name"]].name))
+						elif bonus["type"] == "Skill" and "specialty" in bonus:
+							self.traits[bonus["type"]][category][bonus["name"]].bonusSpecialties = [ bonus["specialty"] ]
 							#Debug.debug("Bonuseigenschaft {} verändert!".format(self.traits[bonus["type"]][category][bonus["name"]].name))
 					break
 

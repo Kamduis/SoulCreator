@@ -47,6 +47,13 @@
 					<kith name="Windwing">
 						<ability>You may spend 1 Glamour to glide in the air for 1 min perpoint of Wyrd. You take only 1 bashing damage for everey 15 yards fallen and begin to take lethal damage only if you fall more than 150 yards.</ability>
 					</kith>
+					<bonus>
+						<Skill>
+							<item name="Athletics"/>
+							<item name="Brawl"/>
+							<item name="Stealth"/>
+						</Skill>
+					</bonus>
 					<weakness>Suffer a -4 untrained penalty when trying to use a Mental skill in which you have no dots. You do not re-roll 10s when using a dice pool involving Intelligence.</weakness>
 					<blessing>8-again when using the Animal Ken Skill and 1 free Specialty for the animal the character reflects. A Beast may spend Glamour to add to dice pools involving Presence and Composure at a one-for-one base.</blessing>
 				</item>
@@ -66,6 +73,13 @@
 					<kith name="Tunnelgrub">
 						<ability>Spend 1 Glamour to get through spaces, that are too narrow for you. Roll Dexterity + Athletics to wriggle out of ropes or handcuffs.</ability>
 					</kith>
+					<bonus>
+						<Skill>
+							<item name="Athletics"/>
+							<item name="Brawl"/>
+							<item name="Stealth"/>
+						</Skill>
+					</bonus>
 					<weakness>Darklings suffer a -1 panalty to all rolls to enact contracts during daylight hours. The penalty increases to -2 if the sun is directly visible to them.Subtract 1 die whenver activating a contract during the day.</weakness>
 					<blessing>You can spend Glamour to increase dice pools including Wits, Subterfuge and Stealth at a one-for-one basis. You also gain the benefit of the 9-again rule on Stealth dice pools.</blessing>
 				</item>
@@ -88,6 +102,13 @@
 					<kith name="Woodblood">
 						<ability>In aly outdoors area where plants are growing from the earth you gain the benefit of the 9-again rule on dice pools involving Strength and Survival. You can also spend 1 Glamour to hide in such a place, even if no hideout seems to be available.</ability>
 					</kith>
+					<bonus>
+						<Skill>
+							<item name="Athletics"/>
+							<item name="Brawl"/>
+							<item name="Stealth"/>
+						</Skill>
+					</bonus>
 					<weakness>You don't benefit from the 10-again rule on dice pools involving Manipulation, Empathy, Expression, Persuasion or Socialize, save to activate seeming-affinity Contracts.</weakness>
 					<blessing>Once per day you can spend 1 Glamour to add your Wyrd rating to your Health dots for the rest of the scene.</blessing>
 				</item>
@@ -110,6 +131,13 @@
 					<kith name="Treasured">
 						<ability>???</ability>
 					</kith>
+					<bonus>
+						<Skill>
+							<item name="Athletics"/>
+							<item name="Brawl"/>
+							<item name="Stealth"/>
+						</Skill>
+					</bonus>
 					<weakness>You suffer a-1 die penalty on dice pools to avoid losing Clarity.</weakness>
 					<blessing>You can spend Glamour to add to dice pools involving Presence, Manipulation and Persuasion at a one-for-one basis. You also suffer no untrained penalty for using Social skills in which you have no point.</blessing>
 				</item>
@@ -132,6 +160,13 @@
 					<kith name="Waterdweller">
 						<ability>You suffer no penalties to sight-based perception rolles when underwater.</ability>
 					</kith>
+					<bonus>
+						<Skill>
+							<item name="Athletics"/>
+							<item name="Brawl"/>
+							<item name="Stealth"/>
+						</Skill>
+					</bonus>
 					<weakness>You do not benefit from the 10-again roll on dice pools involving Composure with the exception on perception rolls. You also suffer a -1 die penalty to Composure when using it as a Defense Trait.</weakness>
 					<blessing>Spend Glamour to improve dice pools involving Strength, Brawl and Intimidation one a one-for-one basis.</blessing>
 				</item>
@@ -160,6 +195,13 @@
 					<kith name="Woodwalker">
 						<ability>You benefit from the 8-again rule on Survival rolls. You also can survive by eating any plant, no matter how poisonous.</ability>
 					</kith>
+					<bonus>
+						<Skill>
+							<item name="Athletics"/>
+							<item name="Brawl"/>
+							<item name="Stealth"/>
+						</Skill>
+					</bonus>
 					<weakness>You don't benefit from the 10-again roll on dice pools involvingPresence. You also suffer a untrained penalty of -2 when using a Social skill in which you have no dots.</weakness>
 					<blessing>Spend 1 Glamour to benefit from the 9-again roll on rolls involving Dexterity for the rest of the scene. You can also spend 1 Glamour to add your Wyrd to your Dodge total for the rest of the scene.</blessing>
 				</item>

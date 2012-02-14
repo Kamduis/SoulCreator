@@ -413,6 +413,13 @@ class StorageTemplate(QObject):
 
 	traits = property(__getTraits, __setTraits)
 
+	def traitSkills(self):
+		result = {}
+		for category in self.__traits["Skill"]:
+			result.update(self.__traits["Skill"][category])
+
+		return result
+
 
 	def addTrait( self, typ, category, identifier, data):
 		"""

@@ -28,7 +28,6 @@ from PySide.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessage
 from src.Config import Config
 #from src.Tools import PathTools
 #from src.Calc.Calc import Calc
-#from src.Widgets.Dialogs.NameDialog import NameDialog
 from src.Debug import Debug
 
 from ui.ui_TemplateWidget import Ui_TemplateWidget
@@ -96,8 +95,6 @@ class TemplateWidget(QWidget):
 		self.__character.dateBirthChanged.connect(self.ui.dateEdit_dateBecoming.setMinimumDate)
 		self.__character.dateGameChanged.connect(self.ui.dateEdit_dateBecoming.setMaximumDate)
 
-		#self.__character.ageChanged.connect(self.setAge)
-
 
 	def updateSpecies( self, species ):
 		"""
@@ -129,7 +126,11 @@ class TemplateWidget(QWidget):
 		"""
 
 		if bonus:
-			self.ui.comboBox_bonus.setCurrentIndex( self.ui.comboBox_bonus.findText( bonus["name"] ) )
+			if bonus["type"] == "Skill" and "specialty" in bonus:
+				#Debug.debug(bonus["specialty"])
+				self.ui.comboBox_bonus.setCurrentIndex( self.ui.comboBox_bonus.findText( bonus["specialty"] ) )
+			else:
+				self.ui.comboBox_bonus.setCurrentIndex( self.ui.comboBox_bonus.findText( bonus["name"] ) )
 		else:
 			self.ui.comboBox_bonus.clear()
 
@@ -195,6 +196,8 @@ class TemplateWidget(QWidget):
 		"""
 		Die Bonuseigenschaften neu festlegen.
 
+		\todo Bei Werwölfen und Wechselbälgern sollten alle Spezialisierungen usgeblendet werden, die der Charkater nicht wählen kann weil die Fertigkeit einen Wert von 0 hat, oder selbige Spezialisierung schon besitzt.
+
 		\todo Nach Ende der Erschaffung muß die Bonus-Eigenschaft unveränderlich gemacht werden.
 		"""
 
@@ -203,8 +206,18 @@ class TemplateWidget(QWidget):
 		if __list:
 			bonusList = [ bonus["name"] for bonus in __list ]
 			bonusList.sort()
-			self.ui.comboBox_bonus.addItems( bonusList )
-			self.ui.label_bonus2.setText(__list[0]["name"])
+			speciesWithSpecialties = (
+				"Changeling",
+				"Werewolf",
+			)
+			if self.__character.species in speciesWithSpecialties:
+				for item in bonusList:
+					for category in self.__storage.traits["Skill"]:
+						if item in self.__storage.traits["Skill"][category]:
+							self.ui.comboBox_bonus.addItems( self.__storage.traits["Skill"][category][item]["specialties"] )
+			else:
+				self.ui.comboBox_bonus.addItems( bonusList )
+				self.ui.label_bonus2.setText(__list[0]["name"])
 
 		## Schonmal im Charakter speichern, da Magier nichts wählen können.
 		self.setCharacterBonus()
@@ -218,16 +231,21 @@ class TemplateWidget(QWidget):
 		__list = self.__storage.bonusTraits(self.__character.species, self.__character.breed)
 		if len(__list) > 1:
 			bonusName = self.ui.comboBox_bonus.currentText()
+			## Bei Bonus-Spezialisierungen muß auch die Fertigkeit gespeichert werden.
 			for item in __list:
-				if item["name"] == bonusName:
+				if item["type"] == "Skill":
+					for skill in self.__storage.traitSkills():
+						if item["name"] == skill and bonusName in self.__storage.traitSkills()[skill]["specialties"]:
+							item["specialty"] = bonusName
+							self.__character.bonus = item
+							break
+				elif item["name"] == bonusName:
 					self.__character.bonus = item
 					break
 		elif len(__list) > 0:
 			self.__character.bonus = __list[0]
 		else:
 			self.__character.bonus = {}
-
-		#Debug.debug(self.__character.bonus)
 
 
 	def repopulateKiths(self, breed):
@@ -283,8 +301,8 @@ class TemplateWidget(QWidget):
 			self.ui.label_kith.setVisible(False)
 			self.ui.comboBox_kith.setVisible(False)
 
-		## Nur Magier und Vampire haben Bonus-Attribute
-		affectedSpecies = ("Mage", "Vampire")
+		## Nur Magier und Vampire haben Bonus-Attribute. Werwölfe haben allerdings Bonus-Spezialisierungen.
+		affectedSpecies = ("Changeling", "Mage", "Vampire", "Werewolf")
 		if species in affectedSpecies:
 			self.ui.label_bonus.setVisible(True)
 			if species == "Mage":

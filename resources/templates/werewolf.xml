@@ -22,11 +22,51 @@
 		</Creation>
 		<Group>
 			<Breed name="Auspice">
-				<item name="Rahu"/>
-				<item name="Cahalith"/>
-				<item name="Elodoth"/>
-				<item name="Ithaeur"/>
-				<item name="Irraka"/>
+				<item name="Rahu">
+					<bonus>
+						<Skill>
+							<item name="Brawl"/>
+							<item name="Intimidation"/>
+							<item name="Survival"/>
+						</Skill>
+					</bonus>
+				</item>
+				<item name="Cahalith">
+					<bonus>
+						<Skill>
+							<item name="Crafts"/>
+							<item name="Expression"/>
+							<item name="Persuasion"/>
+						</Skill>
+					</bonus>
+				</item>
+				<item name="Elodoth">
+					<bonus>
+						<Skill>
+							<item name="Investigation"/>
+							<item name="Politics"/>
+							<item name="Empathy"/>
+						</Skill>
+					</bonus>
+				</item>
+				<item name="Ithaeur">
+					<bonus>
+						<Skill>
+							<item name="Medicine"/>
+							<item name="Occult"/>
+							<item name="Animal Ken"/>
+						</Skill>
+					</bonus>
+				</item>
+				<item name="Irraka">
+					<bonus>
+						<Skill>
+							<item name="Larceny"/>
+							<item name="Stealth"/>
+							<item name="Subterfuge"/>
+						</Skill>
+					</bonus>
+				</item>
 			</Breed>
 			<Faction name="Tribe">
 				<item name="Ghost Wolf"/>

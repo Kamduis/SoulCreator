@@ -122,6 +122,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		bonus = {}
 		bonus["type"] = self.getElementAttribute(breedElement, "bonusType")
 		bonus["name"] = self.getElementAttribute(breedElement, "bonusName")
+		bonus["specialty"] = self.getElementAttribute(breedElement, "bonusSpecialty")
 		if bonus["type"] or bonus["name"]:
 			self.__character.bonus = bonus
 		self.__character.kith = self.getElementAttribute(breedElement, "kith")

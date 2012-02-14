@@ -40,7 +40,6 @@ class BonusTrait(StandardTrait):
 
 
 	bonusSpecialtiesChanged = Signal(object)
-	totalvalueChanged = Signal(int)
 	bonusValueChanged = Signal(object)
 
 
@@ -52,6 +51,8 @@ class BonusTrait(StandardTrait):
 
 		self.valueChanged.connect(self.emitTotalvalueChanged)
 		self.bonusValueChanged.connect(self.emitTotalvalueChanged)
+		self.specialtiesChanged.connect(self.emitTotalspecialtiesChanged)
+		self.bonusSpecialtiesChanged.connect(self.emitTotalspecialtiesChanged)
 
 
 	@property
@@ -89,6 +90,17 @@ class BonusTrait(StandardTrait):
 			self.traitChanged.emit(self)
 
 	bonusSpecialties = property(__getBonusSpecialties, __setBonusSpecialties)
+
+	@property
+	def totalspecialties(self):
+		result = self.specialties[:]
+		result.extend(self.bonusSpecialties)
+		return result
+
+
+	def emitTotalspecialtiesChanged(self, value):
+		self.totalspecialtiesChanged.emit(self.totalspecialties)
+
 
 	def appendBonusSpecialty(self, name):
 		"""
