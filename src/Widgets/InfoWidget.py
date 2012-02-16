@@ -318,33 +318,36 @@ class InfoWidget(QWidget):
 		Der Ära des Spiels verändert das maximale Datum des Spiels.
 		"""
 
-		eraBeginDates = Config.eras.values()
-		eraBeginDates.sort()
+		if Config.autoSelectEra:
+			eraBeginDates = Config.eras.values()
+			eraBeginDates.sort()
 
-		beginYear = Config.eras[era]
-		endYear = QDate.currentDate()
-		endYear = endYear.year()
-		for year in eraBeginDates:
-			if year > beginYear:
-				endYear = year - 1
-				break
+			beginYear = Config.eras[era]
+			endYear = QDate.currentDate()
+			endYear = endYear.year()
+			for year in eraBeginDates:
+				if year > beginYear:
+					endYear = year - 1
+					break
 
-		dateEraBegins = QDate(beginYear, 1, 1)
-		dateEraEnds = QDate(endYear, 12, 31)
+			dateEraBegins = QDate(beginYear, 1, 1)
+			dateEraEnds = QDate(endYear, 12, 31)
 
-		eraModified = True
-		newDate = None
-		if self.ui.dateEdit_dateGame.date() < dateEraBegins:
-			newDate = dateEraBegins
-		elif self.ui.dateEdit_dateGame.date() > dateEraEnds:
-			newDate = dateEraEnds
+			eraModified = True
+			newDate = None
+			if self.ui.dateEdit_dateGame.date() < dateEraBegins:
+				newDate = dateEraBegins
+			elif self.ui.dateEdit_dateGame.date() > dateEraEnds:
+				newDate = dateEraEnds
+			else:
+				eraModified = False
+
+			if eraModified:
+				self.ui.dateEdit_dateGame.setDate(newDate)
+				text = self.tr("Date of game is set to {day}. {month}. {year} to be in the {era} era".format(day=newDate.day(), month=newDate.month(), year=newDate.year(), era=era))
+				self.notificationSent.emit(text)
 		else:
-			eraModified = False
-
-		if eraModified:
-			self.ui.dateEdit_dateGame.setDate(newDate)
-			text = self.tr("Date of game is set to {day}. {month}. {year} to be in the {era} era".format(day=newDate.day(), month=newDate.month(), year=newDate.year(), era=era))
-			self.notificationSent.emit(text)
+			self.__character.era = era
 
 
 	def setCharacterEra(self, date):
@@ -352,26 +355,27 @@ class InfoWidget(QWidget):
 		Der Ära des Spiels läßt sich entweder direkt einstellen, was die Zeit ändert oder über die Zeit.
 		"""
 
-		eraBeginDates = Config.eras.values()
-		eraBeginDates.sort()
+		if Config.autoSelectEra:
+			eraBeginDates = Config.eras.values()
+			eraBeginDates.sort()
 
-		#Debug.debug(eraBeginDates[::-1])
+			#Debug.debug(eraBeginDates[::-1])
 
-		beginYear = None
-		for year in eraBeginDates[::-1]:
-			if year <= date.year():
-				beginYear = year
-				break
+			beginYear = None
+			for year in eraBeginDates[::-1]:
+				if year <= date.year():
+					beginYear = year
+					break
 
-		actualEra = None
-		for era in Config.eras.items():
-			if era[1] == beginYear:
-				actualEra = era[0]
+			actualEra = None
+			for era in Config.eras.items():
+				if era[1] == beginYear:
+					actualEra = era[0]
 
-		if self.__character.era != actualEra:
-			self.__character.era = actualEra
-			text = self.tr("Era changed to {era}".format(era=era))
-			self.notificationSent.emit(text)
+			if self.__character.era != actualEra:
+				self.__character.era = actualEra
+				text = self.tr("Era changed to {era}".format(era=era))
+				self.notificationSent.emit(text)
 
 
 	def setCharacterDateBirth(self, date):

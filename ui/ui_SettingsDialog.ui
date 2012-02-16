@@ -17,34 +17,19 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
        <string>General</string>
       </attribute>
-     </widget>
-     <widget class="QWidget" name="tab_export">
-      <attribute name="title">
-       <string>Export/Printing</string>
-      </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QFormLayout" name="formLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>&amp;Font</string>
-           </property>
-           <property name="buddy">
-            <cstring>fontComboBox_export</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QFontComboBox" name="fontComboBox_export"/>
-         </item>
-        </layout>
+        <widget class="QCheckBox" name="checkBox_autoSelectEra">
+         <property name="text">
+          <string>Select current Era automatically</string>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">
@@ -54,7 +39,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>178</height>
+           <height>40</height>
           </size>
          </property>
         </spacer>

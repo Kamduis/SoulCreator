@@ -143,8 +143,6 @@ class MainWindow(QMainWindow):
 
 		self.ui.selectWidget_select.currentRowChanged.connect(self.showCreationPoints)
 
-	#connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
-
 		self.ui.actionSettings.triggered.connect(self.showSettingsDialog)
 		self.ui.actionNew.triggered.connect(self.newCharacter)
 		self.ui.actionOpen.triggered.connect(self.openCharacter)
@@ -313,7 +311,6 @@ class MainWindow(QMainWindow):
 					trait.traitChanged.connect(self.__creation.calcPoints)
 
 		# Schreibe die übrigen Erschaffungspunkte
-		#connect( creation, SIGNAL( pointsChanged() ), self, SLOT( showCreationPoints() ) );
 		self.__creation.pointsChanged.connect(self.showCreationPoints)
 		self.__creation.pointsChangedZero.connect(self.warnCreationPointsDepleted)
 		self.__creation.pointsChangedNegative.connect(self.warnCreationPointsNegative)
@@ -624,8 +621,6 @@ class MainWindow(QMainWindow):
 
 			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
-			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
-
 			try:
 				drawSheet.print()
 			except ErrSpeciesNotExisting as e:
@@ -648,8 +643,6 @@ class MainWindow(QMainWindow):
 		if ( printDialog.exec_() == QDialog.Accepted ):
 			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
-			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
-
 			try:
 				drawSheet.print()
 			except ErrSpeciesNotExisting as e:
@@ -669,10 +662,9 @@ class MainWindow(QMainWindow):
 		settings.setValue( "state", self.saveState() )
 		settings.endGroup()
 
-		settings.beginGroup( "Config" );
-		#// 	settings.setValue( "windowFont", Config.windowFont.family() );
-		settings.setValue( "calendarForAgeCalculation", Config.calendarForAgeCalculation )
-		settings.endGroup();
+		settings.beginGroup( "Config" )
+		settings.setValue( "autoSelectEra", Config.autoSelectEra )
+		settings.endGroup()
 
 
 	def readSettings(self):
@@ -683,17 +675,15 @@ class MainWindow(QMainWindow):
 		appPath = PathTools.getPath()
 		settings = Settings( "{}/{}".format(appPath, Config.configFile))
 
-		settings.beginGroup( "MainWindow" );
+		settings.beginGroup( "MainWindow" )
 		self.resize( settings.value( "size", QSize( 900, 600 ) ) )
 		self.move( settings.value( "pos", QPoint( 200, 200 ) ) )
 		self.restoreState( QByteArray(settings.value( "state" )) )
 		settings.endGroup()
 
-		settings.beginGroup( "Config" );
-		#// 	Config.windowFont = QFont( settings.value( "windowFont" ).toString() );
-		## bool(bla) funktioniert nicht, also sorge ich dafür, daß alles außer false (nicht case-sensitive) als Wahr gilt.
-		Config.calendarForAgeCalculation = unicode(settings.value( "calendarForAgeCalculation" )).lower() != "false"
-		settings.endGroup();
+		settings.beginGroup( "Config" )
+		Config.autoSelectEra = unicode(settings.value( "autoSelectEra" )).lower() != "false"
+		settings.endGroup()
 
 		#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.
 		#// 	setFont(Config.windowFont);

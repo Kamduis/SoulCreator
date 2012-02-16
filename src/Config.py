@@ -63,6 +63,8 @@ class Config(object):
 	# Dateiendung der gespeicherten Charkatere
 	fileSuffixSave = "chr"
 
+	compressSaves = True
+
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"
 
@@ -302,7 +304,7 @@ class Config(object):
 	## Folgende Werte können über den Einstellungsdialog verändert werden und sollten beim Beenden des Programms gespeichert und beim Starten geladen werden. Die übergebenen Werte sind die Standartwerte, wenn im Einstellungsdialog nichts verändert wird.
 	# Zur Altersberechnung Kalender verwenden
 	#calendarForAgeCalculation = True
-	compressSaves = True
+	autoSelectEra = True
 
 
 	@staticmethod
