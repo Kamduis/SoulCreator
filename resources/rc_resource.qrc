@@ -2,11 +2,6 @@
   <qresource prefix="icons">
     <file>images/actions/exec.png</file>
     <file>images/actions/exit.png</file>
-    <file>images/Skull-Changeling.png</file>
-    <file>images/Skull-Human.png</file>
-    <file>images/Skull-Mage.png</file>
-    <file>images/Skull-Vampire.png</file>
-    <file>images/Skull-Werewolf.png</file>
     <file>images/svg/symbolFemale.svg</file>
     <file>images/svg/symbolMale.svg</file>
     <file>images/svg/symbolHermaphrodite.svg</file>
@@ -19,6 +14,55 @@
     <file>images/actions/filenew.png</file>
     <file>images/actions/cancel.png</file>
     <file>images/WoD.png</file>
+    <file>images/species/Human/Skull.png</file>
+    <file>images/species/Changeling/Skull.png</file>
+    <file>images/species/Changeling/Breed-Beast.svg</file>
+    <file>images/species/Changeling/Breed-Darkling.svg</file>
+    <file>images/species/Changeling/Breed-Elemental.svg</file>
+    <file>images/species/Changeling/Breed-Fairest.svg</file>
+    <file>images/species/Changeling/Breed-Ogre.svg</file>
+    <file>images/species/Changeling/Breed-Wizened.svg</file>
+    <file>images/species/Changeling/Faction-Spring.png</file>
+    <file>images/species/Changeling/Faction-Summer.png</file>
+    <file>images/species/Changeling/Faction-Autumn.png</file>
+    <file>images/species/Changeling/Faction-Winter.png</file>
+    <file>images/species/Changeling/Faction-Courtless.png</file>
+    <file>images/species/Mage/Skull.png</file>
+    <file>images/species/Mage/Breed-Acanthus.svg</file>
+    <file>images/species/Mage/Breed-Mastigos.svg</file>
+    <file>images/species/Mage/Breed-Moros.svg</file>
+    <file>images/species/Mage/Breed-Obrimos.svg</file>
+    <file>images/species/Mage/Breed-Thyrsus.svg</file>
+    <file>images/species/Mage/Faction-AdamantineArrow.png</file>
+    <file>images/species/Mage/Faction-FreeCouncil.png</file>
+    <file>images/species/Mage/Faction-GuardiansoftheVeil.png</file>
+    <file>images/species/Mage/Faction-Mysterium.png</file>
+    <file>images/species/Mage/Faction-SilverLadder.png</file>
+    <file>images/species/Vampire/Skull.png</file>
+    <file>images/species/Vampire/Breed-Daeva.svg</file>
+    <file>images/species/Vampire/Breed-Gangrel.svg</file>
+    <file>images/species/Vampire/Breed-Julii.svg</file>
+    <file>images/species/Vampire/Breed-Mekhet.svg</file>
+    <file>images/species/Vampire/Breed-Nosferatu.svg</file>
+    <file>images/species/Vampire/Breed-Ventrue.svg</file>
+    <file>images/species/Vampire/Faction-CarthianMovement.svg</file>
+    <file>images/species/Vampire/Faction-CircleoftheCrone.svg</file>
+    <file>images/species/Vampire/Faction-Invictus.svg</file>
+    <file>images/species/Vampire/Faction-LanceaSancta.svg</file>
+    <file>images/species/Vampire/Faction-OrdoDracul.svg</file>
+    <file>images/species/Vampire/Faction-Unaligned.svg</file>
+    <file>images/species/Werewolf/Skull.png</file>
+    <file>images/species/Werewolf/Breed-Rahu.svg</file>
+    <file>images/species/Werewolf/Breed-Cahalith.svg</file>
+    <file>images/species/Werewolf/Breed-Elodoth.svg</file>
+    <file>images/species/Werewolf/Breed-Ithaeur.svg</file>
+    <file>images/species/Werewolf/Breed-Irraka.svg</file>
+    <file>images/species/Werewolf/Faction-BloodTalons.svg</file>
+    <file>images/species/Werewolf/Faction-BoneShadows.svg</file>
+    <file>images/species/Werewolf/Faction-HuntersinDarkness.svg</file>
+    <file>images/species/Werewolf/Faction-IronMasters.svg</file>
+    <file>images/species/Werewolf/Faction-StormLords.svg</file>
+    <file>images/species/Werewolf/Faction-GhostWolves.svg</file>
   </qresource>
   <qresource prefix="fonts">
     <file>fonts/linlibertine_bd-4.1.5ro.ttf</file>
@@ -35,11 +79,11 @@
     <file>fonts/Blokletters-Balpen.ttf</file>
   </qresource>
   <qresource prefix="background">
-    <file>images/Skull-Changeling-gray.png</file>
-    <file>images/Skull-Human-gray.png</file>
-    <file>images/Skull-Mage-gray.png</file>
-    <file>images/Skull-Vampire-gray.png</file>
-    <file>images/Skull-Werewolf-gray.png</file>
+    <file>images/species/Human/Skull-gray.png</file>
+    <file>images/species/Changeling/Skull-gray.png</file>
+    <file>images/species/Mage/Skull-gray.png</file>
+    <file>images/species/Vampire/Skull-gray.png</file>
+    <file>images/species/Werewolf/Skull-gray.png</file>
   </qresource>
   <qresource prefix="sheet">
     <file>images/sheet/WorldOfDarkness.jpg</file>

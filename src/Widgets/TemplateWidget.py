@@ -22,13 +22,15 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import re
+
 from PySide.QtCore import QDate
 from PySide.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageBox
 
 #from src.Config import Config
 #from src.Tools import PathTools
 #from src.Calc.Calc import Calc
-#from src.Debug import Debug
+from src.Debug import Debug
 
 from ui.ui_TemplateWidget import Ui_TemplateWidget
 
@@ -54,7 +56,7 @@ class TemplateWidget(QWidget):
 		speciesList.sort()
 		#self.ui.comboBox_species.addItems(speciesList)
 		for species in speciesList:
-			self.ui.comboBox_species.addItem(QIcon(":/icons/images/Skull-{}.png".format(species)), species)
+			self.ui.comboBox_species.addItem(QIcon(":/icons/images/species/{}/Skull.png".format(species)), species)
 
 		self.ui.dateEdit_dateBecoming.setMinimumDate(QDate(100, 1, 1))
 
@@ -189,7 +191,8 @@ class TemplateWidget(QWidget):
 	def repopulateBreeds(self, species):
 
 		self.ui.comboBox_breed.clear()
-		self.ui.comboBox_breed.addItems(self.__storage.breeds(species))
+		for item in self.__storage.breeds(species):
+			self.ui.comboBox_breed.addItem(QIcon(":icons/images/species/{}/Breed-{}.svg".format(species, item)), item)
 
 
 	def repopulateBonus(self, breed):
@@ -261,8 +264,18 @@ class TemplateWidget(QWidget):
 
 	def repopulateFactions(self, species):
 
+		fileExtension = {
+			"Human": "svg",
+			"Changeling": "png",
+			"Mage": "png",
+			"Vampire": "svg",
+			"Werewolf": "svg",
+		}
+
 		self.ui.comboBox_faction.clear()
-		self.ui.comboBox_faction.addItems(self.__storage.factions(species))
+		for item in self.__storage.factions(species):
+			self.ui.comboBox_faction.addItem(QIcon(":icons/images/species/{}/Faction-{}.{}".format(species, item.replace(" ", ""), fileExtension[species])), item)
+		#self.ui.comboBox_faction.addItems(self.__storage.factions(species))
 
 
 	def repopulateOrganisations(self, species):

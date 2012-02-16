@@ -350,16 +350,8 @@ class MainWindow(QMainWindow):
 		Für jede Spezies wird das passende Hintergrundbild angezeigt.
 		"""
 
-		if ( species == "Changeling" ):
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
-		elif ( species == "Mage" ):
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
-		elif ( species == "Vampire" ):
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
-		elif ( species == "Werewolf" ):
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
-		else:
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
+		self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget {{ background-image: url(:/background/images/species/{}/Skull-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }}".format(species) )
+
 
 
 	def setTabButtonState( self, index ):

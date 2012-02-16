@@ -24,7 +24,7 @@ from __future__ import division, print_function
 
 from PySide.QtCore import Qt
 from PySide.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
-from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
+#from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.Config import Config
 #from src.Debug import Debug
