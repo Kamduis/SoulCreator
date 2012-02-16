@@ -121,8 +121,6 @@ class Config(object):
 	## Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 	traitCategorySpace = 10
 
-	traitSpiritMax = 10
-
 	companionInfluencesCount = 5
 
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.

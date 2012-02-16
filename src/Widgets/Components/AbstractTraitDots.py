@@ -287,7 +287,7 @@ class AbstractTraitDots(QWidget):
 				# Signal
 				self.maximumChanged.emit( value )
 				## neu zeichnen
-				#update()
+				self.update()
 
 			# Ist das neue Maximum kleiner als das Minimum wird letzteres verändert, um dieses mindestens so groß wie das Maximum zu behalten.
 			if ( value < self.__minimum):

@@ -88,9 +88,9 @@ class CompanionWidget(QGroupBox):
 		self.ui.traitDots_finesse.valueChanged.connect(self.calcEssence)
 		self.ui.traitDots_resistance.valueChanged.connect(self.calcEssence)
 
-		self.ui.traitDots_power.maximum = Config.traitSpiritMax
-		self.ui.traitDots_finesse.maximum = Config.traitSpiritMax
-		self.ui.traitDots_resistance.maximum = Config.traitSpiritMax
+		self.ui.traitDots_power.valueChanged.connect(self.calcMaxTrait)
+		self.ui.traitDots_finesse.valueChanged.connect(self.calcMaxTrait)
+		self.ui.traitDots_resistance.valueChanged.connect(self.calcMaxTrait)
 
 		## Liste aller Einflüsse
 		self.__influenceWidgets = []
@@ -113,7 +113,7 @@ class CompanionWidget(QGroupBox):
 
 	def calcEssence(self):
 		"""
-		Berechnet den Rang eines Geistes aus dessen Attributssumme.
+		Berechnet die maximal zu verfügung stehende Essenz.
 		"""
 
 		rank = CalcAdvantages.calculateSpiritRank(
@@ -123,6 +123,27 @@ class CompanionWidget(QGroupBox):
 		)
 
 		self.__character.companionFuel = self.__storage.fuelMax("Spirit", rank)
+
+
+	def calcMaxTrait(self):
+		"""
+		Berechnet die maximalen Attribute.
+		"""
+
+		rank = CalcAdvantages.calculateSpiritRank(
+			self.__character.companionPower,
+			self.__character.companionFinesse,
+			self.__character.companionResistance
+		)
+
+		maxValue = self.__storage.maxTrait("Spirit", rank)
+
+		for widget in self.__influenceWidgets:
+			widget[1].setMaximum(rank)
+		
+		self.ui.traitDots_power.maximum = maxValue
+		self.ui.traitDots_finesse.maximum = maxValue
+		self.ui.traitDots_resistance.maximum = maxValue
 
 
 	def modifyNumen(self, name, state):
