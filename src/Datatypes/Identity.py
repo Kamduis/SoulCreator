@@ -28,7 +28,7 @@ from PySide.QtCore import QObject, Signal
 from src.Config import Config
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 #from src.Widgets.Dialogs.NameDialog import NameDialog
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -176,9 +176,9 @@ class Identity(QObject):
 		
 		if (not self.firstname or not self.surname):
 			# In diesem Fall benötige ich keinen Abstand zwischen den Namen, da je einer leer ist.
-			return "{}{}".format(firstname, surname)
+			return "{}{}".format(self.firstname, self.surname)
 		else:
-			return "{} {}".format(firstname, surname)
+			return "{} {}".format(self.firstname, self.surname)
 
 	realname = property(__getRealname)
 

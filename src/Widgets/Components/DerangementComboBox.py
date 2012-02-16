@@ -27,7 +27,7 @@ from PySide.QtGui import QComboBox, QColor
 
 from src.Config import Config
 #from src import Error
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

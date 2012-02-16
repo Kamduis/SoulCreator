@@ -31,7 +31,7 @@ from PySide.QtGui import QPixmap
 from src.Config import Config
 from src.Error import ErrXmlOldVersion
 from src.IO.ReadXml import ReadXml
-from src.Debug import Debug
+#from src.Debug import Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
@@ -227,7 +227,6 @@ class ReadXmlCharacter(QObject, ReadXml):
 		Liest die Gegenstände des Charakters aus.
 		"""
 
-		items = tree.find("Items")
 		self.readWeapons(tree.find("Items/Weapons"))
 		self.readArmor(tree.find("Items/armor"))
 		self.readEquipment(tree.find("Items/Equipment"))

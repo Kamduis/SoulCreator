@@ -22,12 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Signal
+from PySide.QtCore import Signal
 
 #from src.Config import Config
-from src.Datatypes.AbstractTrait import AbstractTrait
+#from src.Datatypes.AbstractTrait import AbstractTrait
 from src.Datatypes.StandardTrait import StandardTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 #from src.Error import ErrTraitType
 
 

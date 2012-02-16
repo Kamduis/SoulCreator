@@ -32,7 +32,7 @@ from src.Config import Config
 from src.Tools import ListTools
 from src.Widgets.TraitWidget import TraitWidget
 from src.Widgets.Components.CharaTrait import CharaTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

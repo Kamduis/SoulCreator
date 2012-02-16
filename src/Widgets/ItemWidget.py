@@ -28,7 +28,7 @@ from PySide.QtCore import Qt
 from PySide.QtGui import QWidget, QColor, QIcon, QListWidgetItem, QRadioButton, QButtonGroup
 
 from src.Config import Config
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_ItemWidget import Ui_ItemWidget
 

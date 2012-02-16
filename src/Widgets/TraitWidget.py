@@ -22,14 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import os
-
 from PySide.QtCore import Signal
 from PySide.QtGui import QWidget
 
 from src.Config import Config
 #from src import Error
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

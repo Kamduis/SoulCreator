@@ -27,7 +27,7 @@ from PySide.QtGui import QDialog
 
 from src.Config import Config
 #from src.Error import ErrXmlTooOldVersion
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_SettingsDialog import Ui_SettingsDialog
 

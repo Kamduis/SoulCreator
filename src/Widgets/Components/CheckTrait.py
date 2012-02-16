@@ -28,7 +28,7 @@ from PySide.QtGui import QWidget, QHBoxLayout, QCheckBox, QLineEdit
 from src.Config import Config
 #from src.Tools import ListTools
 from src.Datatypes.StandardTrait import StandardTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

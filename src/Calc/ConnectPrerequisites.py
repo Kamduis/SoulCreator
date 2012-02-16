@@ -151,7 +151,7 @@ class ConnectPrerequisites(object):
 					#Debug.debug(traitPrerequisites)
 					result = eval(traitPrerequisites)
 					#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
-				except (NameError, SyntaxError) as e:
+				except (NameError, SyntaxError):
 					Debug.debug(u"Error bei {}: {}".format(trait.name, traitPrerequisites))
 					result = False
 

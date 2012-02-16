@@ -30,7 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 from src.Config import Config
 from src.Tools import ListTools
 from src.Widgets.Components.CheckTrait import CheckTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

@@ -25,13 +25,13 @@ from __future__ import division, print_function
 import copy
 
 from PySide.QtCore import Signal
-from PySide.QtGui import QDialog, QIcon, QListWidgetItem
+from PySide.QtGui import QDialog, QIcon
 
 from src.Config import Config
-from src.Error import ErrListLength
+#from src.Error import ErrListLength
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Datatypes.Identity import Identity
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_NameDialog import Ui_NameDialog
 

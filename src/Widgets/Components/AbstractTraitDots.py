@@ -22,12 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt, QPoint, Signal
-from PySide.QtGui import QWidget, QColor, QSizePolicy, QPen, QBrush, QPainter
+from PySide.QtCore import QPoint, Signal
+from PySide.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter
 
 #from src.Config import Config
 #from src.Widgets.TraitLine import TraitLine
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -311,7 +311,7 @@ class AbstractTraitDots(QWidget):
 		self.setMinimumWidth( sizeX * self.__minimumSizeY)
 
 
-	def setForbiddenValues( sel, values ):
+	def setForbiddenValues( self, values ):
 		"""
 		Über diese Funktion wird eine Liste der verbotenen Werte gesetzt.
 

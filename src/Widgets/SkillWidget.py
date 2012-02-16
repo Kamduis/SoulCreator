@@ -31,7 +31,7 @@ from src.Config import Config
 #from src import Error
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Widgets.TraitWidget import TraitWidget
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

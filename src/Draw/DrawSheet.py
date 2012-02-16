@@ -26,18 +26,17 @@ import math
 import copy
 
 from PySide.QtCore import Qt, QObject, QRectF, QRect
-from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage, QFont, QFontDatabase, QFontMetrics
+from PySide.QtGui import QColor, QPen, QPainter, QImage, QFont, QFontMetrics
 
 from src.GlobalState import GlobalState
 from src.Config import Config
 from src.Error import ErrSpeciesNotExisting
-from src.Calc.CalcShapes import CalcShapes
 from src.Random import Random
 from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Calc.CalcShapes import CalcShapes
 from src.Tools import ImageTools
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -877,10 +876,6 @@ class DrawSheet(QObject):
 			textHeight /= traitCount
 		else:
 			textHeight = fontMetrics.height() * .7
-
-		# Warnung, hier muß darauf geachtet werden, daß dies auch die Schriftart/-größe der Überschrift ist.
-		fontHeadingMetrics = QFontMetrics(self.__fontHeading)
-		fontHeadingHeight = fontHeadingMetrics.height()
 
 		i = 0
 		j = 0
@@ -1940,9 +1935,6 @@ class DrawSheet(QObject):
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()
 
-		fontSmallMetrics = QFontMetrics(self.__fontMain_tiny)
-		fontSmallHeight = fontSmallMetrics.height()
-
 		keys = [item for item in self.__character.derangements.keys()]
 		keys.sort(reverse=True)
 		i = 0
@@ -2436,8 +2428,6 @@ class DrawSheet(QObject):
 		pen = self.__painter.pen()
 		pen.setWidthF(self.__dotLineWidth)
 		self.__painter.setPen(pen)
-
-		widthSquares = number * (squareSide + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
 
 		self.__painter.setBrush(self.__colorEmpty)
 

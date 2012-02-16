@@ -22,8 +22,6 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import os
-
 from PySide.QtCore import Qt#, Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
 
@@ -31,7 +29,7 @@ from src.Config import Config
 #from src import Error
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Widgets.TraitWidget import TraitWidget
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

@@ -27,7 +27,7 @@ from PySide.QtGui import QWidget
 
 #from src.Config import Config
 #from src import Error
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_SpecialtiesWidget import Ui_SpecialtiesWidget
 
@@ -121,7 +121,6 @@ class SpecialtiesWidget(QWidget):
 
 	def reshowSpecialties(self):
 		self.ui.listWidget_specialties.clear()
-		stopLoop = False
 		for item in self.__storage:
 			for subitem in self.__storage[item].items():
 				if subitem[0] == self.__trait.name:

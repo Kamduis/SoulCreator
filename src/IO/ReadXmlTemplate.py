@@ -22,20 +22,18 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import os
 import ast
 import tempfile
 import zlib
 
-from PySide.QtCore import QObject, QDir, QFile, QIODevice, QResource, Signal
+from PySide.QtCore import QObject, QDir, QFile, QIODevice, Signal
 
 from src.Config import Config
 from src.GlobalState import GlobalState
-from src import Error
-from src.Tools import ListTools
-from src.Error import ErrXmlParsing, ErrXmlOldVersion, ErrFileNotOpened
+#from src.Tools import ListTools
+from src.Error import ErrXmlOldVersion, ErrFileNotOpened
 from src.IO.ReadXml import ReadXml
-from src.Debug import Debug
+#from src.Debug import Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False

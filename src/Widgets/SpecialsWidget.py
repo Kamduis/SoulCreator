@@ -22,15 +22,13 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import os
-
-from PySide.QtCore import Qt
+#from PySide.QtCore import Qt
 from PySide.QtGui import QWidget, QHBoxLayout, QLineEdit, QMessageBox
 
 from src.Config import Config
 from src.Widgets.Components.TraitDots import TraitDots
 from src.Widgets.Components.CompanionWidget import CompanionWidget
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_SpecialsWidget import Ui_SpecialsWidget
 

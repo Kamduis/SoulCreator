@@ -27,11 +27,11 @@ from __future__ import division, print_function
 from PySide.QtCore import Qt
 from PySide.QtGui import QGroupBox, QHBoxLayout, QLineEdit
 
-from src.Config import Config
+#from src.Config import Config
 #from src import Error
 from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Widgets.Components.TraitDots import TraitDots
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_CompanionWidget import Ui_CompanionWidget
 

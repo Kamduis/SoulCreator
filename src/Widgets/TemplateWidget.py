@@ -25,10 +25,10 @@ from __future__ import division, print_function
 from PySide.QtCore import QDate
 from PySide.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageBox
 
-from src.Config import Config
+#from src.Config import Config
 #from src.Tools import PathTools
 #from src.Calc.Calc import Calc
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_TemplateWidget import Ui_TemplateWidget
 

@@ -22,10 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import ast
-import copy
-
-from PySide.QtCore import QObject, QDate, Signal, Slot
+from PySide.QtCore import QObject, QDate, Signal
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
@@ -36,8 +33,8 @@ from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
 from src.Calc.Calc import Calc
 from src.Calc.ConnectPrerequisites import ConnectPrerequisites
-from src.Error import ErrListLength
-from src.Debug import Debug
+#from src.Error import ErrListLength
+#from src.Debug import Debug
 
 
 

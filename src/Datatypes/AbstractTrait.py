@@ -26,7 +26,7 @@ from PySide.QtCore import QObject, Signal
 
 #from src.Config import Config
 #from ReadXml import ReadXml
-from src.Debug import Debug
+#from src.Debug import Debug
 #from src.Error import ErrTraitType
 
 

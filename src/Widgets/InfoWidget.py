@@ -24,15 +24,15 @@ from __future__ import division, print_function
 
 import os
 
-from PySide.QtCore import Qt, QSize, QFile, QDate, Signal
-from PySide.QtGui import QWidget, QIcon, QLabel, QPixmap, QFileDialog, QMessageBox
+from PySide.QtCore import Qt, QDate, Signal
+from PySide.QtGui import QWidget, QIcon, QPixmap, QFileDialog, QMessageBox
 
 from src.Config import Config
 from src.Tools import PathTools
-from src.Calc.Calc import Calc
+#from src.Calc.Calc import Calc
 from src.Datatypes.Identity import Identity
 from src.Widgets.Dialogs.NameDialog import NameDialog
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_InfoWidget import Ui_InfoWidget
 
@@ -164,7 +164,6 @@ class InfoWidget(QWidget):
 		if not nameStr:
 			nameStr = self.tr("Name")
 		self.ui.pushButton_name.setText( nameStr )
-		genderIcon = QIcon()
 		for item in Config.genders:
 			if self.__character.identity.gender == item[0]:
 				self.ui.pushButton_name.setIcon(QIcon(item[1]))

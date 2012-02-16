@@ -25,9 +25,9 @@ from __future__ import division, print_function
 from PySide.QtCore import QObject
 
 #from src.Config import Config
-from src.Tools import ListTools
-from src.Debug import Debug
+#from src.Tools import ListTools
 from src.Error import ErrTraitType
+#from src.Debug import Debug
 
 
 

@@ -22,14 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt, QSize
+from PySide.QtCore import Qt
 from PySide.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
 from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.Config import Config
-from src.Debug import Debug
-
-from resources import rc_resource
+#from src.Debug import Debug
 
 
 

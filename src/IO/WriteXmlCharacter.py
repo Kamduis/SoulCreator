@@ -22,13 +22,13 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Qt, QIODevice, QByteArray, QBuffer
+from PySide.QtCore import QObject, QIODevice, QByteArray, QBuffer
 
 import gzip
 
 from src.Config import Config
-from src.Error import ErrTraitType, ErrTraitCategory
-from src.Debug import Debug
+#from src.Error import ErrTraitType, ErrTraitCategory
+#from src.Debug import Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
@@ -182,7 +182,7 @@ class WriteXmlCharacter(QObject):
 				for weapon in self.__character.weapons[category]:
 					etree.SubElement(weaponCategory, "weapon").text = weapon
 		if self.__character.armor:
-			armor = etree.SubElement(items, "armor", dedicated=unicode(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
+			etree.SubElement(items, "armor", dedicated=unicode(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
 		if self.__character.equipment or self.__character.magicalTool:
 			equipment = etree.SubElement(items, "Equipment")
 			for item in self.__character.equipment:

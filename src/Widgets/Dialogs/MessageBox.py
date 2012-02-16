@@ -26,7 +26,7 @@ from PySide.QtCore import QObject
 from PySide.QtGui import QMessageBox
 
 from src.Config import Config
-from src.Error import ErrXmlTooOldVersion
+#from src.Error import ErrXmlTooOldVersion
 
 
 

@@ -29,7 +29,7 @@ from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
 #from src.Widgets.Components.CharaTrait import CharaTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

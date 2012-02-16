@@ -30,7 +30,7 @@ from PySide.QtGui import QListWidget, QListWidgetItem, QColor
 from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

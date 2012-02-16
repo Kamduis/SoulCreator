@@ -25,10 +25,10 @@ from __future__ import division, print_function
 from PySide.QtCore import Signal
 #from PySide.QtGui import QWidget, QHBoxLayout, QPushButton, QLineEdit, QLabel
 
-from src.Config import Config
+#from src.Config import Config
 from src.Widgets.Components.TraitLine import TraitLine
 from src.Datatypes.BonusTrait import BonusTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

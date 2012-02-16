@@ -29,7 +29,7 @@ from PySide.QtCore import QObject, Signal
 #from src.Error import ErrFileNotOpened
 from src.Config import Config
 #from src import Error
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

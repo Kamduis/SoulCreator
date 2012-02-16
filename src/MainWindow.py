@@ -22,11 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import sys
+#import sys
 import os
 
-from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, QDir, Signal
-from PySide.QtGui import QMainWindow, QApplication, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
+from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir
+from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
+#from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.GlobalState import GlobalState
 from src.Tools import PathTools
@@ -57,9 +58,11 @@ from Widgets.SpecialsWidget import SpecialsWidget
 from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
 from Draw.DrawSheet import DrawSheet
-from Debug import Debug
+#from Debug import Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
+
+from resources import rc_resource
 
 
 
@@ -78,13 +81,9 @@ class MainWindow(QMainWindow):
 
 	\todo Benutzer sollen ihre eigenen Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
 
-	\todo Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten. Bei Magiern/Vampiren sollte das Bonus-Attribut optisch hervorgehoben werden.
-
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
 
 	\todo Erschaffungspunkte durch einen Wizard ersetzen.
-
-	\todo Items sollten sich der Alterskategorie anpassen.
 
 	\todo "Leere" Felder auf dem Charakterbogen mit Leerzeilen zum händischen Ausfüllen versehen.
 
@@ -92,7 +91,7 @@ class MainWindow(QMainWindow):
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
 
-	\todo Bonus-Eigenschaften werden noch nicht in Berechnungen berücksichtigt.
+	\todo Auspice-Blessing hinzufügen.
 	"""
 
 

@@ -27,7 +27,7 @@ from PySide.QtGui import QWidget, QHBoxLayout, QPushButton, QLineEdit, QLabel
 
 from src.Config import Config
 from src.Widgets.Components.TraitDots import TraitDots
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

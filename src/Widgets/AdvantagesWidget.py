@@ -24,16 +24,16 @@ from __future__ import division, print_function
 
 #import traceback
 
-from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QFontMetrics, QLabel, QSpinBox, QIcon, QPixmap
+from PySide.QtCore import Signal
+from PySide.QtGui import QWidget, QFontMetrics, QIcon
 
 from src.Config import Config
 #from src import Error
-from src.Calc.CalcAdvantages import CalcAdvantages
+#from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Calc.CalcShapes import CalcShapes
-from src.Widgets.Components.TraitDots import TraitDots
-from src.Widgets.Components.Squares import Squares
-from src.Debug import Debug
+#from src.Widgets.Components.TraitDots import TraitDots
+#from src.Widgets.Components.Squares import Squares
+#from src.Debug import Debug
 
 from ui.ui_AdvantagesWidget import Ui_AdvantagesWidget
 
