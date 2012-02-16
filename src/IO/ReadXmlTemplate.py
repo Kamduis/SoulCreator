@@ -156,31 +156,28 @@ class ReadXmlTemplate(QObject, ReadXml):
 		Einlesen aller verfügbarer Eigenschaften.
 		"""
 
-		if isplayable:
-			self.readSpeciesData(tree.find("Template/Traits"), species)
-			self.readCharacteristics(tree.find("Template/Traits/Virtue"))
-			self.readCharacteristics(tree.find("Template/Traits/Vice"))
-			self.readTraits(tree.find("Template/Traits/Attribute"), species)
-			self.readTraits(tree.find("Template/Traits/Skill"), species)
-			self.readTraits(tree.find("Template/Traits/Merit"), species)
-			self.readTraits(tree.find("Template/Traits/Flaw"), species)
-			self.readTraits(tree.find("Template/Traits/Power"), species)
-			self.readSubPowers(tree.find("Template/Traits/Subpower"), species)
-			self.readCreationPoints(tree.find("Template/Creation"), species)
-			self.readGroups(tree.find("Template/Group/Breed"), species)
-			self.readGroups(tree.find("Template/Group/Faction"), species)
-			self.readGroups(tree.find("Template/Group/Organisation"), species)
-			self.readGroups(tree.find("Template/Group/Party"), species)
-			self.readPowerstat(tree.find("Template/Traits/Powerstat"), species)
-			self.readDerangements(tree.find("Template/Traits/Derangement"), species)
-			self.readWeapons(tree.findall("Template/Items/Weapons"))
-			self.readArmor(tree.findall("Template/Items/Armor"))
-			self.readEquipment(tree.findall("Template/Items/Equipment"))
-		else:
-			self.readTraits(tree.find("Template/Traits/Power"), species)
+		self.readSpeciesData(tree.find("Template/Traits"), species, isplayable)
+		self.readCharacteristics(tree.find("Template/Traits/Virtue"))
+		self.readCharacteristics(tree.find("Template/Traits/Vice"))
+		self.readTraits(tree.find("Template/Traits/Attribute"), species)
+		self.readTraits(tree.find("Template/Traits/Skill"), species)
+		self.readTraits(tree.find("Template/Traits/Merit"), species)
+		self.readTraits(tree.find("Template/Traits/Flaw"), species)
+		self.readTraits(tree.find("Template/Traits/Power"), species)
+		self.readSubPowers(tree.find("Template/Traits/Subpower"), species)
+		self.readCreationPoints(tree.find("Template/Creation"), species)
+		self.readGroups(tree.find("Template/Group/Breed"), species)
+		self.readGroups(tree.find("Template/Group/Faction"), species)
+		self.readGroups(tree.find("Template/Group/Organisation"), species)
+		self.readGroups(tree.find("Template/Group/Party"), species)
+		self.readPowerstat(tree.find("Template/Traits/Powerstat"), species)
+		self.readDerangements(tree.find("Template/Traits/Derangement"), species)
+		self.readWeapons(tree.findall("Template/Items/Weapons"))
+		self.readArmor(tree.findall("Template/Items/Armor"))
+		self.readEquipment(tree.findall("Template/Items/Equipment"))
 
 
-	def readSpeciesData(self, root, species):
+	def readSpeciesData(self, root, species, isplayable=True):
 		"""
 		Einlesen aller Spezies-abhängigen Parameter.
 		"""
@@ -189,6 +186,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			"morale": self.getElementAttribute(root, "morale"),
 			"powerstat": self.getElementAttribute(root, "powerstat"),
 			"fuel": self.getElementAttribute(root, "fuel"),
+			"playable": isplayable,
 		}
 
 		self.__storage.appendSpecies( species, speciesData )

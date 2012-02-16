@@ -1008,27 +1008,54 @@ class DrawSheet(QObject):
 			self.__drawTrait(
 				offsetH,
 				verticalPos + i * fontHeight,
-				width=width / 2 - self.__textDotSep,
+				width=width // 2 - self.__textDotSep,
 				name=trait[0],
 				value=trait[1]
 			)
 			i += 1
-
-		advantages = (
-			( "Size", self.__character.companionSize, ),
-			( "Speed", self.__character.companionSpeedFactor, ),
+		advantages1 = (
+			( "Willpower", CalcAdvantages.calculateWillpower(self.__character.companionResistance, self.__character.companionResistance), ),
+			( "Corpus", CalcAdvantages.calculateHealth(self.__character.companionResistance, self.__character.companionSize), ),
 		)
-		i = 0
-		for trait in advantages:
+		for trait in advantages1:
 			self.__drawTextWithValue(
-				offsetH + width - width / 2 - self.__textDotSep,
+				offsetH,
 				verticalPos + i * fontHeight,
-				width / 2 - self.__textDotSep,
+				width // 2 - self.__textDotSep,
 				trait[0],
 				trait[1]
 			)
 			i += 1
-		verticalPos += fontHeight * max(len(traits), len(advantages))
+
+		advantages2 = (
+			( "Size", self.__character.companionSize, ),
+			( "Initiative", CalcAdvantages.calculateInitiative( [
+					self.__character.companionFinesse,
+					self.__character.companionResistance
+				]), ),
+			( "Speed", CalcAdvantages.calculateSpeed( [
+					self.__character.companionPower,
+					self.__character.companionFinesse,
+					self.__character.companionSpeedFactor
+				] ), ),
+			( "Defense", CalcAdvantages.calculateDefense( [
+					self.__character.companionFinesse,
+					self.__character.companionFinesse
+				], True ), ),
+			( "Essence", self.__character.companionFuel ),
+		)
+		i = 0
+		for trait in advantages2:
+			self.__drawTextWithValue(
+				offsetH + width - (width // 2 - self.__textDotSep),
+				verticalPos + i * fontHeight,
+				width // 2 - self.__textDotSep,
+				trait[0],
+				trait[1]
+			)
+			i += 1
+		verticalPos += fontHeight * max([len(traits) + len(advantages1), len(advantages2)])
+		#Debug.debug(width, width // 2 - self.__textDotSep, width - (width // 2 - self.__textDotSep), width - width // 2 - self.__textDotSep )
 
 		i = 0
 		for influence in self.__character.companionInfluences:

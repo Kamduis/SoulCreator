@@ -121,7 +121,6 @@ class Config(object):
 	## Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 	traitCategorySpace = 10
 
-	traitSpiritMin = 1
 	traitSpiritMax = 10
 
 	companionInfluencesCount = 5

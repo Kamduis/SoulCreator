@@ -154,13 +154,22 @@ class CalcAdvantages(QObject):
 		\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
-		result = self.__attrDex.totalvalue + self.__attrCom.totalvalue + self.__meritFastReflexes.totalvalue
+		result = self.calculateInitiative([ self.__attrDex.totalvalue, self.__attrCom.totalvalue, self.__meritFastReflexes.totalvalue ])
 
 		if ( self.__initiative != result ):
 			self.__initiative = result
 			self.initiativeChanged.emit( result )
 
 		return self.__initiative
+
+
+	@staticmethod
+	def calculateInitiative(traitList):
+		"""
+		Berechnet die Initiative aus der Liste an übergebenen Eigenschaften.
+		"""
+
+		return sum(traitList)
 
 
 	def calcSpeed(self):
@@ -170,13 +179,22 @@ class CalcAdvantages(QObject):
 		\todo Bislang nur von Strength und Dexterity abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
-		result = self.__attrStr.totalvalue + self.__attrDex.totalvalue + 5 + self.__meritFleetOfFoot.totalvalue;
+		result = self.calculateSpeed([ self.__attrStr.totalvalue, self.__attrDex.totalvalue, 5, self.__meritFleetOfFoot.totalvalue ])
 
 		if ( self.__speed != result ):
 			self.__speed = result
 			self.speedChanged.emit( result )
 
 		return self.__speed
+
+
+	@staticmethod
+	def calculateSpeed(traitList):
+		"""
+		Berechnet die Geschwindigkeit aus der Liste an übergebenen Eigenschaften.
+		"""
+
+		return sum(traitList)
 
 
 	def calcDefense(self):
@@ -186,13 +204,28 @@ class CalcAdvantages(QObject):
 		\todo Bislang nicht von der Spezies abhängig: Tiere sollten stets das größere von Dex und Wits als Defense haben.
 		"""
 
-		result = min( self.__attrWit.totalvalue, self.__attrDex.totalvalue )
+		result = self.calculateDefense( [ self.__attrWit.totalvalue, self.__attrDex.totalvalue ] )
 
 		if ( self.__defense != result ):
 			self.__defense = result
 			self.defenseChanged.emit( result )
 
 		return self.__defense
+
+
+	@staticmethod
+	def calculateDefense(traitList, maximize=False):
+		"""
+		Berechnet die Defense aus der Liste an übergebenen Eigenschaften.
+		"""
+
+		result = 0
+		if maximize:
+			result = max(traitList)
+		else:
+			result = min(traitList)
+
+		return result
 
 
 	def calcHealth(self):
@@ -203,7 +236,7 @@ class CalcAdvantages(QObject):
 		## Bevor ich die Gesundheit ausrechnen kann, muß erst die Größe feststehen.
 		size = self.calcSize()
 
-		result = self.__attrSta.totalvalue + size
+		result = self.calculateHealth(self.__attrSta.totalvalue, size)
 
 		#Debug.debug("Berechne {} + {} = {}".format(self.__attrSta.totalvalue, size, result))
 
@@ -214,12 +247,21 @@ class CalcAdvantages(QObject):
 		return self.__health
 
 
+	@staticmethod
+	def calculateHealth(trait1, trait2):
+		"""
+		Berechnet die Gesundheit aus den zwei übergebenen Eigenschaften.
+		"""
+
+		return trait1 + trait2
+
+
 	def calcWillpower(self):
 		"""
 		Berechnung der Willenskraft.
 		"""
 
-		result = self.__attrRes.totalvalue + self.__attrCom.totalvalue
+		result = self.calculateWillpower(self.__attrRes.totalvalue, self.__attrCom.totalvalue)
 
 		if ( self.__willpower != result ):
 			self.__willpower = result
@@ -228,3 +270,31 @@ class CalcAdvantages(QObject):
 		return self.__willpower
 
 
+	@staticmethod
+	def calculateWillpower(trait1, trait2):
+		"""
+		Berechnet die Willenskraft aus den zwei übergebenen Eigenschaften.
+		"""
+		
+		return trait1 + trait2
+
+
+	@staticmethod
+	def calculateSpiritRank(power, finesse, resistance):
+		"""
+		Berechnet den Rang eines Geistes aus dessen Attributen.
+		"""
+		
+		result = power + finesse + resistance
+
+		rank = 1
+		if result > 25:
+			rank = 5
+		elif result > 19:
+			rank = 4
+		elif result > 13:
+			rank = 3
+		elif result > 7:
+			rank = 2
+
+		return rank

@@ -95,6 +95,7 @@ class StorageCharacter(QObject):
 	companionResistanceChanged = Signal(int)
 	companionSizeChanged = Signal(int)
 	companionSpeedFactorChanged = Signal(int)
+	companionFuelChanged = Signal(int)
 	companionNuminaChanged = Signal(object)
 	companionBanChanged = Signal(str)
 
@@ -189,6 +190,7 @@ class StorageCharacter(QObject):
 		self.__companionResistance = 0
 		self.__companionSize = 0
 		self.__companionSpeedFactor = 0
+		self.__companionFuel = 0
 		self.__companionInfluences = []
 		for i in xrange(Config.companionInfluencesCount):
 			companionInfluence = AbstractTrait()
@@ -287,6 +289,14 @@ class StorageCharacter(QObject):
 		self.magicalToolChanged.connect(self.setModified)
 		self.nimbusChanged.connect(self.setModified)
 		self.paradoxMarksChanged.connect(self.setModified)
+		self.companionPowerChanged.connect(self.setModified)
+		self.companionFinesseChanged.connect(self.setModified)
+		self.companionResistanceChanged.connect(self.setModified)
+		self.companionSizeChanged.connect(self.setModified)
+		self.companionSpeedFactorChanged.connect(self.setModified)
+		self.companionFuelChanged.connect(self.setModified)
+		self.companionNuminaChanged.connect(self.setModified)
+		self.companionBanChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -647,6 +657,17 @@ class StorageCharacter(QObject):
 			self.companionSpeedFactorChanged.emit(speedFactor)
 
 	companionSpeedFactor = property(__getCompanionSpeedFactor, setCompanionSpeedFactor)
+
+
+	def __getCompanionFuel(self):
+		return self.__companionFuel
+
+	def setCompanionFuel(self, fuel):
+		if self.__companionFuel != fuel:
+			self.__companionFuel = fuel
+			self.companionFuelChanged.emit(fuel)
+
+	companionFuel = property(__getCompanionFuel, setCompanionFuel)
 
 
 	@property
@@ -1127,6 +1148,7 @@ class StorageCharacter(QObject):
 		self.companionResistance = 0
 		self.companionSize = 0
 		self.companionSpeedFactor = 0
+		self.companionFuel = 0
 		for companionInfluence in self.__companionInfluences:
 			companionInfluence.name = ""
 			companionInfluence.value = 0

@@ -50,7 +50,7 @@ class TemplateWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
-		speciesList = self.__storage.species.keys()
+		speciesList = [ species[0] for species in self.__storage.species.items() if species[1]["playable"] ]
 		speciesList.sort()
 		#self.ui.comboBox_species.addItems(speciesList)
 		for species in speciesList:

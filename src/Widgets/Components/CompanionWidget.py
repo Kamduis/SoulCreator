@@ -29,6 +29,7 @@ from PySide.QtGui import QGroupBox, QHBoxLayout, QLineEdit
 
 from src.Config import Config
 #from src import Error
+from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Widgets.Components.TraitDots import TraitDots
 from src.Debug import Debug
 
@@ -83,9 +84,10 @@ class CompanionWidget(QGroupBox):
 		self.__character.companionNuminaChanged.connect(self.updateNumina)
 		self.__character.companionBanChanged.connect(self.ui.textEdit_ban.setPlainText)
 
-		self.ui.traitDots_power.minimum = Config.traitSpiritMin
-		self.ui.traitDots_finesse.minimum = Config.traitSpiritMin
-		self.ui.traitDots_resistance.minimum = Config.traitSpiritMin
+		self.ui.traitDots_power.valueChanged.connect(self.calcEssence)
+		self.ui.traitDots_finesse.valueChanged.connect(self.calcEssence)
+		self.ui.traitDots_resistance.valueChanged.connect(self.calcEssence)
+
 		self.ui.traitDots_power.maximum = Config.traitSpiritMax
 		self.ui.traitDots_finesse.maximum = Config.traitSpiritMax
 		self.ui.traitDots_resistance.maximum = Config.traitSpiritMax
@@ -107,6 +109,20 @@ class CompanionWidget(QGroupBox):
 
 			trait.nameChanged.connect(lineEdit.setText)
 			trait.valueChanged.connect(traitDots.setValue)
+
+
+	def calcEssence(self):
+		"""
+		Berechnet den Rang eines Geistes aus dessen Attributssumme.
+		"""
+
+		rank = CalcAdvantages.calculateSpiritRank(
+			self.__character.companionPower,
+			self.__character.companionFinesse,
+			self.__character.companionResistance
+		)
+
+		self.__character.companionFuel = self.__storage.fuelMax("Spirit", rank)
 
 
 	def modifyNumen(self, name, state):
