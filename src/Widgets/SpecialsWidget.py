@@ -60,9 +60,8 @@ class SpecialsWidget(QWidget):
 		self.ui.textEdit_paradoxMarks.textChanged.connect(self.changeParadoxMarks)
 		self.__character.paradoxMarksChanged.connect(self.ui.textEdit_paradoxMarks.setPlainText)
 
-		self.companionWidget = CompanionWidget(self.__character)
+		self.companionWidget = CompanionWidget(self.__storage, self.__character)
 		self.ui.layout_companion.addWidget(self.companionWidget)
-		self.companionWidget.ui.listWidget_numina.setCheckableItems(self.__storage.spiritNumina)
 
 		## Vampir
 		## Liste aller Vinculum-Widgets
@@ -85,9 +84,8 @@ class SpecialsWidget(QWidget):
 			traitDots.valueChanged.connect(self.checkMaxVinculum)
 
 		## Werewolf
-		self.totemWidget = CompanionWidget(self.__character)
+		self.totemWidget = CompanionWidget(self.__storage, self.__character)
 		self.ui.layout_totem.addWidget(self.totemWidget)
-		self.totemWidget.ui.listWidget_numina.setCheckableItems(self.__storage.spiritNumina)
 
 
 	def setPage(self, species):

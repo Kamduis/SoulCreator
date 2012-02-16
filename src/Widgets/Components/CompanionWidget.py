@@ -52,13 +52,18 @@ class CompanionWidget(QGroupBox):
 	#resistanceChanged = Signal(int)
 
 
-	def __init__(self, character, parent=None):
+	def __init__(self, template, character, parent=None):
 		QGroupBox.__init__(self, parent)
 
 		self.ui = Ui_CompanionWidget()
 		self.ui.setupUi(self)
 
 		self.__character = character
+		self.__storage = template
+
+		spiritNumina = [ numen[1]["name"] for numen in self.__storage.traits["Power"]["Numina"].items() if numen[1]["species"] == "Spirit" ]
+		spiritNumina.sort()
+		self.ui.listWidget_numina.setCheckableItems(spiritNumina)
 
 		self.ui.lineEdit_name.textChanged.connect(self.__character.setCompanionName)
 		self.ui.traitDots_power.valueChanged.connect(self.__character.setCompanionPower)

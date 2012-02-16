@@ -128,48 +128,56 @@ class ReadXmlTemplate(QObject, ReadXml):
 				messageText = self.tr("While opening the template file {}, the following problem arised:\n{} {}\nIt appears, that the file will be importable, so the process will be continued but errors may occur.".format(qrcFile.fileName(), e.message, e.description))
 				self.exceptionRaised.emit(messageText, e.critical)
 
-			species = self.readSpecies(xmlContent)
-			self.readTemplate(xmlContent, species)
+			result = self.readSpecies(xmlContent)
+			self.readTemplate(xmlContent, result[0], result[1])
 		#Debug.timesince(dbgStart)
 
 
 	def readSpecies(self, tree):
 		"""
 		Einlesen der Spezies, für welche die Eigenschaften in der gerade eingelsenen Datei gelten.
+
+		Nicht alle existierenden Spezies sind spielbar, sollen also nicht ausgewählt werden können.
 		"""
 
 		traitsRoot = tree.find("Template")
 		species = ""
 		if "species" in traitsRoot.attrib:
 			species = traitsRoot.attrib["species"]
+		playable = True
+		if "playable" in traitsRoot.attrib:
+			playable = ast.literal_eval(traitsRoot.attrib["playable"])
 
-		return species
+		return [ species, playable ]
 
 
-	def readTemplate(self, tree, species):
+	def readTemplate(self, tree, species, isplayable=True):
 		"""
 		Einlesen aller verfügbarer Eigenschaften.
 		"""
 
-		self.readSpeciesData(tree.find("Template/Traits"), species)
-		self.readCharacteristics(tree.find("Template/Traits/Virtue"))
-		self.readCharacteristics(tree.find("Template/Traits/Vice"))
-		self.readTraits(tree.find("Template/Traits/Attribute"), species)
-		self.readTraits(tree.find("Template/Traits/Skill"), species)
-		self.readTraits(tree.find("Template/Traits/Merit"), species)
-		self.readTraits(tree.find("Template/Traits/Flaw"), species)
-		self.readTraits(tree.find("Template/Traits/Power"), species)
-		self.readSubPowers(tree.find("Template/Traits/Subpower"), species)
-		self.readCreationPoints(tree.find("Template/Creation"), species)
-		self.readGroups(tree.find("Template/Group/Breed"), species)
-		self.readGroups(tree.find("Template/Group/Faction"), species)
-		self.readGroups(tree.find("Template/Group/Organisation"), species)
-		self.readGroups(tree.find("Template/Group/Party"), species)
-		self.readPowerstat(tree.find("Template/Traits/Powerstat"), species)
-		self.readDerangements(tree.find("Template/Traits/Derangement"), species)
-		self.readWeapons(tree.findall("Template/Items/Weapons"))
-		self.readArmor(tree.findall("Template/Items/Armor"))
-		self.readEquipment(tree.findall("Template/Items/Equipment"))
+		if isplayable:
+			self.readSpeciesData(tree.find("Template/Traits"), species)
+			self.readCharacteristics(tree.find("Template/Traits/Virtue"))
+			self.readCharacteristics(tree.find("Template/Traits/Vice"))
+			self.readTraits(tree.find("Template/Traits/Attribute"), species)
+			self.readTraits(tree.find("Template/Traits/Skill"), species)
+			self.readTraits(tree.find("Template/Traits/Merit"), species)
+			self.readTraits(tree.find("Template/Traits/Flaw"), species)
+			self.readTraits(tree.find("Template/Traits/Power"), species)
+			self.readSubPowers(tree.find("Template/Traits/Subpower"), species)
+			self.readCreationPoints(tree.find("Template/Creation"), species)
+			self.readGroups(tree.find("Template/Group/Breed"), species)
+			self.readGroups(tree.find("Template/Group/Faction"), species)
+			self.readGroups(tree.find("Template/Group/Organisation"), species)
+			self.readGroups(tree.find("Template/Group/Party"), species)
+			self.readPowerstat(tree.find("Template/Traits/Powerstat"), species)
+			self.readDerangements(tree.find("Template/Traits/Derangement"), species)
+			self.readWeapons(tree.findall("Template/Items/Weapons"))
+			self.readArmor(tree.findall("Template/Items/Armor"))
+			self.readEquipment(tree.findall("Template/Items/Equipment"))
+		else:
+			self.readTraits(tree.find("Template/Traits/Power"), species)
 
 
 	def readSpeciesData(self, root, species):

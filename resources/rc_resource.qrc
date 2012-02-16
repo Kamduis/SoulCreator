@@ -86,6 +86,7 @@
     <file>templates/mage.scd</file>
     <file>templates/vampire.scd</file>
     <file>templates/werewolf.scd</file>
+    <file>templates/spirit.scd</file>
   </qresource>
   <qresource prefix="characterSheets">
     <file>images/Charactersheet-Changeling-2.jpg</file>
