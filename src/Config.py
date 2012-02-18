@@ -117,6 +117,14 @@ class Config(object):
 	weaponIcons["thrown"] = ":/items/images/svg/shuriken.svg"
 	weaponIcons["ranged"] = ":/items/images/svg/uzi.svg"
 
+	## Hintergrundfarbe für die unterschiedlichen Typen magischer Gegenstände.
+	extraordinaryItemColor = {}
+	extraordinaryItemColor["Cursed Items"] = "lightseagreen"
+	extraordinaryItemColor["Fetishes"] = "burlywood"
+	extraordinaryItemColor["Tokens"] = "lawngreen"
+	extraordinaryItemColor["Imbued Items"] = "lightyellow"
+	extraordinaryItemColor["Artifacts"] = "gold"
+
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
 	vSpace = 5
 

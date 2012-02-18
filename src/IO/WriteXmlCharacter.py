@@ -189,6 +189,12 @@ class WriteXmlCharacter(QObject):
 				etree.SubElement(equipment, "equipment").text = item
 			if self.__character.magicalTool:
 				etree.SubElement(equipment, "magicalTool").text = self.__character.magicalTool
+		if self.__character.extraordinaryItems:
+			extraordinaries = etree.SubElement(items, "ExtraordinaryItems")
+			for typ in self.__character.extraordinaryItems:
+				itemType = etree.SubElement(extraordinaries, "Type", name=typ)
+				for extraordinaryItem in self.__character.extraordinaryItems[typ]:
+					etree.SubElement(itemType, "item").text = extraordinaryItem
 
 		## Spezialseigenschaften der Spezies
 		if self.__character.nimbus:

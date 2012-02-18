@@ -83,6 +83,9 @@ class StorageCharacter(QObject):
 	weaponsChanged = Signal()
 	armorChanged = Signal(str, bool)
 	equipmentChanged = Signal(object)
+	extraordinaryItemAdded = Signal(str, str)
+	extraordinaryItemRemoved = Signal(str, str)
+	extraordinaryItemsChanged = Signal()
 	magicalToolChanged = Signal(str)
 	nimbusChanged = Signal(str)
 	paradoxMarksChanged = Signal(str)
@@ -120,11 +123,20 @@ class StorageCharacter(QObject):
 	# Eine Liste der Waffen.
 	#
 	# {
-	# 	"melee": [ weapon1, weapon2 ... ]
-	# 	"thrown": [ weapon1, weapon2 ... ]
-	# 	"ranged": [ weapon1, weapon2 ... ]
+	# 	"melee": [ weapon1, weapon2 ... ],
+	# 	"thrown": [ weapon1, weapon2 ... ],
+	# 	"ranged": [ weapon1, weapon2 ... ],
 	# }
 	__weapons = {}
+
+	# Eine Liste der magischen Gegenstände.
+	#
+	# {
+	# 	Typ1: [ item1, item2 ... ],
+	# 	Typ2: [ item1, item2 ... ],
+	# 	...
+	# }
+	__extraordinaryItems = {}
 
 
 	def __init__(self, template, parent=None):
@@ -202,6 +214,8 @@ class StorageCharacter(QObject):
 		self.dateBecomingChanged.connect(self.__calcAgeBecoming)
 		self.weaponAdded.connect(self.weaponsChanged)
 		self.weaponRemoved.connect(self.weaponsChanged)
+		self.extraordinaryItemAdded.connect(self.extraordinaryItemsChanged)
+		self.extraordinaryItemRemoved.connect(self.extraordinaryItemsChanged)
 
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
@@ -531,6 +545,36 @@ class StorageCharacter(QObject):
 		if self.__equipment:
 			self.__equipment = []
 			self.equipmentChanged.emit(self.__equipment)
+
+
+	@property
+	def extraordinaryItems(self):
+		"""
+		Die Liste aller magischen Gegenstände des Charakters.
+		"""
+
+		return self.__extraordinaryItems
+
+	def addExtraordinaryItem(self, typ, extraordinaryItem):
+		"""
+		Fügt der Liste der magischen Gegenstände einen hinzu.
+		"""
+
+		if typ not in self.__extraordinaryItems:
+			self.__extraordinaryItems.setdefault(typ, [])
+
+		if extraordinaryItem not in self.__extraordinaryItems[typ]:
+			self.__extraordinaryItems[typ].append(extraordinaryItem)
+			self.extraordinaryItemAdded.emit(typ, extraordinaryItem)
+
+	def deleteExtraordinaryItem(self, typ, extraordinaryItem):
+		"""
+		Entfernt besagten magischen Gegenstand aus der Liste.
+		"""
+
+		if typ in self.__extraordinaryItems:
+			self.__extraordinaryItems[typ].remove(extraordinaryItem)
+			self.extraordinaryItemRemoved.emit(typ, extraordinaryItem)
 
 
 	def __getMagicalTool(self):
@@ -1132,6 +1176,9 @@ class StorageCharacter(QObject):
 				self.deleteWeapon(category, weapon)
 		self.setArmor(name="")
 		self.clearEquipment()
+		for typ in self.__extraordinaryItems:
+			for item in self.__extraordinaryItems[typ]:
+				self.deleteExtraordinaryItem(typ, item)
 		self.magicalTool = ""
 		self.nimbus = ""
 		self.paradoxMarks = ""

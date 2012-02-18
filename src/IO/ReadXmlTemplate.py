@@ -173,6 +173,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		self.readWeapons(tree.findall("Template/Items/Weapons"))
 		self.readArmor(tree.findall("Template/Items/Armor"))
 		self.readEquipment(tree.findall("Template/Items/Equipment"))
+		self.readExtraordinaryItems(tree.findall("Template/Items/Extraordinary"))
 
 
 	def readSpeciesData(self, root, species, isplayable=True):
@@ -449,6 +450,27 @@ class ReadXmlTemplate(QObject, ReadXml):
 						"cost": int(self.getElementAttribute(equipmentElement, "cost")),
 					}
 					self.__storage.addEquipment( equipmentName, equipmentData )
+
+
+	def readExtraordinaryItems(self, root):
+		"""
+		Einlesen der magischen Gegenstände.
+		"""
+
+		for extraordinary in root:
+			if GlobalState.isFallback or not self.getElementAttribute(Equipment, "fallback") == "True":
+				for element in list(extraordinary):
+					if element.tag == "Type":
+						itemTyp = element.attrib["name"]
+						for subElement in list(element):
+							if subElement.tag == "item":
+								itemName = subElement.attrib["name"]
+								itemData = {
+									#"durability": int(self.getElementAttribute(equipmentElement, "durability")),
+									#"size": int(self.getElementAttribute(equipmentElement, "size")),
+									"cost": float(self.getElementAttribute(subElement, "cost")),
+								}
+								self.__storage.addExtraordinaryItem( itemTyp, itemName, itemData )
 
 
 	def __readTraitData(self, root, species=None, typ=None, category=None):

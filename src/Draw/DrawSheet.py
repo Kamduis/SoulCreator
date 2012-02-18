@@ -490,6 +490,18 @@ class DrawSheet(QObject):
 			elif ( self.__character.species == "Werewolf" ):
 				pass
 			self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+		posY_zeile2 = posY + lengthY + self.__posSep
+
+		posX = 0
+		posY = posY_zeile2
+		lengthX = (self.__pageWidth - self.__posSep) / 2
+		lengthY = 350
+		if self.__character.species == "Werewolf":
+			self._drawBlessing(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+		posY += lengthY + self.__posSep
+		lengthY = 350
+		self._drawExtraordinaryItems(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posY_zeile3 = 2500
 		if ( self.__character.species == "Changeling" ):
@@ -1911,6 +1923,28 @@ class DrawSheet(QObject):
 			width,
 			height
 		)
+
+
+	def _drawExtraordinaryItems(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt das Inventar der magischen Gegenstände des Charakters nieder
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		\param height Die Höhe des Kastens.
+		"""
+
+		for typ in self.__character.extraordinaryItems:
+			equipment = "; ".join(self.__character.extraordinaryItems[typ])
+			self.__drawText(
+				"{}".format(typ),
+				equipment,
+				offsetH,
+				offsetV,
+				width,
+				height
+			)
 
 
 	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):

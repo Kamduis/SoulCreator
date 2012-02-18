@@ -305,6 +305,18 @@ class StorageTemplate(QObject):
 	# }
 	__equipment = {}
 
+	# Eine Liste aller magischen Gegenstände
+	#
+	# {
+	# 	Typ: {
+	# 		name: {
+	# 			"cost": value
+	# 		},
+	# 	},
+	# 	...
+	# }
+	__extraordinaryItems = {}
+
 
 
 	def __init__(self, parent=None):
@@ -804,4 +816,24 @@ class StorageTemplate(QObject):
 		self.__equipment[name] = data
 
 		#Debug.debug(self.__equipment)
+
+
+	@property
+	def extraordinaryItems(self):
+		"""
+		Gibt eine Liste aller magischen Gegenstände zurück.
+		"""
+
+		return self.__extraordinaryItems
+
+
+	def addExtraordinaryItem( self, typ, name, data ):
+		"""
+		Fügt einen magischenen Gegenstand hinzu. Falls ein Gegenstand dieses Namens schon vorhanden ist, werden die Daten überschrieben.
+		"""
+
+		if typ not in self.__extraordinaryItems:
+			self.__extraordinaryItems.setdefault(typ,{})
+			
+		self.__extraordinaryItems[typ][name] = data
 

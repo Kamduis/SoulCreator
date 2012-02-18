@@ -31,7 +31,7 @@ from PySide.QtGui import QPixmap
 from src.Config import Config
 from src.Error import ErrXmlOldVersion
 from src.IO.ReadXml import ReadXml
-#from src.Debug import Debug
+from src.Debug import Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
@@ -230,6 +230,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.readWeapons(tree.find("Items/Weapons"))
 		self.readArmor(tree.find("Items/armor"))
 		self.readEquipment(tree.find("Items/Equipment"))
+		self.readExtraordinaryItems(tree.find("Items/ExtraordinaryItems"))
 
 
 	def readWeapons(self, root):
@@ -268,6 +269,21 @@ class ReadXmlCharacter(QObject, ReadXml):
 			for magicalToolElement in root.getiterator("magicalTool"):
 				toolName = magicalToolElement.text
 				self.__character.setMagicalTool(toolName)
+
+
+	def readExtraordinaryItems(self, root):
+		"""
+		Liest die magischen Gegenstände des Charakters aus.
+		"""
+
+		if root is not None:
+			for typeElement in list(root):
+				if typeElement.tag == "Type":
+					typeName = typeElement.attrib["name"]
+					for element in list(typeElement):
+						if element.tag == "item":
+							extraordinaryItemName = element.text
+							self.__character.addExtraordinaryItem(typeName, extraordinaryItemName)
 
 
 	def readSpeciesSpecials(self, tree):
