@@ -266,11 +266,14 @@ class ErrXmlOldVersion(ErrXmlVersion):
 	@brief Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber zu alt.
 	"""
 
-	def __init__(self, got = "unknown" ):
+	def __init__(self, got="unknown", filename=None ):
 		ErrXmlVersion.__init__(self)
 
-		self.message = self.obj.tr( "Wrong file Version." ) 
-		self.description = self.obj.tr( "The selected file was created with and older version of SoulCreator (version {}).".format(got))
+		msg = self.obj.tr( "Wrong file Version." )
+		if filename is not None:
+			msg = self.obj.tr( "Wrong file Version: {}".format(filename) )
+		self.message = msg
+		self.description = self.obj.tr( "The file was created to be used with SoulCreator {got}.".format(got=got))
 		self.critical = False
 
 
@@ -281,11 +284,14 @@ class ErrXmlTooOldVersion(ErrXmlVersion):
 	Die Version ist so alt, daß eine Verwendung dieser Ressource nicht empfehlenswert ist.
 	"""
 
-	def __init__(self, got = "unknown" ):
+	def __init__(self, got="unknown", filename=None ):
 		ErrXmlVersion.__init__(self)
 
-		self.message = self.obj.tr( "Wrong file version." )
-		self.description = self.obj.tr( "The selected file was created with SoulCreator {}. This file is not usable with this version of SoulCreator.".format(got))
+		msg = self.obj.tr( "Wrong file Version." )
+		if filename is not None:
+			msg = self.obj.tr( "Wrong file Version: {}".format(filename) )
+		self.message = msg
+		self.description = self.obj.tr( "The file was created to be used with SoulCreator {}. This file is not usable with this version of SoulCreator.".format(got))
 
 
 

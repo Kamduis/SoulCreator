@@ -25,7 +25,7 @@ from __future__ import division, print_function
 import ast
 import gzip
 
-from PySide.QtCore import QObject, QDate, QByteArray, Signal
+from PySide.QtCore import QObject, QDate, QByteArray
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
@@ -63,9 +63,6 @@ class ReadXmlCharacter(QObject, ReadXml):
 	"""
 
 
-	exceptionRaised = Signal(str, bool)
-
-
 	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
@@ -93,10 +90,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 		versionSource = xmlRootElement.attrib["version"]
 
 		try:
-			self.checkXmlVersion( xmlRootElement.tag, versionSource )
+			self.checkXmlVersion( xmlRootElement.tag, versionSource, fileName )
 		except ErrXmlOldVersion as e:
-			messageText = self.tr("While opening the character file the following problem arised:\n{} {}\nIt appears, that the character will be importable, so the process will be continued. But some character values may be wrong after importing.".format(e.message, e.description))
-			self.exceptionRaised.emit(messageText, e.critical)
+			descriptionText = self.tr("{description} Loading of character will be continued but errors may occur.".format(message=e.message, description=e.description))
+			self.exceptionRaised.emit(e.message, descriptionText, e.critical)
 
 		self.readCharacterInfo(xmlContent)
 		self.readCharacterIdentity(xmlContent)
