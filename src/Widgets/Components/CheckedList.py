@@ -25,12 +25,12 @@ from __future__ import division, print_function
 #import traceback
 
 from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QListWidget, QListWidgetItem
+from PySide.QtGui import QListWidget, QListWidgetItem, QColor
 
-#from src.Config import Config
+from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -52,15 +52,15 @@ class CheckedList(QListWidget):
 		self.itemChanged.connect(self.emitItemStateChanged)
 
 
-	def addCheckableItem( self, label, state ):
+	def addCheckableItem( self, label, state, isBonus=False ):
 		"""
 		Hängt einen Eintrag an das Ende der Liste an.
 		"""
 		
-		self.insertCheckableItem( self.count(), label, state )
+		self.insertCheckableItem( self.count(), label, state, isBonus )
 
 
-	def insertCheckableItem( self, index, label, state ):
+	def insertCheckableItem( self, index, label, state, isBonus=False ):
 		"""
 		Fügt einen Eintrag an der angegebenen Indexposition ein.
 		"""
@@ -68,10 +68,13 @@ class CheckedList(QListWidget):
 		item = QListWidgetItem()
 		item.setText( label )
 		item.setCheckState( state )
+		if isBonus:
+			item.setData(Qt.ForegroundRole, QColor(Config.bonusColor))
+			item.setFlags(item.flags() & Qt.ItemIsUserCheckable)
 		self.insertItem( index, item )
 
 
-	def setCheckableItems( self, labels, state ):
+	def setCheckableItems( self, labels, state=Qt.Unchecked ):
 		"""
 		Setzt alle Einträge.
 		
@@ -80,36 +83,6 @@ class CheckedList(QListWidget):
 		
 		for item in labels:
 			self.addCheckableItem( item, state )
-
-
-#void CheckedList::removeCheckableItem( int i ) {
-	#"""
-	#Entfernt den Eintrag an der angegebenen Position.
-	#"""
-	
-	#delete item( i );
-#}
-
-#void CheckedList::setItemCheckState( int i, Qt::CheckState state ) {
-	#"""
-	#Abhaken des Eintrags (oder den Haken wieder entfernen).
-	#"""
-	
-	#item(i)->setCheckState(state);
-#}
-
-
-
-#// void CheckedList::emitCheckedItemsChanged(){
-#// 	QStringList list;
-#//
-#// 	for (int i = 0; i < count(); ++i){
-#// 		if (item(i)->checkState() == Qt::Checked)
-#// 			list.append(item(i)->text());
-#// 	}
-#//
-#// 	emit checkedItemsChanged(list);
-#// }
 
 
 	def emitItemStateChanged(self, item):

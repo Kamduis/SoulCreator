@@ -25,9 +25,9 @@ from __future__ import division, print_function
 from PySide.QtCore import QObject
 
 #from src.Config import Config
-from src.Tools import ListTools
-from src.Debug import Debug
+#from src.Tools import ListTools
 from src.Error import ErrTraitType
+#from src.Debug import Debug
 
 
 
@@ -150,7 +150,7 @@ class StorageTemplate(QObject):
 	# "values"			Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
 	# "species"			Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
 	# "age"				Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
-	# "era"				Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
+	# "era"				Eine Liste der Zeitalter, für welche diese Eigenschaft zur Verfügung steht.
 	# "custom"			Handelt es sich um eine Kraft mit Zusatztext?
 	# "specialties"		Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
 	# "prerequisites"	Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
@@ -305,11 +305,18 @@ class StorageTemplate(QObject):
 	# }
 	__equipment = {}
 
-#QList< cv_Species > StorageTemplate::v_species;
-#QList< cv_SpeciesTitle > StorageTemplate::v_titles;
-#QList< Trait* > StorageTemplate::v_traits;
-#QList< TraitBonus* > StorageTemplate::v_traitsBonus;
-#QList< cv_SuperEffect > StorageTemplate::v_superEffects;
+	# Eine Liste aller magischen Gegenstände
+	#
+	# {
+	# 	Typ: {
+	# 		name: {
+	# 			"cost": value
+	# 		},
+	# 	},
+	# 	...
+	# }
+	__extraordinaryItems = {}
+
 
 
 	def __init__(self, parent=None):
@@ -334,103 +341,6 @@ class StorageTemplate(QObject):
 	species = property(__getSpecies)
 
 
-#QStringList StorageTemplate::traitNames( cv_AbstractTrait::Type type, cv_AbstractTrait::Category category, cv_Trait::EraFlag era, cv_Trait::AgeFlag age ) const {
-	#QList< Trait* > traits = v_traits;
-	#QStringList list;
-
-	#for( int i = 0; i < traits.count(); ++i ) {
-		#if( traits.at( i )->type() == type && traits.at( i )->category() == category ) {
-			#if( traits.at( i )->era().testFlag( era ) ) {
-				#if( traits.at( i )->age().testFlag( age ) ) {
-					#// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
-					#if( !list.contains( traits.at( i )->name() ) ) {
-#// 						qDebug() << Q_FUNC_INFO << "Gib aus" << traits.at( i )->name;
-						#list.append( traits.at( i )->name() );
-					#}
-				#}
-			#}
-		#}
-	#}
-
-	#return list;
-#}
-
-#QStringList StorageTemplate::virtueNames( cv_Trait::AgeFlag age ) const {
-	#return traitNames( cv_AbstractTrait::Virtue, cv_AbstractTrait::CategoryNo, cv_Trait::EraAll, age );
-#}
-
-#QStringList StorageTemplate::viceNames( cv_Trait::AgeFlag age ) const {
-	#return traitNames( cv_AbstractTrait::Vice, cv_AbstractTrait::CategoryNo, cv_Trait::EraAll, age );
-#}
-
-#QString StorageTemplate::breedTitle( cv_Species::SpeciesFlag spe ) const {
-	#for( int i = 0; i < v_titles.count(); ++i ) {
-		#if( v_titles.at( i ).species.testFlag( spe ) && v_titles.at( i ).title == cv_SpeciesTitle::Breed ) {
-			#return v_titles.at( i ).name;
-		#}
-	#}
-
-	#return "Breed";
-#}
-#QString StorageTemplate::factionTitle( cv_Species::SpeciesFlag spe ) const {
-	#for( int i = 0; i < v_titles.count(); ++i ) {
-		#if( v_titles.at( i ).species.testFlag( spe ) && v_titles.at( i ).title == cv_SpeciesTitle::Faction ) {
-			#return v_titles.at( i ).name;
-		#}
-	#}
-
-	#return "Faction";
-#}
-#QStringList StorageTemplate::powerHeaders( cv_Species::SpeciesFlag spe ) const {
-	#QStringList list;
-
-	#for( int i = 0; i < v_titles.count(); ++i ) {
-		#if( v_titles.at( i ).species.testFlag( spe ) && v_titles.at( i ).title == cv_SpeciesTitle::Power ) {
-			#list.append( v_titles.at( i ).name );
-		#}
-	#}
-
-	#return list;
-#}
-
-
-#QStringList StorageTemplate::breedNames( cv_Species::SpeciesFlag spe ) const {
-	#QList< Trait* > traits = v_traits;
-	#QStringList list;
-
-	#for( int i = 0; i < traits.count(); ++i ) {
-		#if( traits.at( i )->type() == cv_AbstractTrait::Breed && traits.at( i )->category() == cv_AbstractTrait::CategoryNo ) {
-			#if( traits.at( i )->species() == spe ) {
-				#// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
-				#if( !list.contains( traits.at( i )->name() ) ) {
-					#list.append( traits.at( i )->name() );
-				#}
-			#}
-		#}
-	#}
-
-	#return list;
-#}
-#QStringList StorageTemplate::factionNames( cv_Species::SpeciesFlag spe ) const {
-	#QList< Trait* > traits = v_traits;
-	#QStringList list;
-
-	#for( int i = 0; i < traits.count(); ++i ) {
-		#if( traits.at( i )->type() == cv_AbstractTrait::Faction && traits.at( i )->category() == cv_AbstractTrait::CategoryNo ) {
-			#if( traits.at( i )->species() == spe ) {
-				#// Es kann vorkommen, daß mehrere Eigenschaften doppelt aufgeführt sind. Diese wollen wir natürlich nicht doppelt ausgeben.
-				#if( !list.contains( traits.at( i )->name() ) ) {
-					#list.append( traits.at( i )->name() );
-				#}
-			#}
-		#}
-	#}
-
-	#return list;
-#}
-
-
-
 	def __getTraits( self ):
 		"""
 		Gibt eine Liste aller Eigenschaften zurück.
@@ -442,6 +352,13 @@ class StorageTemplate(QObject):
 		self.__traits = traits
 
 	traits = property(__getTraits, __setTraits)
+
+	def traitSkills(self):
+		result = {}
+		for category in self.__traits["Skill"]:
+			result.update(self.__traits["Skill"][category])
+
+		return result
 
 
 	def addTrait( self, typ, category, identifier, data):
@@ -468,6 +385,7 @@ class StorageTemplate(QObject):
 		if identifier not in self.__traits[typ][category]:
 			self.__traits[typ][category][identifier] = data
 		elif (typ != "Subpower"):
+			#Debug.debug(data["name"])
 			specialties = self.__traits[typ][category][identifier]["specialty"]
 			specialties.extend(data["specialty"])
 			specialties.sort()
@@ -560,7 +478,9 @@ class StorageTemplate(QObject):
 
 
 	def breeds(self, species):
-		return self.__speciesGroupNames[species]["Breed"][1].keys()
+		result = self.__speciesGroupNames[species]["Breed"][1].keys()
+		result.sort()
+		return result
 
 
 	def breedTitle(self, species):
@@ -616,7 +536,9 @@ class StorageTemplate(QObject):
 
 
 	def factions(self, species):
-		return self.__speciesGroupNames[species]["Faction"][1].keys()
+		result = self.__speciesGroupNames[species]["Faction"][1].keys()
+		result.sort()
+		return result
 
 
 	def factionTitle(self, species):
@@ -624,7 +546,9 @@ class StorageTemplate(QObject):
 
 
 	def organisations(self, species):
-		return self.__speciesGroupNames[species]["Organisation"][1].keys()
+		result = self.__speciesGroupNames[species]["Organisation"][1].keys()
+		result.sort()
+		return result
 
 
 	def organisationTitle(self, species):
@@ -674,15 +598,6 @@ class StorageTemplate(QObject):
 			return self.__powerstat[species][powerstat]["traitMax"]
 		else:
 			return 5
-
-
-#void StorageTemplate::appendTraitBonus( Trait* tr1, QString breed ) {
-	#TraitBonus* lcl_traitBonus = new TraitBonus( tr1, breed );
-
-	#qDebug() << Q_FUNC_INFO << "Füge Bonuseigenschaft" << tr1->name() << "hinzu, die von" << breed << "abhängt.";
-
-	#v_traitsBonus.append( lcl_traitBonus );
-#}
 
 
 	def appendCharacteristic( self, typ, trait ):
@@ -761,22 +676,6 @@ class StorageTemplate(QObject):
 		#Debug.debug(self.__powerstat)
 
 
-	def appendBonusTrait( self, species, breed, traitData ):
-		"""
-		Manche Bruten erhlaten Bonuseigenschaften. Diese werden hier hinzugefügt.
-		"""
-
-		if species not in self.__bonusTraits:
-			self.__bonusTraits.setdefault(species,{})
-
-		if breed not in self.__bonusTraits[species]:
-			self.__bonusTraits[species].setdefault(breed,[])
-
-		self.__bonusTraits[species][breed].append(traitData)
-
-		#print(self.__bonusTraits)
-
-
 	def appendTitle( self, species, typ, group, names=None, infos=None):
 		"""
 		Fügt die Gruppierungsnamen der entsprechenden Spezies hinzu.
@@ -812,6 +711,29 @@ class StorageTemplate(QObject):
 					self.__speciesGroupNames[species][typ][1].setdefault(names, {})
 
 		#Debug.debug(self.__speciesGroupNames)
+
+
+	def bonusTraits(self, species, breed):
+		if species in self.__bonusTraits and breed in self.__bonusTraits[species]:
+			return self.__bonusTraits[species][breed]
+		else:
+			return []
+
+
+	def appendBonusTrait( self, species, breed, traitData ):
+		"""
+		Manche Bruten erhlaten Bonuseigenschaften. Diese werden hier hinzugefügt.
+		"""
+
+		if species not in self.__bonusTraits:
+			self.__bonusTraits.setdefault(species,{})
+
+		if breed not in self.__bonusTraits[species]:
+			self.__bonusTraits[species].setdefault(breed,[])
+
+		self.__bonusTraits[species][breed].append(traitData)
+
+		#Debug.debug(self.__bonusTraits)
 
 
 	@property
@@ -894,4 +816,24 @@ class StorageTemplate(QObject):
 		self.__equipment[name] = data
 
 		#Debug.debug(self.__equipment)
+
+
+	@property
+	def extraordinaryItems(self):
+		"""
+		Gibt eine Liste aller magischen Gegenstände zurück.
+		"""
+
+		return self.__extraordinaryItems
+
+
+	def addExtraordinaryItem( self, typ, name, data ):
+		"""
+		Fügt einen magischenen Gegenstand hinzu. Falls ein Gegenstand dieses Namens schon vorhanden ist, werden die Daten überschrieben.
+		"""
+
+		if typ not in self.__extraordinaryItems:
+			self.__extraordinaryItems.setdefault(typ,{})
+			
+		self.__extraordinaryItems[typ][name] = data
 

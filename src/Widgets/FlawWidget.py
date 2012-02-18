@@ -30,7 +30,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 from src.Config import Config
 from src.Tools import ListTools
 from src.Widgets.Components.CheckTrait import CheckTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -93,7 +93,7 @@ class FlawWidget(QWidget):
 				layoutFlawCategory.addWidget( traitWidget )
 
 				flaw[1].valueChanged.connect(self.countItems)
-				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
+				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait)
 
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.

@@ -22,21 +22,19 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import ast
-import copy
-
-from PySide.QtCore import QObject, QDate, Signal, Slot
+from PySide.QtCore import QObject, QDate, Signal
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
 from src.Datatypes.AbstractTrait import AbstractTrait
 from src.Datatypes.StandardTrait import StandardTrait
+from src.Datatypes.BonusTrait import BonusTrait
 from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
 from src.Calc.Calc import Calc
 from src.Calc.ConnectPrerequisites import ConnectPrerequisites
-from src.Error import ErrListLength
-from src.Debug import Debug
+#from src.Error import ErrListLength
+#from src.Debug import Debug
 
 
 
@@ -59,6 +57,7 @@ class StorageCharacter(QObject):
 	virtueChanged = Signal(str)
 	viceChanged = Signal(str)
 	breedChanged = Signal(str)
+	bonusChanged = Signal(object)
 	kithChanged = Signal(str)
 	factionChanged = Signal(str)
 	organisationChanged = Signal(str)
@@ -69,7 +68,8 @@ class StorageCharacter(QObject):
 	derangementChanged = Signal(int, str)
 	#traitChanged = Signal(object)
 	#traitsChanged = Signal(object)
-	ageChanged = Signal(int)
+	#ageChanged = Signal(int)
+	ageChanged = Signal((int,), (str,))
 	ageBecomingChanged = Signal(int)
 	#ageCategoryChanged = Signal(str, int, int)	# (<Child|Adult>, <neues Alter>, <altes Alter>)
 	heightChanged = Signal(float)
@@ -83,8 +83,21 @@ class StorageCharacter(QObject):
 	weaponsChanged = Signal()
 	armorChanged = Signal(str, bool)
 	equipmentChanged = Signal(object)
+	extraordinaryItemAdded = Signal(str, str)
+	extraordinaryItemRemoved = Signal(str, str)
+	extraordinaryItemsChanged = Signal()
 	magicalToolChanged = Signal(str)
 	nimbusChanged = Signal(str)
+	paradoxMarksChanged = Signal(str)
+	companionNameChanged = Signal(str)
+	companionPowerChanged = Signal(int)
+	companionFinesseChanged = Signal(int)
+	companionResistanceChanged = Signal(int)
+	companionSizeChanged = Signal(int)
+	companionSpeedFactorChanged = Signal(int)
+	companionFuelChanged = Signal(int)
+	companionNuminaChanged = Signal(object)
+	companionBanChanged = Signal(str)
 
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
@@ -110,11 +123,20 @@ class StorageCharacter(QObject):
 	# Eine Liste der Waffen.
 	#
 	# {
-	# 	"melee": [ weapon1, weapon2 ... ]
-	# 	"thrown": [ weapon1, weapon2 ... ]
-	# 	"ranged": [ weapon1, weapon2 ... ]
+	# 	"melee": [ weapon1, weapon2 ... ],
+	# 	"thrown": [ weapon1, weapon2 ... ],
+	# 	"ranged": [ weapon1, weapon2 ... ],
 	# }
 	__weapons = {}
+
+	# Eine Liste der magischen Gegenstände.
+	#
+	# {
+	# 	Typ1: [ item1, item2 ... ],
+	# 	Typ2: [ item1, item2 ... ],
+	# 	...
+	# }
+	__extraordinaryItems = {}
 
 
 	def __init__(self, template, parent=None):
@@ -136,6 +158,7 @@ class StorageCharacter(QObject):
 		self.__virtue = ""
 		self.__vice = ""
 		self.__breed = ""
+		self.__bonus = {}
 		self.__kith = ""
 		self.__faction = ""
 		self.__organisation = ""
@@ -162,6 +185,7 @@ class StorageCharacter(QObject):
 		self.__derangements = {}
 
 		self.__nimbus = ""
+		self.__paradoxMarks = ""
 
 		self.__vinculi = []
 		for i in xrange(Config.vinculiCount):
@@ -169,12 +193,29 @@ class StorageCharacter(QObject):
 			self.__vinculi.append(vinculum)
 			vinculum.traitChanged.connect(self.setModified)
 
+		self.__companionName = ""
+		self.__companionPower = 0
+		self.__companionFinesse = 0
+		self.__companionResistance = 0
+		self.__companionSize = 0
+		self.__companionSpeedFactor = 0
+		self.__companionFuel = 0
+		self.__companionInfluences = []
+		for i in xrange(Config.companionInfluencesCount):
+			companionInfluence = AbstractTrait()
+			self.__companionInfluences.append(companionInfluence)
+			companionInfluence.traitChanged.connect(self.setModified)
+		self.__companionNumina = []
+		self.__companionBan = ""
+
 		self.dateBirthChanged.connect(self.__calcAge)
 		self.dateGameChanged.connect(self.__calcAge)
 		self.dateBirthChanged.connect(self.__calcAgeBecoming)
 		self.dateBecomingChanged.connect(self.__calcAgeBecoming)
 		self.weaponAdded.connect(self.weaponsChanged)
 		self.weaponRemoved.connect(self.weaponsChanged)
+		self.extraordinaryItemAdded.connect(self.extraordinaryItemsChanged)
+		self.extraordinaryItemRemoved.connect(self.extraordinaryItemsChanged)
 
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
@@ -201,7 +242,10 @@ class StorageCharacter(QObject):
 							trait.level = subitem[1]["level"]
 							trait.powers = subitem[1]["powers"]
 						else:
-							trait = StandardTrait(self, subitem[1]["name"], val)
+							if typ == "Attribute" or typ == "Skill":
+								trait = BonusTrait(self, subitem[1]["name"], val)
+							else:
+								trait = StandardTrait(self, subitem[1]["name"], val)
 							trait.age = subitem[1]["age"]
 							trait.era = subitem[1]["era"]
 							trait.custom = custom
@@ -226,7 +270,7 @@ class StorageCharacter(QObject):
 				#if typ == "Subpower":
 					#Debug.debug(self.__traits[typ][item])
 
-
+		self.bonusChanged.connect(self.__changeBonusTrait)
 
 		# Sobald irgendein Aspekt des Charakters verändert wird, muß festgelegt werden, daß sich der Charkater seit dem letzten Speichern verändert hat.
 		# Es ist Aufgabe der Speicher-Funktion, dafür zu sorgen, daß beim Speichern diese Inforamtion wieder zurückgesetzt wird.
@@ -241,6 +285,8 @@ class StorageCharacter(QObject):
 		self.virtueChanged.connect(self.setModified)
 		self.viceChanged.connect(self.setModified)
 		self.breedChanged.connect(self.setModified)
+		self.kithChanged.connect(self.setModified)
+		self.bonusChanged.connect(self.setModified)
 		self.factionChanged.connect(self.setModified)
 		self.partyChanged.connect(self.setModified)
 		self.descriptionChanged.connect(self.setModified)
@@ -253,6 +299,15 @@ class StorageCharacter(QObject):
 		self.equipmentChanged.connect(self.setModified)
 		self.magicalToolChanged.connect(self.setModified)
 		self.nimbusChanged.connect(self.setModified)
+		self.paradoxMarksChanged.connect(self.setModified)
+		self.companionPowerChanged.connect(self.setModified)
+		self.companionFinesseChanged.connect(self.setModified)
+		self.companionResistanceChanged.connect(self.setModified)
+		self.companionSizeChanged.connect(self.setModified)
+		self.companionSpeedFactorChanged.connect(self.setModified)
+		self.companionFuelChanged.connect(self.setModified)
+		self.companionNuminaChanged.connect(self.setModified)
+		self.companionBanChanged.connect(self.setModified)
 
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
 
@@ -492,6 +547,36 @@ class StorageCharacter(QObject):
 			self.equipmentChanged.emit(self.__equipment)
 
 
+	@property
+	def extraordinaryItems(self):
+		"""
+		Die Liste aller magischen Gegenstände des Charakters.
+		"""
+
+		return self.__extraordinaryItems
+
+	def addExtraordinaryItem(self, typ, extraordinaryItem):
+		"""
+		Fügt der Liste der magischen Gegenstände einen hinzu.
+		"""
+
+		if typ not in self.__extraordinaryItems:
+			self.__extraordinaryItems.setdefault(typ, [])
+
+		if extraordinaryItem not in self.__extraordinaryItems[typ]:
+			self.__extraordinaryItems[typ].append(extraordinaryItem)
+			self.extraordinaryItemAdded.emit(typ, extraordinaryItem)
+
+	def deleteExtraordinaryItem(self, typ, extraordinaryItem):
+		"""
+		Entfernt besagten magischen Gegenstand aus der Liste.
+		"""
+
+		if typ in self.__extraordinaryItems:
+			self.__extraordinaryItems[typ].remove(extraordinaryItem)
+			self.extraordinaryItemRemoved.emit(typ, extraordinaryItem)
+
+
 	def __getMagicalTool(self):
 		"""
 		Magisches Werkzeug.
@@ -524,14 +609,142 @@ class StorageCharacter(QObject):
 	nimbus = property(__getNimbus, setNimbus)
 
 
-	def __getVinculi(self):
+	def __getParadoxMarks(self):
+		"""
+		Die Paradoxzeichen eines Magiers.
+		"""
+
+		return self.__paradoxMarks
+
+	def setParadoxMarks(self, paradoxMarks):
+
+		if self.__paradoxMarks != paradoxMarks:
+			self.__paradoxMarks = paradoxMarks
+			self.paradoxMarksChanged.emit(paradoxMarks)
+
+	paradoxMarks = property(__getParadoxMarks, setParadoxMarks)
+
+
+	@property
+	def vinculi(self):
 		"""
 		Die Vinculi eines Vampirs
 		"""
 
 		return self.__vinculi
 
-	vinculi = property(__getVinculi)
+
+	def __getCompanionName(self):
+		return self.__companionName
+
+	def setCompanionName(self, name):
+		if self.__companionName != name:
+			self.__companionName = name
+			self.companionNameChanged.emit(name)
+
+	companionName = property(__getCompanionName, setCompanionName)
+
+
+	def __getCompanionPower(self):
+		return self.__companionPower
+
+	def setCompanionPower(self, power):
+		if self.__companionPower != power:
+			self.__companionPower = power
+			self.companionPowerChanged.emit(power)
+
+	companionPower = property(__getCompanionPower, setCompanionPower)
+
+
+	def __getCompanionFinesse(self):
+		return self.__companionFinesse
+
+	def setCompanionFinesse(self, finesse):
+		if self.__companionFinesse != finesse:
+			self.__companionFinesse = finesse
+			self.companionFinesseChanged.emit(finesse)
+
+	companionFinesse = property(__getCompanionFinesse, setCompanionFinesse)
+
+
+	def __getCompanionResistance(self):
+		return self.__companionResistance
+
+	def setCompanionResistance(self, resistance):
+		if self.__companionResistance != resistance:
+			self.__companionResistance = resistance
+			self.companionResistanceChanged.emit(resistance)
+
+	companionResistance = property(__getCompanionResistance, setCompanionResistance)
+
+
+	def __getCompanionSize(self):
+		return self.__companionSize
+
+	def setCompanionSize(self, size):
+		if self.__companionSize != size:
+			self.__companionSize = size
+			self.companionSizeChanged.emit(size)
+
+	companionSize = property(__getCompanionSize, setCompanionSize)
+
+
+	def __getCompanionSpeedFactor(self):
+		return self.__companionSpeedFactor
+
+	def setCompanionSpeedFactor(self, speedFactor):
+		if self.__companionSpeedFactor != speedFactor:
+			self.__companionSpeedFactor = speedFactor
+			self.companionSpeedFactorChanged.emit(speedFactor)
+
+	companionSpeedFactor = property(__getCompanionSpeedFactor, setCompanionSpeedFactor)
+
+
+	def __getCompanionFuel(self):
+		return self.__companionFuel
+
+	def setCompanionFuel(self, fuel):
+		if self.__companionFuel != fuel:
+			self.__companionFuel = fuel
+			self.companionFuelChanged.emit(fuel)
+
+	companionFuel = property(__getCompanionFuel, setCompanionFuel)
+
+
+	@property
+	def companionInfluences(self):
+		"""
+		Die Einflüsse eines Vertrauten-Geistes.
+		"""
+
+		return self.__companionInfluences
+
+	@property
+	def companionNumina(self):
+		return self.__companionNumina
+
+	@companionNumina.setter
+	def companionNumina(self, numina):
+		if self.__companionNumina != numina:
+			self.__companionNumina = numina
+			self.companionNuminaChanged.emit(numina)
+
+	def appendCompanionNumen(self, numen):
+		self.__companionNumina.append(numen)
+
+	def removeCompanionNumen(self, numen):
+		self.__companionNumina.remove(numen)
+
+
+	def __getCompanionBan(self):
+		return self.__companionBan
+
+	def setCompanionBan(self, ban):
+		if self.__companionBan != ban:
+			self.__companionBan = ban
+			self.companionBanChanged.emit(ban)
+
+	companionBan = property(__getCompanionBan, setCompanionBan)
 
 
 	@property
@@ -557,8 +770,13 @@ class StorageCharacter(QObject):
 		age = Calc.years(self.dateBirth, self.dateGame)
 
 		if self.__age != age:
+			ageCtagoryChanged = False
+			if Config.getAge(self.__age) != Config.getAge(age):
+				ageCtagoryChanged = True
 			self.__age = age
 			self.ageChanged.emit(age)
+			if ageCtagoryChanged:
+				self.ageChanged[str].emit(Config.getAge(age))
 
 
 	def __calcAgeBecoming(self):
@@ -634,6 +852,62 @@ class StorageCharacter(QObject):
 			self.breedChanged.emit(breed)
 
 	breed = property(__getBreed, setBreed)
+
+
+	def __getBonus(self ):
+		"""
+		Bonuseigenschaft
+		"""
+
+		return self.__bonus
+
+	def setBonus( self, bonus ):
+		"""
+		Verändert die Bonuseigenschaft.
+
+		Die Bonuseigenschaft wird folgendermaßen gespeichert. Der Eintrag für die Spezialisierung ist optional.
+		{
+			"type": Typ,
+			"name": Name,
+			"specialty": Gewählte Spezialisierung,
+		}
+		"""
+
+		#Debug.debug(bonus)
+
+		if ( self.__bonus != bonus ):
+			#Debug.debug(bonus)
+			self.__bonus = bonus
+			self.bonusChanged.emit( bonus )
+
+	bonus = property(__getBonus, setBonus)
+
+
+	def __changeBonusTrait(self, bonus):
+		"""
+		Ändert die Bonuseigenschaft.
+
+		\todo Wenn die Erschaffungsphase vorüber ist, sollte die Bonuseigenschaft nichtmehr verändert werden können und die davon betroffene Eigenscahft wie eine normale Eigenschaft mit erhöhtem Wert, zusätzlicher Spezialisierung betrachtet werden.
+		"""
+
+		## Alle bisherigen Bonuseigenschaften löschen, denn es kann immer nur eine solche geben.
+		for typ in self.traits:
+			for category in self.traits[typ]:
+				for identifier in self.traits[typ][category]:
+					if type(self.traits[typ][category][identifier]) == BonusTrait:
+						self.traits[typ][category][identifier].clearBonus()
+
+		if bonus:
+			for category in self.traits[bonus["type"]]:
+				if bonus["name"] in self.traits[bonus["type"]][category].keys():
+					if type(self.traits[bonus["type"]][category][bonus["name"]]) == BonusTrait:
+						if bonus["type"] == "Attribute":
+							self.traits[bonus["type"]][category][bonus["name"]].bonusValue = 1
+							#Debug.debug("Bonuseigenschaft {} verändert!".format(self.traits[bonus["type"]][category][bonus["name"]].name))
+						elif bonus["type"] == "Skill" and "specialty" in bonus:
+							self.traits[bonus["type"]][category][bonus["name"]].bonusSpecialties = [ bonus["specialty"] ]
+							#Debug.debug("Bonuseigenschaft {} verändert!".format(self.traits[bonus["type"]][category][bonus["name"]].name))
+					break
 
 
 	def __getKith(self ):
@@ -846,9 +1120,10 @@ class StorageCharacter(QObject):
 
 
 	def resetCharacter(self):
+		# Standardspezies ist der Mensch.
+		self.species = Config.initialSpecies
 		# Zeitalter festlegen.
-		self.era = Config.eras[0]
-
+		self.era = Config.initialEra
 		## Anfangsdatum setzen.
 		self.dateGame = QDate.currentDate()
 		self.dateBirth = QDate(self.dateGame.year() - Config.ageInitial, self.dateGame.month(), self.dateGame.day())
@@ -857,13 +1132,13 @@ class StorageCharacter(QObject):
 		# Löschen aller Identitäten.
 		self.identity.reset()
 
-		# Standardspezies ist der Mensch.
-		self.species = Config.initialSpecies
-
 		#Debug.debug(self.__storage.virtues[0])
 		#Debug.debug(self.__storage.virtues[0]["name"])
 		self.virtue = self.__storage.virtues[0]["name"]
 		self.vice = self.__storage.vices[0]["name"]
+		self.breed = ""
+		self.bonus= ""
+		self.kith = ""
 		self.faction = ""
 		self.height = 1.60
 		self.weight = 60
@@ -901,11 +1176,28 @@ class StorageCharacter(QObject):
 				self.deleteWeapon(category, weapon)
 		self.setArmor(name="")
 		self.clearEquipment()
+		for typ in self.__extraordinaryItems:
+			for item in self.__extraordinaryItems[typ]:
+				self.deleteExtraordinaryItem(typ, item)
 		self.magicalTool = ""
 		self.nimbus = ""
+		self.paradoxMarks = ""
 		for vinculum in self.__vinculi:
 			vinculum.name = ""
 			vinculum.value = 0
+
+		self.companionName = ""
+		self.companionPower = 0
+		self.companionFinesse = 0
+		self.companionResistance = 0
+		self.companionSize = 0
+		self.companionSpeedFactor = 0
+		self.companionFuel = 0
+		for companionInfluence in self.__companionInfluences:
+			companionInfluence.name = ""
+			companionInfluence.value = 0
+		self.companionNumina = []
+		self.companionBan = ""
 
 		self.picture = QPixmap()
 

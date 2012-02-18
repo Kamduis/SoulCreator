@@ -26,18 +26,17 @@ import math
 import copy
 
 from PySide.QtCore import Qt, QObject, QRectF, QRect
-from PySide.QtGui import QColor, QPen, QBrush, QPainter, QImage, QFont, QFontDatabase, QFontMetrics
+from PySide.QtGui import QColor, QPen, QPainter, QImage, QFont, QFontMetrics
 
 from src.GlobalState import GlobalState
 from src.Config import Config
 from src.Error import ErrSpeciesNotExisting
-from src.Calc.CalcShapes import CalcShapes
 from src.Random import Random
 from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Calc.CalcShapes import CalcShapes
 from src.Tools import ImageTools
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -262,7 +261,7 @@ class DrawSheet(QObject):
 			self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY, short=True)
 		elif self.__character.species == "Mage":
 			posY += lengthY + self.__posSep
-			lengthY = 300
+			lengthY = 250
 			self._drawMagicalTool(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 		elif self.__character.species == "Vampire":
 			posY += lengthY + self.__posSep
@@ -412,7 +411,12 @@ class DrawSheet(QObject):
 
 			posX += lengthX + self.__posSep
 			lengthX = self.__pageWidth - posX
+			lengthY = lengthY / 2 - self.__posSep / 2
 			self._drawNimbus(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+			
+			posY += lengthY + self.__posSep
+			lengthY = self.__pageHeight - posY
+			self._drawParadoxMarks(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 		elif self.__character.species == "Vampire":
 			posX = 0
 			posY = posY_zeile4
@@ -465,9 +469,15 @@ class DrawSheet(QObject):
 		if GlobalState.isDevelop:
 			self.__drawGrid()
 
+		posX = 0
+		posY = 0
+		lengthX = 700
+		lengthY = 1000
+		if self.__character.species == "Mage" or self.__character.species == "Werewolf":
+			self._drawCompanion(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
 		if self.__character.species != "Changeling":
-			posX = 700
-			posY = 0
+			posX += lengthX + self.__posSep
 			lengthX = self.__pageWidth - posX
 			lengthY = 1000
 			if ( self.__character.species == "Changeling" ):
@@ -480,6 +490,18 @@ class DrawSheet(QObject):
 			elif ( self.__character.species == "Werewolf" ):
 				pass
 			self._drawSubPowers(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+		posY_zeile2 = posY + lengthY + self.__posSep
+
+		posX = 0
+		posY = posY_zeile2
+		lengthX = (self.__pageWidth - self.__posSep) / 2
+		lengthY = 350
+		if self.__character.species == "Werewolf":
+			self._drawBlessing(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
+
+		posY += lengthY + self.__posSep
+		lengthY = 350
+		self._drawExtraordinaryItems(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posY_zeile3 = 2500
 		if ( self.__character.species == "Changeling" ):
@@ -817,7 +839,7 @@ class DrawSheet(QObject):
 			j = 0
 			for subitem in item[1]:
 				attrib = self.__character.traits["Attribute"][item[0]][subitem]
-				self.__drawTrait(headingWidth + i * distanceH, offsetV - fontSubHeadingHeightDiff + fontHeightDiff + j * self.__fontSubHeadingHeight, width=distanceH, name=attrib.name, value=attrib.value, maxValue=self.__traitMax, align=Qt.AlignRight)
+				self.__drawTrait(headingWidth + i * distanceH, offsetV - fontSubHeadingHeightDiff + fontHeightDiff + j * self.__fontSubHeadingHeight, width=distanceH, name=attrib.name, value=attrib.totalvalue, maxValue=self.__traitMax, align=Qt.AlignRight)
 				j += 1
 			i += 1
 
@@ -867,17 +889,21 @@ class DrawSheet(QObject):
 		else:
 			textHeight = fontMetrics.height() * .7
 
-		# Warnung, hier muß darauf geachtet werden, daß dies auch die Schriftart/-größe der Überschrift ist.
-		fontHeadingMetrics = QFontMetrics(self.__fontHeading)
-		fontHeadingHeight = fontHeadingMetrics.height()
-
 		i = 0
 		j = 0
 		## Die Verwendung von Config.mainCategories garantiert die richtige Reihenfolge der Kategorien.
 		for item in Config.mainCategories:
 			self.__drawHeading(offsetH, offsetV + i * (self.__fontHeadingHeight + self.__headingSep) + j * textHeight, width, item)
 			for subitem in traitsToDisplay[item]:
-				self.__drawTrait(offsetH, offsetV + self.__fontHeadingHeight + i * (self.__fontHeadingHeight + self.__headingSep) + j * textHeight, width=width, name=subitem.name, value=subitem.value, maxValue=self.__traitMax, text=", ".join(subitem.specialties))
+				self.__drawTrait(
+					offsetH,
+					offsetV + self.__fontHeadingHeight + i * (self.__fontHeadingHeight + self.__headingSep) + j * textHeight,
+					width=width,
+					name=subitem.name,
+					value=subitem.value,
+					maxValue=self.__traitMax,
+					text=", ".join(subitem.totalspecialties)
+				)
 				j += 1
 			i += 1
 
@@ -952,6 +978,125 @@ class DrawSheet(QObject):
 
 		if not height:
 			height = self.__fontHeadingHeight + numOfTraits * textHeight
+		self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
+
+
+	def _drawCompanion(self, offsetH=0, offsetV=0, width=None, height=None, short=False):
+		"""
+		"""
+
+		self.__painter.save()
+
+		if width == None:
+			width = self.__pageWidth / 3
+
+		self.__painter.setFont(self.__fontMain)
+
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Companion"))
+
+		fontMetrics = QFontMetrics(self.__painter.font())
+		fontHeight = fontMetrics.height()
+
+		verticalPos = offsetV + self.__fontHeadingHeight 
+		self.__drawTextWithValue(
+			offsetH, verticalPos, width, self.tr("Name:"), self.__character.companionName
+		)
+		verticalPos += fontHeight
+
+		traits = (
+			( "Power", self.__character.companionPower, ),
+			( "Finesse", self.__character.companionFinesse, ),
+			( "Resistance", self.__character.companionResistance, ),
+		)
+		i = 0
+		for trait in traits:
+			self.__drawTrait(
+				offsetH,
+				verticalPos + i * fontHeight,
+				width=width // 2 - self.__textDotSep,
+				name=trait[0],
+				value=trait[1]
+			)
+			i += 1
+		advantages1 = (
+			( "Willpower", CalcAdvantages.calculateWillpower(self.__character.companionResistance, self.__character.companionResistance), ),
+			( "Corpus", CalcAdvantages.calculateHealth(self.__character.companionResistance, self.__character.companionSize), ),
+		)
+		for trait in advantages1:
+			self.__drawTextWithValue(
+				offsetH,
+				verticalPos + i * fontHeight,
+				width // 2 - self.__textDotSep,
+				trait[0],
+				trait[1]
+			)
+			i += 1
+
+		advantages2 = (
+			( "Size", self.__character.companionSize, ),
+			( "Initiative", CalcAdvantages.calculateInitiative( [
+					self.__character.companionFinesse,
+					self.__character.companionResistance
+				]), ),
+			( "Speed", CalcAdvantages.calculateSpeed( [
+					self.__character.companionPower,
+					self.__character.companionFinesse,
+					self.__character.companionSpeedFactor
+				] ), ),
+			( "Defense", CalcAdvantages.calculateDefense( [
+					self.__character.companionFinesse,
+					self.__character.companionFinesse
+				], True ), ),
+			( "Essence", self.__character.companionFuel ),
+		)
+		i = 0
+		for trait in advantages2:
+			self.__drawTextWithValue(
+				offsetH + width - (width // 2 - self.__textDotSep),
+				verticalPos + i * fontHeight,
+				width // 2 - self.__textDotSep,
+				trait[0],
+				trait[1]
+			)
+			i += 1
+		verticalPos += fontHeight * max([len(traits) + len(advantages1), len(advantages2)])
+		#Debug.debug(width, width // 2 - self.__textDotSep, width - (width // 2 - self.__textDotSep), width - width // 2 - self.__textDotSep )
+
+		i = 0
+		for influence in self.__character.companionInfluences:
+			self.__drawTrait(
+				offsetH,
+				verticalPos + i * fontHeight,
+				width=width,
+				name=influence.name,
+				value=influence.value
+			)
+			i += 1
+		verticalPos += fontHeight * i
+
+		self.__painter.drawText(
+			offsetH,
+			verticalPos,
+			width,
+			3 * fontHeight,
+			Qt.AlignLeft | Qt.TextWordWrap,
+			u"Numina: {}".format(
+				", ".join(self.__character.companionNumina)
+			)
+		)
+		verticalPos += fontHeight * 3
+
+		self.__painter.drawText(
+			offsetH,
+			verticalPos,
+			width,
+			3 * fontHeight,
+			Qt.AlignLeft | Qt.TextWordWrap,
+			u"Ban: {}".format(self.__character.companionBan)
+		)
+
 		self.__drawBB(offsetH, offsetV, width, height)
 
 		self.__painter.restore()
@@ -1475,38 +1620,25 @@ class DrawSheet(QObject):
 
 
 	def _drawNimbus(self, offsetH=0, offsetV=0, width=None, height=None):
-		"""
-		Zeichnet die Werte aller fünf Gestalten von Werwölfen auf den Charakterbogen.
-
-		\param offsetH Der horizontale Abstand zur linken Kante des nutzbaren Charakterbogens.
-		\param offsetV Der vertikale Abstand zur Oberkante des nutzbaren Charakterbogens.
-		\param width Die Breite.
-		\param height Die Höhe.
-
-		\bug Da ich als Argument von self.tr() keine unicode-String nutzen kann, sind manche minus-Zeichen als "-" und nicht als "−" genutzt worden.
-		"""
-
-		self.__painter.save()
-
-		if width == None:
-			width = self.__pageWidth
-
-		self.__painter.setFont(self.__fontMain)
-
-		self.__drawHeading(offsetH, offsetV, width, self.tr("Nimbus"))
-
-		self.__painter.drawText(
+		self.__drawText(
+			self.tr("Nimbus"),
+			self.__character.nimbus,
 			offsetH,
-			offsetV + self.__fontHeadingHeight + self.__headingSep,
+			offsetV,
 			width,
-			height - self.__fontHeadingHeight - self.__headingSep,
-			Qt.AlignLeft | Qt.TextWordWrap,
-			self.__character.nimbus
+			height
 		)
 
-		self.__drawBB(offsetH, offsetV, width, height)
 
-		self.__painter.restore()
+	def _drawParadoxMarks(self, offsetH=0, offsetV=0, width=None, height=None):
+		self.__drawText(
+			self.tr("Paradox Marks"),
+			self.__character.paradoxMarks,
+			offsetH,
+			offsetV,
+			width,
+			height
+		)
 
 
 	def _drawShapes(self, offsetH=0, offsetV=0, width=None, height=None):
@@ -1793,6 +1925,28 @@ class DrawSheet(QObject):
 		)
 
 
+	def _drawExtraordinaryItems(self, offsetH=0, offsetV=0, width=None, height=None):
+		"""
+		Schreibt das Inventar der magischen Gegenstände des Charakters nieder
+
+		\param offsetH Der horizontale Abstand zwischen der linken Kante des nutzbaren Charakterbogens bis zum linken Rahmen der Boundingbox.
+		\param offsetV Der vertikale Abstand zwischen der Oberkante des nutzbaren Charakterbogens bis zum opren Punkt des Boundingbox.
+		\param width Die Breite der Spalte.
+		\param height Die Höhe des Kastens.
+		"""
+
+		for typ in self.__character.extraordinaryItems:
+			equipment = "; ".join(self.__character.extraordinaryItems[typ])
+			self.__drawText(
+				"{}".format(typ),
+				equipment,
+				offsetH,
+				offsetV,
+				width,
+				height
+			)
+
+
 	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):
 		"""
 		Schreibt die Geistesstörungen auf den Charkaterbogen. Allerdings nicht in die Moraltabelle!
@@ -1814,9 +1968,6 @@ class DrawSheet(QObject):
 		self.__painter.setFont(self.__fontMain)
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()
-
-		fontSmallMetrics = QFontMetrics(self.__fontMain_tiny)
-		fontSmallHeight = fontSmallMetrics.height()
 
 		keys = [item for item in self.__character.derangements.keys()]
 		keys.sort(reverse=True)
@@ -2311,8 +2462,6 @@ class DrawSheet(QObject):
 		pen = self.__painter.pen()
 		pen.setWidthF(self.__dotLineWidth)
 		self.__painter.setPen(pen)
-
-		widthSquares = number * (squareSide + self.__dotLineWidth / 2) + (number - 1) * self.__dotSep
 
 		self.__painter.setBrush(self.__colorEmpty)
 

@@ -22,14 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt, QSize
+from PySide.QtCore import Qt
 from PySide.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
-from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
+#from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.Config import Config
-from src.Debug import Debug
-
-from resources import rc_resource
+#from src.Debug import Debug
 
 
 
@@ -48,9 +46,9 @@ class SelectWidget(QListWidget):
 			[ "Information", ":types/images/svg/humans.svg", ],
 			[ "Attributes", ":types/images/svg/maleprofile.svg", ],
 			[ "Skills", ":types/images/svg/high_jump.svg", ],
+			[ "Template", ":types/images/svg/evolution.svg", ],
 			[ "Merits", ":types/images/svg/karate.svg", ],
 			[ "Morality", ":types/images/svg/knife.svg", ],
-			[ "Template", ":types/images/svg/evolution.svg", ],
 			[ "Powers", ":types/images/svg/bolt.svg", ],
 			[ "Flaws", ":types/images/svg/tail.svg", ],
 			[ "Items", ":types/images/svg/flail.svg", ],

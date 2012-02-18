@@ -26,7 +26,7 @@ from PySide.QtCore import Signal
 from PySide.QtGui import QDateEdit
 
 #from src.Config import Config
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

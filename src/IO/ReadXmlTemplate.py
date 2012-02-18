@@ -22,19 +22,18 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import os
 import ast
-import StringIO
+import tempfile
+import zlib
 
-from PySide.QtCore import QObject, QDir, QFile, QIODevice, QResource, Signal
+from PySide.QtCore import QObject, QDir, QFile, QIODevice
 
 from src.Config import Config
 from src.GlobalState import GlobalState
-from src import Error
-from src.Tools import ListTools
-from src.Error import ErrXmlParsing, ErrXmlOldVersion, ErrFileNotOpened
+#from src.Tools import ListTools
+from src.Error import ErrXmlOldVersion, ErrFileNotOpened
 from src.IO.ReadXml import ReadXml
-from src.Debug import Debug
+#from src.Debug import Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
@@ -66,9 +65,6 @@ class ReadXmlTemplate(QObject, ReadXml):
 	"""
 
 
-	exceptionRaised = Signal(str, bool)
-
-
 	def __init__(self, template, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
@@ -77,10 +73,11 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		## Die Template-Dateien alle für das Laden vorbereiten.
 		self.__templateFiles = []
-		pathToTemplates = ":/template/xml"
+		pathToTemplates = ":/template/{}".format(Config.resourceDirTemplates)
 		templateDir = QDir(pathToTemplates)
 		for templateFile in templateDir.entryList():
-			self.__templateFiles.append("{}/{}".format(pathToTemplates, templateFile))
+			if templateFile.endswith(".{}".format(Config.fileSuffixCompressed)):
+				self.__templateFiles.append("{}/{}".format(pathToTemplates, templateFile))
 
 
 	def read(self):
@@ -96,51 +93,65 @@ class ReadXmlTemplate(QObject, ReadXml):
 		\exception ErrXmlParsing Beim Parsen der XML-Datei ist ein Fehler aufgetreten.
 		"""
 
+		#dbgStart = Debug.timehook()
 		for item in self.__templateFiles:
 			#Debug.debug("Lese aus Datei: {}".format(item))
 			qrcFile = QFile(item)
 			if not qrcFile.open(QIODevice.ReadOnly):
 				raise ErrFileNotOpened(item, qrcFile.errorString())
-			fileContent = ""
-			while not qrcFile.atEnd():
-				fileContent += qrcFile.readLine()
+			fileContent = qrcFile.readAll()
 			qrcFile.close()
-			fileLike = StringIO.StringIO(str(fileContent))
+
+			## Erzeuge eine temporäre Datei, mit der etree umgehen kann und schreibe den Inhalt aus der Qt-Resource in selbige hinein.
+			fileLike = tempfile.SpooledTemporaryFile()
+			## Dank dieser Einstellung kann ich zlib verwenden um Dateien zu dekomprimieren, welche mittels des gzip-Moduls komprimiert wurden.
+			decompressObject = zlib.decompressobj(16 + zlib.MAX_WBITS)
+			fileLike.write(decompressObject.decompress(fileContent))
+			fileLike.seek(0)
+
 			xmlContent = etree.parse(fileLike)
+			fileLike.close()
+
 			xmlRootElement = xmlContent.getroot()
 
 			versionSource = xmlRootElement.attrib["version"]
 			#Debug.debug(versionSource)
 
 			try:
-				self.checkXmlVersion( xmlRootElement.tag, versionSource )
+				self.checkXmlVersion( xmlRootElement.tag, versionSource, qrcFile.fileName() )
 			except ErrXmlOldVersion as e:
-				messageText = self.tr("While opening the template file {}, the following problem arised:\n{} {}\nIt appears, that the file will be importable, so the process will be continued but errors may occur.".format(qrcFile.fileName(), e.message, e.description))
-				self.exceptionRaised.emit(messageText, e.critical)
+				descriptionText = self.tr("{description} Loading of template will be continued but errors may occur.".format(description=e.description))
+				self.exceptionRaised.emit(e.message, descriptionText, e.critical)
 
-			species = self.readSpecies(xmlContent)
-			self.readTemplate(xmlContent, species)
+			result = self.readSpecies(xmlContent)
+			self.readTemplate(xmlContent, result[0], result[1])
+		#Debug.timesince(dbgStart)
 
 
 	def readSpecies(self, tree):
 		"""
 		Einlesen der Spezies, für welche die Eigenschaften in der gerade eingelsenen Datei gelten.
+
+		Nicht alle existierenden Spezies sind spielbar, sollen also nicht ausgewählt werden können.
 		"""
 
 		traitsRoot = tree.find("Template")
 		species = ""
 		if "species" in traitsRoot.attrib:
 			species = traitsRoot.attrib["species"]
+		playable = True
+		if "playable" in traitsRoot.attrib:
+			playable = ast.literal_eval(traitsRoot.attrib["playable"])
 
-		return species
+		return [ species, playable ]
 
 
-	def readTemplate(self, tree, species):
+	def readTemplate(self, tree, species, isplayable=True):
 		"""
 		Einlesen aller verfügbarer Eigenschaften.
 		"""
 
-		self.readSpeciesData(tree.find("Template/Traits"), species)
+		self.readSpeciesData(tree.find("Template/Traits"), species, isplayable)
 		self.readCharacteristics(tree.find("Template/Traits/Virtue"))
 		self.readCharacteristics(tree.find("Template/Traits/Vice"))
 		self.readTraits(tree.find("Template/Traits/Attribute"), species)
@@ -159,9 +170,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 		self.readWeapons(tree.findall("Template/Items/Weapons"))
 		self.readArmor(tree.findall("Template/Items/Armor"))
 		self.readEquipment(tree.findall("Template/Items/Equipment"))
+		self.readExtraordinaryItems(tree.findall("Template/Items/Extraordinary"))
 
 
-	def readSpeciesData(self, root, species):
+	def readSpeciesData(self, root, species, isplayable=True):
 		"""
 		Einlesen aller Spezies-abhängigen Parameter.
 		"""
@@ -170,6 +182,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 			"morale": self.getElementAttribute(root, "morale"),
 			"powerstat": self.getElementAttribute(root, "powerstat"),
 			"fuel": self.getElementAttribute(root, "fuel"),
+			"playable": isplayable,
 		}
 
 		self.__storage.appendSpecies( species, speciesData )
@@ -314,6 +327,16 @@ class ReadXmlTemplate(QObject, ReadXml):
 							infos["weakness"] = subElement.text
 						elif subElement.tag == "blessing":
 							infos["blessing"] = subElement.text
+						elif subElement.tag == "bonus":
+							for subsubElement in list(subElement):
+								for subsubsubElement in list(subsubElement):
+									if subsubsubElement.tag == "item":
+										bonusTraits = {
+											"type": subsubElement.tag,
+											"name": subsubsubElement.attrib["name"]
+										}
+										if bonusTraits:
+											self.__storage.appendBonusTrait( species, groupName, bonusTraits )
 					self.__storage.appendTitle( species, groupCategory, groupCategoryName, element.attrib["name"], infos )
 
 
@@ -426,6 +449,27 @@ class ReadXmlTemplate(QObject, ReadXml):
 					self.__storage.addEquipment( equipmentName, equipmentData )
 
 
+	def readExtraordinaryItems(self, root):
+		"""
+		Einlesen der magischen Gegenstände.
+		"""
+
+		for extraordinary in root:
+			if GlobalState.isFallback or not self.getElementAttribute(extraordinary, "fallback") == "True":
+				for element in list(extraordinary):
+					if element.tag == "Type":
+						itemTyp = element.attrib["name"]
+						for subElement in list(element):
+							if subElement.tag == "item":
+								itemName = subElement.attrib["name"]
+								itemData = {
+									#"durability": int(self.getElementAttribute(equipmentElement, "durability")),
+									#"size": int(self.getElementAttribute(equipmentElement, "size")),
+									"cost": float(self.getElementAttribute(subElement, "cost")),
+								}
+								self.__storage.addExtraordinaryItem( itemTyp, itemName, itemData )
+
+
 	def __readTraitData(self, root, species=None, typ=None, category=None):
 		"""
 		Einlesen aller Eigenschaftswerte.
@@ -464,13 +508,16 @@ class ReadXmlTemplate(QObject, ReadXml):
 					"values": [0],													# Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
 					"species": species,												# Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
 					"age": self.getElementAttribute(traitElement, "age"),			# Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
-					"era": self.getElementAttribute(traitElement, "era"),			# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
+					"era": [],														# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
 					"custom": self.getElementAttribute(traitElement, "custom"),	# Handelt es sich um eine Kraft mit Zusatztext?
 					"specialties": listOfSpecialties,									# Dieser Eigenschaft zugeteilten Spezialisierungen (Skills)
 					"prerequisites": " and ".join(listOfPrerequisites),				# Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
 					"cheap": [],
 					"only": [],
 				}
+				eraText = self.getElementAttribute(traitElement, "era")
+				if eraText:
+					traitData["era"] = eraText.split(Config.sepChar)
 				if not traitData["id"]:
 					traitData["id"] = traitData["name"]
 				traitData["values"].extend(listOfValues)

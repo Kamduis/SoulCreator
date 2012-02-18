@@ -22,31 +22,13 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import os
+
+from PySide.QtCore import Signal
+
 from src.Config import Config
 import src.Error as Error
-from src.Debug import Debug
-
-## Fallback to normal ElementTree, if lxml not installed.
-lxmlLoadad = False
-try:
-	from lxml import etree
-	#Debug.debug("Running with lxml.etree")
-	lxmlLoadad = True
-except ImportError:
-	try:
-		# Python 2.5
-		import xml.etree.cElementTree as etree
-		#Debug.debug("running with cElementTree on Python 2.5+")
-		#print("running with cElementTree on Python 2.5+")
-	except ImportError:
-		try:
-			# Python 2.5
-			import xml.etree.ElementTree as etree
-			#Debug.debug("running with ElementTree on Python 2.5+")
-			#print("running with ElementTree on Python 2.5+")
-		except ImportError:
-			#Debug.debug("Failed to import ElementTree from any known place")
-			print("Failed to import ElementTree from any known place")
+#from src.Debug import Debug
 
 
 
@@ -57,6 +39,9 @@ class ReadXml(object):
 
 	Diese Klasse bietet die grundlegendsten Funktionen für das Lesen aus XML-Dateien.
 	"""
+
+
+	exceptionRaised = Signal(str, str, bool)
 
 
 	def __init__(self):
@@ -74,7 +59,7 @@ class ReadXml(object):
 			return ""
 
 
-	def checkXmlVersion(self, name, version ):
+	def checkXmlVersion(self, name, version, filename=None ):
 		"""
 		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.
 		"""
@@ -88,10 +73,12 @@ class ReadXml(object):
 				splitVersion = [int(item) for item in splitVersion]
 
 				## Es ist darauf zu achten, daß Charaktere bis Version 0.6 nicht mit SoulCreator 0.7 und neuer geladen werden können.
+				if filename is not None:
+					filename = os.path.basename(filename)
 				if( splitVersion[0] != Config.programVersionMajor or splitVersion[1] < 7):
-					raise Error.ErrXmlTooOldVersion( version )
+					raise Error.ErrXmlTooOldVersion( version, filename )
 				else:
-					raise Error.ErrXmlOldVersion( version )
+					raise Error.ErrXmlOldVersion( version, filename )
 		else:
 			raise Error.ErrXmlVersion( "{} {}".format(Config.programName, Config.version()), "{} {}".format(name, version) )
 

@@ -29,7 +29,7 @@ from PySide.QtCore import QObject, Signal
 #from src.Error import ErrFileNotOpened
 from src.Config import Config
 #from src import Error
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -133,7 +133,8 @@ class Creation(QObject):
 		)
 		if typ in identicalTyps:
 			for species in self.__storage.species:
-				self.__availablePoints[species][typ] = [x - y for x, y in zip(self.__creationPoints[species][typ], pointList)]
+				if self.__storage.species[species]["playable"]:
+					self.__availablePoints[species][typ] = [x - y for x, y in zip(self.__creationPoints[species][typ], pointList)]
 		else:
 			self.__availablePoints[self.__character.species][typ] = [x - y for x, y in zip(self.__creationPoints[self.__character.species][typ], pointList)]
 			#Debug.debug("{} {}: {} ({})".format(self.__character.species, typ, self.__availablePoints[self.__character.species], self.__creationPoints[self.__character.species]))

@@ -22,14 +22,13 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import os
-
-from PySide.QtCore import Qt
+#from PySide.QtCore import Qt
 from PySide.QtGui import QWidget, QHBoxLayout, QLineEdit, QMessageBox
 
 from src.Config import Config
 from src.Widgets.Components.TraitDots import TraitDots
-from src.Debug import Debug
+from src.Widgets.Components.CompanionWidget import CompanionWidget
+#from src.Debug import Debug
 
 from ui.ui_SpecialsWidget import Ui_SpecialsWidget
 
@@ -54,8 +53,13 @@ class SpecialsWidget(QWidget):
 		self.__character.speciesChanged.connect(self.setPage)
 
 		## Magier
-		self.ui.textEdit_nimbus.focusLost.connect(self.changeNimbus)
+		self.ui.textEdit_nimbus.textChanged.connect(self.changeNimbus)
 		self.__character.nimbusChanged.connect(self.ui.textEdit_nimbus.setPlainText)
+		self.ui.textEdit_paradoxMarks.textChanged.connect(self.changeParadoxMarks)
+		self.__character.paradoxMarksChanged.connect(self.ui.textEdit_paradoxMarks.setPlainText)
+
+		self.companionWidget = CompanionWidget(self.__storage, self.__character)
+		self.ui.layout_companion.addWidget(self.companionWidget)
 
 		## Vampir
 		## Liste aller Vinculum-Widgets
@@ -70,12 +74,16 @@ class SpecialsWidget(QWidget):
 			vinculumLayout.addWidget(lineEdit)
 			vinculumLayout.addWidget(traitDots)
 			self.ui.layout_vinculi.addLayout(vinculumLayout)
-			
+
 			self.__vinculumWidgets.append([ lineEdit, traitDots ])
 
 			trait.nameChanged.connect(lineEdit.setText)
 			trait.valueChanged.connect(traitDots.setValue)
 			traitDots.valueChanged.connect(self.checkMaxVinculum)
+
+		## Werewolf
+		self.totemWidget = CompanionWidget(self.__storage, self.__character)
+		self.ui.layout_totem.addWidget(self.totemWidget)
 
 
 	def setPage(self, species):
@@ -91,7 +99,7 @@ class SpecialsWidget(QWidget):
 			self.ui.stackedWidget.setCurrentWidget(self.ui.page_mage)
 		elif species == "Vampire":
 			self.ui.stackedWidget.setCurrentWidget(self.ui.page_vampire)
-		elif species == "Mage":
+		elif species == "Werewolf":
 			self.ui.stackedWidget.setCurrentWidget(self.ui.page_werewolf)
 
 
@@ -100,7 +108,27 @@ class SpecialsWidget(QWidget):
 		Verändert den Nimbustext im Speicher.
 		"""
 
+		cursor = self.ui.textEdit_nimbus.textCursor()
+		cursorPosition = cursor.position()
+
 		self.__character.nimbus = self.ui.textEdit_nimbus.toPlainText()
+
+		cursor.setPosition(cursorPosition)
+		self.ui.textEdit_nimbus.setTextCursor(cursor)
+
+
+	def changeParadoxMarks( self ):
+		"""
+		Verändert den Text der Paradox-Zeichen im Speicher.
+		"""
+
+		cursor = self.ui.textEdit_paradoxMarks.textCursor()
+		cursorPosition = cursor.position()
+
+		self.__character.paradoxMarks = self.ui.textEdit_paradoxMarks.toPlainText()
+
+		cursor.setPosition(cursorPosition)
+		self.ui.textEdit_paradoxMarks.setTextCursor(cursor)
 
 
 	def checkMaxVinculum( self, value ):

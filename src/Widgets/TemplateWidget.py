@@ -22,13 +22,14 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
+import re
+
 from PySide.QtCore import QDate
 from PySide.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageBox
 
-from src.Config import Config
+#from src.Config import Config
 #from src.Tools import PathTools
 #from src.Calc.Calc import Calc
-#from src.Widgets.Dialogs.NameDialog import NameDialog
 from src.Debug import Debug
 
 from ui.ui_TemplateWidget import Ui_TemplateWidget
@@ -51,11 +52,11 @@ class TemplateWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
-		speciesList = self.__storage.species.keys()
+		speciesList = [ species[0] for species in self.__storage.species.items() if species[1]["playable"] ]
 		speciesList.sort()
 		#self.ui.comboBox_species.addItems(speciesList)
 		for species in speciesList:
-			self.ui.comboBox_species.addItem(QIcon(":/icons/images/Skull-{}.png".format(species)), species)
+			self.ui.comboBox_species.addItem(QIcon(":/icons/images/species/{}/Skull.png".format(species)), species)
 
 		self.ui.dateEdit_dateBecoming.setMinimumDate(QDate(100, 1, 1))
 
@@ -63,6 +64,7 @@ class TemplateWidget(QWidget):
 		self.ui.dateEdit_dateBecoming.dateChanged.connect(self.__character.setDateBecoming)
 		self.ui.comboBox_species.currentIndexChanged[str].connect(self.__character.setSpecies)
 		self.ui.comboBox_breed.currentIndexChanged[str].connect(self.__character.setBreed)
+		self.ui.comboBox_bonus.currentIndexChanged[str].connect(self.setCharacterBonus)
 		self.ui.comboBox_kith.currentIndexChanged[str].connect(self.__character.setKith)
 		self.ui.comboBox_faction.currentIndexChanged[str].connect(self.__character.setFaction)
 		self.ui.lineEdit_faction.textEdited.connect(self.__character.setFaction)
@@ -70,15 +72,13 @@ class TemplateWidget(QWidget):
 		self.ui.lineEdit_party.textEdited.connect(self.__character.setParty)
 
 		## Aktualisieren der Darstellung der im Charakter veränderten Werte.
-		#self.__character.dateBirthChanged.connect(self.ui.dateEdit_dateBirth.setDate)
 		self.__character.dateBecomingChanged.connect(self.ui.dateEdit_dateBecoming.setDate)
-		#self.__character.dateGameChanged.connect(self.ui.dateEdit_dateGame.setDate)
-		#self.__character.ageChanged.connect(self.ui.label_age.setNum)
 		self.__character.ageBecomingChanged.connect(self.ui.label_ageBecoming.setNum)
 		self.__character.speciesChanged.connect(self.updateSpecies)
 		self.__character.breedChanged.connect(self.updateBreed)
+		self.__character.breedChanged.connect(self.repopulateBonus)
 		self.__character.breedChanged.connect(self.repopulateKiths)
-		#self.__character.speciesChanged.connect(self.repopulateKiths)
+		self.__character.bonusChanged.connect(self.updateBonus)
 		self.__character.kithChanged.connect(self.updateKith)
 		self.__character.speciesChanged.connect(self.updateBreedTitle)
 		self.__character.speciesChanged.connect(self.repopulateBreeds)
@@ -96,8 +96,6 @@ class TemplateWidget(QWidget):
 		## Das Alter darf nie negativ werden können
 		self.__character.dateBirthChanged.connect(self.ui.dateEdit_dateBecoming.setMinimumDate)
 		self.__character.dateGameChanged.connect(self.ui.dateEdit_dateBecoming.setMaximumDate)
-
-		#self.__character.ageChanged.connect(self.setAge)
 
 
 	def updateSpecies( self, species ):
@@ -122,6 +120,21 @@ class TemplateWidget(QWidget):
 		"""
 
 		self.ui.label_breed.setText( "{}:".format(self.__storage.breedTitle(species)) )
+
+
+	def updateBonus( self, bonus ):
+		"""
+		Aktualisiert die Anzeige der Bonuseigenschaft.
+		"""
+
+		if bonus:
+			if bonus["type"] == "Skill" and "specialty" in bonus:
+				#Debug.debug(bonus["specialty"])
+				self.ui.comboBox_bonus.setCurrentIndex( self.ui.comboBox_bonus.findText( bonus["specialty"] ) )
+			else:
+				self.ui.comboBox_bonus.setCurrentIndex( self.ui.comboBox_bonus.findText( bonus["name"] ) )
+		else:
+			self.ui.comboBox_bonus.clear()
 
 
 	def updateKith( self, kith ):
@@ -178,7 +191,64 @@ class TemplateWidget(QWidget):
 	def repopulateBreeds(self, species):
 
 		self.ui.comboBox_breed.clear()
-		self.ui.comboBox_breed.addItems(self.__storage.breeds(species))
+		for item in self.__storage.breeds(species):
+			self.ui.comboBox_breed.addItem(QIcon(":icons/images/species/{}/Breed-{}.svg".format(species, item)), item)
+
+
+	def repopulateBonus(self, breed):
+		"""
+		Die Bonuseigenschaften neu festlegen.
+
+		\todo Bei Werwölfen und Wechselbälgern sollten alle Spezialisierungen usgeblendet werden, die der Charkater nicht wählen kann weil die Fertigkeit einen Wert von 0 hat, oder selbige Spezialisierung schon besitzt.
+
+		\todo Nach Ende der Erschaffung muß die Bonus-Eigenschaft unveränderlich gemacht werden.
+		"""
+
+		self.ui.comboBox_bonus.clear()
+		__list = self.__storage.bonusTraits(self.__character.species, breed)
+		if __list:
+			bonusList = [ bonus["name"] for bonus in __list ]
+			bonusList.sort()
+			speciesWithSpecialties = (
+				"Changeling",
+				"Werewolf",
+			)
+			if self.__character.species in speciesWithSpecialties:
+				for item in bonusList:
+					for category in self.__storage.traits["Skill"]:
+						if item in self.__storage.traits["Skill"][category]:
+							self.ui.comboBox_bonus.addItems( self.__storage.traits["Skill"][category][item]["specialties"] )
+			else:
+				self.ui.comboBox_bonus.addItems( bonusList )
+				self.ui.label_bonus2.setText(__list[0]["name"])
+
+		## Schonmal im Charakter speichern, da Magier nichts wählen können.
+		self.setCharacterBonus()
+
+
+	def setCharacterBonus(self):
+		"""
+		Legt die Bonuseigenschaft im Charkater fest.
+		"""
+
+		__list = self.__storage.bonusTraits(self.__character.species, self.__character.breed)
+		if len(__list) > 1:
+			bonusName = self.ui.comboBox_bonus.currentText()
+			## Bei Bonus-Spezialisierungen muß auch die Fertigkeit gespeichert werden.
+			for item in __list:
+				if item["type"] == "Skill":
+					for skill in self.__storage.traitSkills():
+						if item["name"] == skill and bonusName in self.__storage.traitSkills()[skill]["specialties"]:
+							item["specialty"] = bonusName
+							self.__character.bonus = item
+							break
+				elif item["name"] == bonusName:
+					self.__character.bonus = item
+					break
+		elif len(__list) > 0:
+			self.__character.bonus = __list[0]
+		else:
+			self.__character.bonus = {}
 
 
 	def repopulateKiths(self, breed):
@@ -194,8 +264,18 @@ class TemplateWidget(QWidget):
 
 	def repopulateFactions(self, species):
 
+		fileExtension = {
+			"Human": "svg",
+			"Changeling": "png",
+			"Mage": "png",
+			"Vampire": "svg",
+			"Werewolf": "svg",
+		}
+
 		self.ui.comboBox_faction.clear()
-		self.ui.comboBox_faction.addItems(self.__storage.factions(species))
+		for item in self.__storage.factions(species):
+			self.ui.comboBox_faction.addItem(QIcon(":icons/images/species/{}/Faction-{}.{}".format(species, item.replace(" ", ""), fileExtension[species])), item)
+		#self.ui.comboBox_faction.addItems(self.__storage.factions(species))
 
 
 	def repopulateOrganisations(self, species):
@@ -233,3 +313,18 @@ class TemplateWidget(QWidget):
 		else:
 			self.ui.label_kith.setVisible(False)
 			self.ui.comboBox_kith.setVisible(False)
+
+		## Nur Magier und Vampire haben Bonus-Attribute. Werwölfe haben allerdings Bonus-Spezialisierungen.
+		affectedSpecies = ("Changeling", "Mage", "Vampire", "Werewolf")
+		if species in affectedSpecies:
+			self.ui.label_bonus.setVisible(True)
+			if species == "Mage":
+				self.ui.comboBox_bonus.setVisible(False)
+				self.ui.label_bonus2.setVisible(True)
+			else:
+				self.ui.comboBox_bonus.setVisible(True)
+				self.ui.label_bonus2.setVisible(False)
+		else:
+			self.ui.label_bonus.setVisible(False)
+			self.ui.comboBox_bonus.setVisible(False)
+			self.ui.label_bonus2.setVisible(False)

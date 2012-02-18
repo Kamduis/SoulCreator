@@ -40,8 +40,8 @@ class Config(object):
 	programName = "SoulCreator"
 	programAuthor = "Victor"
 	programVersionMajor = 0
-	programVersionMinor = 10
-	programVersionChange = 1
+	programVersionMinor = 11
+	programVersionChange = 0
 	programDescription = "Charaktergenerator für die World of Darkness."
 	organization = "Caern"
 
@@ -53,9 +53,17 @@ class Config(object):
 
 	# Verzeichnisname für Ressourcen
 	resourceDir = "resources"
+	resourceDirTemplates = "templates"
 
 	# Verzeichnisname für Uis
 	uiDir = "ui"
+
+	# Dateiendung komprimierter Dateien.
+	fileSuffixCompressed = "scd"
+	# Dateiendung der gespeicherten Charkatere
+	fileSuffixSave = "chr"
+
+	compressSaves = True
 
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 	sepChar = ";"
@@ -94,6 +102,9 @@ class Config(object):
 	##  Deaktivierte textabschnitte
 	deactivatedTextColor = "darkgrey"
 
+	## Kennzeichnung von Bonuseigenschaften.
+	bonusColor = "red"
+
 	## Hintergrundfarbe für die unterschiedlichen Waffenkategorien.
 	weaponsColor = {}
 	weaponsColor["melee"] = "white"
@@ -106,11 +117,21 @@ class Config(object):
 	weaponIcons["thrown"] = ":/items/images/svg/shuriken.svg"
 	weaponIcons["ranged"] = ":/items/images/svg/uzi.svg"
 
+	## Hintergrundfarbe für die unterschiedlichen Typen magischer Gegenstände.
+	extraordinaryItemColor = {}
+	extraordinaryItemColor["Cursed Items"] = "lightseagreen"
+	extraordinaryItemColor["Fetishes"] = "burlywood"
+	extraordinaryItemColor["Tokens"] = "lawngreen"
+	extraordinaryItemColor["Imbued Items"] = "lightyellow"
+	extraordinaryItemColor["Artifacts"] = "gold"
+
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
 	vSpace = 5
 
 	## Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
 	traitCategorySpace = 10
+
+	companionInfluencesCount = 5
 
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
 	traitMultipleMax = 4
@@ -255,11 +276,14 @@ class Config(object):
 		#"Extraordinary",
 	)
 
-	## Sämtliche Eras, welcher ein Charakter angehören kann.
-	eras = (
-		"Modern",
-		"Ancient",
-	)
+	initialEra = "Modern"
+
+	## Sämtliche Eras, welcher ein Charakter angehören kann und mit welchem jahr sie beginnen.
+	eras = {
+		"Modern": 1950,
+		"Renaissance": 1500,
+		"Ancient": 0,
+	}
 
 	## Sämtliche Eras, welcher ein Charakter angehören kann.
 	ages = (
@@ -287,7 +311,8 @@ class Config(object):
 
 	## Folgende Werte können über den Einstellungsdialog verändert werden und sollten beim Beenden des Programms gespeichert und beim Starten geladen werden. Die übergebenen Werte sind die Standartwerte, wenn im Einstellungsdialog nichts verändert wird.
 	# Zur Altersberechnung Kalender verwenden
-	calendarForAgeCalculation = True
+	#calendarForAgeCalculation = True
+	autoSelectEra = True
 
 
 	@staticmethod

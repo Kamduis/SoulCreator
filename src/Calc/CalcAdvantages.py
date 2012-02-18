@@ -29,7 +29,7 @@ from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
 #from src.Widgets.Components.CharaTrait import CharaTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -68,9 +68,12 @@ class CalcAdvantages(QObject):
 		self.__attrDex = self.__character.traits["Attribute"]["Physical"]["Dexterity"]
 		self.__attrSta = self.__character.traits["Attribute"]["Physical"]["Stamina"]
 		self.__attrCom = self.__character.traits["Attribute"]["Social"]["Composure"]
-		self.__meritGiant = self.__character.traits["Merit"]["Physical"]["Giant"]
 		self.__meritFleetOfFoot = self.__character.traits["Merit"]["Physical"]["Fleet of Foot"]
 		self.__meritFastReflexes = self.__character.traits["Merit"]["Physical"]["Fast Reflexes"]
+		self.__giantTrait = self.__character.traits["Merit"]["Physical"]["Giant"]
+		self.__giantTraitKid = self.__character.traits["Merit"]["Physical"]["GiantKid"]
+		self.__smallTrait = self.__character.traits["Flaw"]["Physical"]["Dwarf"]
+		self.__smallTraitKid = self.__character.traits["Merit"]["Physical"]["Tiny"]
 
 		self.sizeChanged.connect(self.calcHealth)
 
@@ -122,12 +125,20 @@ class CalcAdvantages(QObject):
 		Berechnung der Größe des Charakters.
 		"""
 
+		giantTrait = self.__giantTrait
+		smallTrait = self.__smallTrait
+		if self.__character.age < Config.ageAdult:
+			giantTrait = self.__giantTraitKid
+			smallTrait = self.__smallTraitKid
+
 		result = 5
 		if self.__character.age < Config.ageAdult:
 			result -= 1
 
-		if ( self.__meritGiant.value > 0 ):
+		if ( giantTrait.totalvalue > 0 ):
 			result += 1
+		elif ( smallTrait.totalvalue > 0 ):
+			result -= 1
 
 		if ( self.__size != result ):
 			self.__size = result
@@ -143,13 +154,22 @@ class CalcAdvantages(QObject):
 		\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
-		result = self.__attrDex.value + self.__attrCom.value + self.__meritFastReflexes.value
+		result = self.calculateInitiative([ self.__attrDex.totalvalue, self.__attrCom.totalvalue, self.__meritFastReflexes.totalvalue ])
 
 		if ( self.__initiative != result ):
 			self.__initiative = result
 			self.initiativeChanged.emit( result )
 
 		return self.__initiative
+
+
+	@staticmethod
+	def calculateInitiative(traitList):
+		"""
+		Berechnet die Initiative aus der Liste an übergebenen Eigenschaften.
+		"""
+
+		return sum(traitList)
 
 
 	def calcSpeed(self):
@@ -159,13 +179,22 @@ class CalcAdvantages(QObject):
 		\todo Bislang nur von Strength und Dexterity abhängig. Möglicherweise vorhandene Übernatürliche Eigenschaften werden nicht berücksichtigt.
 		"""
 
-		result = self.__attrStr.value + self.__attrDex.value + 5 + self.__meritFleetOfFoot.value;
+		result = self.calculateSpeed([ self.__attrStr.totalvalue, self.__attrDex.totalvalue, 5, self.__meritFleetOfFoot.totalvalue ])
 
 		if ( self.__speed != result ):
 			self.__speed = result
 			self.speedChanged.emit( result )
 
 		return self.__speed
+
+
+	@staticmethod
+	def calculateSpeed(traitList):
+		"""
+		Berechnet die Geschwindigkeit aus der Liste an übergebenen Eigenschaften.
+		"""
+
+		return sum(traitList)
 
 
 	def calcDefense(self):
@@ -175,13 +204,28 @@ class CalcAdvantages(QObject):
 		\todo Bislang nicht von der Spezies abhängig: Tiere sollten stets das größere von Dex und Wits als Defense haben.
 		"""
 
-		result = min( self.__attrWit.value, self.__attrDex.value )
+		result = self.calculateDefense( [ self.__attrWit.totalvalue, self.__attrDex.totalvalue ] )
 
 		if ( self.__defense != result ):
 			self.__defense = result
 			self.defenseChanged.emit( result )
 
 		return self.__defense
+
+
+	@staticmethod
+	def calculateDefense(traitList, maximize=False):
+		"""
+		Berechnet die Defense aus der Liste an übergebenen Eigenschaften.
+		"""
+
+		result = 0
+		if maximize:
+			result = max(traitList)
+		else:
+			result = min(traitList)
+
+		return result
 
 
 	def calcHealth(self):
@@ -192,9 +236,9 @@ class CalcAdvantages(QObject):
 		## Bevor ich die Gesundheit ausrechnen kann, muß erst die Größe feststehen.
 		size = self.calcSize()
 
-		result = self.__attrSta.value + size
+		result = self.calculateHealth(self.__attrSta.totalvalue, size)
 
-		#Debug.debug("Berechne {} + {} = {}".format(self.__attrSta.value, size, result))
+		#Debug.debug("Berechne {} + {} = {}".format(self.__attrSta.totalvalue, size, result))
 
 		if ( self.__health != result ):
 			self.__health = result
@@ -203,12 +247,21 @@ class CalcAdvantages(QObject):
 		return self.__health
 
 
+	@staticmethod
+	def calculateHealth(trait1, trait2):
+		"""
+		Berechnet die Gesundheit aus den zwei übergebenen Eigenschaften.
+		"""
+
+		return trait1 + trait2
+
+
 	def calcWillpower(self):
 		"""
 		Berechnung der Willenskraft.
 		"""
 
-		result = self.__attrRes.value + self.__attrCom.value
+		result = self.calculateWillpower(self.__attrRes.totalvalue, self.__attrCom.totalvalue)
 
 		if ( self.__willpower != result ):
 			self.__willpower = result
@@ -217,3 +270,31 @@ class CalcAdvantages(QObject):
 		return self.__willpower
 
 
+	@staticmethod
+	def calculateWillpower(trait1, trait2):
+		"""
+		Berechnet die Willenskraft aus den zwei übergebenen Eigenschaften.
+		"""
+		
+		return trait1 + trait2
+
+
+	@staticmethod
+	def calculateSpiritRank(power, finesse, resistance):
+		"""
+		Berechnet den Rang eines Geistes aus dessen Attributen.
+		"""
+		
+		result = power + finesse + resistance
+
+		rank = 1
+		if result > 25:
+			rank = 5
+		elif result > 19:
+			rank = 4
+		elif result > 13:
+			rank = 3
+		elif result > 7:
+			rank = 2
+
+		return rank

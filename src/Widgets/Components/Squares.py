@@ -24,14 +24,14 @@ from __future__ import division, print_function
 
 import math
 
-from PySide.QtCore import Qt, QRect, Signal
-from PySide.QtGui import QWidget, QSizePolicy, QPainter, QPen, QBrush, QColor
+from PySide.QtCore import QRect, Signal
+from PySide.QtGui import QWidget, QPainter, QPen, QColor
 
 #from src.Config import Config
 #from src import Error
 #from ReadXml import ReadXml
 #from src.Widgets.Components.CharaTrait import CharaTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

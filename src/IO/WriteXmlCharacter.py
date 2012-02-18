@@ -22,11 +22,13 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, Qt, QIODevice, QByteArray, QBuffer
+from PySide.QtCore import QObject, QIODevice, QByteArray, QBuffer
+
+import gzip
 
 from src.Config import Config
-from src.Error import ErrTraitType, ErrTraitCategory
-from src.Debug import Debug
+#from src.Error import ErrTraitType, ErrTraitCategory
+#from src.Debug import Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
@@ -67,6 +69,15 @@ class WriteXmlCharacter(QObject):
 		Startet den Schreibvorgang.
 		"""
 
+		tree = self.buildXmlTree()
+		self.writeFile(tree, fileName)
+
+
+	def buildXmlTree(self):
+		"""
+		Erzeugt den Element-Baum, der später in eine XML-Datei geschrieben werden kann.
+		"""
+
 		root = etree.Element(Config.programName, version=Config.version())
 
 		etree.SubElement(root, "species").text = self.__character.species
@@ -84,7 +95,7 @@ class WriteXmlCharacter(QObject):
 			supername=self.__character.identity.supername,
 			gender=self.__character.identity.gender,
 		)
-		
+
 		## Daten
 		etree.SubElement(root, "dates",
 			birth=self.__character.dateBirth.toString(Config.dateFormat),
@@ -98,6 +109,11 @@ class WriteXmlCharacter(QObject):
 
 		breedElement = etree.SubElement(root, "breed")
 		breedElement.text = self.__character.breed
+		if self.__character.bonus:
+			breedElement.attrib["bonusType"] = self.__character.bonus["type"]
+			breedElement.attrib["bonusName"] = self.__character.bonus["name"]
+			if "specialty" in self.__character.bonus:
+				breedElement.attrib["bonusSpecialty"] = self.__character.bonus["specialty"]
 		if self.__character.species == "Changeling":
 			breedElement.attrib["kith"] = self.__character.kith
 
@@ -166,22 +182,48 @@ class WriteXmlCharacter(QObject):
 				for weapon in self.__character.weapons[category]:
 					etree.SubElement(weaponCategory, "weapon").text = weapon
 		if self.__character.armor:
-			armor = etree.SubElement(items, "armor", dedicated=unicode(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
+			etree.SubElement(items, "armor", dedicated=unicode(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
 		if self.__character.equipment or self.__character.magicalTool:
 			equipment = etree.SubElement(items, "Equipment")
 			for item in self.__character.equipment:
 				etree.SubElement(equipment, "equipment").text = item
 			if self.__character.magicalTool:
 				etree.SubElement(equipment, "magicalTool").text = self.__character.magicalTool
+		if self.__character.extraordinaryItems:
+			extraordinaries = etree.SubElement(items, "ExtraordinaryItems")
+			for typ in self.__character.extraordinaryItems:
+				itemType = etree.SubElement(extraordinaries, "Type", name=typ)
+				for extraordinaryItem in self.__character.extraordinaryItems[typ]:
+					etree.SubElement(itemType, "item").text = extraordinaryItem
 
 		## Spezialseigenschaften der Spezies
 		if self.__character.nimbus:
 			etree.SubElement(root, "nimbus").text = self.__character.nimbus
+		if self.__character.paradoxMarks:
+			etree.SubElement(root, "paradoxMarks").text = self.__character.paradoxMarks
 		if self.__character.species == "Vampire" and any((x.name and x.value > 0) for x in self.__character.vinculi):
 			vinculi = etree.SubElement(root, "vinculi")
 			for item in self.__character.vinculi:
 				if item.name and item.value > 0:
 					etree.SubElement(vinculi, "vinculum", value=unicode(item.value)).text = item.name
+		companion = etree.SubElement(
+			root,
+			"companion",
+			name = self.__character.companionName,
+			power = unicode(self.__character.companionPower),
+			finesse = unicode(self.__character.companionFinesse),
+			resistance = unicode(self.__character.companionResistance),
+			size = unicode(self.__character.companionSize),
+			speedFactor = unicode(self.__character.companionSpeedFactor),
+		)
+		for item in self.__character.companionNumina:
+			etree.SubElement(companion, "numen").text = item
+		for item in self.__character.companionInfluences:
+			if item.name and item.value > 0:
+				etree.SubElement(companion, "influence", value=unicode(item.value)).text = item.name
+		if self.__character.companionBan:
+			etree.SubElement(companion, "ban").text = self.__character.companionBan
+		
 
 		if self.__character.picture:
 			imageData = QByteArray()
@@ -191,9 +233,28 @@ class WriteXmlCharacter(QObject):
 			imageData = imageData.toBase64()
 			etree.SubElement(root, "picture").text = unicode(imageData)
 
+		return root
+
+
+	def __writeTreeToFile(self, fileObject, tree):
+		if lxmlLoadad:
+			fileObject.write(etree.tostring(tree, pretty_print=True, encoding='UTF-8', xml_declaration=True))
+		else:
+			fileObject.write(etree.tostring(tree, encoding='UTF-8'))
+
+
+
+	def writeFile(self, tree, fileName):
+		"""
+		Schreibt den Elementbaum in eine Datei.
+
+		Die Charaktere werden als komprimierte Datei gespeichert.
+		"""
+
 		## In die Datei schreiben.
-		with open(fileName, "w") as f:
-			if lxmlLoadad:
-				f.write(etree.tostring(root, pretty_print=True, encoding='UTF-8', xml_declaration=True))
-			else:
-				f.write(etree.tostring(root, encoding='UTF-8'))
+		if Config.compressSaves:
+			with gzip.open(fileName, "w") as fileObject:
+				self.__writeTreeToFile(fileObject, tree)
+		else:
+			with open(fileName, "w") as fileObject:
+				self.__writeTreeToFile(fileObject, tree)

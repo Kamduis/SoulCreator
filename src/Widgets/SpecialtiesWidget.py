@@ -27,7 +27,7 @@ from PySide.QtGui import QWidget
 
 #from src.Config import Config
 #from src import Error
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_SpecialtiesWidget import Ui_SpecialtiesWidget
 
@@ -65,10 +65,13 @@ class SpecialtiesWidget(QWidget):
 	def setSpecialties( self, specialties ):
 		for item in specialties:
 			state = Qt.Unchecked
-			if ( item in self.__trait.specialties ):
+			isBonus = False
+			if ( item in self.__trait.totalspecialties ):
 				state = Qt.Checked
+				if ( item in self.__trait.bonusSpecialties ):
+					isBonus = True
 
-			self.ui.listWidget_specialties.addCheckableItem( item, state )
+			self.ui.listWidget_specialties.addCheckableItem( item, state, isBonus )
 		self.setEnabled(True)
 		## Auch wenn Spezialisierungen vorhanden sind, heißt das nicht, daß wir den Hinzufügen-Knopf auch erlauben dürfen.
 		#self.ui.pushButton_add.setEnabled(False)
@@ -82,9 +85,9 @@ class SpecialtiesWidget(QWidget):
 		newSpecialty = self.ui.lineEdit_newSpecialty.text()
 		self.ui.listWidget_specialties.addCheckableItem( newSpecialty, Qt.Checked )
 		## Neue Spezialisierungen nicht nur der Liste, sondern auch der Eigenschaft hinzufügen.
-		if newSpecialty not in self.__trait.specialties:
+		if newSpecialty not in self.__trait.totalspecialties:
 			self.__trait.appendSpecialty(newSpecialty)
-		#Debug.debug(self.__trait.specialties)
+		#Debug.debug(self.__trait.totalspecialties)
 		## Ist die neue Spezialisierung hinzugefügt, wird die Zeile wieder geleert.
 		self.ui.lineEdit_newSpecialty.setText("")
 
@@ -96,10 +99,10 @@ class SpecialtiesWidget(QWidget):
 			if self.__trait != trait:
 				# Vorherige Verbindung lösen.
 				if self.__trait:
-					self.__trait.specialtiesChanged.disconnect(self.reshowSpecialties)
+					self.__trait.totalspecialtiesChanged.disconnect(self.reshowSpecialties)
 				self.__trait = trait
 				# Neue Verbindung aufbauen, damit beim Laden des Charakters die angezeigten Spezialisierungen automatisch richtig abgehakt werden.
-				self.__trait.specialtiesChanged.connect(self.reshowSpecialties)
+				self.__trait.totalspecialtiesChanged.connect(self.reshowSpecialties)
 			#Debug.debug(self.__trait)
 			for item in self.__storage:
 				for subitem in self.__storage[item].items():
@@ -107,7 +110,7 @@ class SpecialtiesWidget(QWidget):
 					if subitem[0] == trait.name:
 						self.setSpecialties(subitem[1]["specialties"])
 						## Jetzt müssen noch alle Spezialisierungen angezeigt werden, die zwar im Charkater stehen, aber nicht teil der Standard-Spezialisierungen sind.
-						for charaSpecialty in self.__trait.specialties:
+						for charaSpecialty in self.__trait.totalspecialties:
 							if charaSpecialty not in subitem[1]["specialties"]:
 								self.ui.listWidget_specialties.addCheckableItem( charaSpecialty, Qt.Checked )
 						return
@@ -118,13 +121,14 @@ class SpecialtiesWidget(QWidget):
 
 	def reshowSpecialties(self):
 		self.ui.listWidget_specialties.clear()
-		stopLoop = False
 		for item in self.__storage:
 			for subitem in self.__storage[item].items():
 				if subitem[0] == self.__trait.name:
+					#Debug.debug(subitem[1]["specialties"])
 					self.setSpecialties(subitem[1]["specialties"])
 					## Jetzt müssen noch alle Spezialisierungen angezeigt werden, die zwar im Charkater stehen, aber nicht teil der Standard-Spezialisierungen sind.
-					for charaSpecialty in self.__trait.specialties:
+					for charaSpecialty in self.__trait.totalspecialties:
+						#Debug.debug(charaSpecialty)
 						if charaSpecialty not in subitem[1]["specialties"]:
 							self.ui.listWidget_specialties.addCheckableItem( charaSpecialty, Qt.Checked )
 					return
@@ -134,7 +138,7 @@ class SpecialtiesWidget(QWidget):
 	def modifyTrait(self, name, state):
 		#Debug.debug("Test")
 		if state == Qt.Checked:
-			if name not in self.__trait.specialties:
+			if name not in self.__trait.totalspecialties:
 				self.__trait.appendSpecialty(name)
 		elif name in self.__trait.specialties:
 			self.__trait.removeSpecialty(name)

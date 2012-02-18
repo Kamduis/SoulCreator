@@ -28,7 +28,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel,
 from src.Config import Config
 from src.Widgets.Components.DerangementComboBox import DerangementComboBox
 from src.Widgets.Components.Dot import Dot
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 

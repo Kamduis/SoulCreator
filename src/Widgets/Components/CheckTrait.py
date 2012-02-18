@@ -28,7 +28,7 @@ from PySide.QtGui import QWidget, QHBoxLayout, QCheckBox, QLineEdit
 from src.Config import Config
 #from src.Tools import ListTools
 from src.Datatypes.StandardTrait import StandardTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -123,7 +123,7 @@ class CheckTrait(QWidget):
 			self.__lineEdit.show()
 
 
-	def hideOrShowTrait_species(self, species):
+	def hideOrShowTrait(self, species):
 		"""
 		Versteckt oder zeigt diese Eigenschaft, je nach gewählter Spezies.
 		"""

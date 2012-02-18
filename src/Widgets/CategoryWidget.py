@@ -31,9 +31,9 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 #from src import Error
 from src.Datatypes.StandardTrait import StandardTrait
 #from src.Datatypes.SubPowerTrait import SubPowerTrait
-from src.Widgets.Components.TraitLine import CharaTrait
+from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Widgets.Components.CheckTrait import CheckTrait
-from src.Debug import Debug
+#from src.Debug import Debug
 
 
 
@@ -101,7 +101,7 @@ class CategoryWidget(QWidget):
 
 				layoutCategory.addWidget( traitWidget )
 
-				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
+				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait)
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutCategory.addStretch()

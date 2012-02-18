@@ -23,8 +23,9 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 import ast
+import gzip
 
-from PySide.QtCore import QObject, QDate, QByteArray, Signal
+from PySide.QtCore import QObject, QDate, QByteArray
 from PySide.QtGui import QPixmap
 
 from src.Config import Config
@@ -62,9 +63,6 @@ class ReadXmlCharacter(QObject, ReadXml):
 	"""
 
 
-	exceptionRaised = Signal(str, bool)
-
-
 	def __init__(self, character, parent=None):
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
@@ -75,18 +73,27 @@ class ReadXmlCharacter(QObject, ReadXml):
 	def read( self, fileName ):
 		"""
 		Startet den Lesevorgang.
+
+		\note Diese Funktion kann sowohl normale xml-Dateien als auch mittels gzip komprimierte xml-Dateien laden.
 		"""
 
-		xmlContent = etree.parse(fileName)
+		## Mittels lxml kann diese Funktion normale XML-Dateien und offenbar auch mittels gzip komprimierte XML-Dateien laden.
+		## Das normale ElementTree-Modul kann das aber nicht.
+		xmlContent = None
+		try:
+			xmlContent = etree.parse(fileName)
+		except etree.ParseError:
+			## Möglicherweise eine komprimierte Datei und lxml wurde nicht verwendet?
+			xmlContent = etree.parse(gzip.GzipFile(fileName))
 		xmlRootElement = xmlContent.getroot()
 
 		versionSource = xmlRootElement.attrib["version"]
 
 		try:
-			self.checkXmlVersion( xmlRootElement.tag, versionSource )
+			self.checkXmlVersion( xmlRootElement.tag, versionSource, fileName )
 		except ErrXmlOldVersion as e:
-			messageText = self.tr("While opening the character file the following problem arised:\n{} {}\nIt appears, that the character will be importable, so the process will be continued. But some character values may be wrong after importing.".format(e.message, e.description))
-			self.exceptionRaised.emit(messageText, e.critical)
+			descriptionText = self.tr("{description} Loading of character will be continued but errors may occur.".format(message=e.message, description=e.description))
+			self.exceptionRaised.emit(e.message, descriptionText, e.critical)
 
 		self.readCharacterInfo(xmlContent)
 		self.readCharacterIdentity(xmlContent)
@@ -109,6 +116,12 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.__character.vice = tree.find("vice").text
 		breedElement = tree.find("breed")
 		self.__character.breed = breedElement.text
+		bonus = {}
+		bonus["type"] = self.getElementAttribute(breedElement, "bonusType")
+		bonus["name"] = self.getElementAttribute(breedElement, "bonusName")
+		bonus["specialty"] = self.getElementAttribute(breedElement, "bonusSpecialty")
+		if bonus["type"] or bonus["name"]:
+			self.__character.bonus = bonus
 		self.__character.kith = self.getElementAttribute(breedElement, "kith")
 		self.__character.faction = tree.find("faction").text
 		self.__character.organisation = tree.find("organisation").text
@@ -211,10 +224,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 		Liest die Gegenstände des Charakters aus.
 		"""
 
-		items = tree.find("Items")
 		self.readWeapons(tree.find("Items/Weapons"))
 		self.readArmor(tree.find("Items/armor"))
 		self.readEquipment(tree.find("Items/Equipment"))
+		self.readExtraordinaryItems(tree.find("Items/ExtraordinaryItems"))
 
 
 	def readWeapons(self, root):
@@ -255,6 +268,21 @@ class ReadXmlCharacter(QObject, ReadXml):
 				self.__character.setMagicalTool(toolName)
 
 
+	def readExtraordinaryItems(self, root):
+		"""
+		Liest die magischen Gegenstände des Charakters aus.
+		"""
+
+		if root is not None:
+			for typeElement in list(root):
+				if typeElement.tag == "Type":
+					typeName = typeElement.attrib["name"]
+					for element in list(typeElement):
+						if element.tag == "item":
+							extraordinaryItemName = element.text
+							self.__character.addExtraordinaryItem(typeName, extraordinaryItemName)
+
+
 	def readSpeciesSpecials(self, tree):
 		"""
 		Lese die Spezialeigenschaften der Spezies aus.
@@ -264,6 +292,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 		if elem is not None:
 			self.__character.nimbus = elem.text
 
+		elem = tree.find("paradoxMarks")
+		if elem is not None:
+			self.__character.paradoxMarks = elem.text
+
 		elem = tree.find("vinculi")
 		if elem is not None:
 			i = 0
@@ -272,6 +304,27 @@ class ReadXmlCharacter(QObject, ReadXml):
 					self.__character.vinculi[i].name = element.text
 					self.__character.vinculi[i].value = int(element.attrib["value"])
 					i += 1
+
+		elem = tree.find("companion")
+		if elem is not None:
+			self.__character.companionName = elem.attrib["name"]
+			self.__character.companionPower = int(elem.attrib["power"])
+			self.__character.companionFinesse = int(elem.attrib["finesse"])
+			self.__character.companionResistance = int(elem.attrib["resistance"])
+			self.__character.companionSize = int(elem.attrib["size"])
+			self.__character.companionSpeedFactor = int(elem.attrib["speedFactor"])
+			companionNumina = []
+			i = 0
+			for element in list(elem):
+				if element.tag == "numen":
+					companionNumina.append(element.text)
+				if element.tag == "influence" and i < Config.companionInfluencesCount:
+					self.__character.companionInfluences[i].name = element.text
+					self.__character.companionInfluences[i].value = int(element.attrib["value"])
+					i += 1
+				if element.tag == "ban":
+					self.__character.companionBan = element.text
+			self.__character.companionNumina = companionNumina
 
 
 	def readPicture(self, tree):

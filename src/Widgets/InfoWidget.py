@@ -24,15 +24,15 @@ from __future__ import division, print_function
 
 import os
 
-from PySide.QtCore import Qt, QSize, QFile, QDate, Signal
-from PySide.QtGui import QWidget, QIcon, QLabel, QPixmap, QFileDialog, QMessageBox
+from PySide.QtCore import Qt, QDate, Signal
+from PySide.QtGui import QWidget, QIcon, QPixmap, QFileDialog, QMessageBox
 
 from src.Config import Config
 from src.Tools import PathTools
-from src.Calc.Calc import Calc
+#from src.Calc.Calc import Calc
 from src.Datatypes.Identity import Identity
 from src.Widgets.Dialogs.NameDialog import NameDialog
-from src.Debug import Debug
+#from src.Debug import Debug
 
 from ui.ui_InfoWidget import Ui_InfoWidget
 
@@ -62,7 +62,7 @@ class InfoWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
-		self.ui.comboBox_era.addItems( Config.eras )
+		self.ui.comboBox_era.addItems( Config.eras.keys() )
 
 		self.ui.dateEdit_dateBirth.setMinimumDate(QDate(100, 1, 1))
 		self.ui.dateEdit_dateGame.setMinimumDate(QDate(100, 1, 1))
@@ -73,11 +73,13 @@ class InfoWidget(QWidget):
 
 		## Speichern der vom Benutzer veränderten Werte
 		self.ui.pushButton_name.clicked.connect(self.openNameDialog)
-		self.ui.comboBox_era.currentIndexChanged[str].connect(self.__character.setEra)
-		self.ui.dateEdit_dateBirth.dateEdited.connect(self.setCharacterDateBirth)
-		#self.ui.dateEdit_dateBirth.dateChanged.connect(self.__character.setDateBirth)
-		self.ui.dateEdit_dateGame.dateEdited.connect(self.setCharacterDateGame)
-		#self.ui.dateEdit_dateGame.dateChanged.connect(self.__character.setDateGame)
+		self.ui.comboBox_era.currentIndexChanged[str].connect(self.updateDateGame_era)
+		#self.ui.dateEdit_dateBirth.dateEdited.connect(self.setCharacterDateBirth)
+		#self.ui.dateEdit_dateGame.dateEdited.connect(self.setCharacterDateGame)
+		#self.ui.dateEdit_dateGame.dateEdited.connect(self.setCharacterEra)
+		self.ui.dateEdit_dateBirth.dateChanged.connect(self.setCharacterDateBirth)
+		self.ui.dateEdit_dateGame.dateChanged.connect(self.setCharacterDateGame)
+		self.ui.dateEdit_dateGame.dateChanged.connect(self.setCharacterEra)
 		self.ui.comboBox_virtue.currentIndexChanged[str].connect(self.__character.setVirtue)
 		self.ui.comboBox_vice.currentIndexChanged[str].connect(self.__character.setVice)
 		self.ui.doubleSpinBox_height.valueChanged[float].connect(self.setCharacterHeight)
@@ -88,7 +90,7 @@ class InfoWidget(QWidget):
 		self.ui.pushButton_picture.clicked.connect(self.openImage)
 		self.ui.pushButton_pictureClear.clicked.connect(self.clearImage)
 		#self.ui.textEdit_description.textChanged.connect(self.saveDescription)	## Kann ich nicht nutzen, da sonst der Curser bei jeder änderung an den Angang springt.
-		self.ui.textEdit_description.focusLost.connect(self.changeDescription)
+		self.ui.textEdit_description.textChanged.connect(self.changeDescription)
 
 		## Aktualisieren der Darstellung der im Charakter veränderten Werte.
 		self.__character.identity.identityChanged.connect(self.updateButtonText)
@@ -118,9 +120,14 @@ class InfoWidget(QWidget):
 		self.__character.ageChanged.connect(self.updateViceTitle)
 		self.__character.ageChanged.connect(self.repopulateVices)
 
+		## Benachrichtigung bei Änderung der Alterskategorie.
+		self.__character.ageChanged[str].connect(self.notifyOfAge)
+
 		self.__character.ageChanged.connect(self.setHeightMinMax)
 		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(self.updateHeight)
+		self.__character.traits["Merit"]["Physical"]["GiantKid"].valueChanged.connect(self.updateHeight)
 		self.__character.traits["Flaw"]["Physical"]["Dwarf"].valueChanged.connect(self.updateHeight)
+		self.__character.traits["Merit"]["Physical"]["Tiny"].valueChanged.connect(self.updateHeight)
 
 
 
@@ -138,7 +145,13 @@ class InfoWidget(QWidget):
 		Verändert den Beschreibungstext im Speicher.
 		"""
 
+		cursor = self.ui.textEdit_description.textCursor()
+		cursorPosition = cursor.position()
+
 		self.__character.description = self.ui.textEdit_description.toPlainText()
+
+		cursor.setPosition(cursorPosition)
+		self.ui.textEdit_description.setTextCursor(cursor)
 
 
 	def updateButtonText( self ):
@@ -151,7 +164,6 @@ class InfoWidget(QWidget):
 		if not nameStr:
 			nameStr = self.tr("Name")
 		self.ui.pushButton_name.setText( nameStr )
-		genderIcon = QIcon()
 		for item in Config.genders:
 			if self.__character.identity.gender == item[0]:
 				self.ui.pushButton_name.setIcon(QIcon(item[1]))
@@ -300,18 +312,93 @@ class InfoWidget(QWidget):
 			self.ui.pushButton_pictureClear.setEnabled(True)
 
 
+	def updateDateGame_era(self, era):
+		"""
+		Der Ära des Spiels verändert das maximale Datum des Spiels.
+		"""
+
+		if Config.autoSelectEra:
+			eraBeginDates = Config.eras.values()
+			eraBeginDates.sort()
+
+			beginYear = Config.eras[era]
+			endYear = QDate.currentDate()
+			endYear = endYear.year()
+			for year in eraBeginDates:
+				if year > beginYear:
+					endYear = year - 1
+					break
+
+			dateEraBegins = QDate(beginYear, 1, 1)
+			dateEraEnds = QDate(endYear, 12, 31)
+
+			eraModified = True
+			newDate = None
+			if self.ui.dateEdit_dateGame.date() < dateEraBegins:
+				newDate = dateEraBegins
+			elif self.ui.dateEdit_dateGame.date() > dateEraEnds:
+				newDate = dateEraEnds
+			else:
+				eraModified = False
+
+			if eraModified:
+				self.ui.dateEdit_dateGame.setDate(newDate)
+				text = self.tr("Date of game is set to {day}. {month}. {year} to be in the {era} era".format(day=newDate.day(), month=newDate.month(), year=newDate.year(), era=era))
+				self.notificationSent.emit(text)
+		else:
+			self.__character.era = era
+
+
+	def setCharacterEra(self, date):
+		"""
+		Der Ära des Spiels läßt sich entweder direkt einstellen, was die Zeit ändert oder über die Zeit.
+		"""
+
+		if Config.autoSelectEra:
+			eraBeginDates = Config.eras.values()
+			eraBeginDates.sort()
+
+			#Debug.debug(eraBeginDates[::-1])
+
+			beginYear = None
+			for year in eraBeginDates[::-1]:
+				if year <= date.year():
+					beginYear = year
+					break
+
+			actualEra = None
+			for era in Config.eras.items():
+				if era[1] == beginYear:
+					actualEra = era[0]
+
+			if self.__character.era != actualEra:
+				self.__character.era = actualEra
+				text = self.tr("Era changed to {era}".format(era=era))
+				self.notificationSent.emit(text)
+
+
 	def setCharacterDateBirth(self, date):
 		"""
 		Speichert das Geburtsdatum des Charakters im Speicher.
 
 		Allerdings muß zuvor möglicherweise um Erlaubnis gefragt werden.
+
+		\todo Momentan wird keine Frage gestellt, da das nervt.
 		"""
 
-		years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
-		if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
-			self.ui.dateEdit_dateBirth.setDate(self.__character.dateBirth)
-		else:
-			self.__character.setDateBirth(date)
+		#years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
+		#if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
+			#self.ui.dateEdit_dateBirth.setDate(self.__character.dateBirth)
+		#else:
+			#self.__character.setDateBirth(date)
+		self.__character.setDateBirth(date)
+
+
+	def notifyOfAge(self, age):
+		text = self.tr("Character is an adult now (following the normal rules).")
+		if age == "Kid":
+			text = self.tr("Character is a kid now (following the rules for Innocents).")
+		self.notificationSent.emit(text)
 
 
 	def setCharacterDateGame(self, date):
@@ -319,13 +406,20 @@ class InfoWidget(QWidget):
 		Speichert das Geburtsdatum des Charakters im Speicher.
 
 		Allerdings muß zuvor möglicherweise um Erlaubnis gefragt werden.
+
+		\todo Momentan wird keine Frage gestellt, da das nervt.
 		"""
 
-		years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
-		if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
-			self.ui.dateEdit_dateGame.setDate(self.__character.dateGame)
-		else:
-			self.__character.setDateGame(date)
+		#years = Calc.years(self.ui.dateEdit_dateBirth.date(), self.ui.dateEdit_dateGame.date())
+		#if (self.__character.age < Config.ageAdult <= years or years < Config.ageAdult <= self.__character.age) and not self.warnAgeChange(years):
+			#self.ui.dateEdit_dateGame.setDate(self.__character.dateGame)
+		#else:
+			#self.__character.setDateGame(date)
+		self.__character.setDateGame(date)
+		text = self.tr("Character is an adult now (following the normal rules).")
+		if self.__character.age < Config.ageAdult:
+			text = self.tr("Character is a kid now (following the rules for Innocents).")
+		self.notificationSent.emit(text)
 
 
 	def setMaxBirthday(self):
@@ -340,26 +434,26 @@ class InfoWidget(QWidget):
 			self.__character.dateBirth = maxDateBirth
 
 
-	def warnAgeChange(self, newAge):
-		"""
-		Wird der Charakter vom Erwachsenen zum Kind (oder umgekehrt), sollte eine Bestätigung eingefordert werden.
+	#def warnAgeChange(self, newAge):
+		#"""
+		#Wird der Charakter vom Erwachsenen zum Kind (oder umgekehrt), sollte eine Bestätigung eingefordert werden.
 
-		Wird auf "No" geklickt, wird das Geburtsdatum wieder so verändert, daß das alte Alter beibehalten bleibt.
-		"""
+		#Wird auf "No" geklickt, wird das Geburtsdatum wieder so verändert, daß das alte Alter beibehalten bleibt.
+		#"""
 
-		text = self.tr("Your character is going to be an adult.")
-		if newAge < Config.ageAdult:
-			text = self.tr("Your character is going to be a child.")
-		ret = QMessageBox.warning(
-			self,
-			self.tr( "Age category changed" ),
-			self.tr( "{} Do you want that to happen?".format(text) ),
-			QMessageBox.Yes | QMessageBox.No
-		)
-		if ret == QMessageBox.StandardButton.No:
-			return False
-		else:
-			return True
+		#text = self.tr("Your character is going to be an adult.")
+		#if newAge < Config.ageAdult:
+			#text = self.tr("Your character is going to be a child.")
+		#ret = QMessageBox.warning(
+			#self,
+			#self.tr( "Age category changed" ),
+			#self.tr( "{} Do you want that to happen?".format(text) ),
+			#QMessageBox.Yes | QMessageBox.No
+		#)
+		#if ret == QMessageBox.StandardButton.No:
+			#return False
+		#else:
+			#return True
 
 
 	def setHeightMinMax(self, age):
@@ -376,28 +470,38 @@ class InfoWidget(QWidget):
 
 		ageText = Config.getAge(self.__character.age)
 
+		giantTrait = self.__character.traits["Merit"]["Physical"]["Giant"]
+		smallTrait = self.__character.traits["Flaw"]["Physical"]["Dwarf"]
+		smallAddNotification = self.tr("Added the Dwarf Flaw.")
+		smallRemoveNotification = self.tr("Removed the Dwarf Flaw.")
+		if self.__character.age < Config.ageAdult:
+			giantTrait = self.__character.traits["Merit"]["Physical"]["GiantKid"]
+			smallTrait = self.__character.traits["Merit"]["Physical"]["Tiny"]
+			smallAddNotification = self.tr("Added the Tiny Merit.")
+			smallRemoveNotification = self.tr("Removed the Tiny Merit.")
+
 		if height >= Config.heightGiant[ageText]:
-			if self.__character.traits["Merit"]["Physical"]["Giant"].value > 0:
+			if giantTrait.value > 0:
 				pass
 			elif self.warnHeightChange(height):
-				self.__character.traits["Merit"]["Physical"]["Giant"].value = 4
+				giantTrait.value = 5
 				self.notificationSent.emit(self.tr("Added the Giant Merit."))
 			else:
 				self.ui.doubleSpinBox_height.setValue(self.__character.height)
 		elif height <= Config.heightDwarf[ageText]:
-			if self.__character.traits["Flaw"]["Physical"]["Dwarf"].value > 0:
+			if smallTrait.value > 0:
 				pass
 			elif self.warnHeightChange(height):
-				self.__character.traits["Flaw"]["Physical"]["Dwarf"].value = 2
-				self.notificationSent.emit(self.tr("Added the Dwarf Flaw."))
+				smallTrait.value = 2
+				self.notificationSent.emit(smallAddNotification)
 			else:
 				self.ui.doubleSpinBox_height.setValue(self.__character.height)
-		elif self.__character.traits["Merit"]["Physical"]["Giant"].value:
-			self.__character.traits["Merit"]["Physical"]["Giant"].value = 0
+		elif giantTrait.value:
+			giantTrait.value = 0
 			self.notificationSent.emit(self.tr("Removed the Giant Merit."))
-		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value:
-			self.__character.traits["Flaw"]["Physical"]["Dwarf"].value = 0
-			self.notificationSent.emit(self.tr("Removed the Dwarf Flaw."))
+		elif smallTrait.value:
+			smallTrait.value = 0
+			self.notificationSent.emit(smallRemoveNotification)
 
 		self.__character.height = height
 
@@ -407,11 +511,15 @@ class InfoWidget(QWidget):
 		Ändert sich die Körpergröße zu sehr, sollautomatisch der Merit Giant bzw. der Flaw Dwarf vorgeschlagen werden.
 		"""
 
+		smallTrait = "Dwarf Flaw"
+		if self.__character.age < Config.ageAdult:
+			smallTrait = "Tiny Merit"
+
 		title = self.tr("Too big")
 		text = self.tr("To be this big, the character needs to purchase the Giant Merit.")
 		if newHeight <= Config.heightDwarf[Config.getAge(self.__character.age)]:
 			title = self.tr("Too small")
-			text = self.tr("To be this small, the character needs to get the Dwarf Flaw.")
+			text = self.tr("To be this small, the character needs to get the {}.".format(smallTrait))
 		ret = QMessageBox.warning(
 			self,
 			title,
@@ -429,18 +537,24 @@ class InfoWidget(QWidget):
 		Werden der Giant-Merit oder der Dwarf-Flaw verändert, muß die Körpergröße angepaßt werden.
 		"""
 
+		giantTrait = self.__character.traits["Merit"]["Physical"]["Giant"]
+		smallTrait = self.__character.traits["Flaw"]["Physical"]["Dwarf"]
+		if self.__character.age < Config.ageAdult:
+			giantTrait = self.__character.traits["Merit"]["Physical"]["GiantKid"]
+			smallTrait = self.__character.traits["Merit"]["Physical"]["Tiny"]
+
 		ageText = Config.getAge(self.__character.age)
-		if self.__character.traits["Merit"]["Physical"]["Giant"].value > 0 and self.ui.doubleSpinBox_height.value() < Config.heightGiant[ageText]:
+		if giantTrait.value > 0 and self.ui.doubleSpinBox_height.value() < Config.heightGiant[ageText]:
 			self.ui.doubleSpinBox_height.setValue(Config.heightGiant[ageText])
 			self.notificationSent.emit(self.tr("Height changed to {} meters".format(Config.heightGiant[ageText])))
-		elif self.__character.traits["Merit"]["Physical"]["Giant"].value < 1 and self.ui.doubleSpinBox_height.value() >= Config.heightGiant[ageText]:
+		elif giantTrait.value < 1 and self.ui.doubleSpinBox_height.value() >= Config.heightGiant[ageText]:
 			newHeight = Config.heightGiant[ageText] - 0.01
 			self.ui.doubleSpinBox_height.setValue(newHeight)
 			self.notificationSent.emit(self.tr("Height changed to {} meters".format(newHeight)))
-		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value > 0 and self.ui.doubleSpinBox_height.value() > Config.heightDwarf[ageText]:
+		elif smallTrait.value > 0 and self.ui.doubleSpinBox_height.value() > Config.heightDwarf[ageText]:
 			self.ui.doubleSpinBox_height.setValue(Config.heightDwarf[ageText])
 			self.notificationSent.emit(self.tr("Height changed to {} meters".format(Config.heightDwarf[ageText])))
-		elif self.__character.traits["Flaw"]["Physical"]["Dwarf"].value < 1 and self.ui.doubleSpinBox_height.value() <= Config.heightDwarf[ageText]:
+		elif smallTrait.value < 1 and self.ui.doubleSpinBox_height.value() <= Config.heightDwarf[ageText]:
 			newHeight = Config.heightDwarf[ageText] + 0.01
 			self.ui.doubleSpinBox_height.setValue(newHeight)
 			self.notificationSent.emit(self.tr("Height changed to {} meters".format(newHeight)))

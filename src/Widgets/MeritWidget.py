@@ -30,13 +30,14 @@ from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
 from src.Config import Config
 #from src import Error
 from src.Tools import ListTools
-from src.Widgets.Components.TraitLine import CharaTrait
-from src.Debug import Debug
+from src.Widgets.TraitWidget import TraitWidget
+from src.Widgets.Components.CharaTrait import CharaTrait
+#from src.Debug import Debug
 
 
 
 
-class MeritWidget(QWidget):
+class MeritWidget(TraitWidget):
 	"""
 	@brief Das Widget, in welchem sämtliche Merits angeordnet sind.
 
@@ -47,10 +48,7 @@ class MeritWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
-
-		self.__storage = template
-		self.__character = character
+		TraitWidget.__init__(self, template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
@@ -66,7 +64,7 @@ class MeritWidget(QWidget):
 		self.__typ = "Merit"
 		categories = []
 		categories.extend(Config.meritCategories)
-		categories.extend(self.__storage.categories(self.__typ))
+		categories.extend(self._storage.categories(self.__typ))
 		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
 		categories = ListTools.uniqifyOrdered(categories)
 
@@ -87,7 +85,7 @@ class MeritWidget(QWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self.__character.traits[self.__typ][item].items()
+			__list = self._character.traits[self.__typ][item].items()
 			__list.sort()
 			for merit in __list:
 				#Debug.debug(merit)
@@ -98,13 +96,16 @@ class MeritWidget(QWidget):
 					traitWidget.setDescriptionHidden(True)
 
 				# Bei Merits sind nur bestimmte Werte erlaubt.
-				#Debug.debug(self.__storage.traits[self.__typ][item][merit[0]])
-				traitWidget.setPossibleValues(self.__storage.traits[self.__typ][item][merit[1].identifier]["values"])
+				#Debug.debug(self._storage.traits[self.__typ][item][merit[0]])
+				traitWidget.setPossibleValues(self._storage.traits[self.__typ][item][merit[1].identifier]["values"])
+
+				# Es werden nur Eigenschaften der richtigen Alters- und Zeit-Kategorie angezeigt.
+				self.hideReasonChanged.connect(traitWidget.hideOrShowTrait)
 
 				layoutMeritCategory.addWidget( traitWidget )
 
 				merit[1].valueChanged.connect(self.countMerits)
-				self.__character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
+				#self._character.speciesChanged.connect(traitWidget.hideOrShowTrait_species)
 
 
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
@@ -112,7 +113,7 @@ class MeritWidget(QWidget):
 
 		self.setMinimumWidth(Config.traitLineWidthMin)
 
-		self.__character.speciesChanged.connect(self.countMerits)
+		self._character.speciesChanged.connect(self.countMerits)
 
 	#// 	dialog = new SelectMeritsDialog( this );
 	#//
@@ -137,10 +138,10 @@ class MeritWidget(QWidget):
 		Versteckte Eigenschaften. also solche, die der Spezies nicht zur Verfügung stehen, können einen Wert > 0 haben, sollten aber nicht mitgezählt werden.
 		"""
 
-		for item in self.__character.traits[self.__typ]:
+		for item in self._character.traits[self.__typ]:
 			numberInCategory = 0
-			for subitem in self.__character.traits[self.__typ][item].values():
-				if subitem.value > 0 and (not subitem.species or subitem.species == self.__character.species):
+			for subitem in self._character.traits[self.__typ][item].values():
+				if subitem.value > 0 and (not subitem.species or subitem.species == self._character.species):
 					numberInCategory += 1
 
 			# ToolBox-Seite des entsprechenden Kategorie mit der Anzahl gewählter Merits beschriften.

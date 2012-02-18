@@ -22,11 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-import sys
+#import sys
 import os
 
-from PySide.QtCore import Qt, QCoreApplication, QFile, QSize, QPoint, QByteArray, QDir, Signal
-from PySide.QtGui import QMainWindow, QApplication, QIcon, QPixmap, QMessageBox, QFileDialog, QDialog, QPrinter, QFont, QFontDatabase, QColor, QPrintDialog
+from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir
+from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
+from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.GlobalState import GlobalState
 from src.Tools import PathTools
@@ -42,7 +43,8 @@ from Calc.CalcAdvantages import CalcAdvantages
 from Calc.Creation import Creation
 from Calc.ConnectPrerequisites import ConnectPrerequisites
 from Widgets.InfoWidget import InfoWidget
-from Widgets.TraitWidget import AttributeWidget, SkillWidget
+from Widgets.AttributeWidget import AttributeWidget
+from Widgets.SkillWidget import SkillWidget
 from Widgets.TemplateWidget import TemplateWidget
 from Widgets.PowerWidget import PowerWidget
 from Widgets.SubPowerWidget import SubPowerWidget
@@ -56,9 +58,11 @@ from Widgets.SpecialsWidget import SpecialsWidget
 from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
 from Draw.DrawSheet import DrawSheet
-from Debug import Debug
+#from Debug import Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
+
+from resources import rc_resource
 
 
 
@@ -71,23 +75,15 @@ class MainWindow(QMainWindow):
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 
-	\todo Speicherdateien komprimieren.
-
 	\todo Charaktererschaffung in Schritten und Erfahrungspunkte einbauen.
 
 	\todo Kosten von Gegenständen berücksichtigen.
 
 	\todo Benutzer sollen ihre eigenen Merits etc. eintragen können. Dafür sollte ich ihnen eine eigene template-Datei bereitstellen, in welche dann all diese Eigenschaften hineingeschrieben werden. Diese Datei wird gleichberechtigt ausgelesen wie die anderen, befindet sich jedoch nicht in der Ressource, sondern liegt als externe Datei vor.
 
-	\todo Bonus-Attributspuntke bei Vampiren und Magier bzw. Bonus-Spezialisierung bei Werwölfen und Wechselbälgern beachten.
-
 	\todo Damit beim Laden einer Datei eine Eigenschaft, welche eigentlich nicht zur Verfügung steht, keine Punkte hat, sollte nach dem Laden nochmal eine Kontrolle durchgeführt werden.
 
 	\todo Erschaffungspunkte durch einen Wizard ersetzen.
-
-	\todo Merits sollten sich der Alterskategorie anpassen.
-
-	\todo Items sollten sich der Alterskategorie anpassen.
 
 	\todo "Leere" Felder auf dem Charakterbogen mit Leerzeilen zum händischen Ausfüllen versehen.
 
@@ -95,7 +91,7 @@ class MainWindow(QMainWindow):
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
 
-	\todo Körpergröße läßt beim Laden möglicherweise  dazu auffordern, daß man den Giant-Merit bzw. Dwarf Flaw benötige, obwohl selbiger Merit/Flaw im Charakter bereits gespeichert wurde.
+	\todo Auspice-Blessing hinzufügen.
 	"""
 
 
@@ -104,6 +100,7 @@ class MainWindow(QMainWindow):
 
 
 	def __init__(self, fileName=None, parent=None):
+		#dbgStart = Debug.timehook()
 		QMainWindow.__init__(self, parent)
 
 		self.ui = Ui_MainWindow()
@@ -142,11 +139,8 @@ class MainWindow(QMainWindow):
 
 		self.populateUi()
 		self.activate()
-		self.reset()
 
 		self.ui.selectWidget_select.currentRowChanged.connect(self.showCreationPoints)
-
-	#connect( readCharacter, SIGNAL( oldVersion( QString, QString ) ), self, SLOT( raiseExceptionMessage( QString, QString ) ) );
 
 		self.ui.actionSettings.triggered.connect(self.showSettingsDialog)
 		self.ui.actionNew.triggered.connect(self.newCharacter)
@@ -156,9 +150,13 @@ class MainWindow(QMainWindow):
 		self.ui.actionPrint.triggered.connect(self.printCharacter)
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
 
+		self.reset()
+		#Debug.timesince(dbgStart)
+
 		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
 		if fileName:
 			self.openCharacter(fileName)
+		#Debug.timesince(dbgStart)
 
 
 
@@ -280,18 +278,21 @@ class MainWindow(QMainWindow):
 		calc = CalcAdvantages( self.__character, self )
 		#Debug.debug(self.__character.traits[typ]["Mental"]["Resolve"].name)
 		self.__character.ageChanged.connect(calc.calcSize)
-		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(calc.calcSize)
-		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcInitiative)
-		self.__character.traits["Attribute"]["Social"]["Composure"].valueChanged.connect(calc.calcInitiative)
-		self.__character.traits["Merit"]["Physical"]["Fast Reflexes"].valueChanged.connect(calc.calcInitiative)
-		self.__character.traits["Attribute"]["Physical"]["Strength"].valueChanged.connect(calc.calcSpeed)
-		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcSpeed)
-		self.__character.traits["Merit"]["Physical"]["Fleet of Foot"].valueChanged.connect(calc.calcSpeed)
-		self.__character.traits["Attribute"]["Mental"]["Wits"].valueChanged.connect(calc.calcDefense)
-		self.__character.traits["Attribute"]["Physical"]["Dexterity"].valueChanged.connect(calc.calcDefense)
-		self.__character.traits["Attribute"]["Physical"]["Stamina"].valueChanged.connect(calc.calcHealth)
-		self.__character.traits["Attribute"]["Mental"]["Resolve"].valueChanged.connect(calc.calcWillpower)
-		self.__character.traits["Attribute"]["Social"]["Composure"].valueChanged.connect(calc.calcWillpower)
+		self.__character.traits["Merit"]["Physical"]["Giant"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.traits["Merit"]["Physical"]["GiantKid"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.traits["Merit"]["Physical"]["Tiny"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.traits["Flaw"]["Physical"]["Dwarf"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].totalvalueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Attribute"]["Social"]["Composure"].totalvalueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Merit"]["Physical"]["Fast Reflexes"].totalvalueChanged.connect(calc.calcInitiative)
+		self.__character.traits["Attribute"]["Physical"]["Strength"].totalvalueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].totalvalueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Merit"]["Physical"]["Fleet of Foot"].totalvalueChanged.connect(calc.calcSpeed)
+		self.__character.traits["Attribute"]["Mental"]["Wits"].totalvalueChanged.connect(calc.calcDefense)
+		self.__character.traits["Attribute"]["Physical"]["Dexterity"].totalvalueChanged.connect(calc.calcDefense)
+		self.__character.traits["Attribute"]["Physical"]["Stamina"].totalvalueChanged.connect(calc.calcHealth)
+		self.__character.traits["Attribute"]["Mental"]["Resolve"].totalvalueChanged.connect(calc.calcWillpower)
+		self.__character.traits["Attribute"]["Social"]["Composure"].totalvalueChanged.connect(calc.calcWillpower)
 
 		calc.sizeChanged.connect(self.__advantages.setSize)
 		calc.initiativeChanged.connect(self.__advantages.setInitiative)
@@ -309,7 +310,6 @@ class MainWindow(QMainWindow):
 					trait.traitChanged.connect(self.__creation.calcPoints)
 
 		# Schreibe die übrigen Erschaffungspunkte
-		#connect( creation, SIGNAL( pointsChanged() ), self, SLOT( showCreationPoints() ) );
 		self.__creation.pointsChanged.connect(self.showCreationPoints)
 		self.__creation.pointsChangedZero.connect(self.warnCreationPointsDepleted)
 		self.__creation.pointsChangedNegative.connect(self.warnCreationPointsNegative)
@@ -350,16 +350,8 @@ class MainWindow(QMainWindow):
 		Für jede Spezies wird das passende Hintergrundbild angezeigt.
 		"""
 
-		if ( species == "Changeling" ):
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Changeling-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
-		elif ( species == "Mage" ):
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Mage-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
-		elif ( species == "Vampire" ):
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Vampire-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
-		elif ( species == "Werewolf" ):
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Werewolf-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
-		else:
-			self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget { background-image: url(:/background/images/Skull-Human-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }" )
+		self.ui.widget_traits.setStyleSheet( "BackgroundImageWidget {{ background-image: url(:/background/images/species/{}/Skull-gray.png); background-repeat: no-repeat; background-position: center; background-attachment: fixed; }}".format(species) )
+
 
 
 	def setTabButtonState( self, index ):
@@ -536,7 +528,7 @@ class MainWindow(QMainWindow):
 					self,
 					self.tr( "Select Character File" ),
 					savePath,
-					self.tr( "WoD Characters (*.chr)" )
+					self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) )
 				)
 				filePath = fileData[0]
 
@@ -571,7 +563,7 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.chr".format(savePath), self.tr( "WoD Characters (*.chr)" ) )
+		filePath = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.{}".format(savePath, Config.fileSuffixSave), self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) ) )
 
 		#Debug.debug(filePath)
 
@@ -620,8 +612,6 @@ class MainWindow(QMainWindow):
 
 			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
-			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
-
 			try:
 				drawSheet.print()
 			except ErrSpeciesNotExisting as e:
@@ -644,8 +634,6 @@ class MainWindow(QMainWindow):
 		if ( printDialog.exec_() == QDialog.Accepted ):
 			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 
-			##connect( &drawSheet, SIGNAL( enforcedTraitLimits( cv_AbstractTrait.Type ) ), self, SLOT( messageEnforcedTraitLimits( cv_AbstractTrait.Type ) ) );
-
 			try:
 				drawSheet.print()
 			except ErrSpeciesNotExisting as e:
@@ -665,10 +653,9 @@ class MainWindow(QMainWindow):
 		settings.setValue( "state", self.saveState() )
 		settings.endGroup()
 
-		settings.beginGroup( "Config" );
-		#// 	settings.setValue( "windowFont", Config.windowFont.family() );
-		settings.setValue( "calendarForAgeCalculation", Config.calendarForAgeCalculation )
-		settings.endGroup();
+		settings.beginGroup( "Config" )
+		settings.setValue( "autoSelectEra", Config.autoSelectEra )
+		settings.endGroup()
 
 
 	def readSettings(self):
@@ -679,17 +666,15 @@ class MainWindow(QMainWindow):
 		appPath = PathTools.getPath()
 		settings = Settings( "{}/{}".format(appPath, Config.configFile))
 
-		settings.beginGroup( "MainWindow" );
+		settings.beginGroup( "MainWindow" )
 		self.resize( settings.value( "size", QSize( 900, 600 ) ) )
 		self.move( settings.value( "pos", QPoint( 200, 200 ) ) )
 		self.restoreState( QByteArray(settings.value( "state" )) )
 		settings.endGroup()
 
-		settings.beginGroup( "Config" );
-		#// 	Config.windowFont = QFont( settings.value( "windowFont" ).toString() );
-		## bool(bla) funktioniert nicht, also sorge ich dafür, daß alles außer false (nicht case-sensitive) als Wahr gilt.
-		Config.calendarForAgeCalculation = unicode(settings.value( "calendarForAgeCalculation" )).lower() != "false"
-		settings.endGroup();
+		settings.beginGroup( "Config" )
+		Config.autoSelectEra = unicode(settings.value( "autoSelectEra" )).lower() != "false"
+		settings.endGroup()
 
 		#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.
 		#// 	setFont(Config.windowFont);
@@ -729,15 +714,15 @@ class MainWindow(QMainWindow):
 		self.statusBar().showMessage(message, timeout)
 
 
-	def showExceptionMessage( self, message, critical=True ):
+	def showExceptionMessage( self, message, description, critical=True ):
 		"""
 		Ausgabe einer Fehlernachricht.
 		"""
 
 		if critical:
-			MessageBox.critical( self, self.tr( "Critical Error occured!" ), message )
+			MessageBox.critical( self, message, description )
 		else:
-			MessageBox.warning( self, self.tr( "Error occured!" ), message )
+			MessageBox.warning( self, message, description )
 
 
 #void MainWindow.messageEnforcedTraitLimits( cv_AbstractTrait.Type type ) {

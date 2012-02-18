@@ -26,7 +26,7 @@ from PySide.QtCore import QObject, Signal
 
 #from src.Config import Config
 #from ReadXml import ReadXml
-from src.Debug import Debug
+#from src.Debug import Debug
 #from src.Error import ErrTraitType
 
 
@@ -40,6 +40,7 @@ class AbstractTrait(QObject):
 
 	nameChanged = Signal(str)
 	valueChanged = Signal(int)
+	totalvalueChanged = Signal(int)
 	traitChanged = Signal(object)
 
 
@@ -55,6 +56,8 @@ class AbstractTrait(QObject):
 		self.__identifier = name
 		self.__name = name
 		self.__value = value
+
+		self.valueChanged.connect(self.totalvalueChanged)
 
 
 	@property
@@ -89,8 +92,10 @@ class AbstractTrait(QObject):
 		if self.__value != value:
 			self.__value = value
 			#Debug.debug("Ändere Eigenschaft {} zu {}".format(self.name, self.value))
-			self.valueChanged.emit(value)
+			self.valueChanged.emit(self.value)
 			self.traitChanged.emit(self)
 
 	value = property(__getValue, setValue)
+
+	totalvalue = property(__getValue)
 
