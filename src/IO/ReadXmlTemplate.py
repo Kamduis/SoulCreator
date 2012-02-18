@@ -455,7 +455,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for extraordinary in root:
-			if GlobalState.isFallback or not self.getElementAttribute(Equipment, "fallback") == "True":
+			if GlobalState.isFallback or not self.getElementAttribute(extraordinary, "fallback") == "True":
 				for element in list(extraordinary):
 					if element.tag == "Type":
 						itemTyp = element.attrib["name"]

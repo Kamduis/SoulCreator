@@ -27,7 +27,7 @@ import os
 
 from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir
 from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
-#from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
+from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.GlobalState import GlobalState
 from src.Tools import PathTools
