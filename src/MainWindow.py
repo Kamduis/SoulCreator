@@ -714,15 +714,15 @@ class MainWindow(QMainWindow):
 		self.statusBar().showMessage(message, timeout)
 
 
-	def showExceptionMessage( self, message, critical=True ):
+	def showExceptionMessage( self, message, description, critical=True ):
 		"""
 		Ausgabe einer Fehlernachricht.
 		"""
 
 		if critical:
-			MessageBox.critical( self, self.tr( "Critical Error occured!" ), message )
+			MessageBox.critical( self, message, description )
 		else:
-			MessageBox.warning( self, self.tr( "Error occured!" ), message )
+			MessageBox.warning( self, message, description )
 
 
 #void MainWindow.messageEnforcedTraitLimits( cv_AbstractTrait.Type type ) {

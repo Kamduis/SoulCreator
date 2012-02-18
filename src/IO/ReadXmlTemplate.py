@@ -26,7 +26,7 @@ import ast
 import tempfile
 import zlib
 
-from PySide.QtCore import QObject, QDir, QFile, QIODevice, Signal
+from PySide.QtCore import QObject, QDir, QFile, QIODevice
 
 from src.Config import Config
 from src.GlobalState import GlobalState
@@ -63,9 +63,6 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 	Diese Klasse dient dazu einen möglichst simplen Zugriff auf die Eigenschaften der WoD-Charaktere zu bieten. Dazu werden die Eigenschaften und all ihre Zusatzinformationen aus den xml-Dateien gelesen und in Listen gespeichert.
 	"""
-
-
-	exceptionRaised = Signal(str, bool)
 
 
 	def __init__(self, template, parent=None):
@@ -121,10 +118,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 			#Debug.debug(versionSource)
 
 			try:
-				self.checkXmlVersion( xmlRootElement.tag, versionSource )
+				self.checkXmlVersion( xmlRootElement.tag, versionSource, qrcFile.fileName() )
 			except ErrXmlOldVersion as e:
-				messageText = self.tr("While opening the template file {}, the following problem arised:\n{} {}\nIt appears, that the file will be importable, so the process will be continued but errors may occur.".format(qrcFile.fileName(), e.message, e.description))
-				self.exceptionRaised.emit(messageText, e.critical)
+				descriptionText = self.tr("{description} Loading of template will be continued but errors may occur.".format(description=e.description))
+				self.exceptionRaised.emit(e.message, descriptionText, e.critical)
 
 			result = self.readSpecies(xmlContent)
 			self.readTemplate(xmlContent, result[0], result[1])
