@@ -1,0 +1,29 @@
+/* Grundeinstellung */
+* {
+	font-family: 'Linux Libertine O';
+	font-size: 45px;
+}
+
+/* Schriften */
+/*h1,h2,h3,h4 {
+	font-family: 'DejaVu Sans'; 
+}*/
+
+p {
+	margin-top: 5px;
+	text-align: justify; 
+}
+
+/* Listen */
+dl {
+	padding: 0.5em;
+}
+dt {
+	font-weight: bold;
+}
+
+#FirstTongue {
+	font-style: italic;
+}
+
+
