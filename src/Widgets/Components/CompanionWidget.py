@@ -25,7 +25,7 @@ from __future__ import division, print_function
 #import traceback
 
 from PySide.QtCore import Qt
-from PySide.QtGui import QGroupBox, QHBoxLayout, QLineEdit
+from PySide.QtGui import QWidget, QHBoxLayout, QLineEdit
 
 #from src.Config import Config
 #from src import Error
@@ -38,7 +38,7 @@ from ui.ui_CompanionWidget import Ui_CompanionWidget
 
 
 
-class CompanionWidget(QGroupBox):
+class CompanionWidget(QWidget):
 	"""
 	@brief Ein Widget mit allen nötigen Feldern für einen Companion.
 
@@ -54,7 +54,7 @@ class CompanionWidget(QGroupBox):
 
 
 	def __init__(self, template, character, parent=None):
-		QGroupBox.__init__(self, parent)
+		QWidget.__init__(self, parent)
 
 		self.ui = Ui_CompanionWidget()
 		self.ui.setupUi(self)
