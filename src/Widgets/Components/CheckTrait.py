@@ -123,14 +123,34 @@ class CheckTrait(QWidget):
 			self.__lineEdit.show()
 
 
-	def hideOrShowTrait(self, species):
+	def hideOrShowTrait(self, species=None, age=None, era=None, breed=None, faction=None):
 		"""
-		Versteckt oder zeigt diese Eigenschaft, je nach gewählter Spezies.
+		Versteckt oder zeigt diese Eigenschaft.
+
+		\note age und era gibt es zwar nicht bei SubPowerTrait, aber damit diese Funktion mit StorageCharacter.traitVisibleReasonChanged kompatible bleibt, werden sie als Argument übergeben.
 		"""
 
-		if (not self.__trait.species or self.__trait.species == species):
-			self.setHidden(False)
-			#Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
-		else:
-			self.setHidden(True)
+		visible = True
+		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
+		if (
+			(species and self.__trait.species and self.__trait.species != species) or
+			#(age and self.__trait.age and self.__trait.age != age) or
+			#(era and self.__trait.era and era not in self.__trait.era) or
+			((breed or faction) and self.__trait.only and breed not in self.__trait.only and faction not in self.__trait.only)
+		):
+			visible = False
+
+		self.setVisible(visible)
+
+
+	#def hideOrShowTrait(self, species):
+		#"""
+		#Versteckt oder zeigt diese Eigenschaft, je nach gewählter Spezies.
+		#"""
+
+		#if (not self.__trait.species or self.__trait.species == species):
+			#self.setHidden(False)
+			##Debug.debug("Verstecke {}, da Alter {} bzw. Ära {}".format(self.name, age, era))
+		#else:
+			#self.setHidden(True)
 

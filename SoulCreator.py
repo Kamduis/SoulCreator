@@ -35,6 +35,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 import sys
 import argparse
+import signal
 
 from PySide.QtGui import QApplication
 
@@ -55,6 +56,9 @@ if __name__ == "__main__":
 
 	\todo Das Argument --onepage sollte auch genau das versprochene leisten.
 	"""
+
+	## Das Programm kann mit CTRL-C beendet werden.
+	signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 	parser = argparse.ArgumentParser(description=Config.programDescription)
 

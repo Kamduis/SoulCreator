@@ -103,14 +103,19 @@ class CharaTrait(TraitLine):
 		self.specialtiesClicked.emit(sw, self.__trait)
 
 
-	def hideOrShowTrait(self, species, age=None, era=None):
+	def hideOrShowTrait(self, species=None, age=None, era=None, breed=None, faction=None):
 		"""
 		Versteckt oder zeigt diese Eigenschaft.
 		"""
 
 		visible = True
 		# Es können nur Eigenschaften versteckt werden, die einen age- bzw. era-Eintrag besitzen.
-		if (age and self.__trait.age and self.__trait.age != age) or (era and self.__trait.era and era not in self.__trait.era) or (self.__trait.species and self.__trait.species != species):
+		if (
+			(species and self.__trait.species and self.__trait.species != species) or
+			(age and self.__trait.age and self.__trait.age != age) or
+			(era and self.__trait.era and era not in self.__trait.era) or
+			((breed or faction) and self.__trait.only and breed not in self.__trait.only and faction not in self.__trait.only)
+		):
 			visible = False
 
 		self.setVisible(visible)

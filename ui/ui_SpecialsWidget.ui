@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="page_human"/>
      <widget class="QWidget" name="page_changeling"/>
@@ -56,8 +56,17 @@
         </layout>
        </item>
        <item>
-        <widget class="QWidget" name="widget_companion" native="true">
-         <layout class="QVBoxLayout" name="layout_companion"/>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Companion</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QWidget" name="widget_companion" native="true">
+            <layout class="QVBoxLayout" name="layout_companion"/>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -96,8 +105,17 @@
      <widget class="QWidget" name="page_werewolf">
       <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>
-        <widget class="QWidget" name="widget_totem" native="true">
-         <layout class="QVBoxLayout" name="layout_totem"/>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Totem</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QWidget" name="widget_totem" native="true">
+            <layout class="QVBoxLayout" name="layout_totem"/>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>

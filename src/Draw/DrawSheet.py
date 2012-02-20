@@ -25,8 +25,8 @@ from __future__ import division, print_function
 import math
 import copy
 
-from PySide.QtCore import Qt, QObject, QRectF, QRect
-from PySide.QtGui import QColor, QPen, QPainter, QImage, QFont, QFontMetrics
+from PySide.QtCore import Qt, QObject, QRectF, QRect, QUrl
+from PySide.QtGui import QColor, QPen, QPainter, QImage, QFont, QFontMetrics, QTextDocument
 
 from src.GlobalState import GlobalState
 from src.Config import Config
@@ -35,8 +35,9 @@ from src.Random import Random
 from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Calc.CalcShapes import CalcShapes
+from src.Draw.CharacterSheetDocument import CharacterSheetDocument
 from src.Tools import ImageTools
-#from src.Debug import Debug
+from src.Debug import Debug
 
 
 
@@ -173,6 +174,9 @@ class DrawSheet(QObject):
 
 		## Hiermit wird der Seitenrahmen eingehalten.
 		self.__painter.translate(self.__borderFrameWest, self.__borderFrameNorth)
+
+		## Standardschrift einstellen
+		self.__painter.setFont(self.__fontMain)
 
 		## Grundeinstellungen des Painters sind abgeschlossen. Dies ist der Zusatnd, zu dem wir zurückkehren, wenn wir painter.restore() aufrufen.
 		self.__painter.save()
@@ -480,9 +484,7 @@ class DrawSheet(QObject):
 			posX += lengthX + self.__posSep
 			lengthX = self.__pageWidth - posX
 			lengthY = 1000
-			if ( self.__character.species == "Changeling" ):
-				pass
-			elif ( self.__character.species == "Mage" ):
+			if ( self.__character.species == "Mage" ):
 				pass
 			elif ( self.__character.species == "Vampire" ):
 				posX = 750
@@ -501,6 +503,8 @@ class DrawSheet(QObject):
 
 		posY += lengthY + self.__posSep
 		lengthY = 350
+		if ( self.__character.species == "Changeling" ):
+			posY_zeile3 = 2200
 		self._drawExtraordinaryItems(offsetH=posX, offsetV=posY, width=lengthX, height=lengthY)
 
 		posY_zeile3 = 2500
@@ -992,8 +996,6 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth / 3
 
-		self.__painter.setFont(self.__fontMain)
-
 		self.__drawHeading(offsetH, offsetV, width, self.tr("Companion"))
 
 		fontMetrics = QFontMetrics(self.__painter.font())
@@ -1113,8 +1115,6 @@ class DrawSheet(QObject):
 
 		if width == None:
 			width = self.__pageWidth / 3
-
-		self.__painter.setFont(self.__fontMain)
 
 		self.__drawHeading(offsetH, offsetV, width, self.__storage.subPowerName(self.__character.species))
 
@@ -1295,8 +1295,6 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		self.__painter.setFont(self.__fontMain)
-
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
 
@@ -1409,8 +1407,6 @@ class DrawSheet(QObject):
 
 		self.__painter.save()
 
-		self.__painter.setFont(self.__fontMain)
-
 		if width == None:
 			width = self.__pageWidth / 3
 
@@ -1445,8 +1441,6 @@ class DrawSheet(QObject):
 			width = self.__pageWidth / 3
 
 		self.__drawHeading(offsetH, offsetV, width, self.__storage.moralityName(self.__character.species))
-
-		self.__painter.setFont(self.__fontMain)
 
 		fontMetrics = QFontMetrics(self.__painter.font())
 		textHeight = fontMetrics.height() - 3
@@ -1535,7 +1529,7 @@ class DrawSheet(QObject):
 		)
 
 
-	def __drawText(self, heading, text, offsetH=0, offsetV=0, width=None, height=None):
+	def __drawText(self, heading, text, offsetH=0, offsetV=0, width=None, height=None, level=1):
 		"""
 		Schreibt einen Textblock.
 
@@ -1543,6 +1537,7 @@ class DrawSheet(QObject):
 		\param offsetV Der vertikale Abstand zur Oberkante des nutzbaren Charakterbogens.
 		\param width Die Breite.
 		\param height Die Höhe.
+		\param level Die Ebene der Überschrift.
 
 		\bug Da ich als Argument von self.tr() keine unicode-String nutzen kann, sind manche minus-Zeichen als "-" und nicht als "−" genutzt worden.
 		"""
@@ -1552,15 +1547,13 @@ class DrawSheet(QObject):
 		if width == None:
 			width = self.__pageWidth
 
-		self.__painter.setFont(self.__fontMain)
-
-		self.__drawHeading(offsetH, offsetV, width, heading)
+		headingHeight = self.__drawHeading(offsetH, offsetV, width, heading, level)
 
 		self.__painter.drawText(
 			offsetH,
-			offsetV + self.__fontHeadingHeight + self.__headingSep,
+			offsetV + headingHeight + self.__headingSep,
 			width,
-			height - self.__fontHeadingHeight - self.__headingSep,
+			height - headingHeight - self.__headingSep,
 			Qt.AlignLeft | Qt.TextWordWrap,
 			text
 		)
@@ -1579,8 +1572,6 @@ class DrawSheet(QObject):
 
 		if width == None:
 			width = self.__pageWidth
-
-		self.__painter.setFont(self.__fontMain)
 
 		self.__drawHeading(offsetH, offsetV, width, heading)
 
@@ -1859,12 +1850,12 @@ class DrawSheet(QObject):
 		nameWidth = width - dmgWidth - rangesWidth - capWidth - strWidth - sizeWidth - durabWidth - 5 * colSep
 
 		self.__drawHeading(offsetH, offsetV, nameWidth, self.tr("Weapons"))
-		self.__drawSubHeading(offsetH + colSep + nameWidth, offsetV, dmgWidth, self.tr("Dmg."))
-		self.__drawSubHeading(offsetH + 2 * colSep + nameWidth + dmgWidth, offsetV, rangesWidth, self.tr("Ranges"))
-		self.__drawSubHeading(offsetH + 3 * colSep + nameWidth + dmgWidth + rangesWidth, offsetV, capWidth, self.tr("Cap."))
-		self.__drawSubHeading(offsetH + 4 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth, offsetV, strWidth, self.tr("Str."))
-		self.__drawSubHeading(offsetH + 5 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth, offsetV, sizeWidth, self.tr("Size"))
-		self.__drawSubHeading(offsetH + 6 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth + sizeWidth, offsetV, durabWidth, self.tr("Durab."))
+		self.__drawHeading(offsetH + colSep + nameWidth, offsetV, dmgWidth, self.tr("Dmg."), level=2)
+		self.__drawHeading(offsetH + 2 * colSep + nameWidth + dmgWidth, offsetV, rangesWidth, self.tr("Ranges"), level=2)
+		self.__drawHeading(offsetH + 3 * colSep + nameWidth + dmgWidth + rangesWidth, offsetV, capWidth, self.tr("Cap."), level=2)
+		self.__drawHeading(offsetH + 4 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth, offsetV, strWidth, self.tr("Str."), level=2)
+		self.__drawHeading(offsetH + 5 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth, offsetV, sizeWidth, self.tr("Size"), level=2)
+		self.__drawHeading(offsetH + 6 * colSep + nameWidth + dmgWidth + rangesWidth + capWidth + strWidth + sizeWidth, offsetV, durabWidth, self.tr("Durab."), level=2)
 
 		self.__painter.save()
 
@@ -1935,16 +1926,78 @@ class DrawSheet(QObject):
 		\param height Die Höhe des Kastens.
 		"""
 
+		self.__drawHeading(offsetH, offsetV, width, self.tr("Extraordinary Items"))
+
+		self.__painter.save()
+
+		#text = "<dl>"
+		#for typ in self.__character.extraordinaryItems:
+			#equipment = "; ".join(self.__character.extraordinaryItems[typ])
+			#text += "<dt>{}:</dt> <dd>{}</dd>".format(typ, equipment)
+		#text += "</dl>"
+		text = "<body>"
 		for typ in self.__character.extraordinaryItems:
 			equipment = "; ".join(self.__character.extraordinaryItems[typ])
-			self.__drawText(
-				"{}".format(typ),
-				equipment,
-				offsetH,
-				offsetV,
-				width,
-				height
-			)
+			text += "<b>{}:</b> {}<br>".format(typ, equipment)
+		text += "</body>"
+
+		self.__painter.save()
+
+		self.__painter.translate(offsetH, offsetV + self.__fontHeadingHeight + self.__headingSep)
+
+		rect = QRect(offsetH, offsetV, width, height - self.__fontHeadingHeight - self.__headingSep)
+		#Debug.debug(rect)
+		document = CharacterSheetDocument()
+		document.setHtml(text)
+		document.setTextWidth(width)
+		document.drawContents(self.__painter, rect.translated( -rect.topLeft() ))
+
+		self.__painter.restore()
+
+		#rect = QRect(offsetH, 10, 1000, 1000)
+		#Debug.debug(rect)
+		#document = QTextDocument()
+		#document.setHtml(text)
+		#document.drawContents(self.__painter, rect)
+		#i = 0
+		#for typ in self.__character.extraordinaryItems:
+			#equipment = "; ".join(self.__character.extraordinaryItems[typ])
+			
+			#self.__painter.save()
+
+			#descriptor = "{}:".format(typ)
+			#font = self.__painter.font()
+			#font.setWeight(QFont.Bold)
+			#self.__painter.setFont(font)
+			#boldFontMetrics = QFontMetrics(self.__painter.font())
+			#descriptorWidth = boldFontMetrics.boundingRect(descriptor).width()
+			#descriptorHeight = boldFontMetrics.height()
+			
+			#self.__painter.drawText(
+				#offsetH,
+				#offsetV + self.__fontHeadingHeight + self.__headingSep + i * (max()),
+				#descriptorWidth,
+				#descriptorHeight,
+				#Qt.AlignLeft,
+				#descriptor
+			#)
+			
+			#self.__painter.restore()
+			
+			#self.__painter.drawText(
+				#offsetH + descriptorWidth + self.__dotSep,
+				#offsetV + self.__fontHeadingHeight + self.__headingSep,
+				#width,
+				#height,
+				#Qt.AlignLeft | Qt.TextWordWrap,
+				#equipment
+			#)
+
+			#i += 1
+
+		self.__drawBB(offsetH, offsetV, width, height)
+
+		self.__painter.restore()
 
 
 	def _drawDerangements(self, offsetH=0, offsetV=0, width=None, height=None):
@@ -1964,8 +2017,6 @@ class DrawSheet(QObject):
 			width = self.__pageWidth / 3
 
 		self.__drawHeading(offsetH, offsetV, width, self.tr("Derangements"))
-
-		self.__painter.setFont(self.__fontMain)
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()
 
@@ -2177,8 +2228,6 @@ class DrawSheet(QObject):
 
 		self.__drawHeading(offsetH, offsetV, width, self.tr("Vinculi"))
 
-		self.__painter.setFont(self.__fontMain)
-
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()
 
@@ -2199,7 +2248,7 @@ class DrawSheet(QObject):
 		self.__painter.restore()
 
 
-	def __drawHeading(self, posX, posY, width, text):
+	def __drawHeading(self, posX, posY, width, text, level=1):
 		"""
 		Zeichnet eine Überschrift in der für die Spezies vorgesehenen Schriftart.
 
@@ -2207,20 +2256,26 @@ class DrawSheet(QObject):
 		\param poxY Linke Kante der Boundingbox für die Überschrift.
 		\param width Breite der Überschrift
 		\param text Der Text der Überschrift
+		\param level Die Ebene der Überschrift.
+		
 		\return die Höhe, welche die Überschrift in Anspruch nimmt. Dies ist nützlich, um den Text darunter besser paltzieren zu können.
 		"""
 
 		self.__painter.save()
 
 		self.__painter.setFont(self.__fontHeading)
+		headingHeight = self.__fontHeadingHeight
+		if level > 1:
+			self.__painter.setFont(self.__fontSubHeading)
+			headingHeight = self.__fontSubHeadingHeight
 		fontMetrics = QFontMetrics(self.__painter.font())
 		fontHeight = fontMetrics.height()# Tatsächliche Höhe der Schrift
 
 		## Differenz der tatsächlichen Höhe der Schrift, und der Höhe für die Platz reserviert werden soll.
-		heightDiff = (fontHeight - self.__fontHeadingHeight)
+		heightDiff = (fontHeight - headingHeight)
 
 		if self.__character.species == "Human":
-			imageRect = QRect(posX, posY, width, self.__fontHeadingHeight)
+			imageRect = QRect(posX, posY, width, headingHeight)
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-BalkenOben.png")
 			rnd = Random.random(1)
 			if rnd == 0:
@@ -2231,38 +2286,7 @@ class DrawSheet(QObject):
 
 		self.__painter.restore()
 
-
-	def __drawSubHeading(self, posX, posY, width, text):
-		"""
-		Zeichnet eine Überschrift in der für die Spezies vorgesehenen Schriftart.
-
-		\param poxX Obere Kante der Boundingbox für die Überschrift.
-		\param poxY Linke Kante der Boundingbox für die Überschrift.
-		\param width Breite der Überschrift
-		\param text Der Text der Überschrift
-		\return die Höhe, welche die Überschrift in Anspruch nimmt. Dies ist nützlich, um den Text darunter besser paltzieren zu können.
-		"""
-
-		self.__painter.save()
-
-		self.__painter.setFont(self.__fontSubHeading)
-		fontMetrics = QFontMetrics(self.__painter.font())
-		fontHeight = fontMetrics.height()# Tatsächliche Höhe der Schrift
-
-		## Differenz der tatsächlichen Höhe der Schrift, und der Höhe für die Platz reserviert werden soll.
-		heightDiff = (fontHeight - self.__fontHeadingHeight)
-
-		if self.__character.species == "Human":
-			imageRect = QRect(posX, posY, width, self.__fontHeadingHeight)
-			image = QImage(":sheet/images/sheet/WorldOfDarkness-BalkenOben.png")
-			rnd = Random.random(1)
-			if rnd == 0:
-				image = image.mirrored(True, False)
-			self.__painter.drawImage(imageRect, image)
-
-		self.__painter.drawText(posX, posY - heightDiff / 2, width, fontHeight, Qt.AlignCenter, text)
-
-		self.__painter.restore()
+		return headingHeight
 
 
 	def __drawValueDots(self, posX, posY, value=0, maxValue=5):

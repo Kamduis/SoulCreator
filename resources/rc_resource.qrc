@@ -139,4 +139,7 @@
     <file>images/Charactersheet-Vampire-2.jpg</file>
     <file>images/Charactersheet-Werewolf-2.jpg</file>
   </qresource>
+  <qresource>
+    <file>stylesheets/sheet.css</file>
+  </qresource>
 </RCC>
