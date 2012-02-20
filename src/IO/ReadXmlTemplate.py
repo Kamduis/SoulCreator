@@ -246,7 +246,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 								elif subelement.tag == "prerequisites":
 									listOfPrerequisites.append(u"({})".format(subelement.text))
 								elif subelement.tag == "only":
-									listOfOnlys.append(u"({})".format(subelement.text))
+									listOfOnlys.append(u"{}".format(subelement.text))
 							powerPrerequisites = u" and ".join([u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()])
 							if powerPrerequisites:
 								powerPrerequisites = u"({})".format(powerPrerequisites)

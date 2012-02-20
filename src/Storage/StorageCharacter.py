@@ -99,6 +99,9 @@ class StorageCharacter(QObject):
 	companionNuminaChanged = Signal(object)
 	companionBanChanged = Signal(str)
 
+	## Dieses Signal enthält alle möglichen Gründe, um eine Eigenschaft zu verstecken, oder sie zu zeigen. species, age, era, breed, faction
+	traitVisibleReasonChanged = Signal(str, str, str, str, str)
+
 
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
 	#
@@ -309,7 +312,18 @@ class StorageCharacter(QObject):
 		self.companionNuminaChanged.connect(self.setModified)
 		self.companionBanChanged.connect(self.setModified)
 
+		self.speciesChanged.connect(self.__emitTraitVisibleReasonChanged)
+		self.ageChanged.connect(self.__emitTraitVisibleReasonChanged)
+		self.eraChanged.connect(self.__emitTraitVisibleReasonChanged)
+		self.breedChanged.connect(self.__emitTraitVisibleReasonChanged)
+		self.factionChanged.connect(self.__emitTraitVisibleReasonChanged)
+
 	#connect (self, SIGNAL(realIdentityChanged(cv_Identity)), self, SLOT(emitNameChanged(cv_Identity)));
+
+
+	def __emitTraitVisibleReasonChanged(self):
+		ageText = Config.getAge(self.age)
+		self.traitVisibleReasonChanged.emit(self.species, ageText, self.era, self.breed, self.faction)
 
 
 	def __getEra(self):
