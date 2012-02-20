@@ -263,22 +263,20 @@ class TemplateWidget(QWidget):
 
 
 	def repopulateFactions(self, species):
-
-		fileExtension = {
-			"Human": "svg",
-			"Changeling": "png",
-			"Mage": "png",
-			"Vampire": "svg",
-			"Werewolf": "svg",
-		}
+		"""
+		Fülle die Fraktionsauswahl neu auf.
+		"""
 
 		self.ui.comboBox_faction.clear()
 		for item in self.__storage.factions(species):
-			self.ui.comboBox_faction.addItem(QIcon(":icons/images/species/{}/Faction-{}.{}".format(species, item.replace(" ", ""), fileExtension[species])), item)
+			self.ui.comboBox_faction.addItem(QIcon(":icons/images/species/{}/Faction-{}.svg".format(species, item.replace(" ", ""))), item)
 		#self.ui.comboBox_faction.addItems(self.__storage.factions(species))
 
 
 	def repopulateOrganisations(self, species):
+		"""
+		Fülle die Organisationsauswahl neu auf.
+		"""
 
 		self.ui.comboBox_organisation.clear()
 		self.ui.comboBox_organisation.addItem("")
@@ -286,6 +284,9 @@ class TemplateWidget(QWidget):
 
 
 	def hideShowWidgets_species(self, species):
+		"""
+		Nicht jede Spezies benötigt alle Widgets. Diese Funktion verbirgt/zeigt alle für die gewählte Spezies erforderlichen Auswahl- und Anzeigefelder.
+		"""
 
 		visible = True
 		if species == "Human":
