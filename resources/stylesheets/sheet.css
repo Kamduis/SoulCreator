@@ -1,16 +1,72 @@
 /* Grundeinstellung */
-* {
+body {
 	font-family: 'Linux Libertine O';
-	font-size: 45px;
+/* 	font-size: 45px; */
+	font-size: 12px;
 }
 
-/* Schriften */
-/*h1,h2,h3,h4 {
-	font-family: 'DejaVu Sans'; 
-}*/
+/* Überschriften */
+h1,h2,h3,h4 {
+	margin-top: 20px;
+	font-family: 'DejaVu Sans';
+	text-align: center;
+}
+
+h1.human {
+	font-family: 'Architects Daughter';
+	font-size: 200%;
+	margin-top: 12px;
+	margin-bottom: 8px;
+}
+h2.human {
+	font-family: 'Architects Daughter';
+	font-size: 140%;
+}
+h1.changeling {
+	font-family: 'Mutlu';
+	font-size: 250%;
+	margin-top: -10px;
+	margin-bottom: -5px;
+}
+h2.changeling {
+	font-family: 'Mutlu';
+	font-size: 175%;
+	margin-top: -10px;
+	margin-bottom: -5px;
+}
+h1.mage {
+	font-family: 'Tangerine';
+	font-size: 300%;
+	margin-top: 15px;
+	margin-bottom: 11px;
+}
+h2.mage {
+	font-family: 'Tangerine';
+	font-size: 210%;
+}
+h1.vampire {
+	font-family: 'Cloister Black';
+	font-size: 250%;
+	margin-top: 13px;
+	margin-bottom: 13px;
+}
+h2.vampire {
+	font-family: 'Cloister Black';
+	font-size: 175%;
+}
+h1.werewolf {
+	font-family: 'Note this';
+	font-size: 250%;
+	margin-top: 13px;
+	margin-bottom: 9px;
+}
+h2.werewolf {
+	font-family: 'Note this';
+	font-size: 175%;
+}
 
 p {
-	margin-top: 5px;
+/* 	margin-top: 5px; */
 	text-align: justify; 
 }
 
@@ -22,6 +78,31 @@ dt {
 	font-weight: bold;
 }
 
+/* Kurze Abschnitte */
+span.specialties {
+	font-size: .9em;
+}
+
+#human {
+	font-family: 'Architects Daughter';
+/* 	font-size: 200%; */
+}
+#changeling {
+	font-family: 'Mutlu';
+/* 	font-size: 250%; */
+}
+#mage {
+	font-family: 'Tangerine';
+/* 	font-size: 300%; */
+}
+#vampire {
+	font-family: 'Cloister Black';
+/* 	font-size: 250%; */
+}
+#werewolf {
+	font-family: 'Note this';
+/* 	font-size: 250%; */
+}
 #FirstTongue {
 	font-style: italic;
 }

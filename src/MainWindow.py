@@ -57,7 +57,8 @@ from Widgets.ItemWidget import ItemWidget
 from Widgets.SpecialsWidget import SpecialsWidget
 from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
-from Draw.DrawSheet import DrawSheet
+#from Draw.DrawSheet import DrawSheet
+from Draw.RenderSheet import RenderSheet
 #from Debug import Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
@@ -603,17 +604,19 @@ class MainWindow(QMainWindow):
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
-			printer = QPrinter()
+			printer = QPrinter(QPrinter.PrinterResolution)
 
 			printer.setOutputFormat( QPrinter.PdfFormat )
 			printer.setPaperSize( QPrinter.A4 )
 			printer.setFullPage( True )
 			printer.setOutputFileName( filePath[0] )
 
-			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
+			#drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
+			drawSheet = RenderSheet( self.__storage, self.__character, printer, self )
 
 			try:
-				drawSheet.print()
+				#drawSheet.print()
+				drawSheet.createSheets()
 			except ErrSpeciesNotExisting as e:
 				MessageBox.exception( self, e.message, e.description )
 
@@ -623,19 +626,16 @@ class MainWindow(QMainWindow):
 		Druckt den angezeigten Charakter aus.
 		"""
 
-		printer = QPrinter()
+		printer = QPrinter(QPrinter.PrinterResolution)
 		printDialog = QPrintDialog( printer, self )
 
-		#printer.setPaperSize( QPrinter.A4 )
-		#printer.setFullPage( True )
-
-		drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
-
 		if ( printDialog.exec_() == QDialog.Accepted ):
-			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
+			#drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
+			drawSheet = RenderSheet( self.__storage, self.__character, printer, self )
 
 			try:
-				drawSheet.print()
+				#drawSheet.print()
+				drawSheet.createSheets()
 			except ErrSpeciesNotExisting as e:
 				MessageBox.exception( self, e.message, e.description )
 
