@@ -87,6 +87,8 @@
     <file>images/species/Werewolf/Skull-gray.png</file>
   </qresource>
   <qresource prefix="sheet">
+    <file>stylesheets/sheet.css</file>
+    <file>stylesheets/sheetTemplate.html</file>
     <file>images/sheet/WorldOfDarkness.jpg</file>
     <file>images/sheet/WorldOfDarkness-BalkenOben.png</file>
     <file>images/sheet/WorldOfDarkness-BackgroundL.png</file>
@@ -134,8 +136,6 @@
     <file>templates/spirit.scd</file>
   </qresource>
   <qresource prefix="characterSheets">
-    <file>stylesheets/sheet.css</file>
-    <file>stylesheets/sheetTemplate.html</file>
     <file>images/Charactersheet-Changeling-2.jpg</file>
     <file>images/Charactersheet-Mage-2.jpg</file>
     <file>images/Charactersheet-Vampire-2.jpg</file>

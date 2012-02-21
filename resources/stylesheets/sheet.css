@@ -1,8 +1,13 @@
 /* Grundeinstellung */
+/** {
+	background-color: transparent;
+}*/
+
 body {
 	font-family: 'Linux Libertine O';
 /* 	font-size: 45px; */
 	font-size: 12px;
+	background-color: rgba(0,0,0,0);
 }
 
 /* Überschriften */
@@ -68,6 +73,16 @@ h2.werewolf {
 p {
 /* 	margin-top: 5px; */
 	text-align: justify; 
+}
+
+/* Tabellen */
+table {
+	width: 100%;
+}
+td {
+	border: 1px solid #000;
+	vertical-align:top;
+	overflow:hidden;
 }
 
 /* Listen */

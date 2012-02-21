@@ -604,7 +604,8 @@ class MainWindow(QMainWindow):
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
-			printer = QPrinter(QPrinter.PrinterResolution)
+			#printer = QPrinter(QPrinter.PrinterResolution)
+			printer = QPrinter()
 
 			printer.setOutputFormat( QPrinter.PdfFormat )
 			printer.setPaperSize( QPrinter.A4 )
