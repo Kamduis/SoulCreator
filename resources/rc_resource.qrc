@@ -89,6 +89,11 @@
   <qresource prefix="sheet">
     <file>stylesheets/sheet.css</file>
     <file>stylesheets/sheetTemplate.html</file>
+    <file>stylesheets/sheetTemplate-Human.html</file>
+    <file>stylesheets/sheetTemplate-Changeling.html</file>
+    <file>stylesheets/sheetTemplate-Mage.html</file>
+    <file>stylesheets/sheetTemplate-Vampire.html</file>
+    <file>stylesheets/sheetTemplate-Werewolf.html</file>
     <file>images/sheet/WorldOfDarkness.jpg</file>
     <file>images/sheet/WorldOfDarkness-BalkenOben.png</file>
     <file>images/sheet/WorldOfDarkness-BackgroundL.png</file>

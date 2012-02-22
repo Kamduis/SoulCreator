@@ -172,6 +172,7 @@ class Config(object):
 	moralityTraitDefaultValue = 7
 
 	## Höchstwert der Willenskraft.
+	healthMax = 10
 	willpowerMax = 10
 
 	## Mindestwert der besonderen übernatürlichen Eigenschaft.

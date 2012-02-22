@@ -7,7 +7,11 @@ body {
 	font-family: 'Linux Libertine O';
 /* 	font-size: 45px; */
 	font-size: 12px;
-	background-color: rgba(0,0,0,0);
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+/* 	background-color: rgba(0,0,0,0); */
 }
 
 /* Überschriften */
@@ -76,28 +80,76 @@ p {
 }
 
 /* Tabellen */
-table {
+table.fullWidth {
 	width: 100%;
 }
 td {
 	border: 1px solid #000;
-	vertical-align:top;
-	overflow:hidden;
+	vertical-align: baseline;
+/* 	overflow:hidden; */
+}
+td.nowrap {
+	white-space: nowrap;
+}
+td.hfill {
+	width: 100%;
 }
 
 /* Listen */
-dl {
+/*dl {
 	padding: 0.5em;
 }
 dt {
+	float: left;
+	clear: left;
+	width: 100px;
+	text-align: right;
 	font-weight: bold;
+	color: green;
+}
+dt:after {
+	content: ":";
+}
+dd {
+	margin: 0 0 0 110px;
+	padding: 0 0 0.5em 0;
+}*/
+
+dl.dottedList {
+	width: 100%;
+}
+dl.dottedList dt {
+	float: left;
+	clear: left;
+	width: 90%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+dl.dottedList dt:after {
+	content: " .......................................................................................................................................";
+}
+dl.dottedList dd {
+/* 	float: left; */
+	width: 10%;
+	overflow: hidden;
+	color: red;
 }
 
 /* Kurze Abschnitte */
-span.specialties {
-	font-size: .9em;
+
+/* Abstände */
+div#vSpaceHead {
+	height: 100px;
 }
 
+/* Schriften */
+span#scriptFont {
+	font-family: 'Blokletters Balpen';
+	font-size: 0.7em;
+}
+span#specialties {
+	font-size: .5em;
+}
 #human {
 	font-family: 'Architects Daughter';
 /* 	font-size: 200%; */
