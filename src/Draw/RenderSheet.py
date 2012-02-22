@@ -137,6 +137,8 @@ class RenderSheet(QObject):
 			vinculi=self._createVinculi(),
 			inventory=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory")),
 			description=self._createDescription(),
+			image=self._createImage(),
+			xp=self._createXp(),
 		)
 
 		#Debug.debug(htmlText)
@@ -245,7 +247,7 @@ class RenderSheet(QObject):
 					htmlText += u"<table class='fullWidth'>"
 					htmlText += u"<tr>"
 					htmlText += u"<td class='nowrap'>{label}</td>".format(label=trait.name)
-					htmlText += u"<td style='width: 100%;'><span id='specialties'>{specialties}</span></td>".format(specialties=", ".join(trait.totalspecialties))
+					htmlText += u"<td class='hrulefill'><span id='specialties'>{specialties}</span></td>".format(specialties=", ".join(trait.totalspecialties))
 					htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
 					htmlText += u"</tr>"
 					htmlText += u"</table>"
@@ -293,7 +295,7 @@ class RenderSheet(QObject):
 					htmlText += u"<table class='fullWidth'>"
 					htmlText += u"<tr>"
 					htmlText += u"<td class='nowrap'>{label}</td>".format(label=trait.name)
-					htmlText += u"<td style='width: 100%;'><span id='specialties'>{specialties}</span></td>".format(specialties=trait.customText)
+					htmlText += u"<td class='hrulefill'><span id='specialties'>{specialties}</span></td>".format(specialties=trait.customText)
 					htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
 					htmlText += u"</tr>"
 					htmlText += u"</table>"
@@ -320,7 +322,7 @@ class RenderSheet(QObject):
 					htmlText += u"<table class='fullWidth'>"
 					htmlText += u"<tr>"
 					htmlText += u"<td class='nowrap'>{label}</td>".format(label=trait.name)
-					htmlText += u"<td style='width: 100%;'><span id='specialties'>{specialties}</span></td>".format(specialties=trait.customText)
+					htmlText += u"<td class='hrulefill'><span id='specialties'>{specialties}</span></td>".format(specialties=trait.customText)
 					htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
 					htmlText += u"</tr>"
 					htmlText += u"</table>"
@@ -370,7 +372,8 @@ class RenderSheet(QObject):
 			for item in advantages:
 				htmlText += u"<table class='fullWidth'>"
 				htmlText += u"<tr>"
-				htmlText += u"<td style='width: 100%;'>{label}</td>".format(label=item[0])
+				htmlText += u"<td class='nowrap'>{label}</td>".format(label=item[0])
+				htmlText += u"<td class='hrulefill'></td>"
 				htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=item[1])
 				htmlText += u"</tr>"
 				htmlText += u"</table>"
@@ -387,15 +390,17 @@ class RenderSheet(QObject):
 				htmlText += u"<h1 class='{species}'>{title}</h1>".format(title=item[0], species=self.__character.species)
 				htmlText += u"<table class='fullWidth'>"
 				htmlText += u"<tr>"
-				for i in xrange(item[1]):
-					htmlText += u"<td style='text-align: center;'>{}</td>".format(self.valueStyled(1))
-				for i in xrange(item[1], item[2]):
-					htmlText += u"<td style='text-align: center;'>{}</td>".format(self.valueStyled(0, 1))
+				htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(item[1], item[2]))
+				#for i in xrange(item[1]):
+					#htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(1))
+				#for i in xrange(item[1], item[2]):
+					#htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(0, 1))
 				htmlText += u"</tr>"
 				if item[3]:
 					htmlText += u"<tr>"
-					for i in xrange(item[2]):
-						htmlText += u"<td style='text-align: center;'>{}</td>".format(self.valueStyled(0, 1, squares=True))
+					htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(0, item[2], squares=True))
+					#for i in xrange(item[2]):
+						#htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(0, 1, squares=True))
 					htmlText += u"</tr>"
 				htmlText += u"</table>"
 
@@ -416,25 +421,54 @@ class RenderSheet(QObject):
 			htmlText += u"</tr>"
 			htmlText += u"</table>"
 
+		
+
 		htmlText += u"<h1 class='{species}'>{title}</h1>".format(title=self.__storage.moralityName(self.__character.species), species=self.__character.species)
 		htmlText += u"<table class='fullWidth'>"
 		for row in range(self.__character.morality + 1, Config.moralityTraitMax + 1)[::-1]:
 			htmlText += u"<tr>"
-			htmlText += u"<td style='text-align: center;'>{level}</td><td>{derangement}</td><td style='text-align: center;'>{value}</td>".format(level=row, derangement=self.derangement(row), value=self.valueStyled(0, 1))
+			htmlText += u"<td style='text-align: center;'>{level}</td><td {hrule}><span id='scriptFont'>{derangement}</span></td><td style='text-align: center;'>{value}</td>".format(level=row, derangement=self.derangement(row), value=self.valueStyled(0, 1), hrule=self.__derangementPossible(row))
 			htmlText += u"</tr>"
 		for row in range(1, self.__character.morality + 1)[::-1]:
 			htmlText += u"<tr>"
-			htmlText += u"<td style='text-align: center;'>{level}</td><td></td><td style='text-align: center;'>{value}</td>".format(level=row, value=self.valueStyled(1))
+			htmlText += u"<td style='text-align: center;'>{level}</td><td {hrule}></td><td style='text-align: center;'>{value}</td>".format(level=row, value=self.valueStyled(1), hrule=self.__derangementPossible(row))
 			htmlText += u"</tr>"
 		htmlText += u"</table>"
 
 		return htmlText
 
 
+	def __derangementPossible(self, level):
+		if level <= Config.derangementMoralityTraitMax:
+			return "class='hrulefill'"
+		else:
+			return ""
+
+
+	def derangement(self, level):
+		"""
+		Gibt die Geistesstörung des Charakters bei entsprechender Moralstufe zurück. Ist keine Geistesstörung vorhanden, wird ein leerer String zurückgegeben.
+		"""
+
+		if level in self.__character.derangements:
+			return self.__character.derangements[level]
+		else:
+			return ""
+
+
 	def _createWeapons(self):
 		"""
 		Die Waffen werden aufgelistet.
 		"""
+
+		weaponInfo = (
+			"damage",
+			"ranges",
+			"capacity",
+			"strength",
+			"size",
+			"durability",
+		)
 
 		htmlText = u"<table class='fullWidth'>"
 		htmlText += u"<tr>"
@@ -452,30 +486,13 @@ class RenderSheet(QObject):
 		for category in self.__character.weapons:
 			for weapon in self.__character.weapons[category]:
 				htmlText += u"<tr>"
-				htmlText += u"<td>{}</td><td style='text-align: center;'>{}</td><td style='text-align: center;'>{}</td><td style='text-align: center;'>{}</td><td style='text-align: center;'>{}</td><td style='text-align: center;'>{}</td><td style='text-align: center;'>{}</td>".format(
-					weapon,
-					self.__storage.weapons[category][weapon]["damage"],
-					self.__storage.weapons[category][weapon]["ranges"],
-					self.__storage.weapons[category][weapon]["capacity"],
-					self.__storage.weapons[category][weapon]["strength"],
-					self.__storage.weapons[category][weapon]["size"],
-					self.__storage.weapons[category][weapon]["durability"],
-				)
+				htmlText += u"<td><span id='scriptFont'>{}</span></td>".format(weapon)
+				for column in weaponInfo:
+					htmlText += u"<td style='text-align: center;'><span id='scriptFont'>{}</span></td>".format(self.__storage.weapons[category][weapon][column])
 				htmlText += u"</tr>"
 		htmlText += u"</table>"
 
 		return htmlText
-
-
-	def derangement(self, level):
-		"""
-		Gibt die Geistesstörung des Charakters bei entsprechender Moralstufe zurück. Ist keine Geistesstörung vorhanden, wird ein leerer String zurückgegeben.
-		"""
-
-		if level in self.__character.derangements:
-			return self.__character.derangements[level]
-		else:
-			return ""
 
 
 	def _createGoblinContracts(self):
@@ -499,7 +516,7 @@ class RenderSheet(QObject):
 			htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.tr("Vinculi"), species=self.__character.species)
 			htmlText += u"<table class='fullWidth'>"
 			for vinculum in self.__character.vinculi:
-				htmlText += u"<tr><td style='width: 100%;'>{name}</td><td>{value}</td></tr>".format(name=vinculum.name, value=self.valueStyled(vinculum.value, Config.vinculumLevelMax))
+				htmlText += u"<tr><td style='width: 100%;'><span id='scriptFont'>{name}</span></td><td>{value}</td></tr>".format(name=vinculum.name, value=self.valueStyled(vinculum.value, Config.vinculumLevelMax))
 			htmlText += u"</table>"
 			return htmlText
 		else:
@@ -537,15 +554,49 @@ class RenderSheet(QObject):
 
 		htmlText = self.simpleTextBox(self.__character.description, title=self.tr("Description"))
 
-		htmlText += u"<table><tr>"
+		htmlText += u"<table class='fullWidth'><tr>"
 		for column in dataTable:
-			htmlText += u"<td><table>"
+			htmlText += u"<td style='width: {}%;'><table class='fullWidth'>".format(100 / len(dataTable))
 			for row in column:
 				htmlText += u"<tr>"
-				htmlText += u"<td>{label}</td><td style='text-align: right;'>{value}</td>".format(label=row[0], value=row[1])
+				htmlText += u"<td>{label}</td><td class='hfill' style='text-align: right;'><span id='scriptFont'>{value}</span></td>".format(label=row[0], value=row[1])
 				htmlText += u"</tr>"
 			htmlText += u"</table></td>"
 		htmlText += u"</tr></table>"
+
+		return htmlText
+
+
+	def _createImage(self):
+		htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.tr("Picture"), species=self.__character.species)
+		
+		if self.__character.picture:
+			imageData = QByteArray()
+			imageBuffer = QBuffer(imageData)
+			imageBuffer.open(QIODevice.WriteOnly)
+			self.__character.picture.save(imageBuffer, Config.pictureFormat)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
+			imageData = imageData.toBase64()
+
+			htmlText += u"<p style='text-align: center;'><img src='data:image/{form};base64,{image}' style='max-width:100%; max-height:100%;'></p>".format(image=imageData, form=Config.pictureFormat)
+
+		return htmlText
+
+
+	def _createXp(self):
+		xpColumns = (
+			"XP",
+		)
+		if self.__character.species == "Mage":
+			xpColumns = (
+				"XP",
+				self.tr("Arcane XP"),
+			)
+		htmlText = u""
+		for column in xpColumns:
+			htmlText += u"<table style='width: {}%'>".format(100 / len(xpColumns))
+			htmlText += u"<tr><td><h1 class='{species}'>{title}</h1></td></tr>".format(title=column, species=self.__character.species)
+			htmlText += u"<tr style='height: 3em;'><td></td></tr>"
+			htmlText += u"</table>"
 
 		return htmlText
 
@@ -555,7 +606,7 @@ class RenderSheet(QObject):
 			htmlText = u""
 			if title:
 				htmlText += u"<h1 class='{species}'>{title}</h1>".format(title=title, species=self.__character.species)
-			htmlText += u"<p>{}</p>".format(text)
+			htmlText += u"<p><span id='scriptFont'>{}</span></p>".format(text)
 			return htmlText
 		else:
 			return ""
@@ -675,8 +726,8 @@ class RenderSheet(QObject):
 			self.__printer.height() / contentsSize.height(),
 		)
 		#self.__painter.scale(scaleFactor[0], scaleFactor[1])
-		scale = min(scaleFactor)
-		#scale = scaleFactor[0]
+		#scale = min(scaleFactor)
+		scale = scaleFactor[0]
 		self.__painter.scale(scale, scale)
 		self.__painter.setRenderHint ( QPainter.Antialiasing )
 
@@ -684,6 +735,10 @@ class RenderSheet(QObject):
 			self.__printer.width() / scale,
 			self.__printer.height() / scale,
 		)
+		#self.__paperSize = (
+			#self.__printer.width() / scaleFactor[0],
+			#self.__printer.height() / scaleFactor[1],
+		#)
 
 		self.__painter.save()
 
