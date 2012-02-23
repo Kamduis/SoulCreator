@@ -136,7 +136,7 @@ class RenderSheet(QObject):
 			magicalTool=self.simpleTextBox(self.__character.magicalTool, title=self.tr("Magical Tool"), species="Mage"),
 			vinculi=self._createVinculi(),
 			blessing="",
-			inventory=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory")),
+			inventory=self._createInventory(),
 			description=self._createDescription(),
 			image=self._createImage(),
 			xp=self._createXp(),
@@ -501,13 +501,13 @@ class RenderSheet(QObject):
 		htmlText = u"<table class='fullWidth'>"
 		htmlText += u"<tr>"
 		htmlText += u"""
-			<th class='{species}'>{}</th>
-			<th class='{species}'>{}</th>
-			<th class='{species}'>{}</th>
-			<th class='{species}'>{}</th>
-			<th class='{species}'>{}</th>
-			<th class='{species}'>{}</th>
-			<th class='{species}'>{}</th>""".format(
+			<th class='{species}' style='width: 40%'>{}</th>
+			<th class='{species}' style='width: 13%'>{}</th>
+			<th class='{species}' style='width: 5%'>{}</th>
+			<th class='{species}' style='width: 5%'>{}</th>
+			<th class='{species}' style='width: 5%'>{}</th>
+			<th class='{species}' style='width: 5%'>{}</th>
+			<th class='{species}' style='width: 5%'>{}</th>""".format(
 				self.tr("Weapon"),
 				self.tr("Dmg."),
 				self.tr("Ranges"),
@@ -574,7 +574,21 @@ class RenderSheet(QObject):
 			return ""
 
 
-	def _createDescription(self):
+	def _createInventory(self, height=293):
+		#u"<div style='height:{height}; overflow:hidden;'>{text}</div>".format(text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory")), height="{}px".format(heightInventory))
+		
+		htmlText = text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory"))
+
+		htmlText += u"<dl>"
+		for typ in self.__character.extraordinaryItems:
+			equipment = "; ".join(self.__character.extraordinaryItems[typ])
+			htmlText += u"<dt><span class='scriptFont text'>{}</span></dt><dd><span class='scriptFont text'>{}</span><dd>".format(typ, equipment)
+		htmlText += u"</dl>"
+
+		return htmlText
+
+
+	def _createDescription(self, height=220):
 		dataTable = [
 			[
 				[ "Birthday:", self.__character.dateBirth.toString(Config.textDateFormat), ],
@@ -605,9 +619,15 @@ class RenderSheet(QObject):
 
 		htmlText = u"<table class='fullSpace'><tr style ='height: 100%;'><td class='layout'>"
 
-		htmlText += self.simpleTextBox(self.__character.description, title=self.tr("Description"))
+		htmlText += u"<div style='height:{height}; overflow:hidden;'>{text}</div>".format(text=self.simpleTextBox(self.__character.description, title=self.tr("Description")), height="{}px".format(height))
 
-		htmlText += u"</td></tr><tr><td class='layout'>"
+		htmlText += u"""</td>
+		</tr>
+		<tr>
+		<td class='layout'></td>
+		</tr>
+		<tr>
+		<td class='layout' style='height: 10%'>"""
 
 		htmlText += u"<table class='fullWidth'><tr>"
 		for column in dataTable:
@@ -624,7 +644,7 @@ class RenderSheet(QObject):
 		return htmlText
 
 
-	def _createImage(self):
+	def _createImage(self, height=190):
 		htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.tr("Picture"), species=self.__character.species)
 
 		if self.__character.picture:
@@ -634,7 +654,7 @@ class RenderSheet(QObject):
 			self.__character.picture.save(imageBuffer, Config.pictureFormat)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
 			imageData = imageData.toBase64()
 
-			htmlText += u"<p style='text-align: center;'><img src='data:image/{form};base64,{image}' style='max-width:100%; max-height:100%;'></p>".format(image=imageData, form=Config.pictureFormat)
+			htmlText += u"<p style='text-align: center;'><img src='data:image/{form};base64,{image}' style='max-width:100%; max-height:{height}px;'></p>".format(image=imageData, form=Config.pictureFormat, height=height)
 
 		return htmlText
 
@@ -663,7 +683,7 @@ class RenderSheet(QObject):
 			htmlText = u""
 			if title:
 				htmlText += u"<h1 class='{species}'>{title}</h1>".format(title=title, species=self.__character.species)
-			htmlText += u"<p><span class='scriptFont'>{}</span></p>".format(text)
+			htmlText += u"<p><span class='scriptFont text'>{}</span></p>".format(text)
 			return htmlText
 		else:
 			return ""

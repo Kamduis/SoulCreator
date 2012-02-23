@@ -94,15 +94,16 @@ table.fullSpace {
 	height: 100%;
 }
 td {
-	border: 1px solid #0F0;/* <- Nur zu Debug-Zwecken */
-	padding-top: .5em;
+	/*border: 1px solid #0F0;*//* <- Nur zu Debug-Zwecken */
+	padding-top: .45em;
 /* 	margin: .3em; */
-	vertical-align: baseline;
-	line-height: .7em;
+	vertical-align: bottom;
+/* 	vertical-align: baseline; */
+	line-height: .6em;
 /* 	overflow:hidden; */
 }
 td.layout {
-	border: 1px solid #F00;/* <- Nur zu Debug-Zwecken */
+	/*border: 1px solid #F00;*//* <- Nur zu Debug-Zwecken */
 	padding: 0px;
 	margin: 0px;
 /* 	overflow:hidden; */
@@ -123,7 +124,8 @@ td.hrulefill {
 	width: 100%;
 	white-space: nowrap;
 /* 	border-bottom: 1px solid #000; */
-	border-style: dotted;
+	border-style: solid;
+	border-color: white;
 	border-bottom-width: thin;
 	border-bottom-color: black;
 }
@@ -135,28 +137,31 @@ td.box {
 }
 
 /* Listen */
-/*dl {
-	padding: 0.5em;
-}
+/* dl { */
+/* 	padding: 0.5em; */
+/* 	line-height: 1.5em; */
+/* } */
 dt {
-	float: left;
-	clear: left;
-	width: 100px;
-	text-align: right;
+/* 	float: left; */
+/* 	clear: left; */
+/* 	width: 60px; */
+/* 	text-align: left; */
 	font-weight: bold;
-	color: green;
 }
 dt:after {
 	content: ":";
 }
 dd {
-	margin: 0 0 0 110px;
-	padding: 0 0 0.5em 0;
-}*/
+	margin-left: 2em;
+/* 	padding: 0 0 0.5em 0; */
+}
 
 /* Kurze Abschnitte */
 
 /* Abstände */
+.text {
+	line-height: 1.5em;
+}
 div.vFill {
 	height: 100%;
 }
