@@ -25,7 +25,7 @@ from __future__ import division, print_function
 #import sys
 import os
 
-from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir
+from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTimer
 from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
 from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
@@ -59,7 +59,7 @@ from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
 #from Draw.DrawSheet import DrawSheet
 from Draw.RenderSheet import RenderSheet
-#from Debug import Debug
+from Debug import Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
 
@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
 	#pageChanged = Signal(int)
 
 
-	def __init__(self, fileName=None, parent=None):
+	def __init__(self, fileName=None, exportPath=None, parent=None):
 		#dbgStart = Debug.timehook()
 		QMainWindow.__init__(self, parent)
 
@@ -159,11 +159,21 @@ class MainWindow(QMainWindow):
 			self.openCharacter(fileName)
 		#Debug.timesince(dbgStart)
 
+		if exportPath:
+			if GlobalState.isVerbose:
+				print("Erstelle PDF")
+			# exportPath ist eine Liste mit einem einzigen Element als Inhalt (argparse)
+			self.__createPdf(exportPath[0])
+			# Damit das Programm ordentlich geschlossen werden kann, muß auf das Starten der Event-Loop gewartet werden. dies geht am einfachsten mit einem QTimer.
+			QTimer.singleShot(0, self.close)
+
 
 
 	def closeEvent( self, event ):
 		if ( self.maybeSave() ):
 			self.writeSettings()
+			if GlobalState.isVerbose:
+				print("Closing now.")
 			event.accept()
 		else:
 			event.ignore()
@@ -583,6 +593,34 @@ class MainWindow(QMainWindow):
 			self.__character.setModified( False )
 
 
+	def __createPdf(self, savePath):
+		"""
+		Diese Funktion druckt den Charakter in ein PDF-Dokument.
+		"""
+
+		# Wenn Unterverzeichnis nicht existiert, erstelle es
+		dirname = os.path.dirname(savePath)
+		if not os.path.exists(dirname):
+			os.makedirs(dirname)
+
+		printer = QPrinter(QPrinter.PrinterResolution)
+		#printer = QPrinter()
+
+		printer.setOutputFormat( QPrinter.PdfFormat )
+		printer.setPaperSize( QPrinter.A4 )
+		printer.setFullPage( True )
+		printer.setOutputFileName( savePath )
+
+		#drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
+		drawSheet = RenderSheet( self.__storage, self.__character, printer, self )
+
+		try:
+			#drawSheet.print()
+			drawSheet.createSheets()
+		except ErrSpeciesNotExisting as e:
+			MessageBox.exception( self, e.message, e.description )
+
+
 	def exportCharacter(self):
 		"""
 		Diese Funktion druckt den Charakter in ein PDF-Dokument.
@@ -604,22 +642,7 @@ class MainWindow(QMainWindow):
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
-			printer = QPrinter(QPrinter.PrinterResolution)
-			#printer = QPrinter()
-
-			printer.setOutputFormat( QPrinter.PdfFormat )
-			printer.setPaperSize( QPrinter.A4 )
-			printer.setFullPage( True )
-			printer.setOutputFileName( filePath[0] )
-
-			#drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
-			drawSheet = RenderSheet( self.__storage, self.__character, printer, self )
-
-			try:
-				#drawSheet.print()
-				drawSheet.createSheets()
-			except ErrSpeciesNotExisting as e:
-				MessageBox.exception( self, e.message, e.description )
+			self.__createPdf(filePath[0])
 
 
 	def printCharacter(self):
@@ -687,7 +710,6 @@ class MainWindow(QMainWindow):
 
 		Diese Frage tritt auf, wenn der dargestellte Charakter nicht gespeichert ist und ehe das Programm geschlossen werden oder einen neuen Charakter anlegen soll.
 		"""
-
 
 		if ( self.__character.isModifed() ):
 			ret = QMessageBox.warning(

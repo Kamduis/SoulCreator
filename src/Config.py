@@ -42,7 +42,7 @@ class Config(object):
 	programVersionMajor = 0
 	programVersionMinor = 11
 	programVersionChange = 1
-	programDescription = "Charaktergenerator für die World of Darkness."
+	programDescription = "Charaktergenerator for the World of Darkness."
 	organization = "Caern"
 
 	# Konfigurationsdatei

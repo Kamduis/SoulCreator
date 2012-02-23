@@ -35,6 +35,7 @@ class GlobalState(object):
 	_isDebug = False
 	_isDevelop = False
 	_isFallback = False
+	isVerbose = False
 
 	_shared = {}
 	def __new__(cls, *args, **kwargs):

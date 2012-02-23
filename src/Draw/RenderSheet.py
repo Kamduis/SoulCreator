@@ -135,6 +135,7 @@ class RenderSheet(QObject):
 			goblinContracts=self._createGoblinContracts(),
 			magicalTool=self.simpleTextBox(self.__character.magicalTool, title=self.tr("Magical Tool"), species="Mage"),
 			vinculi=self._createVinculi(),
+			blessing="",
 			inventory=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory")),
 			description=self._createDescription(),
 			image=self._createImage(),
@@ -276,7 +277,7 @@ class RenderSheet(QObject):
 					if trait.isAvailable and self.__character.species == trait.species and (trait.value > 0 or self.__character.species in ( "Mage", "Werewolf", )):
 						traitList.append(trait)
 
-			iteratorGoal = ( len(traitList), )
+			iteratorGoal = ( ( 0, len(traitList), ), )
 			columnWidth = "100%"
 			if twocolumn:
 				iteratorGoal = (
@@ -421,7 +422,7 @@ class RenderSheet(QObject):
 			htmlText += u"</tr>"
 			htmlText += u"</table>"
 
-		
+
 
 		htmlText += u"<h1 class='{species}'>{title}</h1>".format(title=self.__storage.moralityName(self.__character.species), species=self.__character.species)
 		htmlText += u"<table class='fullWidth'>"
@@ -539,18 +540,18 @@ class RenderSheet(QObject):
 			],
 		]
 		if self.__character.species != "Human":
-			text[0][1] = "{} ({})".format(text[0][1], self.__character.age)
-			text[1][1] = "{} ({})".format(self.__character.dateBecoming.toString(Config.textDateFormat), self.__character.ageBecoming)
+			dataTable[0][1] = "{} ({})".format(dataTable[0][1], self.__character.age)
+			dataTable[1][1] = "{} ({})".format(self.__character.dateBecoming.toString(Config.textDateFormat), self.__character.ageBecoming)
 		if self.__character.species == "Changeling":
-			text[1][0] = "Taken:"
+			dataTable[1][0] = "Taken:"
 		elif self.__character.species == "Mage":
-			text[1][0] = "Awakening:"
+			dataTable[1][0] = "Awakening:"
 		elif self.__character.species == "Vampire":
-			text[1][0] = "Embrace:"
+			dataTable[1][0] = "Embrace:"
 		elif self.__character.species == "Werewolf":
-			text[1][0] = "First Change:"
+			dataTable[1][0] = "First Change:"
 			# Größe und Gewicht löschen
-			del text[4:6]
+			del dataTable[4:6]
 
 		htmlText = self.simpleTextBox(self.__character.description, title=self.tr("Description"))
 
@@ -569,7 +570,7 @@ class RenderSheet(QObject):
 
 	def _createImage(self):
 		htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.tr("Picture"), species=self.__character.species)
-		
+
 		if self.__character.picture:
 			imageData = QByteArray()
 			imageBuffer = QBuffer(imageData)
