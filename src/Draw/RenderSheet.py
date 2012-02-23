@@ -199,11 +199,12 @@ class RenderSheet(QObject):
 				tableContents[2][0][0] = "Totem:"
 				tableContents[2][0][1] = self.__character.companionName
 
-		htmlText = "<table class='fullWidth'>"
+		htmlText = "<table class='fullSpace'>"
 		for row in tableContents:
+			#htmlText += "<tr {}%>".format(100 / len(row))
 			htmlText += "<tr>"
 			for column in row:
-				htmlText += u"<td align='right'>{label}</td><td style='width: 25%;'><span id='scriptFont'>{value}</span></td>".format(label=column[0], value=column[1])
+				htmlText += u"<td align='right'>{label}</td><td style='width: 25%;'><span class='scriptFont'>{value}</span></td>".format(label=column[0], value=column[1])
 			htmlText += "</tr>"
 		htmlText += "</table>"
 
@@ -212,16 +213,30 @@ class RenderSheet(QObject):
 
 	def _createAttributes(self):
 		"""
-		Erzeugt die Darstellung der Fertigkeiten.
+		Erzeugt die Darstellung der Attribute.
 		"""
 
-		htmlText = u"<table class='fullWidth'>"
+		tableData = [
+			[],
+			[],
+			[],
+		]
+
 		for category in Config.attributes:
+			i = 0
+			for trait in category[1]:
+				tableData[i].append(self.__character.traits["Attribute"][category[0]][trait])
+				i += 1
+
+		for i in xrange(len(Config.attributeSorts)):
+			tableData[i].insert(0, Config.attributeSorts[i])
+
+		htmlText = u"<table class='fullWidth'>"
+		for row in tableData:
 			htmlText += u"<tr>"
-			htmlText += u"<td><span id='{species}'>{category}</span></td>".format(species=self.__character.species, category=category[0])
-			for attribute in category[1]:
-				trait = self.__character.traits["Attribute"][category[0]][attribute]
-				htmlText += u"<td style='width: 33%; text-align: right;'>{label}</td><td  style='text-align: right;'>{value}</td>".format(label=trait.name, value=self.valueStyled(trait.totalvalue, self.traitMax))
+			htmlText += u"<td style='width: 1%;'>{}</td>".format(row[0])
+			for column in row[1:]:
+				htmlText += u"<td style='width: 33%; text-align: right;'>{label}</td><td>{value}</td>".format(label=column.name, value=self.valueStyled(column.totalvalue, self.traitMax))
 			htmlText += u"</tr>"
 		htmlText += u"</table>"
 
@@ -233,27 +248,33 @@ class RenderSheet(QObject):
 		Erzeugt die Darstellung der Fertigkeiten und Spezialisierungen.
 		"""
 
-		htmlText = u""
+		htmlText = u"<table class='fullSpace' style='table-layout: fixed;'>"
+		firstRow = True
 		for item in self.__character.traits["Skill"]:
 			traits = self.__character.traits["Skill"][item].keys()
 			traits.sort()
+			if not firstRow:
+				htmlText += u"<tr><td class='layout'></td></tr>"
+			firstRow = False
+			## Dadurch, daß die Zeile einen Höhe von 0%, aber Inhalt hat, wird sie auf die Höhe des Inhalts gestreckt. Die Verbleibende Höhe wird auf die Zeilen ohne Hlhenangabe, die Platzhalterspalten, aufgeteilt.
+			htmlText += u"<tr style='height: 0%'><td class='layout'>"
 			htmlText += u"<h2 class='{species}'>{category}</h2>".format(species=self.__character.species.lower(), category=item)
-			#htmlText += u"<dl class='dottedList'>"
 			for subitem in traits:
 				trait = self.__character.traits["Skill"][item][subitem]
+				#Debug.debug(trait.era, self.__character.era, trait.age, Config.getAge(self.__character.age))
 				if (
-					(not trait.era or trait.era == self.__character.era) and
+					(not trait.era or self.__character.era in trait.era) and
 					(not trait.age or trait.age == Config.getAge(self.__character.age))
 				):
 					htmlText += u"<table class='fullWidth'>"
 					htmlText += u"<tr>"
 					htmlText += u"<td class='nowrap'>{label}</td>".format(label=trait.name)
-					htmlText += u"<td class='hrulefill'><span id='specialties'>{specialties}</span></td>".format(specialties=", ".join(trait.totalspecialties))
+					htmlText += u"<td class='hrulefill'><span class='specialties'>{specialties}</span></td>".format(specialties=", ".join(trait.totalspecialties))
 					htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
 					htmlText += u"</tr>"
 					htmlText += u"</table>"
-					#htmlText += u"<dt>{label}<span id='{specialties}'>{specialties}</span></dt><dd>{value}</dd>".format(label=trait.name, specialties=", ".join(trait.totalspecialties), value=self.valueStyled(trait.totalvalue, self.traitMax))
-			#htmlText += u"</dl>"
+			htmlText += u"</td></tr>"
+		htmlText += u"</table>"
 
 		return htmlText
 
@@ -290,13 +311,13 @@ class RenderSheet(QObject):
 
 			htmlText += u"<table style='width: {};'><tr>".format(columnWidth)
 			for column in iteratorGoal:
-				htmlText += u"<td>".format(columnWidth)
+				htmlText += u"<td class='layout'>".format(columnWidth)
 				for i in xrange(column[0], column[1]):
 					trait = traitList[i]
 					htmlText += u"<table class='fullWidth'>"
 					htmlText += u"<tr>"
 					htmlText += u"<td class='nowrap'>{label}</td>".format(label=trait.name)
-					htmlText += u"<td class='hrulefill'><span id='specialties'>{specialties}</span></td>".format(specialties=trait.customText)
+					htmlText += u"<td class='hrulefill'><span class='specialties'>{specialties}</span></td>".format(specialties=trait.customText)
 					htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
 					htmlText += u"</tr>"
 					htmlText += u"</table>"
@@ -308,12 +329,13 @@ class RenderSheet(QObject):
 			return ""
 
 
-	def _createMerits(self):
+	def _createMerits(self, count=20):
 		"""
 		Erzeugt die Darstellung der Merits.
 		"""
 
 		htmlText = u"<h1 class='{species}'>Merits</h1>".format(species=self.__character.species)
+		iterator = 0
 		for item in self.__character.traits["Merit"]:
 			traits = self.__character.traits["Merit"][item].keys()
 			traits.sort()
@@ -323,10 +345,17 @@ class RenderSheet(QObject):
 					htmlText += u"<table class='fullWidth'>"
 					htmlText += u"<tr>"
 					htmlText += u"<td class='nowrap'>{label}</td>".format(label=trait.name)
-					htmlText += u"<td class='hrulefill'><span id='specialties'>{specialties}</span></td>".format(specialties=trait.customText)
+					htmlText += u"<td class='hrulefill'><span class='specialties'>{specialties}</span></td>".format(specialties=trait.customText)
 					htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
 					htmlText += u"</tr>"
 					htmlText += u"</table>"
+					iterator += 1
+
+		while iterator < count:
+			htmlText += u"<table class='fullWidth'><tr>"
+			htmlText += u"<td class='hrulefill'></td><td class='nowrap' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(0, self.traitMax))
+			htmlText += u"</tr></table>"
+			iterator += 1
 
 		return htmlText
 
@@ -381,7 +410,7 @@ class RenderSheet(QObject):
 
 		## ((Name, Wert, Max, Kreise /und/ Quadrate, verbotene Spezies))
 		energy = (
-			( self.tr("Health"), self.__calc.calcHealth(), Config.healthMax, True, (), ),
+			( self.tr("Health"), self.__calc.calcHealth(), Config.healthMax[self.__character.species], True, (), ),
 			( self.tr("Willpower"), self.__calc.calcWillpower(), Config.willpowerMax, True, (), ),
 			( self.__storage.powerstatName(self.__character.species), self.__character.powerstat, Config.powerstatMax, False, ("Human"), ),
 		)
@@ -389,19 +418,19 @@ class RenderSheet(QObject):
 		for item in energy:
 			if self.__character.species not in item[4]:
 				htmlText += u"<h1 class='{species}'>{title}</h1>".format(title=item[0], species=self.__character.species)
-				htmlText += u"<table class='fullWidth'>"
+				htmlText += u"<table style='width: 100%;'>"
 				htmlText += u"<tr>"
-				htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(item[1], item[2]))
-				#for i in xrange(item[1]):
-					#htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(1))
-				#for i in xrange(item[1], item[2]):
-					#htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(0, 1))
+				#htmlText += u"<td class='narrowLine' style='text-align: center;'><span class='bigSymbols'>{}</span></td>".format(self.valueStyled(item[1], item[2]))
+				for i in xrange(item[1]):
+					htmlText += u"<td class='layout' style='text-align: center;'><span class='bigSymbols'>{}</span></td>".format(self.valueStyled(1))
+				for i in xrange(item[1], item[2]):
+					htmlText += u"<td class='layout' style='text-align: center;'><span class='bigSymbols'>{}</span></td>".format(self.valueStyled(0, 1))
 				htmlText += u"</tr>"
 				if item[3]:
 					htmlText += u"<tr>"
-					htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(0, item[2], squares=True))
-					#for i in xrange(item[2]):
-						#htmlText += u"<td style='text-align: center;'><span id='bigSymbols'>{}</span></td>".format(self.valueStyled(0, 1, squares=True))
+					#htmlText += u"<td class='narrowLine' style='text-align: center;'><span class='bigSymbols'>{}</span></td>".format(self.valueStyled(0, item[2], squares=True))
+					for i in xrange(item[2]):
+						htmlText += u"<td class='layout' style='text-align: center;'><span class='bigSymbols'>{}</span></td>".format(self.valueStyled(0, 1, squares=True))
 					htmlText += u"</tr>"
 				htmlText += u"</table>"
 
@@ -415,24 +444,22 @@ class RenderSheet(QObject):
 			while value > maxPerRow:
 				value -= maxPerRow
 				for i in xrange(maxPerRow):
-					htmlText += u"<td style='text-align: center;'>{}</td>".format(self.valueStyled(0, 1, squares=True))
+					htmlText += u"<td class='layout' style='text-align: center;'><span class='bigSymbols'>{}</span></td>".format(self.valueStyled(0, 1, squares=True))
 				htmlText += u"</tr><tr>"
 			for i in xrange(value):
-				htmlText += u"<td style='text-align: center;'>{}</td>".format(self.valueStyled(0, 1, squares=True))
+				htmlText += u"<td class='layout' style='text-align: center;'><span class='bigSymbols'>{}</span></td>".format(self.valueStyled(0, 1, squares=True))
 			htmlText += u"</tr>"
 			htmlText += u"</table>"
-
-
 
 		htmlText += u"<h1 class='{species}'>{title}</h1>".format(title=self.__storage.moralityName(self.__character.species), species=self.__character.species)
 		htmlText += u"<table class='fullWidth'>"
 		for row in range(self.__character.morality + 1, Config.moralityTraitMax + 1)[::-1]:
 			htmlText += u"<tr>"
-			htmlText += u"<td style='text-align: center;'>{level}</td><td {hrule}><span id='scriptFont'>{derangement}</span></td><td style='text-align: center;'>{value}</td>".format(level=row, derangement=self.derangement(row), value=self.valueStyled(0, 1), hrule=self.__derangementPossible(row))
+			htmlText += u"<td style='text-align: center;'>{level}</td><td {hrule}><span class='scriptFont'>{derangement}</span></td><td  class='narrowLine' style='text-align: center;'><span class='bigSymbols'>{value}</span></td>".format(level=row, derangement=self.derangement(row), value=self.valueStyled(0, 1), hrule=self.__derangementPossible(row))
 			htmlText += u"</tr>"
 		for row in range(1, self.__character.morality + 1)[::-1]:
 			htmlText += u"<tr>"
-			htmlText += u"<td style='text-align: center;'>{level}</td><td {hrule}></td><td style='text-align: center;'>{value}</td>".format(level=row, value=self.valueStyled(1), hrule=self.__derangementPossible(row))
+			htmlText += u"<td style='text-align: center;'>{level}</td><td {hrule}></td><td class='narrowLine' style='text-align: center;'><span class='bigSymbols'>{value}</span></td>".format(level=row, value=self.valueStyled(1), hrule=self.__derangementPossible(row))
 			htmlText += u"</tr>"
 		htmlText += u"</table>"
 
@@ -457,7 +484,7 @@ class RenderSheet(QObject):
 			return ""
 
 
-	def _createWeapons(self):
+	def _createWeapons(self, count=5):
 		"""
 		Die Waffen werden aufgelistet.
 		"""
@@ -473,24 +500,47 @@ class RenderSheet(QObject):
 
 		htmlText = u"<table class='fullWidth'>"
 		htmlText += u"<tr>"
-		htmlText += u"<th id='{species}'>{}</th><th id='{species}'>{}</th><th id='{species}'>{}</th><th id='{species}'>{}</th><th id='{species}'>{}</th><th id='{species}'>{}</th><th id='{species}'>{}</th>".format(
-			self.tr("Weapon"),
-			self.tr("Dmg."),
-			self.tr("Ranges"),
-			self.tr("Cap."),
-			self.tr("Str."),
-			self.tr("Size"),
-			self.tr("Durab."),
-			species=self.__character.species,
-		)
+		htmlText += u"""
+			<th class='{species}'>{}</th>
+			<th class='{species}'>{}</th>
+			<th class='{species}'>{}</th>
+			<th class='{species}'>{}</th>
+			<th class='{species}'>{}</th>
+			<th class='{species}'>{}</th>
+			<th class='{species}'>{}</th>""".format(
+				self.tr("Weapon"),
+				self.tr("Dmg."),
+				self.tr("Ranges"),
+				self.tr("Cap."),
+				self.tr("Str."),
+				self.tr("Size"),
+				self.tr("Durab."),
+				species=self.__character.species,
+			)
 		htmlText += u"</tr>"
+
+		#Debug.debug(htmlText)
+
+		iterator = 0
 		for category in self.__character.weapons:
 			for weapon in self.__character.weapons[category]:
 				htmlText += u"<tr>"
-				htmlText += u"<td><span id='scriptFont'>{}</span></td>".format(weapon)
+				htmlText += u"<td><span class='scriptFont'>{}</span></td>".format(weapon)
 				for column in weaponInfo:
-					htmlText += u"<td style='text-align: center;'><span id='scriptFont'>{}</span></td>".format(self.__storage.weapons[category][weapon][column])
+					htmlText += u"<td style='text-align: center;'><span class='scriptFont'>{}</span></td>".format(self.__storage.weapons[category][weapon][column])
 				htmlText += u"</tr>"
+				iterator += 1
+
+		while iterator < count:
+			htmlText += u"<tr class='rowHeight'>"
+			## Der Waffenname hat ja auch ein Feld.
+			for i in xrange(len(weaponInfo) + 1):
+				htmlText += u"<td class='layout' style='vertical-align: bottom;'><table class='underlines fullWidth'><tr style='height: 100%;'>"
+				htmlText += u"<td class='hrulefill'></td>"
+				htmlText += u"</tr></table></td>"
+			htmlText += u"</tr>"
+			iterator += 1
+
 		htmlText += u"</table>"
 
 		return htmlText
@@ -517,7 +567,7 @@ class RenderSheet(QObject):
 			htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.tr("Vinculi"), species=self.__character.species)
 			htmlText += u"<table class='fullWidth'>"
 			for vinculum in self.__character.vinculi:
-				htmlText += u"<tr><td style='width: 100%;'><span id='scriptFont'>{name}</span></td><td>{value}</td></tr>".format(name=vinculum.name, value=self.valueStyled(vinculum.value, Config.vinculumLevelMax))
+				htmlText += u"<tr><td style='width: 100%;'><span class='scriptFont'>{name}</span></td><td>{value}</td></tr>".format(name=vinculum.name, value=self.valueStyled(vinculum.value, Config.vinculumLevelMax))
 			htmlText += u"</table>"
 			return htmlText
 		else:
@@ -553,17 +603,23 @@ class RenderSheet(QObject):
 			# Größe und Gewicht löschen
 			del dataTable[4:6]
 
-		htmlText = self.simpleTextBox(self.__character.description, title=self.tr("Description"))
+		htmlText = u"<table class='fullSpace'><tr style ='height: 100%;'><td class='layout'>"
+
+		htmlText += self.simpleTextBox(self.__character.description, title=self.tr("Description"))
+
+		htmlText += u"</td></tr><tr><td class='layout'>"
 
 		htmlText += u"<table class='fullWidth'><tr>"
 		for column in dataTable:
-			htmlText += u"<td style='width: {}%;'><table class='fullWidth'>".format(100 / len(dataTable))
+			htmlText += u"<td class='layout' style='width: {}%;'><table class='fullWidth'>".format(100 / len(dataTable))
 			for row in column:
 				htmlText += u"<tr>"
-				htmlText += u"<td>{label}</td><td class='hfill' style='text-align: right;'><span id='scriptFont'>{value}</span></td>".format(label=row[0], value=row[1])
+				htmlText += u"<td>{label}</td><td class='hfill' style='text-align: right;'><span class='scriptFont'>{value}</span></td>".format(label=row[0], value=row[1])
 				htmlText += u"</tr>"
 			htmlText += u"</table></td>"
 		htmlText += u"</tr></table>"
+
+		htmlText += u"</td></tr></table>"
 
 		return htmlText
 
@@ -596,7 +652,7 @@ class RenderSheet(QObject):
 		for column in xpColumns:
 			htmlText += u"<table style='width: {}%'>".format(100 / len(xpColumns))
 			htmlText += u"<tr><td><h1 class='{species}'>{title}</h1></td></tr>".format(title=column, species=self.__character.species)
-			htmlText += u"<tr style='height: 3em;'><td></td></tr>"
+			htmlText += u"<tr style='height: 3em;'><td class='box'></td></tr>"
 			htmlText += u"</table>"
 
 		return htmlText
@@ -607,7 +663,7 @@ class RenderSheet(QObject):
 			htmlText = u""
 			if title:
 				htmlText += u"<h1 class='{species}'>{title}</h1>".format(title=title, species=self.__character.species)
-			htmlText += u"<p><span id='scriptFont'>{}</span></p>".format(text)
+			htmlText += u"<p><span class='scriptFont'>{}</span></p>".format(text)
 			return htmlText
 		else:
 			return ""
@@ -638,6 +694,7 @@ class RenderSheet(QObject):
 		for empty in xrange(min(value, maxValue), maxValue):
 			text += charEmpty
 
+		text = u"<span class='dotSize'>{}</span>".format(text)
 		return text
 
 
@@ -747,9 +804,10 @@ class RenderSheet(QObject):
 		self._drawBackground()
 		#posY = 0.01 * self.__paperSize[1]
 		posY = 0
-		width = 0.3 * self.__paperSize[0]
-		#if self.__character.species == "Changeling":
-			#width = 950
+		width = 0.33 * self.__paperSize[0]
+		if self.__character.species == "Changeling":
+			posY = 0.035 * self.__paperSize[1]
+			width = 0.35 * self.__paperSize[0]
 		#elif self.__character.species == "Mage":
 			#width = 780
 		#elif self.__character.species == "Vampire":

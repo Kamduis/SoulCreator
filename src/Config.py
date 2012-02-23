@@ -171,8 +171,16 @@ class Config(object):
 	## Startwert der Moral.
 	moralityTraitDefaultValue = 7
 
+	## Höchstwert der Gesundheit, von Spezies zu Spezies unterschiedlich.
+	healthMax = {
+		"Human": 11,
+		"Changeling": 11,
+		"Mage": 16,
+		"Vampire": 16,
+		"Werewolf": 16,
+	}
+
 	## Höchstwert der Willenskraft.
-	healthMax = 10
 	willpowerMax = 10
 
 	## Mindestwert der besonderen übernatürlichen Eigenschaft.

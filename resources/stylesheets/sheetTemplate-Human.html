@@ -1,56 +1,89 @@
-<!-- <div id="vSpaceHead"></div> -->
-<table style="width: 100%; height: 100%">
-	<tr style="min-height: 25%; max-height: 25%;">
-		<td>{info}</td>
+<!-- <div class="vSpaceHead"></div> -->
+<table class="fullSpace">
+	<tr style="height: 80px;">
+		<td class="layout"></td>
 	</tr>
-	<tr style="min-height: 25%; max-height: 25%;">
-		<td>{attributes}</td>
+	<tr style="height: 0%;">
+		<td class="layout">{info}</td>
 	</tr>
-	<tr style="min-height: 25%; max-height: 25%;">
-		<td>
-			<table style="width: 100%;">
-				<tr>
-					<td style="width: 33%;">
+	<tr style="height: 0%;">
+		<td class="layout">{attributes}</td>
+	</tr>
+	<tr style="height: 0%;">
+		<td class="layout">
+			<table class="fullSpace">
+				<tr style="height: 100%;">
+					<td class='layout' style="width: 33%; vertical-align: top;">
 						{skills}
 					</td>
-					<td style="width: 67%;">
+					<td class="layout">
+						<div class="spacer"></div>
+					</td>
+					<td class="layout" style="width: 67%;">
 						<table style="width: 100%;">
 							<tr>
-								<td style="width: 60%;">
+								<td class="layout" style="width: 60%;">
 									{merits}
 									{flaws}
 								</td>
-								<td style="width: 40%;">
+								<td class="layout">
+									<div class="spacer"></div>
+								</td>
+								<td class='layout middle' style="width: 40%;">
 									{advantages}
 								</td>
 							</tr>
 						</table>
-						{weapons}
+						<table style="width: 100%; height: 100;">
+							<tr>
+								<td class="layout">
+									{weapons}
+								</td>
+							</tr>
+						</table>
 					</td>
 				</tr>
 			</table>
 		</td>
 	</tr>
-	<tr style="min-height: 25%; max-height: 25%;">
-		<table>
-			<tr>
-				<td style="width: 33%;">
-					{inventory}
-				</td>
-				<td style="width: 33%;">
-					{description}
-				</td>
-				<td style="width: 33%;">
-					<table style="width: 100%">
-						<tr>
-							<td>
-								{image}
-								{xp}
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+	<tr class="fullSpace">
+		<td class='layout'>
+			<table class="fullSpace">
+				<tr>
+					<td class='layout' style="width: 33%;">
+						{inventory}
+					</td>
+						<td class='layout'>
+							<div class="spacer"></div>
+						</td>
+					<td class='layout middle' style="width: 33%;">
+						{description}
+					</td>
+						<td class='layout'>
+							<div class="spacer"></div>
+						</td>
+					<td class='layout' style="width: 33%;">
+						<table class="fullSpace">
+							<tr>
+								<td class='layout'>
+									<table class='fullSpace'>
+										<tr style ='height: 100%;'>
+											<td class='layout'>
+												{image}
+											</td>
+										</tr>
+										<tr>
+											<td class='layout'>
+												{xp}
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
 	</tr>
 </table>
