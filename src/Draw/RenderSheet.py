@@ -37,7 +37,7 @@ from src.Error import ErrFileNotOpened
 #from src.Random import Random
 from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
-#from src.Calc.CalcShapes import CalcShapes
+from src.Calc.CalcShapes import CalcShapes
 #from src.Draw.CharacterSheetDocument import CharacterSheetDocument
 from src.Tools import ImageTools
 from src.Debug import Debug
@@ -192,7 +192,11 @@ class RenderSheet(QObject):
 			),
 			curseBreed=self.simpleTextBox(
 				self.__storage.breedCurse(self.__character.species, self.__character.breed),
-				title=self.tr("{} {}".format(self.__storage.breedTitle(self.__character.species), curseText))
+				title="{} {}".format(self.__storage.breedTitle(self.__character.species), curseText)
+			),
+			curseOrganisation=self.simpleTextBox(
+				self.__storage.organisationCurse(self.__character.species, self.__character.organisation),
+				title="{} {}".format(self.__storage.organisationTitle(self.__character.species), curseText)
 			),
 			spellsActive=self.userTextBox(
 				lines=7,
@@ -212,9 +216,15 @@ class RenderSheet(QObject):
 				self.__character.paradoxMarks,
 				title=self.tr("Paradox Marks")
 			),
+			shapes=self._createShapeTable(),
 			inventory=self._createInventory(blockHeight[self.__character.species]["inventory"]),
 			description=self._createDescription(blockHeight[self.__character.species]["description"]),
 			image=self._createImage(),
+			rolls=self._createRolls(),
+			notes=self.userTextBox(
+				lines=3,
+				title=self.tr("Notes")
+			),
 			xp=self._createXp(),
 		)
 
@@ -442,20 +452,20 @@ class RenderSheet(QObject):
 				colIterator += 1
 			htmlText += u"</tr></table>"
 
-			while iterator < count:
-				htmlText += u"<table style='width: 100%'><tr>"
-				for column in iteratorGoal:
-					htmlText += u"<td class='layout'>"
-					for i in xrange(column[0], column[1]):
-						trait = traitList[i]
-						htmlText += u"<table class='fullWidth'>"
-						htmlText += u"<tr>"
-						htmlText += u"<td class='hrulefill'></td><td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(0, self.traitMax))
-						htmlText += u"</tr>"
-						htmlText += u"</table>"
-						iterator += 1
-					htmlText += u"</td>"
-				htmlText += u"</tr></table>"
+			freeCount = count - iterator
+			if freeCount < 0:
+				freeCount = 0
+			htmlText += u"<table style='width: 100%'><tr>"
+			for column in iteratorGoal:
+				htmlText += u"<td class='layout'>"
+				for i in xrange(int(math.ceil(freeCount / len(iteratorGoal)))):
+					htmlText += u"<table class='fullWidth'>"
+					htmlText += u"<tr>"
+					htmlText += u"<td class='hrulefill'></td><td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(0, self.traitMax))
+					htmlText += u"</tr>"
+					htmlText += u"</table>"
+				htmlText += u"</td>"
+			htmlText += u"</tr></table>"
 
 			return htmlText
 		else:
@@ -472,8 +482,8 @@ class RenderSheet(QObject):
 				"Human": 20,
 				"Changeling": 20,
 				"Mage": 21,
-				"Vampire": 15,
-				"Werewolf": 15,
+				"Vampire": 26,
+				"Werewolf": 20,
 			}
 			if self.__character.species in countPerSpecies.keys():
 				count = countPerSpecies[self.__character.species]
@@ -722,15 +732,184 @@ class RenderSheet(QObject):
 
 
 	def _createVinculi(self):
-		if self.__character.species == "Vampire":
-			htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.tr("Vinculi"), species=self.__character.species)
-			htmlText += u"<table class='fullWidth'>"
-			for vinculum in self.__character.vinculi:
-				htmlText += u"<tr><td style='width: 100%;'><span class='scriptFont'>{name}</span></td><td>{value}</td></tr>".format(name=vinculum.name, value=self.valueStyled(vinculum.value, Config.vinculumLevelMax))
-			htmlText += u"</table>"
-			return htmlText
-		else:
-			return ""
+		htmlText = u"<h1 class='{species}'>{title}</h1>".format(title="Vinculi", species=self.__character.species)
+		htmlText += u"<table class='fullWidth'>"
+		iterator = 0
+		for vinculum in [ item for item in self.__character.vinculi if item.value > 0 ]:
+			htmlText += u"<tr>"
+			htmlText += u"<td class='nowrap withHRule'>{label}</td>".format(label=vinculum.name)
+			htmlText += u"<td class='hrulefill'></td>"
+			htmlText += u"<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(vinculum.value, Config.vinculumLevelMax))
+			htmlText += u"</tr>"
+			iterator += 1
+		htmlText += u"</table>"
+
+		htmlText += u"<table class='fullWidth'>"
+		while iterator < len(self.__character.vinculi):
+			htmlText += u"<tr>"
+			htmlText += u"<td class='hrulefill'></td>"
+			htmlText += u"<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(0, Config.vinculumLevelMax))
+			htmlText += u"</tr>"
+			iterator += 1
+		htmlText += u"</table>"
+
+		return htmlText
+
+
+	def _createShapeTable(self):
+		## Attributsänderungen
+		shapesAttributes = {
+			"Hishu": (
+			),
+			"Dalu": (
+				( u"Strength (+1)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[1]) ),
+				( u"Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[1]) ),
+				( u"Manipulation (−1)", CalcShapes.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[1]) ),
+			),
+			"Gauru": (
+				( u"Strength (+3)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[2]) ),
+				( u"Dexterity (+1)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]) ),
+				( u"Stamina (+2)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[2]) ),
+			),
+			"Urshul": (
+				( u"Strength (+2)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[3]) ),
+				( u"Dexterity (+2)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]) ),
+				( u"Stamina (+2)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[3]) ),
+				( u"Manipulation (−3)", CalcShapes.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[3]) ),
+			),
+			"Urhan": (
+				( u"Dexterity (+2)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]) ),
+				( u"Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[4]) ),
+			),
+		}
+
+		armor = [ 0, 0, ]
+		isDedicated = self.__character.armor["dedicated"]
+		if self.__character.armor["name"] in self.__storage.armor:
+			armor[0] = self.__storage.armor[self.__character.armor["name"]]["general"]
+			armor[1] = self.__storage.armor[self.__character.armor["name"]]["firearms"]
+
+		advantages = (
+			( self.tr("Size"), self.__calc.calcSize(), ),
+			( self.tr("Initiative"), self.__calc.calcInitiative(), ),
+			( self.tr("Speed"), self.__calc.calcSpeed(), ),
+			( self.tr("Defense"), self.__calc.calcDefense(), ),
+			( self.tr("Armor"), "{general}/{firearms}".format(general=armor[0], firearms=armor[1]), ),
+			( self.tr("Perception"), u"±0", ),
+		)
+		daluArmor = "0/0"
+		if isDedicated:
+			daluArmor = advantages[4][1]
+		shapesAdvantages = {
+			"Hishu": advantages,
+			"Dalu": (
+				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[1]), ),
+				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[1]), ),
+				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[1]), ),
+				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[1]), ),
+				( advantages[4][0], daluArmor, ),
+				( advantages[5][0], u"+2", ),
+			),
+			"Gauru": (
+				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[2]), ),
+				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[2]), ),
+				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[2]), ),
+				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]), ),
+				( advantages[4][0], "1/1", ),
+				( advantages[5][0], u"+3", ),
+			),
+			"Urshul": (
+				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[3]), ),
+				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[3]), ),
+				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[3]), ),
+				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]), ),
+				( advantages[4][0], "0", ),
+				( advantages[5][0], u"+3", ),
+			),
+			"Urhan": (
+				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[4]), ),
+				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[4]), ),
+				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[4]), ),
+				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]), ),
+				( advantages[4][0], "0", ),
+				( advantages[5][0], u"+4", ),
+			),
+		}
+
+		## Ohne unicode im Argument von self.tr() auch kein unicode "−"!
+		comments = {
+			"Hishu": (
+				self.tr("Others suffer -2 to all attempts to detect werewolf nature."),
+			),
+			"Dalu": (
+				self.tr("Lunacy -4"),
+			),
+			"Gauru": (
+				self.tr("Full Lunacy<br>Bite: +2L, Claw: +1L<br>-2 to resist Death Rage"),
+			),
+			"Urshul": (
+				self.tr("Lunacy -2<br>ite: +2L"),
+			),
+			"Urhan": (
+				self.tr("Bite: +2L<br>Others suffer -2 to all attempts to detect werewolf nature."),
+			),
+		}
+
+		htmlText = "<table style='width: 100%'><tr>"
+		iterator = 0
+		for shape in Config.shapesWerewolf:
+			if iterator > 0:
+				htmlText += "<td class='layout spacer'><!--Fixed horizontal space--></td>"
+			htmlText += "<td class='layout' style='width: {}%'>".format((100 / len(Config.shapesWerewolf)) - 1)
+			htmlText += "<h2 class='{species}'>{title}</h2>".format(title=shape, species=self.__character.species)
+			htmlText += "<table style='width: 100%'>"
+			for row in shapesAttributes[shape]:
+				htmlText += "<tr><td class='layout'><table style='width: 100%'><tr>"
+				htmlText += u"<td class='nowrap withHRule'>{label}</td>".format(label=row[0])
+				htmlText += u"<td class='hrulefill'></td>"
+				htmlText += u"<td class='nowrap withHRule' style='text-align: right;'><span class='scriptFont'>{value}</span></td>".format(value=row[1])
+				htmlText += "</tr></table></td></tr>"
+			htmlText += "</table>"
+			htmlText += "</td>"
+			iterator += 1
+		htmlText += "</tr><tr>"
+		for shape in Config.shapesWerewolf:
+			htmlText += "<td class='layout'><div class='spacer'></div></td>"
+		htmlText += "</tr><tr>"
+		iterator = 0
+		for shape in Config.shapesWerewolf:
+			if iterator > 0:
+				htmlText += "<td class='layout spacer'><!--Fixed horizontal space--></td>"
+			htmlText += "<td class='layout'>"
+			htmlText += "<table style='width: 100%'>"
+			for row in shapesAdvantages[shape]:
+				htmlText += "<tr><td class='layout'><table style='width: 100%'><tr>"
+				htmlText += u"<td class='nowrap withHRule'>{label}</td>".format(label=row[0])
+				htmlText += u"<td class='hrulefill'></td>"
+				htmlText += u"<td class='nowrap withHRule' style='text-align: right;'><span class='scriptFont'>{value}</span></td>".format(value=row[1])
+				htmlText += "</tr></table></td></tr>"
+			htmlText += "</table>"
+			htmlText += "</td>"
+			iterator += 1
+		htmlText += "</tr><tr>"
+		for shape in Config.shapesWerewolf:
+			htmlText += "<td class='layout'><div class='spacer'></div></td>"
+		htmlText += "</tr><tr>"
+		iterator = 0
+		for shape in Config.shapesWerewolf:
+			if iterator > 0:
+				htmlText += "<td class='layout spacer'><!--Fixed horizontal space--></td>"
+			htmlText += "<td class='layout'>"
+			htmlText += "<table style='width: 100%'>"
+			for row in comments[shape]:
+				htmlText += "<tr><td style='text-align: center; font-style: italic;'><span class='small' style=' line-height: 1em;'>{}</span></td></tr>".format(row)
+			htmlText += "</table>"
+			htmlText += "</td>"
+			iterator += 1
+		htmlText += "</tr></table>"
+
+
+		return htmlText
 
 
 	def _createInventory(self, height=293):
@@ -817,6 +996,34 @@ class RenderSheet(QObject):
 			imageData = imageData.toBase64()
 
 			htmlText += u"<p style='text-align: center;'><img src='data:image/{form};base64,{image}' style='max-width:100%; max-height:{height}px;'></p>".format(image=imageData, form=Config.pictureFormat, height=height)
+
+		return htmlText
+
+
+	def _createRolls(self, height=190):
+		htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.tr("Rolls"), species=self.__character.species)
+
+		specialBonus = ""
+		if self.__character.species == "Werewolf" and self.__character.breed == "Irraka":
+			specialBonus = "+ 2"
+
+		rolls = {
+			"Werewolf": (
+				( "Shapeshifting", "Stamina + Survival + Primal Urge", ),
+				( "Stepping Sideways", "Intelligence + Presence + Primal Urge", ),
+				( "Dual Senses", "Wits + Empathy + Primal Urge{}".format(specialBonus), ),
+				( "Sense Twilight Spirit", "Wits + Occult + Primal Urge{}".format(specialBonus), ),
+			),
+		}
+
+		htmlText += "<table style='width: 100%'>"
+		for roll in rolls[self.__character.species]:
+			htmlText += "<tr><td class='layout'><table style='width: 100%'><tr>"
+			htmlText += "<td class='nowrap withHRule'>{desc}</td>".format(desc=roll[0])
+			htmlText += "<td class='hrulefill'></td>"
+			htmlText += "<td class='nowrap withHRule' style='text-align: right;'>{dice}</td>".format(dice=roll[1])
+			htmlText += "</tr></table></td></tr>"
+		htmlText += "</table>"
 
 		return htmlText
 
@@ -1025,11 +1232,12 @@ class RenderSheet(QObject):
 		elif self.__character.species == "Mage":
 			posY = 0.01 * self.__paperSize[1]
 			width = 0.33 * self.__paperSize[0]
-		#elif self.__character.species == "Vampire":
-			#posY = -80
-			#width = 500
-		#elif self.__character.species == "Werewolf":
-			#width = 780
+		elif self.__character.species == "Vampire":
+			posY = 0
+			width = 0.25 * self.__paperSize[0]
+		elif self.__character.species == "Werewolf":
+			posY = 0.01 * self.__paperSize[1]
+			width = 0.33 * self.__paperSize[0]
 		self._drawLogo(posY, width)
 
 		## HTML-Struktur drucken.
