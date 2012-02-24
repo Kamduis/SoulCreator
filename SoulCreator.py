@@ -76,6 +76,9 @@ if __name__ == "__main__":
 	GlobalState.isDevelop = args.develop
 	GlobalState.isFallback = args.fallback
 
+	if GlobalState.isDebug:
+		print("{} runs in debug mode".format(Config.programName))
+
 	app = QApplication(sys.argv)
 	w = MainWindow( args.file )
 	w.show()

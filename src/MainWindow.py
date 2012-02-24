@@ -106,9 +106,6 @@ class MainWindow(QMainWindow):
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
 
-		if GlobalState.isDebug:
-			print("{} wurde im Debug-Modus aufgerufen.".format(Config.programName))
-
 		QCoreApplication.setOrganizationName( Config.organization )
 		QCoreApplication.setApplicationName( Config.programName )
 		QCoreApplication.setApplicationVersion( Config.version() )
