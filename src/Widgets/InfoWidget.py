@@ -108,7 +108,7 @@ class InfoWidget(QWidget):
 		self.__character.hairChanged.connect(self.ui.lineEdit_hair.setText)
 		self.__character.nationalityChanged.connect(self.ui.lineEdit_nationality.setText)
 		self.__character.pictureChanged.connect(self.updatePicture)
-		self.__character.descriptionChanged.connect(self.ui.textEdit_description.setPlainText)
+		self.__character.descriptionChanged.connect(self.ui.textEdit_description.setHtml)
 
 		## Das Alter darf nie negativ werden können
 		#self.ui.dateEdit_dateBirth.dateChanged.connect(self.ui.dateEdit_dateBecoming.setMinimumDate)
@@ -148,7 +148,7 @@ class InfoWidget(QWidget):
 		cursor = self.ui.textEdit_description.textCursor()
 		cursorPosition = cursor.position()
 
-		self.__character.description = self.ui.textEdit_description.toPlainText()
+		self.__character.description = self.ui.textEdit_description.toHtml()
 
 		cursor.setPosition(cursorPosition)
 		self.ui.textEdit_description.setTextCursor(cursor)

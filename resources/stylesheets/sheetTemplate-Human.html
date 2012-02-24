@@ -1,80 +1,88 @@
 <!-- <div class="vSpaceHead"></div> -->
 <table class="fullSpace">
-	<tr style="height: 80px;">
-		<td class="layout"></td>
-	</tr>
-	<tr style="height: 0%;">
-		<td class="layout">{info}</td>
-	</tr>
-	<tr style="height: 0%;">
-		<td class="layout">{attributes}</td>
-	</tr>
-	<tr style="height: 0%;">
-		<td class="layout">
+	<tr>
+		<td class="layout" style='padding: 5px; padding-top: 120;'>
 			<table class="fullSpace">
-				<tr style="height: 100%;">
-					<td class='layout' style="width: 33%; vertical-align: top;">
-						{skills}
-					</td>
-					<td class="layout">
-						<div class="spacer"></div>
-					</td>
-					<td class="layout" style="width: 67%;">
-						<table style="width: 100%;">
-							<tr>
-								<td class="layout" style="width: 60%;">
-									{merits}
-									{flaws}
-								</td>
-								<td class="layout">
-									<div class="spacer"></div>
-								</td>
-								<td class='layout middle' style="width: 40%;">
-									{advantages}
-								</td>
-							</tr>
-						</table>
-						<table style="width: 100%; height: 100;">
-							<tr>
-								<td class="layout">
-									{weapons}
-								</td>
-							</tr>
-						</table>
-					</td>
+				<tr style="height: 0%;">
+					<td class="layout">{info}</td>
 				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr class="fullSpace">
-		<td class='layout'>
-			<table class="fullSpace">
 				<tr>
-					<td class='layout' style="width: 33%;">
-						{inventory}
-					</td>
-						<td class='layout'>
-							<div class="spacer"></div>
-						</td>
-					<td class='layout middle' style="width: 33%;">
-						{description}
-					</td>
-						<td class='layout'>
-							<div class="spacer"></div>
-						</td>
-					<td class='layout' style="width: 33%;">
+					<td class="layout"><!--Just vor stretchable vertical space--></td>
+				</tr>
+				<tr style="height: 0%;">
+					<td class="layout">{attributes}</td>
+				</tr>
+				<tr>
+					<td class="layout"><!--Just vor stretchable vertical space--></td>
+				</tr>
+				<tr style="height: 0%;">
+					<td class="layout">
 						<table class="fullSpace">
-							<tr>
-								<td class='layout'>
-									<table class='fullSpace'>
-										<tr style ='height: 100%;'>
-											<td class='layout'>
-												{image}
+							<tr style="height: 100%;">
+								<td class='layout' style="vertical-align: top;">
+									{skills}
+								</td>
+								<td class="layout spacer"><!--Fixed horizontal space--></td>
+								<td class="layout" style="width: 66%;">
+									<table style="width: 100%; height: 100%;">
+										<tr style="height: 100%;">
+											<td class="layout">
+												<table style="width: 100%; height: 100%;">
+													<tr style='height: 0%'>
+														<td class="layout">
+															{merits}
+														</td>
+													</tr>
+													<tr>
+														<td class="layout"><!--Just vor stretchable vertical space--></td>
+													</tr>
+													<tr style='height: 0%'>
+														<td class="layout">
+															{flaws}
+														</td>
+													</tr>
+												</table>
+											</td>
+											<td class="layout spacer"><!--Fixed horizontal space--></td>
+											<td class='layout' style="width: 40%;">
+												<table style="width: 100%; height: 100%;">
+													<tr style='height: 0%'>
+														<td class="layout">
+															{advantages}
+														</td>
+													</tr>
+													<tr>
+														<td class="layout"><!--Just vor stretchable vertical space--></td>
+													</tr>
+													<tr style='height: 0%'>
+														<td class="layout">
+															{health}
+														</td>
+													</tr>
+													<tr>
+														<td class="layout"><!--Just vor stretchable vertical space--></td>
+													</tr>
+													<tr style='height: 0%'>
+														<td class="layout">
+															{willpower}
+														</td>
+													</tr>
+													<tr>
+														<td class="layout"><!--Just vor stretchable vertical space--></td>
+													</tr>
+													<tr style='height: 0%'>
+														<td class="layout">
+															{morality}
+														</td>
+													</tr>
+												</table>
 											</td>
 										</tr>
+									</table>
+									<table style="width: 100%; height: 100;">
 										<tr>
-											<td class='layout'>
-												{xp}
+											<td class="layout">
+												{weapons}
 											</td>
 										</tr>
 									</table>
@@ -83,7 +91,49 @@
 						</table>
 					</td>
 				</tr>
+				<tr>
+					<td class="layout"><!--Just vor stretchable vertical space--></td>
+				</tr>
+				<tr style='height: 500px'><!-- Die unterste Zeile wird auf eine Feste Höhe gesetzt (und abgeschnitten), damit die anderen Zeilen schön dynamisch bleiben können. -->
+					<td class='layout'>
+						<div style='height: 500px; overflow: hidden;'>
+							<table class="fullSpace">
+								<tr>
+									<td class='layout' style="width: 33%;">
+										{inventory}
+									</td>
+									<td class="layout spacer"><!--Fixed horizontal space--></td>
+									<td class='layout'>
+										{description}
+									</td>
+									<td class="layout spacer"><!--Fixed horizontal space--></td>
+									<td class='layout' style="width: 33%;">
+										<table class="fullSpace">
+											<tr>
+												<td class='layout'>
+													<table class='fullSpace'>
+														<tr style ='height: 100%;'>
+															<td class='layout'>
+																{image}
+															</td>
+														</tr>
+														<tr>
+															<td class='layout'>
+																{xp}
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
 			</table>
 		</td>
 	</tr>
 </table>
+

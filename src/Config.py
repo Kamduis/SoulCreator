@@ -175,7 +175,7 @@ class Config(object):
 	healthMax = {
 		"Human": 11,
 		"Changeling": 11,
-		"Mage": 16,
+		"Mage": 11,
 		"Vampire": 16,
 		"Werewolf": 16,
 	}

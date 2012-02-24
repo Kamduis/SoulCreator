@@ -3,10 +3,10 @@
 	background-color: transparent;
 }*/
 
-*, body {
+body {
 	font-family: 'Linux Libertine O';
 /* 	font-size: 45px; */
-	font-size: 12px;
+	font-size: 18px;
 	margin-top: 0px;
 	margin-bottom: 0px;
 	margin-left: 0px;
@@ -33,9 +33,9 @@ h2.human {
 }
 h1.changeling {
 	font-family: 'Mutlu';
-	font-size: 2em;
-	margin-top: .4em;
-	margin-bottom: .5em;
+	font-size: 1.7em;
+	margin-top: .3em;
+	margin-bottom: .6em;
 }
 h2.changeling {
 	font-family: 'Mutlu';
@@ -45,13 +45,15 @@ h2.changeling {
 }
 h1.mage {
 	font-family: 'Tangerine';
-	font-size: 3em;
-/* 	margin-top: 15px; */
-/* 	margin-bottom: 11px; */
+	font-size: 2em;
+	margin-top: .3em;
+	margin-bottom: .3em;
 }
 h2.mage {
 	font-family: 'Tangerine';
-	font-size: 2.1em;
+	font-size: 1.8em;
+	margin-top: .3em;
+	margin-bottom: .3em;
 }
 h1.vampire {
 	font-family: 'Cloister Black';
@@ -75,7 +77,6 @@ h2.werewolf {
 }
 
 p {
-/* 	margin-top: 5px; */
 	text-align: justify; 
 }
 
@@ -97,19 +98,19 @@ td {
 	/*border: 1px solid #0F0;*//* <- Nur zu Debug-Zwecken */
 	padding-top: .45em;
 /* 	margin: .3em; */
-	vertical-align: bottom;
-/* 	vertical-align: baseline; */
+	vertical-align: baseline;
 	line-height: .6em;
 /* 	overflow:hidden; */
 }
 td.layout {
-	/*border: 1px solid #F00;*//* <- Nur zu Debug-Zwecken */
+	border: 1px solid #F00;/* <- Nur zu Debug-Zwecken */
 	padding: 0px;
 	margin: 0px;
+	vertical-align: top;
 /* 	overflow:hidden; */
 }
-td.middle {
-	vertical-align: middle;
+td.withHRule {
+	vertical-align: bottom;
 }
 td.narrowLine {
 	line-height: .4em;
@@ -122,7 +123,8 @@ td.hfill {
 }
 td.hrulefill {
 	width: 100%;
-	white-space: nowrap;
+	vertical-align: bottom;
+/* 	white-space: nowrap; */
 /* 	border-bottom: 1px solid #000; */
 	border-style: solid;
 	border-color: white;
@@ -168,7 +170,7 @@ div.vFill {
 div.vSpaceHead {
 	height: 100px;
 }
-div.spacer {
+tr.spacer,td.spacer,div.spacer {
 	width: 10px;
 	height: 10px;
 }
@@ -179,14 +181,17 @@ div.spacer {
 /* Schriften */
 span.scriptFont {
 	font-family: 'Blokletters Balpen';
-	font-size: 0.7em;
+	font-size: 0.6em;
 }
-span.specialties {
+span.descText {
 	font-family: 'Blokletters Balpen';
 	font-size: .5em;
 }
+span.small {
+	font-size: 80%
+}
 span.bigSymbols {
-	font-size: 2em;
+	font-size: 1.6em;
 }
 th.human, span.human {
 	font-family: 'Architects Daughter';
@@ -208,8 +213,10 @@ th.werewolf, span.werewolf {
 	font-family: 'Note this';
 /* 	font-size: 250%; */
 }
-span.dotSize {
+span.dots {
 	font-size: 1.2em;
+/* 	letter-spacing: -.1em; */
+/* 	word-spacing: -.5em; */
 }
 span.FirstTongue {
 	font-style: italic;
