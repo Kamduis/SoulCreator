@@ -70,7 +70,7 @@ if __name__ == "__main__":
 	parser.add_argument("--fallback", action="store_true", help=argparse.SUPPRESS)
 	parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
 	parser.add_argument("-V", "--version", action="version", version="{name}: {version}".format( name=sys.argv[0], version=Config.version()) )
-	parser.add_argument(dest="file", metavar="File", nargs="?", help="opens the character from this file at start")
+	parser.add_argument(dest="file", metavar="File/Species", nargs="?", help="Opens the character from this file at start. Instead of a file, the name of a supported species (human, changeling, mage, vampire, werewolf) may be entered, to create an empty character of the specified species, if no file of that specific name exists. This is most useful in combination with the -p option.")
 
 	args = parser.parse_args()
 

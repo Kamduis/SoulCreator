@@ -33,6 +33,7 @@ from src.GlobalState import GlobalState
 from src.Tools import PathTools
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from Config import Config
+import IO.Shell
 from IO.Settings import Settings
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from IO.ReadXmlCharacter import ReadXmlCharacter
@@ -156,12 +157,23 @@ class MainWindow(QMainWindow):
 
 		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
 		if fileName:
-			self.openCharacter(fileName)
+			if os.path.exists(fileName):
+				if GlobalState.isVerbose:
+					print("Opening file {}.".format(fileName))
+				self.openCharacter(fileName)
+			elif fileName.lower() in [ species.lower() for species in self.__storage.species.keys() ]:
+				if GlobalState.isVerbose:
+					print("Empty Charactersheet of species {} will be created.".format(fileName.lower()))
+				self.__character.species = fileName[0].upper() + fileName[1:].lower()
+				self.__character.setModified(False)
+			else:
+				IO.Shell.printError("Warning! A file named {} does not exist.".format(fileName))
+
 		#Debug.timesince(dbgStart)
 
 		if exportPath:
 			if GlobalState.isVerbose:
-				print("Erstelle PDF")
+				print("Creating PDF {}".format(exportPath[0]))
 			# exportPath ist eine Liste mit einem einzigen Element als Inhalt (argparse)
 			self.__createPdf(exportPath[0])
 			# Damit das Programm ordentlich geschlossen werden kann, muß auf das Starten der Event-Loop gewartet werden. dies geht am einfachsten mit einem QTimer.
