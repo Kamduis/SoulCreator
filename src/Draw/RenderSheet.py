@@ -50,6 +50,8 @@ class RenderSheet(QObject):
 	\brief Führt das Drucken des Charakters aus.
 
 	Mit Hilfe dieser Klasse können die Charakterwerte auf Papier gebannt werden.
+
+	◕◑◔
 	"""
 
 	def __init__(self, template, character, printer, parent=None):
@@ -71,7 +73,7 @@ class RenderSheet(QObject):
 
 		self.__mainFrame = self.__page.mainFrame()
 
-		## Erzeuge Temporäre DAteien, ums sie in HTML laden zu können.
+		## Erzeuge Temporäre Dateien, ums sie in HTML laden zu können.
 		persistentResourceFiles = (
 			":sheet/stylesheets/sheet.css",
 		)
@@ -1137,15 +1139,15 @@ class RenderSheet(QObject):
 			self.__painter.drawImage(rect, image)
 		elif self.__character.species == "Werewolf":
 			imageShapes = QImage(":sheet/images/sheet/Werewolf-Shapes.jpg")
-			imageShapes = imageShapes.scaledToWidth(self.__paperSize[0])
-			rectShapes = QRect(0, 0 - self.__paperSize[1] - imageShapes.height(), self.__paperSize[0], imageShapes.height())
-			self.__painter.drawImage(rectShapes, imageShapes)
+			imageHeight = imageShapes.height() * self.__paperSize[0] / imageShapes.width()
+			rect = QRect(0, self.__paperSize[1] - imageHeight, self.__paperSize[0], imageHeight)
+			self.__painter.drawImage(rect, imageShapes)
 
 			## Dieses Bild wird später gezeichnet, damit es nicht von den Gestalten abgeschnitten wird.
-			offsetV = 80
 			image = QImage(":sheet/images/sheet/Werewolf-Background.png")
-			image = image.scaledToHeight(self.__paperSize[1] - imageShapes.height() - offsetV)
-			rect = QRect(0 + (self.__paperSize[0] - image.width()) / 2, offsetV, image.width(), image.height())
+			skullHeight = self.__paperSize[1] - imageHeight
+			skullWidth = image.width() * skullHeight / image.height()
+			rect = QRect((self.__paperSize[0] - skullWidth) / 2, 0, skullWidth, skullHeight)
 			self.__painter.drawImage(rect, image)
 		else:
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-BackgroundL.png")
