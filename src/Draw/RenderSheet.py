@@ -27,7 +27,7 @@ import tempfile
 import math
 import re
 
-from PySide.QtCore import Qt, QObject, QFile, QIODevice, QTextStream, QBuffer, QByteArray, QUrl, QRect
+from PySide.QtCore import Qt, QObject, QFile, QIODevice, QTextStream, QBuffer, QByteArray, QUrl, QRect, Signal
 from PySide.QtGui import QPainter, QImage, QPalette#, QColor, QPen, QFont, QFontMetrics, QTextDocument
 from PySide.QtWebKit import QWebPage
 
@@ -51,8 +51,17 @@ class RenderSheet(QObject):
 
 	Mit Hilfe dieser Klasse können die Charakterwerte auf Papier gebannt werden.
 
+	\note Weil der Painter warten muß, bis die html-Seite fertig geladen ist, und der html-Generator wiederum warten muß, bis der Painter fertig ist, ist die Aufrufsituation ein wenig kompliziert.
+
+	setHtml -> loadFinisched -> render -> printFinished -> seite+1 -> setHtml -> etc.
+
 	◕◑◔
 	"""
+
+
+	loadFinished = Signal(int, bool)
+	printFinished = Signal()
+
 
 	def __init__(self, template, character, printer, parent=None):
 		QObject.__init__(self, parent)
@@ -64,14 +73,10 @@ class RenderSheet(QObject):
 		self.__painter = QPainter()
 		self.__printer = printer
 
+		## Jedesmal, wenn eine HTML-Seite fertig geladen wurde, wird selbige zum Rendern auf PDF geschickt und dieser Zähler um eins erhöht.
+		self.__pageToPrint = 0
+
 		#self.__htmlFileLike = None
-
-		self.__page = QWebPage(self)
-		palette = self.__page.palette()
-		palette.setBrush(QPalette.Base, Qt.transparent)
-		self.__page.setPalette(palette)
-
-		self.__mainFrame = self.__page.mainFrame()
 
 		## Erzeuge Temporäre Dateien, ums sie in HTML laden zu können.
 		persistentResourceFiles = (
@@ -91,26 +96,30 @@ class RenderSheet(QObject):
 			self.__persistentResourceFiles[resFile] = fileLike
 
 		htmlTemplates = {
-			0: ":sheet/stylesheets/sheetTemplate.html",
-			"Human": ":sheet/stylesheets/sheetTemplate-Human.html",
-			"Changeling": ":sheet/stylesheets/sheetTemplate-Changeling.html",
-			"Mage": ":sheet/stylesheets/sheetTemplate-Mage.html",
-			"Vampire": ":sheet/stylesheets/sheetTemplate-Vampire.html",
-			"Werewolf": ":sheet/stylesheets/sheetTemplate-Werewolf.html",
+			0: ( ":sheet/stylesheets/sheetTemplate.html", ),
+			"Human": ( ":sheet/stylesheets/sheetTemplate-Human-A.html", ),
+			"Changeling": ( ":sheet/stylesheets/sheetTemplate-Changeling-A.html", ":sheet/stylesheets/sheetTemplate-Changeling-B.html", ),
+			"Mage": ( ":sheet/stylesheets/sheetTemplate-Mage-A.html", ":sheet/stylesheets/sheetTemplate-Mage-B.html", ),
+			"Vampire": ( ":sheet/stylesheets/sheetTemplate-Vampire-A.html", ":sheet/stylesheets/sheetTemplate-Vampire-B.html", ),
+			"Werewolf": ( ":sheet/stylesheets/sheetTemplate-Werewolf-A.html", ":sheet/stylesheets/sheetTemplate-Werewolf-B.html", ),
 		}
 		self.__htmlTemplates = {}
 		for species in htmlTemplates.items():
-			qrcFile = QFile(species[1])
-			if not qrcFile.open(QIODevice.ReadOnly):
-				raise ErrFileNotOpened(resFile, qrcFile.errorString())
-			textStream = QTextStream(qrcFile)
-			fileContent = textStream.readAll()
-			qrcFile.close()
-			self.__htmlTemplates[species[0]] = fileContent
+			self.__htmlTemplates[species[0]] = []
+			for page in species[1]:
+				qrcFile = QFile(page)
+				if not qrcFile.open(QIODevice.ReadOnly):
+					raise ErrFileNotOpened(resFile, qrcFile.errorString())
+				textStream = QTextStream(qrcFile)
+				fileContent = textStream.readAll()
+				qrcFile.close()
+				self.__htmlTemplates[species[0]].append(fileContent)
 
 		self.traitMax = self.__storage.maxTrait(self.__character.species, self.__character.powerstat)
 
-		self.__mainFrame.loadFinished.connect(self.__renderPdf)
+
+	def emitLoadFinished(self, status):
+		self.loadFinished.emit(self.__pageToPrint, status)
 
 
 	def createSheets(self):
@@ -118,124 +127,160 @@ class RenderSheet(QObject):
 		Erzeugt den Charakterbogen.
 		"""
 
-		htmlText = self.__htmlTemplates[0]
+		self.__page = QWebPage(self)
+		palette = self.__page.palette()
+		palette.setBrush(QPalette.Base, Qt.transparent)
+		self.__page.setPalette(palette)
 
-		htmlText = htmlText.format(
-			stylesheet=QUrl.fromLocalFile(self.__persistentResourceFiles[":sheet/stylesheets/sheet.css"].name).toString(),
-			body=self.__htmlTemplates[self.__character.species],
-		)
+		self.__mainFrame = self.__page.mainFrame()
 
-		blockHeight = {
-			"Human": {
-				"inventory": "450px",
-				"description": "400px",
-			},
-			"Changeling": {
-				"inventory": "200px",
-				"description": "200px",
-			},
-			"Mage": {
-				"inventory": "200px",
-				"description": "200px",
-			},
-			"Vampire": {
-				"inventory": "200px",
-				"description": "200px",
-			},
-			"Werewolf": {
-				"inventory": "200px",
-				"description": "200px",
-			},
-		}
+		self.loadFinished.connect(self.__renderPdf)
+		self.printFinished.connect(self._createPage)
 
-		curseText = "Weakness"
-		if self.__character.species == "Changeling":
-			curseText = "Curse"
+		self.__mainFrame.loadFinished.connect(self.emitLoadFinished)
 
-		htmlText = unicode(htmlText).format(
-			info=self._createInfo(),
-			attributes=self._createAttributes(),
-			skills=self._createSkills(),
-			powers=self._createPowers(),
-			merits=self._createMerits(),
-			flaws=self._createFlaws(),
-			advantages=self._createAdvantages(),
-			health=self._dotStat(
-				self.tr("Health"),
-				self.__calc.calcHealth(),
-				Config.healthMax[self.__character.species],
-				hasTemporary=True
-			),
-			willpower=self._dotStat(
-				self.tr("Willpower"),
-				self.__calc.calcWillpower(),
-				Config.willpowerMax,
-				hasTemporary=True
-			),
-			powerstat=self._dotStat(
-				self.__storage.powerstatName(self.__character.species),
-				self.__character.powerstat,
-				Config.powerstatMax,
-				hasTemporary=False
-			),
-			fuel=self._createFuel(),
-			morality=self._createMorality(),
-			weapons=self._createWeapons(),
-			goblinContracts=self._createGoblinContracts(),
-			magicalTool=self.simpleTextBox(self.__character.magicalTool, title=self.tr("Magical Tool"), species="Mage"),
-			vinculi=self._createVinculi(),
-			blessing=self.simpleTextBox(
-				self.__storage.breedBlessing(self.__character.species, self.__character.breed),
-				title=self.tr("{} Blessing".format(self.__storage.breedTitle(self.__character.species)))
-			),
-			abilityKith=self.simpleTextBox(
-				self.__storage.kithAbility(self.__character.breed, self.__character.kith),
-				title=self.tr("Kith Ability")
-			),
-			curseBreed=self.simpleTextBox(
-				self.__storage.breedCurse(self.__character.species, self.__character.breed),
-				title="{} {}".format(self.__storage.breedTitle(self.__character.species), curseText)
-			),
-			curseOrganisation=self.simpleTextBox(
-				self.__storage.organisationCurse(self.__character.species, self.__character.organisation),
-				title="{} {}".format(self.__storage.organisationTitle(self.__character.species), curseText)
-			),
-			spellsActive=self.userTextBox(
-				lines=7,
-				title=self.tr("Active Spells"),
-				description=self.tr("Max: {} +3".format(self.__storage.powerstatName(self.__character.species)))
-			),
-			spellsUponSelf=self.userTextBox(
-				lines=7,
-				title=self.tr("Spells Cast Upon Self"),
-				description=self.tr("Spell Tolerance: Stamina; -1 die per extra spell")
-			),
-			nimbus=self.simpleTextBox(
-				self.__character.nimbus,
-				title=self.tr("Nimbus")
-			),
-			paradoxMarks=self.simpleTextBox(
-				self.__character.paradoxMarks,
-				title=self.tr("Paradox Marks")
-			),
-			shapes=self._createShapeTable(),
-			inventory=self._createInventory(blockHeight[self.__character.species]["inventory"]),
-			description=self._createDescription(blockHeight[self.__character.species]["description"]),
-			image=self._createImage(),
-			rolls=self._createRolls(),
-			notes=self.userTextBox(
-				lines=3,
-				title=self.tr("Notes")
-			),
-			xp=self._createXp(),
-		)
+		## Vorbereiten der Seite
+		self.__pagePreparation()
 
-		#Debug.debug(htmlText)
+		#for page in self.__htmlTemplates[self.__character.species]:
+		#self._createPage()
+		## Ausgabe Starten
+		self.printFinished.emit()
 
-		self.__mainFrame.setHtml(htmlText)
-		#Debug.debug(QUrl.fromLocalFile(self.__htmlFileLike.name))
 
-		##Das Rendern in PDF wird durch das Signal ausgelöst, welches gesendet wird, sobald der HTML-Text fertig geladen ist.
+	def _createPage(self):
+		"""
+		Erzeugt die Charakterbogen-Seiten.
+		"""
+
+		if self.__pageToPrint < len(self.__htmlTemplates[self.__character.species]):
+			htmlText = self.__htmlTemplates[0][0]
+
+			htmlText = htmlText.format(
+				stylesheet=QUrl.fromLocalFile(self.__persistentResourceFiles[":sheet/stylesheets/sheet.css"].name).toString(),
+				body=self.__htmlTemplates[self.__character.species][self.__pageToPrint],
+			)
+
+			blockHeight = {
+				"Human": {
+					"inventory": "450px",
+					"description": "400px",
+				},
+				"Changeling": {
+					"inventory": "200px",
+					"description": "200px",
+				},
+				"Mage": {
+					"inventory": "200px",
+					"description": "200px",
+				},
+				"Vampire": {
+					"inventory": "200px",
+					"description": "200px",
+				},
+				"Werewolf": {
+					"inventory": "425px",
+					"description": "360px",
+				},
+			}
+
+			curseText = "Weakness"
+			if self.__character.species == "Changeling":
+				curseText = "Curse"
+
+			htmlText = unicode(htmlText).format(
+				info=self._createInfo(),
+				attributes=self._createAttributes(),
+				skills=self._createSkills(),
+				powers=self._createPowers(),
+				subpowers=self._createSubPowers(),
+				merits=self._createMerits(),
+				flaws=self._createFlaws(),
+				advantages=self._createAdvantages(),
+				health=self._dotStat(
+					self.tr("Health"),
+					self.__calc.calcHealth(),
+					Config.healthMax[self.__character.species],
+					hasTemporary=True
+				),
+				willpower=self._dotStat(
+					self.tr("Willpower"),
+					self.__calc.calcWillpower(),
+					Config.willpowerMax,
+					hasTemporary=True
+				),
+				powerstat=self._dotStat(
+					self.__storage.powerstatName(self.__character.species),
+					self.__character.powerstat,
+					Config.powerstatMax,
+					hasTemporary=False
+				),
+				fuel=self._createFuel(),
+				morality=self._createMorality(),
+				weapons=self._createWeapons(),
+				goblinContracts=self._createGoblinContracts(),
+				magicalTool=self.simpleTextBox(self.__character.magicalTool, title=self.tr("Magical Tool"), species="Mage"),
+				vinculi=self._createVinculi(),
+				blessing=self.simpleTextBox(
+					self.__storage.breedBlessing(self.__character.species, self.__character.breed),
+					title=self.tr("{} Blessing".format(self.__storage.breedTitle(self.__character.species)))
+				),
+				abilityKith=self.simpleTextBox(
+					self.__storage.kithAbility(self.__character.breed, self.__character.kith),
+					title=self.tr("Kith Ability")
+				),
+				curseBreed=self.simpleTextBox(
+					self.__storage.breedCurse(self.__character.species, self.__character.breed),
+					title="{} {}".format(self.__storage.breedTitle(self.__character.species), curseText)
+				),
+				curseOrganisation=self.simpleTextBox(
+					self.__storage.organisationCurse(self.__character.species, self.__character.organisation),
+					title="{} {}".format(self.__storage.organisationTitle(self.__character.species), curseText)
+				),
+				spellsActive=self.userTextBox(
+					lines=7,
+					title=self.tr("Active Spells"),
+					description=self.tr("Max: {} +3".format(self.__storage.powerstatName(self.__character.species)))
+				),
+				spellsUponSelf=self.userTextBox(
+					lines=7,
+					title=self.tr("Spells Cast Upon Self"),
+					description=self.tr("Spell Tolerance: Stamina; -1 die per extra spell")
+				),
+				nimbus=self.simpleTextBox(
+					self.__character.nimbus,
+					title=self.tr("Nimbus")
+				),
+				paradoxMarks=self.simpleTextBox(
+					self.__character.paradoxMarks,
+					title=self.tr("Paradox Marks")
+				),
+				shapes=self._createShapeTable(),
+				companion=self._createCompanion(),
+				inventory=self._createInventory(blockHeight[self.__character.species]["inventory"]),
+				description=self._createDescription(blockHeight[self.__character.species]["description"]),
+				allies=self.userTextBox(
+					lines=4,
+					title=self.tr("Allies")
+				),
+				contacts=self.userTextBox(
+					lines=4,
+					title=self.tr("Contacts")
+				),
+				image=self._createImage(),
+				rolls=self._createRolls(),
+				notes=self.userTextBox(
+					lines=3,
+					title=self.tr("Notes")
+				),
+				xp=self._createXp(),
+			)
+
+			#Debug.debug(htmlText)
+
+			self.__mainFrame.setHtml(htmlText)
+
+			##Das Rendern in PDF wird durch das Signal ausgelöst, welches gesendet wird, sobald der HTML-Text fertig geladen ist.
 
 
 	def _createInfo(self):
@@ -374,13 +419,7 @@ class RenderSheet(QObject):
 					(not trait.era or self.__character.era in trait.era) and
 					(not trait.age or trait.age == Config.getAge(self.__character.age))
 				):
-					htmlText += u"<table class='fullWidth'>"
-					htmlText += u"<tr>"
-					htmlText += u"<td class='nowrap withHRule'>{label}</td>".format(label=trait.name)
-					htmlText += u"<td class='hrulefill'><span class='descText'>{additional}</span></td>".format(additional=", ".join(trait.totalspecialties))
-					htmlText += u"<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
-					htmlText += u"</tr>"
-					htmlText += u"</table>"
+					htmlText += self.htmlLabelRuleValue(label=trait.name, value=self.valueStyled(trait.totalvalue, self.traitMax), additional=", ".join(trait.totalspecialties))
 			htmlText += u"</td></tr>"
 		htmlText += u"</table>"
 
@@ -500,13 +539,7 @@ class RenderSheet(QObject):
 			for subitem in traits:
 				trait = self.__character.traits["Merit"][item][subitem]
 				if trait.isAvailable and trait.value > 0:
-					htmlText += u"<table class='fullWidth'>"
-					htmlText += u"<tr>"
-					htmlText += u"<td class='nowrap withHRule'>{label}</td>".format(label=trait.name)
-					htmlText += u"<td class='hrulefill'><span class='descText'>{additional}</span></td>".format(additional=trait.customText)
-					htmlText += u"<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
-					htmlText += u"</tr>"
-					htmlText += u"</table>"
+					htmlText += self.htmlLabelRuleValue(label=trait.name, value=self.valueStyled(trait.totalvalue, self.traitMax), additional=trait.customText)
 					iterator += 1
 
 		while iterator < count:
@@ -560,13 +593,14 @@ class RenderSheet(QObject):
 			)
 
 			for item in advantages:
-				htmlText += u"<table class='fullWidth' style='height: 0%'>"
-				htmlText += u"<tr>"
-				htmlText += u"<td class='nowrap'>{label}</td>".format(label=item[0])
-				htmlText += u"<td class='hrulefill'></td>"
-				htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=item[1])
-				htmlText += u"</tr>"
-				htmlText += u"</table>"
+				htmlText += self.htmlLabelRuleValue(label=item[0], value="<span style='scriptFont'>{}</span>".format(item[1]))
+				#htmlText += u"<table class='fullWidth' style='height: 0%'>"
+				#htmlText += u"<tr>"
+				#htmlText += u"<td class='nowrap'>{label}</td>".format(label=item[0])
+				#htmlText += u"<td class='hrulefill'></td>"
+				#htmlText += u"<td class='nowrap' style='text-align: right;'>{value}</td>".format(value=item[1])
+				#htmlText += u"</tr>"
+				#htmlText += u"</table>"
 
 		return htmlText
 
@@ -660,6 +694,16 @@ class RenderSheet(QObject):
 		Die Waffen werden aufgelistet.
 		"""
 
+		weaponHeadings = (
+			( self.tr("Weapon"), 40, ),
+			( self.tr("Dmg."), 13, ),
+			( self.tr("Ranges"), 0, ),
+			( self.tr("Cap."), 0, ),
+			( self.tr("Str."), 0, ),
+			( self.tr("Size"), 0, ),
+			( self.tr("Durab."), 0, ),
+		)
+
 		weaponInfo = (
 			"damage",
 			"ranges",
@@ -671,23 +715,12 @@ class RenderSheet(QObject):
 
 		htmlText = u"<table class='fullWidth'>"
 		htmlText += u"<tr>"
-		htmlText += u"""
-			<th class='{species}' style='width: 40%'>{}</th>
-			<th class='{species}' style='width: 13%'>{}</th>
-			<th class='{species}' style='width: 5%'>{}</th>
-			<th class='{species}' style='width: 5%'>{}</th>
-			<th class='{species}' style='width: 5%'>{}</th>
-			<th class='{species}' style='width: 5%'>{}</th>
-			<th class='{species}' style='width: 5%'>{}</th>""".format(
-				self.tr("Weapon"),
-				self.tr("Dmg."),
-				self.tr("Ranges"),
-				self.tr("Cap."),
-				self.tr("Str."),
-				self.tr("Size"),
-				self.tr("Durab."),
-				species=self.__character.species,
-			)
+		for heading in weaponHeadings:
+			htmlText += u"<th style='width: {width}%'><h2 class='{species}'>{title}</h2></th>".format(
+					title=heading[0],
+					width=heading[1],
+					species=self.__character.species,
+				)
 		htmlText += u"</tr>"
 
 		#Debug.debug(htmlText)
@@ -866,11 +899,9 @@ class RenderSheet(QObject):
 			htmlText += "<h2 class='{species}'>{title}</h2>".format(title=shape, species=self.__character.species)
 			htmlText += "<table style='width: 100%'>"
 			for row in shapesAttributes[shape]:
-				htmlText += "<tr><td class='layout'><table style='width: 100%'><tr>"
-				htmlText += u"<td class='nowrap withHRule'>{label}</td>".format(label=row[0])
-				htmlText += u"<td class='hrulefill'></td>"
-				htmlText += u"<td class='nowrap withHRule' style='text-align: right;'><span class='scriptFont'>{value}</span></td>".format(value=row[1])
-				htmlText += "</tr></table></td></tr>"
+				htmlText += "<tr><td class='layout'>"
+				htmlText += self.htmlLabelRuleValue(label=row[0], value="<span class='scriptFont'>{}</span>".format(row[1]))
+				htmlText += "</td></tr>"
 			htmlText += "</table>"
 			htmlText += "</td>"
 			iterator += 1
@@ -885,11 +916,9 @@ class RenderSheet(QObject):
 			htmlText += "<td class='layout'>"
 			htmlText += "<table style='width: 100%'>"
 			for row in shapesAdvantages[shape]:
-				htmlText += "<tr><td class='layout'><table style='width: 100%'><tr>"
-				htmlText += u"<td class='nowrap withHRule'>{label}</td>".format(label=row[0])
-				htmlText += u"<td class='hrulefill'></td>"
-				htmlText += u"<td class='nowrap withHRule' style='text-align: right;'><span class='scriptFont'>{value}</span></td>".format(value=row[1])
-				htmlText += "</tr></table></td></tr>"
+				htmlText += "<tr><td class='layout'>"
+				htmlText += self.htmlLabelRuleValue(label=row[0], value=u"<span class='scriptFont'>{}</span>".format(row[1]))
+				htmlText += "</td></tr>"
 			htmlText += "</table>"
 			htmlText += "</td>"
 			iterator += 1
@@ -914,9 +943,159 @@ class RenderSheet(QObject):
 		return htmlText
 
 
+	def _createCompanion(self):
+
+		companionTitle = self.tr("Familiar")
+		if self.__character.species == "Werewolf":
+			companionTitle = self.tr("Totem")
+
+		htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=companionTitle, species=self.__character.species)
+
+		htmlText += self.htmlLabelRuleValue(label=self.tr("Name"), value="<span class='scriptFont'>{value}</span></td>".format(value=self.__character.companionName))
+
+		rank = CalcAdvantages.calculateSpiritRank(
+			self.__character.companionPower,
+			self.__character.companionFinesse,
+			self.__character.companionResistance
+		)
+		maxTrait = self.__storage.maxTrait("Spirit", rank)
+
+		companionTraits = (
+			( "Power", self.__character.companionPower, maxTrait, ),
+			( "Finesse", self.__character.companionFinesse, maxTrait, ),
+			( "Resistance", self.__character.companionResistance, maxTrait, ),
+			( "Willpower", CalcAdvantages.calculateWillpower(self.__character.companionResistance, self.__character.companionResistance), min(2 * maxTrait, Config.willpowerMax), ),
+			( "Corpus", CalcAdvantages.calculateHealth(self.__character.companionResistance, self.__character.companionSize), maxTrait + self.__character.companionSize, ),
+		)
+		companionAdvantages = (
+			( "Size", self.__character.companionSize, ),
+			( "Initiative", CalcAdvantages.calculateInitiative( [
+					self.__character.companionFinesse,
+					self.__character.companionResistance
+				]), ),
+			( "Speed", CalcAdvantages.calculateSpeed( [
+					self.__character.companionPower,
+					self.__character.companionFinesse,
+					self.__character.companionSpeedFactor
+				] ), ),
+			( "Defense", CalcAdvantages.calculateDefense( [
+					self.__character.companionFinesse,
+					self.__character.companionFinesse
+				], True ), ),
+			( "Essence", self.__character.companionFuel ),
+		)
+
+		htmlText += "<table style='width: 100%'><tr><td class='layout'>"
+		for item in companionTraits:
+			htmlText += self.htmlLabelRuleValue(label=item[0], value=self.valueStyled(item[1], item[2]))
+		htmlText += "</td><td class='layout spacer'><!--Fixed horizontal space--></td><td class='layout'>"
+		for item in companionAdvantages:
+			htmlText += self.htmlLabelRuleValue(label=item[0], value="<span class='scriptFont'>{}</span>".format(item[1]))
+		htmlText += "</td></tr></table>"
+
+		htmlText += "<table style='width: 100%'><tr><td class='layout'>"
+		for influence in self.__character.companionInfluences:
+			if influence.value > 0:
+				htmlText += self.htmlLabelRuleValue(label=influence.name, value=self.valueStyled(influence.value, rank))
+		htmlText += "</td></tr></table>"
+
+		additional = (
+			( self.tr("Numina"), ", ".join(self.__character.companionNumina) ),
+			( self.tr("Ban"), self.__character.companionBan ),
+		)
+
+		htmlText += u"<dl>"
+		for item in additional:
+			htmlText += u"<dt class='text'>{}</dt><dd><span class='scriptFont text'>{}</span><dd>".format(item[0], item[1])
+		htmlText += u"</dl>"
+
+		return htmlText
+
+
+	def _createSubPowers(self):
+		htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.__storage.subPowerName(self.__character.species), species=self.__character.species)
+
+		powerMax = Config.traitMax
+		if self.__character.species == "Mage":
+			powerMax = self.traitMax
+
+		headings = (
+			"Name",
+			"Power",
+			"Cost",
+			"Roll",
+		)
+
+		htmlText += "<table style='width: 100%'><tr>"
+		for heading in headings:
+			htmlText += "<td><h2 class='{species}'>{title}</h2></td>".format(title=heading, species=self.__character.species)
+		htmlText += "</tr><tr>"
+		for item in self.__character.traits["Subpower"]:
+			traits = self.__character.traits["Subpower"][item].items()
+			traits.sort()
+			for subitem in traits:
+				if subitem[1].isAvailable and subitem[1].value > 0 and subitem[1].species == self.__character.species:
+					htmlText += "<tr>"
+					htmlText += u"<td><span class='scriptFont'>{}</span></td>".format(subitem[1].name)
+					htmlText += "<td class='layout'>"
+					if self.__storage.traits["Subpower"][item][subitem[0]]["powers"]:
+						for power in self.__storage.traits["Subpower"][item][subitem[0]]["powers"].items():
+							htmlText += u"{}".format(self.htmlLabelRuleValue(label=power[0], value=self.valueStyled(power[1], powerMax)))
+					elif self.__character.species == "Werewolf":
+						htmlText += self.htmlLabelRuleValue(label=item, value=self.valueStyled(subitem[1].level, powerMax))
+					htmlText += "</td>"
+					htmlText += u"<td><span class='scriptFont'>{0[0]}</span><span class='small'> {0[1]}</span>{0[2]}<span class='scriptFont'>{0[3]}</span><span class='small'> {0[4]}</span></td>".format(self.printEnergyCost(
+						willpower=self.__storage.traits["Subpower"][item][subitem[0]]["costWill"],
+						fuel=self.__storage.traits["Subpower"][item][subitem[0]]["costFuel"]
+					))
+					htmlText += u"<td><span class='scriptFont'>{}</span></td>".format(self.__storage.traits["Subpower"][item][subitem[0]]["roll"])
+					htmlText += "</tr>"
+		htmlText += "</tr></table>"
+
+		return htmlText
+		#return  ""
+
+
+	def printEnergyCost(self, willpower=None, fuel=None):
+		result = [
+			"",	# Willpower Wert
+			"",	# Willpower
+			"",	# Zwischenraum
+			"",	# Fuel-Werte
+			"",	# Fuel-Name
+		]
+		if willpower:
+			result[0] = willpower
+			result[1] = "Will."
+		if fuel:
+			result[3] = fuel
+			result[4] = self.__storage.fuelName(self.__character.species)
+		if willpower and fuel:
+			result[2] = " "
+
+		return result
+
+
+	def htmlLabelRuleValue(self, label=None, value=None, additional=None):
+		#Debug.debug(value)
+		htmlText = u"<table style='width: 100%'><tr>"
+		if label:
+			htmlText += u"<td class='nowrap withHRule'>{}</td>".format(label)
+		htmlText += u"<td class='hrulefill'>"
+		if additional:
+			htmlText += u"<span class='descText'>{}</span>".format(additional)
+		htmlText += u"</td>"
+		if value:
+			htmlText += u"<td class='nowrap withHRule'>{}</td>".format(value)
+		htmlText += u"</tr></table>"
+
+		return htmlText
+
+
+
 	def _createInventory(self, height=293):
 		#u"<div style='height:{height}; overflow:hidden;'>{text}</div>".format(text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory")), height="{}px".format(heightInventory))
-		
+
 		htmlText = text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory"))
 
 		htmlText += u"<dl>"
@@ -930,18 +1109,14 @@ class RenderSheet(QObject):
 
 	def _createDescription(self, height=220):
 		dataTable = [
-			[
-				[ "Birthday:", self.__character.dateBirth.toString(Config.textDateFormat), ],
-				[ "Age:", self.__character.age, ],
-				[ "Sex:", ImageTools.genderSymbol(self.__character.identity.gender), ],
-				[ "Eyes:", self.__character.eyes, ],
-			],
-			[
-				[ "Height:", "{} {}".format(self.__character.height, "m"), ],
-				[ "Weight:", "{} {}".format(self.__character.weight, "kg"), ],
-				[ "Hair:", self.__character.hair, ],
-				[ "Nationality:", self.__character.nationality, ],
-			],
+			[ "Birthday:", self.__character.dateBirth.toString(Config.textDateFormat), ],
+			[ "Age:", self.__character.age, ],
+			[ "Sex:", ImageTools.genderSymbol(self.__character.identity.gender), ],
+			[ "Eyes:", self.__character.eyes, ],
+			[ "Height:", "{} {}".format(self.__character.height, "m"), ],
+			[ "Weight:", "{} {}".format(self.__character.weight, "kg"), ],
+			[ "Hair:", self.__character.hair, ],
+			[ "Nationality:", self.__character.nationality, ],
 		]
 		if self.__character.species != "Human":
 			dataTable[0][1] = "{} ({})".format(dataTable[0][1], self.__character.age)
@@ -955,7 +1130,9 @@ class RenderSheet(QObject):
 		elif self.__character.species == "Werewolf":
 			dataTable[1][0] = "First Change:"
 			# Größe und Gewicht löschen
-			del dataTable[4:6]
+			del dataTable[4]
+			# Durch das Löschen, ändert sich natürlich der INdex aller nachfolgenden Einträge
+			del dataTable[4]
 
 		htmlText = u"<table class='fullSpace'><tr style ='height: 100%;'><td class='layout'>"
 
@@ -964,23 +1141,47 @@ class RenderSheet(QObject):
 		description = description.group(1)
 		htmlText += u"<div style='height:{height}; overflow:hidden;'>{text}</div>".format(text=self.simpleTextBox(description, title=self.tr("Description")), height="{}".format(height))
 
-		htmlText += u"""</td>
-		</tr>
-		<tr>
-		<td class='layout'></td>
-		</tr>
-		<tr>
-		<td class='layout' style='height: 10%'>"""
+		htmlText += "</td></tr><tr><td class='layout'><!-- Vertikaler Zwischenraum --></td></tr><tr><td class='layout' style='height: 10%'>"
+
+		columns = 2
 
 		htmlText += u"<table class='fullWidth'><tr>"
-		for column in dataTable:
-			htmlText += u"<td class='layout' style='width: {}%;'><table class='fullWidth'>".format(100 / len(dataTable))
-			for row in column:
+		for i in xrange(columns):
+			htmlText += u"<td class='layout'><table class='fullWidth'>"
+			for row in dataTable[int(i * (len(dataTable) / columns)):int((i+1) *(len(dataTable) / columns))]:
 				htmlText += u"<tr>"
-				htmlText += u"<td>{label}</td><td class='hfill' style='text-align: right;'><span class='scriptFont'>{value}</span></td>".format(label=row[0], value=row[1])
+				htmlText += u"<td class='nowrap'>{label}</td><td class='hfill' style='text-align: right;'><span class='scriptFont'>{value}</span></td>".format(label=row[0], value=row[1])
 				htmlText += u"</tr>"
 			htmlText += u"</table></td>"
 		htmlText += u"</tr></table>"
+
+		if self.__character.species == "Werewolf":
+			werwolfHeights = CalcShapes.werewolfHeight(height=self.__character.height, strength=self.__character.traits["Attribute"]["Physical"]["Strength"].value, stamina=self.__character.traits["Attribute"]["Physical"]["Stamina"].value)
+			werwolfWeights = CalcShapes.werewolfWeight(weight=self.__character.weight, strength=self.__character.traits["Attribute"]["Physical"]["Strength"].value, stamina=self.__character.traits["Attribute"]["Physical"]["Stamina"].value)
+			shapeMeasurements = [
+				[ "", ],
+				[ self.tr("Height"), ],
+				[ self.tr("Weight"), ],
+			]
+			for i in xrange(len(Config.shapesWerewolf)):
+				shapeMeasurements[0].append(Config.shapesWerewolf[i])
+				shapeMeasurements[1].append("{:.2f} {}".format(werwolfHeights[i], "m"))
+				shapeMeasurements[2].append("{:.1f} {}".format(werwolfWeights[i], "kg"))
+
+			htmlText += "</td></tr><tr><td class='layout'><!-- Vertikaler Zwischenraum --></td></tr><tr><td class='layout' style='height: 10%'>"
+
+			htmlText += "<table style='width: 100%; height: 0%'>"
+			htmlText += "<tr>"
+			for item in shapeMeasurements[0]:
+				htmlText += "<th style='text-align: center'><span class='{species}'>{}</span></th>".format(item, species=self.__character.species)
+			htmlText += "</tr>"
+			for item in shapeMeasurements[1:]:
+				htmlText += "<tr>"
+				htmlText += "<td>{}</td>".format(item[0])
+				for subitem in item[1:]:
+					htmlText += "<td style='text-align: center'><span class='scriptFont'>{}</span></td>".format(subitem)
+				htmlText += "</tr>"
+			htmlText += "</table>"
 
 		htmlText += u"</td></tr></table>"
 
@@ -1145,9 +1346,10 @@ class RenderSheet(QObject):
 
 			## Dieses Bild wird später gezeichnet, damit es nicht von den Gestalten abgeschnitten wird.
 			image = QImage(":sheet/images/sheet/Werewolf-Background.png")
-			skullHeight = self.__paperSize[1] - imageHeight
+			skullOffset = 100
+			skullHeight = self.__paperSize[1] - imageHeight - skullOffset
 			skullWidth = image.width() * skullHeight / image.height()
-			rect = QRect((self.__paperSize[0] - skullWidth) / 2, 0, skullWidth, skullHeight)
+			rect = QRect((self.__paperSize[0] - skullWidth) / 2, skullOffset, skullWidth, skullHeight)
 			self.__painter.drawImage(rect, image)
 		else:
 			image = QImage(":sheet/images/sheet/WorldOfDarkness-BackgroundL.png")
@@ -1189,26 +1391,46 @@ class RenderSheet(QObject):
 		self.__painter.restore()
 
 
-	def __renderPdf(self, status=None):
+	def __pagePreparation(self):
 		"""
-		Wandelt das Html-Layout in pdf-Format um.
+		Vorbereiten der Seite, auf welche die HTML-Zeichnung schließlich gedruckt werden soll.
 		"""
 
-		#Debug.debug("Status ist {}".format(status))
+		self.__painter.begin(self.__printer)
+
+	def __pageClosing(self):
+		"""
+		Abschließen der Seite, auf welche die HTML-Zeichnung schließlich gedruckt werden soll.
+		"""
+
+		self.__painter.end()
+
+		for tmp in self.__persistentResourceFiles.values():
+			os.remove("{}".format(tmp.name))
+
+
+
+	def __renderPdf(self, page, status=None):
+		"""
+		Wandelt das Html-Layout in pdf-Format um.
+
+		\param Die Seite, welche zu rendern ist.
+		"""
+
+		#Debug.debug("Seite: {} (Status ist {})".format(page, status))
 
 		contentsSize = self.__mainFrame.contentsSize()
 		#Debug.debug(contentsSize)
 		self.__page.setViewportSize ( contentsSize )
 
-		self.__painter.begin(self.__printer)
-
 		scaleFactor = (
 			self.__printer.width() / contentsSize.width(),
 			self.__printer.height() / contentsSize.height(),
 		)
-		#self.__painter.scale(scaleFactor[0], scaleFactor[1])
-		#scale = min(scaleFactor)
 		scale = scaleFactor[0]
+
+		self.__painter.save()
+
 		self.__painter.scale(scale, scale)
 		self.__painter.setRenderHint ( QPainter.Antialiasing )
 
@@ -1216,41 +1438,41 @@ class RenderSheet(QObject):
 			self.__printer.width() / scale,
 			self.__printer.height() / scale,
 		)
-		#self.__paperSize = (
-			#self.__printer.width() / scaleFactor[0],
-			#self.__printer.height() / scaleFactor[1],
-		#)
-
-		self.__painter.save()
 
 		## Hintergrundbild:
 		self._drawBackground()
-		#posY = 0.01 * self.__paperSize[1]
-		posY = 0
-		width = 0.33 * self.__paperSize[0]
-		if self.__character.species == "Changeling":
-			posY = 0.035 * self.__paperSize[1]
-			width = 0.35 * self.__paperSize[0]
-		elif self.__character.species == "Mage":
-			posY = 0.01 * self.__paperSize[1]
-			width = 0.33 * self.__paperSize[0]
-		elif self.__character.species == "Vampire":
+
+		## Logo erscheint nur auf erster Seite
+		if self.__pageToPrint < 1:
 			posY = 0
-			width = 0.25 * self.__paperSize[0]
-		elif self.__character.species == "Werewolf":
-			posY = 0.01 * self.__paperSize[1]
 			width = 0.33 * self.__paperSize[0]
-		self._drawLogo(posY, width)
+			if self.__character.species == "Changeling":
+				posY = 0.035 * self.__paperSize[1]
+				width = 0.35 * self.__paperSize[0]
+			elif self.__character.species == "Mage":
+				posY = 0.01 * self.__paperSize[1]
+				width = 0.33 * self.__paperSize[0]
+			elif self.__character.species == "Vampire":
+				posY = 0
+				width = 0.25 * self.__paperSize[0]
+			elif self.__character.species == "Werewolf":
+				posY = 0.01 * self.__paperSize[1]
+				width = 0.33 * self.__paperSize[0]
+			self._drawLogo(posY, width)
 
 		## HTML-Struktur drucken.
 		self.__mainFrame.render ( self.__painter )
 
 		self.__painter.restore()
 
-		self.__painter.end()
+		## Seitenindex erhöhen, nachdem diese Seite abgeschlossen ist.
+		self.__pageToPrint += 1
 
-		for tmp in self.__persistentResourceFiles.values():
-			os.remove("{}".format(tmp.name))
+		if self.__pageToPrint >= len(self.__htmlTemplates[self.__character.species]):
+			self.__pageClosing()
+		else:
+			self.__printer.newPage()
+			self.printFinished.emit()
 
 
 

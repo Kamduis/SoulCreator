@@ -94,6 +94,8 @@ class MainWindow(QMainWindow):
 	\todo Attribute der Werewolf-Gestalten anzeigen
 
 	\todo Auspice-Blessing hinzufügen.
+
+	\todo Hausregeln per Option ein-/ausschlatbar machen.
 	"""
 
 
