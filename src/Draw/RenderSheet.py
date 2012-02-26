@@ -76,6 +76,8 @@ class RenderSheet(QObject):
 		## Jedesmal, wenn eine HTML-Seite fertig geladen wurde, wird selbige zum Rendern auf PDF geschickt und dieser Zähler um eins erhöht.
 		self.__pageToPrint = 0
 
+		self.__powerCount = 0
+
 		#self.__htmlFileLike = None
 
 		## Erzeuge Temporäre Dateien, ums sie in HTML laden zu können.
@@ -163,23 +165,23 @@ class RenderSheet(QObject):
 
 			blockHeight = {
 				"Human": {
+					"inventory": "350px",
+					"description": "300px",
+				},
+				"Changeling": {
+					"inventory": "457px",
+					"description": "407px",
+				},
+				"Mage": {
+					"inventory": "455px",
+					"description": "405px",
+				},
+				"Vampire": {
 					"inventory": "450px",
 					"description": "400px",
 				},
-				"Changeling": {
-					"inventory": "200px",
-					"description": "200px",
-				},
-				"Mage": {
-					"inventory": "200px",
-					"description": "200px",
-				},
-				"Vampire": {
-					"inventory": "200px",
-					"description": "200px",
-				},
 				"Werewolf": {
-					"inventory": "425px",
+					"inventory": "450px",
 					"description": "360px",
 				},
 			}
@@ -257,6 +259,9 @@ class RenderSheet(QObject):
 				),
 				shapes=self._createShapeTable(),
 				companion=self._createCompanion(),
+				pledges="",
+				oneiromachy="",
+				influence="",
 				inventory=self._createInventory(blockHeight[self.__character.species]["inventory"]),
 				description=self._createDescription(blockHeight[self.__character.species]["description"]),
 				allies=self.userTextBox(
@@ -429,6 +434,8 @@ class RenderSheet(QObject):
 	def _createPowers(self, count=None):
 		"""
 		Erzeugt die Darstellung der übernatürlichen Kräfte.
+
+		\note count zählt einschließlich der Kräfte-Zeilen. Dies ist der FAll, damit die mittlere Spalte nicht zu viele Zeilen bekommt.
 		"""
 
 		if self.__character.species not in ( "Human", ):
@@ -508,6 +515,11 @@ class RenderSheet(QObject):
 				htmlText += u"</td>"
 			htmlText += u"</tr></table>"
 
+			if self.__character.species in ( "Mage", "Werewolf", ):
+				iterator = int(math.ceil(iterator / 2))
+
+			self.__powerCount = max(iterator, count)
+
 			return htmlText
 		else:
 			return ""
@@ -522,7 +534,7 @@ class RenderSheet(QObject):
 			countPerSpecies = {
 				"Human": 20,
 				"Changeling": 20,
-				"Mage": 21,
+				"Mage": 26,
 				"Vampire": 26,
 				"Werewolf": 20,
 			}
@@ -541,6 +553,21 @@ class RenderSheet(QObject):
 				if trait.isAvailable and trait.value > 0:
 					htmlText += self.htmlLabelRuleValue(label=trait.name, value=self.valueStyled(trait.totalvalue, self.traitMax), additional=trait.customText)
 					iterator += 1
+
+		## Auch die Kräfte nehmen Platz weg, muß also berücksichtigt werden.
+		#i = 0
+		#for item in self.__character.traits["Power"]:
+			#traits = self.__character.traits["Power"][item].keys()
+			#for key in traits:
+				#trait = self.__character.traits["Power"][item][key]
+				#if trait.isAvailable and self.__character.species == trait.species and (trait.value > 0 or self.__character.species in ( "Mage", "Werewolf", )):
+					#i += 1
+
+		#if self.__character.species in ( "Mage", "Werewolf", ):
+			#i = int(math.ceil(i / 2))
+
+		#iterator += i
+		iterator + self.__powerCount
 
 		while iterator < count:
 			htmlText += u"<table class='fullWidth'><tr>"
@@ -1013,47 +1040,49 @@ class RenderSheet(QObject):
 
 
 	def _createSubPowers(self):
-		htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.__storage.subPowerName(self.__character.species), species=self.__character.species)
+		if self.__character.species != "Human":
+			htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.__storage.subPowerName(self.__character.species), species=self.__character.species)
 
-		powerMax = Config.traitMax
-		if self.__character.species == "Mage":
-			powerMax = self.traitMax
+			powerMax = Config.traitMax
+			if self.__character.species == "Mage":
+				powerMax = self.traitMax
 
-		headings = (
-			"Name",
-			"Power",
-			"Cost",
-			"Roll",
-		)
+			headings = (
+				"Name",
+				"Power",
+				"Cost",
+				"Roll",
+			)
 
-		htmlText += "<table style='width: 100%'><tr>"
-		for heading in headings:
-			htmlText += "<td><h2 class='{species}'>{title}</h2></td>".format(title=heading, species=self.__character.species)
-		htmlText += "</tr><tr>"
-		for item in self.__character.traits["Subpower"]:
-			traits = self.__character.traits["Subpower"][item].items()
-			traits.sort()
-			for subitem in traits:
-				if subitem[1].isAvailable and subitem[1].value > 0 and subitem[1].species == self.__character.species:
-					htmlText += "<tr>"
-					htmlText += u"<td><span class='scriptFont'>{}</span></td>".format(subitem[1].name)
-					htmlText += "<td class='layout'>"
-					if self.__storage.traits["Subpower"][item][subitem[0]]["powers"]:
-						for power in self.__storage.traits["Subpower"][item][subitem[0]]["powers"].items():
-							htmlText += u"{}".format(self.htmlLabelRuleValue(label=power[0], value=self.valueStyled(power[1], powerMax)))
-					elif self.__character.species == "Werewolf":
-						htmlText += self.htmlLabelRuleValue(label=item, value=self.valueStyled(subitem[1].level, powerMax))
-					htmlText += "</td>"
-					htmlText += u"<td><span class='scriptFont'>{0[0]}</span><span class='small'> {0[1]}</span>{0[2]}<span class='scriptFont'>{0[3]}</span><span class='small'> {0[4]}</span></td>".format(self.printEnergyCost(
-						willpower=self.__storage.traits["Subpower"][item][subitem[0]]["costWill"],
-						fuel=self.__storage.traits["Subpower"][item][subitem[0]]["costFuel"]
-					))
-					htmlText += u"<td><span class='scriptFont'>{}</span></td>".format(self.__storage.traits["Subpower"][item][subitem[0]]["roll"])
-					htmlText += "</tr>"
-		htmlText += "</tr></table>"
+			htmlText += "<table style='width: 100%'><tr>"
+			for heading in headings:
+				htmlText += "<td><h2 class='{species}'>{title}</h2></td>".format(title=heading, species=self.__character.species)
+			htmlText += "</tr><tr>"
+			for item in self.__character.traits["Subpower"]:
+				traits = self.__character.traits["Subpower"][item].items()
+				traits.sort()
+				for subitem in traits:
+					if subitem[1].isAvailable and subitem[1].value > 0 and subitem[1].species == self.__character.species:
+						htmlText += "<tr>"
+						htmlText += u"<td><span class='scriptFont'>{}</span></td>".format(subitem[1].name)
+						htmlText += "<td class='layout'>"
+						if self.__storage.traits["Subpower"][item][subitem[0]]["powers"]:
+							for power in self.__storage.traits["Subpower"][item][subitem[0]]["powers"].items():
+								htmlText += u"{}".format(self.htmlLabelRuleValue(label=power[0], value=self.valueStyled(power[1], powerMax)))
+						elif self.__character.species == "Werewolf":
+							htmlText += self.htmlLabelRuleValue(label=item, value=self.valueStyled(subitem[1].level, powerMax))
+						htmlText += "</td>"
+						htmlText += u"<td><span class='scriptFont'>{0[0]}</span><span class='small'> {0[1]}</span>{0[2]}<span class='scriptFont'>{0[3]}</span><span class='small'> {0[4]}</span></td>".format(self.printEnergyCost(
+							willpower=self.__storage.traits["Subpower"][item][subitem[0]]["costWill"],
+							fuel=self.__storage.traits["Subpower"][item][subitem[0]]["costFuel"]
+						))
+						htmlText += u"<td><span class='scriptFont'>{}</span></td>".format(self.__storage.traits["Subpower"][item][subitem[0]]["roll"])
+						htmlText += "</tr>"
+			htmlText += "</tr></table>"
 
-		return htmlText
-		#return  ""
+			return htmlText
+		else:
+			return ""
 
 
 	def printEnergyCost(self, willpower=None, fuel=None):
@@ -1147,6 +1176,8 @@ class RenderSheet(QObject):
 
 		htmlText += u"<table class='fullWidth'><tr>"
 		for i in xrange(columns):
+			if i > 0:
+				htmlText += u"<td class='layout spacer'><!-- Horizontaler Abstand --></td>"
 			htmlText += u"<td class='layout'><table class='fullWidth'>"
 			for row in dataTable[int(i * (len(dataTable) / columns)):int((i+1) *(len(dataTable) / columns))]:
 				htmlText += u"<tr>"
@@ -1211,6 +1242,10 @@ class RenderSheet(QObject):
 			specialBonus = "+ 2"
 
 		rolls = {
+			"Human": (),
+			"Changeling": (),
+			"Mage": (),
+			"Vampire": (),
 			"Werewolf": (
 				( "Shapeshifting", "Stamina + Survival + Primal Urge", ),
 				( "Stepping Sideways", "Intelligence + Presence + Primal Urge", ),
@@ -1240,12 +1275,17 @@ class RenderSheet(QObject):
 				"XP",
 				self.tr("Arcane XP"),
 			)
-		htmlText = u""
+		htmlText = u"<table style='width: 100%'><tr>"
+		i = 0
 		for column in xpColumns:
-			htmlText += u"<table style='width: {}%'>".format(100 / len(xpColumns))
-			htmlText += u"<tr><td><h1 class='{species}'>{title}</h1></td></tr>".format(title=column, species=self.__character.species)
+			if i > 0:
+				htmlText += u"<td class='layout spacer'></td>"
+			htmlText += u"<td class='layout' style='width: {}%'><table style='width: 100%'>".format((100 / len(xpColumns)) - 8)
+			htmlText += u"<tr><td class='nowrap'><h1 class='{species}'>{title}</h1></td></tr>".format(title=column, species=self.__character.species)
 			htmlText += u"<tr style='height: 3em;'><td class='box'></td></tr>"
-			htmlText += u"</table>"
+			htmlText += u"</td></table>"
+			i += 1
+		htmlText += u"</tr></table>"
 
 		return htmlText
 
