@@ -23,7 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 import os
-import tempfile
+#import tempfile
 import math
 import re
 
@@ -80,25 +80,26 @@ class RenderSheet(QObject):
 
 		#self.__htmlFileLike = None
 
-		## Erzeuge Temporäre Dateien, ums sie in HTML laden zu können.
-		persistentResourceFiles = (
-			":sheet/stylesheets/sheet.css",
-		)
-		self.__persistentResourceFiles = {}
-		for resFile in persistentResourceFiles:
-			qrcFile = QFile(resFile)
-			if not qrcFile.open(QIODevice.ReadOnly):
-				raise ErrFileNotOpened(resFile, qrcFile.errorString())
-			fileContent = qrcFile.readAll()
-			qrcFile.close()
-			fileLike = tempfile.NamedTemporaryFile(delete=False)
-			fileLike.write(fileContent)
-			fileLike.seek(0)
-			fileLike.close()
-			self.__persistentResourceFiles[resFile] = fileLike
+		### Erzeuge Temporäre Dateien, ums sie in HTML laden zu können.
+		#persistentResourceFiles = (
+			#":sheet/stylesheets/sheet.css",
+		#)
+		#self.__persistentResourceFiles = {}
+		#for resFile in persistentResourceFiles:
+			#qrcFile = QFile(resFile)
+			#if not qrcFile.open(QIODevice.ReadOnly):
+				#raise ErrFileNotOpened(resFile, qrcFile.errorString())
+			#fileContent = qrcFile.readAll()
+			#qrcFile.close()
+			#fileLike = tempfile.NamedTemporaryFile(delete=False)
+			#fileLike.write(fileContent)
+			#fileLike.seek(0)
+			#fileLike.close()
+			#self.__persistentResourceFiles[resFile] = fileLike
 
 		htmlTemplates = {
 			0: ( ":sheet/stylesheets/sheetTemplate.html", ),
+			1: ( ":sheet/stylesheets/sheet.css", ),
 			"Human": ( ":sheet/stylesheets/sheetTemplate-Human-A.html", ),
 			"Changeling": ( ":sheet/stylesheets/sheetTemplate-Changeling-A.html", ":sheet/stylesheets/sheetTemplate-Changeling-B.html", ),
 			"Mage": ( ":sheet/stylesheets/sheetTemplate-Mage-A.html", ":sheet/stylesheets/sheetTemplate-Mage-B.html", ),
@@ -116,6 +117,30 @@ class RenderSheet(QObject):
 				fileContent = textStream.readAll()
 				qrcFile.close()
 				self.__htmlTemplates[species[0]].append(fileContent)
+
+		## Bilder
+		## Zugreifen kann man auf den Inhalt über self.__resourceFiles[<Name>]
+		resourceFiles =(
+			":sheet/images/species/Mage/Power-Death.svg",
+			":sheet/images/species/Mage/Power-Fate.svg",
+			":sheet/images/species/Mage/Power-Forces.svg",
+			":sheet/images/species/Mage/Power-Life.svg",
+			":sheet/images/species/Mage/Power-Matter.svg",
+			":sheet/images/species/Mage/Power-Mind.svg",
+			":sheet/images/species/Mage/Power-Prime.svg",
+			":sheet/images/species/Mage/Power-Space.svg",
+			":sheet/images/species/Mage/Power-Spirit.svg",
+			":sheet/images/species/Mage/Power-Time.svg",
+		)
+		self.__resourceFiles = {}
+		for resFile in resourceFiles:
+			qrcFile = QFile(resFile)
+			if not qrcFile.open(QIODevice.ReadOnly):
+				raise ErrFileNotOpened(resFile, qrcFile.errorString())
+			textStream = QTextStream(qrcFile)
+			fileContent = textStream.readAll()
+			qrcFile.close()
+			self.__resourceFiles[resFile] = fileContent
 
 		self.traitMax = self.__storage.maxTrait(self.__character.species, self.__character.powerstat)
 
@@ -158,10 +183,16 @@ class RenderSheet(QObject):
 		if self.__pageToPrint < len(self.__htmlTemplates[self.__character.species]):
 			htmlText = self.__htmlTemplates[0][0]
 
+			## In der css-Datei müssen die geschweiften Klammern geschweifte Klammern bleiben. Also muß ich diese jeweils verdoppeln
+			cssContent = self.__htmlTemplates[1][0]
+			cssContent = cssContent.replace("{", "{{")
+			cssContent = cssContent.replace("}", "}}")
+
 			htmlText = htmlText.format(
-				stylesheet=QUrl.fromLocalFile(self.__persistentResourceFiles[":sheet/stylesheets/sheet.css"].name).toString(),
+				stylesheet=cssContent,
 				body=self.__htmlTemplates[self.__character.species][self.__pageToPrint],
 			)
+
 
 			blockHeight = {
 				"Human": {
@@ -474,6 +505,10 @@ class RenderSheet(QObject):
 
 			htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.__storage.powerName(self.__character.species), species=self.__character.species)
 
+			powerImages = (
+				"Mage",
+			)
+
 			htmlText += u"<table style='width: 100%'><tr>"
 			iterator = 0
 			colIterator = 0
@@ -483,13 +518,17 @@ class RenderSheet(QObject):
 					trait = traitList[i]
 					htmlText += u"<table class='fullWidth'>"
 					htmlText += u"<tr>"
+					if self.__character.species in powerImages:
+						imageCol = u"<td class='nowrap withHRule layout' style='width: 1em'><div style='width: 1em; height: 1em;'>{}</div></td>".format(self.__resourceFiles[":sheet/images/species/{species}/Power-{power}.svg".format(species=self.__character.species, power=trait.name)])
+					else:
+						imageCol = ""
 					labelCol = u"<td class='nowrap withHRule'>{label}</td>".format(label=trait.name)
-					ruleCol =u"<td class='hrulefill'><span class='descText'>{additional}</span></td>".format(additional=trait.customText)
+					ruleCol = u"<td class='hrulefill'><span class='descText'>{additional}</span></td>".format(additional=trait.customText)
 					valueCol = u"<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
 					if colIterator > 0:
-						htmlText += valueCol + ruleCol + labelCol
+						htmlText += "<td class='layout'><table style='width: 100%;'><tr>" + valueCol + ruleCol + labelCol + "</tr></table></td>" + imageCol
 					else:
-						htmlText += labelCol + ruleCol + valueCol
+						htmlText += imageCol + "<td class='layout'><table style='width: 100%;'><tr>" + labelCol + ruleCol + valueCol + "</tr></table></td>"
 					htmlText += u"</tr>"
 					htmlText += u"</table>"
 					iterator += 1
@@ -1167,7 +1206,10 @@ class RenderSheet(QObject):
 
 		description = re.search(r".*\<body[^\>]*\>\n*(.*)\</body\>", self.__character.description, flags=re.MULTILINE | re.DOTALL)
 		## description.group(0) zeigt den gesamten ursprünglichen string.
-		description = description.group(1)
+		if description:
+			description = description.group(1)
+		else:
+			description = ""
 		htmlText += u"<div style='height:{height}; overflow:hidden;'>{text}</div>".format(text=self.simpleTextBox(description, title=self.tr("Description")), height="{}".format(height))
 
 		htmlText += "</td></tr><tr><td class='layout'><!-- Vertikaler Zwischenraum --></td></tr><tr><td class='layout' style='height: 10%'>"
@@ -1332,8 +1374,8 @@ class RenderSheet(QObject):
 			return False
 
 
-	def htmlImage(self, imagePath):
-		return "{}".format(self.__persistentResourceFiles[imagePath].name)
+	#def htmlImage(self, imagePath):
+		#return "{}".format(self.__persistentResourceFiles[imagePath].name)
 
 
 	def valueStyled(self, value, maxValue=None, squares=False):
@@ -1445,8 +1487,8 @@ class RenderSheet(QObject):
 
 		self.__painter.end()
 
-		for tmp in self.__persistentResourceFiles.values():
-			os.remove("{}".format(tmp.name))
+		#for tmp in self.__persistentResourceFiles.values():
+			#os.remove("{}".format(tmp.name))
 
 
 
