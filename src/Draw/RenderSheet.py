@@ -29,6 +29,7 @@ import re
 
 from PySide.QtCore import Qt, QObject, QFile, QIODevice, QTextStream, QBuffer, QByteArray, QUrl, QRect, Signal
 from PySide.QtGui import QPainter, QImage, QPalette#, QColor, QPen, QFont, QFontMetrics, QTextDocument
+from PySide import QtNetwork# Ist notwendig, wenn ich cx_freeze nutzen möchte. Sonst wird das entsprechende modul nicht eingeschlossen udn QtWebKit funktioniert nicht.
 from PySide.QtWebKit import QWebPage
 
 #from src.GlobalState import GlobalState
@@ -314,7 +315,11 @@ class RenderSheet(QObject):
 
 			#Debug.debug(htmlText)
 
+			## Hier gibtes möglicherweise ein Problem. Unter Linux funktioniert wes zwar, aber unter windows werden mit dieser Funktion die inline-svg-Grafiken nicht angezeigt.
 			self.__mainFrame.setHtml(htmlText)
+			#bytes = QByteArray()
+			#bytes = QByteArray.fromRawData(htmlText)
+			#self.__mainFrame.setContent(htmlText, "application/xhtml+xml")
 
 			##Das Rendern in PDF wird durch das Signal ausgelöst, welches gesendet wird, sobald der HTML-Text fertig geladen ist.
 
