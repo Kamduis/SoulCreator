@@ -99,7 +99,7 @@ table.fullSpace {
 	height: 100%;
 }
 td {
-	/*border: 1px solid #0F0;*//* <- Nur zu Debug-Zwecken */
+/* 	border: 1px solid #0F0; */
 	padding-top: .45em;
 /* 	margin: .3em; */
 	vertical-align: baseline;
@@ -107,7 +107,7 @@ td {
 /* 	overflow:hidden; */
 }
 td.layout {
-	border: 1px solid #F00;/* <- Nur zu Debug-Zwecken */
+/* 	border: 1px solid #F00; */
 	padding: 0px;
 	margin: 0px;
 	vertical-align: top;
