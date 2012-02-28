@@ -28,11 +28,11 @@ import math
 import re
 
 from PySide.QtCore import Qt, QObject, QFile, QIODevice, QTextStream, QBuffer, QByteArray, QUrl, QRect, Signal
-from PySide.QtGui import QPainter, QImage, QPalette#, QColor, QPen, QFont, QFontMetrics, QTextDocument
+from PySide.QtGui import QPainter, QImage, QPalette, QPicture#, QColor, QPen, QFont, QFontMetrics, QTextDocument
 from PySide import QtNetwork# Ist notwendig, wenn ich cx_freeze nutzen möchte. Sonst wird das entsprechende modul nicht eingeschlossen udn QtWebKit funktioniert nicht.
 from PySide.QtWebKit import QWebPage
 
-#from src.GlobalState import GlobalState
+from src.GlobalState import GlobalState
 from src.Config import Config
 from src.Error import ErrFileNotOpened
 #from src.Random import Random
@@ -122,6 +122,7 @@ class RenderSheet(QObject):
 		## Bilder
 		## Zugreifen kann man auf den Inhalt über self.__resourceFiles[<Name>]
 		resourceFiles =(
+			":sheet/images/species/Mage/Border-Corner.svg",
 			":sheet/images/species/Mage/Power-Death.svg",
 			":sheet/images/species/Mage/Power-Fate.svg",
 			":sheet/images/species/Mage/Power-Forces.svg",
@@ -189,6 +190,10 @@ class RenderSheet(QObject):
 			cssContent = cssContent.replace("{", "{{")
 			cssContent = cssContent.replace("}", "}}")
 
+			if GlobalState.isDevelop:
+				cssContent += "td {{ border: 1px solid #0F0; }}"
+				cssContent += "td.layout {{ border: 1px solid #F00; }}"
+
 			htmlText = htmlText.format(
 				stylesheet=cssContent,
 				body=self.__htmlTemplates[self.__character.species][self.__pageToPrint],
@@ -210,7 +215,7 @@ class RenderSheet(QObject):
 				},
 				"Vampire": {
 					"inventory": "450px",
-					"description": "400px",
+					"description": "360px",
 				},
 				"Werewolf": {
 					"inventory": "450px",
@@ -272,12 +277,12 @@ class RenderSheet(QObject):
 					title="{} {}".format(self.__storage.organisationTitle(self.__character.species), curseText)
 				),
 				spellsActive=self.userTextBox(
-					lines=7,
+					lines=5,
 					title=self.tr("Active Spells"),
 					description=self.tr("Max: {} +3".format(self.__storage.powerstatName(self.__character.species)))
 				),
 				spellsUponSelf=self.userTextBox(
-					lines=7,
+					lines=5,
 					title=self.tr("Spells Cast Upon Self"),
 					description=self.tr("Spell Tolerance: Stamina; -1 die per extra spell")
 				),
@@ -313,7 +318,7 @@ class RenderSheet(QObject):
 				xp=self._createXp(),
 			)
 
-			Debug.debug(htmlText)
+			#Debug.debug(htmlText)
 
 			## Hier gibtes möglicherweise ein Problem. Unter Linux funktioniert wes zwar, aber unter windows werden mit dieser Funktion die inline-svg-Grafiken nicht angezeigt.
 			#self.__mainFrame.setHtml(htmlText)
@@ -395,7 +400,7 @@ class RenderSheet(QObject):
 		for column in tableContents:
 			htmlText += "<td style='width: {}; vertical-align: top;'><table style='width: 100%'>".format(column[0])
 			for row in column[1]:
-				htmlText += u"<tr><td style='text-align: right; white-space: nowrap;'>{label}</td><td style='width: 100%;'><span class='scriptFont text'>{value}</span></td></tr>".format(label=row[0], value=row[1])
+				htmlText += u"<tr><td style='text-align: right; white-space: nowrap;'><span class='{species}' style='font-weight: bold;'>{label}</span></td><td style='width: 100%;'><span class='scriptFont text'>{value}</span></td></tr>".format(label=row[0], value=row[1], species=self.__character.species.lower())
 			htmlText += "</table></td>"
 		htmlText += "</tr></table>"
 
@@ -407,29 +412,57 @@ class RenderSheet(QObject):
 		Erzeugt die Darstellung der Attribute.
 		"""
 
-		tableData = [
-			[],
-			[],
-			[],
-		]
-
+		tableData = []
 		for category in Config.attributes:
-			i = 0
+			column = []
 			for trait in category[1]:
-				tableData[i].append(self.__character.traits["Attribute"][category[0]][trait])
-				i += 1
+				column.append(self.__character.traits["Attribute"][category[0]][trait])
+			tableData.append(column)
 
-		for i in xrange(len(Config.attributeSorts)):
-			tableData[i].insert(0, Config.attributeSorts[i])
-
-		htmlText = u"<table class='fullWidth'>"
-		for row in tableData:
+		htmlText = u"<table class='fullWidth'><tr>"
+		htmlText += "<td class='layout' style='width: 1%'><table style='width: 100%'>"
+		for label in Config.attributeSorts:
 			htmlText += u"<tr>"
-			htmlText += u"<td style='width: 0%;'><span class='{species}'>{}</span></td>".format(row[0], species=self.__character.species.lower())
-			for column in row[1:]:
-				htmlText += u"<td style='width: 33%; text-align: right; font-weight: bold;'>{label}</td><td>{value}</td>".format(label=column.name, value=self.valueStyled(column.totalvalue, self.traitMax))
-			htmlText += u"</tr>"
-		htmlText += u"</table>"
+			htmlText += u"<td><span class='{species}' style='font-weight: bold;'>{}</span></td>".format(label, species=self.__character.species.lower())
+			htmlText += "</tr>"
+		htmlText += "</table></td>"
+		for column in tableData:
+			htmlText += "<td class='layout' style='padding: 1px;'><!-- variabler horizontaler Raum (Ohne das padding (margin/border) wird diese Spalte ignoriert) --></td>"
+			htmlText += "<td class='layout' style='width: 0.01%;'><table style='table-layout: fixed; width: 0%'><tr><td class='layout'>{border}</td></tr></table></td>".format(border=self.borderCorner())
+			htmlText += "<td class='layout' style='width: 1%'><table style='width: 100%'>"
+			for trait in column:
+				htmlText += u"<tr>"
+				htmlText += u"<td style='width: 100%; text-align: right; font-weight: bold;'>{label}</td>".format(label=trait.name)
+				htmlText += u"<td>{value}</td>".format(value=self.valueStyled(trait.totalvalue, self.traitMax))
+				htmlText += "</tr>"
+			htmlText += "</table></td>"
+		htmlText += u"</tr></table>"
+
+		#tableData = [
+			#[],
+			#[],
+			#[],
+		#]
+
+		#for category in Config.attributes:
+			#i = 0
+			#for trait in category[1]:
+				#tableData[i].append(self.__character.traits["Attribute"][category[0]][trait])
+				#i += 1
+
+		#for i in xrange(len(Config.attributeSorts)):
+			#tableData[i].insert(0, Config.attributeSorts[i])
+
+		#Debug.debug(tableData)
+
+		#htmlText = u"<table class='fullWidth'>"
+		#for row in tableData:
+			#htmlText += u"<tr>"
+			#htmlText += u"<td style='width: 0%;'><span class='{species}' style='font-weight: bold;'>{}</span></td>".format(row[0], species=self.__character.species.lower())
+			#for column in row[1:]:
+				#htmlText += u"<td style='width: 33%; text-align: right; font-weight: bold;'>{label}{border}</td><td>{value}</td>".format(label=column.name, value=self.valueStyled(column.totalvalue, self.traitMax), border=self.borderCorner())
+			#htmlText += u"</tr>"
+		#htmlText += u"</table>"
 
 		return htmlText
 
@@ -580,8 +613,8 @@ class RenderSheet(QObject):
 			countPerSpecies = {
 				"Human": 20,
 				"Changeling": 20,
-				"Mage": 26,
-				"Vampire": 26,
+				"Mage": 21,
+				"Vampire": 23,
 				"Werewolf": 20,
 			}
 			if self.__character.species in countPerSpecies.keys():
@@ -601,18 +634,6 @@ class RenderSheet(QObject):
 					iterator += 1
 
 		## Auch die Kräfte nehmen Platz weg, muß also berücksichtigt werden.
-		#i = 0
-		#for item in self.__character.traits["Power"]:
-			#traits = self.__character.traits["Power"][item].keys()
-			#for key in traits:
-				#trait = self.__character.traits["Power"][item][key]
-				#if trait.isAvailable and self.__character.species == trait.species and (trait.value > 0 or self.__character.species in ( "Mage", "Werewolf", )):
-					#i += 1
-
-		#if self.__character.species in ( "Mage", "Werewolf", ):
-			#i = int(math.ceil(i / 2))
-
-		#iterator += i
 		iterator + self.__powerCount
 
 		while iterator < count:
@@ -1089,6 +1110,8 @@ class RenderSheet(QObject):
 		if self.__character.species != "Human":
 			htmlText = u"<h1 class='{species}'>{title}</h1>".format(title=self.__storage.subPowerName(self.__character.species), species=self.__character.species.lower())
 
+			htmlText = htmlText.replace("&", "&#38;")
+
 			powerMax = Config.traitMax
 			if self.__character.species == "Mage":
 				powerMax = self.traitMax
@@ -1194,19 +1217,18 @@ class RenderSheet(QObject):
 			[ "Nationality:", self.__character.nationality, ],
 		]
 		if self.__character.species != "Human":
-			dataTable[0][1] = "{} ({})".format(dataTable[0][1], self.__character.age)
-			dataTable[1][1] = "{} ({})".format(self.__character.dateBecoming.toString(Config.textDateFormat), self.__character.ageBecoming)
+			dataTable.insert(2, [ "Becoming:", self.__character.dateBecoming.toString(Config.textDateFormat), ])
 		if self.__character.species == "Changeling":
-			dataTable[1][0] = "Taken:"
+			dataTable[2][0] = "Taken:"
 		elif self.__character.species == "Mage":
-			dataTable[1][0] = "Awakening:"
+			dataTable[2][0] = "Awakening:"
 		elif self.__character.species == "Vampire":
-			dataTable[1][0] = "Embrace:"
+			dataTable[2][0] = "Embrace:"
 		elif self.__character.species == "Werewolf":
-			dataTable[1][0] = "First Change:"
+			dataTable[2][0] = "First Change:"
 			# Größe und Gewicht löschen
 			del dataTable[4]
-			# Durch das Löschen, ändert sich natürlich der INdex aller nachfolgenden Einträge
+			# Durch das Löschen, ändert sich natürlich der Index aller nachfolgenden Einträge
 			del dataTable[4]
 
 		htmlText = u"<table class='fullSpace'><tr style ='height: 100%;'><td class='layout'>"
@@ -1343,7 +1365,7 @@ class RenderSheet(QObject):
 		"""
 		\param species Wird in diesem Argument eine Spezies angegeben, wird nur dann ein Wert zurückgegeben, wenn die Spezies mit der Charakterspezies übereinstimmt.
 		"""
-		
+
 		if self.__isForSpecies(species):
 			htmlText = u""
 			if title:
@@ -1358,7 +1380,7 @@ class RenderSheet(QObject):
 		"""
 		Eine Box mit einer angebenen Anzahl an Linien, in welche der Spieler auf dem ausgedruckten Bogen Dinge eingeben kann.
 		"""
-		
+
 		if self.__isForSpecies(species):
 			htmlText = u""
 			if title:
@@ -1408,6 +1430,27 @@ class RenderSheet(QObject):
 
 		text = u"<span class='dots'>{}</span>".format(text)
 		return text
+
+
+	def borderCorner(self, width=100, height=100):
+		"""
+		Fügt ein Bild ein
+
+		\note width und height haben keine Wirkung!
+		"""
+
+		if self.__character.species == "Mage":
+			svgImage = self.__resourceFiles[":sheet/images/species/{species}/Border-Corner.svg".format(species=self.__character.species)]
+			## In den svg-Dateien muß der <?xml version="1.0" encoding="UTF-8" standalone="no"?> header weg.
+			svgImage = re.sub(r"\<\?[^\>]*\?\>", "", svgImage)
+
+			border = ""
+			if GlobalState.isDevelop:
+				border = "border: 1px solid #00F;"
+
+			return "<div style='width: 0%; height: 0%; text-align: right; {border}'>{}</div>".format(svgImage, width=width, height=height, border=border)
+		else:
+			return  ""
 
 
 	def _drawBackground(self):
