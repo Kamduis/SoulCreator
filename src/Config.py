@@ -42,7 +42,7 @@ class Config(object):
 	programVersionMajor = 0
 	programVersionMinor = 11
 	programVersionChange = 1
-	programDescription = "Charaktergenerator für die World of Darkness."
+	programDescription = "Charaktergenerator for the World of Darkness."
 	organization = "Caern"
 
 	# Konfigurationsdatei
@@ -157,7 +157,7 @@ class Config(object):
 	#const int Config::traitVerticalListWidth = 300
 
 	## Eigenschaftshöchstwert.
-	#const int Config::traitMax = 5
+	traitMax = 5
 
 	## Bezeichnung der Moral für alle Spezies
 	moralityIdentifier = "Morality"
@@ -170,6 +170,15 @@ class Config(object):
 
 	## Startwert der Moral.
 	moralityTraitDefaultValue = 7
+
+	## Höchstwert der Gesundheit, von Spezies zu Spezies unterschiedlich.
+	healthMax = {
+		"Human": 11,
+		"Changeling": 11,
+		"Mage": 11,
+		"Vampire": 16,
+		"Werewolf": 16,
+	}
 
 	## Höchstwert der Willenskraft.
 	willpowerMax = 10

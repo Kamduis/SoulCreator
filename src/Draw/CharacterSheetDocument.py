@@ -36,8 +36,10 @@ class CharacterSheetDocument(QTextDocument):
 	"""
 	
 	
-	def __init__(self, parent=None):
+	def __init__(self, species=None, parent=None):
 		QTextDocument.__init__(self, parent)
+
+		self.__species = species
 
 		## Lade Datei mit Stylesheet-Informationen
 		cssFile = QFile(":stylesheets/sheet.css")
@@ -52,6 +54,20 @@ class CharacterSheetDocument(QTextDocument):
 		self.setDefaultStyleSheet(cssContent)
 
 		#htmlHeader = "<html><head><link rel='stylesheet' type='text/css' href='stylesheet.css'></head><body>"
+
+
+	def setText(self, text, title=None):
 		
+		result = "<html><body>"
+		if title:
+			if self.__species:
+				result += "<h1 align='center' class='{species}'>{title}</h1>".format(title=self.tr("Extraordinary Items"), species=self.__species.lower())
+			else:
+				result += "<h1 align='center'>{title}</h1>".format(title=self.tr("Extraordinary Items"))
+		result += "<p>{}</p>".format(text)
+		result += "</body></html>"
+
+		#self.setHtml(result)
+		self.setHtml("<html><body><h1>Test</h1><hr><h1 class='changeling'>Test</h1><hr>Testtext<hr></body></html>")
 
 

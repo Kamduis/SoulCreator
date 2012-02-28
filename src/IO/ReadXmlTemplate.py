@@ -263,6 +263,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 								"cheap": [],
 								"only": listOfOnlys,
 							}
+							itemsToInt = (
+								"level",
+							)
+							for item in itemsToInt:
+								if subPowerData[item]:
+									subPowerData[item] = int(subPowerData[item])
+								else:
+									subPowerData[item] = 0
 							#Debug.debug(subPowerData["name"], subPowerData["prerequisites"])
 							identifier = self.getElementAttribute(element, "id")
 							if not identifier:
