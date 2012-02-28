@@ -622,11 +622,9 @@ class MainWindow(QMainWindow):
 		printer.setFullPage( True )
 		printer.setOutputFileName( savePath )
 
-		#drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 		drawSheet = RenderSheet( self.__storage, self.__character, printer, self )
 
 		try:
-			#drawSheet.print()
 			drawSheet.createSheets()
 		except ErrSpeciesNotExisting as e:
 			MessageBox.exception( self, e.message, e.description )
@@ -665,11 +663,9 @@ class MainWindow(QMainWindow):
 		printDialog = QPrintDialog( printer, self )
 
 		if ( printDialog.exec_() == QDialog.Accepted ):
-			#drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
 			drawSheet = RenderSheet( self.__storage, self.__character, printer, self )
 
 			try:
-				#drawSheet.print()
 				drawSheet.createSheets()
 			except ErrSpeciesNotExisting as e:
 				MessageBox.exception( self, e.message, e.description )

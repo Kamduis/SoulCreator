@@ -219,7 +219,7 @@ class RenderSheet(QObject):
 				},
 				"Werewolf": {
 					"inventory": "450px",
-					"description": "360px",
+					"description": "350px",
 				},
 			}
 
@@ -974,13 +974,13 @@ class RenderSheet(QObject):
 				self.tr("Lunacy -4"),
 			),
 			"Gauru": (
-				self.tr("Full Lunacy<br>Bite: +2L, Claw: +1L<br>-2 to resist Death Rage"),
+				self.tr("Full Lunacy<br/>Bite: +2L, Claw: +1L<br/>-2 to resist Death Rage"),
 			),
 			"Urshul": (
-				self.tr("Lunacy -2<br>ite: +2L"),
+				self.tr("Lunacy -2<br/>ite: +2L"),
 			),
 			"Urhan": (
-				self.tr("Bite: +2L<br>Others suffer -2 to all attempts to detect werewolf nature."),
+				self.tr("Bite: +2L<br/>Others suffer -2 to all attempts to detect werewolf nature."),
 			),
 		}
 
@@ -1027,7 +1027,7 @@ class RenderSheet(QObject):
 			htmlText += "<td class='layout'>"
 			htmlText += "<table style='width: 100%'>"
 			for row in comments[shape]:
-				htmlText += "<tr><td style='text-align: center; font-style: italic;'><span class='small' style=' line-height: 1em;'>{}</span></td></tr>".format(row)
+				htmlText += "<tr><td style='text-align: center; font-style: italic;'><span class='small' style='line-height: 1em;'>{}</span></td></tr>".format(row)
 			htmlText += "</table>"
 			htmlText += "</td>"
 			iterator += 1

@@ -34,13 +34,13 @@ h2.human {
 h1.changeling {
 	font-family: 'Mutlu';
 	font-size: 1.7em;
-	margin-top: .3em;
+	margin-top: .5em;
 	margin-bottom: .6em;
 }
 h2.changeling {
 	font-family: 'Mutlu';
 	font-size: 1.3em;
-	margin-top: .3em;
+	margin-top: .5em;
 	margin-bottom: .4em;
 }
 h1.mage {
@@ -70,13 +70,13 @@ h2.vampire {
 h1.werewolf {
 	font-family: 'Note this';
 	font-size: 1.5em;
-	margin-top: .3em;
+	margin-top: .5em;
 	margin-bottom: .4em;
 }
 h2.werewolf {
 	font-family: 'Note this';
 	font-size: 1.1em;
-	margin-top: .3em;
+	margin-top: .5em;
 	margin-bottom: .4em;
 }
 
