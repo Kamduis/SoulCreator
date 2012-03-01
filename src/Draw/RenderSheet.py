@@ -299,6 +299,7 @@ class RenderSheet(QObject):
 				pledges="",
 				oneiromachy="",
 				influence="",
+				automobiles=self._createAutomobiles(),
 				inventory=self._createInventory(blockHeight[self.__character.species]["inventory"]),
 				description=self._createDescription(blockHeight[self.__character.species]["description"]),
 				allies=self.userTextBox(
@@ -832,7 +833,7 @@ class RenderSheet(QObject):
 		while iterator < count:
 			htmlText += u"<tr class='rowHeight'>"
 			## Der Waffenname hat ja auch ein Feld.
-			for i in xrange(len(weaponInfo) + 1):
+			for i in xrange(len(weaponHeadings)):
 				htmlText += u"<td class='layout' style='vertical-align: bottom;'><table class='underlines fullWidth'><tr style='height: 100%;'>"
 				htmlText += u"<td class='hrulefill'></td>"
 				htmlText += u"</tr></table></td>"
@@ -1190,6 +1191,69 @@ class RenderSheet(QObject):
 		return htmlText
 
 
+	def _createAutomobiles(self, count=5):
+		"""
+		Die Fahrzeuge werden aufgelistet.
+		"""
+
+		headings = (
+			( self.tr("Type"), 40, ),
+			( self.tr("Durability"), 13, ),
+			( self.tr("Size"), 0, ),
+			( self.tr("Structure"), 0, ),
+			( self.tr("Acceleration"), 0, ),
+			( self.tr("Safe Speed"), 0, ),
+			( self.tr("Max. Speed"), 0, ),
+			( self.tr("Occupants"), 0, ),
+		)
+
+		info = (
+			"durability",
+			"size",
+			"acceleration",
+			"safeSpeed",
+			"maxSpeed",
+			"occupants",
+		)
+
+		htmlText = u"<table class='fullWidth'>"
+		htmlText += u"<tr>"
+		for heading in headings:
+			htmlText += u"<th style='width: {width}%'><h2 class='{species}'>{title}</h2></th>".format(
+					title=heading[0],
+					width=heading[1],
+					species=self.__character.species.lower(),
+				)
+		htmlText += u"</tr>"
+
+		#Debug.debug(htmlText)
+
+		iterator = 0
+		for category in self.__character.automobiles:
+			for automobile in self.__character.automobiles[category]:
+				htmlText += u"<tr>"
+				htmlText += u"<td><span class='scriptFont'>{}</span></td>".format(automobile)
+				for column in info:
+					htmlText += u"<td style='text-align: center;'><span class='scriptFont'>{}</span></td>".format(self.__storage.automobiles[category][automobile][column])
+					## Struktur wird direkt berechneten
+					if column == "size":
+						htmlText += u"<td style='text-align: center;'><span class='scriptFont'>{}</span></td>".format(self.__storage.automobiles[category][automobile]["durability"] + self.__storage.automobiles[category][automobile]["size"])
+				htmlText += u"</tr>"
+				iterator += 1
+
+		while iterator < count:
+			htmlText += u"<tr class='rowHeight'>"
+			for i in xrange(len(headings)):
+				htmlText += u"<td class='layout' style='vertical-align: bottom;'><table class='underlines fullWidth'><tr style='height: 100%;'>"
+				htmlText += u"<td class='hrulefill'></td>"
+				htmlText += u"</tr></table></td>"
+			htmlText += u"</tr>"
+			iterator += 1
+
+		htmlText += u"</table>"
+
+		return htmlText
+
 
 	def _createInventory(self, height=293):
 		#u"<div style='height:{height}; overflow:hidden;'>{text}</div>".format(text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory")), height="{}px".format(heightInventory))
@@ -1197,6 +1261,11 @@ class RenderSheet(QObject):
 		htmlText = text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory"))
 
 		htmlText += u"<dl>"
+		if self.__character.species == "Human" and any([ auto for auto in self.__character.automobiles.values() ]):
+			automobiles = ""
+			for typ in self.__character.automobiles:
+				automobiles += "; ".join(self.__character.automobiles[typ])
+			htmlText += u"<dt><span class='scriptFont text'>{}</span></dt><dd><span class='scriptFont text'>{}</span></dd>".format("Automobiles", automobiles)
 		for typ in self.__character.extraordinaryItems:
 			equipment = "; ".join(self.__character.extraordinaryItems[typ])
 			htmlText += u"<dt><span class='scriptFont text'>{}</span></dt><dd><span class='scriptFont text'>{}</span></dd>".format(typ, equipment)

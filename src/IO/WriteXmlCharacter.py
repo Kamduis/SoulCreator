@@ -189,6 +189,12 @@ class WriteXmlCharacter(QObject):
 				etree.SubElement(equipment, "equipment").text = item
 			if self.__character.magicalTool:
 				etree.SubElement(equipment, "magicalTool").text = self.__character.magicalTool
+		if self.__character.automobiles:
+			automobiles = etree.SubElement(items, "Automobiles")
+			for typ in self.__character.automobiles:
+				itemType = etree.SubElement(automobiles, "Type", name=typ)
+				for automobile in self.__character.automobiles[typ]:
+					etree.SubElement(itemType, "item").text = automobile
 		if self.__character.extraordinaryItems:
 			extraordinaries = etree.SubElement(items, "ExtraordinaryItems")
 			for typ in self.__character.extraordinaryItems:

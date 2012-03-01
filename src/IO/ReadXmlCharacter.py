@@ -227,6 +227,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.readWeapons(tree.find("Items/Weapons"))
 		self.readArmor(tree.find("Items/armor"))
 		self.readEquipment(tree.find("Items/Equipment"))
+		self.readAutomobiles(tree.find("Items/Automobiles"))
 		self.readExtraordinaryItems(tree.find("Items/ExtraordinaryItems"))
 
 
@@ -240,7 +241,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 				categoryName = categoryElement.attrib["name"]
 				for weaponElement in categoryElement.getiterator("weapon"):
 					weaponName = weaponElement.text
-					self.__character.addWeapon(categoryName, weaponName)
+					self.__character.addWeapon(weaponName, categoryName)
 
 
 	def readArmor(self, root):
@@ -268,6 +269,21 @@ class ReadXmlCharacter(QObject, ReadXml):
 				self.__character.setMagicalTool(toolName)
 
 
+	def readAutomobiles(self, root):
+		"""
+		Liest die Fahrzeuge des Charakters aus.
+		"""
+
+		if root is not None:
+			for typeElement in list(root):
+				if typeElement.tag == "Type":
+					typeName = typeElement.attrib["name"]
+					for element in list(typeElement):
+						if element.tag == "item":
+							automobileName = element.text
+							self.__character.addAutomobile(automobileName, typeName)
+
+
 	def readExtraordinaryItems(self, root):
 		"""
 		Liest die magischen Gegenstände des Charakters aus.
@@ -280,7 +296,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 					for element in list(typeElement):
 						if element.tag == "item":
 							extraordinaryItemName = element.text
-							self.__character.addExtraordinaryItem(typeName, extraordinaryItemName)
+							self.__character.addExtraordinaryItem(extraordinaryItemName, typeName)
 
 
 	def readSpeciesSpecials(self, tree):

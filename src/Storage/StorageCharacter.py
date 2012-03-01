@@ -34,7 +34,7 @@ from src.Datatypes.Identity import Identity
 from src.Calc.Calc import Calc
 from src.Calc.ConnectPrerequisites import ConnectPrerequisites
 #from src.Error import ErrListLength
-#from src.Debug import Debug
+from src.Debug import Debug
 
 
 
@@ -82,7 +82,12 @@ class StorageCharacter(QObject):
 	weaponRemoved = Signal(str, str)
 	weaponsChanged = Signal()
 	armorChanged = Signal(str, bool)
-	equipmentChanged = Signal(object)
+	equipmentAdded = Signal(str)
+	equipmentRemoved = Signal(str)
+	equipmentChanged = Signal()
+	automobileAdded = Signal(str, str)
+	automobileRemoved = Signal(str, str)
+	automobilesChanged = Signal()
 	extraordinaryItemAdded = Signal(str, str)
 	extraordinaryItemRemoved = Signal(str, str)
 	extraordinaryItemsChanged = Signal()
@@ -131,6 +136,15 @@ class StorageCharacter(QObject):
 	# 	"ranged": [ weapon1, weapon2 ... ],
 	# }
 	__weapons = {}
+
+	# Eine Liste der Fahrzeuge.
+	#
+	# {
+	# 	Typ1: [ item1, item2 ... ],
+	# 	Typ2: [ item1, item2 ... ],
+	# 	...
+	# }
+	__automobiles = {}
 
 	# Eine Liste der magischen Gegenstände.
 	#
@@ -217,6 +231,10 @@ class StorageCharacter(QObject):
 		self.dateBecomingChanged.connect(self.__calcAgeBecoming)
 		self.weaponAdded.connect(self.weaponsChanged)
 		self.weaponRemoved.connect(self.weaponsChanged)
+		self.equipmentAdded.connect(self.automobilesChanged)
+		self.equipmentRemoved.connect(self.equipmentChanged)
+		self.automobileAdded.connect(self.automobilesChanged)
+		self.automobileRemoved.connect(self.automobilesChanged)
 		self.extraordinaryItemAdded.connect(self.extraordinaryItemsChanged)
 		self.extraordinaryItemRemoved.connect(self.extraordinaryItemsChanged)
 
@@ -300,6 +318,8 @@ class StorageCharacter(QObject):
 		self.weaponsChanged.connect(self.setModified)
 		self.armorChanged.connect(self.setModified)
 		self.equipmentChanged.connect(self.setModified)
+		self.automobilesChanged.connect(self.setModified)
+		self.extraordinaryItemsChanged.connect(self.setModified)
 		self.magicalToolChanged.connect(self.setModified)
 		self.nimbusChanged.connect(self.setModified)
 		self.paradoxMarksChanged.connect(self.setModified)
@@ -500,7 +520,7 @@ class StorageCharacter(QObject):
 
 		return self.__weapons
 
-	def addWeapon(self, category, weapon):
+	def addWeapon(self, weapon, category):
 		"""
 		Fügt der Waffenliste eine Waffe hinzu.
 		"""
@@ -510,16 +530,16 @@ class StorageCharacter(QObject):
 
 		if weapon not in self.__weapons[category]:
 			self.__weapons[category].append(weapon)
-			self.weaponAdded.emit(category, weapon)
+			self.weaponAdded.emit(weapon, category)
 
-	def deleteWeapon(self, category, weapon):
+	def deleteWeapon(self, weapon, category):
 		"""
 		Entfernt besagte Waffe aus der Waffenliste.
 		"""
 
 		if category in self.__weapons:
 			self.__weapons[category].remove(weapon)
-			self.weaponRemoved.emit(category, weapon)
+			self.weaponRemoved.emit(weapon, category)
 
 
 	@property
@@ -548,17 +568,42 @@ class StorageCharacter(QObject):
 	def addEquipment(self, item):
 		if item not in self.__equipment:
 			self.__equipment.append(item)
-			self.equipmentChanged.emit(self.__equipment)
+			self.equipmentAdded.emit(item)
 
-	def delEquipment(self, item):
+	def deleteEquipment(self, item):
 		if item in self.__equipment:
 			self.__equipment.remove(item)
-			self.equipmentChanged.emit(self.__equipment)
+			self.equipmentRemoved.emit(item)
 
-	def clearEquipment(self):
-		if self.__equipment:
-			self.__equipment = []
-			self.equipmentChanged.emit(self.__equipment)
+
+	@property
+	def automobiles(self):
+		"""
+		Die Liste aller Fahrzeuge des Charakters.
+		"""
+
+		return self.__automobiles
+
+	def addAutomobile(self, automobile, category):
+		"""
+		Fügt der Liste ein Fahrzeug hinzu.
+		"""
+
+		if category not in self.__automobiles:
+			self.__automobiles.setdefault(category, [])
+
+		if automobile not in self.__automobiles[category]:
+			self.__automobiles[category].append(automobile)
+			self.automobileAdded.emit(automobile, category)
+
+	def deleteAutomobile(self, automobile, category):
+		"""
+		Entfernt besagtes Fahrzeug aus der Liste.
+		"""
+
+		if category in self.__automobiles:
+			self.__automobiles[category].remove(automobile)
+			self.automobileRemoved.emit(automobile, category)
 
 
 	@property
@@ -569,7 +614,7 @@ class StorageCharacter(QObject):
 
 		return self.__extraordinaryItems
 
-	def addExtraordinaryItem(self, typ, extraordinaryItem):
+	def addExtraordinaryItem(self, extraordinaryItem, typ):
 		"""
 		Fügt der Liste der magischen Gegenstände einen hinzu.
 		"""
@@ -579,16 +624,16 @@ class StorageCharacter(QObject):
 
 		if extraordinaryItem not in self.__extraordinaryItems[typ]:
 			self.__extraordinaryItems[typ].append(extraordinaryItem)
-			self.extraordinaryItemAdded.emit(typ, extraordinaryItem)
+			self.extraordinaryItemAdded.emit(extraordinaryItem, typ)
 
-	def deleteExtraordinaryItem(self, typ, extraordinaryItem):
+	def deleteExtraordinaryItem(self, extraordinaryItem, typ):
 		"""
 		Entfernt besagten magischen Gegenstand aus der Liste.
 		"""
 
 		if typ in self.__extraordinaryItems:
 			self.__extraordinaryItems[typ].remove(extraordinaryItem)
-			self.extraordinaryItemRemoved.emit(typ, extraordinaryItem)
+			self.extraordinaryItemRemoved.emit(extraordinaryItem, typ)
 
 
 	def __getMagicalTool(self):
@@ -1189,7 +1234,11 @@ class StorageCharacter(QObject):
 			for weapon in self.__weapons[category]:
 				self.deleteWeapon(category, weapon)
 		self.setArmor(name="")
-		self.clearEquipment()
+		for item in self.__equipment:
+			self.deleteEquipment(item)
+		for category in self.__automobiles:
+			for automobile in self.__automobiles[category]:
+				self.deleteAutomobile(category, automobile)
 		for typ in self.__extraordinaryItems:
 			for item in self.__extraordinaryItems[typ]:
 				self.deleteExtraordinaryItem(typ, item)

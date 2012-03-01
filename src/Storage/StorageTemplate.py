@@ -317,6 +317,25 @@ class StorageTemplate(QObject):
 	# }
 	__extraordinaryItems = {}
 
+	# Eine Liste aller Fahrzeuge
+	#
+	# {
+	# 	Typ: {
+	# 		name: {
+	# 			"durability": value,
+	# 			"size": value,
+	#			"acceleration": value,
+	# 			"safeSpeed": value,
+	# 			"maxSpeed": value,
+	# 			"maxHandling": value,
+	# 			"occupants": value,
+	# 			"cost": value,
+	# 		},
+	# 	},
+	# 	...
+	# }
+	__automobiles = {}
+
 
 
 	def __init__(self, parent=None):
@@ -828,6 +847,26 @@ class StorageTemplate(QObject):
 
 
 	@property
+	def automobiles(self):
+		"""
+		Gibt eine Liste aller Fahrzeuge.
+		"""
+
+		return self.__automobiles
+
+
+	def addAutomobile( self, typ, name, data ):
+		"""
+		Fügt ein Fahrzeug hinzu. Falls ein Fahrzeug dieses Namens schon vorhanden ist, werden die Daten überschrieben.
+		"""
+
+		if typ not in self.__automobiles:
+			self.__automobiles.setdefault(typ,{})
+			
+		self.__automobiles[typ][name] = data
+
+
+	@property
 	def extraordinaryItems(self):
 		"""
 		Gibt eine Liste aller magischen Gegenstände zurück.
@@ -843,6 +882,6 @@ class StorageTemplate(QObject):
 
 		if typ not in self.__extraordinaryItems:
 			self.__extraordinaryItems.setdefault(typ,{})
-			
+
 		self.__extraordinaryItems[typ][name] = data
 

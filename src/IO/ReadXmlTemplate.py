@@ -170,6 +170,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		self.readWeapons(tree.findall("Template/Items/Weapons"))
 		self.readArmor(tree.findall("Template/Items/Armor"))
 		self.readEquipment(tree.findall("Template/Items/Equipment"))
+		self.readAutomobiles(tree.findall("Template/Items/Automobiles"))
 		self.readExtraordinaryItems(tree.findall("Template/Items/Extraordinary"))
 
 
@@ -455,6 +456,32 @@ class ReadXmlTemplate(QObject, ReadXml):
 						"cost": int(self.getElementAttribute(equipmentElement, "cost")),
 					}
 					self.__storage.addEquipment( equipmentName, equipmentData )
+
+
+	def readAutomobiles(self, root):
+		"""
+		Einlesen der Fahrzeuge.
+		"""
+
+		for automobiles in root:
+			if GlobalState.isFallback or not self.getElementAttribute(automobiles, "fallback") == "True":
+				for element in list(automobiles):
+					if element.tag == "Type":
+						itemTyp = element.attrib["name"]
+						for subElement in list(element):
+							if subElement.tag == "item":
+								itemName = subElement.attrib["name"]
+								itemData = {
+									"durability": int(self.getElementAttribute(subElement, "durability")),
+									"size": int(self.getElementAttribute(subElement, "size")),
+									"acceleration": int(self.getElementAttribute(subElement, "acceleration")),
+									"safeSpeed": int(self.getElementAttribute(subElement, "safeSpeed")),
+									"maxSpeed": int(self.getElementAttribute(subElement, "maxSpeed")),
+									"maxHandling": int(self.getElementAttribute(subElement, "maxHandling")),
+									"occupants": int(self.getElementAttribute(subElement, "occupants")),
+									"cost": float(self.getElementAttribute(subElement, "cost")),
+								}
+								self.__storage.addAutomobile( itemTyp, itemName, itemData )
 
 
 	def readExtraordinaryItems(self, root):
