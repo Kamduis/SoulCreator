@@ -94,7 +94,7 @@ class ItemWidget(QWidget):
 
 		for category in self.__storage.automobiles:
 			for automobile in self.__storage.automobiles[category]:
-				automobileStore.addItemToStore(automobile, category)
+				automobileStore.addItemToStore(automobile, category, QIcon(Config.automobilesIcons[category]))
 
 		automobileStore.itemBought.connect(self.__character.addAutomobile)
 		automobileStore.itemSold.connect(self.__character.deleteAutomobile)
@@ -110,7 +110,7 @@ class ItemWidget(QWidget):
 
 		for category in self.__storage.extraordinaryItems:
 			for extraordinaryItem in self.__storage.extraordinaryItems[category]:
-				extraordinaryItemStore.addItemToStore(extraordinaryItem, category)
+				extraordinaryItemStore.addItemToStore(extraordinaryItem, category, QIcon(Config.extraordinaryItemsIcons[category]))
 
 		extraordinaryItemStore.itemBought.connect(self.__character.addExtraordinaryItem)
 		extraordinaryItemStore.itemSold.connect(self.__character.deleteExtraordinaryItem)

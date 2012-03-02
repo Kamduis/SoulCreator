@@ -146,6 +146,14 @@
     <file>images/svg/shuriken.svg</file>
     <file>images/svg/uzi.svg</file>
     <file>images/svg/shield.svg</file>
+    <file>images/svg/vehicle-car.svg</file>
+    <file>images/svg/vehicle-truck.svg</file>
+    <file>images/svg/vehicle-motorcycle.svg</file>
+    <file>images/svg/vehicle-commercial.svg</file>
+    <file>images/svg/curse.svg</file>
+    <file>images/svg/feather.svg</file>
+    <file>images/svg/spine.svg</file>
+    <file>images/svg/wand.svg</file>
   </qresource>
   <qresource prefix="template">
     <file>templates/base.scd</file>

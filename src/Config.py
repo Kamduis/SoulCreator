@@ -105,25 +105,26 @@ class Config(object):
 	## Kennzeichnung von Bonuseigenschaften.
 	bonusColor = "red"
 
-	## Hintergrundfarbe für die unterschiedlichen Waffenkategorien.
-	weaponsColor = {}
-	weaponsColor["melee"] = "white"
-	weaponsColor["thrown"] = "wheat"
-	weaponsColor["ranged"] = "khaki"
-
 	## Symbole für die verschiedenen Waffencategorien.
 	weaponIcons = {}
 	weaponIcons["melee"] = ":/items/images/svg/machete.svg"
 	weaponIcons["thrown"] = ":/items/images/svg/shuriken.svg"
 	weaponIcons["ranged"] = ":/items/images/svg/uzi.svg"
 
-	## Hintergrundfarbe für die unterschiedlichen Typen magischer Gegenstände.
-	extraordinaryItemColor = {}
-	extraordinaryItemColor["Cursed Items"] = "lightseagreen"
-	extraordinaryItemColor["Fetishes"] = "burlywood"
-	extraordinaryItemColor["Tokens"] = "lawngreen"
-	extraordinaryItemColor["Imbued Items"] = "lightyellow"
-	extraordinaryItemColor["Artifacts"] = "gold"
+	## Symbole für die verschiedenen magischen Gegenstände.
+	extraordinaryItemsIcons = {}
+	extraordinaryItemsIcons["Cursed Items"] = ":/items/images/svg/curse.svg"
+	extraordinaryItemsIcons["Fetishes"] = ":/items/images/svg/feather.svg"
+	extraordinaryItemsIcons["Tokens"] = ":/items/images/svg/spine.svg"
+	extraordinaryItemsIcons["Imbued Items"] = ":/items/images/svg/wand.svg"
+	extraordinaryItemsIcons["Artifacts"] = ":/types/images/svg/pentagram.svg"
+
+	## Symbole für die verschiedenen Fahrzeugkategorien.
+	automobilesIcons = {}
+	automobilesIcons["Cars"] = ":/items/images/svg/vehicle-car.svg"
+	automobilesIcons["Trucks"] = ":/items/images/svg/vehicle-truck.svg"
+	automobilesIcons["Motorcycles"] = ":/items/images/svg/vehicle-motorcycle.svg"
+	automobilesIcons["Commercial Vehicles"] = ":/items/images/svg/vehicle-commercial.svg"
 
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
 	vSpace = 5
