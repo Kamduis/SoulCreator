@@ -40,8 +40,8 @@ class Config(object):
 	programName = "SoulCreator"
 	programAuthor = "Victor"
 	programVersionMajor = 0
-	programVersionMinor = 11
-	programVersionChange = 1
+	programVersionMinor = 12
+	programVersionChange = 0
 	programDescription = "Charaktergenerator for the World of Darkness."
 	organization = "Caern"
 
