@@ -95,9 +95,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 			descriptionText = self.tr("{description} Loading of character will be continued but errors may occur.".format(message=e.message, description=e.description))
 			self.exceptionRaised.emit(e.message, descriptionText, e.critical)
 
+		## Die Daten müssen zuerst geladen werden, damit schon beim Laden die Unterschiedung zwischen Kindern und Erwachsenen erfolgen kann.
+		self.readDates(xmlContent)
 		self.readCharacterInfo(xmlContent)
 		self.readCharacterIdentity(xmlContent)
-		self.readDates(xmlContent)
 		self.readDerangements(xmlContent)
 		self.readTraits(xmlContent)
 		self.readItems(xmlContent)

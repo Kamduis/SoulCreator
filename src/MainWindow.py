@@ -93,9 +93,11 @@ class MainWindow(QMainWindow):
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
 
-	\todo Auspice-Blessing hinzufügen.
-
 	\todo Hausregeln per Option ein-/ausschlatbar machen.
+
+	\todo Werwolf-Gaben vervollständigen.
+
+	\todo Gaben in ene ScrollArea packen, denn es sind viel zu viele, um die Übersicht zu bewahren. Oder ich verwende ein TreeView...
 	"""
 
 
