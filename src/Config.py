@@ -242,6 +242,10 @@ class Config(object):
 		"Kid": 0.70,
 	}
 
+	size = {
+		"Adult": 5,
+		"Kid": 4,
+	}
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (
 		("Hermaphrodite", ":/icons/images/svg/symbolHermaphrodite.svg"),

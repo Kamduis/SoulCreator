@@ -98,6 +98,10 @@ class MainWindow(QMainWindow):
 	\todo Werwolf-Gaben vervollständigen.
 
 	\todo Gaben in ene ScrollArea packen, denn es sind viel zu viele, um die Übersicht zu bewahren. Oder ich verwende ein TreeView...
+
+	\todo Erschaffungspunkte für Fertigkeiten bei Kindern vom Alter abhängig machen.
+
+	\todo Beim Laden die Ganzen Hinweisfenster für das Verteilen von Giant/Tiny etc. nicht anzeigen.
 	"""
 
 
