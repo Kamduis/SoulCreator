@@ -564,6 +564,7 @@ class MainWindow(QMainWindow):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
+				self.__character.isLoading = True
 				try:
 					self.__readCharacter.read(filePath)
 				except ErrXmlVersion as e:
@@ -575,6 +576,7 @@ class MainWindow(QMainWindow):
 
 				# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 				self.__character.setModified( False )
+				self.__character.isLoading = False
 
 
 	def saveCharacter(self):

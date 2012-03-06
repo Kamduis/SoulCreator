@@ -165,6 +165,7 @@ class StorageCharacter(QObject):
 
 		self.__storage = template
 
+		self.isLoading = False
 		self.__modified = False
 		self.__dateBirth = QDate(0, 0, 0)
 		self.__dateBecoming = QDate(0, 0, 0)
