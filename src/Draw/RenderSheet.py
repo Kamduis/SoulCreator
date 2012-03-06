@@ -279,12 +279,13 @@ class RenderSheet(QObject):
 				spellsActive=self.userTextBox(
 					lines=5,
 					title=self.tr("Active Spells"),
-					description=self.tr("Max: {} +3".format(self.__storage.powerstatName(self.__character.species)))
+					#description=self.tr("Max: {} +3".format(self.__storage.powerstatName(self.__character.species)))
+					description=self.tr("Max: {} ({} +3)".format((self.__character.powerstat + 3), self.__storage.powerstatName(self.__character.species)))
 				),
 				spellsUponSelf=self.userTextBox(
 					lines=5,
 					title=self.tr("Spells Cast Upon Self"),
-					description=self.tr("Spell Tolerance: Stamina; -1 die per extra spell")
+					description=self.tr("Spell Tolerance: {} (Resistance); -1 die per extra spell".format(max(self.__character.traits["Attribute"]["Mental"]["Resolve"].totalvalue, self.__character.traits["Attribute"]["Physical"]["Stamina"].totalvalue, self.__character.traits["Attribute"]["Social"]["Composure"].totalvalue)))
 				),
 				nimbus=self.simpleTextBox(
 					self.__character.nimbus,

@@ -102,6 +102,8 @@ class MainWindow(QMainWindow):
 	\todo Erschaffungspunkte für Fertigkeiten bei Kindern vom Alter abhängig machen.
 
 	\todo Beim Laden die Ganzen Hinweisfenster für das Verteilen von Giant/Tiny etc. nicht anzeigen.
+
+	\todo Eigene magische Gegenstände müssen eingegeben werden können.
 	"""
 
 
