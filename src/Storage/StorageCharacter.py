@@ -333,6 +333,8 @@ class StorageCharacter(QObject):
 		self.companionNuminaChanged.connect(self.setModified)
 		self.companionBanChanged.connect(self.setModified)
 
+		self.ageChanged.connect(self.deselctTraitsWithWrongAge)
+
 		self.speciesChanged.connect(self.__emitTraitVisibleReasonChanged)
 		self.ageChanged.connect(self.__emitTraitVisibleReasonChanged)
 		self.eraChanged.connect(self.__emitTraitVisibleReasonChanged)
@@ -1300,6 +1302,18 @@ class StorageCharacter(QObject):
 		"""
 
 		ConnectPrerequisites.checkPrerequisites(trait, self.__storage, self)
+
+
+	def deselctTraitsWithWrongAge(self, age):
+		"""
+		\todo Man sollte nicht bei jedem Alterswechsel über alle Eigenschaften laufen, sondern zu Beginn des Programms alle Eigenschaften mit "Kid" bzw. "Adult" mit ageChanged verknüpfen.
+		"""
+
+		for typ in self.__traits:
+			for category in self.__traits[typ]:
+				for trait in self.__traits[typ][category].values():
+					if type(trait) == StandardTrait and trait.age and trait.age != Config.getAge(self.age) and trait.value > 0:
+						trait.value = 0
 
 
 
