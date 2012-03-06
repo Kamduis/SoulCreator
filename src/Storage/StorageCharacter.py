@@ -1182,6 +1182,8 @@ class StorageCharacter(QObject):
 
 
 	def resetCharacter(self):
+		## Der Charkater wird umorganisiert, ohne daß wir haufenweise Warnhinweise haben wollen.
+		self.isLoading = True
 		# Standardspezies ist der Mensch.
 		self.species = Config.initialSpecies
 		# Zeitalter festlegen.
@@ -1266,6 +1268,9 @@ class StorageCharacter(QObject):
 		self.companionBan = ""
 
 		self.picture = QPixmap()
+
+		## Fertig mit dem Laden der enuen Werte.
+		self.isLoading = False
 
 
 	def isModifed(self):

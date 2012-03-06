@@ -28,7 +28,7 @@ from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel,
 from src.Config import Config
 from src.Widgets.Components.DerangementComboBox import DerangementComboBox
 from src.Widgets.Components.Dot import Dot
-#from src.Debug import Debug
+from src.Debug import Debug
 
 
 
@@ -209,7 +209,8 @@ class MoralityWidget(QWidget):
 			else:
 				self.__derangementBoxList[i].setCurrentIndex(oldIndex)
 
-		if lostDerangements:
+		Debug.debug(self.__character.isLoading)
+		if lostDerangements and not self.__character.isLoading:
 			derangements = ""
 			infoText = ""
 			if len(lostDerangements) > 1:

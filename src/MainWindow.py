@@ -564,6 +564,7 @@ class MainWindow(QMainWindow):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
+				## Verhindern, daß unnötig Warnungen auftauchen, wenn man einen Charakter lädt.
 				self.__character.isLoading = True
 				try:
 					self.__readCharacter.read(filePath)
@@ -761,15 +762,5 @@ class MainWindow(QMainWindow):
 			MessageBox.critical( self, message, description )
 		else:
 			MessageBox.warning( self, message, description )
-
-
-#void MainWindow.messageEnforcedTraitLimits( cv_AbstractTrait.Type type ) {
-	"""
-	Zeigt eine Nachricht an, daß die Eigenschaftsanzahl das für den Charakterbogen gesetzte Limit übertrifft, und daß alle überzähligen Eigenschaften des mitgegebenen Typs ignoriert werden.
-	"""
-
-	#MessageBox.warning( self, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_AbstractTrait.toString( type, true ) ) );
-#}
-
 
 
