@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import Qt, Signal
+#from PySide.QtCore import Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QStandardItemModel, QStandardItem, QTreeView
 
 #from src.Config import Config
@@ -47,11 +47,14 @@ class SubPowerWidget(QWidget):
 		self.__character = character
 
 		self.__model = QStandardItemModel()
+		# Das ungenutzte Model dient dazu, alle Unterkräfte aufzunehmen, die ich nicht darstellen möchte. Ist einfacher, als diese im View zu verstecken.
+		self.__modelUnused = QStandardItemModel()
 
 		self._layout = QVBoxLayout()
 		self.setLayout( self._layout )
 
 		self.__view = QTreeView()
+		self.__view.setHeaderHidden(True)
 		self.__view.setModel( self.__model)
 
 		self._layout.addWidget(self.__view)
@@ -59,35 +62,52 @@ class SubPowerWidget(QWidget):
 		self._typ = "Subpower"
 		categories = self.__storage.categories(self._typ)
 
-		self.__items = []
+		self.__items = {}
 
-		parentItem = QStandardItem()
-		parentItem = self.__model.invisibleRootItem()
+		self.__rootItem = QStandardItem()
+		self.__rootItem = self.__model.invisibleRootItem()
+
+		self.__rootItemUnused = QStandardItem()
+		self.__rootItemUnused = self.__modelUnused.invisibleRootItem()
 
 		for item in categories:
 			categoryItem = QStandardItem(item)
-			parentItem.appendRow(categoryItem)
+			self.__rootItem.appendRow(categoryItem)
 
+			## Ich benötige diese Items auch im ungenutzten Model.
+			categoryItemUnused = QStandardItem(item)
+			self.__rootItemUnused.appendRow(categoryItemUnused)
+			
 			traitList = self.__character.traits[self._typ][item].items()
 			traitList.sort()
 			for trait in traitList:
 				traitItem = QStandardItem(trait[1].name)
 				traitItem.setCheckable(True)
-				self.__items.append([ trait[1], traitItem, ])
+				## Unhashable Type
+				#self.__items[traitItem] = trait[1]
 				categoryItem.appendRow(traitItem)
+
+				## Funktioniert aus irgendeinem Grund nicht.
+				#trait[1].availableChanged.connect(traitItem.setEnabled)
 
 		self.__character.speciesChanged.connect(self.hideOrShowToolPage)
 		self.__character.breedChanged.connect(self.hideOrShowToolPage)
 		self.__character.factionChanged.connect(self.hideOrShowToolPage)
 
 
+	#def test(self, sw):
+		#Debug.debug(sw)
+
+
 	def hideOrShowToolPage(self, res):
 		"""
-		Verbirgt eine Seite der ToolBox, wenn alle darin enthaltenen Widgets versteckt sind oder diese Kategorie für die ausgewählte Brut/Fraktion nicht zur Verfügung steht. Ansonsten wird sie dargestellt.
+		Alle Eigenschaften, die nicht zur Verfügung stehen, werden verborgen, indem sie in ein anderes Model verschoben werden.
+
+		\bug Möglicher Fehler in PySide: Der Aufruf von QStandardItem.model() führt beim Beenden des Programms zu einem Segmentation Fault.
 		"""
 
 		# Versteckt alle Unterkräfte, die zu gewähltem Charakter nicht passen.
-		for item in self.__items:
+		for item in self.__items.items():
 			if (
 				(
 					item[0].species and
@@ -98,11 +118,29 @@ class SubPowerWidget(QWidget):
 					self.__character.faction not in item[0].only
 				)
 			):
-				self.__view.setRowHidden(item[1].index().row(), item[1].parent().index(), True)
+				#self.__view.setRowHidden(item[1].index().row(), item[1].parent().index(), True)
+				#Debug.debug(item[1].model())
+				## Hier wird beispielsweise besagter Aufruf getätigt, der zu einem segfault führt.
+				if item[1].model() == self.__model:
+					parent = item[1].parent()
+					itemUnused = parent.takeRow(item[1].index().row())
+					parentUnused = self.__modelUnused.findItems(parent.text())[0]
+					parentUnused.appendRow(itemUnused)
 			else:
-				self.__view.setRowHidden(item[1].index().row(), item[1].parent().index(), False)
+				#self.__view.setRowHidden(item[1].index().row(), item[1].parent().index(), False)
+				if item[1].model() == self.__modelUnused:
+					parent = item[1].parent()
+					itemUsed = parent.takeRow(item[1].index().row())
+					parentUsed = self.__model.findItems(parent.text())[0]
+					parentUsed.appendRow(itemUsed)
 
-		
+		## Versteckt alle Elternzeilen, wenn sie keine Kinder enthalten.
+		for i in xrange(self.__model.rowCount()):
+			categoryItem = self.__model.item(i)
+			if categoryItem.hasChildren():
+				self.__view.setRowHidden(categoryItem.index().row(), self.__rootItem.index(), False)
+			else:
+				self.__view.setRowHidden(categoryItem.index().row(), self.__rootItem.index(), True)
 
 
 
