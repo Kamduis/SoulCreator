@@ -124,10 +124,10 @@ class InfoWidget(QWidget):
 		self.__character.ageChanged[str].connect(self.notifyOfAge)
 
 		self.__character.ageChanged.connect(self.setHeightMinMax)
-		self.__character.traits["Merit"]["Physical"]["Giant"].valueChanged.connect(self.updateHeight)
-		self.__character.traits["Merit"]["Physical"]["GiantKid"].valueChanged.connect(self.updateHeight)
-		self.__character.traits["Flaw"]["Physical"]["Dwarf"].valueChanged.connect(self.updateHeight)
-		self.__character.traits["Merit"]["Physical"]["Tiny"].valueChanged.connect(self.updateHeight)
+		self.__character.traits[""]["Merit"]["Physical"]["Giant"].valueChanged.connect(self.updateHeight)
+		self.__character.traits[""]["Merit"]["Physical"]["GiantKid"].valueChanged.connect(self.updateHeight)
+		self.__character.traits[""]["Flaw"]["Physical"]["Dwarf"].valueChanged.connect(self.updateHeight)
+		self.__character.traits[""]["Merit"]["Physical"]["Tiny"].valueChanged.connect(self.updateHeight)
 
 
 

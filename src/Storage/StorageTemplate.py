@@ -148,7 +148,6 @@ class StorageTemplate(QObject):
 	# "name" 			Name der Eigenschaft (alle)
 	# "level"			Stufe der Eigenschaft (Subpowers)
 	# "values"			Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
-	# "species"			Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
 	# "age"				Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
 	# "era"				Eine Liste der Zeitalter, für welche diese Eigenschaft zur Verfügung steht.
 	# "custom"			Handelt es sich um eine Kraft mit Zusatztext?
@@ -156,14 +155,17 @@ class StorageTemplate(QObject):
 	# "prerequisites"	Voraussetzungen für diese Eigenschaft (Merits, Subpowers)
 	#
 	# {
-	# 	Typ1: {
-	# 		Kategorie1: {
-	# 			Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
-	# 			Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
-	# 			...
-	# 		},
-	# 		Kategorie2: {
-	# 			Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 	Spezies: {
+	# 		Typ1: {
+	# 			Kategorie1: {
+	# 				Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 				Identifier2: { "name": Name2, "species": Species2, "age": Alter2, ... },
+	# 				...
+	# 			},
+	# 			Kategorie2: {
+	# 				Identifier1: { "name": Name1, "species": Species1, "age": Alter1, ... },
+	# 				...
+	# 			},
 	# 			...
 	# 		},
 	# 		...
@@ -342,14 +344,12 @@ class StorageTemplate(QObject):
 		QObject.__init__(self, parent)
 
 
-	def __getTyps(self):
-		return self.__traits.keys()
-
-	typs = property(__getTyps)
+	def typs(self, species):
+		return self.__traits[species].keys()
 
 
-	def categories(self, typ):
-		listOfCategories = self.__traits[typ].keys()
+	def categories(self, species, typ):
+		listOfCategories = self.__traits[species][typ].keys()
 		listOfCategories.sort()
 		return listOfCategories
 
@@ -372,15 +372,16 @@ class StorageTemplate(QObject):
 
 	traits = property(__getTraits, __setTraits)
 
-	def traitSkills(self):
-		result = {}
-		for category in self.__traits["Skill"]:
-			result.update(self.__traits["Skill"][category])
 
-		return result
+	#def traitSkills(self):
+		#result = {}
+		#for category in self.__traits["Skill"]:
+			#result.update(self.__traits["Skill"][category])
+
+		#return result
 
 
-	def addTrait( self, typ, category, identifier, data):
+	def addTrait( self, species, typ, category, identifier, data):
 		"""
 		Fügt eine Eigenschaft zu der entsprechenden Liste hinzu.
 
@@ -395,36 +396,39 @@ class StorageTemplate(QObject):
 		\param data Alle Informationen über die Eigenschaft außer der Identität.
 		"""
 
-		if typ not in self.__traits:
-			self.__traits.setdefault(typ,{})
+		if species not in self.__traits:
+			self.__traits.setdefault(species,{})
 
-		if category not in self.__traits[typ]:
-			self.__traits[typ].setdefault(category,{})
+		if typ not in self.__traits[species]:
+			self.__traits[species].setdefault(typ,{})
 
-		if identifier not in self.__traits[typ][category]:
-			self.__traits[typ][category][identifier] = data
+		if category not in self.__traits[species][typ]:
+			self.__traits[species][typ].setdefault(category,{})
+
+		if identifier not in self.__traits[species][typ][category]:
+			self.__traits[species][typ][category][identifier] = data
 		elif (typ != "Subpower"):
 			#Debug.debug(data["name"])
-			specialties = self.__traits[typ][category][identifier]["specialty"]
+			specialties = self.__traits[species][typ][category][identifier]["specialty"]
 			specialties.extend(data["specialty"])
 			specialties.sort()
-			self.__traits[typ][category][identifier] = data
-			self.__traits[typ][category][identifier]["specialty"] = specialties
+			self.__traits[species][typ][category][identifier] = data
+			self.__traits[species][typ][category][identifier]["specialty"] = specialties
 
 
-	def traitNames( self, typ, category, era=None, age=None ):
-		"""
-		Gibt eine Liste aller Eigenschaftsnamen zurück, die den übergebenen Parametern entsprechen.
+	#def traitNames( self, species, typ, category, era=None, age=None ):
+		#"""
+		#Gibt eine Liste aller Eigenschaftsnamen zurück, die den übergebenen Parametern entsprechen.
 
-		\note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
-		"""
+		#\note Wenn es keine Eigenschaft mit den übergebenen Parametern gibt, wird eine leere Liste übergeben.
+		#"""
 
-		resultA = self.traits(typ, category, era, age)
-		result = []
-		for item in resultA:
-			result.append(item["name"])
+		#resultA = self.traits(typ, category, era, age)
+		#result = []
+		#for item in resultA:
+			#result.append(item["name"])
 
-		return result
+		#return result
 
 
 	def powerName(self, species):
@@ -662,29 +666,29 @@ class StorageTemplate(QObject):
 		#Debug.debug(self.__derangements)
 
 
-	def appendTrait( self, typ, category, name, data):
-		"""
-		Fügt eine Eigenschaft zu der entsprechenden Liste hinzu.
+	#def appendTrait( self, typ, category, name, data):
+		#"""
+		#Fügt eine Eigenschaft zu der entsprechenden Liste hinzu.
 
-		Die Eigenschaft sollte im Format eines dict daherkommen.
-		"""
+		#Die Eigenschaft sollte im Format eines dict daherkommen.
+		#"""
 
-		if typ not in self.__traits:
-			self.__traits.setdefault(typ,{})
+		#if typ not in self.__traits:
+			#self.__traits.setdefault(typ,{})
 
-		if category not in self.__traits[typ]:
-			self.__traits[typ].setdefault(category,{})
+		#if category not in self.__traits[typ]:
+			#self.__traits[typ].setdefault(category,{})
 
-		if name not in self.__traits[typ][category]:
-			self.__traits[typ][category].setdefault(name, data)
+		#if name not in self.__traits[typ][category]:
+			#self.__traits[typ][category].setdefault(name, data)
 
-		## Kontrolle zu Debugzwecken:
-		#keys = self.__traits.keys()
-		#for key in self.__traits:
-			#Debug.debug(key)
-			#for keyA in self.__traits[key]:
-				#Debug.debug(keyA)
-				#Debug.debug(self.__traits[key][keyA])
+		### Kontrolle zu Debugzwecken:
+		##keys = self.__traits.keys()
+		##for key in self.__traits:
+			##Debug.debug(key)
+			##for keyA in self.__traits[key]:
+				##Debug.debug(keyA)
+				##Debug.debug(self.__traits[key][keyA])
 
 
 	def appendPowerstat( self, species, value, effects ):

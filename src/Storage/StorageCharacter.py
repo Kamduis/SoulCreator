@@ -111,15 +111,18 @@ class StorageCharacter(QObject):
 	# Eine Liste sämtlicher verfügbaren Eigenschaften.
 	#
 	# {
-	# 	Typ1: {
-	# 		Kategorie1: {
-	# 			Name1: { "bla": blub, ... }
-	# 			Name2: { "bla": blub, ... }
-	# 			Name3: { "bla": blub, ... }
-	# 			...
-	# 		},
-	# 		Kategorie2: {
-	# 			Name1: { "bla": blub, ... }
+	# 	Spezies: {
+	# 		Typ1: {
+	# 			Kategorie1: {
+	# 				Name1: { "bla": blub, ... }
+	# 				Name2: { "bla": blub, ... }
+	# 				Name3: { "bla": blub, ... }
+	# 				...
+	# 			},
+	# 			Kategorie2: {
+	# 				Name1: { "bla": blub, ... }
+	# 				...
+	# 			},
 	# 			...
 	# 		},
 	# 		...
@@ -241,55 +244,57 @@ class StorageCharacter(QObject):
 		# Die Eigenschaften in den Charakter laden.
 		self.__traits = {}
 		# Eigenschaften setzen.
-		for typ in self.__storage.traits.keys():
-			self.__traits.setdefault(typ, {})
-			for item in template.traits[typ]:
-				self.__traits[typ].setdefault(item, {})
-				for subitem in template.traits[typ][item].items():
-					#Debug.debug(subitem)
-					val = 2	# Dies mache ich, damit beim initialen Charakter-Reset, auch alle Voraussetzungen überprüft werden.
-					# Eigenschaften, die Zusaztext erhalten können (bspw. Language), werden mehrfach in das Dictionary eingefügt. Aber da ein Dictonary immer nur einen Eintrag desselben Namens haben kann, muß selbiger um ein numerisches Suffix erweitert werden.
-					loop = 1
-					custom = False
-					customText = None
-					if typ != "Subpower" and subitem[1]["custom"]:
-						loop = Config.traitMultipleMax
-						custom = True
+		for species in self.__storage.traits:
+			self.__traits.setdefault(species, {})
+			for typ in self.__storage.traits[species]:
+				self.__traits[species].setdefault(typ, {})
+				for item in template.traits[species][typ]:
+					self.__traits[species][typ].setdefault(item, {})
+					for subitem in template.traits[species][typ][item].items():
+						#Debug.debug(subitem)
+						val = 2	# Dies mache ich, damit beim initialen Charakter-Reset, auch alle Voraussetzungen überprüft werden.
+						# Eigenschaften, die Zusaztext erhalten können (bspw. Language), werden mehrfach in das Dictionary eingefügt. Aber da ein Dictonary immer nur einen Eintrag desselben Namens haben kann, muß selbiger um ein numerisches Suffix erweitert werden.
+						loop = 1
+						custom = False
+						customText = None
+						if typ != "Subpower" and subitem[1]["custom"]:
+							loop = Config.traitMultipleMax
+							custom = True
 
-					for i in xrange(loop):
-						trait = None
-						if typ == "Subpower":
-							trait = SubPowerTrait(self, subitem[1]["name"], val)
-							trait.level = subitem[1]["level"]
-							trait.powers = subitem[1]["powers"]
-						else:
-							if typ == "Attribute" or typ == "Skill":
-								trait = BonusTrait(self, subitem[1]["name"], val)
+						for i in xrange(loop):
+							trait = None
+							if typ == "Subpower":
+								trait = SubPowerTrait(self, subitem[1]["name"], val)
+								trait.level = subitem[1]["level"]
+								trait.powers = subitem[1]["powers"]
 							else:
-								trait = StandardTrait(self, subitem[1]["name"], val)
-							trait.age = subitem[1]["age"]
-							trait.era = subitem[1]["era"]
-							trait.custom = custom
-							trait.customText = customText
-						trait.identifier = subitem[0]
-						trait.species = subitem[1]["species"]
-						trait.cheap = subitem[1]["cheap"]
-						#if typ == "Subpower" and trait.species == "Werewolf":
-							#Debug.debug(subitem[1]["name"], subitem[1]["only"])
-						trait.only = subitem[1]["only"]
-						if "prerequisites" in subitem[1] and subitem[1]["prerequisites"]:
-							trait.hasPrerequisites = True
-							trait.prerequisitesText = subitem[1]["prerequisites"]
-						# In der Eigenschaft steht der richtige Name aber im Dictionary der Name mit einem numerischen Suffix, damit die Eigenschaft häufiger auftauchen kann.
-						dictKey = subitem[0]
-						if custom:
-							dictKey = "{}{}".format(subitem[0], i)
-						self.__traits[typ][item].setdefault(dictKey, trait)
+								if typ == "Attribute" or typ == "Skill":
+									trait = BonusTrait(self, subitem[1]["name"], val)
+								else:
+									trait = StandardTrait(self, subitem[1]["name"], val)
+								trait.age = subitem[1]["age"]
+								trait.era = subitem[1]["era"]
+								trait.custom = custom
+								trait.customText = customText
+							trait.identifier = subitem[0]
+							#trait.species = subitem[1]["species"]
+							trait.cheap = subitem[1]["cheap"]
+							#if typ == "Subpower" and trait.species == "Werewolf":
+								#Debug.debug(subitem[1]["name"], subitem[1]["only"])
+							trait.only = subitem[1]["only"]
+							if "prerequisites" in subitem[1] and subitem[1]["prerequisites"]:
+								trait.hasPrerequisites = True
+								trait.prerequisitesText = subitem[1]["prerequisites"]
+							# In der Eigenschaft steht der richtige Name aber im Dictionary der Name mit einem numerischen Suffix, damit die Eigenschaft häufiger auftauchen kann.
+							dictKey = subitem[0]
+							if custom:
+								dictKey = "{}{}".format(subitem[0], i)
+							self.__traits[species][typ][item].setdefault(dictKey, trait)
 
-						# Wenn sich eine Eigenschaft ändert, gilt der Charakter als modifiziert.
-						trait.traitChanged.connect(self.setModified)
-				#if typ == "Subpower":
-					#Debug.debug(self.__traits[typ][item])
+							# Wenn sich eine Eigenschaft ändert, gilt der Charakter als modifiziert.
+							trait.traitChanged.connect(self.setModified)
+					#if typ == "Subpower":
+						#Debug.debug(self.__traits[species][typ][item])
 
 		self.bonusChanged.connect(self.__changeBonusTrait)
 
@@ -1215,15 +1220,16 @@ class StorageCharacter(QObject):
 		#// setFaction(storage.breedNames(species()).at(0));
 
 		# Attribute und andere Eigenschaften auf Anfangswerte setzen.
-		for item in self.__traits:
-			val = 0
-			if item == "Attribute":
-				val = 1
-			for subitem in self.__traits[item]:
-				for subsubitem in self.__traits[item][subitem].values():
-					subsubitem.value = val
-					subsubitem.customText = ""
-					subsubitem.specialties = []
+		for species in self.__traits:
+			for typ in self.__traits[species]:
+				val = 0
+				if typ == "Attribute":
+					val = 1
+				for category in self.__traits[species][typ]:
+					for trait in self.__traits[species][typ][category].values():
+						trait.value = val
+						trait.customText = ""
+						trait.specialties = []
 
 		self.morality = Config.moralityTraitDefaultValue
 

@@ -104,16 +104,17 @@ class SpecialtiesWidget(QWidget):
 				# Neue Verbindung aufbauen, damit beim Laden des Charakters die angezeigten Spezialisierungen automatisch richtig abgehakt werden.
 				self.__trait.totalspecialtiesChanged.connect(self.reshowSpecialties)
 			#Debug.debug(self.__trait)
-			for item in self.__storage:
-				for subitem in self.__storage[item].items():
-					#Debug.debug(subitem)
-					if subitem[0] == trait.name:
-						self.setSpecialties(subitem[1]["specialties"])
-						## Jetzt müssen noch alle Spezialisierungen angezeigt werden, die zwar im Charkater stehen, aber nicht teil der Standard-Spezialisierungen sind.
-						for charaSpecialty in self.__trait.totalspecialties:
-							if charaSpecialty not in subitem[1]["specialties"]:
-								self.ui.listWidget_specialties.addCheckableItem( charaSpecialty, Qt.Checked )
-						return
+			for species in self.__storage:
+				for category in self.__storage[species]["Skill"]:
+					for item in self.__storage[species]["Skill"][category].items():
+						#Debug.debug(subitem)
+						if item[0] == trait.name:
+							self.setSpecialties(item[1]["specialties"])
+							## Jetzt müssen noch alle Spezialisierungen angezeigt werden, die zwar im Charkater stehen, aber nicht teil der Standard-Spezialisierungen sind.
+							for charaSpecialty in self.__trait.totalspecialties:
+								if charaSpecialty not in item[1]["specialties"]:
+									self.ui.listWidget_specialties.addCheckableItem( charaSpecialty, Qt.Checked )
+							return
 		else:
 			#Gibt es nichts zum Anzeigen, wird das ganze Widget disabled.
 			self.setEnabled(False)
@@ -121,17 +122,18 @@ class SpecialtiesWidget(QWidget):
 
 	def reshowSpecialties(self):
 		self.ui.listWidget_specialties.clear()
-		for item in self.__storage:
-			for subitem in self.__storage[item].items():
-				if subitem[0] == self.__trait.name:
-					#Debug.debug(subitem[1]["specialties"])
-					self.setSpecialties(subitem[1]["specialties"])
-					## Jetzt müssen noch alle Spezialisierungen angezeigt werden, die zwar im Charkater stehen, aber nicht teil der Standard-Spezialisierungen sind.
-					for charaSpecialty in self.__trait.totalspecialties:
-						#Debug.debug(charaSpecialty)
-						if charaSpecialty not in subitem[1]["specialties"]:
-							self.ui.listWidget_specialties.addCheckableItem( charaSpecialty, Qt.Checked )
-					return
+		for species in self.__storage:
+			for category in self.__storage[species]["Skill"]:
+				for item in self.__storage[species]["Skill"][category].items():
+					if item[0] == self.__trait.name:
+						#Debug.debug(subitem[1]["specialties"])
+						self.setSpecialties(item[1]["specialties"])
+						## Jetzt müssen noch alle Spezialisierungen angezeigt werden, die zwar im Charkater stehen, aber nicht teil der Standard-Spezialisierungen sind.
+						for charaSpecialty in self.__trait.totalspecialties:
+							#Debug.debug(charaSpecialty)
+							if charaSpecialty not in item[1]["specialties"]:
+								self.ui.listWidget_specialties.addCheckableItem( charaSpecialty, Qt.Checked )
+						return
 
 
 

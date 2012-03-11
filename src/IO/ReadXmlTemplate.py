@@ -216,7 +216,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				for trait in traits:
 					traitId = trait["id"]
 					del trait["id"]
-					self.__storage.addTrait( root.tag, categoryName, traitId, trait )
+					self.__storage.addTrait( species, root.tag, categoryName, traitId, trait )
 
 
 	def readSubPowers( self, root, species ):
@@ -291,7 +291,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 							item[2]["cheap"] = cheap
 						if only:
 							item[2]["only"] = only
-						self.__storage.addTrait( root.tag, item[0], item[1], item[2] )
+						self.__storage.addTrait( species, root.tag, item[0], item[1], item[2] )
 
 
 	def readCreationPoints( self, root, species ):
@@ -546,7 +546,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 					"name": traitElement.attrib["name"],							# Name der Eigenschaft (alle)
 					"level": self.getElementAttribute(traitElement, "level"),		# Stufe der Eigenschaft (Subpowers)
 					"values": [0],													# Erlaubte Werte, welche diese Eigenschaft annehmen kann. (Merits)
-					"species": species,												# Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
+					#"species": species,												# Die Spezies, für welche diese Eigenschaft zur Verfügung steht.
 					"age": self.getElementAttribute(traitElement, "age"),			# Die Alterskategorie, für welche diese Eigenschaft zur Verfügung steht.
 					"era": [],														# Die Zeitalterkategorie, für welche diese Eigenschaft zur Verfügung steht.
 					"custom": self.getElementAttribute(traitElement, "custom"),	# Handelt es sich um eine Kraft mit Zusatztext?

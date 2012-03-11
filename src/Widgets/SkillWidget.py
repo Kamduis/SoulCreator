@@ -88,7 +88,7 @@ class SkillWidget(TraitWidget):
 
 			self.__scrollLayout.addWidget( widgetSkillCategory )
 
-			__list = self._character.traits[typ][item].items()
+			__list = self._character.traits[""][typ][item].items()
 			__list.sort()
 			for skill in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.

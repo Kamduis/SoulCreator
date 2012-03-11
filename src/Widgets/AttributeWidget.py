@@ -110,7 +110,7 @@ class AttributeWidget(TraitWidget):
 			# Einfügen der tatsächlichen Attribute
 			i = 0
 			for subitem in item[1]:
-				attrib = self._character.traits["Attribute"][item[0]][subitem]
+				attrib = self._character.traits[""]["Attribute"][item[0]][subitem]
 				#Debug.debug(attrib)
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
 				traitWidget = CharaTrait( attrib, self )
