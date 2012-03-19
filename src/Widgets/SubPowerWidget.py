@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import Signal
+from PySide.QtCore import Signal# as Signal
 from PySide.QtGui import QWidget, QVBoxLayout, QStandardItemModel, QStandardItem, QTreeView
 
 #from src.Config import Config
@@ -84,19 +84,32 @@ class SubPowerWidget(QWidget):
 				traitItem = QStandardItem(trait[1].name)
 				traitItem.setCheckable(True)
 				## Unhashable Type
-				#self.__items[traitItem] = trait[1]
+				self.__items[trait[1]] = traitItem
 				categoryItem.appendRow(traitItem)
 
-				## Funktioniert aus irgendeinem Grund nicht.
+				## Funktioniert mit PySide nicht.
 				#trait[1].availableChanged.connect(traitItem.setEnabled)
+				## Hat immer dasselbe QStandardItem als traitItem.
+				#trait[1].availableChanged.connect(
+					#lambda enable: Debug.debug("test {} ({})".format(enable, traitItem))# traitItem.setEnabled(enable)
+				#)
+				trait[1].availableChanged.connect(self.__checkItemAvailability)
 
 		self.__character.speciesChanged.connect(self.hideOrShowToolPage)
 		self.__character.breedChanged.connect(self.hideOrShowToolPage)
 		self.__character.factionChanged.connect(self.hideOrShowToolPage)
 
 
-	#def test(self, sw):
-		#Debug.debug(sw)
+	def __checkItemAvailability(self, sw):
+		"""
+		Diese Funktion ist ein Ersatz für eine richtige Verbindung. Aber die Funktioniert mit PySide zur Zeit nicht, da QStandardItem nicht hashable ist.
+
+		\warning Diese Funktion dient nur als Ersatz, bis "trait[1].availableChanged.connect(traitItem.setEnabled)" vernünftig funktioniert.
+		"""
+
+		# self.sender() ist aus irgendeinem Grund immer "None"1
+		Debug.debug(self.sender())
+		#self.__items[self.sender()].setEnabled(sw)
 
 
 	def hideOrShowToolPage(self, res):

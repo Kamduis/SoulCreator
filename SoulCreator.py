@@ -37,6 +37,9 @@ import sys
 import argparse
 import signal
 
+#import sip
+#sip.setapi('QString', 2)
+#sip.setapi('QVariant', 2)
 from PySide.QtGui import QApplication
 
 from src.GlobalState import GlobalState
