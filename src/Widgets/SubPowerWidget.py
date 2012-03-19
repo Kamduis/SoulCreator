@@ -87,29 +87,16 @@ class SubPowerWidget(QWidget):
 				self.__items[trait[1]] = traitItem
 				categoryItem.appendRow(traitItem)
 
-				## Funktioniert mit PySide nicht.
+				## Funktioniert mit PySide nicht:
 				#trait[1].availableChanged.connect(traitItem.setEnabled)
-				## Hat immer dasselbe QStandardItem als traitItem.
-				#trait[1].availableChanged.connect(
-					#lambda enable: Debug.debug("test {} ({})".format(enable, traitItem))# traitItem.setEnabled(enable)
-				#)
-				trait[1].availableChanged.connect(self.__checkItemAvailability)
+				## Funktioniert auch mit PySide:
+				trait[1].availableChanged.connect(
+					lambda enable, item=traitItem: item.setEnabled(enable)
+				)
 
 		self.__character.speciesChanged.connect(self.hideOrShowToolPage)
 		self.__character.breedChanged.connect(self.hideOrShowToolPage)
 		self.__character.factionChanged.connect(self.hideOrShowToolPage)
-
-
-	def __checkItemAvailability(self, sw):
-		"""
-		Diese Funktion ist ein Ersatz für eine richtige Verbindung. Aber die Funktioniert mit PySide zur Zeit nicht, da QStandardItem nicht hashable ist.
-
-		\warning Diese Funktion dient nur als Ersatz, bis "trait[1].availableChanged.connect(traitItem.setEnabled)" vernünftig funktioniert.
-		"""
-
-		# self.sender() ist aus irgendeinem Grund immer "None"1
-		Debug.debug(self.sender())
-		#self.__items[self.sender()].setEnabled(sw)
 
 
 	def hideOrShowToolPage(self, res):
