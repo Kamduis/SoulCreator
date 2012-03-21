@@ -1235,17 +1235,22 @@ class StorageCharacter(QObject):
 		# Übernatürliche Eigenschaft festlegen.
 		self.powerstat = Config.powerstatDefaultValue
 
+		# Beim Löschen ist darauf zu achten, daß ich nicht aus der Liste löschen kann, über die ich iteriere. Sonst wird nicht alles gelöscht.
 		for category in self.__weapons:
-			for weapon in self.__weapons[category]:
+			weaponList = self.__weapons[category][:]
+			for weapon in weaponList:
 				self.deleteWeapon(category, weapon)
 		self.setArmor(name="")
-		for item in self.__equipment:
+		eqipmentList = self.__equipment[:]
+		for item in eqipmentList:
 			self.deleteEquipment(item)
 		for category in self.__automobiles:
-			for automobile in self.__automobiles[category]:
+			automobileList  = self.__automobiles[category][:]
+			for automobile in automobileList:
 				self.deleteAutomobile(category, automobile)
 		for typ in self.__extraordinaryItems:
-			for item in self.__extraordinaryItems[typ]:
+			extraordinaryItemList = self.__extraordinaryItems[typ][:]
+			for item in extraordinaryItemList:
 				self.deleteExtraordinaryItem(typ, item)
 		self.magicalTool = ""
 		self.nimbus = ""

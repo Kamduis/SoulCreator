@@ -104,6 +104,10 @@ class MainWindow(QMainWindow):
 	\todo Beim Laden die Ganzen Hinweisfenster für das Verteilen von Giant/Tiny etc. nicht anzeigen.
 
 	\todo Eigene magische Gegenstände müssen eingegeben werden können.
+
+	\todo Würfelpool für subpowers ausrechnen.
+
+	\todo Bei Wechselbälgern nur Bonus-Spezialisierungen anbieten, die nicht schon vergeben sind.
 	"""
 
 

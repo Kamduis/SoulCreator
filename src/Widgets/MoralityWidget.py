@@ -209,7 +209,7 @@ class MoralityWidget(QWidget):
 			else:
 				self.__derangementBoxList[i].setCurrentIndex(oldIndex)
 
-		Debug.debug(self.__character.isLoading)
+		#Debug.debug(self.__character.isLoading)
 		if lostDerangements and not self.__character.isLoading:
 			derangements = ""
 			infoText = ""
