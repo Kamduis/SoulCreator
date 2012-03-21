@@ -82,7 +82,7 @@ class AbstractTrait(QObject):
 	name = property(__getName, setName)
 
 
-	def __getValue(self):
+	def _getValue(self):
 		return self.__value
 
 	def setValue(self, value):
@@ -92,11 +92,11 @@ class AbstractTrait(QObject):
 		
 		if self.__value != value:
 			self.__value = value
-			#Debug.debug("Ändere Eigenschaft {} zu {}".format(self.name, self.value))
-			self.valueChanged.emit(self.value)
+			#Debug.debug(u"Ändere Eigenschaft {} zu {}".format(self.name, self.__value))
+			self.valueChanged.emit(self.__value)
 			self.traitChanged.emit(self)
 
-	value = property(__getValue, setValue)
+	value = property(_getValue, setValue)
 
-	totalvalue = property(__getValue)
+	totalvalue = property(_getValue)
 

@@ -23,6 +23,7 @@ You should have received a copy of the GNU General Public License along with Sou
 from __future__ import division, print_function
 
 from PySide.QtCore import Signal# as Signal
+from PySide.QtCore import Qt
 from PySide.QtGui import QWidget, QVBoxLayout, QStandardItemModel, QStandardItem, QTreeView
 
 #from src.Config import Config
@@ -93,10 +94,38 @@ class SubPowerWidget(QWidget):
 				trait[1].availableChanged.connect(
 					lambda enable, item=traitItem: item.setEnabled(enable)
 				)
+				trait[1].valueChanged.connect(
+					lambda val, trait=trait[1], item=traitItem: self.__setItemValue(trait, item)
+				)
 
+		self.__model.itemChanged.connect(self.__getItemValue)
 		self.__character.speciesChanged.connect(self.hideOrShowToolPage)
 		self.__character.breedChanged.connect(self.hideOrShowToolPage)
 		self.__character.factionChanged.connect(self.hideOrShowToolPage)
+
+
+	def __setItemValue(self, trait, item):
+		"""
+		Setzt den Wert der Angezeigten Items.
+		"""
+
+		if trait.value == 0:
+			item.setCheckState(Qt.Unchecked)
+		elif trait.value == 1:
+			item.setCheckState(Qt.PartiallyChecked)
+		else:
+			item.setCheckState(Qt.Checked)
+
+
+	def __getItemValue(self, item):
+		"""
+		Setzt den Wert der Eigenschaft im Speicher.
+		"""
+
+		for trait in self.__items.items():
+			if id(trait[1]) == id(item):
+				trait[0].value = item.checkState()
+				break
 
 
 	def hideOrShowToolPage(self, res):
