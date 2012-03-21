@@ -25,6 +25,7 @@ from __future__ import division, print_function
 #import sys
 import os
 
+#from PySide.QtCore import Slot as Slot
 from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTimer
 from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
 from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
@@ -74,6 +75,8 @@ class MainWindow(QMainWindow):
 	@brief Das Hauptfenster der Anwendung.
 
 	Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
+
+	\todo Alle Eigenschaften zusätzlich in Spezieszugehörigkeit unterteilen: self.__storage.traits[species][typ][category][name]...
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
 

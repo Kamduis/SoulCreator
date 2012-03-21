@@ -27,7 +27,8 @@ import os
 import math
 import re
 
-from PySide.QtCore import Qt, QObject, QFile, QIODevice, QTextStream, QBuffer, QByteArray, QUrl, QRect, Signal
+from PySide.QtCore import Signal# as Signal
+from PySide.QtCore import Qt, QObject, QFile, QIODevice, QTextStream, QBuffer, QByteArray, QUrl, QRect
 from PySide.QtGui import QPainter, QImage, QPalette, QPicture#, QColor, QPen, QFont, QFontMetrics, QTextDocument
 from PySide import QtNetwork# Ist notwendig, wenn ich cx_freeze nutzen möchte. Sonst wird das entsprechende modul nicht eingeschlossen udn QtWebKit funktioniert nicht.
 from PySide.QtWebKit import QWebPage

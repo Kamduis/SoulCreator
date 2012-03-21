@@ -22,11 +22,12 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import QObject, Signal
+#from PySide.QtCore import Signal# as Signal
+from PySide.QtCore import Qt
 
 #from src.Config import Config
 from src.Datatypes.BasicTrait import BasicTrait
-#from src.Debug import Debug
+from src.Debug import Debug
 #from src.Error import ErrTraitType
 
 
@@ -44,10 +45,33 @@ class SubPowerTrait(BasicTrait):
 
 
 	def __init__(self, character, name="", value=0, level=0, parent=None):
-		BasicTrait.__init__(self, character, name, value, parent)
+		super(SubPowerTrait, self).__init__(character, name, value, parent)
 
 		self.__level = level
 		self.__powers = {}
+
+
+	def _getValue(self):
+		return super(SubPowerTrait, self)._getValue()
+
+	def setValue(self, value):
+		"""
+		Verändert den Wert der Eigenschaft.
+		"""
+
+		checkValue = value
+		if type(value) != int:
+			checkValue = 0
+			if value == Qt.Checked:
+				checkValue = 2
+			elif value == Qt.PartiallyChecked:
+				checkValue = 1
+
+		#Debug.debug(checkValue)
+
+		super(SubPowerTrait, self).setValue(checkValue)
+
+	value = property(_getValue, setValue)
 
 
 	@property

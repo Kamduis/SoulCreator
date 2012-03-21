@@ -155,7 +155,7 @@ class ConnectPrerequisites(object):
 					Debug.debug(u"Error bei {}: {}".format(trait.name, traitPrerequisites))
 					result = False
 
-				#Debug.debug("Eigenschaft {} wird verfügbar? {}".format(trait.name, result))
+				#Debug.debug(u"Eigenschaft {} wird verfügbar? {}".format(trait.name, result))
 				trait.setAvailable(result)
 
 

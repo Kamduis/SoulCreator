@@ -24,7 +24,7 @@ from __future__ import division, print_function
 
 import os
 
-from PySide.QtCore import Signal
+from PySide.QtCore import Signal# as Signal
 
 from src.Config import Config
 import src.Error as Error

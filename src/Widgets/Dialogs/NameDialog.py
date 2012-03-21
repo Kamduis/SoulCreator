@@ -24,7 +24,7 @@ from __future__ import division, print_function
 
 import copy
 
-from PySide.QtCore import Signal
+from PySide.QtCore import Signal# as Signal
 from PySide.QtGui import QDialog, QIcon
 
 from src.Config import Config

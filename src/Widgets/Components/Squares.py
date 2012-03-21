@@ -24,7 +24,8 @@ from __future__ import division, print_function
 
 import math
 
-from PySide.QtCore import QRect, Signal
+from PySide.QtCore import Signal# as Signal
+from PySide.QtCore import QRect
 from PySide.QtGui import QWidget, QPainter, QPen, QColor
 
 #from src.Config import Config
