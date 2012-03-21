@@ -262,12 +262,14 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 
 		if root is not None:
-			for equipmentElement in root.getiterator("equipment"):
-				equipmentName = equipmentElement.text
-				self.__character.addEquipment(equipmentName)
-			for magicalToolElement in root.getiterator("magicalTool"):
-				toolName = magicalToolElement.text
-				self.__character.setMagicalTool(toolName)
+			for equipmentElement in list(root):
+				if equipmentElement.tag == "equipment":
+					equipmentName = equipmentElement.text
+					self.__character.addEquipment(equipmentName)
+			for magicalToolElement in list(root):
+				if magicalToolElement.tag == "magicalTool":
+					toolName = magicalToolElement.text
+					self.__character.setMagicalTool(toolName)
 
 
 	def readAutomobiles(self, root):

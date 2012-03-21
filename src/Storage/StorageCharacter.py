@@ -569,6 +569,7 @@ class StorageCharacter(QObject):
 		return self.__equipment
 
 	def addEquipment(self, item):
+		#Debug.debug(item)
 		if item not in self.__equipment:
 			self.__equipment.append(item)
 			self.equipmentAdded.emit(item)
