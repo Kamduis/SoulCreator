@@ -1259,7 +1259,11 @@ class RenderSheet(QObject):
 	def _createInventory(self, height=293):
 		#u"<div style='height:{height}; overflow:hidden;'>{text}</div>".format(text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory")), height="{}px".format(heightInventory))
 
-		htmlText = text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory"))
+		# "&" Darf nicht in den html-Text geschrieben werden.
+		equipmentText = "; ".join(self.__character.equipment)
+		equipmentText = equipmentText.replace("&", "&amp;")
+		
+		htmlText = text=self.simpleTextBox(equipmentText, title=self.tr("Inventory"))
 
 		htmlText += u"<dl>"
 		if self.__character.species == "Human" and any([ auto for auto in self.__character.automobiles.values() ]):
