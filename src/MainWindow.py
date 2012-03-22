@@ -96,9 +96,21 @@ class MainWindow(QMainWindow):
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
 
-	\todo Auspice-Blessing hinzufügen.
-
 	\todo Hausregeln per Option ein-/ausschlatbar machen.
+
+	\todo Werwolf-Gaben vervollständigen.
+
+	\todo Gaben in ene ScrollArea packen, denn es sind viel zu viele, um die Übersicht zu bewahren. Oder ich verwende ein TreeView...
+
+	\todo Erschaffungspunkte für Fertigkeiten bei Kindern vom Alter abhängig machen.
+
+	\todo Beim Laden die Ganzen Hinweisfenster für das Verteilen von Giant/Tiny etc. nicht anzeigen.
+
+	\todo Eigene magische Gegenstände müssen eingegeben werden können.
+
+	\todo Würfelpool für subpowers ausrechnen.
+
+	\todo Bei Wechselbälgern nur Bonus-Spezialisierungen anbieten, die nicht schon vergeben sind.
 	"""
 
 
@@ -489,8 +501,8 @@ class MainWindow(QMainWindow):
 			"""
 			<h1>{name}</h1>
 			<h2>Version: {version}</h2>
-			<p>Copyright (C) Victor von Rhein, 2011, 2012<br>
-			EMail: victor@caern.de</p>
+			<p>Copyright (C) {author}, 2011, 2012<br>
+			EMail: {mail}</p>
 			<h2>GNU General Public License</h2>
 			<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 			<p>This program is distributed in the hope that it will be useful, but <i>without any warranty</i>; without even the implied warranty of <i>merchantability</i> or <i>fitness for a particular purpose</i>. See the GNU General Public License for more details.</p>
@@ -499,7 +511,9 @@ class MainWindow(QMainWindow):
 			<p>World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requiem, Werewolf: The Forsaken, White Wolf, the White Wolf-Logo and all referring terms and symbols are copyrighted by White Wolf Inc.</p>
 			""".format(
 				name=Config.programName,
-				version=Config.version()
+				version=Config.version(),
+				author=Config.programAuthor,
+				mail=Config.programAuthorEMail,
 			)
 		)
 
@@ -561,6 +575,8 @@ class MainWindow(QMainWindow):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
+				## Verhindern, daß unnötig Warnungen auftauchen, wenn man einen Charakter lädt.
+				self.__character.isLoading = True
 				try:
 					self.__readCharacter.read(filePath)
 				except ErrXmlVersion as e:
@@ -572,6 +588,7 @@ class MainWindow(QMainWindow):
 
 				# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 				self.__character.setModified( False )
+				self.__character.isLoading = False
 
 
 	def saveCharacter(self):
@@ -756,15 +773,5 @@ class MainWindow(QMainWindow):
 			MessageBox.critical( self, message, description )
 		else:
 			MessageBox.warning( self, message, description )
-
-
-#void MainWindow.messageEnforcedTraitLimits( cv_AbstractTrait.Type type ) {
-	"""
-	Zeigt eine Nachricht an, daß die Eigenschaftsanzahl das für den Charakterbogen gesetzte Limit übertrifft, und daß alle überzähligen Eigenschaften des mitgegebenen Typs ignoriert werden.
-	"""
-
-	#MessageBox.warning( self, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_AbstractTrait.toString( type, true ) ) );
-#}
-
 
 

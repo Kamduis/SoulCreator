@@ -166,6 +166,7 @@ class StorageCharacter(QObject):
 
 		self.__storage = template
 
+		self.isLoading = False
 		self.__modified = False
 		self.__dateBirth = QDate(0, 0, 0)
 		self.__dateBecoming = QDate(0, 0, 0)
@@ -332,6 +333,8 @@ class StorageCharacter(QObject):
 		self.companionFuelChanged.connect(self.setModified)
 		self.companionNuminaChanged.connect(self.setModified)
 		self.companionBanChanged.connect(self.setModified)
+
+		self.ageChanged.connect(self.deselctTraitsWithWrongAge)
 
 		self.speciesChanged.connect(self.__emitTraitVisibleReasonChanged)
 		self.ageChanged.connect(self.__emitTraitVisibleReasonChanged)
@@ -567,6 +570,7 @@ class StorageCharacter(QObject):
 		return self.__equipment
 
 	def addEquipment(self, item):
+		#Debug.debug(item)
 		if item not in self.__equipment:
 			self.__equipment.append(item)
 			self.equipmentAdded.emit(item)
@@ -1180,6 +1184,8 @@ class StorageCharacter(QObject):
 
 
 	def resetCharacter(self):
+		## Der Charkater wird umorganisiert, ohne daß wir haufenweise Warnhinweise haben wollen.
+		self.isLoading = True
 		# Standardspezies ist der Mensch.
 		self.species = Config.initialSpecies
 		# Zeitalter festlegen.
@@ -1231,17 +1237,22 @@ class StorageCharacter(QObject):
 		# Übernatürliche Eigenschaft festlegen.
 		self.powerstat = Config.powerstatDefaultValue
 
+		# Beim Löschen ist darauf zu achten, daß ich nicht aus der Liste löschen kann, über die ich iteriere. Sonst wird nicht alles gelöscht.
 		for category in self.__weapons:
-			for weapon in self.__weapons[category]:
+			weaponList = self.__weapons[category][:]
+			for weapon in weaponList:
 				self.deleteWeapon(category, weapon)
 		self.setArmor(name="")
-		for item in self.__equipment:
+		eqipmentList = self.__equipment[:]
+		for item in eqipmentList:
 			self.deleteEquipment(item)
 		for category in self.__automobiles:
-			for automobile in self.__automobiles[category]:
+			automobileList  = self.__automobiles[category][:]
+			for automobile in automobileList:
 				self.deleteAutomobile(category, automobile)
 		for typ in self.__extraordinaryItems:
-			for item in self.__extraordinaryItems[typ]:
+			extraordinaryItemList = self.__extraordinaryItems[typ][:]
+			for item in extraordinaryItemList:
 				self.deleteExtraordinaryItem(typ, item)
 		self.magicalTool = ""
 		self.nimbus = ""
@@ -1264,6 +1275,9 @@ class StorageCharacter(QObject):
 		self.companionBan = ""
 
 		self.picture = QPixmap()
+
+		## Fertig mit dem Laden der enuen Werte.
+		self.isLoading = False
 
 
 	def isModifed(self):
@@ -1300,6 +1314,18 @@ class StorageCharacter(QObject):
 		"""
 
 		ConnectPrerequisites.checkPrerequisites(trait, self.__storage, self)
+
+
+	def deselctTraitsWithWrongAge(self, age):
+		"""
+		\todo Man sollte nicht bei jedem Alterswechsel über alle Eigenschaften laufen, sondern zu Beginn des Programms alle Eigenschaften mit "Kid" bzw. "Adult" mit ageChanged verknüpfen.
+		"""
+
+		for typ in self.__traits:
+			for category in self.__traits[typ]:
+				for trait in self.__traits[typ][category].values():
+					if type(trait) == StandardTrait and trait.age and trait.age != Config.getAge(self.age) and trait.value > 0:
+						trait.value = 0
 
 
 

@@ -144,6 +144,25 @@ class AbstractStoreWidget(QWidget):
 		self.itemBought.emit(listOfItems[0].text(), listOfItems[0].data())
 
 
+	def __customItem(self, name):
+		"""
+		Erzeugt einen vom Benutzer benannten Gegenstand.
+		"""
+
+		if name:
+			existingItemInventory = self.__modelInventory.findItems(name)
+			if not existingItemInventory:
+				existingItem = self.__modelStore.findItems(name)
+				if existingItem:
+					listOfItems = self.__modelStore.takeRow(existingItem[0].index().row())
+					self.__modelInventory.appendRow(listOfItems)
+					self.itemBought.emit(listOfItems[0].text(), listOfItems[0].data())
+				else:
+					newItem = QStandardItem(name)
+					self.__modelInventory.appendRow(newItem)
+					self.itemBought.emit(newItem.text(), newItem.data())
+
+
 	def buyCustomItem(self):
 		"""
 		Fügt dem Inventar des Charakters einen Gegenstand hinzu.
@@ -153,15 +172,7 @@ class AbstractStoreWidget(QWidget):
 
 		newName = self.ui.lineEdit_custom.text()
 		if newName:
-			existingItem = self.__modelStore.findItems(newName)
-			if existingItem:
-				listOfItems = self.__modelStore.takeRow(existingItem[0].index().row())
-				self.__modelInventory.appendRow(listOfItems)
-				self.itemBought.emit(listOfItems[0].text(), listOfItems[0].data())
-			else:
-				newItem = QStandardItem(newName)
-				self.__modelInventory.appendRow(newItem)
-				self.itemBought.emit(newItem.text(), newItem.data())
+			self.__customItem(newName)
 			## Textzeile löschen
 			self.ui.lineEdit_custom.setText("")
 
@@ -183,14 +194,17 @@ class AbstractStoreWidget(QWidget):
 
 	def moveItemToInventory(self, name, category=None):
 		"""
-		Der besagte Gegenstand wird aus dem Laden ins Inventar bewegt.
+		Der besagte Gegenstand wird aus dem Laden ins Inventar bewegt. Gibt es keinen Gegenstand dieses Namens im Laden, wird er direkt im Inventar erzeugt.
 		"""
 
 		foundItems = self.__modelStore.findItems(name)
-		for item in foundItems:
-			if item.data() == category:
-				listOfItems = self.__modelStore.takeRow(item.index().row())
-				self.__modelInventory.appendRow(listOfItems)
+		if foundItems:
+			for item in foundItems:
+				if item.data() == category:
+					listOfItems = self.__modelStore.takeRow(item.index().row())
+					self.__modelInventory.appendRow(listOfItems)
+		else:
+			self.__customItem(name)
 
 
 	def moveItemToStore(self, name, category=None):

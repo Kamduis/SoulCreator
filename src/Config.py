@@ -38,10 +38,11 @@ class Config(object):
 
 	# Programmdaten
 	programName = "SoulCreator"
-	programAuthor = "Victor"
+	programAuthor = "Victor von Rhein"
+	programAuthorEMail = "victor@caern.de"
 	programVersionMajor = 0
-	programVersionMinor = 11
-	programVersionChange = 1
+	programVersionMinor = 12
+	programVersionChange = 0
 	programDescription = "Charaktergenerator for the World of Darkness."
 	organization = "Caern"
 
@@ -242,6 +243,10 @@ class Config(object):
 		"Kid": 0.70,
 	}
 
+	size = {
+		"Adult": 5,
+		"Kid": 4,
+	}
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
 	genders = (
 		("Hermaphrodite", ":/icons/images/svg/symbolHermaphrodite.svg"),

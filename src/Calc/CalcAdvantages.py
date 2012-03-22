@@ -77,6 +77,7 @@ class CalcAdvantages(QObject):
 		self.__smallTraitKid = self.__character.traits["Merit"]["Physical"]["Tiny"]
 
 		self.sizeChanged.connect(self.calcHealth)
+		self.sizeChanged.connect(self.calcDefense)
 
 
 	#@property
@@ -132,9 +133,9 @@ class CalcAdvantages(QObject):
 			giantTrait = self.__giantTraitKid
 			smallTrait = self.__smallTraitKid
 
-		result = 5
+		result = Config.size["Adult"]
 		if self.__character.age < Config.ageAdult:
-			result -= 1
+			result = Config.size["Kid"]
 
 		if ( giantTrait.totalvalue > 0 ):
 			result += 1
@@ -202,10 +203,16 @@ class CalcAdvantages(QObject):
 		"""
 		Berechnung der Defense
 
+		\note Bei Kindern wird pro Punkt Size unter 5 ein weiterer Punkt zur Defense hinzugezählt.
+
 		\todo Bislang nicht von der Spezies abhängig: Tiere sollten stets das größere von Dex und Wits als Defense haben.
 		"""
 
 		result = self.calculateDefense( [ self.__attrWit.totalvalue, self.__attrDex.totalvalue ] )
+		if self.__character.age < Config.ageAdult:
+			modificator = Config.size["Adult"] - self.__size
+			modificator = max(modificator, 0)
+			result = result + modificator
 
 		if ( self.__defense != result ):
 			self.__defense = result

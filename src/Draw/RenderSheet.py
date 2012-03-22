@@ -280,12 +280,13 @@ class RenderSheet(QObject):
 				spellsActive=self.userTextBox(
 					lines=5,
 					title=self.tr("Active Spells"),
-					description=self.tr("Max: {} +3".format(self.__storage.powerstatName(self.__character.species)))
+					#description=self.tr("Max: {} +3".format(self.__storage.powerstatName(self.__character.species)))
+					description=self.tr("Max: {} ({} +3)".format((self.__character.powerstat + 3), self.__storage.powerstatName(self.__character.species)))
 				),
 				spellsUponSelf=self.userTextBox(
 					lines=5,
 					title=self.tr("Spells Cast Upon Self"),
-					description=self.tr("Spell Tolerance: Stamina; -1 die per extra spell")
+					description=self.tr("Spell Tolerance: {} (Resistance); -1 die per extra spell".format(max(self.__character.traits["Attribute"]["Mental"]["Resolve"].totalvalue, self.__character.traits["Attribute"]["Physical"]["Stamina"].totalvalue, self.__character.traits["Attribute"]["Social"]["Composure"].totalvalue)))
 				),
 				nimbus=self.simpleTextBox(
 					self.__character.nimbus,
@@ -1259,7 +1260,11 @@ class RenderSheet(QObject):
 	def _createInventory(self, height=293):
 		#u"<div style='height:{height}; overflow:hidden;'>{text}</div>".format(text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory")), height="{}px".format(heightInventory))
 
-		htmlText = text=self.simpleTextBox("; ".join(self.__character.equipment), title=self.tr("Inventory"))
+		# "&" Darf nicht in den html-Text geschrieben werden.
+		equipmentText = "; ".join(self.__character.equipment)
+		equipmentText = equipmentText.replace("&", "&amp;")
+		
+		htmlText = text=self.simpleTextBox(equipmentText, title=self.tr("Inventory"))
 
 		htmlText += u"<dl>"
 		if self.__character.species == "Human" and any([ auto for auto in self.__character.automobiles.values() ]):

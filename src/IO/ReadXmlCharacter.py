@@ -95,9 +95,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 			descriptionText = self.tr("{description} Loading of character will be continued but errors may occur.".format(message=e.message, description=e.description))
 			self.exceptionRaised.emit(e.message, descriptionText, e.critical)
 
+		## Die Daten müssen zuerst geladen werden, damit schon beim Laden die Unterschiedung zwischen Kindern und Erwachsenen erfolgen kann.
+		self.readDates(xmlContent)
 		self.readCharacterInfo(xmlContent)
 		self.readCharacterIdentity(xmlContent)
-		self.readDates(xmlContent)
 		self.readDerangements(xmlContent)
 		self.readTraits(xmlContent)
 		self.readItems(xmlContent)
@@ -261,12 +262,14 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 
 		if root is not None:
-			for equipmentElement in root.getiterator("equipment"):
-				equipmentName = equipmentElement.text
-				self.__character.addEquipment(equipmentName)
-			for magicalToolElement in root.getiterator("magicalTool"):
-				toolName = magicalToolElement.text
-				self.__character.setMagicalTool(toolName)
+			for equipmentElement in list(root):
+				if equipmentElement.tag == "equipment":
+					equipmentName = equipmentElement.text
+					self.__character.addEquipment(equipmentName)
+			for magicalToolElement in list(root):
+				if magicalToolElement.tag == "magicalTool":
+					toolName = magicalToolElement.text
+					self.__character.setMagicalTool(toolName)
 
 
 	def readAutomobiles(self, root):
