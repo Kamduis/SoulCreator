@@ -498,8 +498,8 @@ class MainWindow(QMainWindow):
 			"""
 			<h1>{name}</h1>
 			<h2>Version: {version}</h2>
-			<p>Copyright (C) Victor von Rhein, 2011, 2012<br>
-			EMail: victor@caern.de</p>
+			<p>Copyright (C) {author}, 2011, 2012<br>
+			EMail: {mail}</p>
 			<h2>GNU General Public License</h2>
 			<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 			<p>This program is distributed in the hope that it will be useful, but <i>without any warranty</i>; without even the implied warranty of <i>merchantability</i> or <i>fitness for a particular purpose</i>. See the GNU General Public License for more details.</p>
@@ -508,7 +508,9 @@ class MainWindow(QMainWindow):
 			<p>World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requiem, Werewolf: The Forsaken, White Wolf, the White Wolf-Logo and all referring terms and symbols are copyrighted by White Wolf Inc.</p>
 			""".format(
 				name=Config.programName,
-				version=Config.version()
+				version=Config.version(),
+				author=Config.programAuthor,
+				mail=Config.programAuthorEMail,
 			)
 		)
 

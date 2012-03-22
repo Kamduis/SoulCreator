@@ -25,7 +25,7 @@ from __future__ import division, print_function
 import os
 import sys
 import subprocess
-from cx_Freeze import setup, Executable
+from cx_Freeze import setup, Executable, Freezer
 
 from src.Config import Config
 
@@ -41,6 +41,11 @@ if __name__ == "__main__":
 	"""
 
 	# Process the includes, excludes and packages first
+	includefiles = [
+		("COPYING", "COPYING"),
+		("INSTALL.md", "INSTALL.md"),
+		("README.md", "README.md"),
+	]
 	includes = []
 	excludes = []
 	packages = []
@@ -57,6 +62,8 @@ if __name__ == "__main__":
 		# - plugins/iconengines
 		# - plugins/imageformats
 		# - qt.conf
+		# 	[Paths]
+		# 	Plugins = plugins 
 		#
 		# Da ich nicht weiß, wie ich den Namen des Zielordners bestimme, kann ich sie nicht automatisch kopieren/erstellen.
 		pass
@@ -66,31 +73,35 @@ if __name__ == "__main__":
 	else:
 		_base = "Console"
 
-	exe = Executable(
-		script="SoulCreator.py",
-		base = _base,
-		#targetDir = r"build/test",	# Verursacht Schwierigkeiten, denn die Module werden in ein anderes Verzeichnis geschoben.
-		compress = True,
-		#copyDependentFiles = True,
-		#appendScriptToExe = False,
-		#appendScriptToLibrary = False,
-		icon = None,
-	)
+	exe = [
+		Executable(
+			script="SoulCreator.py",
+			base = _base,
+			#targetDir = r"build/test",	# Verursacht Schwierigkeiten, denn die Module werden in ein anderes Verzeichnis geschoben.
+			compress = True,
+			#copyDependentFiles = True,
+			#appendScriptToExe = False,
+			#appendScriptToLibrary = False,
+			icon = None,
+		)
+	]
 
 	setup(
 		name = Config.programName,
 		version = Config.version(),
 		description = Config.programDescription,
 		author = Config.programAuthor,
-		options = {"build_exe":
-			{
+		author_email = Config.programAuthorEMail,
+		options = {
+			"build_exe": {
 				"includes": includes,
 				"excludes": excludes,
 				"packages": packages,
 				"path": path,
+				"include_files": includefiles,
 			},
 		},
-		executables = [exe]
+		executables = exe
 	)
 
 	sys.exit(0)

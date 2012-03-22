@@ -38,7 +38,8 @@ class Config(object):
 
 	# Programmdaten
 	programName = "SoulCreator"
-	programAuthor = "Victor"
+	programAuthor = "Victor von Rhein"
+	programAuthorEMail = "victor@caern.de"
 	programVersionMajor = 0
 	programVersionMinor = 12
 	programVersionChange = 0
