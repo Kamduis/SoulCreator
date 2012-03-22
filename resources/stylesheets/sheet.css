@@ -1,29 +1,249 @@
 /* Grundeinstellung */
-* {
-	font-family: 'Linux Libertine O';
-	font-size: 45px;
-}
-
-/* Schriften */
-/*h1,h2,h3,h4 {
-	font-family: 'DejaVu Sans'; 
+/** {
+	background-color: transparent;
 }*/
 
+body {
+	font-family: 'Linux Libertine O';
+/* 	font-size: 45px; */
+	font-size: 18px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+/* 	background-color: rgba(0,0,0,0); */
+}
+
+/* Überschriften */
+h1,h2,h3,h4 {
+/* 	margin-top: 20px; */
+	font-family: 'DejaVu Sans';
+	text-align: center;
+	margin-top: .8em;
+	margin-bottom: .6em;
+}
+
+h1.human {
+	font-family: 'Architects Daughter';
+	font-size: 1.3em;
+}
+h2.human {
+	font-family: 'Architects Daughter';
+	font-size: 1em;
+}
+h1.changeling {
+	font-family: 'Mutlu';
+	font-size: 1.7em;
+	margin-top: .5em;
+	margin-bottom: .6em;
+}
+h2.changeling {
+	font-family: 'Mutlu';
+	font-size: 1.3em;
+	margin-top: .5em;
+	margin-bottom: .4em;
+}
+h1.mage {
+	font-family: 'Tangerine';
+	font-size: 1.6em;
+	margin-top: .7em;
+	margin-bottom: .4em;
+}
+h2.mage {
+	font-family: 'Tangerine';
+	font-size: 1.2em;
+	margin-top: .7em;
+	margin-bottom: .4em;
+}
+h1.vampire {
+	font-family: 'Cloister Black';
+	font-size: 1.5em;
+	margin-top: .5em;
+	margin-bottom: .4em;
+}
+h2.vampire {
+	font-family: 'Cloister Black';
+	font-size: 1.2em;
+	margin-top: .5em;
+	margin-bottom: .4em;
+}
+h1.werewolf {
+	font-family: 'Note this';
+	font-size: 1.5em;
+	margin-top: .5em;
+	margin-bottom: .4em;
+}
+h2.werewolf {
+	font-family: 'Note this';
+	font-size: 1.1em;
+	margin-top: .5em;
+	margin-bottom: .4em;
+}
+
 p {
-	margin-top: 5px;
-	text-align: justify; 
+	text-align: justify;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* Tabellen */
+table {
+	border-spacing: 0px;
+}
+table.underlines {
+	border-spacing: 1px;
+}
+table.fullWidth {
+	width: 100%;
+}
+table.fullSpace {
+	width: 100%;
+	height: 100%;
+}
+td {
+/* 	border: 1px solid #0F0; */
+	padding-top: .45em;
+/* 	margin: .3em; */
+	vertical-align: baseline;
+	line-height: .6em;
+/* 	overflow:hidden; */
+}
+td.layout {
+/* 	border: 1px solid #F00; */
+	padding: 0px;
+	margin: 0px;
+	vertical-align: top;
+/* 	overflow:hidden; */
+}
+td.withHRule {
+	vertical-align: bottom;
+}
+td.narrowLine {
+	line-height: .4em;
+}
+td.nowrap {
+	white-space: nowrap;
+}
+td.hfill {
+	width: 100%;
+}
+td.hrulefill {
+	width: 100%;
+	vertical-align: bottom;
+/* 	white-space: nowrap; */
+/* 	border-bottom: 1px solid #000; */
+	border-style: solid;
+	border-color: white;
+	border-bottom-width: thin;
+	border-bottom-color: black;
+}
+td.box {
+/* 	border: .5px solid #000; */
+	border-style: solid;
+	border-width: thin;
+	border-color: black;
 }
 
 /* Listen */
-dl {
-	padding: 0.5em;
-}
+/* dl { */
+/* 	padding: 0.5em; */
+/* 	line-height: 1.5em; */
+/* } */
 dt {
+/* 	float: left; */
+/* 	clear: left; */
+/* 	width: 60px; */
+/* 	text-align: left; */
 	font-weight: bold;
 }
+dt:after {
+	content: ":";
+}
+dd {
+	margin-left: 2em;
+/* 	padding: 0 0 0.5em 0; */
+}
 
-#FirstTongue {
+/* Kurze Abschnitte */
+
+/* Abstände */
+.textNarrow {
+	line-height: 1em;
+}
+.text {
+	line-height: 1.5em;
+}
+div.vFill {
+	height: 100%;
+}
+div.vSpaceHead {
+	height: 100px;
+}
+tr.spacer,td.spacer,div.spacer {
+	width: 10px;
+	height: 10px;
+}
+.rowHeight {
+	height: 1.5em
+}
+
+/* Schriften */
+span.scriptFont {
+	font-family: 'Blokletters Balpen';
+	font-size: 0.6em;
+}
+span.descText {
+	font-family: 'Blokletters Balpen';
+	font-size: .5em;
+}
+span.small {
+	font-size: 80%
+}
+span.bigSymbols {
+	font-size: 1.6em;
+}
+th.human, span.human {
+	font-family: 'Architects Daughter';
+	font-size: 0.8em;
+}
+th.changeling, span.changeling {
+	font-family: 'Mutlu';
+	font-size: 0.9em;
+}
+th.mage, span.mage {
+	font-family: 'Tangerine';
+	font-size: 1.3em;
+/* 	font-size: 300%; */
+}
+th.vampire, span.vampire {
+	font-family: 'Cloister Black';
+/* 	font-size: 250%; */
+}
+th.werewolf, span.werewolf {
+	font-family: 'Note this';
+/* 	font-size: 250%; */
+}
+span.dots {
+	font-size: 1.2em;
+/* 	letter-spacing: -.1em; */
+/* 	word-spacing: -.5em; */
+}
+span.FirstTongue {
 	font-style: italic;
 }
 
+/* Bild hinter Text */
+div.bg {
+	width: 0px;
+	height: 0px;
+}
 
+/* SVG */
+/* svg { */
+/* 	position:absolute; */
+/* 	top:0; */
+/* 	left:0; */
+/* 	width:100%; */
+/* 	height:100%; */
+/* 	height:200; */
+/* } */

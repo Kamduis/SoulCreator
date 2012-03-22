@@ -108,7 +108,7 @@ class InfoWidget(QWidget):
 		self.__character.hairChanged.connect(self.ui.lineEdit_hair.setText)
 		self.__character.nationalityChanged.connect(self.ui.lineEdit_nationality.setText)
 		self.__character.pictureChanged.connect(self.updatePicture)
-		self.__character.descriptionChanged.connect(self.ui.textEdit_description.setPlainText)
+		self.__character.descriptionChanged.connect(self.ui.textEdit_description.setHtml)
 
 		## Das Alter darf nie negativ werden können
 		#self.ui.dateEdit_dateBirth.dateChanged.connect(self.ui.dateEdit_dateBecoming.setMinimumDate)
@@ -148,7 +148,7 @@ class InfoWidget(QWidget):
 		cursor = self.ui.textEdit_description.textCursor()
 		cursorPosition = cursor.position()
 
-		self.__character.description = self.ui.textEdit_description.toPlainText()
+		self.__character.description = self.ui.textEdit_description.toHtml()
 
 		cursor.setPosition(cursorPosition)
 		self.ui.textEdit_description.setTextCursor(cursor)
@@ -511,25 +511,29 @@ class InfoWidget(QWidget):
 		Ändert sich die Körpergröße zu sehr, sollautomatisch der Merit Giant bzw. der Flaw Dwarf vorgeschlagen werden.
 		"""
 
-		smallTrait = "Dwarf Flaw"
-		if self.__character.age < Config.ageAdult:
-			smallTrait = "Tiny Merit"
-
-		title = self.tr("Too big")
-		text = self.tr("To be this big, the character needs to purchase the Giant Merit.")
-		if newHeight <= Config.heightDwarf[Config.getAge(self.__character.age)]:
-			title = self.tr("Too small")
-			text = self.tr("To be this small, the character needs to get the {}.".format(smallTrait))
-		ret = QMessageBox.warning(
-			self,
-			title,
-			self.tr( "{} Do you want that to happen?".format(text) ),
-			QMessageBox.Yes | QMessageBox.No
-		)
-		if ret == QMessageBox.StandardButton.No:
-			return False
-		else:
+		## Wird der Charkater gerade geladen, werden keine Warnungen gezeigt und automatisch davon ausgegangen, daß der Anwender sie auch akzeptieren würde.
+		if self.__character.isLoading:
 			return True
+		else:
+			smallTrait = "Dwarf Flaw"
+			if self.__character.age < Config.ageAdult:
+				smallTrait = "Tiny Merit"
+
+			title = self.tr("Too big")
+			text = self.tr("To be this big, the character needs to purchase the Giant Merit.")
+			if newHeight <= Config.heightDwarf[Config.getAge(self.__character.age)]:
+				title = self.tr("Too small")
+				text = self.tr("To be this small, the character needs to get the {}.".format(smallTrait))
+			ret = QMessageBox.warning(
+				self,
+				title,
+				self.tr( "{} Do you want that to happen?".format(text) ),
+				QMessageBox.Yes | QMessageBox.No
+			)
+			if ret == QMessageBox.StandardButton.No:
+				return False
+			else:
+				return True
 
 
 	def updateHeight(self):

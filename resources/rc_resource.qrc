@@ -22,22 +22,23 @@
     <file>images/species/Changeling/Breed-Fairest.svg</file>
     <file>images/species/Changeling/Breed-Ogre.svg</file>
     <file>images/species/Changeling/Breed-Wizened.svg</file>
-    <file>images/species/Changeling/Faction-Spring.png</file>
-    <file>images/species/Changeling/Faction-Summer.png</file>
-    <file>images/species/Changeling/Faction-Autumn.png</file>
-    <file>images/species/Changeling/Faction-Winter.png</file>
-    <file>images/species/Changeling/Faction-Courtless.png</file>
+    <file>images/species/Changeling/Faction-Spring.svg</file>
+    <file>images/species/Changeling/Faction-Summer.svg</file>
+    <file>images/species/Changeling/Faction-Autumn.svg</file>
+    <file>images/species/Changeling/Faction-Winter.svg</file>
+    <file>images/species/Changeling/Faction-Courtless.svg</file>
     <file>images/species/Mage/Skull.png</file>
     <file>images/species/Mage/Breed-Acanthus.svg</file>
     <file>images/species/Mage/Breed-Mastigos.svg</file>
     <file>images/species/Mage/Breed-Moros.svg</file>
     <file>images/species/Mage/Breed-Obrimos.svg</file>
     <file>images/species/Mage/Breed-Thyrsus.svg</file>
-    <file>images/species/Mage/Faction-AdamantineArrow.png</file>
-    <file>images/species/Mage/Faction-FreeCouncil.png</file>
-    <file>images/species/Mage/Faction-GuardiansoftheVeil.png</file>
-    <file>images/species/Mage/Faction-Mysterium.png</file>
-    <file>images/species/Mage/Faction-SilverLadder.png</file>
+    <file>images/species/Mage/Faction-AdamantineArrows.svg</file>
+    <file>images/species/Mage/Faction-FreeCouncil.svg</file>
+    <file>images/species/Mage/Faction-GuardiansoftheVeil.svg</file>
+    <file>images/species/Mage/Faction-Mysterium.svg</file>
+    <file>images/species/Mage/Faction-SilverLadder.svg</file>
+    <file>images/species/Mage/Faction-Apostate.svg</file>
     <file>images/species/Vampire/Skull.png</file>
     <file>images/species/Vampire/Breed-Daeva.svg</file>
     <file>images/species/Vampire/Breed-Gangrel.svg</file>
@@ -86,6 +87,17 @@
     <file>images/species/Werewolf/Skull-gray.png</file>
   </qresource>
   <qresource prefix="sheet">
+    <file>stylesheets/sheet.css</file>
+    <file>stylesheets/sheetTemplate.html</file>
+    <file>stylesheets/sheetTemplate-Human-A.html</file>
+    <file>stylesheets/sheetTemplate-Changeling-A.html</file>
+    <file>stylesheets/sheetTemplate-Changeling-B.html</file>
+    <file>stylesheets/sheetTemplate-Mage-A.html</file>
+    <file>stylesheets/sheetTemplate-Mage-B.html</file>
+    <file>stylesheets/sheetTemplate-Vampire-A.html</file>
+    <file>stylesheets/sheetTemplate-Vampire-B.html</file>
+    <file>stylesheets/sheetTemplate-Werewolf-A.html</file>
+    <file>stylesheets/sheetTemplate-Werewolf-B.html</file>
     <file>images/sheet/WorldOfDarkness.jpg</file>
     <file>images/sheet/WorldOfDarkness-BalkenOben.png</file>
     <file>images/sheet/WorldOfDarkness-BackgroundL.png</file>
@@ -95,6 +107,18 @@
     <file>images/sheet/Changeling-Balken-v.svg</file>
     <file>images/sheet/Changeling-Background.jpg</file>
     <file>images/sheet/Mage.png</file>
+    <file>images/species/Mage/Background.jpg</file>
+    <file>images/species/Mage/Border-Corner.svg</file>
+    <file>images/species/Mage/Power-Death.svg</file>
+    <file>images/species/Mage/Power-Fate.svg</file>
+    <file>images/species/Mage/Power-Forces.svg</file>
+    <file>images/species/Mage/Power-Life.svg</file>
+    <file>images/species/Mage/Power-Matter.svg</file>
+    <file>images/species/Mage/Power-Mind.svg</file>
+    <file>images/species/Mage/Power-Prime.svg</file>
+    <file>images/species/Mage/Power-Space.svg</file>
+    <file>images/species/Mage/Power-Spirit.svg</file>
+    <file>images/species/Mage/Power-Time.svg</file>
     <file>images/sheet/Vampire.png</file>
     <file>images/sheet/Vampire-Background.jpg</file>
     <file>images/sheet/Werewolf.png</file>
@@ -122,6 +146,14 @@
     <file>images/svg/shuriken.svg</file>
     <file>images/svg/uzi.svg</file>
     <file>images/svg/shield.svg</file>
+    <file>images/svg/vehicle-car.svg</file>
+    <file>images/svg/vehicle-truck.svg</file>
+    <file>images/svg/vehicle-motorcycle.svg</file>
+    <file>images/svg/vehicle-commercial.svg</file>
+    <file>images/svg/curse.svg</file>
+    <file>images/svg/feather.svg</file>
+    <file>images/svg/spine.svg</file>
+    <file>images/svg/wand.svg</file>
   </qresource>
   <qresource prefix="template">
     <file>templates/base.scd</file>
@@ -137,8 +169,5 @@
     <file>images/Charactersheet-Mage-2.jpg</file>
     <file>images/Charactersheet-Vampire-2.jpg</file>
     <file>images/Charactersheet-Werewolf-2.jpg</file>
-  </qresource>
-  <qresource>
-    <file>stylesheets/sheet.css</file>
   </qresource>
 </RCC>

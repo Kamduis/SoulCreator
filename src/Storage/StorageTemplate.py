@@ -27,7 +27,7 @@ from PySide.QtCore import QObject
 #from src.Config import Config
 #from src.Tools import ListTools
 from src.Error import ErrTraitType
-#from src.Debug import Debug
+from src.Debug import Debug
 
 
 
@@ -317,6 +317,25 @@ class StorageTemplate(QObject):
 	# }
 	__extraordinaryItems = {}
 
+	# Eine Liste aller Fahrzeuge
+	#
+	# {
+	# 	Typ: {
+	# 		name: {
+	# 			"durability": value,
+	# 			"size": value,
+	#			"acceleration": value,
+	# 			"safeSpeed": value,
+	# 			"maxSpeed": value,
+	# 			"maxHandling": value,
+	# 			"occupants": value,
+	# 			"cost": value,
+	# 		},
+	# 	},
+	# 	...
+	# }
+	__automobiles = {}
+
 
 
 	def __init__(self, parent=None):
@@ -488,11 +507,17 @@ class StorageTemplate(QObject):
 
 
 	def breedBlessing(self, species, breed):
-		return self.__speciesGroupNames[species]["Breed"][1][breed]["blessing"]
+		if breed and "blessing" in self.__speciesGroupNames[species]["Breed"][1][breed]:
+			return self.__speciesGroupNames[species]["Breed"][1][breed]["blessing"]
+		else:
+			return ""
 
 
 	def breedCurse(self, species, breed):
-		return self.__speciesGroupNames[species]["Breed"][1][breed]["weakness"]
+		if breed and "weakness" in self.__speciesGroupNames[species]["Breed"][1][breed]:
+			return self.__speciesGroupNames[species]["Breed"][1][breed]["weakness"]
+		else:
+			return ""
 
 
 	def kiths(self, seeming):
@@ -514,7 +539,10 @@ class StorageTemplate(QObject):
 		\note Nur für Changelings von Bedeutung.
 		"""
 
-		return self.__kiths[seeming][kith]["ability"]
+		if seeming in self.__kiths and kith in self.__kiths[seeming]:
+			return self.__kiths[seeming][kith]["ability"]
+		else:
+			return ""
 
 
 	def addKith(self, seeming, kith, kithAbility=None):
@@ -819,6 +847,26 @@ class StorageTemplate(QObject):
 
 
 	@property
+	def automobiles(self):
+		"""
+		Gibt eine Liste aller Fahrzeuge.
+		"""
+
+		return self.__automobiles
+
+
+	def addAutomobile( self, typ, name, data ):
+		"""
+		Fügt ein Fahrzeug hinzu. Falls ein Fahrzeug dieses Namens schon vorhanden ist, werden die Daten überschrieben.
+		"""
+
+		if typ not in self.__automobiles:
+			self.__automobiles.setdefault(typ,{})
+			
+		self.__automobiles[typ][name] = data
+
+
+	@property
 	def extraordinaryItems(self):
 		"""
 		Gibt eine Liste aller magischen Gegenstände zurück.
@@ -834,6 +882,6 @@ class StorageTemplate(QObject):
 
 		if typ not in self.__extraordinaryItems:
 			self.__extraordinaryItems.setdefault(typ,{})
-			
+
 		self.__extraordinaryItems[typ][name] = data
 

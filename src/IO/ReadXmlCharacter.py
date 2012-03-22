@@ -95,9 +95,10 @@ class ReadXmlCharacter(QObject, ReadXml):
 			descriptionText = self.tr("{description} Loading of character will be continued but errors may occur.".format(message=e.message, description=e.description))
 			self.exceptionRaised.emit(e.message, descriptionText, e.critical)
 
+		## Die Daten müssen zuerst geladen werden, damit schon beim Laden die Unterschiedung zwischen Kindern und Erwachsenen erfolgen kann.
+		self.readDates(xmlContent)
 		self.readCharacterInfo(xmlContent)
 		self.readCharacterIdentity(xmlContent)
-		self.readDates(xmlContent)
 		self.readDerangements(xmlContent)
 		self.readTraits(xmlContent)
 		self.readItems(xmlContent)
@@ -227,6 +228,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.readWeapons(tree.find("Items/Weapons"))
 		self.readArmor(tree.find("Items/armor"))
 		self.readEquipment(tree.find("Items/Equipment"))
+		self.readAutomobiles(tree.find("Items/Automobiles"))
 		self.readExtraordinaryItems(tree.find("Items/ExtraordinaryItems"))
 
 
@@ -240,7 +242,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 				categoryName = categoryElement.attrib["name"]
 				for weaponElement in categoryElement.getiterator("weapon"):
 					weaponName = weaponElement.text
-					self.__character.addWeapon(categoryName, weaponName)
+					self.__character.addWeapon(weaponName, categoryName)
 
 
 	def readArmor(self, root):
@@ -260,12 +262,29 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 
 		if root is not None:
-			for equipmentElement in root.getiterator("equipment"):
-				equipmentName = equipmentElement.text
-				self.__character.addEquipment(equipmentName)
-			for magicalToolElement in root.getiterator("magicalTool"):
-				toolName = magicalToolElement.text
-				self.__character.setMagicalTool(toolName)
+			for equipmentElement in list(root):
+				if equipmentElement.tag == "equipment":
+					equipmentName = equipmentElement.text
+					self.__character.addEquipment(equipmentName)
+			for magicalToolElement in list(root):
+				if magicalToolElement.tag == "magicalTool":
+					toolName = magicalToolElement.text
+					self.__character.setMagicalTool(toolName)
+
+
+	def readAutomobiles(self, root):
+		"""
+		Liest die Fahrzeuge des Charakters aus.
+		"""
+
+		if root is not None:
+			for typeElement in list(root):
+				if typeElement.tag == "Type":
+					typeName = typeElement.attrib["name"]
+					for element in list(typeElement):
+						if element.tag == "item":
+							automobileName = element.text
+							self.__character.addAutomobile(automobileName, typeName)
 
 
 	def readExtraordinaryItems(self, root):
@@ -280,7 +299,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 					for element in list(typeElement):
 						if element.tag == "item":
 							extraordinaryItemName = element.text
-							self.__character.addExtraordinaryItem(typeName, extraordinaryItemName)
+							self.__character.addExtraordinaryItem(extraordinaryItemName, typeName)
 
 
 	def readSpeciesSpecials(self, tree):

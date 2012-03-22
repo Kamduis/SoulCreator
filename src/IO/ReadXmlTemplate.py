@@ -170,6 +170,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		self.readWeapons(tree.findall("Template/Items/Weapons"))
 		self.readArmor(tree.findall("Template/Items/Armor"))
 		self.readEquipment(tree.findall("Template/Items/Equipment"))
+		self.readAutomobiles(tree.findall("Template/Items/Automobiles"))
 		self.readExtraordinaryItems(tree.findall("Template/Items/Extraordinary"))
 
 
@@ -263,6 +264,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 								"cheap": [],
 								"only": listOfOnlys,
 							}
+							itemsToInt = (
+								"level",
+							)
+							for item in itemsToInt:
+								if subPowerData[item]:
+									subPowerData[item] = int(subPowerData[item])
+								else:
+									subPowerData[item] = 0
 							#Debug.debug(subPowerData["name"], subPowerData["prerequisites"])
 							identifier = self.getElementAttribute(element, "id")
 							if not identifier:
@@ -388,65 +397,96 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 		Einlesen der Waffen.
 
-		\todo Ersetze getiterator durch list(elem) oder Element.iter()
+		\todo Die Einteilung der Kategorie wird noch nicht wahrgenommen.
 		"""
 
-		for Weapons in root:
-			if GlobalState.isFallback or not self.getElementAttribute(Weapons, "fallback") == "True":
-				for typElement in Weapons.getiterator("Type"):
-					typeName = self.getElementAttribute(typElement, "name")
-					for categoryElement in typElement.getiterator("Category"):
-						for weaponElement in typElement.getiterator("weapon"):
-							#Debug.debug(weaponElement.attrib["name"])
-							weaponName = weaponElement.attrib["name"]
-							weaponData = {
-								"damage": self.getElementAttribute(weaponElement, "damage"),
-								"ranges": self.getElementAttribute(weaponElement, "ranges"),
-								"capacity": self.getElementAttribute(weaponElement, "capacity"),
-								"strength": self.getElementAttribute(weaponElement, "strength"),
-								"size": self.getElementAttribute(weaponElement, "size"),
-								"durability": self.getElementAttribute(weaponElement, "durability"),
-							}
-							self.__storage.addWeapon( typeName, weaponName, weaponData )
+		for weapons in root:
+			if GlobalState.isFallback or not self.getElementAttribute(weapons, "fallback") == "True":
+				for typElement in list(weapons):
+					if typElement.tag == "Type":
+						typeName = self.getElementAttribute(typElement, "name")
+						for categoryElement in list(typElement):
+							if categoryElement.tag == "Category":
+								for weaponElement in list(categoryElement):
+									if weaponElement.tag == "weapon":
+										#Debug.debug(weaponElement.attrib["name"])
+										weaponName = weaponElement.attrib["name"]
+										weaponData = {
+											"damage": self.getElementAttribute(weaponElement, "damage"),
+											"ranges": self.getElementAttribute(weaponElement, "ranges"),
+											"capacity": self.getElementAttribute(weaponElement, "capacity"),
+											"strength": self.getElementAttribute(weaponElement, "strength"),
+											"size": self.getElementAttribute(weaponElement, "size"),
+											"durability": self.getElementAttribute(weaponElement, "durability"),
+										}
+										self.__storage.addWeapon( typeName, weaponName, weaponData )
 
 
 	def readArmor(self, root):
 		"""
 		Einlesen der Rüstungen.
-
-		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
-		for Armor in root:
-			if GlobalState.isFallback or not self.getElementAttribute(Armor, "fallback") == "True":
-				for armorElement in Armor.getiterator("armor"):
-					armorName = armorElement.attrib["name"]
-					armorData = {
-						"general": int(self.getElementAttribute(armorElement, "general")),
-						"firearms": int(self.getElementAttribute(armorElement, "firearms")),
-						"defense": int(self.getElementAttribute(armorElement, "defense")),
-						"speed": int(self.getElementAttribute(armorElement, "speed")),
-					}
-					self.__storage.addArmor( armorName, armorData )
+		for armors in root:
+			if GlobalState.isFallback or not self.getElementAttribute(armors, "fallback") == "True":
+				for armorElement in list(armors):
+					if armorElement.tag == "armor":
+						armorName = armorElement.attrib["name"]
+						armorData = {
+							"general": int(self.getElementAttribute(armorElement, "general")),
+							"firearms": int(self.getElementAttribute(armorElement, "firearms")),
+							"defense": int(self.getElementAttribute(armorElement, "defense")),
+							"speed": int(self.getElementAttribute(armorElement, "speed")),
+						}
+						self.__storage.addArmor( armorName, armorData )
 
 
 	def readEquipment(self, root):
 		"""
 		Einlesen der Ausrüstung.
-
-		\todo Ersetze getiterator durch list(elem) oder Element.iter()
 		"""
 
-		for Equipment in root:
-			if GlobalState.isFallback or not self.getElementAttribute(Equipment, "fallback") == "True":
-				for equipmentElement in Equipment.getiterator("equipment"):
-					equipmentName = equipmentElement.attrib["name"]
-					equipmentData = {
-						"durability": int(self.getElementAttribute(equipmentElement, "durability")),
-						"size": int(self.getElementAttribute(equipmentElement, "size")),
-						"cost": int(self.getElementAttribute(equipmentElement, "cost")),
-					}
-					self.__storage.addEquipment( equipmentName, equipmentData )
+		for equipment in root:
+			if GlobalState.isFallback or not self.getElementAttribute(equipment, "fallback") == "True":
+				for equipmentElement in list(equipment):
+					if equipmentElement.tag == "equipment":
+						equipmentName = equipmentElement.attrib["name"]
+						equipmentData = {
+							"durability": int(self.getElementAttribute(equipmentElement, "durability")),
+							"size": int(self.getElementAttribute(equipmentElement, "size")),
+							"cost": int(self.getElementAttribute(equipmentElement, "cost")),
+						}
+						self.__storage.addEquipment( equipmentName, equipmentData )
+
+
+	def readAutomobiles(self, root):
+		"""
+		Einlesen der Fahrzeuge.
+
+		\todo Die Einteilung der Kategorie wird noch nicht wahrgenommen.
+		"""
+
+		for automobiles in root:
+			if GlobalState.isFallback or not self.getElementAttribute(automobiles, "fallback") == "True":
+				for element in list(automobiles):
+					if element.tag == "Type":
+						itemTyp = element.attrib["name"]
+						for subElement in list(element):
+							if subElement.tag == "Category":
+								for subsubElement in list(subElement):
+									if subsubElement.tag == "item":
+										itemName = subsubElement.attrib["name"]
+										itemData = {
+											"durability": int(self.getElementAttribute(subsubElement, "durability")),
+											"size": int(self.getElementAttribute(subsubElement, "size")),
+											"acceleration": int(self.getElementAttribute(subsubElement, "acceleration")),
+											"safeSpeed": int(self.getElementAttribute(subsubElement, "safeSpeed")),
+											"maxSpeed": int(self.getElementAttribute(subsubElement, "maxSpeed")),
+											"maxHandling": int(self.getElementAttribute(subsubElement, "maxHandling")),
+											"occupants": self.getElementAttribute(subsubElement, "occupants"),
+											"cost": float(self.getElementAttribute(subsubElement, "cost")),
+										}
+										self.__storage.addAutomobile( itemTyp, itemName, itemData )
 
 
 	def readExtraordinaryItems(self, root):

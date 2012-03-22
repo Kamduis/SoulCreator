@@ -25,7 +25,7 @@ from __future__ import division, print_function
 #import sys
 import os
 
-from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir
+from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTimer
 from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
 from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
@@ -33,6 +33,7 @@ from src.GlobalState import GlobalState
 from src.Tools import PathTools
 from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from Config import Config
+import IO.Shell
 from IO.Settings import Settings
 from IO.ReadXmlTemplate import ReadXmlTemplate
 from IO.ReadXmlCharacter import ReadXmlCharacter
@@ -57,8 +58,9 @@ from Widgets.ItemWidget import ItemWidget
 from Widgets.SpecialsWidget import SpecialsWidget
 from Widgets.Dialogs.SettingsDialog import SettingsDialog
 from Widgets.Dialogs.MessageBox import MessageBox
-from Draw.DrawSheet import DrawSheet
-#from Debug import Debug
+#from Draw.DrawSheet import DrawSheet
+from Draw.RenderSheet import RenderSheet
+from Debug import Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
 
@@ -91,7 +93,21 @@ class MainWindow(QMainWindow):
 
 	\todo Attribute der Werewolf-Gestalten anzeigen
 
-	\todo Auspice-Blessing hinzufügen.
+	\todo Hausregeln per Option ein-/ausschlatbar machen.
+
+	\todo Werwolf-Gaben vervollständigen.
+
+	\todo Gaben in ene ScrollArea packen, denn es sind viel zu viele, um die Übersicht zu bewahren. Oder ich verwende ein TreeView...
+
+	\todo Erschaffungspunkte für Fertigkeiten bei Kindern vom Alter abhängig machen.
+
+	\todo Beim Laden die Ganzen Hinweisfenster für das Verteilen von Giant/Tiny etc. nicht anzeigen.
+
+	\todo Eigene magische Gegenstände müssen eingegeben werden können.
+
+	\todo Würfelpool für subpowers ausrechnen.
+
+	\todo Bei Wechselbälgern nur Bonus-Spezialisierungen anbieten, die nicht schon vergeben sind.
 	"""
 
 
@@ -99,15 +115,12 @@ class MainWindow(QMainWindow):
 	#pageChanged = Signal(int)
 
 
-	def __init__(self, fileName=None, parent=None):
+	def __init__(self, fileName=None, exportPath=None, parent=None):
 		#dbgStart = Debug.timehook()
 		QMainWindow.__init__(self, parent)
 
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
-
-		if GlobalState.isDebug:
-			print("{} wurde im Debug-Modus aufgerufen.".format(Config.programName))
 
 		QCoreApplication.setOrganizationName( Config.organization )
 		QCoreApplication.setApplicationName( Config.programName )
@@ -155,14 +168,35 @@ class MainWindow(QMainWindow):
 
 		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
 		if fileName:
-			self.openCharacter(fileName)
+			if os.path.exists(fileName):
+				if GlobalState.isVerbose:
+					print("Opening file {}.".format(fileName))
+				self.openCharacter(fileName)
+			elif fileName.lower() in [ species.lower() for species in self.__storage.species.keys() ]:
+				if GlobalState.isVerbose:
+					print("Empty Charactersheet of species {} will be created.".format(fileName.lower()))
+				self.__character.species = fileName[0].upper() + fileName[1:].lower()
+				self.__character.setModified(False)
+			else:
+				IO.Shell.printError("Warning! A file named {} does not exist.".format(fileName))
+
 		#Debug.timesince(dbgStart)
+
+		if exportPath:
+			if GlobalState.isVerbose:
+				print("Creating PDF {}".format(exportPath[0]))
+			# exportPath ist eine Liste mit einem einzigen Element als Inhalt (argparse)
+			self.__createPdf(exportPath[0])
+			# Damit das Programm ordentlich geschlossen werden kann, muß auf das Starten der Event-Loop gewartet werden. dies geht am einfachsten mit einem QTimer.
+			QTimer.singleShot(0, self.close)
 
 
 
 	def closeEvent( self, event ):
 		if ( self.maybeSave() ):
 			self.writeSettings()
+			if GlobalState.isVerbose:
+				print("Closing now.")
 			event.accept()
 		else:
 			event.ignore()
@@ -464,8 +498,8 @@ class MainWindow(QMainWindow):
 			"""
 			<h1>{name}</h1>
 			<h2>Version: {version}</h2>
-			<p>Copyright (C) Victor von Rhein, 2011, 2012<br>
-			EMail: victor@caern.de</p>
+			<p>Copyright (C) {author}, 2011, 2012<br>
+			EMail: {mail}</p>
 			<h2>GNU General Public License</h2>
 			<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 			<p>This program is distributed in the hope that it will be useful, but <i>without any warranty</i>; without even the implied warranty of <i>merchantability</i> or <i>fitness for a particular purpose</i>. See the GNU General Public License for more details.</p>
@@ -474,7 +508,9 @@ class MainWindow(QMainWindow):
 			<p>World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requiem, Werewolf: The Forsaken, White Wolf, the White Wolf-Logo and all referring terms and symbols are copyrighted by White Wolf Inc.</p>
 			""".format(
 				name=Config.programName,
-				version=Config.version()
+				version=Config.version(),
+				author=Config.programAuthor,
+				mail=Config.programAuthorEMail,
 			)
 		)
 
@@ -536,6 +572,8 @@ class MainWindow(QMainWindow):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
 				self.__character.resetCharacter()
 
+				## Verhindern, daß unnötig Warnungen auftauchen, wenn man einen Charakter lädt.
+				self.__character.isLoading = True
 				try:
 					self.__readCharacter.read(filePath)
 				except ErrXmlVersion as e:
@@ -547,6 +585,7 @@ class MainWindow(QMainWindow):
 
 				# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 				self.__character.setModified( False )
+				self.__character.isLoading = False
 
 
 	def saveCharacter(self):
@@ -582,6 +621,32 @@ class MainWindow(QMainWindow):
 			self.__character.setModified( False )
 
 
+	def __createPdf(self, savePath):
+		"""
+		Diese Funktion druckt den Charakter in ein PDF-Dokument.
+		"""
+
+		# Wenn Unterverzeichnis nicht existiert, erstelle es
+		dirname = os.path.dirname(savePath)
+		if not os.path.exists(dirname):
+			os.makedirs(dirname)
+
+		printer = QPrinter(QPrinter.PrinterResolution)
+		#printer = QPrinter()
+
+		printer.setOutputFormat( QPrinter.PdfFormat )
+		printer.setPaperSize( QPrinter.A4 )
+		printer.setFullPage( True )
+		printer.setOutputFileName( savePath )
+
+		drawSheet = RenderSheet( self.__storage, self.__character, printer, self )
+
+		try:
+			drawSheet.createSheets()
+		except ErrSpeciesNotExisting as e:
+			MessageBox.exception( self, e.message, e.description )
+
+
 	def exportCharacter(self):
 		"""
 		Diese Funktion druckt den Charakter in ein PDF-Dokument.
@@ -603,19 +668,7 @@ class MainWindow(QMainWindow):
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
 		if ( filePath[0] ):
-			printer = QPrinter()
-
-			printer.setOutputFormat( QPrinter.PdfFormat )
-			printer.setPaperSize( QPrinter.A4 )
-			printer.setFullPage( True )
-			printer.setOutputFileName( filePath[0] )
-
-			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
-
-			try:
-				drawSheet.print()
-			except ErrSpeciesNotExisting as e:
-				MessageBox.exception( self, e.message, e.description )
+			self.__createPdf(filePath[0])
 
 
 	def printCharacter(self):
@@ -623,19 +676,14 @@ class MainWindow(QMainWindow):
 		Druckt den angezeigten Charakter aus.
 		"""
 
-		printer = QPrinter()
+		printer = QPrinter(QPrinter.PrinterResolution)
 		printDialog = QPrintDialog( printer, self )
 
-		#printer.setPaperSize( QPrinter.A4 )
-		#printer.setFullPage( True )
-
-		drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
-
 		if ( printDialog.exec_() == QDialog.Accepted ):
-			drawSheet = DrawSheet( self.__storage, self.__character, printer, self )
+			drawSheet = RenderSheet( self.__storage, self.__character, printer, self )
 
 			try:
-				drawSheet.print()
+				drawSheet.createSheets()
 			except ErrSpeciesNotExisting as e:
 				MessageBox.exception( self, e.message, e.description )
 
@@ -687,7 +735,6 @@ class MainWindow(QMainWindow):
 		Diese Frage tritt auf, wenn der dargestellte Charakter nicht gespeichert ist und ehe das Programm geschlossen werden oder einen neuen Charakter anlegen soll.
 		"""
 
-
 		if ( self.__character.isModifed() ):
 			ret = QMessageBox.warning(
 				self,
@@ -723,15 +770,5 @@ class MainWindow(QMainWindow):
 			MessageBox.critical( self, message, description )
 		else:
 			MessageBox.warning( self, message, description )
-
-
-#void MainWindow.messageEnforcedTraitLimits( cv_AbstractTrait.Type type ) {
-	"""
-	Zeigt eine Nachricht an, daß die Eigenschaftsanzahl das für den Charakterbogen gesetzte Limit übertrifft, und daß alle überzähligen Eigenschaften des mitgegebenen Typs ignoriert werden.
-	"""
-
-	#MessageBox.warning( self, tr( "Too many Traits" ), tr( "There are too many %1 to fit on page.\n Printing will be done without the exceeding number of traits." ).arg( cv_AbstractTrait.toString( type, true ) ) );
-#}
-
 
 

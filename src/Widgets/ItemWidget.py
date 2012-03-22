@@ -28,6 +28,7 @@ from PySide.QtCore import Qt
 from PySide.QtGui import QWidget, QColor, QIcon, QListWidgetItem, QRadioButton, QButtonGroup
 
 from src.Config import Config
+from src.Widgets.AbstractStoreWidget import AbstractStoreWidget
 from src.Debug import Debug
 
 from ui.ui_ItemWidget import Ui_ItemWidget
@@ -53,6 +54,70 @@ class ItemWidget(QWidget):
 		self.__character = character
 		self.__storage = template
 
+		## Weapons
+		weaponStore = AbstractStoreWidget(template, character)
+		weaponStore.setEnhancedItemTraitsVisible(True)
+		weaponStore.setMagicalItemTraitsVisible(False)
+		weaponStore.setAddCustomVisible(False)
+		self.ui.layout_weapons.addWidget(weaponStore)
+
+		for category in self.__storage.weapons:
+			for weapon in self.__storage.weapons[category]:
+				weaponStore.addItemToStore(weapon, category, QIcon(Config.weaponIcons[category]))
+
+		weaponStore.itemBought.connect(self.__character.addWeapon)
+		weaponStore.itemSold.connect(self.__character.deleteWeapon)
+		self.__character.weaponAdded.connect(weaponStore.moveItemToInventory)
+		self.__character.weaponRemoved.connect(weaponStore.moveItemToStore)
+
+		## Equipment
+		equipmentStore = AbstractStoreWidget(template, character)
+		equipmentStore.setEnhancedItemTraitsVisible(False)
+		equipmentStore.setMagicalItemTraitsVisible(False)
+		equipmentStore.setAddCustomVisible(True)
+		self.ui.layout_equipment.addWidget(equipmentStore)
+
+		for equipment in self.__storage.equipment:
+			equipmentStore.addItemToStore(equipment)
+
+		equipmentStore.itemBought.connect(self.__character.addEquipment)
+		equipmentStore.itemSold.connect(self.__character.deleteEquipment)
+		self.__character.equipmentAdded.connect(equipmentStore.moveItemToInventory)
+		self.__character.equipmentRemoved.connect(equipmentStore.moveItemToStore)
+
+		## Automobiles
+		automobileStore = AbstractStoreWidget(template, character)
+		automobileStore.setEnhancedItemTraitsVisible(False)
+		automobileStore.setMagicalItemTraitsVisible(False)
+		automobileStore.setAddCustomVisible(False)
+		self.ui.layout_automobiles.addWidget(automobileStore)
+
+		for category in self.__storage.automobiles:
+			for automobile in self.__storage.automobiles[category]:
+				automobileStore.addItemToStore(automobile, category, QIcon(Config.automobilesIcons[category]))
+
+		automobileStore.itemBought.connect(self.__character.addAutomobile)
+		automobileStore.itemSold.connect(self.__character.deleteAutomobile)
+		self.__character.automobileAdded.connect(automobileStore.moveItemToInventory)
+		self.__character.automobileRemoved.connect(automobileStore.moveItemToStore)
+
+		## ExtraordinaryItems
+		extraordinaryItemStore = AbstractStoreWidget(template, character)
+		extraordinaryItemStore.setEnhancedItemTraitsVisible(False)
+		extraordinaryItemStore.setMagicalItemTraitsVisible(True)
+		extraordinaryItemStore.setAddCustomVisible(False)
+		self.ui.layout_extraordinaryItems.addWidget(extraordinaryItemStore)
+
+		for category in self.__storage.extraordinaryItems:
+			for extraordinaryItem in self.__storage.extraordinaryItems[category]:
+				extraordinaryItemStore.addItemToStore(extraordinaryItem, category, QIcon(Config.extraordinaryItemsIcons[category]))
+
+		extraordinaryItemStore.itemBought.connect(self.__character.addExtraordinaryItem)
+		extraordinaryItemStore.itemSold.connect(self.__character.deleteExtraordinaryItem)
+		self.__character.extraordinaryItemAdded.connect(extraordinaryItemStore.moveItemToInventory)
+		self.__character.extraordinaryItemRemoved.connect(extraordinaryItemStore.moveItemToStore)
+
+
 		## \todo Sollte nicht vom Betriebssystem, sondern vom verwendeten Style abhängen.
 		self.ui.tabWidget_items.setObjectName("transparentWidget")
 		if os.name == "nt":
@@ -61,59 +126,14 @@ class ItemWidget(QWidget):
 		self.ui.tabWidget_items.setCurrentIndex(0)
 
 		## Resources
-		self.ui.traitDots_weaponsResources.valueChanged.connect(self.__character.traits["Merit"]["Social"]["Resources"].setValue)
 		self.ui.traitDots_armorResources.valueChanged.connect(self.__character.traits["Merit"]["Social"]["Resources"].setValue)
-		self.ui.traitDots_equipmentResources.valueChanged.connect(self.__character.traits["Merit"]["Social"]["Resources"].setValue)
-		self.__character.traits["Merit"]["Social"]["Resources"].valueChanged.connect(self.ui.traitDots_weaponsResources.setValue)
+		#self.ui.traitDots_equipmentResources.valueChanged.connect(self.__character.traits["Merit"]["Social"]["Resources"].setValue)
 		self.__character.traits["Merit"]["Social"]["Resources"].valueChanged.connect(self.ui.traitDots_armorResources.setValue)
-		self.__character.traits["Merit"]["Social"]["Resources"].valueChanged.connect(self.ui.traitDots_equipmentResources.setValue)
-		self.ui.traitDots_weaponsEnhancedItem.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Enhanced Item"].setValue)
+		#self.__character.traits["Merit"]["Social"]["Resources"].valueChanged.connect(self.ui.traitDots_equipmentResources.setValue)
 		self.ui.traitDots_armorEnhancedItem.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Enhanced Item"].setValue)
-		self.ui.traitDots_equipmentEnhancedItem.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Enhanced Item"].setValue)
-		self.__character.traits["Merit"]["Item"]["Enhanced Item"].valueChanged.connect(self.ui.traitDots_weaponsEnhancedItem.setValue)
+		#self.ui.traitDots_equipmentEnhancedItem.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Enhanced Item"].setValue)
 		self.__character.traits["Merit"]["Item"]["Enhanced Item"].valueChanged.connect(self.ui.traitDots_armorEnhancedItem.setValue)
-		self.__character.traits["Merit"]["Item"]["Enhanced Item"].valueChanged.connect(self.ui.traitDots_equipmentEnhancedItem.setValue)
-
-		## Items
-		self.ui.traitDots_token.maximum = 10
-		self.ui.traitDots_imbuedItem.maximum = 10
-		self.ui.traitDots_artifact.maximum = 10
-		self.ui.traitDots_cursedItem.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Cursed Item"].setValue)
-		self.ui.traitDots_fetish.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Fetish"].setValue)
-		self.ui.traitDots_token.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Token"].setValue)
-		self.ui.traitDots_imbuedItem.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Imbued Item"].setValue)
-		self.ui.traitDots_artifact.valueChanged.connect(self.__character.traits["Merit"]["Item"]["Artifact"].setValue)
-		self.__character.traits["Merit"]["Item"]["Cursed Item"].valueChanged.connect(self.ui.traitDots_cursedItem.setValue)
-		self.__character.traits["Merit"]["Item"]["Fetish"].valueChanged.connect(self.ui.traitDots_fetish.setValue)
-		self.__character.traits["Merit"]["Item"]["Token"].valueChanged.connect(self.ui.traitDots_token.setValue)
-		self.__character.traits["Merit"]["Item"]["Imbued Item"].valueChanged.connect(self.ui.traitDots_imbuedItem.setValue)
-		self.__character.traits["Merit"]["Item"]["Artifact"].valueChanged.connect(self.ui.traitDots_artifact.setValue)
-
-		## Weapons
-
-		self.ui.pushButton_weaponAdd.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
-		self.ui.pushButton_weaponRemove.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
-
-		for category in self.__storage.weapons:
-			for weapon in self.__storage.weapons[category]:
-				listItem = QListWidgetItem()
-				listItem.setText(weapon)
-				listItem.setIcon(QIcon(Config.weaponIcons[category]))
-				listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
-				#listItem.setFlags(listItem.flags() | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled)
-				self.ui.listWidget_weaponStore.addItem(listItem)
-
-		self.ui.pushButton_weaponRemove.setEnabled(False)
-
-		self.ui.pushButton_weaponAdd.clicked.connect(self.addWeapon)
-		self.ui.listWidget_weaponStore.itemDoubleClicked.connect(self.addWeapon)
-		self.ui.pushButton_weaponRemove.clicked.connect(self.removeWeapon)
-		self.ui.listWidget_weaponInventory.itemDoubleClicked.connect(self.removeWeapon)
-
-		self.__character.weaponAdded.connect(self.moveWeaponToInventory)
-		self.__character.weaponRemoved.connect(self.moveWeaponToStore)
-		self.__character.weaponAdded.connect(self.checkButtonEnabledWeapons)
-		self.__character.weaponRemoved.connect(self.checkButtonEnabledWeapons)
+		#self.__character.traits["Merit"]["Item"]["Enhanced Item"].valueChanged.connect(self.ui.traitDots_equipmentEnhancedItem.setValue)
 
 		## Armor
 
@@ -138,143 +158,31 @@ class ItemWidget(QWidget):
 		self.__character.armorChanged.connect(self.selectArmor)
 		self.__character.speciesChanged.connect(self.hideShowDedicated)
 
-		## Equipment
+		### Equipment
 
-		self.ui.pushButton_equipmentAdd.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
-		self.ui.pushButton_equipmentRemove.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
+		#self.ui.pushButton_equipmentAdd.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
+		#self.ui.pushButton_equipmentRemove.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
 		
-		for item in self.__storage.equipment:
-			listItem = QListWidgetItem()
-			listItem.setText(item)
-			#listItem.setIcon(QIcon(Config.weaponIcons[category]))
-			#listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
-			self.ui.listWidget_equipmentStore.addItem(listItem)
+		#for item in self.__storage.equipment:
+			#listItem = QListWidgetItem()
+			#listItem.setText(item)
+			##listItem.setIcon(QIcon(Config.weaponIcons[category]))
+			##listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
+			#self.ui.listWidget_equipmentStore.addItem(listItem)
 
-		self.ui.pushButton_equipmentAdd.clicked.connect(self.addEquipment)
-		self.ui.listWidget_equipmentStore.itemDoubleClicked.connect(self.addEquipment)
-		self.ui.pushButton_equipmentRemove.clicked.connect(self.removeEquipment)
-		self.ui.listWidget_equipmentInventory.itemDoubleClicked.connect(self.removeEquipment)
-		self.ui.pushButton_equipmentAddCustom.clicked.connect(self.addCustomEquipment)
-		self.__character.equipmentChanged.connect(self.refillEquipmentInventory)
-		self.__character.equipmentChanged.connect(self.refillEquipmentStore)
-		self.__character.equipmentChanged.connect(self.checkButtonEnabledEquipment)
+		#self.ui.pushButton_equipmentAdd.clicked.connect(self.addEquipment)
+		#self.ui.listWidget_equipmentStore.itemDoubleClicked.connect(self.addEquipment)
+		#self.ui.pushButton_equipmentRemove.clicked.connect(self.removeEquipment)
+		#self.ui.listWidget_equipmentInventory.itemDoubleClicked.connect(self.removeEquipment)
+		#self.ui.pushButton_equipmentAddCustom.clicked.connect(self.addCustomEquipment)
+		#self.__character.equipmentChanged.connect(self.refillEquipmentInventory)
+		#self.__character.equipmentChanged.connect(self.refillEquipmentStore)
+		#self.__character.equipmentChanged.connect(self.checkButtonEnabledEquipment)
 
 		## Magical Tool
 		self.__character.speciesChanged.connect(self.hideShowMagicalTool)
 		self.ui.lineEdit_magicalTool.textEdited.connect(self.__character.setMagicalTool)
 		self.__character.magicalToolChanged.connect(self.ui.lineEdit_magicalTool.setText)
-
-		## Extraordinary
-
-		self.ui.pushButton_extraordinaryAdd.setIcon(QIcon(":/icons/images/actions/1leftarrow.png"))
-		self.ui.pushButton_extraordinaryRemove.setIcon(QIcon(":/icons/images/actions/1rightarrow.png"))
-
-		for typ in self.__storage.extraordinaryItems:
-			for item in self.__storage.extraordinaryItems[typ]:
-				listItem = QListWidgetItem()
-				listItem.setText(item)
-				#listItem.setIcon(QIcon(Config.weaponIcons[category]))
-				listItem.setData(Qt.BackgroundRole, QColor(Config.extraordinaryItemColor[typ]))
-				#listItem.setFlags(listItem.flags() | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled)
-				self.ui.listWidget_extraordinaryStore.addItem(listItem)
-
-		self.ui.pushButton_extraordinaryRemove.setEnabled(False)
-
-		self.ui.pushButton_extraordinaryAdd.clicked.connect(self.addExtraordinary)
-		self.ui.listWidget_extraordinaryStore.itemDoubleClicked.connect(self.addExtraordinary)
-		self.ui.pushButton_extraordinaryRemove.clicked.connect(self.removeExtraordinary)
-		self.ui.listWidget_extraordinaryInventory.itemDoubleClicked.connect(self.removeExtraordinary)
-
-		self.__character.extraordinaryItemAdded.connect(self.moveExtraordinaryToInventory)
-		self.__character.extraordinaryItemRemoved.connect(self.moveExtraordinaryToStore)
-		self.__character.extraordinaryItemAdded.connect(self.checkButtonEnabledExtraordinarys)
-		self.__character.extraordinaryItemRemoved.connect(self.checkButtonEnabledExtraordinarys)
-
-
-	def addWeapon(self):
-		"""
-		Der Charakter erhält die in der in listWidget_weaponStore markierte Waffe.
-		"""
-
-		item = self.ui.listWidget_weaponStore.takeItem(self.ui.listWidget_weaponStore.row(self.ui.listWidget_weaponStore.currentItem()))
-		if item:
-			self.ui.listWidget_weaponInventory.addItem(item)
-			for category in Config.weaponsColor.items():
-				if item.data(Qt.BackgroundRole).name() == QColor(category[1]).name():
-					self.saveWeapon(category[0], item.text())
-					break
-
-
-	def removeWeapon(self):
-		"""
-		Der Charakter verliert die in der in listWidget_weaponInventory markierte Waffe.
-		"""
-
-		item = self.ui.listWidget_weaponInventory.takeItem(self.ui.listWidget_weaponInventory.row(self.ui.listWidget_weaponInventory.currentItem()))
-		if item:
-			self.ui.listWidget_weaponStore.addItem(item)
-			for category in Config.weaponsColor.items():
-				if item.data(Qt.BackgroundRole).name() == QColor(category[1]).name():
-					self.deleteWeapon(category[0], item.text())
-					break
-
-
-	def moveWeaponToInventory(self, category, weapon):
-		"""
-		Bewegt besagte Waffe vom Laden zum Inventar.
-		"""
-
-		item = None
-		for i in xrange(self.ui.listWidget_weaponStore.count()):
-			if self.ui.listWidget_weaponStore.item(i).text() == weapon and self.ui.listWidget_weaponStore.item(i).data(Qt.BackgroundRole).name() == QColor(Config.weaponsColor[category]).name():
-				item = self.ui.listWidget_weaponStore.takeItem(i)
-				self.ui.listWidget_weaponInventory.addItem(item)
-				break
-
-
-	def moveWeaponToStore(self, category, weapon):
-		"""
-		Bewegt besagte Waffe vom Laden zum Inventar.
-		"""
-
-		item = None
-		for i in xrange(self.ui.listWidget_weaponInventory.count()):
-			if self.ui.listWidget_weaponInventory.item(i).text() == weapon and self.ui.listWidget_weaponInventory.item(i).data(Qt.BackgroundRole).name() == QColor(Config.weaponsColor[category]).name():
-				item = self.ui.listWidget_weaponInventory.takeItem(i)
-				self.ui.listWidget_weaponStore.addItem(item)
-				break
-
-
-	def saveWeapon(self, category, weapon):
-		"""
-		Speichert die Waffe im Charakter-Speicher.
-		"""
-
-		self.__character.addWeapon(category, weapon)
-
-
-	def deleteWeapon(self, category, weapon):
-		"""
-		Speichert die Waffe im Charakter-Speicher.
-		"""
-
-		self.__character.deleteWeapon(category, weapon)
-
-
-	def checkButtonEnabledWeapons(self):
-		"""
-		Aktiviert/Deaktiviert die Knöpfe für das Übertragen von Waffen.
-		"""
-
-		if self.ui.listWidget_weaponStore.count() < 1:
-			self.ui.pushButton_weaponAdd.setEnabled(False)
-		else:
-			self.ui.pushButton_weaponAdd.setEnabled(True)
-
-		if self.ui.listWidget_weaponInventory.count() < 1:
-			self.ui.pushButton_weaponRemove.setEnabled(False)
-		else:
-			self.ui.pushButton_weaponRemove.setEnabled(True)
 
 
 	def takeArmor(self):
@@ -319,76 +227,76 @@ class ItemWidget(QWidget):
 			self.ui.checkBox_armorDedicated.setVisible(False)
 
 
-	def addCustomEquipment(self):
-		"""
-		Fügt dem Inventar des Charakters einen Gegenstand hinzu.
+	#def addCustomEquipment(self):
+		#"""
+		#Fügt dem Inventar des Charakters einen Gegenstand hinzu.
 
-		\todo Nach dem Drücken des Hinzufügen.Knopfes, sollte der Fokus wieder auf das LineEdit gehen.
-		"""
+		#\todo Nach dem Drücken des Hinzufügen.Knopfes, sollte der Fokus wieder auf das LineEdit gehen.
+		#"""
 
-		newItem = self.ui.lineEdit_equipmentCustom.text()
-		if newItem:
-			self.__character.addEquipment(newItem)
-			## Textzeile löschen
-			self.ui.lineEdit_equipmentCustom.setText("")
-
-
-	def addEquipment(self):
-		"""
-		Der Charakter erhält den in \ref listWidget_equipmentStore markierte Ausrüstungsgegenstand.
-		"""
-
-		item = self.ui.listWidget_equipmentStore.takeItem(self.ui.listWidget_equipmentStore.row(self.ui.listWidget_equipmentStore.currentItem()))
-		if item:
-			self.__character.addEquipment(item.text())
+		#newItem = self.ui.lineEdit_equipmentCustom.text()
+		#if newItem:
+			#self.__character.addEquipment(newItem)
+			### Textzeile löschen
+			#self.ui.lineEdit_equipmentCustom.setText("")
 
 
-	def removeEquipment(self):
-		"""
-		Entfernt einen Gegenstand aus dem Inventar des Charakters. Wenn er aus der Liste der vorgeschlagenen Ausrüsrtung stammt, wird er dort wieder hinzugefügt.
-		"""
+	#def addEquipment(self):
+		#"""
+		#Der Charakter erhält den in \ref listWidget_equipmentStore markierte Ausrüstungsgegenstand.
+		#"""
 
-		if self.ui.listWidget_equipmentInventory.currentItem():
-			item = self.ui.listWidget_equipmentInventory.takeItem(self.ui.listWidget_equipmentInventory.row(self.ui.listWidget_equipmentInventory.currentItem()))
-			self.__character.delEquipment(item.text())
-
-
-	def refillEquipmentInventory(self, itemList):
-		"""
-		Schreibt alle Gegenstände aus dem Charakterspeicher in die Liste
-		"""
-
-		self.ui.listWidget_equipmentInventory.clear()
-		for item in itemList:
-			listItem = QListWidgetItem()
-			listItem.setText(item)
-			#listItem.setIcon(QIcon(Config.weaponIcons[category]))
-			#listItem.setFlags(listItem.flags() | Qt.ItemIsEditable)
-			self.ui.listWidget_equipmentInventory.addItem(listItem)
+		#item = self.ui.listWidget_equipmentStore.takeItem(self.ui.listWidget_equipmentStore.row(self.ui.listWidget_equipmentStore.currentItem()))
+		#if item:
+			#self.__character.addEquipment(item.text())
 
 
-	def refillEquipmentStore(self, itemList):
-		"""
-		Löschte alle Gegenstände, die im Inventar des Charakters sind aus dem Laden.
-		"""
+	#def removeEquipment(self):
+		#"""
+		#Entfernt einen Gegenstand aus dem Inventar des Charakters. Wenn er aus der Liste der vorgeschlagenen Ausrüsrtung stammt, wird er dort wieder hinzugefügt.
+		#"""
 
-		self.ui.listWidget_equipmentStore.clear()
-		for item in self.__storage.equipment:
-			if item not in itemList:
-				listItem = QListWidgetItem()
-				listItem.setText(item)
-				listItem = self.ui.listWidget_equipmentStore.addItem(listItem)
+		#if self.ui.listWidget_equipmentInventory.currentItem():
+			#item = self.ui.listWidget_equipmentInventory.takeItem(self.ui.listWidget_equipmentInventory.row(self.ui.listWidget_equipmentInventory.currentItem()))
+			#self.__character.delEquipment(item.text())
 
 
-	def checkButtonEnabledEquipment(self):
-		"""
-		Aktiviert/Deaktiviert die Knöpfe für das Übertragen von Ausrüstung.
-		"""
+	#def refillEquipmentInventory(self, itemList):
+		#"""
+		#Schreibt alle Gegenstände aus dem Charakterspeicher in die Liste
+		#"""
 
-		if self.ui.listWidget_equipmentStore.count() < 1:
-			self.ui.pushButton_equipmentAdd.setEnabled(False)
-		else:
-			self.ui.pushButton_equipmentAdd.setEnabled(True)
+		#self.ui.listWidget_equipmentInventory.clear()
+		#for item in itemList:
+			#listItem = QListWidgetItem()
+			#listItem.setText(item)
+			##listItem.setIcon(QIcon(Config.weaponIcons[category]))
+			##listItem.setFlags(listItem.flags() | Qt.ItemIsEditable)
+			#self.ui.listWidget_equipmentInventory.addItem(listItem)
+
+
+	#def refillEquipmentStore(self, itemList):
+		#"""
+		#Löschte alle Gegenstände, die im Inventar des Charakters sind aus dem Laden.
+		#"""
+
+		#self.ui.listWidget_equipmentStore.clear()
+		#for item in self.__storage.equipment:
+			#if item not in itemList:
+				#listItem = QListWidgetItem()
+				#listItem.setText(item)
+				#listItem = self.ui.listWidget_equipmentStore.addItem(listItem)
+
+
+	#def checkButtonEnabledEquipment(self):
+		#"""
+		#Aktiviert/Deaktiviert die Knöpfe für das Übertragen von Ausrüstung.
+		#"""
+
+		#if self.ui.listWidget_equipmentStore.count() < 1:
+			#self.ui.pushButton_equipmentAdd.setEnabled(False)
+		#else:
+			#self.ui.pushButton_equipmentAdd.setEnabled(True)
 
 
 	def hideShowMagicalTool(self, species):
@@ -400,92 +308,6 @@ class ItemWidget(QWidget):
 			self.ui.widget_magicalTool.setVisible(True)
 		else:
 			self.ui.widget_magicalTool.setVisible(False)
-
-
-	def addExtraordinary(self):
-		"""
-		Der Charakter erhält den markierten magischen Gegenstand.
-		"""
-
-		item = self.ui.listWidget_extraordinaryStore.takeItem(self.ui.listWidget_extraordinaryStore.row(self.ui.listWidget_extraordinaryStore.currentItem()))
-		if item:
-			self.ui.listWidget_extraordinaryInventory.addItem(item)
-			for category in Config.extraordinaryItemColor.items():
-				if item.data(Qt.BackgroundRole).name() == QColor(category[1]).name():
-					self.saveExtraordinary(category[0], item.text())
-					break
-
-
-	def removeExtraordinary(self):
-		"""
-		Der Charakter verliert den markierten magischen Gegenstand.
-		"""
-
-		item = self.ui.listWidget_extraordinaryInventory.takeItem(self.ui.listWidget_extraordinaryInventory.row(self.ui.listWidget_extraordinaryInventory.currentItem()))
-		if item:
-			self.ui.listWidget_extraordinaryStore.addItem(item)
-			for category in Config.extraordinaryItemColor.items():
-				if item.data(Qt.BackgroundRole).name() == QColor(category[1]).name():
-					self.deleteExtraordinary(category[0], item.text())
-					break
-
-
-	def moveExtraordinaryToInventory(self, category, extraordinary):
-		"""
-		Bewegt besagten Gegenstand vom Laden zum Inventar.
-		"""
-
-		item = None
-		for i in xrange(self.ui.listWidget_extraordinaryStore.count()):
-			if self.ui.listWidget_extraordinaryStore.item(i).text() == extraordinary and self.ui.listWidget_extraordinaryStore.item(i).data(Qt.BackgroundRole).name() == QColor(Config.extraordinaryItemColor[category]).name():
-				item = self.ui.listWidget_extraordinaryStore.takeItem(i)
-				self.ui.listWidget_extraordinaryInventory.addItem(item)
-				break
-
-
-	def moveExtraordinaryToStore(self, category, extraordinary):
-		"""
-		Bewegt besagte Waffe vom Laden zum Inventar.
-		"""
-
-		item = None
-		for i in xrange(self.ui.listWidget_extraordinaryInventory.count()):
-			if self.ui.listWidget_extraordinaryInventory.item(i).text() == extraordinary and self.ui.listWidget_extraordinaryInventory.item(i).data(Qt.BackgroundRole).name() == QColor(Config.extraordinaryItemColor[category]).name():
-				item = self.ui.listWidget_extraordinaryInventory.takeItem(i)
-				self.ui.listWidget_extraordinaryStore.addItem(item)
-				break
-
-
-	def saveExtraordinary(self, category, extraordinary):
-		"""
-		Speichert die Waffe im Charakter-Speicher.
-		"""
-
-		self.__character.addExtraordinaryItem(category, extraordinary)
-
-
-	def deleteExtraordinary(self, category, extraordinary):
-		"""
-		Speichert die Waffe im Charakter-Speicher.
-		"""
-
-		self.__character.deleteExtraordinaryItem(category, extraordinary)
-
-
-	def checkButtonEnabledExtraordinarys(self):
-		"""
-		Aktiviert/Deaktiviert die Knöpfe für das Übertragen von Waffen.
-		"""
-
-		if self.ui.listWidget_extraordinaryStore.count() < 1:
-			self.ui.pushButton_extraordinaryAdd.setEnabled(False)
-		else:
-			self.ui.pushButton_extraordinaryAdd.setEnabled(True)
-
-		if self.ui.listWidget_extraordinaryInventory.count() < 1:
-			self.ui.pushButton_extraordinaryRemove.setEnabled(False)
-		else:
-			self.ui.pushButton_extraordinaryRemove.setEnabled(True)
 
 
 

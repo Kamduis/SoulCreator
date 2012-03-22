@@ -27,7 +27,7 @@ from PySide.QtGui import QWidget, QHBoxLayout, QLineEdit, QMessageBox
 
 from src.Config import Config
 from src.Widgets.Components.TraitDots import TraitDots
-from src.Widgets.Components.CompanionWidget import CompanionWidget
+from src.Widgets.CompanionWidget import CompanionWidget
 #from src.Debug import Debug
 
 from ui.ui_SpecialsWidget import Ui_SpecialsWidget
