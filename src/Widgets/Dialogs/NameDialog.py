@@ -24,8 +24,8 @@ from __future__ import division, print_function
 
 import copy
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtGui import QDialog, QIcon
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtGui import QDialog, QIcon
 
 from src.Config import Config
 #from src.Error import ErrListLength

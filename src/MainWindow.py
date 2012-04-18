@@ -25,10 +25,9 @@ from __future__ import division, print_function
 #import sys
 import os
 
-#from PySide.QtCore import Slot as Slot
-from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTimer
-from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
-from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
+from PyQt4.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTimer
+from PyQt4.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
+from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.GlobalState import GlobalState
 from src.Tools import PathTools

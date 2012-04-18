@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QFile, QIODevice, QTextStream
-from PySide.QtGui import QTextDocument
+from PyQt4.QtCore import QFile, QIODevice, QTextStream
+from PyQt4.QtGui import QTextDocument
 
 #from src.Debug import Debug
 

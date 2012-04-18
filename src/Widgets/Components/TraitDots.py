@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QPoint
-from PySide.QtGui import QColor, QPainter, QPen
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QPoint
+from PyQt4.QtGui import QColor, QPainter, QPen
 
 from src.Config import Config
 from src.Widgets.Components.AbstractTraitDots import AbstractTraitDots

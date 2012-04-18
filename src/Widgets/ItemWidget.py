@@ -24,8 +24,8 @@ from __future__ import division, print_function
 
 import os
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QColor, QIcon, QListWidgetItem, QRadioButton, QButtonGroup
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QColor, QIcon, QListWidgetItem, QRadioButton, QButtonGroup
 
 from src.Config import Config
 from src.Widgets.AbstractStoreWidget import AbstractStoreWidget

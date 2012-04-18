@@ -25,8 +25,9 @@ from __future__ import division, print_function
 import ast
 import gzip
 
-from PySide.QtCore import QObject, QDate, QByteArray
-from PySide.QtGui import QPixmap
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject, QDate, QByteArray
+from PyQt4.QtGui import QPixmap
 
 from src.Config import Config
 from src.Error import ErrXmlOldVersion
@@ -61,6 +62,9 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 	Diese Klasse dient dazu, einen auf Datenträger gespeicherten Charakter wieder in das Programm zu laden.
 	"""
+
+
+	exceptionRaised = Signal(str, str, bool)
 
 
 	def __init__(self, character, parent=None):

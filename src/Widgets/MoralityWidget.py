@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QMessageBox
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QMessageBox
 
 from src.Config import Config
 from src.Widgets.Components.DerangementComboBox import DerangementComboBox

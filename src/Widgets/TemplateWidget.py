@@ -24,8 +24,8 @@ from __future__ import division, print_function
 
 import re
 
-from PySide.QtCore import QDate
-from PySide.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageBox
+from PyQt4.QtCore import QDate
+from PyQt4.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageBox
 
 #from src.Config import Config
 #from src.Tools import PathTools

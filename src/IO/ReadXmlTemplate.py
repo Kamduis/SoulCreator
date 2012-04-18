@@ -26,7 +26,8 @@ import ast
 import tempfile
 import zlib
 
-from PySide.QtCore import QObject, QDir, QFile, QIODevice
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject, QDir, QFile, QIODevice
 
 from src.Config import Config
 from src.GlobalState import GlobalState
@@ -63,6 +64,9 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 	Diese Klasse dient dazu einen möglichst simplen Zugriff auf die Eigenschaften der WoD-Charaktere zu bieten. Dazu werden die Eigenschaften und all ihre Zusatzinformationen aus den xml-Dateien gelesen und in Listen gespeichert.
 	"""
+
+
+	exceptionRaised = Signal(str, str, bool)
 
 
 	def __init__(self, template, parent=None):

@@ -24,9 +24,9 @@ from __future__ import division, print_function
 
 import os
 
-#from PySide.QtCore import Signal# as Signal
-#from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
+#from PyQt4.QtCore import pyqtSignal as Signal
+#from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QToolBox
 
 from src.Config import Config
 from src.Tools import ListTools

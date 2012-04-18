@@ -24,9 +24,9 @@ from __future__ import division, print_function
 
 import os
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import Qt, QDate
-from PySide.QtGui import QWidget, QIcon, QPixmap, QFileDialog, QMessageBox
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt, QDate
+from PyQt4.QtGui import QWidget, QIcon, QPixmap, QFileDialog, QMessageBox
 
 from src.Config import Config
 from src.Tools import PathTools
