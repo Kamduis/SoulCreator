@@ -42,7 +42,7 @@ class SpecialsWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(SpecialsWidget, self).__init__(parent)
 
 		self.ui = Ui_SpecialsWidget()
 		self.ui.setupUi(self)

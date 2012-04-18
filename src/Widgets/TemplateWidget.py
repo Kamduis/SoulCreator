@@ -44,7 +44,7 @@ class TemplateWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(TemplateWidget, self).__init__(parent)
 
 		self.ui = Ui_TemplateWidget()
 		self.ui.setupUi(self)

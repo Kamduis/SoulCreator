@@ -50,7 +50,7 @@ class AbstractStoreWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(AbstractStoreWidget, self).__init__(parent)
 
 		self.ui = Ui_AbstractStoreWidget()
 		self.ui.setupUi(self)

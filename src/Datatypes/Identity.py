@@ -59,7 +59,7 @@ class Identity(QObject):
 		\note Als Umgehung des deepcopy-Bugs mit dieser Klasse sind die eigentlich provaten Attribute dieser Klasse nur als protected gekennzeichnet. Um eine saubere Kopie durchführen zu können, muß ich schließlich auf sie zugreifen können.
 		"""
 		
-		QObject.__init__(self, parent)
+		super(Identity, self).__init__(parent)
 		
 		# Liste zur Speicherung von Namen.
 		#

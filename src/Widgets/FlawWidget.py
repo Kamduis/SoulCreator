@@ -42,7 +42,7 @@ class FlawWidget(QWidget):
 	"""
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(FlawWidget, self).__init__(parent)
 
 		self.__storage = template
 		self.__character = character

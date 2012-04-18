@@ -52,7 +52,7 @@ class CalcAdvantages(QObject):
 
 
 	def __init__(self, character, parent=None):
-		QObject.__init__(self, parent)
+		super(CalcAdvantages, self).__init__(parent)
 
 		self.__character = character
 

@@ -43,7 +43,7 @@ class SpecialtiesWidget(QWidget):
 
 
 	def __init__(self, template, parent=None):
-		QWidget.__init__(self, parent)
+		super(SpecialtiesWidget, self).__init__(parent)
 
 		#self.__character = character
 		self.__storage = template

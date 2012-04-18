@@ -66,6 +66,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 
 	def __init__(self, template, parent=None):
+		"""
+		\warning Aufgrund der multiplen Vererbung wird nicht die super()-Methode beim Aufruf der __init__()-Methoden der Elternkalssen verwendet.
+		"""
+
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 

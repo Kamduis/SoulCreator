@@ -339,7 +339,7 @@ class StorageTemplate(QObject):
 
 
 	def __init__(self, parent=None):
-		QObject.__init__(self, parent)
+		super(StorageTemplate, self).__init__(parent)
 
 
 	def __getTyps(self):

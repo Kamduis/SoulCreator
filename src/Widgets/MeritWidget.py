@@ -49,7 +49,7 @@ class MeritWidget(TraitWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		TraitWidget.__init__(self, template, character, parent)
+		super(MeritWidget, self).__init__(template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )

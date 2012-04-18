@@ -43,7 +43,7 @@ class TraitWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(TraitWidget, self).__init__(parent)
 
 		self._character = character
 		self._storage = template

@@ -40,7 +40,7 @@ class SelectWidget(QListWidget):
 	"""
 	
 	def __init__(self, parent=None):
-		QListWidget.__init__(self, parent)
+		super(SelectWidget, self).__init__(parent)
 
 		self.pageList = [
 			[ "Information", ":types/images/svg/humans.svg", ],

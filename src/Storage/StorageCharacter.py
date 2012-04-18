@@ -162,7 +162,7 @@ class StorageCharacter(QObject):
 		\todo Eigentlich benötigt Subpower keinen eigenen Datentyp. Da die ganzen Zusatzinformationen ja nur im Template zu stehen haben und nicht auch für den Charakter bekannt sein müssen. Der Wert "level" ist aber interessant und gilt für andere Klassen nicht.
 		"""
 
-		QObject.__init__(self, parent)
+		super(StorageCharacter, self).__init__(parent)
 
 		self.__storage = template
 

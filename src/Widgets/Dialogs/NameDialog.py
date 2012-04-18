@@ -54,7 +54,7 @@ class NameDialog(QDialog):
 
 
 	def __init__(self, character, parent=None):
-		QDialog.__init__(self, parent)
+		super(NameDialog, self).__init__(parent)
 
 		self.ui = Ui_NameDialog()
 		self.ui.setupUi(self)

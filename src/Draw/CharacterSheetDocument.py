@@ -37,7 +37,7 @@ class CharacterSheetDocument(QTextDocument):
 	
 	
 	def __init__(self, species=None, parent=None):
-		QTextDocument.__init__(self, parent)
+		super(CharacterSheetDocument, self).__init__( parent)
 
 		self.__species = species
 
@@ -47,13 +47,9 @@ class CharacterSheetDocument(QTextDocument):
 			raise ErrFileNotOpened(item, cssFile.errorString())
 		cssStream = QTextStream(cssFile)
 		cssContent = cssStream.readAll()
-		#cssContent = cssFile.readAll()
 		cssFile.close()
 
-		#document.addResource(QTextDocument.StyleSheetResource, QUrl("stylesheet.css"), cssContent)
 		self.setDefaultStyleSheet(cssContent)
-
-		#htmlHeader = "<html><head><link rel='stylesheet' type='text/css' href='stylesheet.css'></head><body>"
 
 
 	def setText(self, text, title=None):

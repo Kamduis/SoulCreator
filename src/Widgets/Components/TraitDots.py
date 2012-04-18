@@ -43,7 +43,7 @@ class TraitDots(AbstractTraitDots):
 
 
 	def __init__(self, parent=None):
-		AbstractTraitDots.__init__(self, parent)
+		super(TraitDots, self).__init__(parent)
 
 		self.__bonusValue = 0
 

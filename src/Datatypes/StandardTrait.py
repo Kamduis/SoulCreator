@@ -46,7 +46,7 @@ class StandardTrait(BasicTrait):
 
 
 	def __init__(self, character, name="", value=0, parent=None):
-		BasicTrait.__init__(self, character, name, value, parent)
+		super(StandardTrait, self).__init__(character, name, value, parent)
 
 		self.__specialties = []
 		self.__age = ""

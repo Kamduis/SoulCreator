@@ -54,7 +54,7 @@ class AdvantagesWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(AdvantagesWidget, self).__init__(parent)
 
 		self.ui = Ui_AdvantagesWidget()
 		self.ui.setupUi(self)

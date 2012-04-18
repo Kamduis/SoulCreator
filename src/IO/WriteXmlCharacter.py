@@ -59,7 +59,7 @@ class WriteXmlCharacter(QObject):
 
 
 	def __init__(self, character, parent=None):
-		QObject.__init__(self, parent)
+		super(WriteXmlCharacter, self).__init__(parent)
 
 		self.__character = character
 

@@ -66,7 +66,7 @@ class RenderSheet(QObject):
 
 
 	def __init__(self, template, character, printer, parent=None):
-		QObject.__init__(self, parent)
+		super(RenderSheet, self).__init__(parent)
 
 		self.__storage = template
 		self.__character = character

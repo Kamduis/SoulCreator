@@ -48,7 +48,7 @@ class CheckedList(QListWidget):
 
 
 	def __init__(self, parent=None):
-		QListWidget.__init__(self, parent)
+		super(CheckedList, self).__init__(parent)
 
 		self.itemChanged.connect(self.emitItemStateChanged)
 

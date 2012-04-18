@@ -48,7 +48,7 @@ class CharaTrait(TraitLine):
 
 
 	def __init__(self, trait, parent=None):
-		TraitLine.__init__(self, trait.name, trait.value, parent)
+		super(CharaTrait, self).__init__(trait.name, trait.value, parent)
 
 		self.__trait = trait
 

@@ -41,7 +41,7 @@ class CheckTrait(QWidget):
 	"""
 
 	def __init__(self, trait, parent=None):
-		QWidget.__init__(self, parent)
+		super(CheckTrait, self).__init__(parent)
 
 		self.__trait = trait
 

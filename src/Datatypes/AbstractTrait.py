@@ -52,7 +52,7 @@ class AbstractTrait(QObject):
 		\ref checkPrerequisites
 		"""
 		
-		QObject.__init__(self, parent)
+		super(AbstractTrait, self).__init__(parent)
 
 		self.__identifier = name
 		self.__name = name

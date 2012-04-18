@@ -120,7 +120,7 @@ class MainWindow(QMainWindow):
 
 	def __init__(self, fileName=None, exportPath=None, parent=None):
 		#dbgStart = Debug.timehook()
-		QMainWindow.__init__(self, parent)
+		super(MainWindow, self).__init__(parent)
 
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)

@@ -47,7 +47,7 @@ class TraitLine(QWidget):
 
 
 	def __init__(self, name, value, parent=None):
-		QWidget.__init__(self, parent)
+		super(TraitLine, self).__init__(parent)
 
 		self.__layout = QHBoxLayout()
 		#self.__layout.setMargin( 0 )

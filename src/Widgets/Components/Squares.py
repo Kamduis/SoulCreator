@@ -55,7 +55,7 @@ class Squares(QWidget):
 
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(Squares, self).__init__(parent)
 
 		#self.__character = character
 		#self.__storage = template

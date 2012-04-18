@@ -52,7 +52,7 @@ class AbstractTraitDots(QWidget):
 
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(AbstractTraitDots, self).__init__(parent)
 
 		self.__minimum = 0
 		self.__maximum = 5

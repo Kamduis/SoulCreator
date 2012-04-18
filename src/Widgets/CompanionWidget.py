@@ -54,7 +54,7 @@ class CompanionWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(CompanionWidget, self).__init__(parent)
 
 		self.ui = Ui_CompanionWidget()
 		self.ui.setupUi(self)

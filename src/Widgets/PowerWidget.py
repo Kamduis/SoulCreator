@@ -43,7 +43,7 @@ class PowerWidget(CategoryWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		CategoryWidget.__init__(self, template, character, typ="Power", isCheckable=False, parent=parent)
+		super(PowerWidget, self).__init__(template, character, typ="Power", isCheckable=False, parent=parent)
 
 
 

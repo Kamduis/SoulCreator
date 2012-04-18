@@ -44,7 +44,7 @@ class BonusTrait(StandardTrait):
 
 
 	def __init__(self, character, name="", value=0, parent=None):
-		StandardTrait.__init__(self, character, name, value, parent)
+		super(BonusTrait, self).__init__(character, name, value, parent)
 
 		self.__bonusValue = 0
 		self.__bonusSpecialties = []

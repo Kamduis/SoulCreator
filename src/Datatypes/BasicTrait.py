@@ -50,7 +50,7 @@ class BasicTrait(AbstractTrait):
 		\ref checkPrerequisites
 		"""
 		
-		AbstractTrait.__init__(self, name, value, parent)
+		super(BasicTrait, self).__init__(name, value, parent)
 
 		self.__character = character
 		self.__species = ""

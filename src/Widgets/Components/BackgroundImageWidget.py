@@ -37,7 +37,7 @@ class BackgroundImageWidget(QWidget):
 	"""
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(BackgroundImageWidget, self).__init__(parent)
 
 
 	def paintEvent(self, event):

@@ -45,7 +45,7 @@ class DerangementComboBox(QComboBox):
 
 
 	def __init__(self, parent=None):
-		QComboBox.__init__(self, parent)
+		super(DerangementComboBox, self).__init__(parent)
 
 		self.__severeDerangements = []
 

@@ -44,7 +44,7 @@ class Dot(QWidget):
 
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(Dot, self).__init__(parent)
 
 		# Widget darf nur proportional in seiner Größe verändert werden?
 		# Minimalgröße festlegen

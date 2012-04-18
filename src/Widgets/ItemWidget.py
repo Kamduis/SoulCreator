@@ -46,7 +46,7 @@ class ItemWidget(QWidget):
 	"""
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(ItemWidget, self).__init__(parent)
 
 		self.ui = Ui_ItemWidget()
 		self.ui.setupUi(self)

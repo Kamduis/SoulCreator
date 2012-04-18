@@ -48,7 +48,7 @@ class Creation(QObject):
 
 
 	def __init__(self, template, character, parent=None):
-		QObject.__init__(self, parent)
+		super(Creation, self).__init__(parent)
 
 		self.__storage = template
 		self.__character = character

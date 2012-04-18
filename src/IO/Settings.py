@@ -34,4 +34,4 @@ class Settings(QSettings):
 	"""
 
 	def __init__(self, configFile, parent=None):
-		QSettings.__init__(self, configFile, QSettings.IniFormat, parent)
+		super(Settings, self).__init__(configFile, QSettings.IniFormat, parent)

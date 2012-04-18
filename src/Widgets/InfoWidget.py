@@ -55,7 +55,7 @@ class InfoWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(InfoWidget, self).__init__(parent)
 
 		self.ui = Ui_InfoWidget()
 		self.ui.setupUi(self)
