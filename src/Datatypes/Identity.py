@@ -262,7 +262,7 @@ class Identity(QObject):
 			if type(fores) == list:
 				displayFull = fores[0]
 				for item in fores[1:]:
-					displayFull += u" {}".format(item)
+					displayFull += " {}".format(item)
 			else:
 				displayFull = fores
 
@@ -284,7 +284,7 @@ class Identity(QObject):
 		
 		displayDisplay = first
 		if ( nick ):
-			displayDisplay += u" \"{}\"".format(nick)
+			displayDisplay += " \"{}\"".format(nick)
 
 		# Vor dem Nachnamen nur dann ein Leerzeichen, wenn schon etwas davor steht.
 		if ( displayDisplay ):
@@ -302,7 +302,7 @@ class Identity(QObject):
 		
 		displayHonor = first
 		if ( honor ):
-			displayHonor += u" {}".format(honor)
+			displayHonor += " {}".format(honor)
 
 		return displayHonor
 

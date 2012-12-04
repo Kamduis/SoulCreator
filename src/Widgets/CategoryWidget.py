@@ -85,7 +85,7 @@ class CategoryWidget(QWidget):
 			## In dieser Liste sammle ich die Widgets, damit sie später bei Bedarf in die ToolBox eingefügt werden können.
 			self._toolBoxPageList[item] = [widgetCategory]
 
-			__list = self.__character.traits[self._typ][item].items()
+			__list = list( self.__character.traits[self._typ][item].items() )
 			__list.sort()
 			for trait in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
@@ -118,7 +118,7 @@ class CategoryWidget(QWidget):
 		"""
 
 		# Damit die Kategorien auch nach dem Entfernen und Hinzufügen von Eigenschaften alphapetisch sortiert bleiben.
-		keys = self._toolBoxPageList.keys()
+		keys = list( self._toolBoxPageList.keys() )
 		keys.sort()
 
 		for item in keys:

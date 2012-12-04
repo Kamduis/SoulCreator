@@ -118,7 +118,7 @@ class TraitLine(QWidget):
 
 	@buttonText.setter
 	def buttonText( self, text ):
-		self.__button.setText( unicode(text) )
+		self.__button.setText( str(text) )
 
 
 	def __getValue(self):

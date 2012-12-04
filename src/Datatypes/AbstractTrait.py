@@ -61,6 +61,10 @@ class AbstractTrait(QObject):
 		self.valueChanged.connect(self.totalvalueChanged)
 
 
+	def __lt__(self, other):
+		return self.name < other.name
+
+
 	@property
 	def identifier(self):
 		return self.__identifier

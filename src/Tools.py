@@ -77,11 +77,11 @@ class ImageTools():
 		"""
 
 		if gender.lower() == "female" or gender.lower() == "m" or gender.lower() == "w":
-			return u"♀"
+			return "♀"
 		elif gender.lower() == "male" or gender.lower() == "m":
-			return u"♂"
+			return "♂"
 		else:
-			return u"⚥"
+			return "⚥"
 
 
 

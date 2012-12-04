@@ -60,7 +60,7 @@ class SelectWidget(QListWidget):
 
 		self.__stdBackgroundRole = self.item( 0 ).data(Qt.BackgroundRole)
 
-		for i in xrange(self.count()):
+		for i in range(self.count()):
 			self.item(i).setTextAlignment(Qt.AlignVCenter)
 			self.item(i).setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
 
@@ -136,7 +136,7 @@ class SelectWidget(QListWidget):
 		if type(item) == int:
 			row = item
 		else:
-			for i in xrange(len(self.pageList)):
+			for i in range(len(self.pageList)):
 				if self.pageList[i][0] == item:
 					row = i
 					break
@@ -156,7 +156,7 @@ class SelectWidget(QListWidget):
 		if type(item) == int:
 			row = item
 		else:
-			for i in xrange(len(self.pageList)):
+			for i in range(len(self.pageList)):
 				if self.pageList[i][0] == item:
 					row = i
 					break
@@ -168,7 +168,7 @@ class SelectWidget(QListWidget):
 		Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen.
 		"""
 
-		for i in xrange(len(self.pageList)):
+		for i in range(len(self.pageList)):
 			if self.pageList[i][0] == "Powers" or self.pageList[i][0] == "Specials":
 				if species == "Human":
 					self.setItemEnabled(i, False)
@@ -181,7 +181,7 @@ class SelectWidget(QListWidget):
 		Ändert die Icons abhängig von der Spezies des Charakters.
 		"""
 
-		for i in xrange(len(self.pageList)):
+		for i in range(len(self.pageList)):
 			if self.pageList[i][0] == "Specials":
 				if species == "Changeling":
 					self.item(i).setIcon(QIcon(":types/images/svg/fairy.svg"))

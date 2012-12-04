@@ -127,7 +127,7 @@ class Squares(QWidget):
 			squareColumnIter = 0
 			squareLineIter = 0
 			squareCount = 0
-			for squareCount in xrange (self.__maximum):
+			for squareCount in range(self.__maximum):
 				square = QRect(
 					( squareSideLength + separatorWidth ) * squareColumnIter + frameWidth * ( squareColumnIter + 1 ),
 					( squareSideLength + separatorWidth ) * squareLineIter + frameWidth * ( squareLineIter + 1 ), squareSideLength, squareSideLength

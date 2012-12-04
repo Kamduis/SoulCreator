@@ -160,7 +160,7 @@ class CompanionWidget(QWidget):
 
 
 	def updateNumina(self, listOfNumina):
-		for i in xrange(self.ui.listWidget_numina.count()):
+		for i in range(self.ui.listWidget_numina.count()):
 			item = self.ui.listWidget_numina.item(i)
 			if item.text() in listOfNumina:
 				item.setCheckState(Qt.Checked)

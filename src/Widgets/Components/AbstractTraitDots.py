@@ -121,7 +121,7 @@ class AbstractTraitDots(QWidget):
 
 		painter.save()
 
-		for i in xrange(self.__value):
+		for i in range(self.__value):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 	## 		if (v_forbiddenValues.contains(i+1)){
@@ -133,7 +133,7 @@ class AbstractTraitDots(QWidget):
 
 		painter.save()
 
-		for i in xrange(self.__value, self.__maximum):
+		for i in range(self.__value, self.__maximum):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 
@@ -351,8 +351,8 @@ class AbstractTraitDots(QWidget):
 		if tmpList[-1] > self.__maximum:
 			self.setMaximum( tmpList[-1] )
 
-		# Eine Liste beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumetn genannt werden.
-		self.__forbiddenValues = range(self.__minimum, self.__maximum + 1)
+		# Eine Liste beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumenten genannt werden.
+		self.__forbiddenValues = list( range(self.__minimum, self.__maximum + 1) )
 
 		for item in tmpList:
 			if item in self.__forbiddenValues:

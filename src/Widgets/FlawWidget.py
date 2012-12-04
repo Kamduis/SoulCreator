@@ -83,7 +83,7 @@ class FlawWidget(QWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self.__character.traits[self.__typ][item].items()
+			__list = list( self.__character.traits[self.__typ][item].items() )
 			__list.sort()
 			for flaw in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.

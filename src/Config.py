@@ -312,7 +312,7 @@ class Config(object):
 		( "Physical", ( "Strength", "Dexterity", "Stamina", ), ),
 		( "Social", ( "Presence", "Manipulation", "Composure", ), ),
 	)
-	attributeSorts = ( u"Power", u"Finesse", u"Resistance", )
+	attributeSorts = ( "Power", "Finesse", "Resistance", )
 
 	## Die unterschiedlichen Gestalten der Werwölfe.
 	shapesWerewolf = (

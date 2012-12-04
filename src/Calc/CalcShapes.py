@@ -200,7 +200,7 @@ class CalcShapes(object):
 
 		result =  [height, heightDalu, heightGauru, heightUrshul, heightUrhan]
 
-		for i in xrange(len(result)):
+		for i in range(len(result)):
 			result[i] = round(result[i], 2)
 
 		return result
@@ -229,7 +229,7 @@ class CalcShapes(object):
 
 		result =  [weight, weightDalu, weightGauru, weightUrshul, weightUrhan]
 
-		for i in xrange(len(result)):
+		for i in range(len(result)):
 			result[i] = round(result[i], 2)
 
 		return result

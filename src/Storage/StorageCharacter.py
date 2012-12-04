@@ -207,7 +207,7 @@ class StorageCharacter(QObject):
 		self.__paradoxMarks = ""
 
 		self.__vinculi = []
-		for i in xrange(Config.vinculiCount):
+		for i in range(Config.vinculiCount):
 			vinculum = AbstractTrait()
 			self.__vinculi.append(vinculum)
 			vinculum.traitChanged.connect(self.setModified)
@@ -220,7 +220,7 @@ class StorageCharacter(QObject):
 		self.__companionSpeedFactor = 0
 		self.__companionFuel = 0
 		self.__companionInfluences = []
-		for i in xrange(Config.companionInfluencesCount):
+		for i in range(Config.companionInfluencesCount):
 			companionInfluence = AbstractTrait()
 			self.__companionInfluences.append(companionInfluence)
 			companionInfluence.traitChanged.connect(self.setModified)
@@ -258,7 +258,7 @@ class StorageCharacter(QObject):
 						loop = Config.traitMultipleMax
 						custom = True
 
-					for i in xrange(loop):
+					for i in range(loop):
 						trait = None
 						if typ == "Subpower":
 							trait = SubPowerTrait(self, subitem[1]["name"], val)

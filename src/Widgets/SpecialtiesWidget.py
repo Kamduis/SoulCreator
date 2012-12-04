@@ -151,7 +151,7 @@ class SpecialtiesWidget(QWidget):
 
 		if text:
 			textIsUnique = True
-			for i in xrange(self.ui.listWidget_specialties.count()):
+			for i in range(self.ui.listWidget_specialties.count()):
 				if self.ui.listWidget_specialties.item(i).text() == text:
 					textIsUnique = False
 					break

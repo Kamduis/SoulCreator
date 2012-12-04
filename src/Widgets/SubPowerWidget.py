@@ -79,7 +79,7 @@ class SubPowerWidget(QWidget):
 			categoryItemUnused = QStandardItem(item)
 			self.__rootItemUnused.appendRow(categoryItemUnused)
 			
-			traitList = self.__character.traits[self._typ][item].items()
+			traitList = list( self.__character.traits[self._typ][item].items() )
 			traitList.sort()
 			for trait in traitList:
 				traitItem = QStandardItem(trait[1].name)
@@ -164,7 +164,7 @@ class SubPowerWidget(QWidget):
 					parentUsed.appendRow(itemUsed)
 
 		## Versteckt alle Elternzeilen, wenn sie keine Kinder enthalten.
-		for i in xrange(self.__model.rowCount()):
+		for i in range(self.__model.rowCount()):
 			categoryItem = self.__model.item(i)
 			if categoryItem.hasChildren():
 				self.__view.setRowHidden(categoryItem.index().row(), self.__rootItem.index(), False)

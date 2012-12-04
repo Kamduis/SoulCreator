@@ -349,7 +349,7 @@ class StorageTemplate(QObject):
 
 
 	def categories(self, typ):
-		listOfCategories = self.__traits[typ].keys()
+		listOfCategories = list( self.__traits[typ].keys() )
 		listOfCategories.sort()
 		return listOfCategories
 
@@ -497,7 +497,7 @@ class StorageTemplate(QObject):
 
 
 	def breeds(self, species):
-		result = self.__speciesGroupNames[species]["Breed"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Breed"][1].keys() )
 		result.sort()
 		return result
 
@@ -564,7 +564,7 @@ class StorageTemplate(QObject):
 
 
 	def factions(self, species):
-		result = self.__speciesGroupNames[species]["Faction"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Faction"][1].keys() )
 		result.sort()
 		return result
 
@@ -574,7 +574,7 @@ class StorageTemplate(QObject):
 
 
 	def organisations(self, species):
-		result = self.__speciesGroupNames[species]["Organisation"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Organisation"][1].keys() )
 		result.sort()
 		return result
 

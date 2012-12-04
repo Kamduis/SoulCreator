@@ -74,7 +74,7 @@ class MoralityWidget(QWidget):
 		self.__dotList = {}
 		self.__derangementBoxList = {}
 
-		for i in xrange(Config.moralityTraitMax):
+		for i in range(Config.moralityTraitMax):
 			label = QLabel("{}".format(Config.moralityTraitMax - i))
 			label.setAlignment(Qt.AlignRight)
 			self.__layoutTab.addWidget(label, i, 0)
@@ -125,25 +125,25 @@ class MoralityWidget(QWidget):
 		# Ist der Wert False, suche ich nach dem niedrigesten False punkt, und mache die höheren alle False.
 		if value:
 			dotsTrue = []
-			for i in xrange(1, self.__layoutTab.rowCount()+1):
+			for i in range(1, self.__layoutTab.rowCount()+1):
 				if self.__dotList[i].value:
 					dotsTrue.append(i)
 			maxValue = max(dotsTrue)
 			#Debug.debug(dotsTrue)
-			for i in xrange(1, maxValue):
+			for i in range(1, maxValue):
 				self.__dotList[i].value = True
 				#Debug.debug("{}: {} (Maximalwert {})".format(i, self.__dotList[i].value, maxValue))
 			self.value = maxValue
 		else:
 			dotsFalse = []
-			for i in xrange(1, self.__layoutTab.rowCount()+1):
+			for i in range(1, self.__layoutTab.rowCount()+1):
 				if not self.__dotList[i].value:
 					dotsFalse.append(i)
 			minValue = min(dotsFalse)
 			if minValue == self.value and minValue != 1:
 				self.__dotList[minValue].value = True
 			else:
-				for i in xrange(minValue+1, self.__layoutTab.rowCount()+1):
+				for i in range(minValue+1, self.__layoutTab.rowCount()+1):
 					self.__dotList[i].value = False
 					#Debug.debug("{}: {} (Maximalwert {})".format(i, self.__dotList[i].value, minValue))
 				# Intuitiverweise will man die Moral auf den Wert setzen, auf den man klickt. Aber das gilt nicht, wenn man auf den untersten Punkt klickt.
@@ -161,12 +161,12 @@ class MoralityWidget(QWidget):
 		"""
 
 		if value > 0:
-			for i in xrange(value, len(self.__dotList)+1):
+			for i in range(value, len(self.__dotList)+1):
 				self.__dotList[i].value = False
-			for i in xrange(1, value+1):
+			for i in range(1, value+1):
 				self.__dotList[i].value = True
 		else:
-			for i in xrange(1, len(self.__dotList)+1):
+			for i in range(1, len(self.__dotList)+1):
 				self.__dotList[i].value = False
 
 
@@ -239,7 +239,7 @@ class MoralityWidget(QWidget):
 
 		for i in range(value+1, Config.derangementMoralityTraitMax+1)[::-1]:
 			self.__derangementBoxList[i].setEnabled(True)
-		for i in xrange(1, value+1):
+		for i in range(1, value+1):
 			self.__derangementBoxList[i].setCurrentIndex(0)
 			self.__derangementBoxList[i].setEnabled(False)
 

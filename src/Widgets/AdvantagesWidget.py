@@ -105,25 +105,25 @@ class AdvantagesWidget(QWidget):
 
 
 	def setSize(self, value):
-		if self.ui.label_size.text() != unicode(value):
-			self.ui.label_size.setText(unicode(value))
+		if self.ui.label_size.text() != str(value):
+			self.ui.label_size.setText(str(value))
 			self.sizeChanged.emit(value)
 
 
 	def setInitiative(self, value):
-		if self.ui.label_initiative.text() != unicode(value):
-			self.ui.label_initiative.setText(unicode(value))
+		if self.ui.label_initiative.text() != str(value):
+			self.ui.label_initiative.setText(str(value))
 			self.initiativeChanged.emit(value)
 
 
 	def setSpeed(self, value):
-		if self.ui.label_speed.text() != unicode(value):
-			self.ui.label_speed.setText(unicode(value))
+		if self.ui.label_speed.text() != str(value):
+			self.ui.label_speed.setText(str(value))
 			self.speedChanged.emit(value)
 
 
 	def setDefense(self, value):
-		if self.ui.label_defense.text() != unicode(value):
+		if self.ui.label_defense.text() != str(value):
 			self.ui.label_defense.setNum(value)
 			self.defenseChanged.emit(value)
 

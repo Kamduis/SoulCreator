@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from __future__ import division, print_function
@@ -37,14 +37,14 @@ import sys
 import argparse
 import signal
 
-import sip
-sip.setapi('QDate', 2)
-sip.setapi('QDateTime', 2)
-sip.setapi('QString', 2)
-sip.setapi('QTextStream', 2)
-sip.setapi('QTime', 2)
-sip.setapi('QUrl', 2)
-sip.setapi('QVariant', 2)
+#import sip
+#sip.setapi('QDate', 2)
+#sip.setapi('QDateTime', 2)
+#sip.setapi('QString', 2)
+#sip.setapi('QTextStream', 2)
+#sip.setapi('QTime', 2)
+#sip.setapi('QUrl', 2)
+#sip.setapi('QVariant', 2)
 from PyQt4.QtGui import QApplication
 
 from src.GlobalState import GlobalState

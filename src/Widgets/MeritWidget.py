@@ -86,7 +86,7 @@ class MeritWidget(TraitWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self._character.traits[self.__typ][item].items()
+			__list = list( self._character.traits[self.__typ][item].items() )
 			__list.sort()
 			for merit in __list:
 				#Debug.debug(merit)

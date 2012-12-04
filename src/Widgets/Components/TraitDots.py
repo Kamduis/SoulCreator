@@ -83,7 +83,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.save()
 
-		for i in xrange(self.value):
+		for i in range(self.value):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 	## 		if (v_forbiddenValues.contains(i+1)){
@@ -95,7 +95,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.save()
 
-		for i in xrange(self.value, self.value + self.__bonusValue):
+		for i in range(self.value, self.value + self.__bonusValue):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 
@@ -105,7 +105,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.save()
 
-		for i in xrange(self.value + self.__bonusValue, self.maximum):
+		for i in range(self.value + self.__bonusValue, self.maximum):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 
