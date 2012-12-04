@@ -41,7 +41,7 @@ class DateEdit(QDateEdit):
 
 
 	def __init__(self, date=None, parent=None):
-		super(DateEdit, self).__init__(date, parent)
+		super(DateEdit, self).__init__(parent)
 
 
 	#def mousePressEvent(self, event):

@@ -64,10 +64,10 @@ if __name__ == "__main__":
 			#compressFile("{}/{}/{}/{}".format(PathTools.getPath(), Config.resourceDir, Config.resourceDirTemplates, nameWOSuffix), "xml")
 
 	## Resourcen bauen
-	cmd_string_rcc = ["pyside-rcc", "-o", ]
-	cmd_string_uic = ["pyside-uic", "-i", "0", "-o", ]
-	#cmd_string_rcc = ["pyrcc4", "-o", ]
-	#cmd_string_uic = ["pyuic4", "-i", "0", "-o", ]
+	#cmd_string_rcc = ["pyside-rcc", "-o", ]
+	#cmd_string_uic = ["pyside-uic", "-i", "0", "-o", ]
+	cmd_string_rcc = ["pyrcc4", "-o", ]
+	cmd_string_uic = ["pyuic4", "-i", "0", "-o", ]
 
 	buildResources = True
 	if os.name == "nt":
