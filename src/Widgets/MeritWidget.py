@@ -24,9 +24,9 @@ from __future__ import division, print_function
 
 import os
 
-#from PySide.QtCore import Signal# as Signal
-#from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
+#from PyQt4.QtCore import pyqtSignal as Signal
+#from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QToolBox
 
 from src.Config import Config
 #from src import Error
@@ -49,7 +49,7 @@ class MeritWidget(TraitWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		TraitWidget.__init__(self, template, character, parent)
+		super(MeritWidget, self).__init__(template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
@@ -86,7 +86,7 @@ class MeritWidget(TraitWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self._character.traits[self.__typ][item].items()
+			__list = list( self._character.traits[self.__typ][item].items() )
 			__list.sort()
 			for merit in __list:
 				#Debug.debug(merit)

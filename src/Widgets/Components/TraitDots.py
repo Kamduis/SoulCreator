@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QPoint
-from PySide.QtGui import QColor, QPainter, QPen
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QPoint
+from PyQt4.QtGui import QColor, QPainter, QPen
 
 from src.Config import Config
 from src.Widgets.Components.AbstractTraitDots import AbstractTraitDots
@@ -43,7 +43,7 @@ class TraitDots(AbstractTraitDots):
 
 
 	def __init__(self, parent=None):
-		AbstractTraitDots.__init__(self, parent)
+		super(TraitDots, self).__init__(parent)
 
 		self.__bonusValue = 0
 
@@ -83,7 +83,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.save()
 
-		for i in xrange(self.value):
+		for i in range(self.value):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 	## 		if (v_forbiddenValues.contains(i+1)){
@@ -95,7 +95,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.save()
 
-		for i in xrange(self.value, self.value + self.__bonusValue):
+		for i in range(self.value, self.value + self.__bonusValue):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 
@@ -105,7 +105,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.save()
 
-		for i in xrange(self.value + self.__bonusValue, self.maximum):
+		for i in range(self.value + self.__bonusValue, self.maximum):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 

@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QHBoxLayout, QLineEdit, QMessageBox
+#from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QHBoxLayout, QLineEdit, QMessageBox
 
 from src.Config import Config
 from src.Widgets.Components.TraitDots import TraitDots
@@ -42,7 +42,7 @@ class SpecialsWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(SpecialsWidget, self).__init__(parent)
 
 		self.ui = Ui_SpecialsWidget()
 		self.ui.setupUi(self)

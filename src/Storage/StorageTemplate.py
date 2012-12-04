@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject
+from PyQt4.QtCore import QObject
 
 #from src.Config import Config
 #from src.Tools import ListTools
@@ -339,7 +339,7 @@ class StorageTemplate(QObject):
 
 
 	def __init__(self, parent=None):
-		QObject.__init__(self, parent)
+		super(StorageTemplate, self).__init__(parent)
 
 
 	def __getTyps(self):
@@ -349,7 +349,7 @@ class StorageTemplate(QObject):
 
 
 	def categories(self, typ):
-		listOfCategories = self.__traits[typ].keys()
+		listOfCategories = list( self.__traits[typ].keys() )
 		listOfCategories.sort()
 		return listOfCategories
 
@@ -497,7 +497,7 @@ class StorageTemplate(QObject):
 
 
 	def breeds(self, species):
-		result = self.__speciesGroupNames[species]["Breed"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Breed"][1].keys() )
 		result.sort()
 		return result
 
@@ -564,7 +564,7 @@ class StorageTemplate(QObject):
 
 
 	def factions(self, species):
-		result = self.__speciesGroupNames[species]["Faction"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Faction"][1].keys() )
 		result.sort()
 		return result
 
@@ -574,7 +574,7 @@ class StorageTemplate(QObject):
 
 
 	def organisations(self, species):
-		result = self.__speciesGroupNames[species]["Organisation"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Organisation"][1].keys() )
 		result.sort()
 		return result
 

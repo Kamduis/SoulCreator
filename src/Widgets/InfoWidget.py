@@ -24,9 +24,9 @@ from __future__ import division, print_function
 
 import os
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import Qt, QDate
-from PySide.QtGui import QWidget, QIcon, QPixmap, QFileDialog, QMessageBox
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt, QDate
+from PyQt4.QtGui import QWidget, QIcon, QPixmap, QFileDialog, QMessageBox
 
 from src.Config import Config
 from src.Tools import PathTools
@@ -55,7 +55,7 @@ class InfoWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(InfoWidget, self).__init__(parent)
 
 		self.ui = Ui_InfoWidget()
 		self.ui.setupUi(self)
@@ -63,7 +63,7 @@ class InfoWidget(QWidget):
 		self.__storage = template
 		self.__character = character
 
-		self.ui.comboBox_era.addItems( Config.eras.keys() )
+		self.ui.comboBox_era.addItems( list(Config.eras.keys()) )
 
 		self.ui.dateEdit_dateBirth.setMinimumDate(QDate(100, 1, 1))
 		self.ui.dateEdit_dateGame.setMinimumDate(QDate(100, 1, 1))
@@ -273,15 +273,20 @@ class InfoWidget(QWidget):
 		if ( not os.path.exists( savePath ) ):
 			savePath = appPath
 
-		filePath = QFileDialog.getOpenFileName(
+		fileData = QFileDialog.getOpenFileName(
 			self,
 			self.tr( "Select Image File" ),
 			savePath,
 			self.tr( "Images (*.jpg *.jpeg *.png *.bmp *.gif *.pgm *.pbm *.ppm *.svg )" )
 		)
 
-		if ( filePath[0] ):
-			image = QPixmap(filePath[0])
+		# Sollte PySide verwendet werden!
+		#filePath = fileData[0]
+		# Sollte PyQt4 verwendet werden!
+		filePath = fileData
+
+		if ( filePath ):
+			image = QPixmap(filePath)
 			if image.width() > Config.pictureWidthMax or image.height() > Config.pictureHeightMax:
 				image = image.scaled(800, 800, Qt.KeepAspectRatio)
 
@@ -309,7 +314,7 @@ class InfoWidget(QWidget):
 			self.ui.pushButton_pictureClear.setEnabled(False)
 		else:
 			self.ui.pushButton_picture.setText("")
-			self.ui.pushButton_picture.setIcon(image)
+			self.ui.pushButton_picture.setIcon(QIcon(image))
 			self.ui.pushButton_pictureClear.setEnabled(True)
 
 
@@ -319,7 +324,7 @@ class InfoWidget(QWidget):
 		"""
 
 		if Config.autoSelectEra:
-			eraBeginDates = Config.eras.values()
+			eraBeginDates = list( Config.eras.values() )
 			eraBeginDates.sort()
 
 			beginYear = Config.eras[era]
@@ -356,7 +361,7 @@ class InfoWidget(QWidget):
 		"""
 
 		if Config.autoSelectEra:
-			eraBeginDates = Config.eras.values()
+			eraBeginDates = list( Config.eras.values() )
 			eraBeginDates.sort()
 
 			#Debug.debug(eraBeginDates[::-1])

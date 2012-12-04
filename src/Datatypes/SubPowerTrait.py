@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-#from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import Qt
+#from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt
 
 #from src.Config import Config
 from src.Datatypes.BasicTrait import BasicTrait

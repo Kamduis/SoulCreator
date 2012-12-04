@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
+from PyQt4.QtCore import pyqtSignal as Signal
 
 #from src.Config import Config
 from src.Datatypes.AbstractTrait import AbstractTrait
@@ -50,7 +50,7 @@ class BasicTrait(AbstractTrait):
 		\ref checkPrerequisites
 		"""
 		
-		AbstractTrait.__init__(self, name, value, parent)
+		super(BasicTrait, self).__init__(name, value, parent)
 
 		self.__character = character
 		self.__species = ""

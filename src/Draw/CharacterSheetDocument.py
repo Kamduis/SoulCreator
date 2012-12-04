@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QFile, QIODevice, QTextStream
-from PySide.QtGui import QTextDocument
+from PyQt4.QtCore import QFile, QIODevice, QTextStream
+from PyQt4.QtGui import QTextDocument
 
 #from src.Debug import Debug
 
@@ -37,7 +37,7 @@ class CharacterSheetDocument(QTextDocument):
 	
 	
 	def __init__(self, species=None, parent=None):
-		QTextDocument.__init__(self, parent)
+		super(CharacterSheetDocument, self).__init__( parent)
 
 		self.__species = species
 
@@ -47,13 +47,9 @@ class CharacterSheetDocument(QTextDocument):
 			raise ErrFileNotOpened(item, cssFile.errorString())
 		cssStream = QTextStream(cssFile)
 		cssContent = cssStream.readAll()
-		#cssContent = cssFile.readAll()
 		cssFile.close()
 
-		#document.addResource(QTextDocument.StyleSheetResource, QUrl("stylesheet.css"), cssContent)
 		self.setDefaultStyleSheet(cssContent)
-
-		#htmlHeader = "<html><head><link rel='stylesheet' type='text/css' href='stylesheet.css'></head><body>"
 
 
 	def setText(self, text, title=None):

@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
-#from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
+#from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 from src.Config import Config
 #from src.Debug import Debug
@@ -40,7 +40,7 @@ class SelectWidget(QListWidget):
 	"""
 	
 	def __init__(self, parent=None):
-		QListWidget.__init__(self, parent)
+		super(SelectWidget, self).__init__(parent)
 
 		self.pageList = [
 			[ "Information", ":types/images/svg/humans.svg", ],
@@ -60,7 +60,7 @@ class SelectWidget(QListWidget):
 
 		self.__stdBackgroundRole = self.item( 0 ).data(Qt.BackgroundRole)
 
-		for i in xrange(self.count()):
+		for i in range(self.count()):
 			self.item(i).setTextAlignment(Qt.AlignVCenter)
 			self.item(i).setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
 
@@ -136,7 +136,7 @@ class SelectWidget(QListWidget):
 		if type(item) == int:
 			row = item
 		else:
-			for i in xrange(len(self.pageList)):
+			for i in range(len(self.pageList)):
 				if self.pageList[i][0] == item:
 					row = i
 					break
@@ -156,7 +156,7 @@ class SelectWidget(QListWidget):
 		if type(item) == int:
 			row = item
 		else:
-			for i in xrange(len(self.pageList)):
+			for i in range(len(self.pageList)):
 				if self.pageList[i][0] == item:
 					row = i
 					break
@@ -168,7 +168,7 @@ class SelectWidget(QListWidget):
 		Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen.
 		"""
 
-		for i in xrange(len(self.pageList)):
+		for i in range(len(self.pageList)):
 			if self.pageList[i][0] == "Powers" or self.pageList[i][0] == "Specials":
 				if species == "Human":
 					self.setItemEnabled(i, False)
@@ -181,7 +181,7 @@ class SelectWidget(QListWidget):
 		Ändert die Icons abhängig von der Spezies des Charakters.
 		"""
 
-		for i in xrange(len(self.pageList)):
+		for i in range(len(self.pageList)):
 			if self.pageList[i][0] == "Specials":
 				if species == "Changeling":
 					self.item(i).setIcon(QIcon(":types/images/svg/fairy.svg"))

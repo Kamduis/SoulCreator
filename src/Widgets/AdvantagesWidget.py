@@ -24,8 +24,8 @@ from __future__ import division, print_function
 
 #import traceback
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtGui import QWidget, QFontMetrics, QIcon
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtGui import QWidget, QFontMetrics, QIcon
 
 from src.Config import Config
 #from src import Error
@@ -54,7 +54,7 @@ class AdvantagesWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(AdvantagesWidget, self).__init__(parent)
 
 		self.ui = Ui_AdvantagesWidget()
 		self.ui.setupUi(self)
@@ -105,25 +105,25 @@ class AdvantagesWidget(QWidget):
 
 
 	def setSize(self, value):
-		if self.ui.label_size.text() != unicode(value):
-			self.ui.label_size.setText(unicode(value))
+		if self.ui.label_size.text() != str(value):
+			self.ui.label_size.setText(str(value))
 			self.sizeChanged.emit(value)
 
 
 	def setInitiative(self, value):
-		if self.ui.label_initiative.text() != unicode(value):
-			self.ui.label_initiative.setText(unicode(value))
+		if self.ui.label_initiative.text() != str(value):
+			self.ui.label_initiative.setText(str(value))
 			self.initiativeChanged.emit(value)
 
 
 	def setSpeed(self, value):
-		if self.ui.label_speed.text() != unicode(value):
-			self.ui.label_speed.setText(unicode(value))
+		if self.ui.label_speed.text() != str(value):
+			self.ui.label_speed.setText(str(value))
 			self.speedChanged.emit(value)
 
 
 	def setDefense(self, value):
-		if self.ui.label_defense.text() != unicode(value):
+		if self.ui.label_defense.text() != str(value):
 			self.ui.label_defense.setNum(value)
 			self.defenseChanged.emit(value)
 

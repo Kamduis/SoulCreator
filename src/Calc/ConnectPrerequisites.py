@@ -70,7 +70,7 @@ class ConnectPrerequisites(object):
 								for subitem in categories:
 									for subsubitem in character.traits[item][subitem].values():
 										## Überprüfen ob die Eigenschaft im Anforderungstext des Merits vorkommt.
-										traitResource = u"{}.{}".format(item, subsubitem.identifier)
+										traitResource = "{}.{}".format(item, subsubitem.identifier)
 										if traitResource in traitPrerequisites:
 											# Überprüfen ob diese Eigenschaft tatsächlich in den Voraussetzungen enthalten ist. Bei dieser Überprüfung ist es wichtig, auf den ganuen Namen zu prüfen: "Status" != "Status: Camarilla"
 											# Diese Überprüfung wird aber nur durchgeführt, wenn die Chance besteht, daß dieser String identisch ist.
@@ -81,14 +81,14 @@ class ConnectPrerequisites(object):
 												strBefore = traitPrerequisites[:idxA]
 												strBefore = strBefore.rstrip()
 												strBeforeList = strBefore.split(" ")
-												if not strBeforeList[-1] or strBeforeList[-1] == u"and" or strBeforeList[-1] == u"or" or strBeforeList[-1] == u"(":
+												if not strBeforeList[-1] or strBeforeList[-1] == "and" or strBeforeList[-1] == "or" or strBeforeList[-1] == "(":
 													## \todo Den Namen der Eigenschaft mit einem Zeiger auf diese Eigenschaft im Speicher ersetzen.
 													## Die Eigenschaft, von welcher diese hier abhängig ist, der entsprechenden Liste hinzufügen.
 													trait.addPrerequisiteTrait(subsubitem)
 													# Ändere den prerequisitesText dahingehend, daß der Verweis dort steht.
 													# Ändert ohne viel Intelligenz. "Attribute.GiantKid > 1 and Attribute.Giant > 1" wird gnadenlos in "ptr00 > 1 and ptr00Kid > 1" verändert.
 													#trait.prerequisitesText = trait.prerequisitesText.replace(traitResource, "ptr{}".format(id(subsubitem)))
-													trait.prerequisitesText = re.sub(ur"{}(?=[\s]*[><=.]+)".format(traitResource), "ptr{}".format(id(subsubitem)), trait.prerequisitesText)
+													trait.prerequisitesText = re.sub(r"{}(?=[\s]*[><=.]+)".format(traitResource), "ptr{}".format(id(subsubitem)), trait.prerequisitesText)
 													#Debug.debug(trait.prerequisiteTraits, trait.prerequisitesText)
 													## Die Eigenschaften in den Voraussetzungen mit dem Merit verbinden.
 													#Debug.debug("Verbinde {} mit {}".format(subsubitem.name, trait.name))
@@ -135,16 +135,16 @@ class ConnectPrerequisites(object):
 							specialties = re.findall(r"\w+\.{1}(\w+)", traitPrerequisites[idx:])
 							for special in specialties:
 								if special in item.specialties:
-									traitPrerequisites = traitPrerequisites.replace(u".{}".format(special), "")
+									traitPrerequisites = traitPrerequisites.replace(".{}".format(special), "")
 								else:
-									traitPrerequisites = traitPrerequisites.replace(u"{}.{}".format(literalReference, special), "0")
-						traitPrerequisites = traitPrerequisites.replace(literalReference, unicode(item.value))
+									traitPrerequisites = traitPrerequisites.replace("{}.{}".format(literalReference, special), "0")
+						traitPrerequisites = traitPrerequisites.replace(literalReference, str(item.value))
 				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen ...
 				if Config.powerstatIdentifier in traitPrerequisites:
-					traitPrerequisites = traitPrerequisites.replace(Config.powerstatIdentifier, unicode(character.powerstat))
+					traitPrerequisites = traitPrerequisites.replace(Config.powerstatIdentifier, str(character.powerstat))
 				# ... oder die Moral
 				if Config.moralityIdentifier in traitPrerequisites:
-					traitPrerequisites = traitPrerequisites.replace(Config.moralityIdentifier, unicode(character.morality))
+					traitPrerequisites = traitPrerequisites.replace(Config.moralityIdentifier, str(character.morality))
 
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
 				try:
@@ -152,10 +152,10 @@ class ConnectPrerequisites(object):
 					result = eval(traitPrerequisites)
 					#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
 				except (NameError, SyntaxError):
-					Debug.debug(u"Error bei {}: {}".format(trait.name, traitPrerequisites))
+					Debug.debug("Error bei {}: {}".format(trait.name, traitPrerequisites))
 					result = False
 
-				#Debug.debug(u"Eigenschaft {} wird verfügbar? {}".format(trait.name, result))
+				#Debug.debug("Eigenschaft {} wird verfügbar? {}".format(trait.name, result))
 				trait.setAvailable(result)
 
 

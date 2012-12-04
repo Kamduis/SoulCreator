@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QWidget
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget
 
 #from src.Config import Config
 #from src import Error
@@ -43,7 +43,7 @@ class SpecialtiesWidget(QWidget):
 
 
 	def __init__(self, template, parent=None):
-		QWidget.__init__(self, parent)
+		super(SpecialtiesWidget, self).__init__(parent)
 
 		#self.__character = character
 		self.__storage = template
@@ -151,7 +151,7 @@ class SpecialtiesWidget(QWidget):
 
 		if text:
 			textIsUnique = True
-			for i in xrange(self.ui.listWidget_specialties.count()):
+			for i in range(self.ui.listWidget_specialties.count()):
 				if self.ui.listWidget_specialties.item(i).text() == text:
 					textIsUnique = False
 					break

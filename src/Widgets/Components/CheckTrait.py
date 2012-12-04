@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QHBoxLayout, QCheckBox, QLineEdit
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QHBoxLayout, QCheckBox, QLineEdit
 
 from src.Config import Config
 #from src.Tools import ListTools
@@ -41,7 +41,7 @@ class CheckTrait(QWidget):
 	"""
 
 	def __init__(self, trait, parent=None):
-		QWidget.__init__(self, parent)
+		super(CheckTrait, self).__init__(parent)
 
 		self.__trait = trait
 

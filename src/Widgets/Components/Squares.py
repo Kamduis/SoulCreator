@@ -24,9 +24,9 @@ from __future__ import division, print_function
 
 import math
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QRect
-from PySide.QtGui import QWidget, QPainter, QPen, QColor
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QRect
+from PyQt4.QtGui import QWidget, QPainter, QPen, QColor
 
 #from src.Config import Config
 #from src import Error
@@ -55,7 +55,7 @@ class Squares(QWidget):
 
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(Squares, self).__init__(parent)
 
 		#self.__character = character
 		#self.__storage = template
@@ -127,7 +127,7 @@ class Squares(QWidget):
 			squareColumnIter = 0
 			squareLineIter = 0
 			squareCount = 0
-			for squareCount in xrange (self.__maximum):
+			for squareCount in range(self.__maximum):
 				square = QRect(
 					( squareSideLength + separatorWidth ) * squareColumnIter + frameWidth * ( squareColumnIter + 1 ),
 					( squareSideLength + separatorWidth ) * squareLineIter + frameWidth * ( squareLineIter + 1 ), squareSideLength, squareSideLength

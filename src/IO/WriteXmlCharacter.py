@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject, QIODevice, QByteArray, QBuffer
+from PyQt4.QtCore import QObject, QIODevice, QByteArray, QBuffer
 
 import gzip
 
@@ -59,7 +59,7 @@ class WriteXmlCharacter(QObject):
 
 
 	def __init__(self, character, parent=None):
-		QObject.__init__(self, parent)
+		super(WriteXmlCharacter, self).__init__(parent)
 
 		self.__character = character
 
@@ -123,9 +123,9 @@ class WriteXmlCharacter(QObject):
 
 		etree.SubElement(root, "party").text = self.__character.party
 
-		etree.SubElement(root, "height").text = unicode(self.__character.height)
+		etree.SubElement(root, "height").text = str(self.__character.height)
 
-		etree.SubElement(root, "weight").text = unicode(self.__character.weight)
+		etree.SubElement(root, "weight").text = str(self.__character.weight)
 
 		etree.SubElement(root, "eyes").text = self.__character.eyes
 
@@ -135,15 +135,15 @@ class WriteXmlCharacter(QObject):
 
 		etree.SubElement(root, "description").text = self.__character.description
 
-		etree.SubElement(root, "powerstat").text = unicode(self.__character.powerstat)
+		etree.SubElement(root, "powerstat").text = str(self.__character.powerstat)
 
-		etree.SubElement(root, "morality").text = unicode(self.__character.morality)
+		etree.SubElement(root, "morality").text = str(self.__character.morality)
 
 		## Geistesstörungen
 		derangements = etree.SubElement(root, "derangements")
 		for item in self.__character.derangements.items():
 			if item[1]:
-				etree.SubElement(derangements, "derangement", morality=unicode(item[0])).text = item[1]
+				etree.SubElement(derangements, "derangement", morality=str(item[0])).text = item[1]
 
 		## Eigenschaften
 		traits = etree.SubElement(root, "Traits")
@@ -164,14 +164,14 @@ class WriteXmlCharacter(QObject):
 							traitCategoryExists = True
 						trait = etree.SubElement(traitCategory, "trait",
 							name=subsubitem.name,
-							value=unicode(subsubitem.value),
+							value=str(subsubitem.value),
 						)
 						# Zusatztext
 						if item != "Subpower" and subsubitem.custom:
-							trait.attrib["customText"] =  unicode( subsubitem.customText )
+							trait.attrib["customText"] =  str( subsubitem.customText )
 						# Spezialisierungen
 						if subsubitem.specialties:
-							etree.SubElement(trait, "specialties").text = Config.sepChar.join( unicode(n) for n in subsubitem.specialties )
+							etree.SubElement(trait, "specialties").text = Config.sepChar.join( str(n) for n in subsubitem.specialties )
 
 		## Gegenstände
 		items = etree.SubElement(root, "Items")
@@ -182,7 +182,7 @@ class WriteXmlCharacter(QObject):
 				for weapon in self.__character.weapons[category]:
 					etree.SubElement(weaponCategory, "weapon").text = weapon
 		if self.__character.armor:
-			etree.SubElement(items, "armor", dedicated=unicode(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
+			etree.SubElement(items, "armor", dedicated=str(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
 		if self.__character.equipment or self.__character.magicalTool:
 			equipment = etree.SubElement(items, "Equipment")
 			for item in self.__character.equipment:
@@ -211,22 +211,22 @@ class WriteXmlCharacter(QObject):
 			vinculi = etree.SubElement(root, "vinculi")
 			for item in self.__character.vinculi:
 				if item.name and item.value > 0:
-					etree.SubElement(vinculi, "vinculum", value=unicode(item.value)).text = item.name
+					etree.SubElement(vinculi, "vinculum", value=str(item.value)).text = item.name
 		companion = etree.SubElement(
 			root,
 			"companion",
 			name = self.__character.companionName,
-			power = unicode(self.__character.companionPower),
-			finesse = unicode(self.__character.companionFinesse),
-			resistance = unicode(self.__character.companionResistance),
-			size = unicode(self.__character.companionSize),
-			speedFactor = unicode(self.__character.companionSpeedFactor),
+			power = str(self.__character.companionPower),
+			finesse = str(self.__character.companionFinesse),
+			resistance = str(self.__character.companionResistance),
+			size = str(self.__character.companionSize),
+			speedFactor = str(self.__character.companionSpeedFactor),
 		)
 		for item in self.__character.companionNumina:
 			etree.SubElement(companion, "numen").text = item
 		for item in self.__character.companionInfluences:
 			if item.name and item.value > 0:
-				etree.SubElement(companion, "influence", value=unicode(item.value)).text = item.name
+				etree.SubElement(companion, "influence", value=str(item.value)).text = item.name
 		if self.__character.companionBan:
 			etree.SubElement(companion, "ban").text = self.__character.companionBan
 		
@@ -236,8 +236,8 @@ class WriteXmlCharacter(QObject):
 			imageBuffer = QBuffer(imageData)
 			imageBuffer.open(QIODevice.WriteOnly)
 			self.__character.picture.save(imageBuffer, Config.pictureFormat)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
-			imageData = imageData.toBase64()
-			etree.SubElement(root, "picture").text = unicode(imageData)
+			imageData = imageData.toBase64().data()
+			etree.SubElement(root, "picture").text = imageData.decode("UTF-8")
 
 		return root
 

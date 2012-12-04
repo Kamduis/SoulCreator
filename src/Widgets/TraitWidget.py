@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtGui import QWidget
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtGui import QWidget
 
 from src.Config import Config
 #from src import Error
@@ -43,7 +43,7 @@ class TraitWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(TraitWidget, self).__init__(parent)
 
 		self._character = character
 		self._storage = template

@@ -20,48 +20,47 @@ You should have received a copy of the GNU General Public License along with Sou
 
 
 
-from __future__ import division, print_function
+from __future__ import division, print_function, absolute_import
 
 #import sys
 import os
 
-#from PySide.QtCore import Slot as Slot
-from PySide.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTimer
-from PySide.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
-from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
+from PyQt4.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTimer
+from PyQt4.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
+from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
-from src.GlobalState import GlobalState
-from src.Tools import PathTools
-from Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
-from Config import Config
-import IO.Shell
-from IO.Settings import Settings
-from IO.ReadXmlTemplate import ReadXmlTemplate
-from IO.ReadXmlCharacter import ReadXmlCharacter
-from IO.WriteXmlCharacter import WriteXmlCharacter
-from Storage.StorageCharacter import StorageCharacter
-from Storage.StorageTemplate import StorageTemplate
-from Calc.CalcAdvantages import CalcAdvantages
-from Calc.Creation import Creation
-from Calc.ConnectPrerequisites import ConnectPrerequisites
-from Widgets.InfoWidget import InfoWidget
-from Widgets.AttributeWidget import AttributeWidget
-from Widgets.SkillWidget import SkillWidget
-from Widgets.TemplateWidget import TemplateWidget
-from Widgets.PowerWidget import PowerWidget
-from Widgets.SubPowerWidget import SubPowerWidget
-from Widgets.SpecialtiesWidget import SpecialtiesWidget
-from Widgets.MeritWidget import MeritWidget
-from Widgets.FlawWidget import FlawWidget
-from Widgets.MoralityWidget import MoralityWidget
-from Widgets.AdvantagesWidget import AdvantagesWidget
-from Widgets.ItemWidget import ItemWidget
-from Widgets.SpecialsWidget import SpecialsWidget
-from Widgets.Dialogs.SettingsDialog import SettingsDialog
-from Widgets.Dialogs.MessageBox import MessageBox
-#from Draw.DrawSheet import DrawSheet
-from Draw.RenderSheet import RenderSheet
-from Debug import Debug
+from .GlobalState import GlobalState
+from .Tools import PathTools
+from .Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
+from .Config import Config
+from .IO import Shell
+from .IO.Settings import Settings
+from .IO.ReadXmlTemplate import ReadXmlTemplate
+from .IO.ReadXmlCharacter import ReadXmlCharacter
+from .IO.WriteXmlCharacter import WriteXmlCharacter
+from .Storage.StorageCharacter import StorageCharacter
+from .Storage.StorageTemplate import StorageTemplate
+from .Calc.CalcAdvantages import CalcAdvantages
+from .Calc.Creation import Creation
+from .Calc.ConnectPrerequisites import ConnectPrerequisites
+from .Widgets.InfoWidget import InfoWidget
+from .Widgets.AttributeWidget import AttributeWidget
+from .Widgets.SkillWidget import SkillWidget
+from .Widgets.TemplateWidget import TemplateWidget
+from .Widgets.PowerWidget import PowerWidget
+from .Widgets.SubPowerWidget import SubPowerWidget
+from .Widgets.SpecialtiesWidget import SpecialtiesWidget
+from .Widgets.MeritWidget import MeritWidget
+from .Widgets.FlawWidget import FlawWidget
+from .Widgets.MoralityWidget import MoralityWidget
+from .Widgets.AdvantagesWidget import AdvantagesWidget
+from .Widgets.ItemWidget import ItemWidget
+from .Widgets.SpecialsWidget import SpecialsWidget
+from .Widgets.Dialogs.SettingsDialog import SettingsDialog
+from .Widgets.Dialogs.MessageBox import MessageBox
+#from .Draw.DrawSheet import DrawSheet
+from .Draw.RenderSheet import RenderSheet
+from .Debug import Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
 
@@ -120,7 +119,7 @@ class MainWindow(QMainWindow):
 
 	def __init__(self, fileName=None, exportPath=None, parent=None):
 		#dbgStart = Debug.timehook()
-		QMainWindow.__init__(self, parent)
+		super(MainWindow, self).__init__(parent)
 
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
@@ -429,7 +428,7 @@ class MainWindow(QMainWindow):
 
 		if typ:
 			self.ui.label_pointsLeft.setHidden( False )
-			textList = [unicode(item) for item in self.__creation.creationPointsAvailable[self.__character.species][typ]]
+			textList = [str(item) for item in self.__creation.creationPointsAvailable[self.__character.species][typ]]
 			text = "Creation Points: "
 			if typ == "Skill":
 				text += "/".join(textList[1:])
@@ -525,9 +524,9 @@ class MainWindow(QMainWindow):
 		Fügt den Inhalt des Arguments zum Fenstertitel hinzu.
 		"""
 
-		titleStr = u"{} {} ({})".format(Config.programName, Config.versionDetail(), name )
+		titleStr = "{} {} ({})".format(Config.programName, Config.versionDetail(), name )
 		if not name:
-			titleStr = u"{} {}".format(Config.programName, Config.versionDetail() )
+			titleStr = "{} {}".format(Config.programName, Config.versionDetail() )
 		self.setWindowTitle( titleStr )
 
 
@@ -569,7 +568,11 @@ class MainWindow(QMainWindow):
 					savePath,
 					self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) )
 				)
-				filePath = fileData[0]
+
+				# Sollte PySide verwendet werden!
+				#filePath = fileData[0]
+				# Sollte PyQt4 verwendet werden!
+				filePath = fileData
 
 			if ( filePath ):
 				# Charakter wird erst gelöscht, wenn auch wirklich ein neuer Charkater geladen werden soll.
@@ -605,14 +608,17 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		filePath = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.{}".format(savePath, Config.fileSuffixSave), self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) ) )
+		fileData = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.{}".format(savePath, Config.fileSuffixSave), self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) ) )
 
-		#Debug.debug(filePath)
+		# Sollte PySide verwendet werden!
+		#filePath = fileData[0]
+		# Sollte PyQt4 verwendet werden!
+		filePath = fileData
 
 		# Nur Speichern, wenn ein Name eingegeben wurde.
-		if filePath[0]:
+		if filePath:
 			try:
-				self.__writeCharacter.write( filePath[0] )
+				self.__writeCharacter.write( filePath )
 			except ErrXmlVersion as e:
 				MessageBox.exception( self, e.message(), e.description() )
 			except ErrXmlParsing as e:
@@ -665,13 +671,18 @@ class MainWindow(QMainWindow):
 			os.makedirs(savePath)
 
 		if GlobalState.isDevelop:
-			filePath = ["{}/untitled.pdf".format(savePath), ""]
+			filePath = "{}/untitled.pdf".format(savePath)
 		else:
-			filePath = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
+			fileData = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )
+
+			# Sollte PySide verwendet werden!
+			#filePath = fileData[0]
+			# Sollte PyQt4 verwendet werden!
+			filePath = fileData
 
 		# Ohne diese Abfrage, würde der Druckauftrag auch bei einem angeblichen Abbrechen an den Drucker geschickt, aber wegen der Einstellungen als pdf etc. kommt ein seltsamer Ausdruck heraus. War zumindest zu C++-Zeiten so.
-		if ( filePath[0] ):
-			self.__createPdf(filePath[0])
+		if ( filePath ):
+			self.__createPdf(filePath)
 
 
 	def printCharacter(self):
@@ -724,7 +735,7 @@ class MainWindow(QMainWindow):
 		settings.endGroup()
 
 		settings.beginGroup( "Config" )
-		Config.autoSelectEra = unicode(settings.value( "autoSelectEra" )).lower() != "false"
+		Config.autoSelectEra = str(settings.value( "autoSelectEra" )).lower() != "false"
 		settings.endGroup()
 
 		#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.

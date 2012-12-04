@@ -24,9 +24,9 @@ from __future__ import division, print_function
 
 import os
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QVBoxLayout, QScrollArea, QGroupBox
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QScrollArea, QGroupBox
 
 from src.Config import Config
 #from src import Error
@@ -49,7 +49,7 @@ class SkillWidget(TraitWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		TraitWidget.__init__(self, template, character, parent)
+		super(SkillWidget, self).__init__(template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
@@ -89,7 +89,7 @@ class SkillWidget(TraitWidget):
 
 			self.__scrollLayout.addWidget( widgetSkillCategory )
 
-			__list = self._character.traits[typ][item].items()
+			__list = list( self._character.traits[typ][item].items() )
 			__list.sort()
 			for skill in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.

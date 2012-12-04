@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtGui import QWidget, QHBoxLayout, QPushButton, QLineEdit, QLabel
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtGui import QWidget, QHBoxLayout, QPushButton, QLineEdit, QLabel
 
 from src.Config import Config
 from src.Widgets.Components.TraitDots import TraitDots
@@ -47,7 +47,7 @@ class TraitLine(QWidget):
 
 
 	def __init__(self, name, value, parent=None):
-		QWidget.__init__(self, parent)
+		super(TraitLine, self).__init__(parent)
 
 		self.__layout = QHBoxLayout()
 		#self.__layout.setMargin( 0 )
@@ -118,7 +118,7 @@ class TraitLine(QWidget):
 
 	@buttonText.setter
 	def buttonText( self, text ):
-		self.__button.setText( unicode(text) )
+		self.__button.setText( str(text) )
 
 
 	def __getValue(self):

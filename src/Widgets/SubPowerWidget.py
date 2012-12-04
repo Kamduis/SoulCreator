@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QVBoxLayout, QStandardItemModel, QStandardItem, QTreeView
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QStandardItemModel, QStandardItem, QTreeView
 
 #from src.Config import Config
 #from src import Error
@@ -42,7 +42,7 @@ class SubPowerWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(SubPowerWidget, self).__init__(parent)
 
 		self.__storage = template
 		self.__character = character
@@ -79,7 +79,7 @@ class SubPowerWidget(QWidget):
 			categoryItemUnused = QStandardItem(item)
 			self.__rootItemUnused.appendRow(categoryItemUnused)
 			
-			traitList = self.__character.traits[self._typ][item].items()
+			traitList = list( self.__character.traits[self._typ][item].items() )
 			traitList.sort()
 			for trait in traitList:
 				traitItem = QStandardItem(trait[1].name)
@@ -164,7 +164,7 @@ class SubPowerWidget(QWidget):
 					parentUsed.appendRow(itemUsed)
 
 		## Versteckt alle Elternzeilen, wenn sie keine Kinder enthalten.
-		for i in xrange(self.__model.rowCount()):
+		for i in range(self.__model.rowCount()):
 			categoryItem = self.__model.item(i)
 			if categoryItem.hasChildren():
 				self.__view.setRowHidden(categoryItem.index().row(), self.__rootItem.index(), False)

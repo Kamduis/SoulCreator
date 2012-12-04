@@ -25,8 +25,9 @@ from __future__ import division, print_function
 import ast
 import gzip
 
-from PySide.QtCore import QObject, QDate, QByteArray
-from PySide.QtGui import QPixmap
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject, QDate, QByteArray
+from PyQt4.QtGui import QPixmap
 
 from src.Config import Config
 from src.Error import ErrXmlOldVersion
@@ -63,7 +64,14 @@ class ReadXmlCharacter(QObject, ReadXml):
 	"""
 
 
+	exceptionRaised = Signal(str, str, bool)
+
+
 	def __init__(self, character, parent=None):
+		"""
+		\warning Aufgrund der multiplen Vererbung wird nicht die super()-Methode beim Aufruf der __init__()-Methoden der Elternkalssen verwendet.
+		"""
+
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 

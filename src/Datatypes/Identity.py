@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QObject
-#from PySide.QtGui import QDialog
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject
+#from PyQt4.QtGui import QDialog
 
 from src.Config import Config
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
@@ -59,7 +59,7 @@ class Identity(QObject):
 		\note Als Umgehung des deepcopy-Bugs mit dieser Klasse sind die eigentlich provaten Attribute dieser Klasse nur als protected gekennzeichnet. Um eine saubere Kopie durchführen zu können, muß ich schließlich auf sie zugreifen können.
 		"""
 		
-		QObject.__init__(self, parent)
+		super(Identity, self).__init__(parent)
 		
 		# Liste zur Speicherung von Namen.
 		#
@@ -262,7 +262,7 @@ class Identity(QObject):
 			if type(fores) == list:
 				displayFull = fores[0]
 				for item in fores[1:]:
-					displayFull += u" {}".format(item)
+					displayFull += " {}".format(item)
 			else:
 				displayFull = fores
 
@@ -284,7 +284,7 @@ class Identity(QObject):
 		
 		displayDisplay = first
 		if ( nick ):
-			displayDisplay += u" \"{}\"".format(nick)
+			displayDisplay += " \"{}\"".format(nick)
 
 		# Vor dem Nachnamen nur dann ein Leerzeichen, wenn schon etwas davor steht.
 		if ( displayDisplay ):
@@ -302,7 +302,7 @@ class Identity(QObject):
 		
 		displayHonor = first
 		if ( honor ):
-			displayHonor += u" {}".format(honor)
+			displayHonor += " {}".format(honor)
 
 		return displayHonor
 

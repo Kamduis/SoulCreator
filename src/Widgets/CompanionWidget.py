@@ -24,8 +24,8 @@ from __future__ import division, print_function
 
 #import traceback
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QHBoxLayout, QLineEdit
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QHBoxLayout, QLineEdit
 
 #from src.Config import Config
 #from src import Error
@@ -54,7 +54,7 @@ class CompanionWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(CompanionWidget, self).__init__(parent)
 
 		self.ui = Ui_CompanionWidget()
 		self.ui.setupUi(self)
@@ -160,7 +160,7 @@ class CompanionWidget(QWidget):
 
 
 	def updateNumina(self, listOfNumina):
-		for i in xrange(self.ui.listWidget_numina.count()):
+		for i in range(self.ui.listWidget_numina.count()):
 			item = self.ui.listWidget_numina.item(i)
 			if item.text() in listOfNumina:
 				item.setCheckState(Qt.Checked)

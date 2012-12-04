@@ -24,8 +24,6 @@ from __future__ import division, print_function
 
 import os
 
-from PySide.QtCore import Signal# as Signal
-
 from src.Config import Config
 import src.Error as Error
 #from src.Debug import Debug
@@ -39,9 +37,6 @@ class ReadXml(object):
 
 	Diese Klasse bietet die grundlegendsten Funktionen für das Lesen aus XML-Dateien.
 	"""
-
-
-	exceptionRaised = Signal(str, str, bool)
 
 
 	def __init__(self):

@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QObject
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject
 
 #from src.Config import Config
 #from ReadXml import ReadXml
@@ -52,13 +52,17 @@ class AbstractTrait(QObject):
 		\ref checkPrerequisites
 		"""
 		
-		QObject.__init__(self, parent)
+		super(AbstractTrait, self).__init__(parent)
 
 		self.__identifier = name
 		self.__name = name
 		self.__value = value
 
 		self.valueChanged.connect(self.totalvalueChanged)
+
+
+	def __lt__(self, other):
+		return self.name < other.name
 
 
 	@property

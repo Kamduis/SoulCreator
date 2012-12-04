@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QSettings
-#from PySide.QtGui import QColor
+from PyQt4.QtCore import QSettings
+#from PyQt4.QtGui import QColor
 
 
 
@@ -34,4 +34,4 @@ class Settings(QSettings):
 	"""
 
 	def __init__(self, configFile, parent=None):
-		QSettings.__init__(self, configFile, QSettings.IniFormat, parent)
+		super(Settings, self).__init__(configFile, QSettings.IniFormat, parent)

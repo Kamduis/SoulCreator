@@ -3,7 +3,7 @@
 
 ## Requirements
 
-SoulCreator requires Python Version 2.7 or greater and PySide Version 1.0 or greater. (If PySide will be available for Python3, it is planned, to switch SoulCreator from Python2 to Python3.)
+SoulCreator requires Python Version 3.2 or greater and PyQt Version 4.9 or greater.
 
 
 ### Linux
@@ -11,14 +11,14 @@ SoulCreator requires Python Version 2.7 or greater and PySide Version 1.0 or gre
 
 #### Debian/Ubuntu
 
-To get PySide, just type the following line as root:
+To get Python and PyQt, just type the following line as root:
 
-	apt-get install python-pyside
+	apt-get install python3 python3-pyqt4
 
 
 ### Windows
 
-To get Python for Windows, navigate to the [Python website](http://python.org/download/) and download and install the most recent Python2-Version for your architecture. After that, you should do the same with PySide. Get it from the [PySide homepage](http://developer.qt.nokia.com/wiki/PySide_Binaries_Windows).
+To get Python for Windows, navigate to the [Python website](http://python.org/download/) and download and install the most recent Python 3 Version for your architecture. After that, you should do the same with PyQt. Get it from the [PyQt homepage](http://www.riverbankcomputing.com/software/pyqt/download).
 
 
 ## Generation resource files
@@ -34,7 +34,7 @@ This is not necessary, if you have a frozen executable (see the section *Freezin
 
 ## Execution
 
-To execute the Program just start SoulCreator.py in an python environment.
+To execute the Program just start `SoulCreator.py` in an python environment.
 
 
 ### Linux
@@ -51,7 +51,7 @@ Alternatively you can set the executable flag for SoulCreator.py and start it di
 
 ### Windows
 
-After you have installed Python and PySide, you should be able to start SoulCreator with a simple double-click on `SoulCreator.py`.
+After you have installed Python and PyQt, you should be able to start SoulCreator with a simple double-click on `SoulCreator.py`.
 
 
 ### Frozen Executable
@@ -63,7 +63,7 @@ The next section will describe, how to generate such a *frozen* Executable.
 
 ## Freezing
 
-With the help of [cx_Freeze](http://cx-freeze.sourceforge.net/) it is possible to *freeze* SoulCreator into a executable file, with all dependencies bundled with it. This executable will need no installed Python or PySide to work.
+With the help of [cx_Freeze](http://cx-freeze.sourceforge.net/) it is possible to *freeze* SoulCreator into a executable file, with all dependencies bundled with it. This executable will need no installed Python or PyQt to work.
 
 To create the executable, navigate to the SoulCreator root directory and then type the following in a shell:
 
@@ -86,4 +86,3 @@ Next, you have to create a file named `qt.conf` inside your frozen applications 
 	Plugins = plugins
 
 Now the svg-images should be displayed correctly.
-

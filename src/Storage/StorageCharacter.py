@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QObject, QDate
-from PySide.QtGui import QPixmap
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject, QDate
+from PyQt4.QtGui import QPixmap
 
 from src.Config import Config
 from src.Datatypes.AbstractTrait import AbstractTrait
@@ -162,7 +162,7 @@ class StorageCharacter(QObject):
 		\todo Eigentlich benötigt Subpower keinen eigenen Datentyp. Da die ganzen Zusatzinformationen ja nur im Template zu stehen haben und nicht auch für den Charakter bekannt sein müssen. Der Wert "level" ist aber interessant und gilt für andere Klassen nicht.
 		"""
 
-		QObject.__init__(self, parent)
+		super(StorageCharacter, self).__init__(parent)
 
 		self.__storage = template
 
@@ -207,7 +207,7 @@ class StorageCharacter(QObject):
 		self.__paradoxMarks = ""
 
 		self.__vinculi = []
-		for i in xrange(Config.vinculiCount):
+		for i in range(Config.vinculiCount):
 			vinculum = AbstractTrait()
 			self.__vinculi.append(vinculum)
 			vinculum.traitChanged.connect(self.setModified)
@@ -220,7 +220,7 @@ class StorageCharacter(QObject):
 		self.__companionSpeedFactor = 0
 		self.__companionFuel = 0
 		self.__companionInfluences = []
-		for i in xrange(Config.companionInfluencesCount):
+		for i in range(Config.companionInfluencesCount):
 			companionInfluence = AbstractTrait()
 			self.__companionInfluences.append(companionInfluence)
 			companionInfluence.traitChanged.connect(self.setModified)
@@ -258,7 +258,7 @@ class StorageCharacter(QObject):
 						loop = Config.traitMultipleMax
 						custom = True
 
-					for i in xrange(loop):
+					for i in range(loop):
 						trait = None
 						if typ == "Subpower":
 							trait = SubPowerTrait(self, subitem[1]["name"], val)

@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QPoint
-from PySide.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QPoint
+from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter, QPalette
 
 #from src.Config import Config
 #from src.Widgets.TraitLine import TraitLine
@@ -44,7 +44,7 @@ class Dot(QWidget):
 
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(Dot, self).__init__(parent)
 
 		# Widget darf nur proportional in seiner Größe verändert werden?
 		# Minimalgröße festlegen
@@ -55,10 +55,11 @@ class Dot(QWidget):
 
 		self.__value = False
 
-		# Setze Standardfarbe weiß
-		self.__colorEmpty = QColor( 255, 255, 255 )
-		self.__colorFull = QColor( 0, 0, 0 )
-		self.__colorFrame = QColor( 0, 0, 0 )
+		# Setze Farben abhängig von der verwendeten Palette.
+		__palette = QPalette()
+		self.__colorEmpty = __palette.text().color()
+		self.__colorFull = __palette.highlight().color()
+		self.__colorFrame = __palette.highlight().color()
 
 		self.changed.connect(self.update)
 

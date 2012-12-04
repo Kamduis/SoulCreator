@@ -22,9 +22,9 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QPoint
-from PySide.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QPoint
+from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter, QPalette
 
 #from src.Config import Config
 #from src.Widgets.TraitLine import TraitLine
@@ -52,7 +52,7 @@ class AbstractTraitDots(QWidget):
 
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(AbstractTraitDots, self).__init__(parent)
 
 		self.__minimum = 0
 		self.__maximum = 5
@@ -77,10 +77,11 @@ class AbstractTraitDots(QWidget):
 		self.setMinimumSize( minimumSizeX, self.__minimumSizeY)
 		self.setSizePolicy( QSizePolicy.Minimum, QSizePolicy.Fixed )
 
-		# Setze Standardfarbe weiß
-		self._colorEmpty = QColor( 255, 255, 255 )
-		self._colorFull = QColor( 0, 0, 0 )
-		self._colorFrame = QColor( 0, 0, 0 )
+		# Setze Farben abhängig von der verwendeten Palette.
+		__palette = QPalette()
+		self._colorEmpty = __palette.text().color()
+		self._colorFull = __palette.highlight().color()
+		self._colorFrame = __palette.highlight().color()
 
 		self.maximumChanged.connect(self.resetMinimumSize)
 
@@ -120,7 +121,7 @@ class AbstractTraitDots(QWidget):
 
 		painter.save()
 
-		for i in xrange(self.__value):
+		for i in range(self.__value):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 	## 		if (v_forbiddenValues.contains(i+1)){
@@ -132,7 +133,7 @@ class AbstractTraitDots(QWidget):
 
 		painter.save()
 
-		for i in xrange(self.__value, self.__maximum):
+		for i in range(self.__value, self.__maximum):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 
@@ -350,8 +351,8 @@ class AbstractTraitDots(QWidget):
 		if tmpList[-1] > self.__maximum:
 			self.setMaximum( tmpList[-1] )
 
-		# Eine Liste beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumetn genannt werden.
-		self.__forbiddenValues = range(self.__minimum, self.__maximum + 1)
+		# Eine Liste beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumenten genannt werden.
+		self.__forbiddenValues = list( range(self.__minimum, self.__maximum + 1) )
 
 		for item in tmpList:
 			if item in self.__forbiddenValues:

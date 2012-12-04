@@ -24,9 +24,9 @@ from __future__ import division, print_function
 
 import os
 
-#from PySide.QtCore import Signal# as Signal
-#from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
+#from PyQt4.QtCore import pyqtSignal as Signal
+#from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QToolBox
 
 from src.Config import Config
 from src.Tools import ListTools
@@ -42,7 +42,7 @@ class FlawWidget(QWidget):
 	"""
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(FlawWidget, self).__init__(parent)
 
 		self.__storage = template
 		self.__character = character
@@ -83,7 +83,7 @@ class FlawWidget(QWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self.__character.traits[self.__typ][item].items()
+			__list = list( self.__character.traits[self.__typ][item].items() )
 			__list.sort()
 			for flaw in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.

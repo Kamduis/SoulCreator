@@ -24,9 +24,9 @@ from __future__ import division, print_function
 
 #import traceback
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import Qt
-from PySide.QtGui import QListWidget, QListWidgetItem, QColor
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QListWidget, QListWidgetItem, QColor
 
 from src.Config import Config
 #from src import Error
@@ -48,7 +48,7 @@ class CheckedList(QListWidget):
 
 
 	def __init__(self, parent=None):
-		QListWidget.__init__(self, parent)
+		super(CheckedList, self).__init__(parent)
 
 		self.itemChanged.connect(self.emitItemStateChanged)
 

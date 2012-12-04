@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Signal# as Signal
+from PyQt4.QtCore import pyqtSignal as Signal
 
 #from src.Config import Config
 #from src.Datatypes.AbstractTrait import AbstractTrait
@@ -44,7 +44,7 @@ class BonusTrait(StandardTrait):
 
 
 	def __init__(self, character, name="", value=0, parent=None):
-		StandardTrait.__init__(self, character, name, value, parent)
+		super(BonusTrait, self).__init__(character, name, value, parent)
 
 		self.__bonusValue = 0
 		self.__bonusSpecialties = []

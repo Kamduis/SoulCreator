@@ -24,8 +24,8 @@ from __future__ import division, print_function
 
 import copy
 
-from PySide.QtCore import Signal# as Signal
-from PySide.QtCore import QObject
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject
 
 #from src.Error import ErrFileNotOpened
 from src.Config import Config
@@ -48,7 +48,7 @@ class Creation(QObject):
 
 
 	def __init__(self, template, character, parent=None):
-		QObject.__init__(self, parent)
+		super(Creation, self).__init__(parent)
 
 		self.__storage = template
 		self.__character = character

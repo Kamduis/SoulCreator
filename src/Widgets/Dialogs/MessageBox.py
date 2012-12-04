@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import QObject
-from PySide.QtGui import QMessageBox
+from PyQt4.QtCore import QObject
+from PyQt4.QtGui import QMessageBox
 
 from src.Config import Config
 #from src.Error import ErrXmlTooOldVersion

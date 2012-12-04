@@ -22,8 +22,8 @@ You should have received a copy of the GNU General Public License along with Sou
 
 from __future__ import division, print_function
 
-from PySide.QtCore import Qt, QSize
-#from PySide.QtGui import QColor
+from PyQt4.QtCore import Qt, QSize
+#from PyQt4.QtGui import QColor
 
 
 
@@ -312,7 +312,7 @@ class Config(object):
 		( "Physical", ( "Strength", "Dexterity", "Stamina", ), ),
 		( "Social", ( "Presence", "Manipulation", "Composure", ), ),
 	)
-	attributeSorts = ( u"Power", u"Finesse", u"Resistance", )
+	attributeSorts = ( "Power", "Finesse", "Resistance", )
 
 	## Die unterschiedlichen Gestalten der Werwölfe.
 	shapesWerewolf = (

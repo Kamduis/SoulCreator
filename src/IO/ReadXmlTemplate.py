@@ -26,7 +26,8 @@ import ast
 import tempfile
 import zlib
 
-from PySide.QtCore import QObject, QDir, QFile, QIODevice
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject, QDir, QFile, QIODevice
 
 from src.Config import Config
 from src.GlobalState import GlobalState
@@ -65,7 +66,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 	"""
 
 
+	exceptionRaised = Signal(str, str, bool)
+
+
 	def __init__(self, template, parent=None):
+		"""
+		\warning Aufgrund der multiplen Vererbung wird nicht die super()-Methode beim Aufruf der __init__()-Methoden der Elternkalssen verwendet.
+		"""
+
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 
@@ -245,12 +253,12 @@ class ReadXmlTemplate(QObject, ReadXml):
 								if subelement.tag == "power":
 									listOfPowers.setdefault(subelement.text, int(subelement.attrib["value"]))
 								elif subelement.tag == "prerequisites":
-									listOfPrerequisites.append(u"({})".format(subelement.text))
+									listOfPrerequisites.append("({})".format(subelement.text))
 								elif subelement.tag == "only":
-									listOfOnlys.append(u"{}".format(subelement.text))
-							powerPrerequisites = u" and ".join([u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()])
+									listOfOnlys.append("{}".format(subelement.text))
+							powerPrerequisites = " and ".join(["Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()])
 							if powerPrerequisites:
-								powerPrerequisites = u"({})".format(powerPrerequisites)
+								powerPrerequisites = "({})".format(powerPrerequisites)
 								listOfPrerequisites.append(powerPrerequisites)
 							subPowerData = {
 								"name": element.attrib["name"],
