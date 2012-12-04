@@ -24,7 +24,7 @@ from __future__ import division, print_function
 
 from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QPoint
-from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter
+from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter, QPalette
 
 #from src.Config import Config
 #from src.Widgets.TraitLine import TraitLine
@@ -55,10 +55,11 @@ class Dot(QWidget):
 
 		self.__value = False
 
-		# Setze Standardfarbe weiß
-		self.__colorEmpty = QColor( 255, 255, 255 )
-		self.__colorFull = QColor( 0, 0, 0 )
-		self.__colorFrame = QColor( 0, 0, 0 )
+		# Setze Farben abhängig von der verwendeten Palette.
+		__palette = QPalette()
+		self.__colorEmpty = __palette.text().color()
+		self.__colorFull = __palette.highlight().color()
+		self.__colorFrame = __palette.highlight().color()
 
 		self.changed.connect(self.update)
 

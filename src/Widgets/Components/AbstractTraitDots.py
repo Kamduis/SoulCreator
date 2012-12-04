@@ -24,7 +24,7 @@ from __future__ import division, print_function
 
 from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QPoint
-from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter
+from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter, QPalette
 
 #from src.Config import Config
 #from src.Widgets.TraitLine import TraitLine
@@ -77,10 +77,11 @@ class AbstractTraitDots(QWidget):
 		self.setMinimumSize( minimumSizeX, self.__minimumSizeY)
 		self.setSizePolicy( QSizePolicy.Minimum, QSizePolicy.Fixed )
 
-		# Setze Standardfarbe weiß
-		self._colorEmpty = QColor( 255, 255, 255 )
-		self._colorFull = QColor( 0, 0, 0 )
-		self._colorFrame = QColor( 0, 0, 0 )
+		# Setze Farben abhängig von der verwendeten Palette.
+		__palette = QPalette()
+		self._colorEmpty = __palette.text().color()
+		self._colorFull = __palette.highlight().color()
+		self._colorFrame = __palette.highlight().color()
 
 		self.maximumChanged.connect(self.resetMinimumSize)
 
