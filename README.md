@@ -9,7 +9,7 @@ Developed by [Victor](victor@caern.de).
 
 ## Supported game lines
 
-This character generator supports the following lines:
+This character generator supports the following game lines:
 
 * World of Darkness
 * Changeling the Lost
