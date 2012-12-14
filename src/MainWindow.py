@@ -68,7 +68,7 @@ from .Debug import Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
 
-from resources import rc_resource
+from res import rc_resource
 
 
 
@@ -129,7 +129,7 @@ class MainWindow(QMainWindow):
 		self.ui.setupUi(self)
 
 		QCoreApplication.setOrganizationName( Config.organization )
-		QCoreApplication.setApplicationName( Config.programName )
+		QCoreApplication.setApplicationName( Config.PROGRAM_NAME )
 		QCoreApplication.setApplicationVersion( Config.version() )
 
 		#Debug.debug(QApplication.style())
@@ -513,14 +513,14 @@ class MainWindow(QMainWindow):
 			<h2>World of Darkness</h2>
 			<p>World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requiem, Werewolf: The Forsaken, White Wolf, the White Wolf-Logo and all referring terms and symbols are copyrighted by White Wolf Inc.</p>
 			""".format(
-				name=Config.programName,
+				name=Config.PROGRAM_NAME,
 				version=Config.version(),
 				author=Config.programAuthor,
 				mail=Config.programAuthorEMail,
 			)
 		)
 
-		QMessageBox.about(self, self.tr("About {}".format(Config.programName)), aboutText)
+		QMessageBox.about(self, self.tr("About {}".format(Config.PROGRAM_NAME)), aboutText)
 
 
 	def setTitle( self, name ):
@@ -528,9 +528,9 @@ class MainWindow(QMainWindow):
 		Fügt den Inhalt des Arguments zum Fenstertitel hinzu.
 		"""
 
-		titleStr = "{} {} ({})".format(Config.programName, Config.versionDetail(), name )
+		titleStr = "{} {} ({})".format(Config.PROGRAM_NAME, Config.version(change=True), name )
 		if not name:
-			titleStr = "{} {}".format(Config.programName, Config.versionDetail() )
+			titleStr = "{} {}".format(Config.PROGRAM_NAME, Config.version(change=True) )
 		self.setWindowTitle( titleStr )
 
 
@@ -735,7 +735,7 @@ class MainWindow(QMainWindow):
 		settings.beginGroup( "MainWindow" )
 		self.resize( settings.value( "size", QSize( 900, 600 ) ) )
 		self.move( settings.value( "pos", QPoint( 200, 200 ) ) )
-		self.restoreState( QByteArray(settings.value( "state" )) )
+		self.restoreState( QByteArray( settings.value( "state", "0" ) ) )
 		settings.endGroup()
 
 		settings.beginGroup( "Config" )

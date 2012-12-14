@@ -63,7 +63,7 @@ class ReadXml(object):
 		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.
 		"""
 
-		if name == Config.programName:
+		if name == Config.PROGRAM_NAME:
 			if version == Config.version():
 				return
 			else:
@@ -79,5 +79,5 @@ class ReadXml(object):
 				else:
 					raise Error.ErrXmlOldVersion( version, filename )
 		else:
-			raise Error.ErrXmlVersion( "{} {}".format(Config.programName, Config.version()), "{} {}".format(name, version) )
+			raise Error.ErrXmlVersion( "{} {}".format(Config.PROGRAM_NAME, Config.version()), "{} {}".format(name, version) )
 

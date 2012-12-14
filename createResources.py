@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -26,72 +26,57 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
-
 import os
 import sys
+import argparse
 import subprocess
-import zlib
-import gzip
 
 from src.Config import Config
-from src.Tools import PathTools
 
 
 
 
 if __name__ == "__main__":
 	"""
-	Erzeugt die notwendigen ui-Dateien und Resourcen, um SoulCreator verwenden zu können.
+	Creates the resource files for the program.
 	"""
 
-	#for f in os.listdir("{}/{}".format(Config.resourceDir, Config.resourceDirTemplates)):
-		#if f.endswith(".xml"):
-			#nameWOSuffix = f.split(".xml")[0]
-			#compressFile("{}/{}/{}/{}".format(PathTools.getPath(), Config.resourceDir, Config.resourceDirTemplates, nameWOSuffix), "xml")
+	parser = argparse.ArgumentParser(description="Creates resource and ui-files needed to run {}.".format(Config.PROGRAM_NAME))
 
-	## Resourcen bauen
-	#cmd_string_rcc = ["pyside-rcc", "-o", ]
-	#cmd_string_uic = ["pyside-uic", "-i", "0", "-o", ]
-	cmd_string_rcc = ["pyrcc4", "-py3", "-o", ]
-	cmd_string_uic = ["pyuic4", "-i", "0", "-o", ]
+	parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
+	parser.add_argument("-V", "--version", action="version", version="{name}: {version}".format(
+		name=sys.argv[0],
+		version=Config.version(change=True)
+	))
 
-	buildResources = True
-	if os.name == "nt":
-		## Unter Windows sind pyside-rcc und pyside-uic nicht ohne absolute Pfadangabe aufrufbar. Dieser Pfad wird hier ermittelt.
-		pathToRcc = os.path.join(os.path.dirname(sys.executable), "Lib", "site-packages", "PySide")
-		if os.path.exists(pathToRcc):
-			cmd_string_rcc[0] = os.path.join(pathToRcc, cmd_string_rcc[0])
-		else:
-			buildResources = False
-		pathToUic = os.path.join(os.path.dirname(sys.executable), "Scripts")
-		if os.path.exists(pathToUic):
-			cmd_string_uic[0] = os.path.join(pathToUic, cmd_string_uic[0])
-		else:
-			buildResources = False
+	args = parser.parse_args()
 
-	if buildResources:
-		print("Generate resource files for {}...".format(Config.programName))
-		cmd_string_list = []
-		for f in os.listdir(Config.resourceDir):
-			if f.endswith(".qrc"):
-				nameWOSuffix = f.split(".qrc")[0]
-				cmd_string_lcl = cmd_string_rcc
-				cmd_string_lcl.extend(["{}/{}/{}.py".format(PathTools.getPath(), Config.resourceDir, nameWOSuffix), "{}/{}/{}".format(PathTools.getPath(), Config.resourceDir, f)])
-				cmd_string_list.append([ cmd_string_lcl, f, ])
-		for f in os.listdir(Config.uiDir):
-			if f.endswith(".ui"):
-				nameWOSuffix = f.split(".ui")[0]
-				cmd_string_lcl = cmd_string_uic[:]
-				cmd_string_lcl.extend(["{}/{}/{}.py".format(PathTools.getPath(), Config.uiDir, nameWOSuffix), "{}/{}/{}".format(PathTools.getPath(), Config.uiDir, f)])
-				cmd_string_list.append([ cmd_string_lcl, f, ])
-		for cmd, f in cmd_string_list:
-			print("Processing {}...".format(f))
-			retcode = subprocess.call(cmd, shell=False)
-			if retcode != 0:
-				sys.exit(retcode)
-		print("Done.")
-	else:
-		print("Warning: Resources not built. Old resource files used. Inconsistencies may occur.\nIf no old resource-files were present, you will not be able to run {}.".format(Config.programName))
-		sys.exit(1)
+	cmd_path = Config.PATH_RESOURCE_BUILDER
+	conversion_targets = {
+		"qrc": {
+			"dir": Config.PATH_RESOURCE,
+			"ext": Config.FILEXT_RESOURCE,
+		},
+		"ui": {
+			"dir": Config.PATH_UI,
+			"ext": Config.FILEXT_UI,
+		},
+	}
+
+	for target in conversion_targets.items():
+		do_anything = False
+		cmd = [ cmd_path, "--pyqt", ]
+		file_list = os.listdir(target[1]["dir"])
+		for fi in file_list:
+			if fi.endswith(".{}".format(target[1]["ext"])):
+				do_anything = True
+				cmd.append(os.path.join(target[1]["dir"], fi))
+		if args.verbose:
+			cmd.insert(1, "-v")
+
+		if do_anything:
+			ret = subprocess.call(cmd, shell=False)
+			if ret != 0:
+				sys.exit(1)
 
 	sys.exit(0)

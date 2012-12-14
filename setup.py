@@ -91,7 +91,7 @@ if __name__ == "__main__":
 	]
 
 	setup(
-		name = Config.programName,
+		name = Config.PROGRAM_NAME,
 		version = Config.version(),
 		description = Config.programDescription,
 		author = Config.programAuthor,

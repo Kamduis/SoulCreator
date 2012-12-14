@@ -40,13 +40,24 @@ class Config(object):
 	"""
 
 
+	PATH_RESOURCE_BUILDER = "external/ResourcesPythonQt/resourcesPythonQt.py"
+	PATH_RESOURCE         = "res/"
+	PATH_UI               = "ui/"
+	PATH_LANGUAGES        = "lang/"
+	FILEXT_RESOURCE       = "qrc"
+	FILEXT_UI             = "ui"
+
+
+
 	# Programmdaten
-	programName = "SoulCreator"
+	PROGRAM_NAME = "SoulCreator"
 	programAuthor = "Victor von Rhein"
 	programAuthorEMail = "victor@caern.de"
-	programVersionMajor = 0
-	programVersionMinor = 12
-	programVersionChange = 0
+	PROGRAM_VERSION = {
+		"major": 0,
+		"minor": 12,
+		"change": 0,
+	}
 	programDescription = "Charaktergenerator for the World of Darkness."
 	organization = "Caern"
 
@@ -334,26 +345,34 @@ class Config(object):
 	autoSelectEra = True
 
 
-	@staticmethod
-	def version():
+	@classmethod
+	def version(cls, change=False):
 		"""
-		\brief Die aktuelle Version des Programms ausschließlich der Change-Nummer.
+		Returns the version number of the program.
 
 		Programme mit unterschieldicher Versionsnummer sind zueinander nicht notwendigerweise kompatibel.
-		"""
-
-		return "{}.{}".format(Config.programVersionMajor, Config.programVersionMinor)
-
-
-	@staticmethod
-	def versionDetail():
-		"""
-		\brief Die aktuelle Version des Programms einschließlich der Change-Nummer.
 
 		Unterscheiden sich Programme in ihrer Change-Nummer, aber der Rest ihrer Versionsnummer ist gleich, sollten eigentlich keine Kompatibilitätsprobleme mit den Template-Dateien und den gespeicherten Charakteren auftreten.
+
+		Parameters:
+			change: bool
+				If this parameter is set to "True", the change number of the version will be returned as well.
+
+		Returns:
+			return: string
+				Version number in the format <major>.<minor>.<change>. Change is omitted by default.
 		"""
 
-		return "{}.{}.{}".format(Config.programVersionMajor, Config.programVersionMinor, Config.programVersionChange)
+		version_list = (
+			str(cls.PROGRAM_VERSION["major"]),
+			str(cls.PROGRAM_VERSION["minor"]),
+			str(cls.PROGRAM_VERSION["change"]),
+		)
+
+		if change:
+			return ".".join( str(val) for val in version_list )
+		else:
+			return ".".join( str(val) for val in version_list[:2] )
 
 
 	@staticmethod

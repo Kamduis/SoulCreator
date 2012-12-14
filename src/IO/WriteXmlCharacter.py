@@ -82,7 +82,7 @@ class WriteXmlCharacter(QObject):
 		Erzeugt den Element-Baum, der später in eine XML-Datei geschrieben werden kann.
 		"""
 
-		root = etree.Element(Config.programName, version=Config.version())
+		root = etree.Element(Config.PROGRAM_NAME, version=Config.version())
 
 		etree.SubElement(root, "species").text = self.__character.species
 
