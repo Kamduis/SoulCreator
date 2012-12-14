@@ -78,19 +78,19 @@ class MoralityWidget(QWidget):
 		self.__dotList = {}
 		self.__derangementBoxList = {}
 
-		for i in range(Config.moralityTraitMax):
-			label = QLabel("{}".format(Config.moralityTraitMax - i))
+		for i in range(Config.TRAIT_MORALITY_VALUE_MAX):
+			label = QLabel("{}".format(Config.TRAIT_MORALITY_VALUE_MAX - i))
 			label.setAlignment(Qt.AlignRight)
 			self.__layoutTab.addWidget(label, i, 0)
 
 			dot = Dot()
 			# Den Punkt zu einer Liste hinzufügen, um später zu sehen, welcher Punkt den Wert änderte.
-			self.__dotList[Config.moralityTraitMax - i] = dot
+			self.__dotList[Config.TRAIT_MORALITY_VALUE_MAX - i] = dot
 			self.__layoutTab.addWidget(dot, i, 2)
 
-			if i >= Config.moralityTraitMax - Config.derangementMoralityTraitMax:
+			if i >= Config.TRAIT_MORALITY_VALUE_MAX - Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX:
 				box = DerangementComboBox()
-				self.__derangementBoxList[Config.moralityTraitMax - i] = box
+				self.__derangementBoxList[Config.TRAIT_MORALITY_VALUE_MAX - i] = box
 				self.__layoutTab.addWidget(box, i, 1)
 
 				box.currentIndexChanged[str].connect(self.uniqifyDerangements)
@@ -199,7 +199,7 @@ class MoralityWidget(QWidget):
 		#Debug.debug(mild)
 		#Debug.debug(severe)
 		lostDerangements = []
-		for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
+		for i in range(1, Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX+1)[::-1]:
 			## Speichern der alten Auswahl.
 			oldSelection = self.__derangementBoxList[i].currentText()
 			## Erst löschen
@@ -241,7 +241,7 @@ class MoralityWidget(QWidget):
 
 		#Debug.debug(value)
 
-		for i in range(value+1, Config.derangementMoralityTraitMax+1)[::-1]:
+		for i in range(value+1, Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX+1)[::-1]:
 			self.__derangementBoxList[i].setEnabled(True)
 		for i in range(1, value+1):
 			self.__derangementBoxList[i].setCurrentIndex(0)
@@ -257,7 +257,7 @@ class MoralityWidget(QWidget):
 
 		#Debug.debug(text)
 		firstOccuranceHappened = False
-		for i in range(1, Config.derangementMoralityTraitMax+1):
+		for i in range(1, Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX+1):
 			if self.__derangementBoxList[i].currentIndex != 0:
 				if self.__derangementBoxList[i].currentText() == text and firstOccuranceHappened:
 					self.__derangementBoxList[i].setCurrentIndex(0)
@@ -277,7 +277,7 @@ class MoralityWidget(QWidget):
 					mildParent = item
 					break
 			mildExists = False
-			for i in range(1, Config.derangementMoralityTraitMax+1):
+			for i in range(1, Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX+1):
 				if self.__derangementBoxList[i].currentText() == mildParent:
 					mildExists = True
 					break

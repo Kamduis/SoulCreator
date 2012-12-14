@@ -51,235 +51,214 @@ class Config(object):
 
 	# Programmdaten
 	PROGRAM_NAME = "SoulCreator"
-	programAuthor = "Victor von Rhein"
-	programAuthorEMail = "victor@caern.de"
+	PROGRAM_AUTHOR = "Victor von Rhein"
+	PROGRAM_AUTHOR_EMAIL = "victor@caern.de"
 	PROGRAM_VERSION = {
 		"major": 0,
 		"minor": 12,
 		"change": 0,
 	}
-	programDescription = "Charaktergenerator for the World of Darkness."
-	organization = "Caern"
+	PROGRAM_DESCRIPTION = "Charaktergenerator for the World of Darkness."
+	ORGANIZATION = "Caern"
 
 	# Konfigurationsdatei
-	configFile = "config.ini"
+	CONFIG_FILE = "config.ini"
 
+	# Verzeichnisnamen
 	# Verzeichnisname für gespeicherte Charaktere
-	saveDir = "save"
+	SAVE_DIR = "save"
 
 	# Verzeichnisname für Ressourcen
-	resourceDir = "resources"
-	resourceDirTemplates = "templates"
-
-	# Verzeichnisname für Uis
-	uiDir = "ui"
+	RESOURCE_DIR_TEMPLATES = "templates"
 
 	# Dateiendung komprimierter Dateien.
-	fileSuffixCompressed = "scd"
+	FILE_SUFFIX_COMPRESSED = "scd"
 	# Dateiendung der gespeicherten Charkatere
-	fileSuffixSave = "chr"
+	FILE_SUFFIX_SAVE = "chr"
 
-	compressSaves = True
+	COMPRESS_SAVES = True
 
 	# Zeichen, um Listeneinträge in den XML-Dateien zu trennen
-	sepChar = ";"
+	XML_SEPARATION_SYMBOL = ";"
 
 	# Format von Daten bei der Umwandlung in Strings
-	dateFormat = Qt.ISODate
-	textDateFormat = "dd.MM.yyyy"
+	DATE_FORMAT      = Qt.ISODate
+	DATE_FORMAT_TEXT = "dd.MM.yyyy"
 
 	# Einstellungen für das Auswahl-Widget
-	selectIconSize = QSize(50,50)
-	selectWidgetWidth = 150
+	WIDGET_SELECT_ICON_SIZE = QSize(50,50)
+	WIDGET_SELECT_WIDTH     = 150
 
 	### Minimale Breite für textEdit-Felder, in denen mehrzeiliger Text eingegeben werden soll.
 	#textEditWidthMin = 200
 
 	## Das Charakterbild darf höchstens die hier festgelegte Größe annehmen.
-	pictureWidthMax = 800
-	pictureHeightMax = 800
+	CHARACTER_PIC_WIDTH_MAX  = 800
+	CHARACTER_PIC_HEIGHT_MAX = CHARACTER_PIC_WIDTH_MAX
 
 	## Das Charakterbild wird in dem hier festgelegten Format gespeichert.
-	pictureFormat = "png"#"jpg"
+	CHARACTER_PIC_FORMAT     = "png"#"jpg"
 
 	# Vordefinierte Farben
 	##  Wichtige Textabschnitte
-	importantTextColor = "darkBlue"
+	COLOR_TEXT_IMPORTANT = "darkBlue"
 
 	## Die Hintergrundfarbe für ernste Geistesstörungen in der Auswahlliste.
-	severeDerangementsColor = "sandybrown"
+	COLOR_DERANGEMENTS_SEVERE = "sandybrown"
 
 	## Warnfarbe, wenn zuviele Punkte vergeben wurden.
-	pointsNegativeColor = "orangered"
+	COLOR_POINTS_NEGATIVE = "orangered"
 
 	## Warnfarbe, wenn zuwenige Punkte vergeben wurden.
-	pointsPositiveColor = "chartreuse"
+	COLOR_POINTS_POSITIVE = "chartreuse"
 
 	##  Deaktivierte textabschnitte
-	deactivatedTextColor = "darkgrey"
+	COLOR_TEXT_DEACTIVATED = "darkgrey"
 
 	## Kennzeichnung von Bonuseigenschaften.
-	bonusColor = "red"
+	COLOR_BONUS = "red"
 
 	## Symbole für die verschiedenen Waffencategorien.
-	weaponIcons = {}
-	weaponIcons["melee"] = ":/items/images/svg/machete.svg"
-	weaponIcons["thrown"] = ":/items/images/svg/shuriken.svg"
-	weaponIcons["ranged"] = ":/items/images/svg/uzi.svg"
+	ICONS_WEAPONS = {}
+	ICONS_WEAPONS["melee"]  = ":/items/images/svg/machete.svg"
+	ICONS_WEAPONS["thrown"] = ":/items/images/svg/shuriken.svg"
+	ICONS_WEAPONS["ranged"] = ":/items/images/svg/uzi.svg"
 
 	## Symbole für die verschiedenen magischen Gegenstände.
-	extraordinaryItemsIcons = {}
-	extraordinaryItemsIcons["Cursed Items"] = ":/items/images/svg/curse.svg"
-	extraordinaryItemsIcons["Fetishes"] = ":/items/images/svg/feather.svg"
-	extraordinaryItemsIcons["Tokens"] = ":/items/images/svg/spine.svg"
-	extraordinaryItemsIcons["Imbued Items"] = ":/items/images/svg/wand.svg"
-	extraordinaryItemsIcons["Artifacts"] = ":/types/images/svg/pentagram.svg"
+	ICONS_ITEMS_EXTRAORDINARY = {}
+	ICONS_ITEMS_EXTRAORDINARY["Cursed Items"] = ":/items/images/svg/curse.svg"
+	ICONS_ITEMS_EXTRAORDINARY["Fetishes"]     = ":/items/images/svg/feather.svg"
+	ICONS_ITEMS_EXTRAORDINARY["Tokens"]       = ":/items/images/svg/spine.svg"
+	ICONS_ITEMS_EXTRAORDINARY["Imbued Items"] = ":/items/images/svg/wand.svg"
+	ICONS_ITEMS_EXTRAORDINARY["Artifacts"]    = ":/types/images/svg/pentagram.svg"
 
 	## Symbole für die verschiedenen Fahrzeugkategorien.
-	automobilesIcons = {}
-	automobilesIcons["Cars"] = ":/items/images/svg/vehicle-car.svg"
-	automobilesIcons["Trucks"] = ":/items/images/svg/vehicle-truck.svg"
-	automobilesIcons["Motorcycles"] = ":/items/images/svg/vehicle-motorcycle.svg"
-	automobilesIcons["Commercial Vehicles"] = ":/items/images/svg/vehicle-commercial.svg"
+	ICONS_AUTOMOBILES = {}
+	ICONS_AUTOMOBILES["Cars"]                = ":/items/images/svg/vehicle-car.svg"
+	ICONS_AUTOMOBILES["Trucks"]              = ":/items/images/svg/vehicle-truck.svg"
+	ICONS_AUTOMOBILES["Motorcycles"]         = ":/items/images/svg/vehicle-motorcycle.svg"
+	ICONS_AUTOMOBILES["Commercial Vehicles"] = ":/items/images/svg/vehicle-commercial.svg"
 
 	## Normaler vertikaler Abstand. Wird für Widgets eingesetzt, die zwar untereinander erscheinen, aber nicht zusammengequetscht erscheinen sollen.
-	vSpace = 5
+	SPACE_VERTICAL_STD = 5
 
 	## Der Pixelabstand zwischen Eigenschaftsblöcken. Beispielsweise der vertikale Abstand zwischen Den Fertigkeiten der verschiedenen Kategorien.
-	traitCategorySpace = 10
+	SPACE_TRAIT_CATEGORY = 10
 
-	companionInfluencesCount = 5
+	## Maximale Anzahl von Influences für einen Vertrauten.
+	COMPANION_INFLUENCES_MAX = 5
 
 	## Die Anzahl, wie oft Eigenschaften mit Beschreibungstext mehrfach ausgewählt werden dürfen.
-	traitMultipleMax = 4
+	MULTIPLE_TRAITS_MAX = 4
 
 	## Die Zeit, wie lange Nachrichten in der Statuszeile angezeigt werden sollen.
-	displayTimeout = 10000
+	TIMEOUT_STATUS_MESSAGE_DISPLAY = 10000
 
 	## Die minimale Breite für Widgets wie Fertigkeiten, Merits, Flaws etc.
-	traitLineWidthMin = 320
+	TRAIT_WIDTH_MIN            = 320
 
 	## Die Minimale Breite für Textfelder für zusätzlichen Text von Eigenschaften.
-	traitCustomTextWidthMin = 100
+	TRAIT_CUSTOMTEXT_WIDTH_MIN = 100
 
 	## Die größtmögliche Höhe von Widgets, welche sich in einer Textzeile befinden.
 	#
 	# Diese Höhe wurde gewählt, um vertikalen Raum zu sparen.
-	inlineWidgetHeightMax = 18
-
-	## Die Breite der Armor-Spinboxes.
-	spinBoxNoTextWidth = 30
-
-	## Die Breite einer einfachen vertikalen Eigenschaftsliste.
-	#const int Config::traitVerticalListWidth = 300
+	WIDGET_INLINE_HEIGHT_MAX = 18
 
 	## Eigenschaftshöchstwert.
-	traitMax = 5
+	TRAIT_VALUE_MAX = 5
 
 	## Bezeichnung der Moral für alle Spezies
-	moralityIdentifier = "Morality"
+	MORALITY_IDENTIFIER = "Morality"
 
 	## Höchstwert der Moral.
-	moralityTraitMax = 10
+	TRAIT_MORALITY_VALUE_MAX             = 10
 
 	## Höchstwert der Moral bei der ein Charakter eine Geistesstörung haben kann.
-	derangementMoralityTraitMax = 7
+	TRAIT_MORALITY_DERANGEMENT_VALUE_MAX = 7
 
 	## Startwert der Moral.
-	moralityTraitDefaultValue = 7
+	TRAIT_MORALITY_VALUE_DEFAULT         = 7
 
 	## Höchstwert der Gesundheit, von Spezies zu Spezies unterschiedlich.
-	healthMax = {
-		"Human": 11,
+	TRAIT_HEALTH_VALUE_MAX = {
+		"Human":      11,
 		"Changeling": 11,
-		"Mage": 11,
-		"Vampire": 16,
-		"Werewolf": 16,
+		"Mage":       11,
+		"Vampire":    16,
+		"Werewolf":   16,
 	}
 
 	## Höchstwert der Willenskraft.
-	willpowerMax = 10
+	TRAIT_WILLPOWER_VALUE_MAX = 10
 
-	## Mindestwert der besonderen übernatürlichen Eigenschaft.
-	powerstatMin = 1
-
-	## Höchstwert der besonderen übernatürlichen Eigenschaft.
-	powerstatMax = 10
-
-	## Startwert der besonderen übernatürlichen Eigenschaft.
-	powerstatDefaultValue = 1
+	## Werte der übernatürlichen Eigenschaft.
+	TRAIT_POWERSTAT_VALUE_MIN     = 1
+	TRAIT_POWERSTAT_VALUE_MAX     = 10
+	TRAIT_POWERSTAT_VALUE_DEFAULT = 1
 
 	## Bezeichnung der Übernatürlichen Grundeigenschaft für alle Spezies
-	powerstatIdentifier = "Powerstat"
+	POWERSTAT_IDENTIFIER = "Powerstat"
 
 	## Wieviele Vinculi sollen auf dem Vampir-Charakterbogen angezeigt werden.
-	vinculiCount = 5
-	vinculumLevelMax = 3
+	VINCULI_COUNT_MAX = 5
+	VINCULI_LEVEL_MAX = 3
 
 	## Über wievielen Punkten die Eigenschaften 2 Erschaffungspunkte kosten.
 	#
 	# Alle Punkte bis einschließelich dieser Zahl kosten nur 1 Punkt pro Punkt, aber alle darüber kosten das Doppelte.
-	creationTraitDouble = 4
-
-	## Schriftgröße für den normalen Text auf dem ausdruckbaren Charakterbogen.
-	#const qreal Config::textSizeFactorPrintNormal = 0.45
-
-	## Schriftgröße für den kleinen Text auf dem ausdruckbaren Charakterbogen.
-	#const qreal Config::textSizeFactorPrintSmall = 0.33
-
-	## Die Schriftart, welche für das Programm verwendet wird.
-	#QFont Config::windowFont = QFont()
+	TRAIT_CREATION_DOUBLE_COST = 4
 
 	## Standardspezies eines neuen Charakters
-	initialSpecies = "Human"
+	SPECIES_INITIAL = "Human"
 
 	## Das Standardalter eines neuen Charakters
-	ageInitial = 21
+	AGE_INITIAL = 21
 
-	ageMin = 6
+	AGE_MIN = 6
 
 	## Das Alter ab welchem der Charakter /kein/ Kind mehr ist.
-	ageAdult = 13
+	AGE_ADULT = 13
 
-	heightGiant = {
+	HEIGHT_GIANT_MIN = {
 		"Adult": 2.01,
 		"Kid": 1.51,
 	}
-	heightDwarf = {
+	HEIGHT_DWARF_MAX = {
 		"Adult": 1.39,
 		"Kid": 0.89,
 	}
-	heightMax = {
+	HEIGHT_MAX = {
 		"Adult": 2.30,
 		"Kid": 1.80,
 	}
-	heightMin = {
+	HEIGHT_MIN = {
 		"Adult": 1.10,
 		"Kid": 0.70,
 	}
 
-	size = {
+	SIZE_DEFAULT = {
 		"Adult": 5,
 		"Kid": 4,
 	}
 	## Sämtliche Geschlechter einschließlich der zugehörigen Symbole
-	genders = (
+	GENDERS = (
 		("Hermaphrodite", ":/icons/images/svg/symbolHermaphrodite.svg"),
 		("Male", ":/icons/images/svg/symbolMale.svg"),
 		("Female", ":/icons/images/svg/symbolFemale.svg"),
 	)
 
-	## Sämtliche Eigenschaftstypen.
-	typs = (
-		"Attribute",
-		"Skill",
-		"Merit",
-		"Flaw",
-		"Power",
-	)
+	### Sämtliche Eigenschaftstypen.
+	#TYPS = (
+		#"Attribute",
+		#"Skill",
+		#"Merit",
+		#"Flaw",
+		#"Power",
+	#)
 
 	## Die Kategorien von Attributen und Fertigkeiten sollen in einer gewissen Reihenfolge dargestellt werden.
-	mainCategories = (
+	CATEGORIES_MAIN = (
 		"Mental",
 		"Physical",
 		"Social",
@@ -287,7 +266,7 @@ class Config(object):
 
 	## Die Kategorien von Merits sollen in einer gewissen Reihenfolge dargestellt werden.
 	# Alle Kategorien die nicht in dieser Liste stehen, werden nach den hier aufgeführten Kategorien dargestellt.
-	meritCategories = (
+	CATEGORIES_MERITS = (
 		"Mental",
 		"Physical",
 		"Social",
@@ -299,38 +278,50 @@ class Config(object):
 
 	## Die Kategorien von Flaws sollen in einer gewissen Reihenfolge dargestellt werden.
 	# Alle Kategorien die nicht in dieser Liste stehen, werden nach den hier aufgeführten Kategorien dargestellt.
-	flawCategories = (
+	CATEGORIES_FLAWS = (
 		"Mental",
 		"Physical",
 		"Social",
 		#"Extraordinary",
 	)
 
-	initialEra = "Modern"
+	ERA_INITIAL = "Modern"
 
 	## Sämtliche Eras, welcher ein Charakter angehören kann und mit welchem jahr sie beginnen.
-	eras = {
+	ERAS = {
 		"Modern": 1950,
 		"Renaissance": 1500,
 		"Ancient": 0,
 	}
 
 	## Sämtliche Eras, welcher ein Charakter angehören kann.
-	ages = (
+	AGES = (
 		"Adult",
 		"Kid",
 	)
 
 	## Die Reihenfolge der Attribute ist derart wichtig, daß ich sie nicht automatisch bestimmen kann.
-	attributes = (
-		( "Mental", ( "Intelligence", "Wits", "Resolve", ), ),
-		( "Physical", ( "Strength", "Dexterity", "Stamina", ), ),
-		( "Social", ( "Presence", "Manipulation", "Composure", ), ),
+	ATTRIBUTES = (
+		( "Mental", (
+			"Intelligence",
+			"Wits",
+			"Resolve",
+		), ),
+		( "Physical", (
+			"Strength",
+			"Dexterity",
+			"Stamina",
+		), ),
+		( "Social", (
+			"Presence",
+			"Manipulation",
+			"Composure",
+		), ),
 	)
-	attributeSorts = ( "Power", "Finesse", "Resistance", )
+	ATTRIBUTE_ORDER = ( "Power", "Finesse", "Resistance", )
 
 	## Die unterschiedlichen Gestalten der Werwölfe.
-	shapesWerewolf = (
+	SHAPES_WEREWOLF = (
 		"Hishu",
 		"Dalu",
 		"Gauru",
@@ -342,7 +333,7 @@ class Config(object):
 	## Folgende Werte können über den Einstellungsdialog verändert werden und sollten beim Beenden des Programms gespeichert und beim Starten geladen werden. Die übergebenen Werte sind die Standartwerte, wenn im Einstellungsdialog nichts verändert wird.
 	# Zur Altersberechnung Kalender verwenden
 	#calendarForAgeCalculation = True
-	autoSelectEra = True
+	ERA_AUTO_SELECT = True
 
 
 	@classmethod
@@ -381,10 +372,10 @@ class Config(object):
 		Gibt die Alterskategorie zurück.
 		"""
 
-		if age < Config.ageAdult:
-			return Config.ages[1]
+		if age < Config.AGE_ADULT:
+			return Config.AGES[1]
 		else:
-			return Config.ages[0]
+			return Config.AGES[0]
 
 
 

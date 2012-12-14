@@ -211,7 +211,7 @@ class StorageCharacter(QObject):
 		self.__paradoxMarks = ""
 
 		self.__vinculi = []
-		for i in range(Config.vinculiCount):
+		for i in range(Config.VINCULI_COUNT_MAX):
 			vinculum = AbstractTrait()
 			self.__vinculi.append(vinculum)
 			vinculum.traitChanged.connect(self.setModified)
@@ -224,7 +224,7 @@ class StorageCharacter(QObject):
 		self.__companionSpeedFactor = 0
 		self.__companionFuel = 0
 		self.__companionInfluences = []
-		for i in range(Config.companionInfluencesCount):
+		for i in range(Config.COMPANION_INFLUENCES_MAX):
 			companionInfluence = AbstractTrait()
 			self.__companionInfluences.append(companionInfluence)
 			companionInfluence.traitChanged.connect(self.setModified)
@@ -259,7 +259,7 @@ class StorageCharacter(QObject):
 					custom = False
 					customText = None
 					if typ != "Subpower" and subitem[1]["custom"]:
-						loop = Config.traitMultipleMax
+						loop = Config.MULTIPLE_TRAITS_MAX
 						custom = True
 
 					for i in range(loop):
@@ -1191,13 +1191,13 @@ class StorageCharacter(QObject):
 		## Der Charkater wird umorganisiert, ohne daß wir haufenweise Warnhinweise haben wollen.
 		self.isLoading = True
 		# Standardspezies ist der Mensch.
-		self.species = Config.initialSpecies
+		self.species = Config.SPECIES_INITIAL
 		# Zeitalter festlegen.
-		self.era = Config.initialEra
+		self.era = Config.ERA_INITIAL
 		## Anfangsdatum setzen.
 		self.dateGame = QDate.currentDate()
-		self.dateBirth = QDate(self.dateGame.year() - Config.ageInitial, self.dateGame.month(), self.dateGame.day())
-		self.dateBecoming = QDate(self.dateGame.year() - Config.ageAdult, self.dateGame.month(), self.dateGame.day())
+		self.dateBirth = QDate(self.dateGame.year() - Config.AGE_INITIAL, self.dateGame.month(), self.dateGame.day())
+		self.dateBecoming = QDate(self.dateGame.year() - Config.AGE_ADULT, self.dateGame.month(), self.dateGame.day())
 
 		# Löschen aller Identitäten.
 		self.identity.reset()
@@ -1216,7 +1216,7 @@ class StorageCharacter(QObject):
 		self.hair = ""
 		self.nationality = ""
 		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
-		#self.breed = self.__storage.breeds(Config.initialSpecies)[0]
+		#self.breed = self.__storage.breeds(Config.SPECIES_INITIAL)[0]
 		self.__derangements = {}
 		self.party = ""
 		self.description = ""
@@ -1236,10 +1236,10 @@ class StorageCharacter(QObject):
 					subsubitem.customText = ""
 					subsubitem.specialties = []
 
-		self.morality = Config.moralityTraitDefaultValue
+		self.morality = Config.TRAIT_MORALITY_VALUE_DEFAULT
 
 		# Übernatürliche Eigenschaft festlegen.
-		self.powerstat = Config.powerstatDefaultValue
+		self.powerstat = Config.TRAIT_POWERSTAT_VALUE_DEFAULT
 
 		# Beim Löschen ist darauf zu achten, daß ich nicht aus der Liste löschen kann, über die ich iteriere. Sonst wird nicht alles gelöscht.
 		for category in self.__weapons:

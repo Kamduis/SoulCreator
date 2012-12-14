@@ -103,7 +103,7 @@ class Creation(QObject):
 			for trait in self.__character.traits[typ][item].values():
 				## Es werden nur Eigenschaften beachtet, die auch der aktuellen Spezies des Charakters angehören.
 				if not trait.species or trait.species == self.__character.species:
-					ans = trait.value - Config.creationTraitDouble
+					ans = trait.value - Config.TRAIT_CREATION_DOUBLE_COST
 
 					if ans < 0:
 						ans = 0

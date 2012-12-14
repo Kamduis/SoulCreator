@@ -86,7 +86,7 @@ class MessageBox(QMessageBox):
 		Formatiert die wichtigen Nachrichten für den Dialog.
 		"""
 
-		importantText = "<p><span style='color:{color}; font-size:large'>{text}</span></p>".format(color=Config.importantTextColor, text=message)
+		importantText = "<p><span style='color:{color}; font-size:large'>{text}</span></p>".format(color=Config.COLOR_TEXT_IMPORTANT, text=message)
 
 		return importantText
 

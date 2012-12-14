@@ -65,7 +65,7 @@ class DerangementComboBox(QComboBox):
 			for item in items:
 				self.addItem(item)
 				self.__severeDerangements.append(item)
-				self.setItemData(self.count()-1, QColor(Config.severeDerangementsColor), Qt.BackgroundRole)
+				self.setItemData(self.count()-1, QColor(Config.COLOR_DERANGEMENTS_SEVERE), Qt.BackgroundRole)
 		else:
 			QComboBox.addItems(self, items)
 

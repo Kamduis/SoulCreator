@@ -85,10 +85,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		## Die Template-Dateien alle für das Laden vorbereiten.
 		self.__templateFiles = []
-		pathToTemplates = ":/template/{}".format(Config.resourceDirTemplates)
+		pathToTemplates = ":/template/{}".format(Config.RESOURCE_DIR_TEMPLATES)
 		templateDir = QDir(pathToTemplates)
 		for templateFile in templateDir.entryList():
-			if templateFile.endswith(".{}".format(Config.fileSuffixCompressed)):
+			if templateFile.endswith(".{}".format(Config.FILE_SUFFIX_COMPRESSED)):
 				self.__templateFiles.append("{}/{}".format(pathToTemplates, templateFile))
 
 
@@ -569,7 +569,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 				}
 				eraText = self.getElementAttribute(traitElement, "era")
 				if eraText:
-					traitData["era"] = eraText.split(Config.sepChar)
+					traitData["era"] = eraText.split(Config.XML_SEPARATION_SYMBOL)
 				if not traitData["id"]:
 					traitData["id"] = traitData["name"]
 				traitData["values"].extend(listOfValues)

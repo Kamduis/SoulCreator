@@ -74,7 +74,7 @@ class CheckedList(QListWidget):
 		item.setText( label )
 		item.setCheckState( state )
 		if isBonus:
-			item.setData(Qt.ForegroundRole, QColor(Config.bonusColor))
+			item.setData(Qt.ForegroundRole, QColor(Config.COLOR_BONUS))
 			item.setFlags(item.flags() & Qt.ItemIsUserCheckable)
 		self.insertItem( index, item )
 

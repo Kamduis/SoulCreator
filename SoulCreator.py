@@ -62,7 +62,7 @@ if __name__ == "__main__":
 	## Das Programm kann mit CTRL-C beendet werden.
 	signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-	parser = argparse.ArgumentParser(description=Config.programDescription)
+	parser = argparse.ArgumentParser(description=Config.PROGRAM_DESCRIPTION)
 
 	#parser.add_argument("-o", "--onepage", action="store_true", help="Charactersheets will consist of one page only. (Momentan noch ohne Funktion.)")
 	parser.add_argument("-p", "--pdf", metavar="Name", nargs=1, help="Directly creates a pdf file of the specified name out of the loaded character and closes immediatly. If no character file is passed as an argument to this program, an empty character sheet will be created.")

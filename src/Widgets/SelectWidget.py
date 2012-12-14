@@ -68,9 +68,9 @@ class SelectWidget(QListWidget):
 			self.item(i).setTextAlignment(Qt.AlignVCenter)
 			self.item(i).setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
 
-		self.setIconSize(Config.selectIconSize)
+		self.setIconSize(Config.WIDGET_SELECT_ICON_SIZE)
 
-		self.setMaximumWidth(Config.selectWidgetWidth)
+		self.setMaximumWidth(Config.WIDGET_SELECT_WIDTH)
 
 
 	def currentPage(self):
@@ -126,7 +126,7 @@ class SelectWidget(QListWidget):
 			self.item( row ).setData(Qt.ForegroundRole, QColor())
 		else:
 			self.item( row ).setFlags( Qt.NoItemFlags )
-			self.item( row ).setData(Qt.ForegroundRole, QColor(Config.deactivatedTextColor))
+			self.item( row ).setData(Qt.ForegroundRole, QColor(Config.COLOR_TEXT_DEACTIVATED))
 
 
 	def setItemColor( self, item, color ):

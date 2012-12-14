@@ -172,9 +172,9 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 
 		dates = tree.find("dates")
-		self.__character.dateBirth = QDate.fromString(dates.attrib["birth"], Config.dateFormat)
-		self.__character.dateBecoming = QDate.fromString(dates.attrib["becoming"], Config.dateFormat)
-		self.__character.dateGame = QDate.fromString(dates.attrib["game"], Config.dateFormat)
+		self.__character.dateBirth = QDate.fromString(dates.attrib["birth"], Config.DATE_FORMAT)
+		self.__character.dateBecoming = QDate.fromString(dates.attrib["becoming"], Config.DATE_FORMAT)
+		self.__character.dateGame = QDate.fromString(dates.attrib["game"], Config.DATE_FORMAT)
 
 
 	def readDerangements(self, tree):
@@ -228,7 +228,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 							for specialties in traitElement.getiterator("specialties"):
 								if specialties is not None:
 									specialtiesText = specialties.text
-									item.specialties = [n for n in specialtiesText.split(Config.sepChar)]
+									item.specialties = [n for n in specialtiesText.split(Config.XML_SEPARATION_SYMBOL)]
 							break
 
 
@@ -331,7 +331,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		if elem is not None:
 			i = 0
 			for element in list(elem):
-				if element.tag == "vinculum" and i < Config.vinculiCount:
+				if element.tag == "vinculum" and i < Config.VINCULI_COUNT_MAX:
 					self.__character.vinculi[i].name = element.text
 					self.__character.vinculi[i].value = int(element.attrib["value"])
 					i += 1
@@ -349,7 +349,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 			for element in list(elem):
 				if element.tag == "numen":
 					companionNumina.append(element.text)
-				if element.tag == "influence" and i < Config.companionInfluencesCount:
+				if element.tag == "influence" and i < Config.COMPANION_INFLUENCES_MAX:
 					self.__character.companionInfluences[i].name = element.text
 					self.__character.companionInfluences[i].value = int(element.attrib["value"])
 					i += 1
@@ -367,7 +367,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		if pictureElement is not None:
 			imageData = QByteArray.fromBase64(str(pictureElement.text))
 			image = QPixmap()
-			image.loadFromData(imageData, Config.pictureFormat)
+			image.loadFromData(imageData, Config.CHARACTER_PIC_FORMAT)
 			self.__character.picture = image
 
 

@@ -79,6 +79,10 @@ class MainWindow(QMainWindow):
 
 	Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
 
+	\todo Einstellen, ob .chr-Dateien komprimiert werden sollen, oder nicht.
+
+	\todo Mehr debug-Ausgaben.
+
 	\todo Alle Eigenschaften zusätzlich in Spezieszugehörigkeit unterteilen: self.__storage.traits[species][typ][category][name]...
 
 	\todo Die Information, daß manche Merits nur bei Charaktererschaffung gewählt werden können, in das Programm einbinden.
@@ -128,7 +132,7 @@ class MainWindow(QMainWindow):
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
 
-		QCoreApplication.setOrganizationName( Config.organization )
+		QCoreApplication.setOrganizationName( Config.ORGANIZATION )
 		QCoreApplication.setApplicationName( Config.PROGRAM_NAME )
 		QCoreApplication.setApplicationVersion( Config.version() )
 
@@ -344,7 +348,7 @@ class MainWindow(QMainWindow):
 		self.info.notificationSent.connect(self.showStatusBarMessage)
 
 		self.__creation = Creation( self.__storage, self.__character, self )
-		for typ in self.__creation.creationPoints[Config.initialSpecies]:
+		for typ in self.__creation.creationPoints[Config.SPECIES_INITIAL]:
 			for category in self.__storage.categories(typ):
 				for trait in self.__character.traits[typ][category].values():
 					trait.traitChanged.connect(self.__creation.calcPoints)
@@ -364,7 +368,7 @@ class MainWindow(QMainWindow):
 		# Wir wollen zu Beginn immer die Informationen sehen.
 		self.ui.selectWidget_select.setCurrentRow(0)
 		## Am Anfang stehen Menschen, aber das speciesChanged-Signal wurde nicht gesendet.
-		#self.ui.selectWidget_select.disableItems(Config.initialSpecies)
+		#self.ui.selectWidget_select.disableItems(Config.SPECIES_INITIAL)
 
 
 	def showSettingsDialog(self):
@@ -440,7 +444,7 @@ class MainWindow(QMainWindow):
 			else:
 				text += "/".join(textList)
 			if any(x < 0 for x in self.__creation.creationPointsAvailable[self.__character.species][typ]):
-				text = "<span style='color:{color}'>{text}</span>".format(color=Config.pointsNegativeColor, text=text)
+				text = "<span style='color:{color}'>{text}</span>".format(color=Config.COLOR_POINTS_NEGATIVE, text=text)
 			self.ui.label_pointsLeft.setText( text )
 
 
@@ -469,13 +473,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.setItemColor( "Attributes", QColor(Config.pointsPositiveColor))
+			self.ui.selectWidget_select.setItemColor( "Attributes", QColor(Config.COLOR_POINTS_POSITIVE))
 		elif typ == "Skill":
-			self.ui.selectWidget_select.setItemColor( "Skills", QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Skills", QColor(Config.COLOR_POINTS_POSITIVE) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.setItemColor( "Merits", QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Merits", QColor(Config.COLOR_POINTS_POSITIVE) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.setItemColor( "Powers", QColor(Config.pointsPositiveColor) )
+			self.ui.selectWidget_select.setItemColor( "Powers", QColor(Config.COLOR_POINTS_POSITIVE) )
 
 
 	def warnCreationPointsNegative( self, typ ):
@@ -486,13 +490,13 @@ class MainWindow(QMainWindow):
 		"""
 
 		if typ == "Attribute":
-			self.ui.selectWidget_select.setItemColor( "Attributes", QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Attributes", QColor(Config.COLOR_POINTS_NEGATIVE) )
 		elif typ == "Skill":
-			self.ui.selectWidget_select.setItemColor( "Skills", QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Skills", QColor(Config.COLOR_POINTS_NEGATIVE) )
 		elif typ == "Merit":
-			self.ui.selectWidget_select.setItemColor( "Merits", QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Merits", QColor(Config.COLOR_POINTS_NEGATIVE) )
 		elif typ == "Power":
-			self.ui.selectWidget_select.setItemColor( "Powers", QColor(Config.pointsNegativeColor) )
+			self.ui.selectWidget_select.setItemColor( "Powers", QColor(Config.COLOR_POINTS_NEGATIVE) )
 
 
 	def aboutApp(self):
@@ -515,8 +519,8 @@ class MainWindow(QMainWindow):
 			""".format(
 				name=Config.PROGRAM_NAME,
 				version=Config.version(),
-				author=Config.programAuthor,
-				mail=Config.programAuthorEMail,
+				author=Config.PROGRAM_AUTHOR,
+				mail=Config.PROGRAM_AUTHOR_EMAIL,
 			)
 		)
 
@@ -560,7 +564,7 @@ class MainWindow(QMainWindow):
 				appPath = PathTools.getPath()
 
 				# Pfad zum Speicherverzeichnis
-				savePath = "{}/{}".format(appPath, Config.saveDir)
+				savePath = "{}/{}".format(appPath, Config.SAVE_DIR)
 
 				# Wenn Unterverzeichnis nicht existiert, suche im Programmverzeichnis.
 				if ( not os.path.exists( savePath ) ):
@@ -570,7 +574,7 @@ class MainWindow(QMainWindow):
 					self,
 					self.tr( "Select Character File" ),
 					savePath,
-					self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) )
+					self.tr( "WoD Characters (*.{})".format(Config.FILE_SUFFIX_SAVE) )
 				)
 
 				# Sollte PySide verwendet werden!
@@ -606,13 +610,13 @@ class MainWindow(QMainWindow):
 		appPath = PathTools.getPath()
 
 		# Pfad zum Speicherverzeichnis
-		savePath = "{}/{}".format(appPath, Config.saveDir)
+		savePath = "{}/{}".format(appPath, Config.SAVE_DIR)
 
 		# Wenn Unterverzeichnis nicht existiert, erstelle es
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		fileData = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.{}".format(savePath, Config.fileSuffixSave), self.tr( "WoD Characters (*.{})".format(Config.fileSuffixSave) ) )
+		fileData = QFileDialog.getSaveFileName( self, self.tr( "Save Character" ), "{}/untitled.{}".format(savePath, Config.FILE_SUFFIX_SAVE), self.tr( "WoD Characters (*.{})".format(Config.FILE_SUFFIX_SAVE) ) )
 
 		# Sollte PySide verwendet werden!
 		#filePath = fileData[0]
@@ -668,7 +672,7 @@ class MainWindow(QMainWindow):
 		appPath = PathTools.getPath()
 
 		# Pfad zum Speicherverzeichnis
-		savePath = "{}/{}".format(appPath, Config.saveDir)
+		savePath = "{}/{}".format(appPath, Config.SAVE_DIR)
 
 		# Wenn Unterverzeichnis nicht existiert, erstelle es
 		if not os.path.exists(savePath):
@@ -711,7 +715,7 @@ class MainWindow(QMainWindow):
 		Speichert die Konfiguration dieses Programms für den nächsten Aufruf.
 		"""
 
-		settings = Settings( "{}/{}".format(PathTools.getPath(), Config.configFile ))
+		settings = Settings( "{}/{}".format(PathTools.getPath(), Config.CONFIG_FILE ))
 
 		settings.beginGroup( "MainWindow" )
 		settings.setValue( "size", self.size() )
@@ -720,7 +724,7 @@ class MainWindow(QMainWindow):
 		settings.endGroup()
 
 		settings.beginGroup( "Config" )
-		settings.setValue( "autoSelectEra", Config.autoSelectEra )
+		settings.setValue( "autoSelectEra", Config.ERA_AUTO_SELECT )
 		settings.endGroup()
 
 
@@ -730,7 +734,7 @@ class MainWindow(QMainWindow):
 		"""
 
 		appPath = PathTools.getPath()
-		settings = Settings( "{}/{}".format(appPath, Config.configFile))
+		settings = Settings( "{}/{}".format(appPath, Config.CONFIG_FILE))
 
 		settings.beginGroup( "MainWindow" )
 		self.resize( settings.value( "size", QSize( 900, 600 ) ) )
@@ -739,7 +743,7 @@ class MainWindow(QMainWindow):
 		settings.endGroup()
 
 		settings.beginGroup( "Config" )
-		Config.autoSelectEra = str(settings.value( "autoSelectEra" )).lower() != "false"
+		Config.ERA_AUTO_SELECT = str(settings.value( "autoSelectEra" )).lower() != "false"
 		settings.endGroup()
 
 		#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.
@@ -769,13 +773,13 @@ class MainWindow(QMainWindow):
 		return True
 
 
-	def showStatusBarMessage( self, message, timeout=Config.displayTimeout ):
+	def showStatusBarMessage( self, message, timeout=Config.TIMEOUT_STATUS_MESSAGE_DISPLAY ):
 		"""
 		Zeigt eien Nachricht auf der Statusleiste an.
 		"""
 
 		#if timeout is None:
-			#timeout = Config.displayTimeout
+			#timeout = Config.TIMEOUT_STATUS_MESSAGE_DISPLAY
 		self.statusBar().showMessage(message, timeout)
 
 

@@ -109,10 +109,10 @@ class ConnectPrerequisites(object):
 							if stopLoop:
 								break
 						## Es kann auch die Supereigenschaft als Voraussetzung vorkommen ...
-						if Config.powerstatIdentifier in traitPrerequisites:
+						if Config.POWERSTAT_IDENTIFIER in traitPrerequisites:
 							character.powerstatChanged.connect(trait.checkPrerequisites)
 						## ... oder die Moral
-						if Config.moralityIdentifier in traitPrerequisites:
+						if Config.MORALITY_IDENTIFIER in traitPrerequisites:
 							character.moralityChanged.connect(trait.checkPrerequisites)
 
 
@@ -144,11 +144,11 @@ class ConnectPrerequisites(object):
 									traitPrerequisites = traitPrerequisites.replace("{}.{}".format(literalReference, special), "0")
 						traitPrerequisites = traitPrerequisites.replace(literalReference, str(item.value))
 				# Es kann auch die Supereigenschaft als Voraussetzung vorkommen ...
-				if Config.powerstatIdentifier in traitPrerequisites:
-					traitPrerequisites = traitPrerequisites.replace(Config.powerstatIdentifier, str(character.powerstat))
+				if Config.POWERSTAT_IDENTIFIER in traitPrerequisites:
+					traitPrerequisites = traitPrerequisites.replace(Config.POWERSTAT_IDENTIFIER, str(character.powerstat))
 				# ... oder die Moral
-				if Config.moralityIdentifier in traitPrerequisites:
-					traitPrerequisites = traitPrerequisites.replace(Config.moralityIdentifier, str(character.morality))
+				if Config.MORALITY_IDENTIFIER in traitPrerequisites:
+					traitPrerequisites = traitPrerequisites.replace(Config.MORALITY_IDENTIFIER, str(character.morality))
 
 				# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
 				try:

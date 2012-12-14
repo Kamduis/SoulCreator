@@ -80,7 +80,7 @@ class SkillWidget(TraitWidget):
 		## Eine Liste, in der alle Eigenschafts-Widgets aufgelistet werden.
 		self.__traitWidgets = []
 
-		for item in Config.mainCategories:
+		for item in Config.CATEGORIES_MAIN:
 			#Debug.debug(self._character.traits)
 
 			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.

@@ -68,7 +68,7 @@ class MeritWidget(TraitWidget):
 
 		self.__typ = "Merit"
 		categories = []
-		categories.extend(Config.meritCategories)
+		categories.extend(Config.CATEGORIES_MERITS)
 		categories.extend(self._storage.categories(self.__typ))
 		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
 		categories = ListTools.uniqifyOrdered(categories)
@@ -116,7 +116,7 @@ class MeritWidget(TraitWidget):
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutMeritCategory.addStretch()
 
-		self.setMinimumWidth(Config.traitLineWidthMin)
+		self.setMinimumWidth(Config.TRAIT_WIDTH_MIN)
 
 		self._character.speciesChanged.connect(self.countMerits)
 

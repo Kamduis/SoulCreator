@@ -81,7 +81,7 @@ class NameDialog(QDialog):
 		self.identityLcl._gender = copy.deepcopy(self.__character.identity._gender)
 		#falseIdentities = copy.deepcopy(self.__character.falseIdentities)
 
-		for item in Config.genders[1:]:
+		for item in Config.GENDERS[1:]:
 			self.ui.comboBox_gender.addItem( QIcon(item[1]), item[0] )
 
 		self.ui.lineEdit_firstName.textChanged.connect(self.updateForenames)

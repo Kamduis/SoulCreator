@@ -57,12 +57,6 @@ class AttributeWidget(TraitWidget):
 		self.__layoutAttributes = QGridLayout()
 		self.__layout.addLayout( self.__layoutAttributes )
 
-		#// 	QFrame* frame = new QFrame( self )
-		#// 	layout.addWidget( frame )
-		#//
-		#// 	QVBoxLayout* layoutHeader = new QVBoxLayout()
-		#// 	frame.setLayout( layoutHeader )
-
 		self.__labelPower = QLabel( "<b>" + self.tr( "Power" ) + "</b>" )
 		self.__labelPower.setAlignment( Qt.AlignRight )
 
@@ -91,7 +85,7 @@ class AttributeWidget(TraitWidget):
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) )
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) )
 
-		for item in Config.attributes:
+		for item in Config.ATTRIBUTES:
 			#Debug.debug(self._character.traits)
 
 			actualColumn += 1
@@ -100,7 +94,6 @@ class AttributeWidget(TraitWidget):
 			vLine.setFrameStyle( QFrame.VLine)
 			self.__layoutAttributes.addWidget( vLine, 1, actualColumn, len(item[1]), 1, Qt.AlignHCenter )
 
-			#// 		layout.setColumnMinimumWidth(actualColumn, Config::traitCategorySpace)
 			self.__layoutAttributes.setColumnStretch( actualColumn, 1 )
 
 			# Jetzt sind wir in der Spalte für die tatsächlchen Attribute
@@ -122,7 +115,7 @@ class AttributeWidget(TraitWidget):
 				traitWidget.setSpecialtiesHidden( True )
 				traitWidget.setDescriptionHidden( True )
 
-				# An welcher Position sitzt dieses Attribut in der Config.attributes-Liste?
+				# An welcher Position sitzt dieses Attribut in der Config.ATTRIBUTES-Liste?
 
 				self.__layoutAttributes.addWidget( traitWidget, i + 1, actualColumn )
 
@@ -148,7 +141,7 @@ class AttributeWidget(TraitWidget):
 			# Bei Werwölfen erscheint hier Zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
 			actualColumn += 1
 
-		self.__layout.addSpacing( Config.vSpace )
+		self.__layout.addSpacing( Config.SPACE_VERTICAL_STD )
 
 		self.__layoutBonus = QGridLayout()
 		self.__layout.addLayout( self.__layoutBonus )

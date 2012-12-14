@@ -78,11 +78,11 @@ class AdvantagesWidget(QWidget):
 
 		self.ui.dots_health.setReadOnly( True )
 
-		self.ui.dots_willpower.setMaximum( Config.willpowerMax )
+		self.ui.dots_willpower.setMaximum( Config.TRAIT_WILLPOWER_VALUE_MAX )
 		self.ui.dots_willpower.setReadOnly( True )
 
-		self.ui.dots_powerstat.setMaximum( Config.powerstatMax )
-		self.ui.dots_powerstat.setMinimum( Config.powerstatMin )
+		self.ui.dots_powerstat.setMaximum( Config.TRAIT_POWERSTAT_VALUE_MAX )
+		self.ui.dots_powerstat.setMinimum( Config.TRAIT_POWERSTAT_VALUE_MIN )
 		# Damit später der Wert stimmt muß ich irgendeinen Wert != 1 geben, sonst wird kein Signal gesandt.
 		self.ui.dots_powerstat.setValue( 9 )
 
@@ -148,10 +148,10 @@ class AdvantagesWidget(QWidget):
 			size = int(self.ui.label_size.text())
 			self.ui.label_sizeShapes.setHidden(False)
 			self.ui.label_sizeShapes.setText(", {}, {}, {}, {}".format(
-				CalcShapes.size(size, Config.shapesWerewolf[1]),
-				CalcShapes.size(size, Config.shapesWerewolf[2]),
-				CalcShapes.size(size, Config.shapesWerewolf[3]),
-				CalcShapes.size(size, Config.shapesWerewolf[4]),
+				CalcShapes.size(size, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.size(size, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.size(size, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.size(size, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_sizeShapes.setHidden(True)
@@ -162,10 +162,10 @@ class AdvantagesWidget(QWidget):
 			value = int(self.ui.label_initiative.text())
 			self.ui.label_initiativeShapes.setHidden(False)
 			self.ui.label_initiativeShapes.setText(", {}, {}, {}, {}".format(
-				CalcShapes.initiative(value, Config.shapesWerewolf[1]),
-				CalcShapes.initiative(value, Config.shapesWerewolf[2]),
-				CalcShapes.initiative(value, Config.shapesWerewolf[3]),
-				CalcShapes.initiative(value, Config.shapesWerewolf[4]),
+				CalcShapes.initiative(value, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.initiative(value, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.initiative(value, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.initiative(value, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_initiativeShapes.setHidden(True)
@@ -176,10 +176,10 @@ class AdvantagesWidget(QWidget):
 			value = int(self.ui.label_speed.text())
 			self.ui.label_speedShapes.setHidden(False)
 			self.ui.label_speedShapes.setText(", {}, {}, {}, {}".format(
-				CalcShapes.speed(value, Config.shapesWerewolf[1]),
-				CalcShapes.speed(value, Config.shapesWerewolf[2]),
-				CalcShapes.speed(value, Config.shapesWerewolf[3]),
-				CalcShapes.speed(value, Config.shapesWerewolf[4]),
+				CalcShapes.speed(value, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.speed(value, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.speed(value, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.speed(value, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_speedShapes.setHidden(True)
@@ -191,10 +191,10 @@ class AdvantagesWidget(QWidget):
 			dexterity = self.__character.traits["Attribute"]["Physical"]["Dexterity"].value
 			self.ui.label_defenseShapes.setHidden(False)
 			self.ui.label_defenseShapes.setText(", {}, {}, {}, {}".format(
-				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[1]),
-				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[2]),
-				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[3]),
-				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[4]),
+				CalcShapes.defense(wits, dexterity, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.defense(wits, dexterity, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.defense(wits, dexterity, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.defense(wits, dexterity, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_defenseShapes.setHidden(True)
@@ -205,10 +205,10 @@ class AdvantagesWidget(QWidget):
 			value = self.ui.dots_health.value
 			self.ui.label_healthShapes.setHidden(False)
 			self.ui.label_healthShapes.setText("{}, {}, {}, {}".format(
-				CalcShapes.health(value, Config.shapesWerewolf[1]),
-				CalcShapes.health(value, Config.shapesWerewolf[2]),
-				CalcShapes.health(value, Config.shapesWerewolf[3]),
-				CalcShapes.health(value, Config.shapesWerewolf[4]),
+				CalcShapes.health(value, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.health(value, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.health(value, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.health(value, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_healthShapes.setHidden(True)
@@ -219,7 +219,7 @@ class AdvantagesWidget(QWidget):
 		Verbirgt die übernatürlichen Eigenschaften, falls ein Mensch gewählt wird.
 		"""
 
-		if ( species == Config.initialSpecies ):
+		if ( species == Config.SPECIES_INITIAL ):
 			self.ui.label_powerstat.setHidden( True )
 			self.ui.dots_powerstat.setHidden( True )
 

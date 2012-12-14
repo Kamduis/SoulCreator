@@ -61,12 +61,12 @@ class TraitLine(QWidget):
 
 		self.__button = QPushButton( self )
 		self.__button.setText( "..." )
-		self.__button.setMaximumHeight( Config.inlineWidgetHeightMax )
+		self.__button.setMaximumHeight( Config.WIDGET_INLINE_HEIGHT_MAX )
 		self.__button.setCheckable( True )
 
 		self.__lineEdit = QLineEdit( self )
-		self.__lineEdit.setMinimumWidth( Config.traitCustomTextWidthMin )
-		self.__lineEdit.setMaximumHeight( Config.inlineWidgetHeightMax )
+		self.__lineEdit.setMinimumWidth( Config.TRAIT_CUSTOMTEXT_WIDTH_MIN )
+		self.__lineEdit.setMaximumHeight( Config.WIDGET_INLINE_HEIGHT_MAX )
 
 		self.__traitDots = TraitDots( self )
 

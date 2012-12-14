@@ -56,11 +56,11 @@ class CheckTrait(QWidget):
 
 		self.__checkBox = QCheckBox()
 		self.__checkBox.setText( trait.name )
-		self.__checkBox.setMaximumHeight( Config.inlineWidgetHeightMax )
+		self.__checkBox.setMaximumHeight( Config.WIDGET_INLINE_HEIGHT_MAX )
 
 		self.__lineEdit = QLineEdit()
-		#self.__lineEdit.setMinimumWidth( Config.traitCustomTextWidthMin )
-		self.__lineEdit.setMaximumHeight(Config.inlineWidgetHeightMax)
+		#self.__lineEdit.setMinimumWidth( Config.TRAIT_CUSTOMTEXT_WIDTH_MIN )
+		self.__lineEdit.setMaximumHeight(Config.WIDGET_INLINE_HEIGHT_MAX)
 
 		self.__layout.addWidget( self.__checkBox )
 		self.__layout.addStretch()

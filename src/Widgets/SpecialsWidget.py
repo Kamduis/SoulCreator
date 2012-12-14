@@ -73,7 +73,7 @@ class SpecialsWidget(QWidget):
 			lineEdit = QLineEdit()
 			lineEdit.textChanged.connect(trait.setName)
 			traitDots = TraitDots()
-			traitDots.setMaximum(Config.vinculumLevelMax)
+			traitDots.setMaximum(Config.VINCULI_LEVEL_MAX)
 			traitDots.valueChanged.connect(trait.setValue)
 			vinculumLayout.addWidget(lineEdit)
 			vinculumLayout.addWidget(traitDots)

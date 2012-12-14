@@ -53,11 +53,11 @@ class CalcShapes(object):
 		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		if shape == Config.shapesWerewolf[1]:
+		if shape == Config.SHAPES_WEREWOLF[1]:
 			return strength + 1
-		elif shape == Config.shapesWerewolf[2]:
+		elif shape == Config.SHAPES_WEREWOLF[2]:
 			return strength + 3
-		elif shape == Config.shapesWerewolf[3]:
+		elif shape == Config.SHAPES_WEREWOLF[3]:
 			return strength + 2
 		else:
 			return strength
@@ -69,9 +69,9 @@ class CalcShapes(object):
 		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		if shape == Config.shapesWerewolf[2]:
+		if shape == Config.SHAPES_WEREWOLF[2]:
 			return dexterity + 1
-		elif shape == Config.shapesWerewolf[3] or shape == Config.shapesWerewolf[4]:
+		elif shape == Config.SHAPES_WEREWOLF[3] or shape == Config.SHAPES_WEREWOLF[4]:
 			return dexterity + 2
 		else:
 			return dexterity
@@ -83,9 +83,9 @@ class CalcShapes(object):
 		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		if shape == Config.shapesWerewolf[1] or shape == Config.shapesWerewolf[4]:
+		if shape == Config.SHAPES_WEREWOLF[1] or shape == Config.SHAPES_WEREWOLF[4]:
 			return stamina + 1
-		elif shape == Config.shapesWerewolf[2] or shape == Config.shapesWerewolf[3]:
+		elif shape == Config.SHAPES_WEREWOLF[2] or shape == Config.SHAPES_WEREWOLF[3]:
 			return stamina + 2
 		else:
 			return stamina
@@ -97,9 +97,9 @@ class CalcShapes(object):
 		Berechnet die Manipulation des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		if shape == Config.shapesWerewolf[1]:
+		if shape == Config.SHAPES_WEREWOLF[1]:
 			return manipulation - 1
-		elif shape == Config.shapesWerewolf[3]:
+		elif shape == Config.SHAPES_WEREWOLF[3]:
 			return manipulation - 3
 		else:
 			return manipulation
@@ -111,11 +111,11 @@ class CalcShapes(object):
 		Berechnet die Größe des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		if shape == Config.shapesWerewolf[1] or shape == Config.shapesWerewolf[3]:
+		if shape == Config.SHAPES_WEREWOLF[1] or shape == Config.SHAPES_WEREWOLF[3]:
 			return size + 1
-		elif shape == Config.shapesWerewolf[2]:
+		elif shape == Config.SHAPES_WEREWOLF[2]:
 			return size + 2
-		elif shape == Config.shapesWerewolf[4]:
+		elif shape == Config.SHAPES_WEREWOLF[4]:
 			return size - 1
 		else:
 			return size
@@ -127,9 +127,9 @@ class CalcShapes(object):
 		Berechnet die Initiative des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		if shape == Config.shapesWerewolf[2]:
+		if shape == Config.SHAPES_WEREWOLF[2]:
 			return initiative + 1
-		elif shape == Config.shapesWerewolf[3] or shape == Config.shapesWerewolf[4]:
+		elif shape == Config.SHAPES_WEREWOLF[3] or shape == Config.SHAPES_WEREWOLF[4]:
 			return initiative + 2
 		else:
 			return initiative
@@ -141,13 +141,13 @@ class CalcShapes(object):
 		Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		if shape == Config.shapesWerewolf[1]:
+		if shape == Config.SHAPES_WEREWOLF[1]:
 			return speed + 1
-		elif shape == Config.shapesWerewolf[2]:
+		elif shape == Config.SHAPES_WEREWOLF[2]:
 			return speed + 4
-		elif shape == Config.shapesWerewolf[3]:
+		elif shape == Config.SHAPES_WEREWOLF[3]:
 			return speed + 7
-		elif shape == Config.shapesWerewolf[4]:
+		elif shape == Config.SHAPES_WEREWOLF[4]:
 			return speed + 5
 		else:
 			return speed
@@ -170,11 +170,11 @@ class CalcShapes(object):
 		Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
 		"""
 
-		if shape == Config.shapesWerewolf[1]:
+		if shape == Config.SHAPES_WEREWOLF[1]:
 			return value + 2
-		elif shape == Config.shapesWerewolf[2]:
+		elif shape == Config.SHAPES_WEREWOLF[2]:
 			return value + 4
-		elif shape == Config.shapesWerewolf[3]:
+		elif shape == Config.SHAPES_WEREWOLF[3]:
 			return value + 3
 		else:
 			return value

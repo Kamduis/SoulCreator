@@ -64,7 +64,7 @@ class FlawWidget(QWidget):
 
 		self.__typ = "Flaw"
 		categories = []
-		categories.extend(Config.flawCategories)
+		categories.extend(Config.CATEGORIES_FLAWS)
 		categories.extend(self.__storage.categories(self.__typ))
 		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
 		categories = ListTools.uniqifyOrdered(categories)
@@ -104,7 +104,7 @@ class FlawWidget(QWidget):
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutFlawCategory.addStretch()
 
-		self.setMinimumWidth(Config.traitLineWidthMin)
+		self.setMinimumWidth(Config.TRAIT_WIDTH_MIN)
 
 
 

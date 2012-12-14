@@ -102,9 +102,9 @@ class WriteXmlCharacter(QObject):
 
 		## Daten
 		etree.SubElement(root, "dates",
-			birth=self.__character.dateBirth.toString(Config.dateFormat),
-			becoming=self.__character.dateBecoming.toString(Config.dateFormat),
-			game=self.__character.dateGame.toString(Config.dateFormat),
+			birth=self.__character.dateBirth.toString(Config.DATE_FORMAT),
+			becoming=self.__character.dateBecoming.toString(Config.DATE_FORMAT),
+			game=self.__character.dateGame.toString(Config.DATE_FORMAT),
 		)
 
 		etree.SubElement(root, "virtue").text = self.__character.virtue
@@ -175,7 +175,7 @@ class WriteXmlCharacter(QObject):
 							trait.attrib["customText"] =  str( subsubitem.customText )
 						# Spezialisierungen
 						if subsubitem.specialties:
-							etree.SubElement(trait, "specialties").text = Config.sepChar.join( str(n) for n in subsubitem.specialties )
+							etree.SubElement(trait, "specialties").text = Config.XML_SEPARATION_SYMBOL.join( str(n) for n in subsubitem.specialties )
 
 		## Gegenstände
 		items = etree.SubElement(root, "Items")
@@ -239,7 +239,7 @@ class WriteXmlCharacter(QObject):
 			imageData = QByteArray()
 			imageBuffer = QBuffer(imageData)
 			imageBuffer.open(QIODevice.WriteOnly)
-			self.__character.picture.save(imageBuffer, Config.pictureFormat)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
+			self.__character.picture.save(imageBuffer, Config.CHARACTER_PIC_FORMAT)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
 			imageData = imageData.toBase64().data()
 			etree.SubElement(root, "picture").text = imageData.decode("UTF-8")
 
@@ -262,7 +262,7 @@ class WriteXmlCharacter(QObject):
 		"""
 
 		## In die Datei schreiben.
-		if Config.compressSaves:
+		if Config.COMPRESS_SAVES:
 			with gzip.open(fileName, "w") as fileObject:
 				self.__writeTreeToFile(fileObject, tree)
 		else:

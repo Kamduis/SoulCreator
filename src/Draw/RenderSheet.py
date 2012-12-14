@@ -244,19 +244,19 @@ class RenderSheet(QObject):
 				health=self._dotStat(
 					self.tr("Health"),
 					self.__calc.calcHealth(),
-					Config.healthMax[self.__character.species],
+					Config.TRAIT_HEALTH_VALUE_MAX[self.__character.species],
 					hasTemporary=True
 				),
 				willpower=self._dotStat(
 					self.tr("Willpower"),
 					self.__calc.calcWillpower(),
-					Config.willpowerMax,
+					Config.TRAIT_WILLPOWER_VALUE_MAX,
 					hasTemporary=True
 				),
 				powerstat=self._dotStat(
 					self.__storage.powerstatName(self.__character.species),
 					self.__character.powerstat,
-					Config.powerstatMax,
+					Config.TRAIT_POWERSTAT_VALUE_MAX,
 					hasTemporary=False
 				),
 				fuel=self._createFuel(),
@@ -421,7 +421,7 @@ class RenderSheet(QObject):
 		"""
 
 		tableData = []
-		for category in Config.attributes:
+		for category in Config.ATTRIBUTES:
 			column = []
 			for trait in category[1]:
 				column.append(self.__character.traits["Attribute"][category[0]][trait])
@@ -429,7 +429,7 @@ class RenderSheet(QObject):
 
 		htmlText = "<table class='fullWidth'><tr>"
 		htmlText += "<td class='layout' style='width: 1%'><table style='width: 100%'>"
-		for label in Config.attributeSorts:
+		for label in Config.ATTRIBUTE_ORDER:
 			htmlText += "<tr>"
 			htmlText += "<td><span class='{species}' style='font-weight: bold;'>{}</span></td>".format(label, species=self.__character.species.lower())
 			htmlText += "</tr>"
@@ -452,14 +452,14 @@ class RenderSheet(QObject):
 			#[],
 		#]
 
-		#for category in Config.attributes:
+		#for category in Config.ATTRIBUTES:
 			#i = 0
 			#for trait in category[1]:
 				#tableData[i].append(self.__character.traits["Attribute"][category[0]][trait])
 				#i += 1
 
-		#for i in range(len(Config.attributeSorts)):
-			#tableData[i].insert(0, Config.attributeSorts[i])
+		#for i in range(len(Config.ATTRIBUTE_ORDER)):
+			#tableData[i].insert(0, Config.ATTRIBUTE_ORDER[i])
 
 		#Debug.debug(tableData)
 
@@ -760,7 +760,7 @@ class RenderSheet(QObject):
 	def _createMorality(self):
 		htmlText = "<h1 class='{species}'>{title}</h1>".format(title=self.__storage.moralityName(self.__character.species), species=self.__character.species.lower())
 		htmlText += "<table class='fullWidth'>"
-		for row in range(self.__character.morality + 1, Config.moralityTraitMax + 1)[::-1]:
+		for row in range(self.__character.morality + 1, Config.TRAIT_MORALITY_VALUE_MAX + 1)[::-1]:
 			htmlText += "<tr>"
 			htmlText += "<td style='text-align: center;'>{level}</td><td {hrule}><span class='scriptFont'>{derangement}</span></td><td  class='narrowLine' style='text-align: center;'><span class='bigSymbols'>{value}</span></td>".format(level=row, derangement=self.derangement(row), value=self.valueStyled(0, 1), hrule=self.__derangementPossible(row))
 			htmlText += "</tr>"
@@ -774,7 +774,7 @@ class RenderSheet(QObject):
 
 
 	def __derangementPossible(self, level):
-		if level <= Config.derangementMoralityTraitMax:
+		if level <= Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX:
 			return "class='hrulefill'"
 		else:
 			return ""
@@ -876,7 +876,7 @@ class RenderSheet(QObject):
 			htmlText += "<tr>"
 			htmlText += "<td class='nowrap withHRule'>{label}</td>".format(label=vinculum.name)
 			htmlText += "<td class='hrulefill'></td>"
-			htmlText += "<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(vinculum.value, Config.vinculumLevelMax))
+			htmlText += "<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(vinculum.value, Config.VINCULI_LEVEL_MAX))
 			htmlText += "</tr>"
 			iterator += 1
 		htmlText += "</table>"
@@ -885,7 +885,7 @@ class RenderSheet(QObject):
 		while iterator < len(self.__character.vinculi):
 			htmlText += "<tr>"
 			htmlText += "<td class='hrulefill'></td>"
-			htmlText += "<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(0, Config.vinculumLevelMax))
+			htmlText += "<td class='nowrap withHRule' style='text-align: right;'>{value}</td>".format(value=self.valueStyled(0, Config.VINCULI_LEVEL_MAX))
 			htmlText += "</tr>"
 			iterator += 1
 		htmlText += "</table>"
@@ -899,24 +899,24 @@ class RenderSheet(QObject):
 			"Hishu": (
 			),
 			"Dalu": (
-				( "Strength (+1)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[1]) ),
-				( "Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[1]) ),
-				( "Manipulation (−1)", CalcShapes.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[1]) ),
+				( "Strength (+1)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.SHAPES_WEREWOLF[1]) ),
+				( "Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.SHAPES_WEREWOLF[1]) ),
+				( "Manipulation (−1)", CalcShapes.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.SHAPES_WEREWOLF[1]) ),
 			),
 			"Gauru": (
-				( "Strength (+3)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[2]) ),
-				( "Dexterity (+1)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]) ),
-				( "Stamina (+2)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[2]) ),
+				( "Strength (+3)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.SHAPES_WEREWOLF[2]) ),
+				( "Dexterity (+1)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.SHAPES_WEREWOLF[2]) ),
+				( "Stamina (+2)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.SHAPES_WEREWOLF[2]) ),
 			),
 			"Urshul": (
-				( "Strength (+2)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.shapesWerewolf[3]) ),
-				( "Dexterity (+2)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]) ),
-				( "Stamina (+2)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[3]) ),
-				( "Manipulation (−3)", CalcShapes.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.shapesWerewolf[3]) ),
+				( "Strength (+2)", CalcShapes.strength(self.__character.traits["Attribute"]["Physical"]["Strength"].value, Config.SHAPES_WEREWOLF[3]) ),
+				( "Dexterity (+2)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.SHAPES_WEREWOLF[3]) ),
+				( "Stamina (+2)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.SHAPES_WEREWOLF[3]) ),
+				( "Manipulation (−3)", CalcShapes.manipulation(self.__character.traits["Attribute"]["Social"]["Manipulation"].value, Config.SHAPES_WEREWOLF[3]) ),
 			),
 			"Urhan": (
-				( "Dexterity (+2)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]) ),
-				( "Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.shapesWerewolf[4]) ),
+				( "Dexterity (+2)", CalcShapes.dexterity(self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.SHAPES_WEREWOLF[4]) ),
+				( "Stamina (+1)", CalcShapes.stamina(self.__character.traits["Attribute"]["Physical"]["Stamina"].value, Config.SHAPES_WEREWOLF[4]) ),
 			),
 		}
 
@@ -940,34 +940,34 @@ class RenderSheet(QObject):
 		shapesAdvantages = {
 			"Hishu": advantages,
 			"Dalu": (
-				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[1]), ),
-				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[1]), ),
-				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[1]), ),
-				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[1]), ),
+				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.SHAPES_WEREWOLF[1]), ),
+				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.SHAPES_WEREWOLF[1]), ),
+				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.SHAPES_WEREWOLF[1]), ),
+				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.SHAPES_WEREWOLF[1]), ),
 				( advantages[4][0], daluArmor, ),
 				( advantages[5][0], "+2", ),
 			),
 			"Gauru": (
-				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[2]), ),
-				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[2]), ),
-				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[2]), ),
-				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[2]), ),
+				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.SHAPES_WEREWOLF[2]), ),
+				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.SHAPES_WEREWOLF[2]), ),
+				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.SHAPES_WEREWOLF[2]), ),
+				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.SHAPES_WEREWOLF[2]), ),
 				( advantages[4][0], "1/1", ),
 				( advantages[5][0], "+3", ),
 			),
 			"Urshul": (
-				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[3]), ),
-				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[3]), ),
-				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[3]), ),
-				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[3]), ),
+				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.SHAPES_WEREWOLF[3]), ),
+				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.SHAPES_WEREWOLF[3]), ),
+				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.SHAPES_WEREWOLF[3]), ),
+				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.SHAPES_WEREWOLF[3]), ),
 				( advantages[4][0], "0", ),
 				( advantages[5][0], "+3", ),
 			),
 			"Urhan": (
-				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.shapesWerewolf[4]), ),
-				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.shapesWerewolf[4]), ),
-				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.shapesWerewolf[4]), ),
-				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.shapesWerewolf[4]), ),
+				( advantages[0][0], CalcShapes.size(advantages[0][1], Config.SHAPES_WEREWOLF[4]), ),
+				( advantages[1][0], CalcShapes.initiative(advantages[1][1], Config.SHAPES_WEREWOLF[4]), ),
+				( advantages[2][0], CalcShapes.speed(advantages[1][1], Config.SHAPES_WEREWOLF[4]), ),
+				( advantages[3][0], CalcShapes.defense(self.__character.traits["Attribute"]["Mental"]["Wits"].value, self.__character.traits["Attribute"]["Physical"]["Dexterity"].value, Config.SHAPES_WEREWOLF[4]), ),
 				( advantages[4][0], "0", ),
 				( advantages[5][0], "+4", ),
 			),
@@ -994,10 +994,10 @@ class RenderSheet(QObject):
 
 		htmlText = "<table style='width: 100%'><tr>"
 		iterator = 0
-		for shape in Config.shapesWerewolf:
+		for shape in Config.SHAPES_WEREWOLF:
 			if iterator > 0:
 				htmlText += "<td class='layout spacer'><!--Fixed horizontal space--></td>"
-			htmlText += "<td class='layout' style='width: {}%'>".format((100 / len(Config.shapesWerewolf)) - 1)
+			htmlText += "<td class='layout' style='width: {}%'>".format((100 / len(Config.SHAPES_WEREWOLF)) - 1)
 			htmlText += "<h2 class='{species}'>{title}</h2>".format(title=shape, species=self.__character.species.lower())
 			htmlText += "<table style='width: 100%'>"
 			for row in shapesAttributes[shape]:
@@ -1008,11 +1008,11 @@ class RenderSheet(QObject):
 			htmlText += "</td>"
 			iterator += 1
 		htmlText += "</tr><tr>"
-		for shape in Config.shapesWerewolf:
+		for shape in Config.SHAPES_WEREWOLF:
 			htmlText += "<td class='layout'><div class='spacer'></div></td>"
 		htmlText += "</tr><tr>"
 		iterator = 0
-		for shape in Config.shapesWerewolf:
+		for shape in Config.SHAPES_WEREWOLF:
 			if iterator > 0:
 				htmlText += "<td class='layout spacer'><!--Fixed horizontal space--></td>"
 			htmlText += "<td class='layout'>"
@@ -1025,11 +1025,11 @@ class RenderSheet(QObject):
 			htmlText += "</td>"
 			iterator += 1
 		htmlText += "</tr><tr>"
-		for shape in Config.shapesWerewolf:
+		for shape in Config.SHAPES_WEREWOLF:
 			htmlText += "<td class='layout'><div class='spacer'></div></td>"
 		htmlText += "</tr><tr>"
 		iterator = 0
-		for shape in Config.shapesWerewolf:
+		for shape in Config.SHAPES_WEREWOLF:
 			if iterator > 0:
 				htmlText += "<td class='layout spacer'><!--Fixed horizontal space--></td>"
 			htmlText += "<td class='layout'>"
@@ -1066,7 +1066,7 @@ class RenderSheet(QObject):
 			( "Power", self.__character.companionPower, maxTrait, ),
 			( "Finesse", self.__character.companionFinesse, maxTrait, ),
 			( "Resistance", self.__character.companionResistance, maxTrait, ),
-			( "Willpower", CalcAdvantages.calculateWillpower(self.__character.companionResistance, self.__character.companionResistance), min(2 * maxTrait, Config.willpowerMax), ),
+			( "Willpower", CalcAdvantages.calculateWillpower(self.__character.companionResistance, self.__character.companionResistance), min(2 * maxTrait, Config.TRAIT_WILLPOWER_VALUE_MAX), ),
 			( "Corpus", CalcAdvantages.calculateHealth(self.__character.companionResistance, self.__character.companionSize), maxTrait + self.__character.companionSize, ),
 		)
 		companionAdvantages = (
@@ -1120,7 +1120,7 @@ class RenderSheet(QObject):
 
 			htmlText = htmlText.replace("&", "&#38;")
 
-			powerMax = Config.traitMax
+			powerMax = Config.TRAIT_VALUE_MAX
 			if self.__character.species == "Mage":
 				powerMax = self.traitMax
 
@@ -1287,7 +1287,7 @@ class RenderSheet(QObject):
 
 	def _createDescription(self, height=220):
 		dataTable = [
-			[ "Birthday:", self.__character.dateBirth.toString(Config.textDateFormat), ],
+			[ "Birthday:", self.__character.dateBirth.toString(Config.DATE_FORMAT_TEXT), ],
 			[ "Age:", self.__character.age, ],
 			[ "Sex:", ImageTools.genderSymbol(self.__character.identity.gender), ],
 			[ "Eyes:", self.__character.eyes, ],
@@ -1297,7 +1297,7 @@ class RenderSheet(QObject):
 			[ "Nationality:", self.__character.nationality, ],
 		]
 		if self.__character.species != "Human":
-			dataTable.insert(2, [ "Becoming:", self.__character.dateBecoming.toString(Config.textDateFormat), ])
+			dataTable.insert(2, [ "Becoming:", self.__character.dateBecoming.toString(Config.DATE_FORMAT_TEXT), ])
 		if self.__character.species == "Changeling":
 			dataTable[2][0] = "Taken:"
 		elif self.__character.species == "Mage":
@@ -1345,8 +1345,8 @@ class RenderSheet(QObject):
 				[ self.tr("Height"), ],
 				[ self.tr("Weight"), ],
 			]
-			for i in range(len(Config.shapesWerewolf)):
-				shapeMeasurements[0].append(Config.shapesWerewolf[i])
+			for i in range(len(Config.SHAPES_WEREWOLF)):
+				shapeMeasurements[0].append(Config.SHAPES_WEREWOLF[i])
 				shapeMeasurements[1].append("{:.2f} {}".format(werwolfHeights[i], "m"))
 				shapeMeasurements[2].append("{:.1f} {}".format(werwolfWeights[i], "kg"))
 
@@ -1377,10 +1377,10 @@ class RenderSheet(QObject):
 			imageData = QByteArray()
 			imageBuffer = QBuffer(imageData)
 			imageBuffer.open(QIODevice.WriteOnly)
-			self.__character.picture.save(imageBuffer, Config.pictureFormat)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
+			self.__character.picture.save(imageBuffer, Config.CHARACTER_PIC_FORMAT)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
 			imageData = imageData.toBase64().data()
 
-			htmlText += "<p style='text-align: center;'><img src='data:image/{form};base64,{image}' style='max-width:100%; max-height:{height}px;'/></p>".format(image=imageData.decode("UTF-8"), form=Config.pictureFormat, height=height)
+			htmlText += "<p style='text-align: center;'><img src='data:image/{form};base64,{image}' style='max-width:100%; max-height:{height}px;'/></p>".format(image=imageData.decode("UTF-8"), form=Config.CHARACTER_PIC_FORMAT, height=height)
 
 		return htmlText
 

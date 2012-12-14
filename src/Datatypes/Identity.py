@@ -249,7 +249,7 @@ class Identity(QObject):
 		self.nickname = ""
 		self.honorname = ""
 		self.supername = ""
-		self.gender = Config.genders[0][0]
+		self.gender = Config.GENDERS[0][0]
 
 
 	@staticmethod

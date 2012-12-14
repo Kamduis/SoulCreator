@@ -93,9 +93,9 @@ if __name__ == "__main__":
 	setup(
 		name = Config.PROGRAM_NAME,
 		version = Config.version(),
-		description = Config.programDescription,
-		author = Config.programAuthor,
-		author_email = Config.programAuthorEMail,
+		description = Config.PROGRAM_DESCRIPTION,
+		author = Config.PROGRAM_AUTHOR,
+		author_email = Config.PROGRAM_AUTHOR_EMAIL,
 		options = {
 			"build_exe": {
 				"includes": includes,

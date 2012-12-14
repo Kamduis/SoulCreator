@@ -95,7 +95,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.restore()
 
-		painter.setBrush( QColor(Config.bonusColor) )
+		painter.setBrush( QColor(Config.COLOR_BONUS) )
 
 		painter.save()
 

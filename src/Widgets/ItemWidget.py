@@ -67,7 +67,7 @@ class ItemWidget(QWidget):
 
 		for category in self.__storage.weapons:
 			for weapon in self.__storage.weapons[category]:
-				weaponStore.addItemToStore(weapon, category, QIcon(Config.weaponIcons[category]))
+				weaponStore.addItemToStore(weapon, category, QIcon(Config.ICONS_WEAPONS[category]))
 
 		weaponStore.itemBought.connect(self.__character.addWeapon)
 		weaponStore.itemSold.connect(self.__character.deleteWeapon)
@@ -98,7 +98,7 @@ class ItemWidget(QWidget):
 
 		for category in self.__storage.automobiles:
 			for automobile in self.__storage.automobiles[category]:
-				automobileStore.addItemToStore(automobile, category, QIcon(Config.automobilesIcons[category]))
+				automobileStore.addItemToStore(automobile, category, QIcon(Config.ICONS_AUTOMOBILES[category]))
 
 		automobileStore.itemBought.connect(self.__character.addAutomobile)
 		automobileStore.itemSold.connect(self.__character.deleteAutomobile)
@@ -114,7 +114,7 @@ class ItemWidget(QWidget):
 
 		for category in self.__storage.extraordinaryItems:
 			for extraordinaryItem in self.__storage.extraordinaryItems[category]:
-				extraordinaryItemStore.addItemToStore(extraordinaryItem, category, QIcon(Config.extraordinaryItemsIcons[category]))
+				extraordinaryItemStore.addItemToStore(extraordinaryItem, category, QIcon(Config.ICONS_ITEMS_EXTRAORDINARY[category]))
 
 		extraordinaryItemStore.itemBought.connect(self.__character.addExtraordinaryItem)
 		extraordinaryItemStore.itemSold.connect(self.__character.deleteExtraordinaryItem)
@@ -170,7 +170,7 @@ class ItemWidget(QWidget):
 		#for item in self.__storage.equipment:
 			#listItem = QListWidgetItem()
 			#listItem.setText(item)
-			##listItem.setIcon(QIcon(Config.weaponIcons[category]))
+			##listItem.setIcon(QIcon(Config.ICONS_WEAPONS[category]))
 			##listItem.setData(Qt.BackgroundRole, QColor(Config.weaponsColor[category]))
 			#self.ui.listWidget_equipmentStore.addItem(listItem)
 
@@ -274,7 +274,7 @@ class ItemWidget(QWidget):
 		#for item in itemList:
 			#listItem = QListWidgetItem()
 			#listItem.setText(item)
-			##listItem.setIcon(QIcon(Config.weaponIcons[category]))
+			##listItem.setIcon(QIcon(Config.ICONS_WEAPONS[category]))
 			##listItem.setFlags(listItem.flags() | Qt.ItemIsEditable)
 			#self.ui.listWidget_equipmentInventory.addItem(listItem)
 

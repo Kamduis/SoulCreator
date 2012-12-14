@@ -133,13 +133,13 @@ class CalcAdvantages(QObject):
 
 		giantTrait = self.__giantTrait
 		smallTrait = self.__smallTrait
-		if self.__character.age < Config.ageAdult:
+		if self.__character.age < Config.AGE_ADULT:
 			giantTrait = self.__giantTraitKid
 			smallTrait = self.__smallTraitKid
 
-		result = Config.size["Adult"]
-		if self.__character.age < Config.ageAdult:
-			result = Config.size["Kid"]
+		result = Config.SIZE_DEFAULT["Adult"]
+		if self.__character.age < Config.AGE_ADULT:
+			result = Config.SIZE_DEFAULT["Kid"]
 
 		if ( giantTrait.totalvalue > 0 ):
 			result += 1
@@ -213,8 +213,8 @@ class CalcAdvantages(QObject):
 		"""
 
 		result = self.calculateDefense( [ self.__attrWit.totalvalue, self.__attrDex.totalvalue ] )
-		if self.__character.age < Config.ageAdult:
-			modificator = Config.size["Adult"] - self.__size
+		if self.__character.age < Config.AGE_ADULT:
+			modificator = Config.SIZE_DEFAULT["Adult"] - self.__size
 			modificator = max(modificator, 0)
 			result = result + modificator
 
