@@ -531,7 +531,7 @@ class StorageTemplate(QObject):
 		\note Nur für Changelings von Bedeutung.
 		"""
 
-		result = self.__kiths[seeming].keys()
+		result = list( self.__kiths[seeming].keys() )
 		result.sort()
 		return result
 
