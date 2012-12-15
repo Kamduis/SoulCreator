@@ -30,7 +30,7 @@ import os
 
 import src.Config as Config
 import src.Error as Error
-#import src.Debug as Debug
+import src.Debug as Debug
 
 
 
@@ -63,18 +63,24 @@ class ReadXml(object):
 		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.
 		"""
 
+		Debug.debug( "Version of file \"{name_file}\": {name} {version}".format(
+			name_file=filename,
+			name=name,
+			version=version,
+		), level=3 )
+
 		if name == Config.PROGRAM_NAME:
 			if version == Config.version():
 				return
 			else:
 				# Unterschiede in der Minor-Version sind ignorierbar, Unterschiede in der Major-Version allerdings nicht.
-				splitVersion = version.split(".")
-				splitVersion = [int(item) for item in splitVersion]
+				version_split = version.split(".")
+				version_split = [ int(item) for item in version_split ]
 
 				## Es ist darauf zu achten, daß Charaktere bis Version 0.6 nicht mit SoulCreator 0.7 und neuer geladen werden können.
 				if filename is not None:
 					filename = os.path.basename(filename)
-				if( splitVersion[0] != Config.programVersionMajor or splitVersion[1] < 7):
+				if( version_split[0] != Config.programVersionMajor or version_split[1] < 7):
 					raise Error.ErrXmlTooOldVersion( version, filename )
 				else:
 					raise Error.ErrXmlOldVersion( version, filename )

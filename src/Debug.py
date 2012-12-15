@@ -51,15 +51,39 @@ def debug( *args, level=Config.DEBUG_LEVEL_STD ):
 	\param level Ab welchem debug-level diese debug-Nachricht angezeigt wird.
 	"""
 
+	# Als level kann auch der Detailgrad angegeben werden.
+	if level in Config.DEBUG_LEVELS:
+		level = Config.DEBUG_LEVELS.index(level)
+
 	if level <= Config.DEBUG_LEVEL_NONE:
 		raise ValueError( "A level smaller than {} is not supported.".format(Config.DEBUG_LEVEL_NONE + 1) )
+	elif level >= len(Config.DEBUG_LEVELS):
+		raise ValueError( "A level greater than {level_index} ({level_name}) is not supported.".format(
+			level_index=len(Config.DEBUG_LEVELS) - 1,
+			level_name=Config.DEBUG_LEVELS[len(Config.DEBUG_LEVELS) - 1],
+		) )
 
 	if GlobalState.debug_level and GlobalState.debug_level > Config.DEBUG_LEVEL_NONE and GlobalState.debug_level >= level:
+		_indent = ""
 		## Dateiname und Zeilennummer der Debug-Ausgabe werden nur ausgegeben, wenn der Debug-Level hoch genug ist. Normalerweise wird darauf aufgrund der Übersichtlichkeit verzichtet.
-		if GlobalState.debug_level > Config.DEBUG_LEVEL_STD:
-			print("{:<78}\tl. {:<4}\t{:<18}".format(inspect.stack()[1][1], inspect.stack()[1][2], inspect.stack()[1][3]))
+		if GlobalState.debug_level >= Config.DEBUG_LEVEL_LINENUMBERS:
+			print("{debug_prefix}{source_file:<78}\tl. {source_line:<4}\t{source_func:<18}".format(
+				debug_prefix=_debug_prefix( level ),
+				source_file=inspect.stack()[1][1],
+				source_line=inspect.stack()[1][2],
+				source_func=inspect.stack()[1][3],
+			))
+			_indent = "\t"
 		for arg in args:
-			print(arg)
+			print( "{debug_prefix}{indent}{arg}".format(
+				debug_prefix=_debug_prefix(level),
+				indent=_indent,
+				arg=arg,
+			) )
+
+
+def _debug_prefix( level ):
+	return "DEBUG ({}) ".format(level)
 
 
 #def stack( *args ):
@@ -80,12 +104,12 @@ def timehook( level=Config.DEBUG_LEVEL_STD + 1 ):
 def timer( start, end, text=None, level=Config.DEBUG_LEVEL_STD + 1 ):
 	_text = ""
 	if text:
-		if text[-1] == ".":
-			_text = text[:-1]
-		else:
-			_text = text[:-1]
-		_text += ": "
-	debug( "{text}{time:.3f} seconds.".format(text=_text, time=(end - start) ), level=level )
+		_text = ": "
+		_text += text
+	else:
+		_text = "."
+
+	debug( "{time:.3f} seconds{text}".format(text=_text, time=(end - start) ), level=level )
 
 
 def timesince( start, text=None, level=Config.DEBUG_LEVEL_STD + 1 ):

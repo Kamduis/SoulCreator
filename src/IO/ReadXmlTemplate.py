@@ -38,24 +38,19 @@ import src.GlobalState as GlobalState
 #from src.Tools import ListTools
 from src.Error import ErrXmlOldVersion, ErrFileNotOpened
 from src.IO.ReadXml import ReadXml
-#import src.Debug as Debug
+import src.Debug as Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
 try:
 	from lxml import etree
-	#Debug.debug("Running with lxml.etree")
 	lxmlLoadad = True
 except ImportError:
 	try:
-		# Python 2.5
 		import xml.etree.cElementTree as etree
-		#Debug.debug("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
-			# Python 2.5
 			import xml.etree.ElementTree as etree
-			#Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
 			print("Failed to import ElementTree from any known place")
 
@@ -107,7 +102,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		#dbgStart = Debug.timehook()
 		for item in self.__templateFiles:
-			#Debug.debug("Lese aus Datei: {}".format(item))
+			Debug.debug( "Reading from file \"{}\".".format(item), level=2 )
 			qrcFile = QFile(item)
 			if not qrcFile.open(QIODevice.ReadOnly):
 				raise ErrFileNotOpened(item, qrcFile.errorString())
@@ -388,7 +383,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		if root is not None:
-			#Debug.debug(root.tag)
+			#Debug.debug(root.tag, level=4)
 			for mildElement in root.getiterator("mild"):
 				mild = mildElement.attrib["name"]
 				descriptionMild = ""
@@ -529,7 +524,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		Gibt ein Dictionary folgender Form zurück:
 
 		{
-			"typ": <Typ der ausgelsenen Eigenschaften>,
+			"typ": <Typ der ausgelesenen Eigenschaften>,
 			"traits" [<Liste der Eigenschaftsdaten der gefundenen Eigenschaften>]
 		}
 
@@ -576,5 +571,3 @@ class ReadXmlTemplate(QObject, ReadXml):
 				listOfTraits.append(traitData)
 
 		return listOfTraits
-
-

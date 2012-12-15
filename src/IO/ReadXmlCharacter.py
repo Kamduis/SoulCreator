@@ -46,14 +46,10 @@ try:
 	lxmlLoadad = True
 except ImportError:
 	try:
-		# Python 2.5
 		import xml.etree.cElementTree as etree
-		#Debug.debug("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
-			# Python 2.5
 			import xml.etree.ElementTree as etree
-			#Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
 			print("Failed to import ElementTree from any known place")
 
@@ -82,27 +78,29 @@ class ReadXmlCharacter(QObject, ReadXml):
 		self.__character = character
 
 
-	def read( self, fileName ):
+	def read( self, file_name ):
 		"""
 		Startet den Lesevorgang.
 
 		\note Diese Funktion kann sowohl normale xml-Dateien als auch mittels gzip komprimierte xml-Dateien laden.
 		"""
 
+		Debug.debug( "Loading Character out of {}.".format(file_name) )
+
 		## Mittels lxml kann diese Funktion normale XML-Dateien und offenbar auch mittels gzip komprimierte XML-Dateien laden.
 		## Das normale ElementTree-Modul kann das aber nicht.
 		xmlContent = None
 		try:
-			xmlContent = etree.parse(fileName)
+			xmlContent = etree.parse(file_name)
 		except etree.ParseError:
 			## Möglicherweise eine komprimierte Datei und lxml wurde nicht verwendet?
-			xmlContent = etree.parse(gzip.GzipFile(fileName))
+			xmlContent = etree.parse(gzip.GzipFile(file_name))
 		xmlRootElement = xmlContent.getroot()
 
 		versionSource = xmlRootElement.attrib["version"]
 
 		try:
-			self.checkXmlVersion( xmlRootElement.tag, versionSource, fileName )
+			self.checkXmlVersion( xmlRootElement.tag, versionSource, file_name )
 		except ErrXmlOldVersion as e:
 			descriptionText = self.tr("{description} Loading of character will be continued but errors may occur.".format(message=e.message, description=e.description))
 			self.exceptionRaised.emit(e.message, descriptionText, e.critical)
@@ -164,6 +162,8 @@ class ReadXmlCharacter(QObject, ReadXml):
 			self.__character.identity.nickname = self.getElementAttribute(identity, "nickname")
 			self.__character.identity.supername = self.getElementAttribute(identity, "supername")
 			self.__character.identity.gender = self.getElementAttribute(identity, "gender")
+		else:
+			Debug.debug( "No identity of the character found.", level=3 )
 
 
 	def readDates(self, tree):
