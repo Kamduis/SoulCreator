@@ -126,7 +126,8 @@ class MainWindow(QMainWindow):
 
 
 	def __init__(self, fileName=None, exportPath=None, parent=None):
-		#dbgStart = Debug.timehook()
+		debug_timing_start = Debug.timehook()
+
 		super(MainWindow, self).__init__(parent)
 
 		self.ui = Ui_MainWindow()
@@ -161,7 +162,16 @@ class MainWindow(QMainWindow):
 		self.readSettings()
 
 		self.populateUi()
+
+		Debug.timesince( debug_timing_start, "Time neccessary to populate the UI." )
+
+		debug_timing_between_start = Debug.timehook()
+
 		self.activate()
+
+		Debug.timesince( debug_timing_between_start, "Time neccessary to activate the UI." )
+
+		debug_timing_between_start = Debug.timehook()
 
 		self.ui.selectWidget_select.currentRowChanged.connect(self.showCreationPoints)
 
@@ -174,38 +184,41 @@ class MainWindow(QMainWindow):
 		self.ui.actionAbout.triggered.connect(self.aboutApp)
 
 		self.reset()
-		#Debug.timesince(dbgStart)
+		Debug.timesince( debug_timing_between_start, "Time neccessary to set all initial values." )
+
+		debug_timing_between_start = Debug.timehook()
 
 		## Wird ein Dateiname angegeben, soll dieser sofort geladen werden.
 		if fileName:
 			if os.path.exists(fileName):
-				if GlobalState.isVerbose:
+				if GlobalState.is_verbose:
 					print("Opening file {}.".format(fileName))
 				self.openCharacter(fileName)
 			elif fileName.lower() in [ species.lower() for species in self.__storage.species.keys() ]:
-				if GlobalState.isVerbose:
+				if GlobalState.is_verbose:
 					print("Empty Charactersheet of species {} will be created.".format(fileName.lower()))
 				self.__character.species = fileName[0].upper() + fileName[1:].lower()
 				self.__character.setModified(False)
 			else:
 				IO.Shell.printError("Warning! A file named {} does not exist.".format(fileName))
 
-		#Debug.timesince(dbgStart)
+			Debug.timesince( debug_timing_between_start, "Time neccessary to load a file at startup." )
 
 		if exportPath:
-			if GlobalState.isVerbose:
+			if GlobalState.is_verbose:
 				print("Creating PDF {}".format(exportPath[0]))
 			# exportPath ist eine Liste mit einem einzigen Element als Inhalt (argparse)
 			self.__createPdf(exportPath[0])
 			# Damit das Programm ordentlich geschlossen werden kann, muß auf das Starten der Event-Loop gewartet werden. dies geht am einfachsten mit einem QTimer.
 			QTimer.singleShot(0, self.close)
 
+		Debug.timesince( debug_timing_start, "The full time span neccessary to prepare the application for user input." )
 
 
 	def closeEvent( self, event ):
 		if ( self.maybeSave() ):
 			self.writeSettings()
-			if GlobalState.isVerbose:
+			if GlobalState.is_verbose:
 				print("Closing now.")
 			event.accept()
 		else:

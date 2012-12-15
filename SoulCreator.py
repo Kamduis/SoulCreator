@@ -94,8 +94,8 @@ if __name__ == "__main__":
 	else:
 		GlobalState.debug_level = int( args.debug )
 	GlobalState.is_develop = args.develop
-	GlobalState.isFallback = args.fallback
-	GlobalState.isVerbose = args.verbose
+	GlobalState.is_fallback = args.fallback
+	GlobalState.is_verbose = args.verbose
 
 	if GlobalState.debug_level and GlobalState.debug_level > Config.DEBUG_LEVEL_NONE:
 		print("{name} runs in debug mode (debug-level: {level_index} \"{level_name}\").".format(

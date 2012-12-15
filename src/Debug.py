@@ -72,14 +72,23 @@ def debug( *args, level=Config.DEBUG_LEVEL_STD ):
 			#print("{}\t{:<78}\t{}".format(item[0], item[1], item[3]))
 
 
-def timehook():
-	return time.time()
+def timehook( level=Config.DEBUG_LEVEL_STD + 1 ):
+	if GlobalState.debug_level >= level:
+		return time.time()
 
 
-def timer(start, end):
-	debug('Code time %.3f seconds' % (end - start))
+def timer( start, end, text=None, level=Config.DEBUG_LEVEL_STD + 1 ):
+	_text = ""
+	if text:
+		if text[-1] == ".":
+			_text = text[:-1]
+		else:
+			_text = text[:-1]
+		_text += ": "
+	debug( "{text}{time:.3f} seconds.".format(text=_text, time=(end - start) ), level=level )
 
 
-def timesince(start):
-	end = time.time()
-	timer(start, end)
+def timesince( start, text=None, level=Config.DEBUG_LEVEL_STD + 1 ):
+	if GlobalState.debug_level >= level:
+		end = time.time()
+		timer(start, end, text, level=level)

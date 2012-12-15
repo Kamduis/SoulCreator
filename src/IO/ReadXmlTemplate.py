@@ -413,7 +413,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for weapons in root:
-			if GlobalState.isFallback or not self.getElementAttribute(weapons, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(weapons, "fallback") == "True":
 				for typElement in list(weapons):
 					if typElement.tag == "Type":
 						typeName = self.getElementAttribute(typElement, "name")
@@ -440,7 +440,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for armors in root:
-			if GlobalState.isFallback or not self.getElementAttribute(armors, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(armors, "fallback") == "True":
 				for armorElement in list(armors):
 					if armorElement.tag == "armor":
 						armorName = armorElement.attrib["name"]
@@ -459,7 +459,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for equipment in root:
-			if GlobalState.isFallback or not self.getElementAttribute(equipment, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(equipment, "fallback") == "True":
 				for equipmentElement in list(equipment):
 					if equipmentElement.tag == "equipment":
 						equipmentName = equipmentElement.attrib["name"]
@@ -479,7 +479,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for automobiles in root:
-			if GlobalState.isFallback or not self.getElementAttribute(automobiles, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(automobiles, "fallback") == "True":
 				for element in list(automobiles):
 					if element.tag == "Type":
 						itemTyp = element.attrib["name"]
@@ -507,7 +507,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for extraordinary in root:
-			if GlobalState.isFallback or not self.getElementAttribute(extraordinary, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(extraordinary, "fallback") == "True":
 				for element in list(extraordinary):
 					if element.tag == "Type":
 						itemTyp = element.attrib["name"]

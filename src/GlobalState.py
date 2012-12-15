@@ -40,5 +40,5 @@ import src.Config as Config
 
 debug_level = Config.DEBUG_LEVEL_NONE
 is_develop = False
-isFallback = False
-isVerbose = False
+is_fallback = False
+is_verbose = False
