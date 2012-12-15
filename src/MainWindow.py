@@ -44,7 +44,7 @@ from .Storage.StorageCharacter import StorageCharacter
 from .Storage.StorageTemplate import StorageTemplate
 from .Calc.CalcAdvantages import CalcAdvantages
 from .Calc.Creation import Creation
-from .Calc.ConnectPrerequisites import ConnectPrerequisites
+import src.Calc.ConnectPrerequisites as ConnectPrerequisites
 from .Widgets.InfoWidget import InfoWidget
 from .Widgets.AttributeWidget import AttributeWidget
 from .Widgets.SkillWidget import SkillWidget
@@ -78,8 +78,6 @@ class MainWindow(QMainWindow):
 	@brief Das Hauptfenster der Anwendung.
 
 	Hier werden die Widgets präsentiert und die hier laufen die Verbindungen zwischen den einzelnen Objekten zusammen.
-
-	\todo Einstellen, ob .chr-Dateien komprimiert werden sollen, oder nicht.
 
 	\todo Mehr debug-Ausgaben.
 

@@ -34,7 +34,7 @@ from PyQt4.QtGui import QWidget, QFontMetrics, QIcon
 import src.Config as Config
 #from src import Error
 #from src.Calc.CalcAdvantages import CalcAdvantages
-from src.Calc.CalcShapes import CalcShapes
+import src.Calc.CalcShapes as CalcShapes
 #from src.Widgets.Components.TraitDots import TraitDots
 #from src.Widgets.Components.Squares import Squares
 #import src.Debug as Debug

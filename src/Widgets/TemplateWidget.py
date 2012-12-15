@@ -33,7 +33,7 @@ from PyQt4.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageB
 
 #import src.Config as Config
 #from src.Tools import PathTools
-#from src.Calc.Calc import Calc
+#import src.Calc.Calc as Calc
 import src.Debug as Debug
 
 from ui.ui_TemplateWidget import Ui_TemplateWidget

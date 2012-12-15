@@ -26,6 +26,13 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+"""
+Allgemeine Berechnungen.
+"""
+
+
+
+
 #from PyQt4.QtCore import pyqtSignal as Signal
 #from PyQt4.QtCore import QObject
 #from PyQt4.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
@@ -39,27 +46,20 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
-class Calc(object):
+def years(date1, date2):
 	"""
-	\brief Allgemeine Berechnungen.
+	Berechnet die Anzahl der Jahre zwischen den beiden Daten.
 	"""
 
+	#if date1 > date2:
+		#cache = date1
+		#date1 = date2
+		#date2 = cache
 
-	@staticmethod
-	def years(date1, date2):
-		"""
-		Berechnet die Anzahl der Jahre zwischen den beiden Daten.
-		"""
+	years = date2.year() - date1.year()
+	if date2.month() < date1.month() or (date2.month() == date1.month() and date2.day() < date1.day()):
+		years -= 1
 
-		#if date1 > date2:
-			#cache = date1
-			#date1 = date2
-			#date2 = cache
+	#Debug.debug(date1, date2, years)
 
-		years = date2.year() - date1.year()
-		if date2.month() < date1.month() or (date2.month() == date1.month() and date2.day() < date1.day()):
-			years -= 1
-
-		#Debug.debug(date1, date2, years)
-
-		return years
+	return years

@@ -40,10 +40,10 @@ from PyQt4.QtWebKit import QWebPage
 import src.GlobalState as GlobalState
 import src.Config as Config
 from src.Error import ErrFileNotOpened
-#from src.Random import Random
+#import src.Random as Random
 from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
-from src.Calc.CalcShapes import CalcShapes
+import src.Calc.CalcShapes as CalcShapes
 #from src.Draw.CharacterSheetDocument import CharacterSheetDocument
 from src.Tools import ImageTools
 import src.Debug as Debug

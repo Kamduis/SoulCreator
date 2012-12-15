@@ -31,21 +31,19 @@ import random
 
 
 
-class Random():
-	# Systemzeit als Seed nutzen
-	random.seed(None)
+# Systemzeit als Seed nutzen
+random.seed(None)
 
-	@staticmethod
-	def random(valA, valB=0):
-		"""
-		Gibt einen zufälligen Wert zwischen valMin und valMax (jeweils einschließlich) zurück.
-		"""
 
-		if (valB < valA):
-			valueMin = valB
-			valueMax = valA
-		else:
-			valueMin = valA
-			valueMax = valB
+def random(val_a, val_b=0):
+	"""
+	Gibt einen zufälligen Wert val_a <= x <= val_b zurück.
+	"""
 
-		return random.randint(valueMin, valueMax)
+	value_min = val_a
+	value_max = val_b
+	if (val_b < val_a):
+		value_min = val_b
+		value_max = val_a
+
+	return random.randint(value_min, value_max)
