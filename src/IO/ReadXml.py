@@ -28,7 +28,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 
-from src.Config import Config
+import src.Config as Config
 import src.Error as Error
 #from src.Debug import Debug
 

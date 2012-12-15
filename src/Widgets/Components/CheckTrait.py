@@ -29,7 +29,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QHBoxLayout, QCheckBox, QLineEdit
 
-from src.Config import Config
+import src.Config as Config
 #from src.Tools import ListTools
 from src.Datatypes.StandardTrait import StandardTrait
 #from src.Debug import Debug

@@ -30,7 +30,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QPoint
 from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter, QPalette
 
-#from src.Config import Config
+#import src.Config as Config
 #from src.Widgets.TraitLine import TraitLine
 #from src.Debug import Debug
 

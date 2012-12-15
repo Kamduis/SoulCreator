@@ -30,7 +30,7 @@ from PyQt4.QtCore import QObject, QIODevice, QByteArray, QBuffer
 
 import gzip
 
-from src.Config import Config
+import src.Config as Config
 #from src.Error import ErrTraitType, ErrTraitCategory
 #from src.Debug import Debug
 

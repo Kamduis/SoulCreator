@@ -32,7 +32,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QRect
 from PyQt4.QtGui import QWidget, QPainter, QPen, QColor
 
-#from src.Config import Config
+#import src.Config as Config
 #from src import Error
 #from ReadXml import ReadXml
 #from src.Widgets.Components.CharaTrait import CharaTrait

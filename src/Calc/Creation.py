@@ -32,7 +32,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QObject
 
 #from src.Error import ErrFileNotOpened
-from src.Config import Config
+import src.Config as Config
 #from src import Error
 #from src.Debug import Debug
 

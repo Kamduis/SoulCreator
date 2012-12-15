@@ -29,7 +29,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 #from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtGui import QDialog
 
-from src.Config import Config
+import src.Config as Config
 #from src.Error import ErrXmlTooOldVersion
 #from src.Debug import Debug
 

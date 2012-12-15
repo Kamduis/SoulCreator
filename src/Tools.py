@@ -29,7 +29,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os
 
-#from src.Config import Config
+#import src.Config as Config
 
 
 

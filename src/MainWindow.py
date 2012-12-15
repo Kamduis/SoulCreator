@@ -36,7 +36,7 @@ from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werde
 from .GlobalState import GlobalState
 from .Tools import PathTools
 from .Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
-from .Config import Config
+import src.Config as Config
 from .IO import Shell
 from .IO.Settings import Settings
 from .IO.ReadXmlTemplate import ReadXmlTemplate

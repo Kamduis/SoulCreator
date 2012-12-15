@@ -32,7 +32,7 @@ import sys
 import subprocess
 from cx_Freeze import setup, Executable, Freezer
 
-from src.Config import Config
+import src.Config as Config
 
 
 

@@ -41,7 +41,7 @@ import signal
 from PyQt4.QtGui import QApplication
 
 from src.GlobalState import GlobalState
-from src.Config import Config
+import src.Config as Config
 from src.MainWindow import MainWindow
 #from src.Debug import Debug
 

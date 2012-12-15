@@ -32,7 +32,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import Qt, QDate
 from PyQt4.QtGui import QWidget, QIcon, QPixmap, QFileDialog, QMessageBox
 
-from src.Config import Config
+import src.Config as Config
 from src.Tools import PathTools
 #from src.Calc.Calc import Calc
 from src.Datatypes.Identity import Identity

@@ -33,7 +33,7 @@ import zlib
 from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QObject, QDir, QFile, QIODevice
 
-from src.Config import Config
+import src.Config as Config
 from src.GlobalState import GlobalState
 #from src.Tools import ListTools
 from src.Error import ErrXmlOldVersion, ErrFileNotOpened

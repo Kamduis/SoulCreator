@@ -29,7 +29,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 #from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QStyle, QStyleOption, QPainter
 
-#from src.Config import Config
+#import src.Config as Config
 #from src.Debug import Debug
 
 

@@ -28,7 +28,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4.QtCore import QObject
 
-#from src.Config import Config
+#import src.Config as Config
 #from src.Tools import ListTools
 from src.Error import ErrTraitType
 from src.Debug import Debug

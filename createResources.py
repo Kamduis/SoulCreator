@@ -31,7 +31,7 @@ import sys
 import argparse
 import subprocess
 
-from src.Config import Config
+import src.Config as Config
 
 
 

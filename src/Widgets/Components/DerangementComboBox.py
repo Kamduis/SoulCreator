@@ -30,7 +30,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QComboBox, QColor
 
-from src.Config import Config
+import src.Config as Config
 #from src import Error
 #from src.Debug import Debug
 

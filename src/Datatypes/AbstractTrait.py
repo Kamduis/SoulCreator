@@ -29,7 +29,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QObject
 
-#from src.Config import Config
+#import src.Config as Config
 #from ReadXml import ReadXml
 #from src.Debug import Debug
 #from src.Error import ErrTraitType

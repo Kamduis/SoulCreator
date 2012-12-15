@@ -30,7 +30,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QMessageBox
 
-from src.Config import Config
+import src.Config as Config
 from src.Widgets.Components.DerangementComboBox import DerangementComboBox
 from src.Widgets.Components.Dot import Dot
 from src.Debug import Debug

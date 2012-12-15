@@ -30,7 +30,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QObject, QDate
 from PyQt4.QtGui import QPixmap
 
-from src.Config import Config
+import src.Config as Config
 from src.Datatypes.AbstractTrait import AbstractTrait
 from src.Datatypes.StandardTrait import StandardTrait
 from src.Datatypes.BonusTrait import BonusTrait

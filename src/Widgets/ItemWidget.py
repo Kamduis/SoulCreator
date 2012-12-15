@@ -31,7 +31,7 @@ import os
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QColor, QIcon, QListWidgetItem, QRadioButton, QButtonGroup
 
-from src.Config import Config
+import src.Config as Config
 from src.Widgets.AbstractStoreWidget import AbstractStoreWidget
 from src.Debug import Debug
 

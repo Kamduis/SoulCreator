@@ -38,7 +38,7 @@ from PyQt4 import QtNetwork# Ist notwendig, wenn ich cx_freeze nutzen möchte. S
 from PyQt4.QtWebKit import QWebPage
 
 from src.GlobalState import GlobalState
-from src.Config import Config
+import src.Config as Config
 from src.Error import ErrFileNotOpened
 #from src.Random import Random
 from src.Datatypes.Identity import Identity

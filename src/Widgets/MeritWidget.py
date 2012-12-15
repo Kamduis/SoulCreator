@@ -32,7 +32,7 @@ import os
 #from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QVBoxLayout, QToolBox
 
-from src.Config import Config
+import src.Config as Config
 #from src import Error
 from src.Tools import ListTools
 from src.Widgets.TraitWidget import TraitWidget

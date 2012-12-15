@@ -30,7 +30,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QObject
 #from PyQt4.QtGui import QDialog
 
-from src.Config import Config
+import src.Config as Config
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 #from src.Widgets.Dialogs.NameDialog import NameDialog
 #from src.Debug import Debug

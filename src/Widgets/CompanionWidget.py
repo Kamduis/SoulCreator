@@ -31,7 +31,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QHBoxLayout, QLineEdit
 
-#from src.Config import Config
+#import src.Config as Config
 #from src import Error
 from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Widgets.Components.TraitDots import TraitDots

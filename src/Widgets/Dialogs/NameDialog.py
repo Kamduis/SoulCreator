@@ -31,7 +31,7 @@ import copy
 from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtGui import QDialog, QIcon
 
-from src.Config import Config
+import src.Config as Config
 #from src.Error import ErrListLength
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Datatypes.Identity import Identity

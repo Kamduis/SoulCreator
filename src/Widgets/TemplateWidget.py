@@ -31,7 +31,7 @@ import re
 from PyQt4.QtCore import QDate
 from PyQt4.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageBox
 
-#from src.Config import Config
+#import src.Config as Config
 #from src.Tools import PathTools
 #from src.Calc.Calc import Calc
 from src.Debug import Debug

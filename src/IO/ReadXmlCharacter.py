@@ -33,7 +33,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QObject, QDate, QByteArray
 from PyQt4.QtGui import QPixmap
 
-from src.Config import Config
+import src.Config as Config
 from src.Error import ErrXmlOldVersion
 from src.IO.ReadXml import ReadXml
 from src.Debug import Debug
