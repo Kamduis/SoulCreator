@@ -40,7 +40,7 @@ import signal
 
 from PyQt4.QtGui import QApplication
 
-from src.GlobalState import GlobalState
+import src.GlobalState as GlobalState
 import src.Config as Config
 from src.MainWindow import MainWindow
 #import src.Debug as Debug
@@ -69,14 +69,17 @@ if __name__ == "__main__":
 	# Als Argument kann der Name oder die Nummer des Debug-levels eingegeben werden. Bei der Liste der erlaubten Möglichkeiten wird der Name immer nach der zugehörigen Nummer eingefügt.
 	__choices_debug_level = []
 	for item in range( len( Config.DEBUG_LEVELS ) ):
-		__choices_debug_level.append( item )
+		__choices_debug_level.append( str(item) )
 		__choices_debug_level.append( Config.DEBUG_LEVELS[item] )
-	parser.add_argument("--debug", nargs="?", choices=__choices_debug_level, const=Config.DEBUG_LEVELS[Config.DEBUG_LEVEL_STD], default="0", help="Give debug information. {level_index_none} ({level_name_none}) means, that no debug information will be printed (standard behaviour). {level_index_normal} ({level_name_normal}) is the normal behaviour, if the option string is present, but no argument given. Any other debug level is not recommended for printing and/or exporting character sheets.".format(
+	parser.add_argument("--debug", nargs="?", choices=__choices_debug_level, const=Config.DEBUG_LEVELS[Config.DEBUG_LEVEL_STD], default="0", help="Give debug information. {level_index_none} ({level_name_none}) means, that no debug information will be printed (standard behaviour). {level_index_normal} ({level_name_normal}) is the normal behaviour, if the option string is present, but no argument given. Debug from {level_index_mod} ({level_name_mod}) and above are not recommended for printing and/or exporting character sheets.".format(
 		level_index_none=Config.DEBUG_LEVEL_NONE,
 		level_name_none=Config.DEBUG_LEVELS[Config.DEBUG_LEVEL_NONE],
 		level_index_normal=Config.DEBUG_LEVEL_STD,
 		level_name_normal=Config.DEBUG_LEVELS[Config.DEBUG_LEVEL_STD],
+		level_index_mod=Config.DEBUG_LEVEL_MODIFIES_EXPORTS,
+		level_name_mod=Config.DEBUG_LEVELS[Config.DEBUG_LEVEL_MODIFIES_EXPORTS],
 	) )
+	## Development. Some tasks are automatic, that normally the user would have to undertake, like choosing a file name for saving characters and other stuff. Very dangerous for normal work.
 	parser.add_argument("--develop", action="store_true", help=argparse.SUPPRESS)
 	parser.add_argument("--fallback", action="store_true", help=argparse.SUPPRESS)
 	parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
@@ -90,7 +93,7 @@ if __name__ == "__main__":
 		GlobalState.debug_level = Config.DEBUG_LEVELS.index( args.debug )
 	else:
 		GlobalState.debug_level = int( args.debug )
-	GlobalState.isDevelop = args.develop
+	GlobalState.is_develop = args.develop
 	GlobalState.isFallback = args.fallback
 	GlobalState.isVerbose = args.verbose
 
@@ -100,6 +103,14 @@ if __name__ == "__main__":
 			level_index=GlobalState.debug_level,
 			level_name=Config.DEBUG_LEVELS[GlobalState.debug_level],
 		))
+		if GlobalState.debug_level >= Config.DEBUG_LEVEL_MODIFIES_EXPORTS:
+			print("WARNING! Exporting and printing character sheets is not recommended.")
+
+	if GlobalState.is_develop:
+		print( "{name} runs in development mode.".format(
+			name=Config.PROGRAM_NAME,
+		))
+		print( "WARNING! You may encounter unexpected behaviour. Data loss is possible. Proceed only, if you know, what you are doing." )
 
 	app = QApplication(sys.argv)
 	w = MainWindow( args.file, exportPath=args.pdf )

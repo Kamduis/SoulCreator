@@ -34,7 +34,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QObject, QDir, QFile, QIODevice
 
 import src.Config as Config
-from src.GlobalState import GlobalState
+import src.GlobalState as GlobalState
 #from src.Tools import ListTools
 from src.Error import ErrXmlOldVersion, ErrFileNotOpened
 from src.IO.ReadXml import ReadXml

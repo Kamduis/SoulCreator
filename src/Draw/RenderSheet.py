@@ -37,7 +37,7 @@ from PyQt4.QtGui import QPainter, QImage, QPalette, QPicture#, QColor, QPen, QFo
 from PyQt4 import QtNetwork# Ist notwendig, wenn ich cx_freeze nutzen möchte. Sonst wird das entsprechende modul nicht eingeschlossen udn QtWebKit funktioniert nicht.
 from PyQt4.QtWebKit import QWebPage
 
-from src.GlobalState import GlobalState
+import src.GlobalState as GlobalState
 import src.Config as Config
 from src.Error import ErrFileNotOpened
 #from src.Random import Random
@@ -195,7 +195,7 @@ class RenderSheet(QObject):
 			cssContent = cssContent.replace("{", "{{")
 			cssContent = cssContent.replace("}", "}}")
 
-			if GlobalState.isDevelop:
+			if GlobalState.debug_level >= Config.DEBUG_LEVEL_MODIFIES_EXPORTS:
 				cssContent += "td {{ border: 1px solid #0F0; }}"
 				cssContent += "td.layout {{ border: 1px solid #F00; }}"
 
@@ -1525,7 +1525,7 @@ class RenderSheet(QObject):
 			svgImage = re.sub(r"\<\?[^\>]*\?\>", "", svgImage)
 
 			border = ""
-			if GlobalState.isDevelop:
+			if GlobalState.debug_level >= Config.DEBUG_LEVEL_MODIFIES_EXPORTS:
 				border = "border: 1px solid #00F;"
 
 			return "<div style='width: 0%; height: 0%; text-align: right; {border}'>{}</div>".format(svgImage, width=width, height=height, border=border)

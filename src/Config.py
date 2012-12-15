@@ -67,9 +67,11 @@ DEBUG_LEVELS = (
 	"none",
 	"normal",
 	"detailed",
+	"extensive",
 )
 DEBUG_LEVEL_NONE = 0
 DEBUG_LEVEL_STD  = 1
+DEBUG_LEVEL_MODIFIES_EXPORTS = 3 ## From this debug level on, debug information is even added to the exports (printing, exporting etc.).
 
 # Konfigurationsdatei
 CONFIG_FILE = "config.ini"

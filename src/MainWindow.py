@@ -33,7 +33,6 @@ from PyQt4.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTim
 from PyQt4.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
 from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
-from .GlobalState import GlobalState
 from .Tools import PathTools
 from .Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from .IO import Shell
@@ -64,6 +63,7 @@ from .Widgets.Dialogs.MessageBox import MessageBox
 #from .Draw.DrawSheet import DrawSheet
 from .Draw.RenderSheet import RenderSheet
 import src.Config as Config
+import src.GlobalState as GlobalState
 import src.Debug as Debug
 
 from ui.ui_MainWindow import Ui_MainWindow
@@ -678,7 +678,7 @@ class MainWindow(QMainWindow):
 		if not os.path.exists(savePath):
 			os.makedirs(savePath)
 
-		if GlobalState.isDevelop:
+		if GlobalState.is_develop:
 			filePath = "{}/untitled.pdf".format(savePath)
 		else:
 			fileData = QFileDialog.getSaveFileName( self, self.tr( "Export Character" ), "{}/untitled.pdf".format(savePath), self.tr( "Portable Document Format (*.pdf)" ) )

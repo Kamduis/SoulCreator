@@ -37,7 +37,7 @@ import inspect
 import time
 
 import src.Config as Config
-from src.GlobalState import GlobalState
+import src.GlobalState as GlobalState
 
 
 

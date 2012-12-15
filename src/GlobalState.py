@@ -26,67 +26,19 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+"""
+Dieses Modul speichert alle globalen Einstellungen für das Programm.
+"""
+
+
+
+
 import src.Config as Config
 
 
 
 
-class GlobalState(object):
-	"""
-	@brief Diese Klasse speichert alle globalen Einstellungen für das Programm.
-
-	\note Diese Klasse folgt dem Borg-Pattern.
-	"""
-
-	_debug_level = Config.DEBUG_LEVEL_NONE
-	_isDevelop = False
-	_isFallback = False
-	isVerbose = False
-
-	_shared = {}
-	def __new__(cls, *args, **kwargs):
-		inst = object.__new__(cls, *args, **kwargs)
-		inst.__dict__ = cls._shared
-		return inst
-
-
-	@property
-	@staticmethod
-	def debug_level():
-		return GlobalState._debug_level
-
-	@debug_level.setter
-	@staticmethod
-	def debug_level( lvl ):
-		GlobalState._debug_level = lvl
-
-
-	@property
-	@staticmethod
-	def isDevelop():
-		return GlobalState._isDevelop
-
-	@isDevelop.setter
-	@staticmethod
-	def isDevelop(sw):
-		GlobalState._isDevelop = sw
-
-
-	@property
-	@staticmethod
-	def isFallback():
-		return GlobalState._isFallback
-
-	@isFallback.setter
-	@staticmethod
-	def isFallback(sw):
-		GlobalState._isFallback = sw
-
-
-
-
-
-
-
-
-
+debug_level = Config.DEBUG_LEVEL_NONE
+is_develop = False
+isFallback = False
+isVerbose = False
