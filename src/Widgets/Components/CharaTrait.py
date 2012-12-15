@@ -32,7 +32,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 #import src.Config as Config
 from src.Widgets.Components.TraitLine import TraitLine
 from src.Datatypes.BonusTrait import BonusTrait
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

@@ -39,7 +39,7 @@ from src.Datatypes.Identity import Identity
 from src.Calc.Calc import Calc
 from src.Calc.ConnectPrerequisites import ConnectPrerequisites
 #from src.Error import ErrListLength
-from src.Debug import Debug
+import src.Debug as Debug
 
 
 

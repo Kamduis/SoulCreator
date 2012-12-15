@@ -26,6 +26,11 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+import src.Config as Config
+
+
+
+
 class GlobalState(object):
 	"""
 	@brief Diese Klasse speichert alle globalen Einstellungen für das Programm.
@@ -33,7 +38,7 @@ class GlobalState(object):
 	\note Diese Klasse folgt dem Borg-Pattern.
 	"""
 
-	_isDebug = False
+	_debug_level = Config.DEBUG_LEVEL_NONE
 	_isDevelop = False
 	_isFallback = False
 	isVerbose = False
@@ -47,13 +52,13 @@ class GlobalState(object):
 
 	@property
 	@staticmethod
-	def isDebug():
-		return GlobalState._isDebug
+	def debug_level():
+		return GlobalState._debug_level
 
-	@isDebug.setter
+	@debug_level.setter
 	@staticmethod
-	def isDebug(sw):
-		GlobalState._isDebug = sw
+	def debug_level( lvl ):
+		GlobalState._debug_level = lvl
 
 
 	@property
@@ -61,7 +66,7 @@ class GlobalState(object):
 	def isDevelop():
 		return GlobalState._isDevelop
 
-	@isDebug.setter
+	@isDevelop.setter
 	@staticmethod
 	def isDevelop(sw):
 		GlobalState._isDevelop = sw
@@ -72,7 +77,7 @@ class GlobalState(object):
 	def isFallback():
 		return GlobalState._isFallback
 
-	@isDebug.setter
+	@isFallback.setter
 	@staticmethod
 	def isFallback(sw):
 		GlobalState._isFallback = sw

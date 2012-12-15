@@ -35,7 +35,7 @@ from PyQt4.QtGui import QWidget, QHBoxLayout, QLineEdit
 #from src import Error
 from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Widgets.Components.TraitDots import TraitDots
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 from ui.ui_CompanionWidget import Ui_CompanionWidget
 

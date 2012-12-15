@@ -36,7 +36,7 @@ from PyQt4.QtGui import QWidget, QPainter, QPen, QColor
 #from src import Error
 #from ReadXml import ReadXml
 #from src.Widgets.Components.CharaTrait import CharaTrait
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

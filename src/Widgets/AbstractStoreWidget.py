@@ -36,7 +36,7 @@ from PyQt4.QtGui import QWidget, QIcon, QTableWidgetItem, QStandardItemModel, QS
 #from src import Error
 #from src.Calc.CalcAdvantages import CalcAdvantages
 #from src.Widgets.Components.TraitDots import TraitDots
-from src.Debug import Debug
+import src.Debug as Debug
 
 from ui.ui_AbstractStoreWidget import Ui_AbstractStoreWidget
 

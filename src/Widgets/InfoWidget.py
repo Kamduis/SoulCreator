@@ -37,7 +37,7 @@ from src.Tools import PathTools
 #from src.Calc.Calc import Calc
 from src.Datatypes.Identity import Identity
 from src.Widgets.Dialogs.NameDialog import NameDialog
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 from ui.ui_InfoWidget import Ui_InfoWidget
 

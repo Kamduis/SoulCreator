@@ -30,7 +30,7 @@ import re
 
 import src.Config as Config
 from src.Datatypes.BasicTrait import BasicTrait
-from src.Debug import Debug
+import src.Debug as Debug
 
 
 

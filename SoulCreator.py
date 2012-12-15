@@ -43,7 +43,7 @@ from PyQt4.QtGui import QApplication
 from src.GlobalState import GlobalState
 import src.Config as Config
 from src.MainWindow import MainWindow
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -66,7 +66,17 @@ if __name__ == "__main__":
 
 	#parser.add_argument("-o", "--onepage", action="store_true", help="Charactersheets will consist of one page only. (Momentan noch ohne Funktion.)")
 	parser.add_argument("-p", "--pdf", metavar="Name", nargs=1, help="Directly creates a pdf file of the specified name out of the loaded character and closes immediatly. If no character file is passed as an argument to this program, an empty character sheet will be created.")
-	parser.add_argument("--debug", action="store_true", help="Give debug information. Not recommended for printing or exporting character sheets.")
+	# Als Argument kann der Name oder die Nummer des Debug-levels eingegeben werden. Bei der Liste der erlaubten Möglichkeiten wird der Name immer nach der zugehörigen Nummer eingefügt.
+	__choices_debug_level = []
+	for item in range( len( Config.DEBUG_LEVELS ) ):
+		__choices_debug_level.append( item )
+		__choices_debug_level.append( Config.DEBUG_LEVELS[item] )
+	parser.add_argument("--debug", nargs="?", choices=__choices_debug_level, const=Config.DEBUG_LEVELS[Config.DEBUG_LEVEL_STD], default="0", help="Give debug information. {level_index_none} ({level_name_none}) means, that no debug information will be printed (standard behaviour). {level_index_normal} ({level_name_normal}) is the normal behaviour, if the option string is present, but no argument given. Any other debug level is not recommended for printing and/or exporting character sheets.".format(
+		level_index_none=Config.DEBUG_LEVEL_NONE,
+		level_name_none=Config.DEBUG_LEVELS[Config.DEBUG_LEVEL_NONE],
+		level_index_normal=Config.DEBUG_LEVEL_STD,
+		level_name_normal=Config.DEBUG_LEVELS[Config.DEBUG_LEVEL_STD],
+	) )
 	parser.add_argument("--develop", action="store_true", help=argparse.SUPPRESS)
 	parser.add_argument("--fallback", action="store_true", help=argparse.SUPPRESS)
 	parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
@@ -75,13 +85,21 @@ if __name__ == "__main__":
 
 	args = parser.parse_args()
 
-	GlobalState.isDebug = args.debug
+	# Debug-Level soll immer als Zahl gespeichert werden. Der Zugehörige Name kann über das Tupel Config.DEBUG_LEVELS herausgefunden werden.
+	if args.debug in Config.DEBUG_LEVELS:
+		GlobalState.debug_level = Config.DEBUG_LEVELS.index( args.debug )
+	else:
+		GlobalState.debug_level = int( args.debug )
 	GlobalState.isDevelop = args.develop
 	GlobalState.isFallback = args.fallback
 	GlobalState.isVerbose = args.verbose
 
-	if GlobalState.isDebug:
-		print("{} runs in debug mode".format(Config.PROGRAM_NAME))
+	if GlobalState.debug_level and GlobalState.debug_level > Config.DEBUG_LEVEL_NONE:
+		print("{name} runs in debug mode (debug-level: {level_index} \"{level_name}\").".format(
+			name=Config.PROGRAM_NAME,
+			level_index=GlobalState.debug_level,
+			level_name=Config.DEBUG_LEVELS[GlobalState.debug_level],
+		))
 
 	app = QApplication(sys.argv)
 	w = MainWindow( args.file, exportPath=args.pdf )

@@ -34,7 +34,7 @@ from PyQt4.QtGui import QWidget, QVBoxLayout, QStandardItemModel, QStandardItem,
 #from src import Error
 #from src.Widgets.CategoryWidget import CategoryWidget
 #from src.Widgets.Components.CheckTrait import CheckTrait
-from src.Debug import Debug
+import src.Debug as Debug
 
 
 

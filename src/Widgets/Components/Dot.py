@@ -32,7 +32,7 @@ from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter, QPalette
 
 #import src.Config as Config
 #from src.Widgets.TraitLine import TraitLine
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

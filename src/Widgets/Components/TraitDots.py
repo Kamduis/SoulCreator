@@ -32,7 +32,7 @@ from PyQt4.QtGui import QColor, QPainter, QPen
 
 import src.Config as Config
 from src.Widgets.Components.AbstractTraitDots import AbstractTraitDots
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

@@ -32,7 +32,7 @@ from PyQt4.QtGui import QWidget, QHBoxLayout, QLineEdit, QMessageBox
 import src.Config as Config
 from src.Widgets.Components.TraitDots import TraitDots
 from src.Widgets.CompanionWidget import CompanionWidget
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 from ui.ui_SpecialsWidget import Ui_SpecialsWidget
 

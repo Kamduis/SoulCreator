@@ -32,7 +32,7 @@ from PyQt4.QtGui import QWidget, QHBoxLayout, QCheckBox, QLineEdit
 import src.Config as Config
 #from src.Tools import ListTools
 from src.Datatypes.StandardTrait import StandardTrait
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

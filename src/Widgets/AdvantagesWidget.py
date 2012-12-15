@@ -37,7 +37,7 @@ import src.Config as Config
 from src.Calc.CalcShapes import CalcShapes
 #from src.Widgets.Components.TraitDots import TraitDots
 #from src.Widgets.Components.Squares import Squares
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 from ui.ui_AdvantagesWidget import Ui_AdvantagesWidget
 

@@ -31,7 +31,7 @@ from PyQt4.QtCore import QObject
 
 #import src.Config as Config
 #from ReadXml import ReadXml
-#from src.Debug import Debug
+#import src.Debug as Debug
 #from src.Error import ErrTraitType
 
 

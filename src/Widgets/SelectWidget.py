@@ -31,7 +31,7 @@ from PyQt4.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
 #from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
 import src.Config as Config
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

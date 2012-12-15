@@ -62,6 +62,15 @@ PROGRAM_VERSION = {
 PROGRAM_DESCRIPTION = "Charaktergenerator for the World of Darkness."
 ORGANIZATION = "Caern"
 
+# Debug-Level
+DEBUG_LEVELS = (
+	"none",
+	"normal",
+	"detailed",
+)
+DEBUG_LEVEL_NONE = 0
+DEBUG_LEVEL_STD  = 1
+
 # Konfigurationsdatei
 CONFIG_FILE = "config.ini"
 

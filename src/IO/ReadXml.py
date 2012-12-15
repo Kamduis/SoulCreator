@@ -30,7 +30,7 @@ import os
 
 import src.Config as Config
 import src.Error as Error
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

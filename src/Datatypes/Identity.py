@@ -33,7 +33,7 @@ from PyQt4.QtCore import QObject
 import src.Config as Config
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 #from src.Widgets.Dialogs.NameDialog import NameDialog
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

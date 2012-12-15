@@ -34,7 +34,7 @@ from PyQt4.QtCore import QObject
 #from src.Error import ErrFileNotOpened
 import src.Config as Config
 #from src import Error
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

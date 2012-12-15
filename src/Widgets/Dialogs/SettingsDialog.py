@@ -31,7 +31,7 @@ from PyQt4.QtGui import QDialog
 
 import src.Config as Config
 #from src.Error import ErrXmlTooOldVersion
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 from ui.ui_SettingsDialog import Ui_SettingsDialog
 

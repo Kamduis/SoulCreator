@@ -38,7 +38,7 @@ from src.Datatypes.StandardTrait import StandardTrait
 #from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Widgets.Components.CheckTrait import CheckTrait
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

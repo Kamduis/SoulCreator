@@ -33,7 +33,7 @@ from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, 
 import src.Config as Config
 from src.Widgets.Components.DerangementComboBox import DerangementComboBox
 from src.Widgets.Components.Dot import Dot
-from src.Debug import Debug
+import src.Debug as Debug
 
 
 

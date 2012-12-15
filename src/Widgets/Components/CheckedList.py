@@ -35,7 +35,7 @@ from PyQt4.QtGui import QListWidget, QListWidgetItem, QColor
 import src.Config as Config
 #from src import Error
 #from ReadXml import ReadXml
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

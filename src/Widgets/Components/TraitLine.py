@@ -31,7 +31,7 @@ from PyQt4.QtGui import QWidget, QHBoxLayout, QPushButton, QLineEdit, QLabel
 
 import src.Config as Config
 from src.Widgets.Components.TraitDots import TraitDots
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

@@ -31,7 +31,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 #import src.Config as Config
 from src.Datatypes.AbstractTrait import AbstractTrait
 #from src.Error import ErrTraitType
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

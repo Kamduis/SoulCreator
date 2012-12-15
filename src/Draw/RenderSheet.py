@@ -46,7 +46,7 @@ from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Calc.CalcShapes import CalcShapes
 #from src.Draw.CharacterSheetDocument import CharacterSheetDocument
 from src.Tools import ImageTools
-from src.Debug import Debug
+import src.Debug as Debug
 
 
 

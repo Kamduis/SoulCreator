@@ -29,7 +29,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4.QtCore import QFile, QIODevice, QTextStream
 from PyQt4.QtGui import QTextDocument
 
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

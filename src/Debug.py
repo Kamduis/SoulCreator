@@ -26,55 +26,60 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+"""
+Erlaubt einfachen Zugriff auf Debug-Informationen.
+"""
+
+
+
+
 import inspect
 import time
 
+import src.Config as Config
 from src.GlobalState import GlobalState
 
 
 
 
-class Debug():
+def debug( *args, level=Config.DEBUG_LEVEL_STD ):
 	"""
-	@brief Erlaubt einfachen Zugriff auf Debug-Informationen.
+	Gibt einen Text aus.
+
+	Der vom Nutzer beim Programmaufruf gewählte Debug level bestimmt, wie ausfühlrich die Debug-Informationen sind und welche davon überhaupt angezeigt werden. Beispielsweise wird der Ort des Aufrufs dieser Funktion nur vorangestellt, wenn der gewählte Debug-Level hoch genug ist) Standardmäßig entfällt diese Anzeige.
+
+	\param level Ab welchem debug-level diese debug-Nachricht angezeigt wird.
 	"""
 
+	if level <= Config.DEBUG_LEVEL_NONE:
+		raise ValueError( "A level smaller than {} is not supported.".format(Config.DEBUG_LEVEL_NONE + 1) )
 
-	@staticmethod
-	def debug( *args ):
-		"""
-		Gibt einen Text aus, wobei der Ort des Aufrufs dieser Funktion vorangestellt ist.
-		"""
-
-		if GlobalState.isDebug:
+	if GlobalState.debug_level and GlobalState.debug_level > Config.DEBUG_LEVEL_NONE and GlobalState.debug_level >= level:
+		## Dateiname und Zeilennummer der Debug-Ausgabe werden nur ausgegeben, wenn der Debug-Level hoch genug ist. Normalerweise wird darauf aufgrund der Übersichtlichkeit verzichtet.
+		if GlobalState.debug_level > Config.DEBUG_LEVEL_STD:
 			print("{:<78}\tl. {:<4}\t{:<18}".format(inspect.stack()[1][1], inspect.stack()[1][2], inspect.stack()[1][3]))
-			for arg in args:
-				print(arg)
+		for arg in args:
+			print(arg)
 
 
-	#@staticmethod
-	#def stack( *args ):
-		#"""
-		#???
-		#"""
+#def stack( *args ):
+	#"""
+	#???
+	#"""
 
-		#if GlobalState.isDebug:
-			#for item in inspect.stack():
-				#print("{}\t{:<78}\t{}".format(item[0], item[1], item[3]))
-
-
-	@staticmethod
-	def timehook():
-		return time.time()
+	#if GlobalState.debug_level and GlobalState.debug_level > Config.DEBUG_LEVEL_NONE:
+		#for item in inspect.stack():
+			#print("{}\t{:<78}\t{}".format(item[0], item[1], item[3]))
 
 
-	@classmethod
-	def timer(cls, start, end):
-		cls.debug('Code time %.3f seconds' % (end - start))
+def timehook():
+	return time.time()
 
 
-	@classmethod
-	def timesince(cls, start):
-		end = time.time()
-		cls.timer(start, end)
+def timer(start, end):
+	debug('Code time %.3f seconds' % (end - start))
 
+
+def timesince(start):
+	end = time.time()
+	timer(start, end)

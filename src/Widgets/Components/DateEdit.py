@@ -30,7 +30,7 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtGui import QDateEdit
 
 #import src.Config as Config
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

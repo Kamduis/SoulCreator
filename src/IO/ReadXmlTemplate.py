@@ -38,7 +38,7 @@ from src.GlobalState import GlobalState
 #from src.Tools import ListTools
 from src.Error import ErrXmlOldVersion, ErrFileNotOpened
 from src.IO.ReadXml import ReadXml
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False

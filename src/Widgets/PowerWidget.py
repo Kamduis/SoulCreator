@@ -33,7 +33,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 #import src.Config as Config
 #from src import Error
 from src.Widgets.CategoryWidget import CategoryWidget
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 

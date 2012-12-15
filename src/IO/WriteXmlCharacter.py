@@ -32,7 +32,7 @@ import gzip
 
 import src.Config as Config
 #from src.Error import ErrTraitType, ErrTraitCategory
-from src.Debug import Debug
+import src.Debug as Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False

@@ -33,7 +33,7 @@ from PyQt4.QtGui import QWidget, QColor, QIcon, QListWidgetItem, QRadioButton, Q
 
 import src.Config as Config
 from src.Widgets.AbstractStoreWidget import AbstractStoreWidget
-from src.Debug import Debug
+import src.Debug as Debug
 
 from ui.ui_ItemWidget import Ui_ItemWidget
 

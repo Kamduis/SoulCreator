@@ -35,7 +35,7 @@ import src.Config as Config
 #from src.Error import ErrListLength
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Datatypes.Identity import Identity
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 from ui.ui_NameDialog import Ui_NameDialog
 

@@ -35,7 +35,7 @@ from PyQt4.QtGui import QWidget, QVBoxLayout, QToolBox
 import src.Config as Config
 from src.Tools import ListTools
 from src.Widgets.Components.CheckTrait import CheckTrait
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
