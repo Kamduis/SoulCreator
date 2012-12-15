@@ -77,8 +77,6 @@ FILE_SUFFIX_COMPRESSED = "scd"
 # Dateiendung der gespeicherten Charkatere
 FILE_SUFFIX_SAVE = "chr"
 
-COMPRESS_SAVES = True
-
 # Zeichen, um Listeneinträge in den XML-Dateien zu trennen
 XML_SEPARATION_SYMBOL = ";"
 
@@ -332,9 +330,15 @@ SHAPES_WEREWOLF = (
 
 
 ## Folgende Werte können über den Einstellungsdialog verändert werden und sollten beim Beenden des Programms gespeichert und beim Starten geladen werden. Die übergebenen Werte sind die Standartwerte, wenn im Einstellungsdialog nichts verändert wird.
+
 # Zur Altersberechnung Kalender verwenden
 #calendarForAgeCalculation = True
-ERA_AUTO_SELECT = True
+
+# Die Era automatisch aus dem Spiel-Datum ermitteln?
+era_auto_select = True
+
+# Gespeicherte Dateien komprimieren?
+compress_saves = True
 
 
 

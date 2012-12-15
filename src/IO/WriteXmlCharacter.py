@@ -32,7 +32,7 @@ import gzip
 
 import src.Config as Config
 #from src.Error import ErrTraitType, ErrTraitCategory
-#from src.Debug import Debug
+from src.Debug import Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
@@ -42,14 +42,10 @@ try:
 	lxmlLoadad = True
 except ImportError:
 	try:
-		# Python 2.5
 		import xml.etree.cElementTree as etree
-		#Debug.debug("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
-			# Python 2.5
 			import xml.etree.ElementTree as etree
-			#Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
 			print("Failed to import ElementTree from any known place")
 
@@ -246,15 +242,16 @@ class WriteXmlCharacter(QObject):
 		return root
 
 
-	def __writeTreeToFile(self, fileObject, tree):
+	def __writeTreeToFile(self, file_object, tree):
 		if lxmlLoadad:
-			fileObject.write(etree.tostring(tree, pretty_print=True, encoding='UTF-8', xml_declaration=True))
+			Debug.debug( "Using the advanced lxml-module to write the XML-tree." )
+			file_object.write(etree.tostring(tree, pretty_print=True, encoding="UTF-8", xml_declaration=True))
 		else:
-			fileObject.write(etree.tostring(tree, encoding='UTF-8'))
+			Debug.debug( "Using the basic xml.etree.ElementTree-module to write the XML-tree." )
+			file_object.write(etree.tostring(tree, encoding="unicode"))
 
 
-
-	def writeFile(self, tree, fileName):
+	def writeFile(self, tree, file_name):
 		"""
 		Schreibt den Elementbaum in eine Datei.
 
@@ -262,9 +259,13 @@ class WriteXmlCharacter(QObject):
 		"""
 
 		## In die Datei schreiben.
-		if Config.COMPRESS_SAVES:
-			with gzip.open(fileName, "w") as fileObject:
-				self.__writeTreeToFile(fileObject, tree)
+		if Config.compress_saves:
+			Debug.debug( "Writing character into {} (compressed).".format(file_name) )
+
+			with gzip.open(file_name, "w") as file_object:
+				self.__writeTreeToFile(file_object, tree)
 		else:
-			with open(fileName, "w") as fileObject:
-				self.__writeTreeToFile(fileObject, tree)
+			Debug.debug( "Writing character into {} (uncompressed).".format(file_name) )
+
+			with open(file_name, "w") as file_object:
+				self.__writeTreeToFile(file_object, tree)

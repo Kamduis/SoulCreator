@@ -55,7 +55,8 @@ class SettingsDialog(QDialog):
 		self.ui = Ui_SettingsDialog()
 		self.ui.setupUi(self)
 
-		self.ui.checkBox_autoSelectEra.setChecked(Config.ERA_AUTO_SELECT)
+		self.ui.checkBox_autoSelectEra.setChecked(Config.era_auto_select)
+		self.ui.checkBox_compressSaves.setChecked(Config.compress_saves)
 
 		self.ui.buttonBox.accepted.connect(self.saveChanges)
 		self.ui.buttonBox.rejected.connect(self.reject)
@@ -66,6 +67,7 @@ class SettingsDialog(QDialog):
 		Speichert die im Dialog vorgenommen Änderungen.
 		"""
 
-		Config.ERA_AUTO_SELECT = self.ui.checkBox_autoSelectEra.isChecked()
+		Config.era_auto_select = self.ui.checkBox_autoSelectEra.isChecked()
+		Config.compress_saves = self.ui.checkBox_compressSaves.isChecked()
 
 		self.accept()

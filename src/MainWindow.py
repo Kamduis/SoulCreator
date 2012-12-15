@@ -724,7 +724,8 @@ class MainWindow(QMainWindow):
 		settings.endGroup()
 
 		settings.beginGroup( "Config" )
-		settings.setValue( "autoSelectEra", Config.ERA_AUTO_SELECT )
+		settings.setValue( "autoSelectEra", Config.era_auto_select )
+		settings.setValue( "compressSaves", Config.compress_saves )
 		settings.endGroup()
 
 
@@ -743,7 +744,8 @@ class MainWindow(QMainWindow):
 		settings.endGroup()
 
 		settings.beginGroup( "Config" )
-		Config.ERA_AUTO_SELECT = str(settings.value( "autoSelectEra" )).lower() != "false"
+		Config.era_auto_select = str(settings.value( "autoSelectEra" )).lower() != "false"
+		Config.compress_saves = str(settings.value( "compressSaves" )).lower() != "false"
 		settings.endGroup()
 
 		#// 	// Nachdem die Einstellungen geladen wurden, müssen sie auch angewandt werden.

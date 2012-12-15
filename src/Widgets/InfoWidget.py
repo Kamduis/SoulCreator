@@ -327,7 +327,7 @@ class InfoWidget(QWidget):
 		Der Ära des Spiels verändert das maximale Datum des Spiels.
 		"""
 
-		if Config.ERA_AUTO_SELECT:
+		if Config.era_auto_select:
 			eraBeginDates = list( Config.ERAS.values() )
 			eraBeginDates.sort()
 
@@ -364,7 +364,7 @@ class InfoWidget(QWidget):
 		Der Ära des Spiels läßt sich entweder direkt einstellen, was die Zeit ändert oder über die Zeit.
 		"""
 
-		if Config.ERA_AUTO_SELECT:
+		if Config.era_auto_select:
 			eraBeginDates = list( Config.ERAS.values() )
 			eraBeginDates.sort()
 
