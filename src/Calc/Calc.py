@@ -47,20 +47,11 @@ def years(date_1, date_2):
 	"""
 	Berechnet die Anzahl der Jahre zwischen den beiden Daten.
 
-	Funktioniert mit QDate- oder datetime-date-Objekten.
+	Funktioniert nur mit QDate.
 	"""
 
-	## QDate wird in datetime.date verwandelt
-	dates_to_use = [ date_1, date_2 ]
-	for idx, date in enumerate( dates_to_use ):
-		try:
-			dates_to_use[idx] = date.toPyDate()
-		except AttributeError as e:
-			## Existiert die Funktion toPyDate nicht, handelt es sich nicht um ein QDate-Objekt, also kann direkt weitergearbeitet werden.
-			pass
-
-	time_between_dates = date_2 - date_1
-	years = time_between_dates.days // 365
+	days_between_dates = date_1.daysTo( date_2 )
+	years = days_between_dates // 365
 
 	#Debug.debug(date_1, date_2, time_between_dates)
 
