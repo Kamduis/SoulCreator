@@ -16,6 +16,15 @@ To get Python and PyQt, just type the following line as root:
 	apt-get install python3 python3-pyqt4
 
 
+#### Distribution independant
+
+* Install Python3 from [Python website](http://python.org/download/).
+
+* Use `pip` to install PyQt4:
+
+		pip install pyqt
+
+
 ### Windows
 
 To get Python for Windows, navigate to the [Python website](http://python.org/download/) and download and install the most recent Python 3 Version for your architecture. After that, you should do the same with PyQt. Get it from the [PyQt homepage](http://www.riverbankcomputing.com/software/pyqt/download).
