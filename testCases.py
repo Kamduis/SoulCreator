@@ -29,7 +29,8 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
 
-from src.tests.TestCalc import TestCalc
+from src.Tests.TestCalc import TestCalc
+from src.Tests.TestCalcAdvantages import TestCalcAdvantages
 
 
 

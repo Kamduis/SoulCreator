@@ -101,7 +101,7 @@ class BasicTrait(AbstractTrait):
 
 	def isAvailable(self):
 		"""
-		Gibt zurück, ob die Voraussetzungen der Eigenschaft erfüllt sind, ode rnicht.
+		Gibt zurück, ob die Voraussetzungen der Eigenschaft erfüllt sind, oder nicht.
 		"""
 
 		return self.__available

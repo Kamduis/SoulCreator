@@ -37,6 +37,12 @@ import src.Config as Config
 
 
 
+# Pylint-Einstellungen
+# pylint: disable-msg=C0103
+
+
+
+
 if __name__ == "__main__":
 	"""
 	Erstellt eine ausführbare Datei in dem als obligatorisch anzugebenden Unterverzeichnis.

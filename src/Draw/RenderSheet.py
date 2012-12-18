@@ -42,6 +42,7 @@ import src.Config as Config
 from src.Error import ErrFileNotOpened
 #import src.Random as Random
 from src.Datatypes.Identity import Identity
+import src.Calc.Calc as Calc
 from src.Calc.CalcAdvantages import CalcAdvantages
 import src.Calc.CalcShapes as CalcShapes
 #from src.Draw.CharacterSheetDocument import CharacterSheetDocument
@@ -687,7 +688,7 @@ class RenderSheet(QObject):
 				armor[1] = self.__storage.armor[self.__character.armor["name"]]["firearms"]
 
 			advantages = (
-				( self.tr("Size"), self.__calc.calcSize(), ),
+				( self.tr("Size"), self.__calc.calc_size(), ),
 				( self.tr("Initiative"), self.__calc.calcInitiative(), ),
 				( self.tr("Speed"), self.__calc.calcSpeed(), ),
 				( self.tr("Defense"), self.__calc.calcDefense(), ),
@@ -927,7 +928,7 @@ class RenderSheet(QObject):
 			armor[1] = self.__storage.armor[self.__character.armor["name"]]["firearms"]
 
 		advantages = (
-			( self.tr("Size"), self.__calc.calcSize(), ),
+			( self.tr("Size"), self.__calc.calc_size(), ),
 			( self.tr("Initiative"), self.__calc.calcInitiative(), ),
 			( self.tr("Speed"), self.__calc.calcSpeed(), ),
 			( self.tr("Defense"), self.__calc.calcDefense(), ),
@@ -1066,24 +1067,40 @@ class RenderSheet(QObject):
 			( "Power", self.__character.companionPower, maxTrait, ),
 			( "Finesse", self.__character.companionFinesse, maxTrait, ),
 			( "Resistance", self.__character.companionResistance, maxTrait, ),
-			( "Willpower", CalcAdvantages.calculateWillpower(self.__character.companionResistance, self.__character.companionResistance), min(2 * maxTrait, Config.TRAIT_WILLPOWER_VALUE_MAX), ),
-			( "Corpus", CalcAdvantages.calculateHealth(self.__character.companionResistance, self.__character.companionSize), maxTrait + self.__character.companionSize, ),
+			(
+				"Willpower",
+				Calc.calc_willpower( self.__character.companionResistance, self.__character.companionResistance ),
+				min(2 * maxTrait, Config.TRAIT_WILLPOWER_VALUE_MAX),
+			),
+			(
+				"Corpus",
+				CalcAdvantages.calc_health( self.__character.companionResistance, self.__character.companionSize ),
+				maxTrait + self.__character.companionSize,
+			),
 		)
 		companionAdvantages = (
 			( "Size", self.__character.companionSize, ),
-			( "Initiative", CalcAdvantages.calculateInitiative( [
+			(
+				"Initiative", Calc.calc_initiative( 
 					self.__character.companionFinesse,
-					self.__character.companionResistance
-				]), ),
-			( "Speed", CalcAdvantages.calculateSpeed( [
+					self.__character.companionResistance,
+				),
+			),
+			(
+				"Speed", Calc.calc_speed(
 					self.__character.companionPower,
 					self.__character.companionFinesse,
-					self.__character.companionSpeedFactor
-				] ), ),
-			( "Defense", CalcAdvantages.calculateDefense( [
+					self.__character.companionSpeedFactor,
+					monster=True,
+				),
+			),
+			(
+				"Defense", Calc.calc_defense(
 					self.__character.companionFinesse,
-					self.__character.companionFinesse
-				], True ), ),
+					self.__character.companionFinesse,
+					maximize=True,
+				),
+			),
 			( "Essence", self.__character.companionFuel ),
 		)
 

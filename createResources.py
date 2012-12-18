@@ -36,6 +36,12 @@ import src.Config as Config
 
 
 
+# Pylint-Einstellungen
+# pylint: disable-msg=C0103
+
+
+
+
 if __name__ == "__main__":
 	"""
 	Creates the resource files for the program.

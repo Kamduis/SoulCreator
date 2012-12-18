@@ -35,7 +35,7 @@ Allgemeine Berechnungen.
 
 from PyQt4.QtCore import QDate
 
-#import src.Config as Config
+import src.Config as Config
 #from src import Error
 #from src.Widgets.Components.CharaTrait import CharaTrait
 import src.Debug as Debug
@@ -56,3 +56,85 @@ def years(date_1, date_2):
 	#Debug.debug(date_1, date_2, time_between_dates)
 
 	return years
+
+
+def calc_size( age, is_giant=False, is_small=False ):
+	"""
+	Berechnet den abstrakten Größenwert.
+	"""
+
+	result = Config.SIZE_DEFAULT["Adult"]
+	if age < Config.AGE_ADULT:
+		result = Config.SIZE_DEFAULT["Kid"]
+
+	if is_giant:
+		result += 1
+	elif is_small:
+		result -= 1
+
+	return result
+
+
+def calc_initiative( *args ):
+	"""
+	Berechnet die Initiative.
+
+	Monster (Finesse und Resistance), addieren keinen Basiswert hinzu. Humanoide (normale Attribute) schon.
+
+	\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene übernatürliche Eigenschaften werden nicht berücksichtigt.
+	"""
+
+	result = sum( args )
+
+	return result
+
+
+def calc_speed( *args, monster=False ):
+	"""
+	Berechnet die abstrakte Geschwindigkeit.
+
+	\todo Bislang nur von Dexterity, Composure und Fast Reflexes abhängig. Möglicherweise vorhandene übernatürliche Eigenschaften werden nicht berücksichtigt.
+	"""
+
+	result = sum( args )
+
+	if not monster:
+		result += Config.SPEED_BASE_VALUE_HUMAN
+
+	return result
+
+
+def calc_defense( *args, age=None, size=None, maximize=False):
+	"""
+	Berechnet die Defense.
+
+	Einige Kreaturen (Tiere, Monster etc.) Nutzen die größte Eigenschaft als Defense, nicht die kleinste.
+	"""
+
+	result = min( args )
+	if maximize:
+		result = max( args )
+
+	## Bei kindern gibt auch die Größe (bzw. deren Abwesenheit) einen Bonus auf Defense.
+	if age and size and age < Config.AGE_ADULT:
+		modificator = Config.SIZE_DEFAULT["Adult"] - size
+		modificator = max(modificator, 0)
+		result = result + modificator
+
+	return result
+
+
+def calc_health(stamina, size):
+	"""
+	Berechnet die Gesundheit.
+	"""
+
+	return stamina + size
+
+
+def calc_willpower(resolve, composure):
+	"""
+	Berechnet die Willenskraft.
+	"""
+
+	return resolve + composure

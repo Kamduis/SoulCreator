@@ -180,6 +180,9 @@ WIDGET_INLINE_HEIGHT_MAX = 18
 ## Eigenschaftshöchstwert.
 TRAIT_VALUE_MAX = 5
 
+## Basisgröße für Geschwindigkeit von Menschen etc.
+SPEED_BASE_VALUE_HUMAN = 5
+
 ## Bezeichnung der Moral für alle Spezies
 MORALITY_IDENTIFIER = "Morality"
 

@@ -103,6 +103,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		#dbgStart = Debug.timehook()
 		for item in self.__templateFiles:
 			Debug.debug( "Reading from file \"{}\".".format(item), level=2 )
+
 			qrcFile = QFile(item)
 			if not qrcFile.open(QIODevice.ReadOnly):
 				raise ErrFileNotOpened(item, qrcFile.errorString())

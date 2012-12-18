@@ -172,9 +172,9 @@ class StorageCharacter(QObject):
 
 		self.isLoading = False
 		self.__modified = False
-		self.__dateBirth = QDate(0, 0, 0)
-		self.__dateBecoming = QDate(0, 0, 0)
-		self.__dateGame = QDate(0, 0, 0)
+		self.__dateBirth = QDate(1, 1, 1)
+		self.__dateBecoming = QDate(1, 1, 1)
+		self.__dateGame = QDate(1, 1, 1)
 		self.__age = 0
 		self.__ageBecoming = 0
 		self.__species = ""
