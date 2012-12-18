@@ -1056,7 +1056,7 @@ class RenderSheet(QObject):
 
 		htmlText += self.htmlLabelRuleValue(label=self.tr("Name"), value="<span class='scriptFont'>{value}</span>".format(value=self.__character.companionName))
 
-		rank = CalcAdvantages.calculateSpiritRank(
+		rank = Calc.calc_rank_spirit(
 			self.__character.companionPower,
 			self.__character.companionFinesse,
 			self.__character.companionResistance

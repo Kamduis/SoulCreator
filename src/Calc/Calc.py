@@ -138,3 +138,23 @@ def calc_willpower(resolve, composure):
 	"""
 
 	return resolve + composure
+
+
+def calc_rank_spirit(power, finesse, resistance):
+	"""
+	Berechnet den Rang eines Geistes aus dessen Attributen.
+	"""
+
+	result = power + finesse + resistance
+
+	rank = 1
+	if result > 25:
+		rank = 5
+	elif result > 19:
+		rank = 4
+	elif result > 13:
+		rank = 3
+	elif result > 7:
+		rank = 2
+
+	return rank

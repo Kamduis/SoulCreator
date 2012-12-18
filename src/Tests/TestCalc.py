@@ -191,3 +191,14 @@ class TestCalc(unittest.TestCase):
 		for val_1 in range( 1, ATTRIBUTE_MAX + 1 ):
 			for val_2 in range( 1, ATTRIBUTE_MAX + 1 ):
 				self.assertEqual( Calc.calc_willpower( val_1, val_2 ), val_1 + val_2 )
+
+
+	def test__calc_rank_spirit(self):
+		"""
+		Überprüft die Berechnung des Ranges von Geistern.
+		"""
+
+		for val_1 in range( 1, ATTRIBUTE_MAX + 1 ):
+			for val_2 in range( 1, ATTRIBUTE_MAX + 1 ):
+				for val_3 in range( 1, ATTRIBUTE_MAX + 1 ):
+					self.assertIn( Calc.calc_rank_spirit( val_1, val_2, val_3 ), ( 1, 2, 3, 4, 5, ) )
