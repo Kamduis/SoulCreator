@@ -54,6 +54,43 @@ from src.MainWindow import MainWindow
 
 
 
+def main( argv, file=None, pdf=None, verbose=None, debug=0, develop=None, fallback=None ):
+	"""
+	Entry Point.
+	"""
+
+	GlobalState.is_verbose = verbose
+	GlobalState.is_develop = develop
+	GlobalState.is_fallback = fallback
+	# Debug-Level soll immer als Zahl gespeichert werden. Der Zugehörige Name kann über das Tupel Config.DEBUG_LEVELS herausgefunden werden.
+	if debug in Config.DEBUG_LEVELS:
+		GlobalState.debug_level = Config.DEBUG_LEVELS.index( debug )
+	else:
+		GlobalState.debug_level = int( debug )
+
+	if GlobalState.debug_level and GlobalState.debug_level > Config.DEBUG_LEVEL_NONE:
+		print("{name} runs in debug mode (debug-level: {level_index} \"{level_name}\").".format(
+			name=Config.PROGRAM_NAME,
+			level_index=GlobalState.debug_level,
+			level_name=Config.DEBUG_LEVELS[GlobalState.debug_level],
+		))
+		if GlobalState.debug_level >= Config.DEBUG_LEVEL_MODIFIES_EXPORTS:
+			print("WARNING! Exporting and printing character sheets is not recommended.")
+
+	if GlobalState.is_develop:
+		print( "{name} runs in development mode.".format(
+			name=Config.PROGRAM_NAME,
+		))
+		print( "WARNING! You may encounter unexpected behaviour. Data loss is possible. Proceed only, if you know, what you are doing." )
+
+	app = QApplication( argv )
+	w = MainWindow( file, exportPath=pdf )
+	w.show()
+	retcode = app.exec_()
+
+
+
+
 if __name__ == "__main__":
 	"""
 	Das Hauptprogramm
@@ -94,31 +131,5 @@ if __name__ == "__main__":
 
 	args = parser.parse_args()
 
-	# Debug-Level soll immer als Zahl gespeichert werden. Der Zugehörige Name kann über das Tupel Config.DEBUG_LEVELS herausgefunden werden.
-	if args.debug in Config.DEBUG_LEVELS:
-		GlobalState.debug_level = Config.DEBUG_LEVELS.index( args.debug )
-	else:
-		GlobalState.debug_level = int( args.debug )
-	GlobalState.is_develop = args.develop
-	GlobalState.is_fallback = args.fallback
-	GlobalState.is_verbose = args.verbose
-
-	if GlobalState.debug_level and GlobalState.debug_level > Config.DEBUG_LEVEL_NONE:
-		print("{name} runs in debug mode (debug-level: {level_index} \"{level_name}\").".format(
-			name=Config.PROGRAM_NAME,
-			level_index=GlobalState.debug_level,
-			level_name=Config.DEBUG_LEVELS[GlobalState.debug_level],
-		))
-		if GlobalState.debug_level >= Config.DEBUG_LEVEL_MODIFIES_EXPORTS:
-			print("WARNING! Exporting and printing character sheets is not recommended.")
-
-	if GlobalState.is_develop:
-		print( "{name} runs in development mode.".format(
-			name=Config.PROGRAM_NAME,
-		))
-		print( "WARNING! You may encounter unexpected behaviour. Data loss is possible. Proceed only, if you know, what you are doing." )
-
-	app = QApplication(sys.argv)
-	w = MainWindow( args.file, exportPath=args.pdf )
-	w.show()
-	retcode = app.exec_()
+	## Hauptprogramm starten
+	main( sys.argv, file=args.file, pdf=args.pdf, verbose=args.verbose, debug=args.debug, develop=args.develop, fallback=args.fallback )
