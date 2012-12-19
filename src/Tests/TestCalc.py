@@ -80,6 +80,7 @@ class TestCalc(unittest.TestCase):
 			dates_all.append( date_store )
 			date_store = date_store.addDays( DATE_STEP )
 
+		## Kopie erstellen
 		dates_to_compare = dates_all[:]
 		results_expected = tuple( range( year_max - year_min + 1 ) )
 

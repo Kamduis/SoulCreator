@@ -1074,7 +1074,7 @@ class RenderSheet(QObject):
 			),
 			(
 				"Corpus",
-				CalcAdvantages.calc_health( self.__character.companionResistance, self.__character.companionSize ),
+				Calc.calc_health( self.__character.companionResistance, self.__character.companionSize ),
 				maxTrait + self.__character.companionSize,
 			),
 		)
@@ -1355,8 +1355,8 @@ class RenderSheet(QObject):
 		htmlText += "</tr></table>"
 
 		if self.__character.species == "Werewolf":
-			werwolfHeights = CalcShapes.werewolfHeight(height=self.__character.height, strength=self.__character.traits["Attribute"]["Physical"]["Strength"].value, stamina=self.__character.traits["Attribute"]["Physical"]["Stamina"].value)
-			werwolfWeights = CalcShapes.werewolfWeight(weight=self.__character.weight, strength=self.__character.traits["Attribute"]["Physical"]["Strength"].value, stamina=self.__character.traits["Attribute"]["Physical"]["Stamina"].value)
+			werwolf_heights = [ CalcShapes.height( self.__character.height, self.__character.traits["Attribute"]["Physical"]["Strength"].value, self.__character.traits["Attribute"]["Physical"]["Stamina"].value, shape ) for shape in Config.SHAPES_WEREWOLF ]
+			werwolf_weights = [ CalcShapes.weight( self.__character.weight, self.__character.traits["Attribute"]["Physical"]["Strength"].value, self.__character.traits["Attribute"]["Physical"]["Stamina"].value, shape ) for shape in Config.SHAPES_WEREWOLF ]
 			shapeMeasurements = [
 				[ "", ],
 				[ self.tr("Height"), ],
@@ -1364,8 +1364,8 @@ class RenderSheet(QObject):
 			]
 			for i in range(len(Config.SHAPES_WEREWOLF)):
 				shapeMeasurements[0].append(Config.SHAPES_WEREWOLF[i])
-				shapeMeasurements[1].append("{:.2f} {}".format(werwolfHeights[i], "m"))
-				shapeMeasurements[2].append("{:.1f} {}".format(werwolfWeights[i], "kg"))
+				shapeMeasurements[1].append("{:.2f} {}".format(werwolf_heights[i], "m"))
+				shapeMeasurements[2].append("{:.1f} {}".format(werwolf_weights[i], "kg"))
 
 			htmlText += "</td></tr><tr><td class='layout'><!-- Vertikaler Zwischenraum --></td></tr><tr><td class='layout' style='height: 10%'>"
 

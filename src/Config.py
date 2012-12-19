@@ -104,6 +104,10 @@ WIDGET_SELECT_WIDTH     = 150
 ### Minimale Breite für textEdit-Felder, in denen mehrzeiliger Text eingegeben werden soll.
 #textEditWidthMin = 200
 
+### Mathematische Konstanten
+INCH_IN_METER = 0.0254
+FOOT_IN_METER = 0.3048
+
 ## Das Charakterbild darf höchstens die hier festgelegte Größe annehmen.
 CHARACTER_PIC_WIDTH_MAX  = 800
 CHARACTER_PIC_HEIGHT_MAX = CHARACTER_PIC_WIDTH_MAX

@@ -148,9 +148,7 @@ def defense( wits, dex, shape ):
 	Berechnet die Verteidigung des Charakters abhängig von den unterschiedlichen Gestalten.
 	"""
 
-	values = [wits, dexterity( dex, shape ), ]
-
-	return min(values)
+	return min( wits, dexterity( dex, shape ) )
 
 
 def health( value, shape ):
@@ -168,58 +166,55 @@ def health( value, shape ):
 		return value
 
 
-def werewolfHeight( value_height, str, sta ):
+def height( value, strength, stamina, shape ):
 	"""
-	Berechnet die Körpergröße der übrigen vier Werwolfgestalten aus der Hishu-Gestalt und den körperlichen Attributen.
+	Berechnet die Körpergröße der jeweiligen Gestalt aus der Größe Hishu-Gestalt und den körperlichen Attributen.
 
 	\todo Möglicherweise noch einen Hauch Zufall einfügen, der aber bei einem Charakter immer gleich sein sollte, also vielleicht mit dem Namen seeden oder so ähnlich.
 
 	\todo Geschlecht berücksichtigen? Weibchen sind um 2 bis 12 % kleiner als die Rüden und 20 bis 25 % leichter.
 	"""
 
-	## gewinnt 4 bis 6 in an Größe.
-	heightDalu = value_height + 0.1 + 0.003125 * max(0, str - 1) * max(0, sta - 1)
+	result = value
 
-	## gewinnt 2 bis 3 ft an Größe.
-	heightGauru = value_height + 0.61 + 0.0381 * max(0, str - 1) * max(0, sta - 1)
+	if shape == Config.SHAPES_WEREWOLF[1]:
+		## gewinnt 4 bis 6 in an Größe
+		result = value + ( 4 + min(10, strength + stamina) / 5 ) * Config.INCH_IN_METER
+	elif shape == Config.SHAPES_WEREWOLF[2]:
+		## gewinnt 2 bis 3 ft an Größe
+		result = value + ( 2 + min(10, strength + stamina) / 10 ) * Config.FOOT_IN_METER
+	elif shape == Config.SHAPES_WEREWOLF[3]:
+		## 3 bis 5 ft Schulterhöhe. Hishu-Größe hat auch Einfluß. Große Charaktere ergeben größere Wölfe.
+		result = ( 3 + min( 10, strength + stamina ) / 10 + min( 2, value ) / 2 ) * Config.FOOT_IN_METER
+	elif shape == Config.SHAPES_WEREWOLF[4]:
+		## Wölfe haben Schulterhöhe von 70 bis 90 cm
+		result = ( 7 + min( 10, strength + stamina ) / 10 + min( 2, value ) / 2 ) * 0.1
 
-	## 3 bis 5 ft Schulterhöhe. Hishu-Größe hat Einfluß, indem Durchschnittsgröße 1.7 m angenommen wird.
-	heightUrshul = (value_height - .7) * 0.9144 + 0.038125 * max(0, str - 1) * max(0, sta - 1)
-
-	## Wölfe haben Schulterhöhe von 70 bis 90 cm
-	heightUrhan = (value_height - .7) * 0.8
-
-	result =  [value_height, heightDalu, heightGauru, heightUrshul, heightUrhan]
-
-	for i in range(len(result)):
-		result[i] = round(result[i], 2)
-
-	return result
+	return round(result, 2)
 
 
-def werewolfWeight( weight, strength, stamina ):
+def weight( value, strength, stamina, shape ):
 	"""
-	Berechnet das Körpergewicht der übrigen vier Werwolfgestalten aus der Hishu-Gestalt und den körperlichen Attributen.
+	Berechnet das Körpergewicht der jeweiligen Gestalt aus dem Gewicht Hishu-Gestalt und den körperlichen Attributen.
 
 	\todo Möglicherweise noch einen Hauch Zufall einfügen, der aber bei einem Charakter immer gleich sein sollte, also vielelicht mit dem Namen seeden oder so ähnlich.
 
 	\todo Geschlecht berücksichtigen?
 	"""
 
-	## gewinnt 12.5 bis 25 kg an Gewicht.
-	weightDalu = weight + 12.5 + 0.78125 * max(0, strength - 1) * max(0, stamina - 1)
+	result = value
 
-	## gewinnt 100 bis 125 kg an Gewicht.
-	weightGauru = weight + 100 + 1.5625 * max(0, strength - 1) * max(0, stamina - 1)
+	if shape == Config.SHAPES_WEREWOLF[1]:
+		## gewinnt 12.5 bis 25 kg an Gewicht
+		result = value + ( 1 + min(10, strength + stamina) / 10 ) * 12.5
+	elif shape == Config.SHAPES_WEREWOLF[2]:
+		## gewinnt 100 bis 125 kg an Gewicht
+		result = value + 100 + ( min(10, strength + stamina) / 10 ) * 25
+	elif shape == Config.SHAPES_WEREWOLF[3]:
+		## 90% des Gauru-Gewichts
+		result = .9 * weight( value, strength, stamina, Config.SHAPES_WEREWOLF[2] )
+	elif shape == Config.SHAPES_WEREWOLF[4]:
+		## Wölfe wiegen 35 bis 67 kg
+		result = 35 + ( min( 10, strength + stamina ) / 10 + min( 100, value ) / 100 ) * 16
 
-	weightUrshul = 0.9 * weightGauru
-
-	## Wölfe Wiegen 35 bis 67 kg
-	weightUrhan = 0.77 * weight
-
-	result =  [weight, weightDalu, weightGauru, weightUrshul, weightUrhan]
-
-	for i in range(len(result)):
-		result[i] = round(result[i], 2)
-
-	return result
+	return round(result, 2)
