@@ -139,13 +139,19 @@ def checkPrerequisites(trait, storage, character):
 				traitPrerequisites = traitPrerequisites.replace(Config.MORALITY_IDENTIFIER, str(character.morality))
 
 			# Die Voraussetzungen sollten jetzt nurnoch aus Zahlen und logischen Operatoren bestehen.
-			try:
-				#Debug.debug(traitPrerequisites)
-				result = eval(traitPrerequisites)
-				#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
-			except (NameError, SyntaxError):
-				Debug.debug("Error bei {}: {}".format(trait.name, traitPrerequisites))
-				result = False
+			## eval() is dangerous
+			## Aber ast.literal_eval() erlaubt nicht das Auswerten von "a < b" etc.
+			## Es werden ausschließlich Zahlen, Klammern "(" und ")" und die Zeichen "<" "<=" ">" ">=" "==" und "!=" sowie den logischen Verknüpfungen "and" und "or" erlaubt.
+			#traitPrerequisites = "1 < 2 and 2 < 3"
+			if re.match( r"^(\(*\d+\s*[<>=!]+\s*\d+\)*\s*(and|or)?\s*)+$", traitPrerequisites ):
+				try:
+					result = eval(traitPrerequisites)
+					#Debug.debug("Eigenschaft {} ({} = {})".format(trait.name, traitPrerequisites, result))
+				except (NameError, SyntaxError):
+					Debug.debug("Error bei {}: {}".format(trait.name, traitPrerequisites))
+					result = False
+			else:
+				raise ValueError("Only digits, spaces and the symbols \"<\", \">\", \"=\", \"!\", \"(\" and \")\" are allowed at this point.")
 
-			#Debug.debug("Eigenschaft {} wird verfügbar? {}".format(trait.name, result))
+			Debug.debug( "Eigenschaft \"{}\" wird verfügbar? {}!".format(trait.name, result), level=4 )
 			trait.setAvailable(result)
