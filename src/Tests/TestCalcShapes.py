@@ -92,4 +92,4 @@ class TestCalcShapes(unittest.TestCase):
 
 		for val_1 in range(1, ATTRIBUTE_MAX + 1):
 			for val_2 in SHAPES:
-				self.assertLesserEqual( CalcShapes.stamina(val_1, val_2), val_1 )
+				self.assertLessEqual( CalcShapes.manipulation(val_1, val_2), val_1 )
