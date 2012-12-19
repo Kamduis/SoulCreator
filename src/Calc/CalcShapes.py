@@ -46,7 +46,7 @@ import src.Config as Config
 
 def strength( value, shape ):
 	"""
-	Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
+	Berechnet die Strength des Charakters abhängig von den unterschiedlichen Gestalten.
 	"""
 
 	if shape == Config.SHAPES_WEREWOLF[1]:
@@ -61,7 +61,7 @@ def strength( value, shape ):
 
 def dexterity( value, shape ):
 	"""
-	Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
+	Berechnet die Dexterity des Charakters abhängig von den unterschiedlichen Gestalten.
 	"""
 
 	if shape == Config.SHAPES_WEREWOLF[2]:

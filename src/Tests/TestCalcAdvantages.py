@@ -52,7 +52,7 @@ ATTRIBUTE_MAX = 10
 
 class TestCalcAdvantages(unittest.TestCase):
 	"""
-	Testfunktionen für das CalcAdvantages-Modul.
+	Testfunktionen für die CalcAdvantages-Klasse.
 	"""
 
 	def setUp(self):

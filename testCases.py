@@ -31,6 +31,7 @@ import unittest
 
 from src.Tests.TestCalc import TestCalc
 from src.Tests.TestCalcAdvantages import TestCalcAdvantages
+from src.Tests.TestCalcShapes import TestCalcShapes
 
 
 
