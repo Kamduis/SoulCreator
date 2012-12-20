@@ -37,7 +37,7 @@ from src.Datatypes.BonusTrait import BonusTrait
 from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
 import src.Calc.Calc as Calc
-import src.Calc.ConnectPrerequisites as ConnectPrerequisites
+import src.Work.ConnectPrerequisites as ConnectPrerequisites
 #from src.Error import ErrListLength
 import src.Debug as Debug
 

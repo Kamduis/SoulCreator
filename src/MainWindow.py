@@ -44,7 +44,7 @@ from .Storage.StorageCharacter import StorageCharacter
 from .Storage.StorageTemplate import StorageTemplate
 from .Calc.CalcAdvantages import CalcAdvantages
 from .Calc.Creation import Creation
-import src.Calc.ConnectPrerequisites as ConnectPrerequisites
+import src.Work.ConnectPrerequisites as ConnectPrerequisites
 from .Widgets.InfoWidget import InfoWidget
 from .Widgets.AttributeWidget import AttributeWidget
 from .Widgets.SkillWidget import SkillWidget
@@ -327,7 +327,7 @@ class MainWindow(QMainWindow):
 		"""
 
 		## Merits und Subpowers müssen mit allen Eigenschaften verknüpft werden, die in ihrer Prerequisits-Eigenschaft vorkommen.
-		ConnectPrerequisites.buildConnection(self.__storage, self.__character)
+		ConnectPrerequisites.build_connection(self.__storage, self.__character)
 
 		# Bei der Änderung gewisser Eigenschaften müssen die Advantages neu berechnet werden. Die Verknüpfung dazu werden hier festgelegt.
 		calc = CalcAdvantages( self.__character, self )

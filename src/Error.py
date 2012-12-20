@@ -285,3 +285,15 @@ class ErrTraitType(ErrTrait):
 		self.description = self.obj.tr( "Expected Trait of type {}, but got type {}, which is not valid at this point.".format(typ, got) )
 
 
+class ErrTraitPrerequisite(ErrTrait):
+	"""
+	Ungültige Voraussetzung für die Eigenschaft.
+	"""
+
+	def __init__(self, trait):
+		super().__init__()
+
+		self.message = self.obj.tr( "Prerequisit of a Trait not valid" )
+		self.description = self.obj.tr( "Some or all prerequisites of the trait \"{}\" is not valid.".format( trait ))
+
+

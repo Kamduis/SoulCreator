@@ -68,11 +68,12 @@ DEBUG_LEVELS = (
 	"normal",
 	"detailed",
 	"extensive",
+	"extreme",
 	"ultimate",
 )
 DEBUG_LEVEL_NONE             = 0
 DEBUG_LEVEL_STD              = 1
-DEBUG_LEVEL_LINENUMBERS      = 4
+DEBUG_LEVEL_LINENUMBERS      = len( DEBUG_LEVELS ) - 1
 DEBUG_LEVEL_MODIFIES_EXPORTS = 3 ## From this debug level on, debug information is even added to the exports (printing, exporting etc.).
 
 # Konfigurationsdatei
