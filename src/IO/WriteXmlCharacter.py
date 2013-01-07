@@ -242,30 +242,27 @@ class WriteXmlCharacter(QObject):
 		return root
 
 
-	def __writeTreeToFile(self, file_object, tree):
-		if lxmlLoadad:
-			Debug.debug( "Using the advanced lxml-module to write the XML-tree." )
-			file_object.write(etree.tostring(tree, pretty_print=True, encoding="UTF-8", xml_declaration=True))
-		else:
-			Debug.debug( "Using the basic xml.etree.ElementTree-module to write the XML-tree." )
-			file_object.write(etree.tostring(tree, encoding="unicode"))
-
-
 	def writeFile(self, tree, file_name):
 		"""
 		Schreibt den Elementbaum in eine Datei.
 
-		Die Charaktere werden als komprimierte Datei gespeichert.
+		Die Charaktere können als komprimierte Datei gespeichert werden, wenn dies in den Einstellungen so festgelegt wird.
 		"""
+
+		_character_data = None
+		if lxmlLoadad:
+			Debug.debug( "Using the advanced lxml-module to write the XML-tree." )
+			_character_data = etree.tostring(tree, pretty_print=True, encoding="UTF-8", xml_declaration=True)
+		else:
+			Debug.debug( "Using the basic xml.etree.ElementTree-module to write the XML-tree." )
+			_character_data = etree.tostring(tree, encoding="unicode")
 
 		## In die Datei schreiben.
 		if Config.compress_saves:
 			Debug.debug( "Writing character into {} (compressed).".format(file_name) )
-
 			with gzip.open(file_name, "w") as file_object:
-				self.__writeTreeToFile(file_object, tree)
+				file_object.write(bytes(_character_data, "UTF-8"))
 		else:
 			Debug.debug( "Writing character into {} (uncompressed).".format(file_name) )
-
 			with open(file_name, "w") as file_object:
-				self.__writeTreeToFile(file_object, tree)
+				file_object.write(_character_data)
