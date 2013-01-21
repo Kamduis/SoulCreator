@@ -33,7 +33,7 @@ from PyQt4.QtCore import QCoreApplication, QSize, QPoint, QByteArray, QDir, QTim
 from PyQt4.QtGui import QMainWindow, QIcon, QMessageBox, QFileDialog, QDialog, QPrinter, QFontDatabase, QColor, QPrintDialog
 from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
-from .Tools import PathTools
+import src.Tools.PathTools as PathTools
 from .Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
 from .IO import Shell
 from .IO.Settings import Settings
@@ -572,7 +572,7 @@ class MainWindow(QMainWindow):
 			if fileName:
 				filePath = fileName
 			else:
-				appPath = PathTools.getPath()
+				appPath = PathTools.program_path()
 
 				# Pfad zum Speicherverzeichnis
 				savePath = "{}/{}".format(appPath, Config.SAVE_DIR)
@@ -618,7 +618,7 @@ class MainWindow(QMainWindow):
 		Über diese Funktion wird erst der Dialog aufgerufen zum Aussuchen des Speicherortes und danach dann das Schreiben des Charakters in eine XML-Datei eingeletiet.
 		"""
 
-		appPath = PathTools.getPath()
+		appPath = PathTools.program_path()
 
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.SAVE_DIR)
@@ -680,7 +680,7 @@ class MainWindow(QMainWindow):
 		Diese Funktion druckt den Charakter in ein PDF-Dokument.
 		"""
 
-		appPath = PathTools.getPath()
+		appPath = PathTools.program_path()
 
 		# Pfad zum Speicherverzeichnis
 		savePath = "{}/{}".format(appPath, Config.SAVE_DIR)
@@ -726,7 +726,7 @@ class MainWindow(QMainWindow):
 		Speichert die Konfiguration dieses Programms für den nächsten Aufruf.
 		"""
 
-		settings = Settings( "{}/{}".format(PathTools.getPath(), Config.CONFIG_FILE ))
+		settings = Settings( "{}/{}".format(PathTools.program_path(), Config.CONFIG_FILE ))
 
 		settings.beginGroup( "MainWindow" )
 		settings.setValue( "size", self.size() )
@@ -745,7 +745,7 @@ class MainWindow(QMainWindow):
 		Liest die Einstellungen für das Programm aus der Konfigurationsdatei.
 		"""
 
-		appPath = PathTools.getPath()
+		appPath = PathTools.program_path()
 		settings = Settings( "{}/{}".format(appPath, Config.CONFIG_FILE))
 
 		settings.beginGroup( "MainWindow" )

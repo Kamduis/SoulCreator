@@ -33,7 +33,7 @@ from PyQt4.QtCore import Qt, QDate
 from PyQt4.QtGui import QWidget, QIcon, QPixmap, QFileDialog, QMessageBox
 
 import src.Config as Config
-from src.Tools import PathTools
+import src.Tools.PathTools as PathTools
 #from src.Calc.Calc import Calc
 from src.Datatypes.Identity import Identity
 from src.Widgets.Dialogs.NameDialog import NameDialog
@@ -264,7 +264,7 @@ class InfoWidget(QWidget):
 		\note Das Bild wird auf eine in der Configurationsdatei festgelegte Maximalgröße skaliert, um die Größe überschaubar zu halten.
 		"""
 
-		appPath = PathTools.getPath()
+		appPath = PathTools.program_path()
 
 		# Pfad zum Speicherverzeichnis
 		savePath = ""

@@ -33,7 +33,7 @@ import os
 from PyQt4.QtGui import QWidget, QVBoxLayout, QToolBox
 
 import src.Config as Config
-from src.Tools import ListTools
+import src.Tools.ListTools as ListTools
 from src.Widgets.Components.CheckTrait import CheckTrait
 #import src.Debug as Debug
 
@@ -67,7 +67,7 @@ class FlawWidget(QWidget):
 		categories.extend(Config.CATEGORIES_FLAWS)
 		categories.extend(self.__storage.categories(self.__typ))
 		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
-		categories = ListTools.uniqifyOrdered(categories)
+		categories = ListTools.uniqify_ordered(categories)
 
 		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
 		self.__categoryIndex = {}

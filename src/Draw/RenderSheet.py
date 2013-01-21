@@ -45,7 +45,7 @@ from src.Datatypes.Identity import Identity
 from src.Calc.CalcAdvantages import CalcAdvantages
 import src.Calc.CalcShapes as CalcShapes
 #from src.Draw.CharacterSheetDocument import CharacterSheetDocument
-from src.Tools import ImageTools
+import src.Tools.ImageTools as ImageTools
 import src.Debug as Debug
 
 
@@ -1289,7 +1289,7 @@ class RenderSheet(QObject):
 		dataTable = [
 			[ "Birthday:", self.__character.dateBirth.toString(Config.DATE_FORMAT_TEXT), ],
 			[ "Age:", self.__character.age, ],
-			[ "Sex:", ImageTools.genderSymbol(self.__character.identity.gender), ],
+			[ "Sex:", ImageTools.gender_symbol(self.__character.identity.gender), ],
 			[ "Eyes:", self.__character.eyes, ],
 			[ "Height:", "{} {}".format(self.__character.height, "m"), ],
 			[ "Weight:", "{} {}".format(self.__character.weight, "kg"), ],

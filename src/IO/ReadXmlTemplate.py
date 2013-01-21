@@ -26,6 +26,7 @@ SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+import os
 import ast
 import tempfile
 import zlib
@@ -34,8 +35,8 @@ from PyQt4.QtCore import pyqtSignal as Signal
 from PyQt4.QtCore import QObject, QDir, QFile, QIODevice
 
 import src.Config as Config
+import src.Tools.PathTools as PathTools
 import src.GlobalState as GlobalState
-#from src.Tools import ListTools
 from src.Error import ErrXmlOldVersion, ErrFileNotOpened
 from src.IO.ReadXml import ReadXml
 import src.Debug as Debug
@@ -80,11 +81,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		## Die Template-Dateien alle für das Laden vorbereiten.
 		self.__templateFiles = []
-		pathToTemplates = ":/template/{}".format(Config.RESOURCE_DIR_TEMPLATES)
-		templateDir = QDir(pathToTemplates)
-		for templateFile in templateDir.entryList():
-			if templateFile.endswith(".{}".format(Config.FILE_SUFFIX_COMPRESSED)):
-				self.__templateFiles.append("{}/{}".format(pathToTemplates, templateFile))
+		path_to_templates = os.path.join( PathTools.program_path(), Config.PATH_RESOURCE, Config.RESOURCE_DIR_TEMPLATES )
+		for template_file in os.listdir(path_to_templates):
+			if template_file.endswith(".{}".format(Config.FILE_SUFFIX_COMPRESSED)):
+				self.__templateFiles.append( os.path.join( path_to_templates, template_file ) )
 
 
 	def read(self):
@@ -103,35 +103,33 @@ class ReadXmlTemplate(QObject, ReadXml):
 		#dbgStart = Debug.timehook()
 		for item in self.__templateFiles:
 			Debug.debug( "Reading from file \"{}\".".format(item), level=2 )
-			qrcFile = QFile(item)
-			if not qrcFile.open(QIODevice.ReadOnly):
-				raise ErrFileNotOpened(item, qrcFile.errorString())
-			fileContent = qrcFile.readAll()
-			qrcFile.close()
+			file_content = None
+			with open(item, mode="rb") as fi:
+				file_content = fi.read()
 
 			## Erzeuge eine temporäre Datei, mit der etree umgehen kann und schreibe den Inhalt aus der Qt-Resource in selbige hinein.
-			fileLike = tempfile.SpooledTemporaryFile()
+			file_like = tempfile.SpooledTemporaryFile()
 			## Dank dieser Einstellung kann ich zlib verwenden um Dateien zu dekomprimieren, welche mittels des gzip-Moduls komprimiert wurden.
-			decompressObject = zlib.decompressobj(16 + zlib.MAX_WBITS)
-			fileLike.write(decompressObject.decompress(fileContent))
-			fileLike.seek(0)
+			decompressed_object = zlib.decompressobj(16 + zlib.MAX_WBITS)
+			file_like.write(decompressed_object.decompress(file_content))
+			file_like.seek(0)
 
-			xmlContent = etree.parse(fileLike)
-			fileLike.close()
+			xml_content = etree.parse(file_like)
+			file_like.close()
 
-			xmlRootElement = xmlContent.getroot()
+			xml_root_element = xml_content.getroot()
 
-			versionSource = xmlRootElement.attrib["version"]
+			version_source = xml_root_element.attrib["version"]
 			#Debug.debug(versionSource)
 
 			try:
-				self.checkXmlVersion( xmlRootElement.tag, versionSource, qrcFile.fileName() )
+				self.checkXmlVersion( xml_root_element.tag, version_source, item )
 			except ErrXmlOldVersion as e:
 				descriptionText = self.tr("{description} Loading of template will be continued but errors may occur.".format(description=e.description))
 				self.exceptionRaised.emit(e.message, descriptionText, e.critical)
 
-			result = self.readSpecies(xmlContent)
-			self.readTemplate(xmlContent, result[0], result[1])
+			result = self.readSpecies(xml_content)
+			self.readTemplate(xml_content, result[0], result[1])
 		#Debug.timesince(dbgStart)
 
 
