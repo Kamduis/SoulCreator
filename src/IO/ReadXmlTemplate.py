@@ -32,7 +32,7 @@ import tempfile
 import zlib
 
 from PyQt4.QtCore import pyqtSignal as Signal
-from PyQt4.QtCore import QObject, QDir, QFile, QIODevice
+from PyQt4.QtCore import QObject
 
 import src.Config as Config
 import src.Tools.PathTools as PathTools

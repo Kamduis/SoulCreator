@@ -33,6 +33,22 @@ import subprocess
 from cx_Freeze import setup, Executable, Freezer
 
 import src.Config as Config
+import src.Tools.PathTools as PathTools
+
+
+
+
+def templates_include():
+	"""
+	Erstellt eine Liste aller zu kopierender template-Dateien.
+	"""
+
+	result = []
+
+	for item in os.listdir( os.path.join( PathTools.program_path(), Config.PATH_RESOURCE, Config.RESOURCE_DIR_TEMPLATES ) ):
+		result.append( os.path.join( Config.PATH_RESOURCE, Config.RESOURCE_DIR_TEMPLATES, item ) )
+
+	return result
 
 
 
@@ -46,10 +62,12 @@ if __name__ == "__main__":
 
 	# Process the includes, excludes and packages first
 	includefiles = [
-		("COPYING", "COPYING"),
-		("INSTALL.md", "INSTALL.md"),
-		("README.md", "README.md"),
+		( "COPYING", "COPYING", ),
+		( "INSTALL.md", "INSTALL.md", ),
+		( "README.md", "README.md", ),
 	]
+	for item in templates_include():
+		includefiles.append( (item, item, ) )
 	includes = []
 	excludes = []
 	packages = []
