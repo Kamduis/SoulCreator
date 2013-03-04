@@ -34,6 +34,7 @@ from PyQt4.QtCore import QObject, QDate, QByteArray
 from PyQt4.QtGui import QPixmap
 
 import src.Config as Config
+import src.IO.Shell as Shell
 from src.Error import ErrXmlOldVersion
 from src.IO.ReadXml import ReadXml
 import src.Debug as Debug
@@ -51,7 +52,7 @@ except ImportError:
 		try:
 			import xml.etree.ElementTree as etree
 		except ImportError:
-			print("Failed to import ElementTree from any known place")
+			Shell.print_error("Failed to import ElementTree from any known place")
 
 
 
@@ -64,7 +65,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 	"""
 
 
-	exceptionRaised = Signal(str, str, bool)
+	exception_raised = Signal( str, str )
 
 
 	def __init__(self, character, parent=None):
@@ -89,31 +90,31 @@ class ReadXmlCharacter(QObject, ReadXml):
 
 		## Mittels lxml kann diese Funktion normale XML-Dateien und offenbar auch mittels gzip komprimierte XML-Dateien laden.
 		## Das normale ElementTree-Modul kann das aber nicht.
-		xmlContent = None
+		xml_content = None
 		try:
-			xmlContent = etree.parse(file_name)
+			xml_content = etree.parse(file_name)
 		except etree.ParseError:
 			## Möglicherweise eine komprimierte Datei und lxml wurde nicht verwendet?
-			xmlContent = etree.parse(gzip.GzipFile(file_name))
-		xmlRootElement = xmlContent.getroot()
+			xml_content = etree.parse(gzip.GzipFile(file_name))
+		xmlRootElement = xml_content.getroot()
 
 		versionSource = xmlRootElement.attrib["version"]
 
 		try:
 			self.checkXmlVersion( xmlRootElement.tag, versionSource, file_name )
 		except ErrXmlOldVersion as e:
-			descriptionText = self.tr("{description} Loading of character will be continued but errors may occur.".format(message=e.message, description=e.description))
-			self.exceptionRaised.emit(e.message, descriptionText, e.critical)
+			text_description = self.tr( "{} Loading will be continued but errors may occur.".format( str( e ) ) )
+			self.exception_raised.emit( text_description, "warning" )
 
 		## Die Daten müssen zuerst geladen werden, damit schon beim Laden die Unterschiedung zwischen Kindern und Erwachsenen erfolgen kann.
-		self.readDates(xmlContent)
-		self.readCharacterInfo(xmlContent)
-		self.readCharacterIdentity(xmlContent)
-		self.readDerangements(xmlContent)
-		self.readTraits(xmlContent)
-		self.readItems(xmlContent)
-		self.readSpeciesSpecials(xmlContent)
-		self.readPicture(xmlContent)
+		self.readDates(xml_content)
+		self.readCharacterInfo(xml_content)
+		self.readCharacterIdentity(xml_content)
+		self.readDerangements(xml_content)
+		self.readTraits(xml_content)
+		self.readItems(xml_content)
+		self.readSpeciesSpecials(xml_content)
+		self.readPicture(xml_content)
 
 
 	def readCharacterInfo(self, tree):

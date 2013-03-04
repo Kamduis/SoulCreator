@@ -58,9 +58,11 @@ class ReadXml(object):
 			return ""
 
 
-	def checkXmlVersion(self, name, version, filename=None ):
+	def checkXmlVersion(self, name, version, filename=None, required=False ):
 		"""
 		Überprüft die Version der XML-Datei. Damit ist die SoulCreator-Version gemeint.
+
+		\param required Für den Betrieb des Programms erfordelriche Dateien sorgen dafür, daß das Programm einen entsprechend ernsten Fehler ausgibt.
 		"""
 
 		Debug.debug( "Version of file \"{name_file}\": {name} {version}".format(
@@ -77,13 +79,34 @@ class ReadXml(object):
 				version_split = version.split(".")
 				version_split = [ int(item) for item in version_split ]
 
-				## Es ist darauf zu achten, daß Charaktere bis Version 0.6 nicht mit SoulCreator 0.7 und neuer geladen werden können.
 				if filename is not None:
 					filename = os.path.basename(filename)
-				if( version_split[0] != Config.programVersionMajor or version_split[1] < 7):
-					raise Error.ErrXmlTooOldVersion( version, filename )
+				if version_split[0] < Config.PROGRAM_VERSION["major"]:
+					raise Error.ErrXmlVersion(
+						"XML-file \"{filename}\" was created with {program_name} {file_version} and is incompatible with {program_name} {program_version}.\nLoading of file aborted.".format(
+							filename=filename,
+							file_version=version,
+							program_name=Config.PROGRAM_NAME,
+							program_version=Config.version()
+						),
+						got=version,
+						critical=required
+					)
 				else:
-					raise Error.ErrXmlOldVersion( version, filename )
+					raise Error.ErrXmlOldVersion(
+						"XML-file \"{filename}\" was created with {program_name} {file_version} and may be compatible with {program_name} {program_version}.".format(
+							filename=filename,
+							file_version=version,
+							program_name=Config.PROGRAM_NAME,
+							program_version=Config.version()
+						),
+						got=version,
+						critical=required
+					)
 		else:
-			raise Error.ErrXmlVersion( "{} {}".format(Config.PROGRAM_NAME, Config.version()), "{} {}".format(name, version) )
+			raise Error.ErrXmlVersion(
+				got="{} {}".format(name, version),
+				expected="{} {}".format(Config.PROGRAM_NAME, Config.version()),
+				critical=required
+			)
 

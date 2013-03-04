@@ -67,7 +67,7 @@ def debug( *args, level=Config.DEBUG_LEVEL_STD ):
 		_indent = ""
 		## Dateiname und Zeilennummer der Debug-Ausgabe werden nur ausgegeben, wenn der Debug-Level hoch genug ist. Normalerweise wird darauf aufgrund der Übersichtlichkeit verzichtet.
 		if GlobalState.debug_level >= Config.DEBUG_LEVEL_LINENUMBERS:
-			print("{debug_prefix}{source_file:<78}\tl. {source_line:<4}\t{source_func:<18}".format(
+			print("{debug_prefix} {source_file:<78}\tl. {source_line:<4}\t{source_func:<18}".format(
 				debug_prefix=_debug_prefix( level ),
 				source_file=inspect.stack()[1][1],
 				source_line=inspect.stack()[1][2],
@@ -83,7 +83,7 @@ def debug( *args, level=Config.DEBUG_LEVEL_STD ):
 
 
 def _debug_prefix( level ):
-	return "DEBUG ({}) ".format(level)
+	return "DEBUG ({})".format(level)
 
 
 #def stack( *args ):

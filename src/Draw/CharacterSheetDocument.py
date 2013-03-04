@@ -48,7 +48,10 @@ class CharacterSheetDocument(QTextDocument):
 		## Lade Datei mit Stylesheet-Informationen
 		cssFile = QFile(":stylesheets/sheet.css")
 		if not cssFile.open(QIODevice.ReadOnly):
-			raise ErrFileNotOpened(item, cssFile.errorString())
+			raise ErrFileNotOpened( "Wile opening file \"{}\", the error \"{}\" occured.".format(
+				item,
+				cssFile.errorString()
+			), filename=item )
 		cssStream = QTextStream(cssFile)
 		cssContent = cssStream.readAll()
 		cssFile.close()

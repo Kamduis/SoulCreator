@@ -31,8 +31,27 @@ import sys
 
 
 
-@staticmethod
-def printError(text):
-	sys.stderr.write("{msg}\n".format(msg=text))
+_WARNING_PREFIX = "WARNING"
 
 
+def print_warning( *args ):
+	"""
+	Print warning message on console.
+	"""
+
+	print( _WARNING_PREFIX, *args, file=sys.stderr )
+
+
+def _error_prefix( critical=False ):
+	if critical:
+		return "CRITICAL ERROR"
+	else:
+		return "ERROR"
+
+
+def print_error( *args, critical=False ):
+	"""
+	Print error message on console.
+	"""
+
+	print( _error_prefix(critical), *args, file=sys.stderr )

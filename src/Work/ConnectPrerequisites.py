@@ -31,7 +31,7 @@ import re
 import src.Config as Config
 from src.Datatypes.BasicTrait import BasicTrait
 import src.Debug as Debug
-from src.Error import ErrTraitPrerequisite
+#from src.Error import ErrTraitPrerequisite
 
 
 

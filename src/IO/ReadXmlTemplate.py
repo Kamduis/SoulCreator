@@ -66,7 +66,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 	"""
 
 
-	exceptionRaised = Signal(str, str, bool)
+	exception_raised = Signal( str, str )
 
 
 	def __init__(self, template, parent=None):
@@ -120,13 +120,16 @@ class ReadXmlTemplate(QObject, ReadXml):
 			xml_root_element = xml_content.getroot()
 
 			version_source = xml_root_element.attrib["version"]
+			required_source = False
+			if "required" in xml_root_element.attrib:
+				required_source = xml_root_element.attrib["required"].lower() == "true"
 			#Debug.debug(versionSource)
 
 			try:
-				self.checkXmlVersion( xml_root_element.tag, version_source, item )
+				self.checkXmlVersion( xml_root_element.tag, version_source, item, required=required_source )
 			except ErrXmlOldVersion as e:
-				descriptionText = self.tr("{description} Loading of template will be continued but errors may occur.".format(description=e.description))
-				self.exceptionRaised.emit(e.message, descriptionText, e.critical)
+				text_description = self.tr( "{} Loading of template will be continued but errors may occur.".format( str( e ) ) )
+				self.exception_raised.emit( text_description, "warning" )
 
 			result = self.readSpecies(xml_content)
 			self.readTemplate(xml_content, result[0], result[1])

@@ -35,9 +35,9 @@ from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werde
 
 import src.Tools.PathTools as PathTools
 from .Error import ErrFileNotOpened, ErrXmlParsing, ErrXmlVersion, ErrSpeciesNotExisting
-from .IO import Shell
+import src.IO.Shell as Shell
 from .IO.Settings import Settings
-from .IO.ReadXmlTemplate import ReadXmlTemplate
+from src.IO.ReadXmlTemplate import ReadXmlTemplate
 from .IO.ReadXmlCharacter import ReadXmlCharacter
 from .IO.WriteXmlCharacter import WriteXmlCharacter
 from .Storage.StorageCharacter import StorageCharacter
@@ -154,7 +154,7 @@ class MainWindow(QMainWindow):
 		#self.ui.selectWidget_select.currentRowChanged.connect(self.pageChanged.emit)
 		self.__character.speciesChanged.connect(self.ui.selectWidget_select.changeIcons)
 
-		self.__readCharacter.exceptionRaised.connect(self.showExceptionMessage)
+		self.__readCharacter.exception_raised.connect(self.showExceptionMessage)
 
 		# Laden der Konfiguration
 		self.readSettings()
@@ -198,7 +198,7 @@ class MainWindow(QMainWindow):
 				self.__character.species = fileName[0].upper() + fileName[1:].lower()
 				self.__character.setModified(False)
 			else:
-				IO.Shell.printError("Warning! A file named {} does not exist.".format(fileName))
+				Shell.print_warning("A file named \"{}\" does not exist.".format(fileName))
 
 			Debug.timesince( debug_timing_between_start, "Time neccessary to load a file at startup." )
 
@@ -230,16 +230,22 @@ class MainWindow(QMainWindow):
 
 		reader = ReadXmlTemplate(self.__storage)
 
-		reader.exceptionRaised.connect(self.showExceptionMessage)
+		reader.exception_raised.connect(self.showExceptionMessage)
 
 		try:
 			reader.read()
 		except ErrXmlVersion as e:
-			MessageBox.exception( self, e.message, e.description )
+			if e.critical:
+				text = "{}\nThis is a critical error and forces the program to abort.".format( str( e ) )
+				MessageBox.error( self, text, critical=e.critical )
+				## Funktioniert nicht richtig, da __init__ irgendwie weiterbearbeitet wird und dann natürlich die Eigenschaften aus base.scd etc. fehlen können.
+				QTimer.singleShot(0, self.close)
+			else:
+				MessageBox.error( self, e, critical=e.critical )
 		except ErrXmlParsing as e:
-			MessageBox.exception( self, e.message, e.description )
+			MessageBox.error( self, e )
 		except ErrFileNotOpened as e:
-			MessageBox.exception( self, e.message, e.description )
+			MessageBox.error( self, e )
 
 
 	def populateUi(self):
@@ -602,11 +608,11 @@ class MainWindow(QMainWindow):
 				try:
 					self.__readCharacter.read(filePath)
 				except ErrXmlVersion as e:
-					MessageBox.exception( self, e.message, e.description )
+					MessageBox.error( self, e )
 				except ErrXmlParsing as e:
-					MessageBox.exception( self, e.message, e.description )
+					MessageBox.error( self, e )
 				except ErrFileNotOpened as e:
-					MessageBox.exception( self, e.message, e.description )
+					MessageBox.error( self, e )
 
 				# Unmittelbar nach dem Laden ist der Charkter natürlich nicht mehr 'geändert'.
 				self.__character.setModified( False )
@@ -770,20 +776,22 @@ class MainWindow(QMainWindow):
 		Diese Frage tritt auf, wenn der dargestellte Charakter nicht gespeichert ist und ehe das Programm geschlossen werden oder einen neuen Charakter anlegen soll.
 		"""
 
-		if ( self.__character.isModifed() ):
-			ret = QMessageBox.warning(
-				self,
-				self.tr( "Application" ),
-				self.tr( "The character has been modified.\nDo you want to save your changes?" ),
-				QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel
-			)
+		try:
+			if ( self.__character.isModifed() ):
+				ret = QMessageBox.warning(
+					self,
+					self.tr( "Application" ),
+					self.tr( "The character has been modified.\nDo you want to save your changes?" ),
+					QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel
+				)
 
-			if ( ret == QMessageBox.Save ):
-				self.saveCharacter()
-			elif ( ret == QMessageBox.Cancel ):
-				return False
-
-		return True
+				if ( ret == QMessageBox.Save ):
+					self.saveCharacter()
+				elif ( ret == QMessageBox.Cancel ):
+					return False
+			return True
+		except AttributeError as e:
+			return True
 
 
 	def showStatusBarMessage( self, message, timeout=Config.TIMEOUT_STATUS_MESSAGE_DISPLAY ):
@@ -796,14 +804,15 @@ class MainWindow(QMainWindow):
 		self.statusBar().showMessage(message, timeout)
 
 
-	def showExceptionMessage( self, message, description, critical=True ):
+	def showExceptionMessage( self, text, error_type="error" ):
 		"""
 		Ausgabe einer Fehlernachricht.
 		"""
 
-		if critical:
-			MessageBox.critical( self, message, description )
-		else:
-			MessageBox.warning( self, message, description )
+		message_box_function = MessageBox.error
+		if error_type == "warning":
+			message_box_function = MessageBox.warning
+
+		message_box_function( self, text )
 
 

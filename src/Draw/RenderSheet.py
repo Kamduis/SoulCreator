@@ -118,7 +118,7 @@ class RenderSheet(QObject):
 			for page in species[1]:
 				qrcFile = QFile(page)
 				if not qrcFile.open(QIODevice.ReadOnly):
-					raise ErrFileNotOpened(resFile, qrcFile.errorString())
+					raise ErrFileNotOpened( "While opening file \"{}\" the error \"{}\" occured.".format( page, qrcFile.errorString() ), filename=page )
 				textStream = QTextStream(qrcFile)
 				fileContent = textStream.readAll()
 				qrcFile.close()
@@ -143,7 +143,7 @@ class RenderSheet(QObject):
 		for resFile in resourceFiles:
 			qrcFile = QFile(resFile)
 			if not qrcFile.open(QIODevice.ReadOnly):
-				raise ErrFileNotOpened(resFile, qrcFile.errorString())
+				raise ErrFileNotOpened( "While opening \"{}\" the error \"{}\" occured.".format( resFile, qrcFile.errorString() ), filename=resFile )
 			textStream = QTextStream(qrcFile)
 			fileContent = textStream.readAll()
 			qrcFile.close()
