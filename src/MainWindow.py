@@ -532,7 +532,8 @@ class MainWindow(QMainWindow):
 			<p>This program is distributed in the hope that it will be useful, but <i>without any warranty</i>; without even the implied warranty of <i>merchantability</i> or <i>fitness for a particular purpose</i>. See the GNU General Public License for more details.</p>
 			<p>You should have received a copy of the GNU General Public License along with self program. If not, see <a>http://www.gnu.org/licenses/</a>.</p>
 			<h2>World of Darkness</h2>
-			<p>World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requiem, Werewolf: The Forsaken, White Wolf, the White Wolf-Logo and all referring terms and symbols are copyrighted by White Wolf Inc.</p>
+			<p>White Wolf and its logo, World of Darkness, Changeling the Lost, Mage the Awakening, Vampire the Requiem, and Werewolf the Forsaken are registered trademarks of White Wolf Publishing, Inc. All rights reserved. All rights reserved. The mention of or reference to any company or product in this program is not a challenge to the trademark or copyright concerned. The developers of SoulCreator are in no way affiliated with or endorsed by White Wolf Publishing, Inc. SoulCreator is intended for personal and non-profit use only.</p>
+			<p>The developers make no claim to own White Wolf or any of the names related to it. Some images that are displayed as part of SoulCreator are copyrighted to White Wolf Publishing, Inc or to the creator of the image (for developer-made artwork).</p>
 			""".format(
 				name=Config.PROGRAM_NAME,
 				version=Config.version(),
