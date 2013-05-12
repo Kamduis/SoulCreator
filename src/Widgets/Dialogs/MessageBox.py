@@ -1,31 +1,37 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import QObject
+from PyQt4.QtGui import QMessageBox
 
-from PySide.QtCore import QObject
-from PySide.QtGui import QMessageBox
-
-from src.Config import Config
+import src.Config as Config
+import src.GlobalState as GlobalState
+import src.IO.Shell as Shell
 #from src.Error import ErrXmlTooOldVersion
 
 
@@ -38,63 +44,37 @@ class MessageBox(QMessageBox):
 	Über das Standardnachrichtenfenster können die Nachrichten über Ausnahmen bequem an den Nutzer weitergegeben werden. Unter anderem existiert auch eine Nachrichtenbox für die Ausnahmebehandlung.
 	"""
 
-	@staticmethod
-	def exception(parent, message, description):
-		"""
-		Standardisierte Dialogbox für die Mitteilung einer Ausnahme an den Benutzer. Dient bislang Debug-Zwecken und sind noch keine normierten Fehlermeldungen.
 
-		\todo Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann und nicht nur als Debug-Hilfe dienen kann. Dies wird auch Änderungen in der \ref Exception -Klasse erfordern.
+	@staticmethod
+	def warning( parent, text ):
 		"""
+		Standardisierte Dialogbox für die Mitteilung einer Warnung an den Benutzer.
+
+		Eine Warnung wird auch auf der kommandozeile ausgegeben, wenn "verbose" aktiviert ist.
+		"""
+
+		if GlobalState.is_verbose:
+			Shell.print_warning( text )
 
 		obj = QObject()
-
-		text = MessageBox.formatText(message, description)
-		QMessageBox.critical(parent, obj.tr("Exception"), text)
+		QMessageBox.warning( parent, obj.tr("Warning"), str( text ) )
 
 
 	@staticmethod
-	def warning(parent, message, description):
+	def error( parent, text, critical=False ):
 		"""
-		Standardisierte Dialogbox für die Mitteilung einer Ausnahme an den Benutzer. Dient bislang Debug-Zwecken und sind noch keine normierten Fehlermeldungen.
+		Standardisierte Dialogbox für die Mitteilung eines Fehlers an den Benutzer.
 
-		\todo Den Dialog so umwandeln, der er auch als Fehlermeldung einem Benutzer präsentiert werden kann und nicht nur als Debug-Hilfe dienen kann. Dies wird auch Änderungen in der \ref Exception -Klasse erfordern.
+		Ein Fehler wird auch auf der kommandozeile ausgegeben, wenn "verbose" aktiviert ist.
+
+		\param critical=True macht daraus einen kritischen Fehler, bei welchem das Programm beendet werden muß.
 		"""
+
+		if GlobalState.is_verbose:
+			Shell.print_error( text, critical=critical )
 
 		obj = QObject()
-
-		text = MessageBox.formatText(message, description)
-		QMessageBox.warning(parent, obj.tr("Warning"), text)
-
-
-	@staticmethod
-	def formatText ( message, description ):
-		"""
-		Formatiert Nachricht und Beschreibung für den Dialog.
-		"""
-
-		return MessageBox.formatMessage(message) + MessageBox.formatDescription(description)
-
-
-
-	@staticmethod
-	def formatMessage ( message ):
-		"""
-		Formatiert die wichtigen Nachrichten für den Dialog.
-		"""
-
-		importantText = "<p><span style='color:{color}; font-size:large'>{text}</span></p>".format(color=Config.importantTextColor, text=message)
-
-		return importantText
-
-
-	@staticmethod
-	def formatDescription ( description ):
-		"""
-		Formatiert die ausfürhlichere Beschreibung für den Dialog.
-		"""
-
-		descriptionText = "<p>{}</p>".format(description)
-
-		return descriptionText
-
-
+		headline = obj.tr("Error")
+		if critical:
+			headline = obj.tr("Critical Error")
+		QMessageBox.critical( parent, headline, str( text ) )

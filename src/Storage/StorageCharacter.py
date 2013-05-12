@@ -1,40 +1,45 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject, QDate
+from PyQt4.QtGui import QPixmap
 
-from PySide.QtCore import QObject, QDate, Signal
-from PySide.QtGui import QPixmap
-
-from src.Config import Config
+import src.Config as Config
 from src.Datatypes.AbstractTrait import AbstractTrait
 from src.Datatypes.StandardTrait import StandardTrait
 from src.Datatypes.BonusTrait import BonusTrait
 from src.Datatypes.SubPowerTrait import SubPowerTrait
 from src.Datatypes.Identity import Identity
-from src.Calc.Calc import Calc
-from src.Calc.ConnectPrerequisites import ConnectPrerequisites
+import src.Calc.Calc as Calc
+import src.Work.ConnectPrerequisites as ConnectPrerequisites
 #from src.Error import ErrListLength
-from src.Debug import Debug
+import src.Debug as Debug
 
 
 
@@ -161,15 +166,15 @@ class StorageCharacter(QObject):
 		\todo Eigentlich benötigt Subpower keinen eigenen Datentyp. Da die ganzen Zusatzinformationen ja nur im Template zu stehen haben und nicht auch für den Charakter bekannt sein müssen. Der Wert "level" ist aber interessant und gilt für andere Klassen nicht.
 		"""
 
-		QObject.__init__(self, parent)
+		super(StorageCharacter, self).__init__(parent)
 
 		self.__storage = template
 
 		self.isLoading = False
 		self.__modified = False
-		self.__dateBirth = QDate(0, 0, 0)
-		self.__dateBecoming = QDate(0, 0, 0)
-		self.__dateGame = QDate(0, 0, 0)
+		self.__dateBirth = QDate(1, 1, 1)
+		self.__dateBecoming = QDate(1, 1, 1)
+		self.__dateGame = QDate(1, 1, 1)
 		self.__age = 0
 		self.__ageBecoming = 0
 		self.__species = ""
@@ -206,7 +211,7 @@ class StorageCharacter(QObject):
 		self.__paradoxMarks = ""
 
 		self.__vinculi = []
-		for i in xrange(Config.vinculiCount):
+		for i in range(Config.VINCULI_COUNT_MAX):
 			vinculum = AbstractTrait()
 			self.__vinculi.append(vinculum)
 			vinculum.traitChanged.connect(self.setModified)
@@ -219,7 +224,7 @@ class StorageCharacter(QObject):
 		self.__companionSpeedFactor = 0
 		self.__companionFuel = 0
 		self.__companionInfluences = []
-		for i in xrange(Config.companionInfluencesCount):
+		for i in range(Config.COMPANION_INFLUENCES_MAX):
 			companionInfluence = AbstractTrait()
 			self.__companionInfluences.append(companionInfluence)
 			companionInfluence.traitChanged.connect(self.setModified)
@@ -254,10 +259,10 @@ class StorageCharacter(QObject):
 					custom = False
 					customText = None
 					if typ != "Subpower" and subitem[1]["custom"]:
-						loop = Config.traitMultipleMax
+						loop = Config.MULTIPLE_TRAITS_MAX
 						custom = True
 
-					for i in xrange(loop):
+					for i in range(loop):
 						trait = None
 						if typ == "Subpower":
 							trait = SubPowerTrait(self, subitem[1]["name"], val)
@@ -1186,13 +1191,13 @@ class StorageCharacter(QObject):
 		## Der Charkater wird umorganisiert, ohne daß wir haufenweise Warnhinweise haben wollen.
 		self.isLoading = True
 		# Standardspezies ist der Mensch.
-		self.species = Config.initialSpecies
+		self.species = Config.SPECIES_INITIAL
 		# Zeitalter festlegen.
-		self.era = Config.initialEra
+		self.era = Config.ERA_INITIAL
 		## Anfangsdatum setzen.
 		self.dateGame = QDate.currentDate()
-		self.dateBirth = QDate(self.dateGame.year() - Config.ageInitial, self.dateGame.month(), self.dateGame.day())
-		self.dateBecoming = QDate(self.dateGame.year() - Config.ageAdult, self.dateGame.month(), self.dateGame.day())
+		self.dateBirth = QDate(self.dateGame.year() - Config.AGE_INITIAL, self.dateGame.month(), self.dateGame.day())
+		self.dateBecoming = QDate(self.dateGame.year() - Config.AGE_ADULT, self.dateGame.month(), self.dateGame.day())
 
 		# Löschen aller Identitäten.
 		self.identity.reset()
@@ -1211,7 +1216,7 @@ class StorageCharacter(QObject):
 		self.hair = ""
 		self.nationality = ""
 		# Nicht notwendig, da ja schon die Spezies gewechselt wird, was automatisch diese Felder zurücksetzt.
-		#self.breed = self.__storage.breeds(Config.initialSpecies)[0]
+		#self.breed = self.__storage.breeds(Config.SPECIES_INITIAL)[0]
 		self.__derangements = {}
 		self.party = ""
 		self.description = ""
@@ -1231,25 +1236,29 @@ class StorageCharacter(QObject):
 					subsubitem.customText = ""
 					subsubitem.specialties = []
 
-		self.morality = Config.moralityTraitDefaultValue
+		self.morality = Config.TRAIT_MORALITY_VALUE_DEFAULT
 
 		# Übernatürliche Eigenschaft festlegen.
-		self.powerstat = Config.powerstatDefaultValue
+		self.powerstat = Config.TRAIT_POWERSTAT_VALUE_DEFAULT
 
 		# Beim Löschen ist darauf zu achten, daß ich nicht aus der Liste löschen kann, über die ich iteriere. Sonst wird nicht alles gelöscht.
 		for category in self.__weapons:
+			## Kopie erstellen
 			weaponList = self.__weapons[category][:]
 			for weapon in weaponList:
 				self.deleteWeapon(category, weapon)
 		self.setArmor(name="")
+		## Kopie erstellen
 		eqipmentList = self.__equipment[:]
 		for item in eqipmentList:
 			self.deleteEquipment(item)
 		for category in self.__automobiles:
+			## Kopie erstellen
 			automobileList  = self.__automobiles[category][:]
 			for automobile in automobileList:
 				self.deleteAutomobile(category, automobile)
 		for typ in self.__extraordinaryItems:
+			## Kopie erstellen
 			extraordinaryItemList = self.__extraordinaryItems[typ][:]
 			for item in extraordinaryItemList:
 				self.deleteExtraordinaryItem(typ, item)

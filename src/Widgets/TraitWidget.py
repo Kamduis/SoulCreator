@@ -1,33 +1,37 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtGui import QWidget
 
-from PySide.QtCore import Signal
-from PySide.QtGui import QWidget
-
-from src.Config import Config
+import src.Config as Config
 #from src import Error
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -43,7 +47,7 @@ class TraitWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(TraitWidget, self).__init__(parent)
 
 		self._character = character
 		self._storage = template
@@ -69,9 +73,9 @@ class TraitWidget(QWidget):
 
 	def emitHideReasonChanged(self):
 		#Debug.debug(Config.getAge(self._character.age), self._character.era)
-		#ageStr = Config.ages[0]
-		#if self._character.age < Config.ageAdult:
-			#ageStr = Config.ages[1]
+		#ageStr = Config.AGES[0]
+		#if self._character.age < Config.AGE_ADULT:
+			#ageStr = Config.AGES[1]
 		ageStr = Config.getAge(self._character.age)
 		eraStr = self._character.era
 		self.hideReasonChanged.emit(self._character.species, ageStr, eraStr)

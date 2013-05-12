@@ -1,37 +1,43 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
 import ast
 import gzip
 
-from PySide.QtCore import QObject, QDate, QByteArray
-from PySide.QtGui import QPixmap
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject, QDate, QByteArray
+from PyQt4.QtGui import QPixmap
 
-from src.Config import Config
+import src.Config as Config
+import src.IO.Shell as Shell
 from src.Error import ErrXmlOldVersion
 from src.IO.ReadXml import ReadXml
-from src.Debug import Debug
+import src.Debug as Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
@@ -41,16 +47,12 @@ try:
 	lxmlLoadad = True
 except ImportError:
 	try:
-		# Python 2.5
 		import xml.etree.cElementTree as etree
-		#Debug.debug("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
-			# Python 2.5
 			import xml.etree.ElementTree as etree
-			#Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
-			print("Failed to import ElementTree from any known place")
+			Shell.print_error("Failed to import ElementTree from any known place")
 
 
 
@@ -63,47 +65,56 @@ class ReadXmlCharacter(QObject, ReadXml):
 	"""
 
 
+	exception_raised = Signal( str, str )
+
+
 	def __init__(self, character, parent=None):
+		"""
+		\warning Aufgrund der multiplen Vererbung wird nicht die super()-Methode beim Aufruf der __init__()-Methoden der Elternkalssen verwendet.
+		"""
+
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 
 		self.__character = character
 
 
-	def read( self, fileName ):
+	def read( self, file_name ):
 		"""
 		Startet den Lesevorgang.
 
 		\note Diese Funktion kann sowohl normale xml-Dateien als auch mittels gzip komprimierte xml-Dateien laden.
 		"""
 
+		Debug.debug( "Loading Character out of {}.".format(file_name) )
+
 		## Mittels lxml kann diese Funktion normale XML-Dateien und offenbar auch mittels gzip komprimierte XML-Dateien laden.
 		## Das normale ElementTree-Modul kann das aber nicht.
-		xmlContent = None
+		xml_content = None
 		try:
-			xmlContent = etree.parse(fileName)
+			xml_content = etree.parse(file_name)
 		except etree.ParseError:
 			## Möglicherweise eine komprimierte Datei und lxml wurde nicht verwendet?
-			xmlContent = etree.parse(gzip.GzipFile(fileName))
-		xmlRootElement = xmlContent.getroot()
+			xml_content = etree.parse(gzip.GzipFile(file_name))
+		xmlRootElement = xml_content.getroot()
 
 		versionSource = xmlRootElement.attrib["version"]
 
 		try:
-			self.checkXmlVersion( xmlRootElement.tag, versionSource, fileName )
+			self.checkXmlVersion( xmlRootElement.tag, versionSource, file_name )
 		except ErrXmlOldVersion as e:
-			descriptionText = self.tr("{description} Loading of character will be continued but errors may occur.".format(message=e.message, description=e.description))
-			self.exceptionRaised.emit(e.message, descriptionText, e.critical)
+			text_description = self.tr( "{} Loading will be continued but errors may occur.".format( str( e ) ) )
+			self.exception_raised.emit( text_description, "warning" )
 
 		## Die Daten müssen zuerst geladen werden, damit schon beim Laden die Unterschiedung zwischen Kindern und Erwachsenen erfolgen kann.
-		self.readDates(xmlContent)
-		self.readCharacterInfo(xmlContent)
-		self.readCharacterIdentity(xmlContent)
-		self.readDerangements(xmlContent)
-		self.readTraits(xmlContent)
-		self.readItems(xmlContent)
-		self.readSpeciesSpecials(xmlContent)
-		self.readPicture(xmlContent)
+		self.readDates(xml_content)
+		self.readCharacterInfo(xml_content)
+		self.readCharacterIdentity(xml_content)
+		self.readDerangements(xml_content)
+		self.readTraits(xml_content)
+		self.readItems(xml_content)
+		self.readSpeciesSpecials(xml_content)
+		self.readPicture(xml_content)
 
 
 	def readCharacterInfo(self, tree):
@@ -152,6 +163,8 @@ class ReadXmlCharacter(QObject, ReadXml):
 			self.__character.identity.nickname = self.getElementAttribute(identity, "nickname")
 			self.__character.identity.supername = self.getElementAttribute(identity, "supername")
 			self.__character.identity.gender = self.getElementAttribute(identity, "gender")
+		else:
+			Debug.debug( "No identity of the character found.", level=3 )
 
 
 	def readDates(self, tree):
@@ -160,9 +173,9 @@ class ReadXmlCharacter(QObject, ReadXml):
 		"""
 
 		dates = tree.find("dates")
-		self.__character.dateBirth = QDate.fromString(dates.attrib["birth"], Config.dateFormat)
-		self.__character.dateBecoming = QDate.fromString(dates.attrib["becoming"], Config.dateFormat)
-		self.__character.dateGame = QDate.fromString(dates.attrib["game"], Config.dateFormat)
+		self.__character.dateBirth = QDate.fromString(dates.attrib["birth"], Config.DATE_FORMAT)
+		self.__character.dateBecoming = QDate.fromString(dates.attrib["becoming"], Config.DATE_FORMAT)
+		self.__character.dateGame = QDate.fromString(dates.attrib["game"], Config.DATE_FORMAT)
 
 
 	def readDerangements(self, tree):
@@ -216,7 +229,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 							for specialties in traitElement.getiterator("specialties"):
 								if specialties is not None:
 									specialtiesText = specialties.text
-									item.specialties = [n for n in specialtiesText.split(Config.sepChar)]
+									item.specialties = [n for n in specialtiesText.split(Config.XML_SEPARATION_SYMBOL)]
 							break
 
 
@@ -319,7 +332,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		if elem is not None:
 			i = 0
 			for element in list(elem):
-				if element.tag == "vinculum" and i < Config.vinculiCount:
+				if element.tag == "vinculum" and i < Config.VINCULI_COUNT_MAX:
 					self.__character.vinculi[i].name = element.text
 					self.__character.vinculi[i].value = int(element.attrib["value"])
 					i += 1
@@ -337,7 +350,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 			for element in list(elem):
 				if element.tag == "numen":
 					companionNumina.append(element.text)
-				if element.tag == "influence" and i < Config.companionInfluencesCount:
+				if element.tag == "influence" and i < Config.COMPANION_INFLUENCES_MAX:
 					self.__character.companionInfluences[i].name = element.text
 					self.__character.companionInfluences[i].value = int(element.attrib["value"])
 					i += 1
@@ -355,7 +368,7 @@ class ReadXmlCharacter(QObject, ReadXml):
 		if pictureElement is not None:
 			imageData = QByteArray.fromBase64(str(pictureElement.text))
 			image = QPixmap()
-			image.loadFromData(imageData, Config.pictureFormat)
+			image.loadFromData(imageData, Config.CHARACTER_PIC_FORMAT)
 			self.__character.picture = image
 
 

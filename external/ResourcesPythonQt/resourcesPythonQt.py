@@ -1,0 +1,360 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+A simple script to create the python files out of ui- and/or qrc-files created by
+QtDesigner. These files make the user interface and the resource data available
+for Python using either PySide or PyQt4, if they are imported.
+
+This script takes a varying number of file paths, checking the file name
+extensions and creating the appropriatewith the same names as the original files
+had, but changing the file name extension to ".py"
+
+# Examples
+
+	python3 resourcesPythonQt ui/*
+
+Creates the importable `.py`-files out of all `.ui`- and `.qrc`-files in `./ui/`.
+
+	python3 resourcesPythonQt -2 res/rc_resource.qrc ui/ui_widget.ui
+
+Creates the importable `.py`-files out of `res/rc_resource.qrc` and
+`ui/ui_widget.ui` in the Python 2.x format.
+
+# Copyright
+
+Copyright (C) 2012 by Victor von Rhein
+victor@caern.de
+
+# License
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+
+
+import os
+import sys
+import argparse
+import subprocess
+import xml
+from xml.etree.ElementTree import ElementTree
+
+
+
+
+PROGRAM_NAME = "ResourcesPythonQt"
+PROGRAM_VERSION_MAJOR = 0
+PROGRAM_VERSION_MINOR = 2
+PROGRAM_VERSION_CHANGE = 0
+PROGRAM_DESCRIPTION = "Generates py-files out of ui- and qrc-files usable with PySide or PyQt4. Creates png-icons from svg graphics."
+AUTHOR_NAME = "Victor"
+ORGANIZATION_NAME = "Caern"
+ORGANIZATION_DOMAIN = "www.caern.de"
+COPYRIGHT_YEAR = 2012
+
+GPL_LICENSE = """{name}  Copyright (C) {year}  {author}
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.
+""".format(name=PROGRAM_NAME, author=AUTHOR_NAME, year=COPYRIGHT_YEAR)
+
+SUFFIX_RESOURCE = "qrc"
+SUFFIX_UI = "ui"
+SUFFIX_PY = "py"
+
+
+
+
+def version(change=False):
+	"""
+	Returns the version number of the program.
+
+	Parameters:
+		change: bool
+			If this parameter is set to "True", the change number of the version will be returned as well.
+
+	Returns:
+		return: string
+			Version number in the format <major>.<minor>.<change>. Change is omitted by default.
+	"""
+
+	if change:
+		return "{major}.{minor}.{change}".format(major=PROGRAM_VERSION_MAJOR, minor=PROGRAM_VERSION_MINOR, change=PROGRAM_VERSION_CHANGE)
+	else:
+		return "{major}.{minor}".format(major=PROGRAM_VERSION_MAJOR, minor=PROGRAM_VERSION_MINOR)
+
+
+
+
+def get_path():
+	"""
+	Get the path to this script no matter how it's run.
+	"""
+
+	## Determine if the application is a py/pyw or a frozen exe.
+	if hasattr(sys,  'frozen'):
+		## If run from exe
+		dir_path = os.path.dirname(sys.executable)
+	elif '__file__' in locals():
+		## If run from py
+		dir_path = os.path.dirname(__file__)
+	else:
+		## If run from command line
+		dir_path = sys.path[0]
+	return dir_path
+
+
+def path_select(paths):
+	"""
+	Selects the files from the given paths, to be processed with the correct method.
+	"""
+
+	paths_res = []
+	paths_ui = []
+	paths_unknown = []
+
+	for path in paths:
+		if path.endswith(".{}".format(SUFFIX_RESOURCE)):
+			paths_res.append(path)
+		elif path.endswith(".{}".format(SUFFIX_UI)):
+			paths_ui.append(path)
+		else:
+			paths_unknown.append(path)
+
+	return (paths_res, paths_ui, paths_unknown)
+
+
+def create_rcc(path, pyqt=False, verbose=True, python3=True):
+	"""
+	Creates the necessary py-files from qrc-files (Qt resource files).
+	"""
+
+	file_name = os.path.basename(path)
+	if (
+		not os.path.exists(path) or
+		not os.path.isfile(path) or
+		not file_name.lower().endswith(".{}".format(SUFFIX_RESOURCE.lower()))
+	):
+		raise IOError("{} is not a valid {}-file.".format(path, SUFFIX_RESOURCE))
+	dir_name = os.path.dirname(path)
+
+	## Command arguments
+	rcc_cmd = "pyside-rcc"
+	if pyqt:
+		rcc_cmd = "pyrcc4"
+	rcc_py_ver = "-py2"
+	if python3:
+		rcc_py_ver = "-py3"
+	cmd_string = [ rcc_cmd, rcc_py_ver, "-o", ]
+
+	name_wo_suffix = file_name.split(".{}".format(SUFFIX_RESOURCE))[0]
+	cmd_string_lcl = cmd_string[:]
+	cmd_string_lcl.extend(
+		(
+			os.path.join(dir_name, "{}.{}".format(name_wo_suffix, SUFFIX_PY)),
+			path,
+		)
+	)
+
+	if verbose:
+		print("Processing {} ...".format(file_name))
+	proc = subprocess.Popen(cmd_string_lcl, stderr=subprocess.PIPE, shell=False)
+	proc_return, proc_err = proc.communicate()
+	proc_retcode = proc.poll()
+	if proc_err:
+		raise subprocess.CalledProcessError(proc_retcode, cmd_string_lcl, output=proc_return)
+
+
+def create_uic(path, pyqt=False, verbose=True, python3=True):
+	"""
+	Creates the necessary py-files from ui-files generated by Qt-Designer.
+	"""
+
+	file_name = os.path.basename(path)
+	if (
+		not os.path.exists(path) or
+		not os.path.isfile(path) or
+		not file_name.lower().endswith(".{}".format(SUFFIX_UI.lower()))
+	):
+		raise IOError("{} is not a valid {}-file.".format(path, SUFFIX_UI))
+	dir_name = os.path.dirname(path)
+
+	## Command arguments
+	uic_cmd = "pyside-uic"
+	if pyqt:
+		uic_cmd = "pyuic4"
+	cmd_string = [ uic_cmd, "-i", "0", "-o", ]
+
+	name_wo_suffix = file_name.split(".{}".format(SUFFIX_UI))[0]
+	cmd_string_lcl = cmd_string[:]
+	cmd_string_lcl.extend(
+		(
+			os.path.join(dir_name, "{}.{}".format(name_wo_suffix, SUFFIX_PY)),
+			path,
+		)
+	)
+
+	if verbose:
+		print("Processing {} ...".format(file_name))
+	proc = subprocess.Popen(cmd_string_lcl, stderr=subprocess.PIPE, shell=False)
+	proc_return, proc_err = proc.communicate()
+	proc_retcode = proc.poll()
+	if proc_err:
+		raise subprocess.CalledProcessError(proc_retcode, cmd_string_lcl, output=proc_return)
+
+
+def get_svg_size(svg_file):
+	"""
+	Find the width and height of the svg-image.
+	"""
+
+	tree = ElementTree()
+	tree.parse(svg_file)
+	elem = tree.getroot()
+
+	return ( float(elem.get("width")), float(elem.get("height")) )
+
+
+def svg_to_png(path, max_side=24, verbose=True):
+	"""
+	Create png-images out of the svg-graphics.
+	"""
+
+	file_name = os.path.basename(path)
+	if (
+		not os.path.exists(path) or
+		not os.path.isfile(path) or
+		not file_name.lower().endswith(".{}".format("svg"))
+	):
+		raise IOError("{} is not a valid {}-file.".format(path, "svg"))
+	dir_name = os.path.dirname(path)
+
+	## Command arguments
+	cmd_string = [ "convert", "-background", "transparent", ]
+
+	name_wo_suffix = file_name.split(".svg")[0]
+	svg_width = None
+	svg_height = None
+	with open(path) as f:
+		# width and height are in user units (px). 1 in = 90 px
+		(svg_width, svg_height) = get_svg_size(f)
+	svg_side = max(svg_width, svg_height)
+	dpi = max_side / ( svg_side / 90 )
+	cmd_string_lcl = cmd_string[:]
+	cmd_string_lcl.extend(
+		(
+			"-density", "{}".format(dpi),
+			path,
+			os.path.join(dir_name, "{}.{}".format(name_wo_suffix, "png")),
+		)
+	)
+
+	if verbose:
+		print("Processing {} ...".format(file_name))
+	proc = subprocess.Popen(cmd_string_lcl, stderr=subprocess.PIPE, shell=False)
+	proc_return, proc_err = proc.communicate()
+	proc_retcode = proc.poll()
+	if proc_err:
+		raise subprocess.CalledProcessError(proc_retcode, cmd_string_lcl, output=proc_return)
+
+
+
+
+if __name__ == "__main__":
+	"""
+	Creates the necessary py-files from ui- and qrc-files.
+	"""
+
+	parser = argparse.ArgumentParser(
+		description=PROGRAM_DESCRIPTION,
+		epilog=GPL_LICENSE,
+		formatter_class=argparse.RawDescriptionHelpFormatter
+	)
+
+	parser.add_argument("-2", "--python2", action="store_true", help="Create files for Python2. Mutually exclusive with -3.")
+	parser.add_argument("-3", "--python3", action="store_true", help="Create files for Python3. Standard. Mutually exclusive with -2.")
+	parser.add_argument("--svg2png", metavar='SIZE', nargs=1, type=int, help="Converts svg graphics to png graphics with transparent background. The pixel width is defined by SIZE. No other resource files will be generated.")
+	parser.add_argument("-q", "--pyqt", action="store_true", help="Use PyQt4 instead of PySide.")
+	parser.add_argument("-v", "--verbose", action="store_true", help="Output useful information.")
+	parser.add_argument("-V", "--version", action="version", version="{name}: {major}.{minor}.{change}".format(
+		name=sys.argv[0],
+		major=PROGRAM_VERSION_MAJOR,
+		minor=PROGRAM_VERSION_MINOR,
+		change=PROGRAM_VERSION_CHANGE
+	))
+	parser.add_argument(dest="target", metavar="TARGET", nargs="+", help="Paths to the files to process. Either ui- and/or qrc-files or svg-images, if the --svg2png option is used.")
+
+	args = parser.parse_args()
+
+	python_3 = True
+
+	if args.python2 and args.python3:
+		print("-2 and -3 are mutually exclusive. Please choose only one of them.", file=sys.stderr)
+	elif args.python2:
+		python_3 = False
+
+	if args.svg2png:
+		if args.verbose:
+			print("Converting svg-images to png-images ...")
+		for path in args.target:
+			try:
+				svg_to_png(path, max_side=args.svg2png[0], verbose=args.verbose)
+			except IOError as e:
+				print(e, "Skipping this file.", file=sys.stderr)
+			except (xml.parsers.expat.ExpatError, xml.etree.ElementTree.ParseError) as e:
+				print("\"{}\" seems to be broken: {}.".format(path, e), "Skipping this file.", file=sys.stderr)
+			except (OSError, subprocess.CalledProcessError) as e:
+				built_successful = False
+				print(e, e.output, file=sys.stderr)
+	else:
+		( paths_res, paths_ui, paths_unknown ) = path_select(args.target)
+
+		if args.verbose:
+			print("Generate resource files ...")
+
+		built_successful = True
+
+		for path in paths_res:
+			try:
+				create_rcc(path, pyqt=args.pyqt, verbose=args.verbose, python3=python_3)
+			except IOError as e:
+				print(e, "Skipping this file.", file=sys.stderr)
+			except (OSError, subprocess.CalledProcessError) as e:
+				built_successful = False
+				print(e, file=sys.stderr)
+
+		for path in paths_ui:
+			try:
+				create_uic(path, pyqt=args.pyqt, verbose=args.verbose, python3=python_3)
+			except IOError as e:
+				print(e, "Skipping this file.", file=sys.stderr)
+			except (OSError, subprocess.CalledProcessError) as e:
+				built_successful = False
+				print(e, file=sys.stderr)
+
+		for path in paths_unknown:
+			print("{} is not a valid {}- or {}-file.".format(path, SUFFIX_RESOURCE, SUFFIX_UI), "Skipping this file.", file=sys.stderr)
+
+		if built_successful:
+			if args.verbose:
+				print("Done.")
+		else:
+			print(
+			"Warning: Resources not built. Old resource files may be used. Inconsistencies or errors may occur.\nIf no old resource-files were present, you will not be able to run the application.",
+				file=sys.stderr
+			)
+			sys.exit(1)
+
+	sys.exit(0)

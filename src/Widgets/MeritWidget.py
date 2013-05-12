@@ -1,38 +1,43 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
 import os
 
-#from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
+#from PyQt4.QtCore import pyqtSignal as Signal
+#from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QToolBox
 
-from src.Config import Config
+import src.Config as Config
 #from src import Error
-from src.Tools import ListTools
+import src.Tools.ListTools as ListTools
 from src.Widgets.TraitWidget import TraitWidget
 from src.Widgets.Components.CharaTrait import CharaTrait
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -48,7 +53,7 @@ class MeritWidget(TraitWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		TraitWidget.__init__(self, template, character, parent)
+		super(MeritWidget, self).__init__(template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
@@ -63,10 +68,10 @@ class MeritWidget(TraitWidget):
 
 		self.__typ = "Merit"
 		categories = []
-		categories.extend(Config.meritCategories)
+		categories.extend(Config.CATEGORIES_MERITS)
 		categories.extend(self._storage.categories(self.__typ))
 		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
-		categories = ListTools.uniqifyOrdered(categories)
+		categories = ListTools.uniqify_ordered(categories)
 
 		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
 		self.__categoryIndex = {}
@@ -85,7 +90,7 @@ class MeritWidget(TraitWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self._character.traits[self.__typ][item].items()
+			__list = list( self._character.traits[self.__typ][item].items() )
 			__list.sort()
 			for merit in __list:
 				#Debug.debug(merit)
@@ -111,7 +116,7 @@ class MeritWidget(TraitWidget):
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutMeritCategory.addStretch()
 
-		self.setMinimumWidth(Config.traitLineWidthMin)
+		self.setMinimumWidth(Config.TRAIT_WIDTH_MIN)
 
 		self._character.speciesChanged.connect(self.countMerits)
 

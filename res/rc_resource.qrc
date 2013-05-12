@@ -155,15 +155,6 @@
     <file>images/svg/spine.svg</file>
     <file>images/svg/wand.svg</file>
   </qresource>
-  <qresource prefix="template">
-    <file>templates/base.scd</file>
-    <file>templates/changeling.scd</file>
-    <file>templates/human.scd</file>
-    <file>templates/mage.scd</file>
-    <file>templates/vampire.scd</file>
-    <file>templates/werewolf.scd</file>
-    <file>templates/spirit.scd</file>
-  </qresource>
   <qresource prefix="characterSheets">
     <file>images/Charactersheet-Changeling-2.jpg</file>
     <file>images/Charactersheet-Mage-2.jpg</file>

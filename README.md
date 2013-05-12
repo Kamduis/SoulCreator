@@ -6,10 +6,12 @@ A character generator for the Pen & Paper Roleplaying games in the World of Dark
 
 Developed by [Victor](victor@caern.de).
 
+ The developers of SoulCreator are in no way affiliated with or endorsed by White Wolf Publishing, Inc.
+
 
 ## Supported game lines
 
-This character generator supports the following lines:
+This character generator supports the following game lines:
 
 * World of Darkness
 * Changeling the Lost
@@ -42,7 +44,9 @@ The Documentation of the source code can be found under [Code-Documentation][].
 
 ## Copyright
 
-World of Darkness, Changeling: The Lost, Mage: The Awakening, Vampire: The Requiem, Werewolf: The Forsaken, White Wolf, the White Wolf-Logo and all referring terms and symbols are copyrighted by White Wolf Inc.
+White Wolf and its logo, World of Darkness, Changeling the Lost, Mage the Awakening, Vampire the Requiem, and Werewolf the Forsaken are registered trademarks of White Wolf Publishing, Inc. All rights reserved. All rights reserved. The mention of or reference to any company or product in this program is not a challenge to the trademark or copyright concerned. The developers of SoulCreator are in no way affiliated with or endorsed by White Wolf Publishing, Inc. SoulCreator is intended for personal and non-profit use only.
+
+The developers make no claim to own White Wolf or any of the names related to it. Some images that are displayed as part of SoulCreator are copyrighted to White Wolf Publishing, Inc or to the creator of the image (for developer-made artwork).
 
 
 ## Contact

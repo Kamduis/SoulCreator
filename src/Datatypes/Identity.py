@@ -1,34 +1,39 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject
+#from PyQt4.QtGui import QDialog
 
-from PySide.QtCore import QObject, Signal
-#from PySide.QtGui import QDialog
-
-from src.Config import Config
+import src.Config as Config
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 #from src.Widgets.Dialogs.NameDialog import NameDialog
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -58,7 +63,7 @@ class Identity(QObject):
 		\note Als Umgehung des deepcopy-Bugs mit dieser Klasse sind die eigentlich provaten Attribute dieser Klasse nur als protected gekennzeichnet. Um eine saubere Kopie durchführen zu können, muß ich schließlich auf sie zugreifen können.
 		"""
 		
-		QObject.__init__(self, parent)
+		super(Identity, self).__init__(parent)
 		
 		# Liste zur Speicherung von Namen.
 		#
@@ -244,7 +249,7 @@ class Identity(QObject):
 		self.nickname = ""
 		self.honorname = ""
 		self.supername = ""
-		self.gender = Config.genders[0][0]
+		self.gender = Config.GENDERS[0][0]
 
 
 	@staticmethod
@@ -261,7 +266,7 @@ class Identity(QObject):
 			if type(fores) == list:
 				displayFull = fores[0]
 				for item in fores[1:]:
-					displayFull += u" {}".format(item)
+					displayFull += " {}".format(item)
 			else:
 				displayFull = fores
 
@@ -283,7 +288,7 @@ class Identity(QObject):
 		
 		displayDisplay = first
 		if ( nick ):
-			displayDisplay += u" \"{}\"".format(nick)
+			displayDisplay += " \"{}\"".format(nick)
 
 		# Vor dem Nachnamen nur dann ein Leerzeichen, wenn schon etwas davor steht.
 		if ( displayDisplay ):
@@ -301,7 +306,7 @@ class Identity(QObject):
 		
 		displayHonor = first
 		if ( honor ):
-			displayHonor += u" {}".format(honor)
+			displayHonor += " {}".format(honor)
 
 		return displayHonor
 

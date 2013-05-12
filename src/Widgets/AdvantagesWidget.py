@@ -1,39 +1,43 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
 #import traceback
 
-from PySide.QtCore import Signal
-from PySide.QtGui import QWidget, QFontMetrics, QIcon
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtGui import QWidget, QFontMetrics, QIcon
 
-from src.Config import Config
+import src.Config as Config
 #from src import Error
 #from src.Calc.CalcAdvantages import CalcAdvantages
-from src.Calc.CalcShapes import CalcShapes
+import src.Calc.CalcShapes as CalcShapes
 #from src.Widgets.Components.TraitDots import TraitDots
 #from src.Widgets.Components.Squares import Squares
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 from ui.ui_AdvantagesWidget import Ui_AdvantagesWidget
 
@@ -54,7 +58,7 @@ class AdvantagesWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(AdvantagesWidget, self).__init__(parent)
 
 		self.ui = Ui_AdvantagesWidget()
 		self.ui.setupUi(self)
@@ -74,11 +78,11 @@ class AdvantagesWidget(QWidget):
 
 		self.ui.dots_health.setReadOnly( True )
 
-		self.ui.dots_willpower.setMaximum( Config.willpowerMax )
+		self.ui.dots_willpower.setMaximum( Config.TRAIT_WILLPOWER_VALUE_MAX )
 		self.ui.dots_willpower.setReadOnly( True )
 
-		self.ui.dots_powerstat.setMaximum( Config.powerstatMax )
-		self.ui.dots_powerstat.setMinimum( Config.powerstatMin )
+		self.ui.dots_powerstat.setMaximum( Config.TRAIT_POWERSTAT_VALUE_MAX )
+		self.ui.dots_powerstat.setMinimum( Config.TRAIT_POWERSTAT_VALUE_MIN )
 		# Damit später der Wert stimmt muß ich irgendeinen Wert != 1 geben, sonst wird kein Signal gesandt.
 		self.ui.dots_powerstat.setValue( 9 )
 
@@ -105,25 +109,25 @@ class AdvantagesWidget(QWidget):
 
 
 	def setSize(self, value):
-		if self.ui.label_size.text() != unicode(value):
-			self.ui.label_size.setText(unicode(value))
+		if self.ui.label_size.text() != str(value):
+			self.ui.label_size.setText(str(value))
 			self.sizeChanged.emit(value)
 
 
 	def setInitiative(self, value):
-		if self.ui.label_initiative.text() != unicode(value):
-			self.ui.label_initiative.setText(unicode(value))
+		if self.ui.label_initiative.text() != str(value):
+			self.ui.label_initiative.setText(str(value))
 			self.initiativeChanged.emit(value)
 
 
 	def setSpeed(self, value):
-		if self.ui.label_speed.text() != unicode(value):
-			self.ui.label_speed.setText(unicode(value))
+		if self.ui.label_speed.text() != str(value):
+			self.ui.label_speed.setText(str(value))
 			self.speedChanged.emit(value)
 
 
 	def setDefense(self, value):
-		if self.ui.label_defense.text() != unicode(value):
+		if self.ui.label_defense.text() != str(value):
 			self.ui.label_defense.setNum(value)
 			self.defenseChanged.emit(value)
 
@@ -144,10 +148,10 @@ class AdvantagesWidget(QWidget):
 			size = int(self.ui.label_size.text())
 			self.ui.label_sizeShapes.setHidden(False)
 			self.ui.label_sizeShapes.setText(", {}, {}, {}, {}".format(
-				CalcShapes.size(size, Config.shapesWerewolf[1]),
-				CalcShapes.size(size, Config.shapesWerewolf[2]),
-				CalcShapes.size(size, Config.shapesWerewolf[3]),
-				CalcShapes.size(size, Config.shapesWerewolf[4]),
+				CalcShapes.size(size, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.size(size, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.size(size, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.size(size, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_sizeShapes.setHidden(True)
@@ -158,10 +162,10 @@ class AdvantagesWidget(QWidget):
 			value = int(self.ui.label_initiative.text())
 			self.ui.label_initiativeShapes.setHidden(False)
 			self.ui.label_initiativeShapes.setText(", {}, {}, {}, {}".format(
-				CalcShapes.initiative(value, Config.shapesWerewolf[1]),
-				CalcShapes.initiative(value, Config.shapesWerewolf[2]),
-				CalcShapes.initiative(value, Config.shapesWerewolf[3]),
-				CalcShapes.initiative(value, Config.shapesWerewolf[4]),
+				CalcShapes.initiative(value, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.initiative(value, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.initiative(value, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.initiative(value, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_initiativeShapes.setHidden(True)
@@ -172,10 +176,10 @@ class AdvantagesWidget(QWidget):
 			value = int(self.ui.label_speed.text())
 			self.ui.label_speedShapes.setHidden(False)
 			self.ui.label_speedShapes.setText(", {}, {}, {}, {}".format(
-				CalcShapes.speed(value, Config.shapesWerewolf[1]),
-				CalcShapes.speed(value, Config.shapesWerewolf[2]),
-				CalcShapes.speed(value, Config.shapesWerewolf[3]),
-				CalcShapes.speed(value, Config.shapesWerewolf[4]),
+				CalcShapes.speed(value, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.speed(value, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.speed(value, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.speed(value, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_speedShapes.setHidden(True)
@@ -187,10 +191,10 @@ class AdvantagesWidget(QWidget):
 			dexterity = self.__character.traits["Attribute"]["Physical"]["Dexterity"].value
 			self.ui.label_defenseShapes.setHidden(False)
 			self.ui.label_defenseShapes.setText(", {}, {}, {}, {}".format(
-				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[1]),
-				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[2]),
-				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[3]),
-				CalcShapes.defense(wits, dexterity, Config.shapesWerewolf[4]),
+				CalcShapes.defense(wits, dexterity, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.defense(wits, dexterity, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.defense(wits, dexterity, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.defense(wits, dexterity, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_defenseShapes.setHidden(True)
@@ -201,10 +205,10 @@ class AdvantagesWidget(QWidget):
 			value = self.ui.dots_health.value
 			self.ui.label_healthShapes.setHidden(False)
 			self.ui.label_healthShapes.setText("{}, {}, {}, {}".format(
-				CalcShapes.health(value, Config.shapesWerewolf[1]),
-				CalcShapes.health(value, Config.shapesWerewolf[2]),
-				CalcShapes.health(value, Config.shapesWerewolf[3]),
-				CalcShapes.health(value, Config.shapesWerewolf[4]),
+				CalcShapes.health(value, Config.SHAPES_WEREWOLF[1]),
+				CalcShapes.health(value, Config.SHAPES_WEREWOLF[2]),
+				CalcShapes.health(value, Config.SHAPES_WEREWOLF[3]),
+				CalcShapes.health(value, Config.SHAPES_WEREWOLF[4]),
 			))
 		else:
 			self.ui.label_healthShapes.setHidden(True)
@@ -215,7 +219,7 @@ class AdvantagesWidget(QWidget):
 		Verbirgt die übernatürlichen Eigenschaften, falls ein Mensch gewählt wird.
 		"""
 
-		if ( species == Config.initialSpecies ):
+		if ( species == Config.SPECIES_INITIAL ):
 			self.ui.label_powerstat.setHidden( True )
 			self.ui.dots_powerstat.setHidden( True )
 

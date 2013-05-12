@@ -1,36 +1,41 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
 import os
 
-#from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QToolBox
+#from PyQt4.QtCore import pyqtSignal as Signal
+#from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QToolBox
 
-from src.Config import Config
-from src.Tools import ListTools
+import src.Config as Config
+import src.Tools.ListTools as ListTools
 from src.Widgets.Components.CheckTrait import CheckTrait
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -41,7 +46,7 @@ class FlawWidget(QWidget):
 	"""
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(FlawWidget, self).__init__(parent)
 
 		self.__storage = template
 		self.__character = character
@@ -59,10 +64,10 @@ class FlawWidget(QWidget):
 
 		self.__typ = "Flaw"
 		categories = []
-		categories.extend(Config.flawCategories)
+		categories.extend(Config.CATEGORIES_FLAWS)
 		categories.extend(self.__storage.categories(self.__typ))
 		# Duplikate werden entfernt. Dadurch wird die in der Config-Klasse vorgegebene Reihenfolge eingehalten und zusätzliche, dort nicht erwähnte Kategorien werden hinterher angehängt.
-		categories = ListTools.uniqifyOrdered(categories)
+		categories = ListTools.uniqify_ordered(categories)
 
 		# Diese Liste speichert den Index der ToolBox-Seite bei den unterschiedlichen Kategorien
 		self.__categoryIndex = {}
@@ -82,7 +87,7 @@ class FlawWidget(QWidget):
 			self.__categoryIndex[item] = self.__toolBox.count() - 1
 			#Debug.debug(self.__categoryIndex)
 
-			__list = self.__character.traits[self.__typ][item].items()
+			__list = list( self.__character.traits[self.__typ][item].items() )
 			__list.sort()
 			for flaw in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.
@@ -99,7 +104,7 @@ class FlawWidget(QWidget):
 			# Stretch einfügen, damit die Eigenschaften besser angeordnet sind.
 			layoutFlawCategory.addStretch()
 
-		self.setMinimumWidth(Config.traitLineWidthMin)
+		self.setMinimumWidth(Config.TRAIT_WIDTH_MIN)
 
 
 

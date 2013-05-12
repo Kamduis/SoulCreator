@@ -1,37 +1,42 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
 import os
 
-from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QScrollArea, QGroupBox
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QScrollArea, QGroupBox
 
-from src.Config import Config
+import src.Config as Config
 #from src import Error
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Widgets.TraitWidget import TraitWidget
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -48,7 +53,7 @@ class SkillWidget(TraitWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		TraitWidget.__init__(self, template, character, parent)
+		super(SkillWidget, self).__init__(template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
@@ -75,7 +80,7 @@ class SkillWidget(TraitWidget):
 		## Eine Liste, in der alle Eigenschafts-Widgets aufgelistet werden.
 		self.__traitWidgets = []
 
-		for item in Config.mainCategories:
+		for item in Config.CATEGORIES_MAIN:
 			#Debug.debug(self._character.traits)
 
 			# Für jede Kategorie wird ein eigener Abschnitt erzeugt.
@@ -88,7 +93,7 @@ class SkillWidget(TraitWidget):
 
 			self.__scrollLayout.addWidget( widgetSkillCategory )
 
-			__list = self._character.traits[typ][item].items()
+			__list = list( self._character.traits[typ][item].items() )
 			__list.sort()
 			for skill in __list:
 				# Anlegen des Widgets, das diese Eigenschaft repräsentiert.

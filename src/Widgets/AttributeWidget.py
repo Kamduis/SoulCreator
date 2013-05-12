@@ -1,35 +1,40 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+#from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
 
-from PySide.QtCore import Qt#, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
-
-from src.Config import Config
+import src.Config as Config
 #from src import Error
 from src.Widgets.Components.CharaTrait import CharaTrait
 from src.Widgets.TraitWidget import TraitWidget
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -44,19 +49,13 @@ class AttributeWidget(TraitWidget):
 	"""
 
 	def __init__(self, template, character, parent=None):
-		TraitWidget.__init__(self, template, character, parent)
+		super(AttributeWidget, self).__init__(template, character, parent)
 
 		self.__layout = QVBoxLayout()
 		self.setLayout( self.__layout )
 
 		self.__layoutAttributes = QGridLayout()
 		self.__layout.addLayout( self.__layoutAttributes )
-
-		#// 	QFrame* frame = new QFrame( self )
-		#// 	layout.addWidget( frame )
-		#//
-		#// 	QVBoxLayout* layoutHeader = new QVBoxLayout()
-		#// 	frame.setLayout( layoutHeader )
 
 		self.__labelPower = QLabel( "<b>" + self.tr( "Power" ) + "</b>" )
 		self.__labelPower.setAlignment( Qt.AlignRight )
@@ -86,7 +85,7 @@ class AttributeWidget(TraitWidget):
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelSta, SLOT( setHidden( bool ) ) )
 		#connect( self, SIGNAL( speciesChanged( bool ) ), labelMan, SLOT( setHidden( bool ) ) )
 
-		for item in Config.attributes:
+		for item in Config.ATTRIBUTES:
 			#Debug.debug(self._character.traits)
 
 			actualColumn += 1
@@ -95,7 +94,6 @@ class AttributeWidget(TraitWidget):
 			vLine.setFrameStyle( QFrame.VLine)
 			self.__layoutAttributes.addWidget( vLine, 1, actualColumn, len(item[1]), 1, Qt.AlignHCenter )
 
-			#// 		layout.setColumnMinimumWidth(actualColumn, Config::traitCategorySpace)
 			self.__layoutAttributes.setColumnStretch( actualColumn, 1 )
 
 			# Jetzt sind wir in der Spalte für die tatsächlchen Attribute
@@ -117,7 +115,7 @@ class AttributeWidget(TraitWidget):
 				traitWidget.setSpecialtiesHidden( True )
 				traitWidget.setDescriptionHidden( True )
 
-				# An welcher Position sitzt dieses Attribut in der Config.attributes-Liste?
+				# An welcher Position sitzt dieses Attribut in der Config.ATTRIBUTES-Liste?
 
 				self.__layoutAttributes.addWidget( traitWidget, i + 1, actualColumn )
 
@@ -143,7 +141,7 @@ class AttributeWidget(TraitWidget):
 			# Bei Werwölfen erscheint hier Zusatztext. Und damit der Sparator richtig gesetzt wird, muß die aktuelle Spalte ein weitergezählt werden.
 			actualColumn += 1
 
-		self.__layout.addSpacing( Config.vSpace )
+		self.__layout.addSpacing( Config.SPACE_VERTICAL_STD )
 
 		self.__layoutBonus = QGridLayout()
 		self.__layout.addLayout( self.__layoutBonus )

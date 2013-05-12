@@ -1,33 +1,38 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http:##www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QPoint
+from PyQt4.QtGui import QColor, QPainter, QPen
 
-from PySide.QtCore import QPoint, Signal
-from PySide.QtGui import QColor, QPainter, QPen
-
-from src.Config import Config
+import src.Config as Config
 from src.Widgets.Components.AbstractTraitDots import AbstractTraitDots
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -42,7 +47,7 @@ class TraitDots(AbstractTraitDots):
 
 
 	def __init__(self, parent=None):
-		AbstractTraitDots.__init__(self, parent)
+		super(TraitDots, self).__init__(parent)
 
 		self.__bonusValue = 0
 
@@ -82,7 +87,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.save()
 
-		for i in xrange(self.value):
+		for i in range(self.value):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 	## 		if (v_forbiddenValues.contains(i+1)){
@@ -90,11 +95,11 @@ class TraitDots(AbstractTraitDots):
 
 		painter.restore()
 
-		painter.setBrush( QColor(Config.bonusColor) )
+		painter.setBrush( QColor(Config.COLOR_BONUS) )
 
 		painter.save()
 
-		for i in xrange(self.value, self.value + self.__bonusValue):
+		for i in range(self.value, self.value + self.__bonusValue):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 
@@ -104,7 +109,7 @@ class TraitDots(AbstractTraitDots):
 
 		painter.save()
 
-		for i in xrange(self.value + self.__bonusValue, self.maximum):
+		for i in range(self.value + self.__bonusValue, self.maximum):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 

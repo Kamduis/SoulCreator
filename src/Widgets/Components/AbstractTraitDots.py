@@ -1,33 +1,38 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http:##www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QPoint
+from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter, QPalette
 
-from PySide.QtCore import QPoint, Signal
-from PySide.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter
-
-#from src.Config import Config
+#import src.Config as Config
 #from src.Widgets.TraitLine import TraitLine
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -51,7 +56,7 @@ class AbstractTraitDots(QWidget):
 
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(AbstractTraitDots, self).__init__(parent)
 
 		self.__minimum = 0
 		self.__maximum = 5
@@ -76,10 +81,11 @@ class AbstractTraitDots(QWidget):
 		self.setMinimumSize( minimumSizeX, self.__minimumSizeY)
 		self.setSizePolicy( QSizePolicy.Minimum, QSizePolicy.Fixed )
 
-		# Setze Standardfarbe weiß
-		self._colorEmpty = QColor( 255, 255, 255 )
-		self._colorFull = QColor( 0, 0, 0 )
-		self._colorFrame = QColor( 0, 0, 0 )
+		# Setze Farben abhängig von der verwendeten Palette.
+		__palette = QPalette()
+		self._colorEmpty = __palette.text().color()
+		self._colorFull = __palette.highlight().color()
+		self._colorFrame = __palette.highlight().color()
 
 		self.maximumChanged.connect(self.resetMinimumSize)
 
@@ -119,7 +125,7 @@ class AbstractTraitDots(QWidget):
 
 		painter.save()
 
-		for i in xrange(self.__value):
+		for i in range(self.__value):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 	## 		if (v_forbiddenValues.contains(i+1)){
@@ -131,7 +137,7 @@ class AbstractTraitDots(QWidget):
 
 		painter.save()
 
-		for i in xrange(self.__value, self.__maximum):
+		for i in range(self.__value, self.__maximum):
 			shiftCenter = dotCenter + QPoint( 0 + dotDiameter * i, 0 )
 			painter.drawEllipse( shiftCenter, dotRadius, dotRadius )
 
@@ -328,10 +334,10 @@ class AbstractTraitDots(QWidget):
 	def setAllowedValues( self, values ):
 		"""
 		Über diese Funktion wird eine Liste der erlaubten Werte gesetzt.
-		
-		Da es manchmal einfacher ist, erlaubte Werte einzugeben, müssen diese entsprechend Übersetzt werden, ehe sie in die self.__forbiddenList eingesetzt werden.
+
+		Da es manchmal einfacher ist, erlaubte Werte einzugeben, müssen diese entsprechend übersetzt werden, ehe sie in die self.__forbiddenList eingesetzt werden.
 		"""
-		
+
 		# Neue List erstellen und mit den Werten aus dem Argument fÜllen. Aber da Werte kleiner 0 nie erlaubt sind, werden diese garnicht erst übernommen.
 		tmpList = values
 
@@ -349,8 +355,8 @@ class AbstractTraitDots(QWidget):
 		if tmpList[-1] > self.__maximum:
 			self.setMaximum( tmpList[-1] )
 
-		# Eine Liste beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumetn genannt werden.
-		self.__forbiddenValues = range(self.__minimum, self.__maximum + 1)
+		# Eine Liste beginnt beim Minimalwert und reicht bis zum Maximalwert. Es werden alle Werte verboten, die nicht im Argumenten genannt werden.
+		self.__forbiddenValues = list( range(self.__minimum, self.__maximum + 1) )
 
 		for item in tmpList:
 			if item in self.__forbiddenValues:

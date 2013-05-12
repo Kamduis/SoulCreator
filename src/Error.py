@@ -1,28 +1,34 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import QObject
 
-from PySide.QtCore import QObject
+import src.Config as Config
 
 
 
@@ -31,148 +37,67 @@ class Err(Exception):
 	"""
 	@brief Basisklasse für die Ausnahmebehandlung
 
-	Diese Klasse liegt allen Ausnahmebehandlungen zugrunde.
+	Diese Klasse liegt allen eigenen Ausnahmebehandlungen zugrunde.
+
+	\param critical (bool) Kritische Fehler führen zu einem Abbruch des Programms.
 	"""
 
-	def __init__(self, msg="", desc="", critical=True):
-		Exception.__init__(self)
+	def __init__( self, text=None, critical=False ):
+		super().__init__()
 
 		self.obj = QObject()
 
-		self.__critical = critical
-		self.__message = msg
-		self.__description = desc
+		if text is None:
+			text = self.obj.tr( "Unknown generic Exception." )
 
-	@property
-	def message(self):
-		"""
-		Erlaubt das Auslesen der Standardnachricht.
-		"""
-		
-		return self.__message
+		# Kurze Benachrichtigung der Ausnahme
+		self.text = text
+		self.critical = critical
 
-	@message.setter
-	def message(self, txt):
-		"""
-		Setzt die Kurznachricht über die Ausnahme.
-		"""
-		
-		self.__message = txt
 
-	@property
-	def description(self):
-		"""
-		Erlaubt das Auslesen einer ausführlichen Beschreibung der ausgelösten Ausnahme.
-		"""
-		
-		return self.__description
-
-	@description.setter
-	def description(self, txt):
-		"""
-		Setzt die ausfühlriche Beschreibung der Ausnahme.
-		"""
-		
-		self.__description = txt
-
-	@property
-	def critical(self):
-		"""
-		Legt fest, ob es sich bei dieser Ausnahme um eine kritische oder um eine einfache Ausnahme handelt.
-		"""
-
-		return self.__critical
-
-	@critical.setter
-	def critical(self, sw):
-
-		self.__critical = sw
+	def __str__(self):
+		return self.text
 
 
 
-#eNumber::eNumber() : Exception() {
+
+#class ErrList(Err):
 	#"""
-	#@brief Ausnahme bei Zahlen.
+	#@brief Ausnahme bei Listen.
 	#"""
 	
-	#message = self.obj.tr( "Unspecified Problem with a number." )
-	#description = self.obj.tr( "An unspecified error occured while handling a number or what should at least be a number." )
-#}
-
-#eNotANumber::eNotANumber() : eNumber() {
-	#"""
-	#@brief Ausnahme beim Fehlen einer Zahl.
-
-	#Es wird eine Zahl erwartet, abe rkeine Zahl übergeben.
-	#"""
-
-	#message = self.obj.tr( "Not a Number." )
-	#description = self.obj.tr( "While expecting a number, somethin other than a number was given." )
-#}
-
-
-
-
-class ErrList(Err):
-	"""
-	@brief Ausnahme bei Listen.
-	"""
-	
-	def __init__(self):
-		Err.__init__(self)
+	#def __init__(self):
+		#super(ErrList, self).__init__()
 		
-		self.message = self.obj.tr( "Unspecified Problem with a List." ) 
-		self.description = self.obj.tr( "An unspecified error occured while handling a List." ) 
+		#self.message = self.obj.tr( "Unspecified Problem with a List." ) 
+		#self.description = self.obj.tr( "An unspecified error occured while handling a List." ) 
 
 
-class ErrIndexExceedsRange(ErrList):
-	"""
-	@brief Index überschreitet Listengröße.
-	"""
+#class ErrIndexExceedsRange(ErrList):
+	#"""
+	#@brief Index überschreitet Listengröße.
+	#"""
 
-	def __init__(self, idx, listLen ):
-		ErrList.__init__(self)
+	#def __init__(self, idx, listLen ):
+		#super(ErrList, self).__init__()
 		
-		self.message = self.obj.tr( "Index exceeds Range of List or Vector." ) 
-		self.description = self.obj.tr( "Index {} exceeds List Range of {}.".format(idx, listLen) )
+		#self.message = self.obj.tr( "Index exceeds Range of List or Vector." ) 
+		#self.description = self.obj.tr( "Index {} exceeds List Range of {}.".format(idx, listLen) )
 
 
-class ErrListLength(ErrList):
-	"""
-	@brief Listenlänge stimmt nicht mit erwartetem Wert überein.
-	"""
-
-	def __init__(self, expected, got ):
-		ErrList.__init__(self)
-
-		txt = "long"
-		if got < expected:
-			txt = "short"
-		self.message = self.obj.tr( "List to {}.".format(txt) ) 
-		self.description = self.obj.tr( "Got a List of length {}, but got a length of {}.".format(expected, got) ) 
-
-
-
-
-#eDir::eDir( QString dirName ) : Exception() {
+#class ErrListLength(ErrList):
 	#"""
-	#@brief Ausnahme im Verzeichnis-Management.
-
-	#Allgemeine Fehler im Umgang mit Verzeichnissen werfen diese Ausnahme.
+	#@brief Listenlänge stimmt nicht mit erwartetem Wert überein.
 	#"""
 
-	#message = self.obj.tr( "Unspecified Problem with a directory." )
-	#description = self.obj.tr( "An unspecified error occured while handling directory %1" ).arg( dirName )
-#}
+	#def __init__(self, expected, got ):
+		#super(ErrListLength, self).__init__()
 
-#eDirNotCreated::eDirNotCreated( QString dirName ) : eDir() {
-	#"""
-	#@brief Verzeichnis kann nicht angelegt werden.
-	#"""
-
-	#message = self.obj.tr( "Cannot create Directory." )
-	#description = self.obj.tr( "Directory %1 could not be created" ).arg( dirName )
-#}
+		#txt = "long"
+		#if got < expected:
+			#txt = "short"
+		#self.message = self.obj.tr( "List to {}.".format(txt) ) 
+		#self.description = self.obj.tr( "Got a List of length {}, but got a length of {}.".format(expected, got) ) 
 
 
 
@@ -184,11 +109,17 @@ class ErrFile(Err):
 	Allgemeine Fehler im Umgang mit Dateien werfen diese Ausnahme.
 	"""
 	
-	def __init__(self, filename = "unknown" ):
-		Err.__init__(self)
+	def __init__(self, text=None, filename=None ):
 
-		self.message =self.obj.tr( "Unspecified Problem with a file." )
-		self.description =self.obj.tr( "An unspecified error occured while handling file %1".format(filename) )
+		if text is None:
+			text = self.obj.tr( "Unknown exception while handling a file." )
+
+			if filename is not None:
+				text = self.obj.tr( "Unknown exception while handling file \"{}\".".format( filename ) )
+
+		super().__init__( text=text )
+
+		self.filename = filename
 
 
 class ErrFileNotOpened(ErrFile):
@@ -198,55 +129,60 @@ class ErrFileNotOpened(ErrFile):
 	Das Programm kann die spezifizierte Datei nicht öffnen.
 	"""
 
-	def __init__(self, filename = "unknown", lastError = "unknown" ):
-		ErrFile.__init__(self)
-		
-		self.message = self.obj.tr( "Cannot open File." ) 
-		self.description = self.obj.tr( "File {} could not be opened: {}".format(filename,  lastError ) )
+	def __init__(self, text=None, filename=None ):
+
+		if text is None:
+			text = self.obj.tr( "Could not open file." )
+
+			if filename is not None:
+				text = self.obj.tr( "Could not open file \"{}\".".format( filename ) )
+
+		super().__init__( text=text, filename=filename )
 
 
-class ErrFileNotDeleted(ErrFile):
-	"""
-	@brief Datei kann nicht gelöscht werden.
+#class ErrFileNotDeleted(ErrFile):
+	#"""
+	#@brief Datei kann nicht gelöscht werden.
 
-	Das Programm kann die spezifizierte Datei nicht löschen.
-	"""
+	#Das Programm kann die spezifizierte Datei nicht löschen.
+	#"""
 
-	def __init__(self, filename = "unknown" ):
-		ErrFile.__init__(self)
+	#def __init__(self, filename = "unknown" ):
+		#super(ErrFileNotDeleted, self).__init__()
 
-		self.message = self.obj.tr( "Deletion not successful." ) 
-		self.description = self.obj.tr( "File {} could not be deleted.".format(filename ) )
+		#self.message = self.obj.tr( "Deletion not successful." ) 
+		#self.description = self.obj.tr( "File {} could not be deleted.".format(filename ) )
 
 
 
 
 class ErrXml(Err):
 	"""
-	@brief Ausnahme beim Lesen der XML-Datei
-
-	Treten Fehler beim Lesen der XML-Datei auf, wird diese Ausnahme geworfen.
+	@brief Ausnahme beim Umgang mit XML.
 	"""
 
-	def __init__(self, error = "unknown" ):
-		Err.__init__(self)
+	def __init__(self, text=None, critical=False ):
+		super().__init__( text=text, critical=critical )
 
-		self.message = self.obj.tr( "XML-Problem." ) 
-		self.description = self.obj.tr( "{}".format(error ) )
+		if text is None:
+			text = self.obj.tr( "Unknown exception while handling XML." )
+			self.text = text
 
 
 class ErrXmlParsing(ErrXml):
 	"""
-	@brief Beim Parsen der XML-Datei trat ein Fehler auf.
+	@brief Beim Parsen einer XML-Datei trat ein Fehler auf.
 
 	Während das Programm versucht, eine XML-Datei zu parsen, tritt der im Argument spezifizierte Fehler auf.
 	"""
 
-	def __init__(self, fileName = "unknown", error = "unknown" ):
-		ErrXml.__init__(self)
+	def __init__(self, text=None, critical=False ):
+		super().__init__( text=text, critical=critical )
 
-		self.message = self.obj.tr( "XML-Parsing raised error." ) 
-		self.description = self.obj.tr( "While trying to parse the XML-File, the following error was raised: \"{error}\" in file \"{filename}\"".format(filename=fileName, error=error))
+		if text is None:
+			text = self.obj.tr( "Unknown exception while parsing XML." )
+			self.text = text
+
 
 
 class ErrXmlVersion(ErrXml):
@@ -254,11 +190,22 @@ class ErrXmlVersion(ErrXml):
 	@brief Die XML-Datei weist die falsche Version auf.
 	"""
 
-	def __init__(self, expected = "unknown", got = "unknown" ):
-		ErrXml.__init__(self)
+	def __init__(self, text=None, got=None, expected=None, critical=False ):
+		super().__init__( text=text, critical=critical )
 
-		self.message = self.obj.tr( "Wrong XML-Version." ) 
-		self.description = self.obj.tr( "Got {} but expected was at least {}".format(got, expected))
+		if text is None:
+			text = self.obj.tr( "Wrong version number of XML-string." )
+
+			if got is not None:
+				if expected is not None:
+					text += " " + self.obj.tr( "Got version {} but expected was {}.".format( got, expected ) )
+				else:
+					text += " " + self.obj.tr( "Got version {}.".format( got ) )
+
+			self.text = text
+
+		self.got = got
+		self.expected = expected
 
 
 class ErrXmlOldVersion(ErrXmlVersion):
@@ -266,32 +213,16 @@ class ErrXmlOldVersion(ErrXmlVersion):
 	@brief Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber zu alt.
 	"""
 
-	def __init__(self, got="unknown", filename=None ):
-		ErrXmlVersion.__init__(self)
+	def __init__(self, text=None, got=None, critical=False ):
+		super().__init__( text=text, got=got, critical=critical )
 
-		msg = self.obj.tr( "Wrong file Version." )
-		if filename is not None:
-			msg = self.obj.tr( "Wrong file Version: {}".format(filename) )
-		self.message = msg
-		self.description = self.obj.tr( "The file was created to be used with SoulCreator {got}.".format(got=got))
-		self.critical = False
+		if text is None:
+			text = self.obj.tr( "Old Version of XML-string." )
 
+			if got is not None:
+				text += " " + self.obj.tr( "Was created for {} {}.".format( Config.PROGRAM_NAME, got ) )
 
-class ErrXmlTooOldVersion(ErrXmlVersion):
-	"""
-	@brief Die Version der XML-Datei paßt zwar zu diesem Programm, ist aber viel zu alt.
-
-	Die Version ist so alt, daß eine Verwendung dieser Ressource nicht empfehlenswert ist.
-	"""
-
-	def __init__(self, got="unknown", filename=None ):
-		ErrXmlVersion.__init__(self)
-
-		msg = self.obj.tr( "Wrong file Version." )
-		if filename is not None:
-			msg = self.obj.tr( "Wrong file Version: {}".format(filename) )
-		self.message = msg
-		self.description = self.obj.tr( "The file was created to be used with SoulCreator {}. This file is not usable with this version of SoulCreator.".format(got))
+			self.text = text
 
 
 
@@ -301,72 +232,35 @@ class ErrSpecies(Err):
 	#@brief Ausnahme, falls Fehler bei den Spezies auftritt.
 	#"""
 
-	def __init__(self ):
-		Err.__init__(self)
+	def __init__(self, text=None, critical=False ):
+		super().__init__( text=text, critical=critical )
+		
+		if text is None:
+			text = self.obj.tr( "Unknown error with character species." )
 
-		self.message = self.obj.tr( "Problem with species occured." )
-		self.description = self.obj.tr( "There is a problem with a character species.")
+			self.text = text
 
 
 class ErrSpeciesNotExisting(ErrSpecies):
-	#"""
-	#@brief Ausnahme, falls eine spezifizierte Spezies nicht existiert.
+	"""
+	@brief Ausnahme, falls eine spezifizierte Spezies nicht existiert.
 
-	#Die erwartete Spezies wurde nicht gefunden.
-	#"""
+	Die erwartete Spezies wurde nicht gefunden.
+	"""
 
-	def __init__(self, species = "unknown" ):
-		ErrSpecies.__init__(self)
+	def __init__(self, text=None, species=None, critical=False ):
+		super().__init__( text=text, critical=critical )
 
-		self.message = self.obj.tr( "Problem with species occured." )
-		self.description = self.obj.tr( "Species {} is missing.".format(species))
+		if text is None:
+			text = self.obj.tr( "Species does not exist." )
 
+			if species is not None:
+				text = self.obj.tr( "Species \"{}\" does not exist.".format( species ) )
 
-
-
-#class ErrDerangement(Err):
-	##"""
-	##@brief Ausnahme, falls Fehler bei den Geistesstörungen auftritt.
-	##"""
-
-	#def __init__(self ):
-		#Err.__init__(self)
-
-		#self.message = self.obj.tr( "Problem with derangements occured." )
-		#self.description = self.obj.tr( "There is a problem with a derangement of the character.")
-
-
-#class ErrDerangementNotExisting(ErrDerangement):
-	##"""
-	##@briefDie erwartete Geistesstörung wurde nicht gefunden.
-	##"""
-
-	#def __init__(self, derangement="unknown" ):
-		#ErrDerangement.__init__(self)
-
-		#self.message = self.obj.tr( "Problem with derangements occured." )
-		#self.description = self.obj.tr( "Derangement {} is missing.".format(derangement))
+			self.text = text
 
 
 
-
-#eGender::eGender() : Exception() {
-	#"""
-	#@brief Ausnahme, falls Fehler bei den Geschlechtern auftritt.
-	#"""
-
-	#message = self.obj.tr( "Gender Problem" )
-	#description = self.obj.tr( "There is a problem with the gender of the character." )
-#}
-
-#eGenderNotExisting::eGenderNotExisting( cv_Identity::Gender gen ) : eGender() {
-	#"""
-	#@brief Ausnahme, falls das spezifizierte Geschlecht nicht existiert.
-	#"""
-
-	#message = self.obj.tr( "Character Gender Problem" )
-	#description = self.obj.tr( "Gender %1 does not exist." ).arg( gen )
-#}
 
 
 class ErrTrait(Err):
@@ -374,34 +268,27 @@ class ErrTrait(Err):
 	@brief Ausnahme, falls Fehler bei den Eigenschaften auftritt.
 	"""
 
-	def __init__(self):
-		Err.__init__(self)
-		
-		self.message = self.obj.tr( "Character Trait Problem" )
-		self.description = self.obj.tr( "There is a problem with a character trait." )
+	def __init__(self, text=None, critical=False ):
+		super().__init__( text=text, critical=critical )
+
+		if text is None:
+			text = self.obj.tr( "Unknown error with character trait." )
+
+			self.text = text
 
 
-#eTraitNotExisting::eTraitNotExisting() : eTrait() {
+#class ErrTraitCategory(ErrTrait):
 	#"""
-	#@brief Ausnahme, falls eine spezifizierte Eigenscahft nicht existiert.
+	#@brief Ausnahme, falls eine falsche Kategorie genutzt wird.
 
-	#Die erwartete Charaktereigenschaft wurde nicht gefunden.
+	#Die Kategorie exitiert nicht oder hat an dieser Stelle keine Gültigkeit.
 	#"""
 
-	#message = self.obj.tr( "Character Trait Problem" )
-	#description = self.obj.tr( "Trait is missing." )
-#}
+	#def __init__(self, category):
+		#super(ErrTraitCategory, self).__init__()
 
-class ErrTraitCategory(ErrTrait):
-	"""
-	@brief Ausnahme, falls eine falsche Kategorie genutzt wird.
-
-	Die Kategorie exitiert nicht oder hat an dieser Stelle keine Gültigkeit.
-	"""
-
-	def __init__(self, category):
-		self.message = self.obj.tr( "Category of a Trait not valid" )
-		self.description = self.obj.tr( "The Category {} is not valid at this point.".format( category ))
+		#self.message = self.obj.tr( "Category of a Trait not valid" )
+		#self.description = self.obj.tr( "The Category {} is not valid at this point.".format( category ))
 
 
 class ErrTraitType(ErrTrait):
@@ -409,107 +296,29 @@ class ErrTraitType(ErrTrait):
 	@brief Ausnahme, falls ein falscher Typ genutzt wird.
 	"""
 
-	def __init__(self, expected, got):
-		ErrTrait.__init__(self)
+	def __init__(self, text=None, got=None, expected=None, critical=False ):
+		super().__init__( text=text, critical=critical )
 
-		self.message = self.obj.tr( "Type of a Trait not valid" )
-		typ = expected
-		if type(expected) == list:
-			typ = ", ".join(expected[:-1])
-			typ += " or "
-			typ += expected[-1]
+		if text is None:
+			text = self.obj.tr( "Type of character trait is not valid." )
 
-		self.description = self.obj.tr( "Expected Trait of type {}, but got type {}, which is not valid at this point.".format(typ, got) )
+			if got is not None:
+				if expected is not None:
+					expected_text = "{} or {}".format( ", ".join( expected[:-1], expected[-1] ) )
+					text += self.obj.tr( "Got {} but expected {}.".format( got, expected_text ) )
+				else:
+					text += self.obj.tr( "Got {}.".format( got ) )
+
+			self.text = text
 
 
-#ePrint::ePrint() : Exception() {
+#class ErrTraitPrerequisite(ErrTrait):
 	#"""
-	#@brief Ausnahme, falls beim Audrucken ein Fehler entsteht.
-
-	#Ein unspezifizierter Fehler beim Ausdruck ist aufgetreten.
-	#"""
-
-	#message = self.obj.tr( "Printing Problem" )
-	#description = self.obj.tr( "There is a problem while trying to print the character sheet." )
-#}
-
-#eTraitsExceedSheetCapacity::eTraitsExceedSheetCapacity( cv_AbstractTrait::Type type, int maxNumber ) : ePrint() {
-	#"""
-	#@brief Ausnahme, falls zu viele Eigenschaften gedruckt werden sollen.
-
-	#Aufgrund vorgefertigter Charakterbögen können je nach Typ nur eine gewissen Anzahl der entsprechenden Eigenschaften darauf aufgebracht werden. Stehen im Generator mehr dieser Eigenschaften, als gedruckt werden können, tritt diese Ausnahme auf.
+	#Ungültige Voraussetzung für die Eigenschaft.
 	#"""
 
-	#message = self.obj.tr( "Too many %1 to print on character sheet." ).arg( cv_AbstractTrait::toString( type, true ) )
-	#description = self.obj.tr( "Trying to print too many %1. The character sheet hat only room for %2" ).arg( cv_AbstractTrait::toString( type, true ) ).arg( maxNumber )
-#}
+	#def __init__(self, trait):
+		#super().__init__()
 
-#eValueExceedsSheetCapacity::eValueExceedsSheetCapacity( int value, QString name ) : ePrint() {
-	#"""
-	#@brief Ausnahme, falls ein zu großer Wert auf den Charakterbogen gedruckt werden soll.
-
-	#Aufgrund vorgefertigter Charakterbögen können gewisse Teiel des charkaters nicht in beliebiger Höhe dargestellt werden.
-	#"""
-
-	#message = self.obj.tr( "A value exceeds the capacity of the Charactersheet." )
-	#description = self.obj.tr( "The character sheet has no room for %1 %2" ).arg( QString::number( value ) ).arg( name )
-#}
-
-
-#eEntry::eEntry() : Exception() {
-	#"""
-	#@brief Ausnahme, falls Fehler bei einer Eingabe auftreten.
-
-	#Falsche oder Fehlende Eingabe führt zu dieser Ausnahme.
-	#"""
-
-	#message = self.obj.tr( "Entry Problem." )
-	#description = self.obj.tr( "There is a problem with an expected Input." )
-#}
-
-#eUserEntry::eUserEntry() : eEntry() {
-	#"""
-	#@brief Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.
-	#"""
-
-	#message = self.obj.tr( "User Entry Problem." )
-	#description = self.obj.tr( "There is a problem with an expected User Input." )
-#}
-
-#eMissingUserEntry::eMissingUserEntry() : eUserEntry() {
-	#"""
-	#@brief Ausnahme, falls Fehler bei einer Benutzereingabe auftreten.
-	
-	#Fehlende Benutzereingabe führt zu dieser Ausnahme.
-	#"""
-
-	#message = self.obj.tr( "Missing User Entry." )
-	#description = self.obj.tr( "An expected User Input is missing." )
-#}
-
-
-#eWerewolfShape::eWerewolfShape() {
-	#"""
-	#@brief Ausnahme, falls Fehler Bei den Gestalten der Werwölfe auftritt.
-	#"""
-
-	#message = self.obj.tr( "Problem with werewolf shape." )
-	#description = self.obj.tr( "A Probklem regarding a shape of the werewolf has occured." )
-#}
-#eWerewolfShapeNotExisting::eWerewolfShapeNotExisting( cv_Shape::WerewolfShape shape ): eWerewolfShape() {
-	#"""
-	#@brief Ausnahme, falls eine ungültige Werwolf-Gestalt gewählt wird.
-	#"""
-
-	#message = self.obj.tr( "Shape not existing." )
-	#description = self.obj.tr( "The chosen Shape %1 does not exist." ).arg( shape )
-#}
-#eWerewolfShapeNotExisting::eWerewolfShapeNotExisting( QString shape ): eWerewolfShape() {
-	#"""
-	#
-	#"""
-
-	#message = self.obj.tr( "Shape not existing." )
-	#description = self.obj.tr( "The chosen Shape %1 does not exist." ).arg( shape )
-#}
-
+		#self.message = self.obj.tr( "Prerequisit of a Trait not valid" )
+		#self.description = self.obj.tr( "Some or all prerequisites of the trait \"{}\" is not valid.".format( trait ))

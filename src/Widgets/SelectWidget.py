@@ -1,33 +1,37 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
+#from PyQt4 import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QListWidget, QListWidgetItem, QIcon, QColor
-#from PySide import QtSvg	# Damit auch unter Windows SVG-Dateien dargestellt werden.
-
-from src.Config import Config
-#from src.Debug import Debug
+import src.Config as Config
+#import src.Debug as Debug
 
 
 
@@ -40,7 +44,7 @@ class SelectWidget(QListWidget):
 	"""
 	
 	def __init__(self, parent=None):
-		QListWidget.__init__(self, parent)
+		super(SelectWidget, self).__init__(parent)
 
 		self.pageList = [
 			[ "Information", ":types/images/svg/humans.svg", ],
@@ -60,13 +64,13 @@ class SelectWidget(QListWidget):
 
 		self.__stdBackgroundRole = self.item( 0 ).data(Qt.BackgroundRole)
 
-		for i in xrange(self.count()):
+		for i in range(self.count()):
 			self.item(i).setTextAlignment(Qt.AlignVCenter)
 			self.item(i).setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
 
-		self.setIconSize(Config.selectIconSize)
+		self.setIconSize(Config.WIDGET_SELECT_ICON_SIZE)
 
-		self.setMaximumWidth(Config.selectWidgetWidth)
+		self.setMaximumWidth(Config.WIDGET_SELECT_WIDTH)
 
 
 	def currentPage(self):
@@ -122,7 +126,7 @@ class SelectWidget(QListWidget):
 			self.item( row ).setData(Qt.ForegroundRole, QColor())
 		else:
 			self.item( row ).setFlags( Qt.NoItemFlags )
-			self.item( row ).setData(Qt.ForegroundRole, QColor(Config.deactivatedTextColor))
+			self.item( row ).setData(Qt.ForegroundRole, QColor(Config.COLOR_TEXT_DEACTIVATED))
 
 
 	def setItemColor( self, item, color ):
@@ -136,7 +140,7 @@ class SelectWidget(QListWidget):
 		if type(item) == int:
 			row = item
 		else:
-			for i in xrange(len(self.pageList)):
+			for i in range(len(self.pageList)):
 				if self.pageList[i][0] == item:
 					row = i
 					break
@@ -156,7 +160,7 @@ class SelectWidget(QListWidget):
 		if type(item) == int:
 			row = item
 		else:
-			for i in xrange(len(self.pageList)):
+			for i in range(len(self.pageList)):
 				if self.pageList[i][0] == item:
 					row = i
 					break
@@ -168,7 +172,7 @@ class SelectWidget(QListWidget):
 		Diese Funktion verbirgt die Anzeige übernatürlicher Kräfte, wenn keine zur Verfügung stehen.
 		"""
 
-		for i in xrange(len(self.pageList)):
+		for i in range(len(self.pageList)):
 			if self.pageList[i][0] == "Powers" or self.pageList[i][0] == "Specials":
 				if species == "Human":
 					self.setItemEnabled(i, False)
@@ -181,7 +185,7 @@ class SelectWidget(QListWidget):
 		Ändert die Icons abhängig von der Spezies des Charakters.
 		"""
 
-		for i in xrange(len(self.pageList)):
+		for i in range(len(self.pageList)):
 			if self.pageList[i][0] == "Specials":
 				if species == "Changeling":
 					self.item(i).setIcon(QIcon(":types/images/svg/fairy.svg"))

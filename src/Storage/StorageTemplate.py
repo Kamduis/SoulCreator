@@ -1,33 +1,36 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import QObject
 
-from PySide.QtCore import QObject
-
-#from src.Config import Config
-#from src.Tools import ListTools
+#import src.Config as Config
 from src.Error import ErrTraitType
-from src.Debug import Debug
+import src.Debug as Debug
 
 
 
@@ -339,7 +342,7 @@ class StorageTemplate(QObject):
 
 
 	def __init__(self, parent=None):
-		QObject.__init__(self, parent)
+		super(StorageTemplate, self).__init__(parent)
 
 
 	def __getTyps(self):
@@ -349,7 +352,7 @@ class StorageTemplate(QObject):
 
 
 	def categories(self, typ):
-		listOfCategories = self.__traits[typ].keys()
+		listOfCategories = list( self.__traits[typ].keys() )
 		listOfCategories.sort()
 		return listOfCategories
 
@@ -405,11 +408,11 @@ class StorageTemplate(QObject):
 			self.__traits[typ][category][identifier] = data
 		elif (typ != "Subpower"):
 			#Debug.debug(data["name"])
-			specialties = self.__traits[typ][category][identifier]["specialty"]
-			specialties.extend(data["specialty"])
+			specialties = self.__traits[typ][category][identifier]["specialties"]
+			specialties.extend(data["specialties"])
 			specialties.sort()
 			self.__traits[typ][category][identifier] = data
-			self.__traits[typ][category][identifier]["specialty"] = specialties
+			self.__traits[typ][category][identifier]["specialties"] = specialties
 
 
 	def traitNames( self, typ, category, era=None, age=None ):
@@ -497,7 +500,7 @@ class StorageTemplate(QObject):
 
 
 	def breeds(self, species):
-		result = self.__speciesGroupNames[species]["Breed"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Breed"][1].keys() )
 		result.sort()
 		return result
 
@@ -527,7 +530,7 @@ class StorageTemplate(QObject):
 		\note Nur für Changelings von Bedeutung.
 		"""
 
-		result = self.__kiths[seeming].keys()
+		result = list( self.__kiths[seeming].keys() )
 		result.sort()
 		return result
 
@@ -564,7 +567,7 @@ class StorageTemplate(QObject):
 
 
 	def factions(self, species):
-		result = self.__speciesGroupNames[species]["Faction"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Faction"][1].keys() )
 		result.sort()
 		return result
 
@@ -574,7 +577,7 @@ class StorageTemplate(QObject):
 
 
 	def organisations(self, species):
-		result = self.__speciesGroupNames[species]["Organisation"][1].keys()
+		result = list( self.__speciesGroupNames[species]["Organisation"][1].keys() )
 		result.sort()
 		return result
 

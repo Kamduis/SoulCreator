@@ -1,34 +1,38 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
-from PySide.QtCore import QObject, QIODevice, QByteArray, QBuffer
+from PyQt4.QtCore import QObject, QIODevice, QByteArray, QBuffer
 
 import gzip
 
-from src.Config import Config
+import src.Config as Config
 #from src.Error import ErrTraitType, ErrTraitCategory
-#from src.Debug import Debug
+import src.Debug as Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
@@ -38,14 +42,10 @@ try:
 	lxmlLoadad = True
 except ImportError:
 	try:
-		# Python 2.5
 		import xml.etree.cElementTree as etree
-		#Debug.debug("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
-			# Python 2.5
 			import xml.etree.ElementTree as etree
-			#Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
 			print("Failed to import ElementTree from any known place")
 
@@ -59,7 +59,7 @@ class WriteXmlCharacter(QObject):
 
 
 	def __init__(self, character, parent=None):
-		QObject.__init__(self, parent)
+		super(WriteXmlCharacter, self).__init__(parent)
 
 		self.__character = character
 
@@ -78,7 +78,7 @@ class WriteXmlCharacter(QObject):
 		Erzeugt den Element-Baum, der später in eine XML-Datei geschrieben werden kann.
 		"""
 
-		root = etree.Element(Config.programName, version=Config.version())
+		root = etree.Element(Config.PROGRAM_NAME, version=Config.version())
 
 		etree.SubElement(root, "species").text = self.__character.species
 
@@ -98,9 +98,9 @@ class WriteXmlCharacter(QObject):
 
 		## Daten
 		etree.SubElement(root, "dates",
-			birth=self.__character.dateBirth.toString(Config.dateFormat),
-			becoming=self.__character.dateBecoming.toString(Config.dateFormat),
-			game=self.__character.dateGame.toString(Config.dateFormat),
+			birth=self.__character.dateBirth.toString(Config.DATE_FORMAT),
+			becoming=self.__character.dateBecoming.toString(Config.DATE_FORMAT),
+			game=self.__character.dateGame.toString(Config.DATE_FORMAT),
 		)
 
 		etree.SubElement(root, "virtue").text = self.__character.virtue
@@ -123,9 +123,9 @@ class WriteXmlCharacter(QObject):
 
 		etree.SubElement(root, "party").text = self.__character.party
 
-		etree.SubElement(root, "height").text = unicode(self.__character.height)
+		etree.SubElement(root, "height").text = str(self.__character.height)
 
-		etree.SubElement(root, "weight").text = unicode(self.__character.weight)
+		etree.SubElement(root, "weight").text = str(self.__character.weight)
 
 		etree.SubElement(root, "eyes").text = self.__character.eyes
 
@@ -135,15 +135,15 @@ class WriteXmlCharacter(QObject):
 
 		etree.SubElement(root, "description").text = self.__character.description
 
-		etree.SubElement(root, "powerstat").text = unicode(self.__character.powerstat)
+		etree.SubElement(root, "powerstat").text = str(self.__character.powerstat)
 
-		etree.SubElement(root, "morality").text = unicode(self.__character.morality)
+		etree.SubElement(root, "morality").text = str(self.__character.morality)
 
 		## Geistesstörungen
 		derangements = etree.SubElement(root, "derangements")
 		for item in self.__character.derangements.items():
 			if item[1]:
-				etree.SubElement(derangements, "derangement", morality=unicode(item[0])).text = item[1]
+				etree.SubElement(derangements, "derangement", morality=str(item[0])).text = item[1]
 
 		## Eigenschaften
 		traits = etree.SubElement(root, "Traits")
@@ -164,14 +164,14 @@ class WriteXmlCharacter(QObject):
 							traitCategoryExists = True
 						trait = etree.SubElement(traitCategory, "trait",
 							name=subsubitem.name,
-							value=unicode(subsubitem.value),
+							value=str(subsubitem.value),
 						)
 						# Zusatztext
 						if item != "Subpower" and subsubitem.custom:
-							trait.attrib["customText"] =  unicode( subsubitem.customText )
+							trait.attrib["customText"] =  str( subsubitem.customText )
 						# Spezialisierungen
 						if subsubitem.specialties:
-							etree.SubElement(trait, "specialties").text = Config.sepChar.join( unicode(n) for n in subsubitem.specialties )
+							etree.SubElement(trait, "specialties").text = Config.XML_SEPARATION_SYMBOL.join( str(n) for n in subsubitem.specialties )
 
 		## Gegenstände
 		items = etree.SubElement(root, "Items")
@@ -182,7 +182,7 @@ class WriteXmlCharacter(QObject):
 				for weapon in self.__character.weapons[category]:
 					etree.SubElement(weaponCategory, "weapon").text = weapon
 		if self.__character.armor:
-			etree.SubElement(items, "armor", dedicated=unicode(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
+			etree.SubElement(items, "armor", dedicated=str(self.__character.armor["dedicated"])).text = self.__character.armor["name"]
 		if self.__character.equipment or self.__character.magicalTool:
 			equipment = etree.SubElement(items, "Equipment")
 			for item in self.__character.equipment:
@@ -211,22 +211,22 @@ class WriteXmlCharacter(QObject):
 			vinculi = etree.SubElement(root, "vinculi")
 			for item in self.__character.vinculi:
 				if item.name and item.value > 0:
-					etree.SubElement(vinculi, "vinculum", value=unicode(item.value)).text = item.name
+					etree.SubElement(vinculi, "vinculum", value=str(item.value)).text = item.name
 		companion = etree.SubElement(
 			root,
 			"companion",
 			name = self.__character.companionName,
-			power = unicode(self.__character.companionPower),
-			finesse = unicode(self.__character.companionFinesse),
-			resistance = unicode(self.__character.companionResistance),
-			size = unicode(self.__character.companionSize),
-			speedFactor = unicode(self.__character.companionSpeedFactor),
+			power = str(self.__character.companionPower),
+			finesse = str(self.__character.companionFinesse),
+			resistance = str(self.__character.companionResistance),
+			size = str(self.__character.companionSize),
+			speedFactor = str(self.__character.companionSpeedFactor),
 		)
 		for item in self.__character.companionNumina:
 			etree.SubElement(companion, "numen").text = item
 		for item in self.__character.companionInfluences:
 			if item.name and item.value > 0:
-				etree.SubElement(companion, "influence", value=unicode(item.value)).text = item.name
+				etree.SubElement(companion, "influence", value=str(item.value)).text = item.name
 		if self.__character.companionBan:
 			etree.SubElement(companion, "ban").text = self.__character.companionBan
 		
@@ -235,32 +235,34 @@ class WriteXmlCharacter(QObject):
 			imageData = QByteArray()
 			imageBuffer = QBuffer(imageData)
 			imageBuffer.open(QIODevice.WriteOnly)
-			self.__character.picture.save(imageBuffer, Config.pictureFormat)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
-			imageData = imageData.toBase64()
-			etree.SubElement(root, "picture").text = unicode(imageData)
+			self.__character.picture.save(imageBuffer, Config.CHARACTER_PIC_FORMAT)	# Schreibt das Bild in ein QByteArray im angegebenen Bildformat.
+			imageData = imageData.toBase64().data()
+			etree.SubElement(root, "picture").text = imageData.decode("UTF-8")
 
 		return root
 
 
-	def __writeTreeToFile(self, fileObject, tree):
-		if lxmlLoadad:
-			fileObject.write(etree.tostring(tree, pretty_print=True, encoding='UTF-8', xml_declaration=True))
-		else:
-			fileObject.write(etree.tostring(tree, encoding='UTF-8'))
-
-
-
-	def writeFile(self, tree, fileName):
+	def writeFile(self, tree, file_name):
 		"""
 		Schreibt den Elementbaum in eine Datei.
 
-		Die Charaktere werden als komprimierte Datei gespeichert.
+		Die Charaktere können als komprimierte Datei gespeichert werden, wenn dies in den Einstellungen so festgelegt wird.
 		"""
 
-		## In die Datei schreiben.
-		if Config.compressSaves:
-			with gzip.open(fileName, "w") as fileObject:
-				self.__writeTreeToFile(fileObject, tree)
+		_character_data = None
+		if lxmlLoadad:
+			Debug.debug( "Using the advanced lxml-module to write the XML-tree." )
+			_character_data = etree.tostring(tree, pretty_print=True, encoding="UTF-8", xml_declaration=True)
 		else:
-			with open(fileName, "w") as fileObject:
-				self.__writeTreeToFile(fileObject, tree)
+			Debug.debug( "Using the basic xml.etree.ElementTree-module to write the XML-tree." )
+			_character_data = etree.tostring(tree, encoding="unicode")
+
+		## In die Datei schreiben.
+		if Config.compress_saves:
+			Debug.debug( "Writing character into {} (compressed).".format(file_name) )
+			with gzip.open(file_name, "w") as file_object:
+				file_object.write(bytes(_character_data, "UTF-8"))
+		else:
+			Debug.debug( "Writing character into {} (uncompressed).".format(file_name) )
+			with open(file_name, "w") as file_object:
+				file_object.write(_character_data)

@@ -1,36 +1,40 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
 import re
 
-from PySide.QtCore import QDate
-from PySide.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageBox
+from PyQt4.QtCore import QDate
+from PyQt4.QtGui import QWidget, QIcon#, QLabel, QPixmap, QFileDialog, QMessageBox
 
-#from src.Config import Config
+#import src.Config as Config
 #from src.Tools import PathTools
-#from src.Calc.Calc import Calc
-from src.Debug import Debug
+#import src.Calc.Calc as Calc
+import src.Debug as Debug
 
 from ui.ui_TemplateWidget import Ui_TemplateWidget
 
@@ -44,7 +48,7 @@ class TemplateWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(TemplateWidget, self).__init__(parent)
 
 		self.ui = Ui_TemplateWidget()
 		self.ui.setupUi(self)

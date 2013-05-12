@@ -2,33 +2,59 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
-from __future__ import division, print_function
 
 import os
 import sys
 import subprocess
 from cx_Freeze import setup, Executable, Freezer
 
-from src.Config import Config
+import src.Config as Config
+import src.Tools.PathTools as PathTools
 
+
+
+
+def templates_include():
+	"""
+	Erstellt eine Liste aller zu kopierender template-Dateien.
+	"""
+
+	result = []
+
+	for item in os.listdir( os.path.join( PathTools.program_path(), Config.PATH_RESOURCE, Config.RESOURCE_DIR_TEMPLATES ) ):
+		result.append( os.path.join( Config.PATH_RESOURCE, Config.RESOURCE_DIR_TEMPLATES, item ) )
+
+	return result
+
+
+
+
+# Pylint-Einstellungen
+# pylint: disable-msg=C0103
 
 
 
@@ -42,10 +68,12 @@ if __name__ == "__main__":
 
 	# Process the includes, excludes and packages first
 	includefiles = [
-		("COPYING", "COPYING"),
-		("INSTALL.md", "INSTALL.md"),
-		("README.md", "README.md"),
+		( "COPYING", "COPYING", ),
+		( "INSTALL.md", "INSTALL.md", ),
+		( "README.md", "README.md", ),
 	]
+	for item in templates_include():
+		includefiles.append( (item, item, ) )
 	includes = []
 	excludes = []
 	packages = []
@@ -87,11 +115,11 @@ if __name__ == "__main__":
 	]
 
 	setup(
-		name = Config.programName,
+		name = Config.PROGRAM_NAME,
 		version = Config.version(),
-		description = Config.programDescription,
-		author = Config.programAuthor,
-		author_email = Config.programAuthorEMail,
+		description = Config.PROGRAM_DESCRIPTION,
+		author = Config.PROGRAM_AUTHOR,
+		author_email = Config.PROGRAM_AUTHOR_EMAIL,
 		options = {
 			"build_exe": {
 				"includes": includes,

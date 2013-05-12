@@ -1,56 +1,57 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
+import os
 import ast
 import tempfile
 import zlib
 
-from PySide.QtCore import QObject, QDir, QFile, QIODevice
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject
 
-from src.Config import Config
-from src.GlobalState import GlobalState
-#from src.Tools import ListTools
+import src.Config as Config
+import src.Tools.PathTools as PathTools
+import src.GlobalState as GlobalState
 from src.Error import ErrXmlOldVersion, ErrFileNotOpened
 from src.IO.ReadXml import ReadXml
-#from src.Debug import Debug
+import src.Debug as Debug
 
 ## Fallback to normal ElementTree, sollte lxml nicht installiert sein.
 lxmlLoadad = False
 try:
 	from lxml import etree
-	#Debug.debug("Running with lxml.etree")
 	lxmlLoadad = True
 except ImportError:
 	try:
-		# Python 2.5
 		import xml.etree.cElementTree as etree
-		#Debug.debug("running with cElementTree on Python 2.5+")
 	except ImportError:
 		try:
-			# Python 2.5
 			import xml.etree.ElementTree as etree
-			#Debug.debug("running with ElementTree on Python 2.5+")
 		except ImportError:
 			print("Failed to import ElementTree from any known place")
 
@@ -65,7 +66,14 @@ class ReadXmlTemplate(QObject, ReadXml):
 	"""
 
 
+	exception_raised = Signal( str, str )
+
+
 	def __init__(self, template, parent=None):
+		"""
+		\warning Aufgrund der multiplen Vererbung wird nicht die super()-Methode beim Aufruf der __init__()-Methoden der Elternkalssen verwendet.
+		"""
+
 		QObject.__init__(self, parent)
 		ReadXml.__init__(self)
 
@@ -73,11 +81,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		## Die Template-Dateien alle für das Laden vorbereiten.
 		self.__templateFiles = []
-		pathToTemplates = ":/template/{}".format(Config.resourceDirTemplates)
-		templateDir = QDir(pathToTemplates)
-		for templateFile in templateDir.entryList():
-			if templateFile.endswith(".{}".format(Config.fileSuffixCompressed)):
-				self.__templateFiles.append("{}/{}".format(pathToTemplates, templateFile))
+		path_to_templates = os.path.join( PathTools.program_path(), Config.PATH_RESOURCE, Config.RESOURCE_DIR_TEMPLATES )
+		for template_file in os.listdir(path_to_templates):
+			if template_file.endswith(".{}".format(Config.FILE_SUFFIX_COMPRESSED)):
+				self.__templateFiles.append( os.path.join( path_to_templates, template_file ) )
 
 
 	def read(self):
@@ -95,36 +102,37 @@ class ReadXmlTemplate(QObject, ReadXml):
 
 		#dbgStart = Debug.timehook()
 		for item in self.__templateFiles:
-			#Debug.debug("Lese aus Datei: {}".format(item))
-			qrcFile = QFile(item)
-			if not qrcFile.open(QIODevice.ReadOnly):
-				raise ErrFileNotOpened(item, qrcFile.errorString())
-			fileContent = qrcFile.readAll()
-			qrcFile.close()
+			Debug.debug( "Reading from file \"{}\".".format(item), level=2 )
+			file_content = None
+			with open(item, mode="rb") as fi:
+				file_content = fi.read()
 
 			## Erzeuge eine temporäre Datei, mit der etree umgehen kann und schreibe den Inhalt aus der Qt-Resource in selbige hinein.
-			fileLike = tempfile.SpooledTemporaryFile()
+			file_like = tempfile.SpooledTemporaryFile()
 			## Dank dieser Einstellung kann ich zlib verwenden um Dateien zu dekomprimieren, welche mittels des gzip-Moduls komprimiert wurden.
-			decompressObject = zlib.decompressobj(16 + zlib.MAX_WBITS)
-			fileLike.write(decompressObject.decompress(fileContent))
-			fileLike.seek(0)
+			decompressed_object = zlib.decompressobj(16 + zlib.MAX_WBITS)
+			file_like.write(decompressed_object.decompress(file_content))
+			file_like.seek(0)
 
-			xmlContent = etree.parse(fileLike)
-			fileLike.close()
+			xml_content = etree.parse(file_like)
+			file_like.close()
 
-			xmlRootElement = xmlContent.getroot()
+			xml_root_element = xml_content.getroot()
 
-			versionSource = xmlRootElement.attrib["version"]
+			version_source = xml_root_element.attrib["version"]
+			required_source = False
+			if "required" in xml_root_element.attrib:
+				required_source = xml_root_element.attrib["required"].lower() == "true"
 			#Debug.debug(versionSource)
 
 			try:
-				self.checkXmlVersion( xmlRootElement.tag, versionSource, qrcFile.fileName() )
+				self.checkXmlVersion( xml_root_element.tag, version_source, item, required=required_source )
 			except ErrXmlOldVersion as e:
-				descriptionText = self.tr("{description} Loading of template will be continued but errors may occur.".format(description=e.description))
-				self.exceptionRaised.emit(e.message, descriptionText, e.critical)
+				text_description = self.tr( "{} Loading of template will be continued but errors may occur.".format( str( e ) ) )
+				self.exception_raised.emit( text_description, "warning" )
 
-			result = self.readSpecies(xmlContent)
-			self.readTemplate(xmlContent, result[0], result[1])
+			result = self.readSpecies(xml_content)
+			self.readTemplate(xml_content, result[0], result[1])
 		#Debug.timesince(dbgStart)
 
 
@@ -245,12 +253,12 @@ class ReadXmlTemplate(QObject, ReadXml):
 								if subelement.tag == "power":
 									listOfPowers.setdefault(subelement.text, int(subelement.attrib["value"]))
 								elif subelement.tag == "prerequisites":
-									listOfPrerequisites.append(u"({})".format(subelement.text))
+									listOfPrerequisites.append("({})".format(subelement.text))
 								elif subelement.tag == "only":
-									listOfOnlys.append(u"{}".format(subelement.text))
-							powerPrerequisites = u" and ".join([u"Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()])
+									listOfOnlys.append("{}".format(subelement.text))
+							powerPrerequisites = " and ".join(["Power.{} > {}".format(powerName, powerValue - 1) for powerName, powerValue in listOfPowers.items()])
 							if powerPrerequisites:
-								powerPrerequisites = u"({})".format(powerPrerequisites)
+								powerPrerequisites = "({})".format(powerPrerequisites)
 								listOfPrerequisites.append(powerPrerequisites)
 							subPowerData = {
 								"name": element.attrib["name"],
@@ -376,7 +384,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		if root is not None:
-			#Debug.debug(root.tag)
+			#Debug.debug(root.tag, level=4)
 			for mildElement in root.getiterator("mild"):
 				mild = mildElement.attrib["name"]
 				descriptionMild = ""
@@ -401,7 +409,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for weapons in root:
-			if GlobalState.isFallback or not self.getElementAttribute(weapons, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(weapons, "fallback") == "True":
 				for typElement in list(weapons):
 					if typElement.tag == "Type":
 						typeName = self.getElementAttribute(typElement, "name")
@@ -428,7 +436,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for armors in root:
-			if GlobalState.isFallback or not self.getElementAttribute(armors, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(armors, "fallback") == "True":
 				for armorElement in list(armors):
 					if armorElement.tag == "armor":
 						armorName = armorElement.attrib["name"]
@@ -447,7 +455,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for equipment in root:
-			if GlobalState.isFallback or not self.getElementAttribute(equipment, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(equipment, "fallback") == "True":
 				for equipmentElement in list(equipment):
 					if equipmentElement.tag == "equipment":
 						equipmentName = equipmentElement.attrib["name"]
@@ -467,7 +475,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for automobiles in root:
-			if GlobalState.isFallback or not self.getElementAttribute(automobiles, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(automobiles, "fallback") == "True":
 				for element in list(automobiles):
 					if element.tag == "Type":
 						itemTyp = element.attrib["name"]
@@ -495,7 +503,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		"""
 
 		for extraordinary in root:
-			if GlobalState.isFallback or not self.getElementAttribute(extraordinary, "fallback") == "True":
+			if GlobalState.is_fallback or not self.getElementAttribute(extraordinary, "fallback") == "True":
 				for element in list(extraordinary):
 					if element.tag == "Type":
 						itemTyp = element.attrib["name"]
@@ -517,7 +525,7 @@ class ReadXmlTemplate(QObject, ReadXml):
 		Gibt ein Dictionary folgender Form zurück:
 
 		{
-			"typ": <Typ der ausgelsenen Eigenschaften>,
+			"typ": <Typ der ausgelesenen Eigenschaften>,
 			"traits" [<Liste der Eigenschaftsdaten der gefundenen Eigenschaften>]
 		}
 
@@ -557,12 +565,10 @@ class ReadXmlTemplate(QObject, ReadXml):
 				}
 				eraText = self.getElementAttribute(traitElement, "era")
 				if eraText:
-					traitData["era"] = eraText.split(Config.sepChar)
+					traitData["era"] = eraText.split(Config.XML_SEPARATION_SYMBOL)
 				if not traitData["id"]:
 					traitData["id"] = traitData["name"]
 				traitData["values"].extend(listOfValues)
 				listOfTraits.append(traitData)
 
 		return listOfTraits
-
-

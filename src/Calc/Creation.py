@@ -1,35 +1,40 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
 import copy
 
-from PySide.QtCore import QObject, Signal
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QObject
 
 #from src.Error import ErrFileNotOpened
-from src.Config import Config
+import src.Config as Config
 #from src import Error
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -47,7 +52,7 @@ class Creation(QObject):
 
 
 	def __init__(self, template, character, parent=None):
-		QObject.__init__(self, parent)
+		super(Creation, self).__init__(parent)
 
 		self.__storage = template
 		self.__character = character
@@ -98,7 +103,7 @@ class Creation(QObject):
 			for trait in self.__character.traits[typ][item].values():
 				## Es werden nur Eigenschaften beachtet, die auch der aktuellen Spezies des Charakters angehören.
 				if not trait.species or trait.species == self.__character.species:
-					ans = trait.value - Config.creationTraitDouble
+					ans = trait.value - Config.TRAIT_CREATION_DOUBLE_COST
 
 					if ans < 0:
 						ans = 0

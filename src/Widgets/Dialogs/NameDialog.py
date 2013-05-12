@@ -1,37 +1,41 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
-
 import copy
 
-from PySide.QtCore import Signal
-from PySide.QtGui import QDialog, QIcon
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtGui import QDialog, QIcon
 
-from src.Config import Config
+import src.Config as Config
 #from src.Error import ErrListLength
 #from src.Widgets.Components.CharaSpecies import CharaSpecies
 from src.Datatypes.Identity import Identity
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 from ui.ui_NameDialog import Ui_NameDialog
 
@@ -54,7 +58,7 @@ class NameDialog(QDialog):
 
 
 	def __init__(self, character, parent=None):
-		QDialog.__init__(self, parent)
+		super(NameDialog, self).__init__(parent)
 
 		self.ui = Ui_NameDialog()
 		self.ui.setupUi(self)
@@ -77,7 +81,7 @@ class NameDialog(QDialog):
 		self.identityLcl._gender = copy.deepcopy(self.__character.identity._gender)
 		#falseIdentities = copy.deepcopy(self.__character.falseIdentities)
 
-		for item in Config.genders[1:]:
+		for item in Config.GENDERS[1:]:
 			self.ui.comboBox_gender.addItem( QIcon(item[1]), item[0] )
 
 		self.ui.lineEdit_firstName.textChanged.connect(self.updateForenames)

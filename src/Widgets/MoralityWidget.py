@@ -1,34 +1,39 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QMessageBox
 
-from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QMessageBox
-
-from src.Config import Config
+import src.Config as Config
 from src.Widgets.Components.DerangementComboBox import DerangementComboBox
 from src.Widgets.Components.Dot import Dot
-from src.Debug import Debug
+import src.Debug as Debug
 
 
 
@@ -45,7 +50,7 @@ class MoralityWidget(QWidget):
 
 
 	def __init__(self, template, character, parent=None):
-		QWidget.__init__(self, parent)
+		super(MoralityWidget, self).__init__(parent)
 
 		self.__character = character
 		self.__storage = template
@@ -73,19 +78,19 @@ class MoralityWidget(QWidget):
 		self.__dotList = {}
 		self.__derangementBoxList = {}
 
-		for i in xrange(Config.moralityTraitMax):
-			label = QLabel("{}".format(Config.moralityTraitMax - i))
+		for i in range(Config.TRAIT_MORALITY_VALUE_MAX):
+			label = QLabel("{}".format(Config.TRAIT_MORALITY_VALUE_MAX - i))
 			label.setAlignment(Qt.AlignRight)
 			self.__layoutTab.addWidget(label, i, 0)
 
 			dot = Dot()
 			# Den Punkt zu einer Liste hinzufügen, um später zu sehen, welcher Punkt den Wert änderte.
-			self.__dotList[Config.moralityTraitMax - i] = dot
+			self.__dotList[Config.TRAIT_MORALITY_VALUE_MAX - i] = dot
 			self.__layoutTab.addWidget(dot, i, 2)
 
-			if i >= Config.moralityTraitMax - Config.derangementMoralityTraitMax:
+			if i >= Config.TRAIT_MORALITY_VALUE_MAX - Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX:
 				box = DerangementComboBox()
-				self.__derangementBoxList[Config.moralityTraitMax - i] = box
+				self.__derangementBoxList[Config.TRAIT_MORALITY_VALUE_MAX - i] = box
 				self.__layoutTab.addWidget(box, i, 1)
 
 				box.currentIndexChanged[str].connect(self.uniqifyDerangements)
@@ -124,25 +129,25 @@ class MoralityWidget(QWidget):
 		# Ist der Wert False, suche ich nach dem niedrigesten False punkt, und mache die höheren alle False.
 		if value:
 			dotsTrue = []
-			for i in xrange(1, self.__layoutTab.rowCount()+1):
+			for i in range(1, self.__layoutTab.rowCount()+1):
 				if self.__dotList[i].value:
 					dotsTrue.append(i)
 			maxValue = max(dotsTrue)
 			#Debug.debug(dotsTrue)
-			for i in xrange(1, maxValue):
+			for i in range(1, maxValue):
 				self.__dotList[i].value = True
 				#Debug.debug("{}: {} (Maximalwert {})".format(i, self.__dotList[i].value, maxValue))
 			self.value = maxValue
 		else:
 			dotsFalse = []
-			for i in xrange(1, self.__layoutTab.rowCount()+1):
+			for i in range(1, self.__layoutTab.rowCount()+1):
 				if not self.__dotList[i].value:
 					dotsFalse.append(i)
 			minValue = min(dotsFalse)
 			if minValue == self.value and minValue != 1:
 				self.__dotList[minValue].value = True
 			else:
-				for i in xrange(minValue+1, self.__layoutTab.rowCount()+1):
+				for i in range(minValue+1, self.__layoutTab.rowCount()+1):
 					self.__dotList[i].value = False
 					#Debug.debug("{}: {} (Maximalwert {})".format(i, self.__dotList[i].value, minValue))
 				# Intuitiverweise will man die Moral auf den Wert setzen, auf den man klickt. Aber das gilt nicht, wenn man auf den untersten Punkt klickt.
@@ -160,12 +165,12 @@ class MoralityWidget(QWidget):
 		"""
 
 		if value > 0:
-			for i in xrange(value, len(self.__dotList)+1):
+			for i in range(value, len(self.__dotList)+1):
 				self.__dotList[i].value = False
-			for i in xrange(1, value+1):
+			for i in range(1, value+1):
 				self.__dotList[i].value = True
 		else:
-			for i in xrange(1, len(self.__dotList)+1):
+			for i in range(1, len(self.__dotList)+1):
 				self.__dotList[i].value = False
 
 
@@ -194,7 +199,7 @@ class MoralityWidget(QWidget):
 		#Debug.debug(mild)
 		#Debug.debug(severe)
 		lostDerangements = []
-		for i in range(1, Config.derangementMoralityTraitMax+1)[::-1]:
+		for i in range(1, Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX+1)[::-1]:
 			## Speichern der alten Auswahl.
 			oldSelection = self.__derangementBoxList[i].currentText()
 			## Erst löschen
@@ -236,9 +241,9 @@ class MoralityWidget(QWidget):
 
 		#Debug.debug(value)
 
-		for i in range(value+1, Config.derangementMoralityTraitMax+1)[::-1]:
+		for i in range(value+1, Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX+1)[::-1]:
 			self.__derangementBoxList[i].setEnabled(True)
-		for i in xrange(1, value+1):
+		for i in range(1, value+1):
 			self.__derangementBoxList[i].setCurrentIndex(0)
 			self.__derangementBoxList[i].setEnabled(False)
 
@@ -252,7 +257,7 @@ class MoralityWidget(QWidget):
 
 		#Debug.debug(text)
 		firstOccuranceHappened = False
-		for i in range(1, Config.derangementMoralityTraitMax+1):
+		for i in range(1, Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX+1):
 			if self.__derangementBoxList[i].currentIndex != 0:
 				if self.__derangementBoxList[i].currentText() == text and firstOccuranceHappened:
 					self.__derangementBoxList[i].setCurrentIndex(0)
@@ -272,7 +277,7 @@ class MoralityWidget(QWidget):
 					mildParent = item
 					break
 			mildExists = False
-			for i in range(1, Config.derangementMoralityTraitMax+1):
+			for i in range(1, Config.TRAIT_MORALITY_DERANGEMENT_VALUE_MAX+1):
 				if self.__derangementBoxList[i].currentText() == mildParent:
 					mildExists = True
 					break

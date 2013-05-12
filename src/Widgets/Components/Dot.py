@@ -1,33 +1,38 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http:##www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import QPoint
+from PyQt4.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter, QPalette
 
-from PySide.QtCore import QPoint, Signal
-from PySide.QtGui import QWidget, QColor, QSizePolicy, QPen, QPainter
-
-#from src.Config import Config
+#import src.Config as Config
 #from src.Widgets.TraitLine import TraitLine
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
@@ -43,7 +48,7 @@ class Dot(QWidget):
 
 
 	def __init__(self, parent=None):
-		QWidget.__init__(self, parent)
+		super(Dot, self).__init__(parent)
 
 		# Widget darf nur proportional in seiner Größe verändert werden?
 		# Minimalgröße festlegen
@@ -54,10 +59,11 @@ class Dot(QWidget):
 
 		self.__value = False
 
-		# Setze Standardfarbe weiß
-		self.__colorEmpty = QColor( 255, 255, 255 )
-		self.__colorFull = QColor( 0, 0, 0 )
-		self.__colorFrame = QColor( 0, 0, 0 )
+		# Setze Farben abhängig von der verwendeten Palette.
+		__palette = QPalette()
+		self.__colorEmpty = __palette.text().color()
+		self.__colorFull = __palette.highlight().color()
+		self.__colorFrame = __palette.highlight().color()
 
 		self.changed.connect(self.update)
 

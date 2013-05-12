@@ -1,236 +1,220 @@
 # -*- coding: utf-8 -*-
 
 """
-\file
-\author Victor von Rhein <victor@caern.de>
+# Copyright
 
-\section License
+Copyright (C) 2012 by Victor
+victor@caern.de
 
-Copyright (C) Victor von Rhein, 2011, 2012
+# License
 
 This file is part of SoulCreator.
 
-SoulCreator is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+SoulCreator is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
 
-SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+SoulCreator is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with
+SoulCreator.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
 
 
-from __future__ import division, print_function
+"""
+Einfache Berechnungen betreffend des unterschiedlichen Werwolf-Gestalten.
+"""
 
-#from PySide.QtCore import QObject, Signal
-#from PySide.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
 
-from src.Config import Config
+
+
+#from PyQt4.QtCore import pyqtSignal as Signal
+#from PyQt4.QtCore import QObject
+#from PyQt4.QtGui import QWidget, QVBoxLayout, QGridLayout, QLabel, QFrame, QButtonGroup
+
+import src.Config as Config
 #from src import Error
-#from src.Debug import Debug
+#import src.Debug as Debug
 
 
 
 
-class CalcShapes(object):
+def strength( value, shape ):
 	"""
-	\brief Einfache Berechnungen betreffend des unterschiedlichen Werwolf-Gestalten.
+	Berechnet die Strength des Charakters abhängig von den unterschiedlichen Gestalten.
 	"""
 
-
-	def __init__(self):
-		pass
-
-
-	@staticmethod
-	def strength( strength, shape ):
-		"""
-		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1]:
-			return strength + 1
-		elif shape == Config.shapesWerewolf[2]:
-			return strength + 3
-		elif shape == Config.shapesWerewolf[3]:
-			return strength + 2
-		else:
-			return strength
+	if shape == Config.SHAPES_WEREWOLF[1]:
+		return value + 1
+	elif shape == Config.SHAPES_WEREWOLF[2]:
+		return value + 3
+	elif shape == Config.SHAPES_WEREWOLF[3]:
+		return value + 2
+	else:
+		return value
 
 
-	@staticmethod
-	def dexterity( dexterity, shape ):
-		"""
-		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
+def dexterity( value, shape ):
+	"""
+	Berechnet die Dexterity des Charakters abhängig von den unterschiedlichen Gestalten.
+	"""
 
-		if shape == Config.shapesWerewolf[2]:
-			return dexterity + 1
-		elif shape == Config.shapesWerewolf[3] or shape == Config.shapesWerewolf[4]:
-			return dexterity + 2
-		else:
-			return dexterity
-
-
-	@staticmethod
-	def stamina( stamina, shape ):
-		"""
-		Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1] or shape == Config.shapesWerewolf[4]:
-			return stamina + 1
-		elif shape == Config.shapesWerewolf[2] or shape == Config.shapesWerewolf[3]:
-			return stamina + 2
-		else:
-			return stamina
+	if shape == Config.SHAPES_WEREWOLF[2]:
+		return value + 1
+	elif shape == Config.SHAPES_WEREWOLF[3] or shape == Config.SHAPES_WEREWOLF[4]:
+		return value + 2
+	else:
+		return value
 
 
-	@staticmethod
-	def manipulation( manipulation, shape ):
-		"""
-		Berechnet die Manipulation des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
+def stamina( value, shape ):
+	"""
+	Berechnet die Stamina des Charakters abhängig von den unterschiedlichen Gestalten.
+	"""
 
-		if shape == Config.shapesWerewolf[1]:
-			return manipulation - 1
-		elif shape == Config.shapesWerewolf[3]:
-			return manipulation - 3
-		else:
-			return manipulation
-
-
-	@staticmethod
-	def size( size, shape ):
-		"""
-		Berechnet die Größe des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1] or shape == Config.shapesWerewolf[3]:
-			return size + 1
-		elif shape == Config.shapesWerewolf[2]:
-			return size + 2
-		elif shape == Config.shapesWerewolf[4]:
-			return size - 1
-		else:
-			return size
+	if shape == Config.SHAPES_WEREWOLF[1] or shape == Config.SHAPES_WEREWOLF[4]:
+		return value + 1
+	elif shape == Config.SHAPES_WEREWOLF[2] or shape == Config.SHAPES_WEREWOLF[3]:
+		return value + 2
+	else:
+		return value
 
 
-	@staticmethod
-	def initiative( initiative, shape ):
-		"""
-		Berechnet die Initiative des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
+def manipulation( value, shape ):
+	"""
+	Berechnet die Manipulation des Charakters abhängig von den unterschiedlichen Gestalten.
+	"""
 
-		if shape == Config.shapesWerewolf[2]:
-			return initiative + 1
-		elif shape == Config.shapesWerewolf[3] or shape == Config.shapesWerewolf[4]:
-			return initiative + 2
-		else:
-			return initiative
-
-
-	@staticmethod
-	def speed( speed, shape ):
-		"""
-		Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1]:
-			return speed + 1
-		elif shape == Config.shapesWerewolf[2]:
-			return speed + 4
-		elif shape == Config.shapesWerewolf[3]:
-			return speed + 7
-		elif shape == Config.shapesWerewolf[4]:
-			return speed + 5
-		else:
-			return speed
+	if shape == Config.SHAPES_WEREWOLF[1]:
+		return value - 1
+	elif shape == Config.SHAPES_WEREWOLF[3]:
+		return value - 3
+	else:
+		return value
 
 
-	@classmethod
-	def defense( cls, wits, dexterity, shape ):
-		"""
-		Berechnet die Verteidigung des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
+def size( value, shape ):
+	"""
+	Berechnet die Größe des Charakters abhängig von den unterschiedlichen Gestalten.
+	"""
 
-		values = [wits, cls.dexterity( dexterity, shape ), ]
-
-		return min(values)
-
-
-	@staticmethod
-	def health( value, shape ):
-		"""
-		Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
-		"""
-
-		if shape == Config.shapesWerewolf[1]:
-			return value + 2
-		elif shape == Config.shapesWerewolf[2]:
-			return value + 4
-		elif shape == Config.shapesWerewolf[3]:
-			return value + 3
-		else:
-			return value
+	if shape == Config.SHAPES_WEREWOLF[1] or shape == Config.SHAPES_WEREWOLF[3]:
+		return value + 1
+	elif shape == Config.SHAPES_WEREWOLF[2]:
+		return value + 2
+	elif shape == Config.SHAPES_WEREWOLF[4]:
+		return value - 1
+	else:
+		return value
 
 
-	@staticmethod
-	def werewolfHeight( height, strength, stamina ):
-		"""
-		Berechnet die Körpergröße der übrigen vier Werwolfgestalten aus der Hishu-Gestalt und den körperlichen Attributen.
+def initiative( value, shape ):
+	"""
+	Berechnet die Initiative des Charakters abhängig von den unterschiedlichen Gestalten.
+	"""
 
-		\todo Möglicherweise noch einen Hauch Zufall einfügen, der aber bei einem Charakter immer gleich sein sollte, also vielelicht mit dem Namen seeden oder so ähnlich.
+	if shape == Config.SHAPES_WEREWOLF[2]:
+		return value + 1
+	elif shape == Config.SHAPES_WEREWOLF[3] or shape == Config.SHAPES_WEREWOLF[4]:
+		return value + 2
+	else:
+		return value
 
-		\todo GEschlecht berücksichtigen? Weibchen sind um 2 bis 12 % kleiner als die Rüden und 20 bis 25 % leichter.
-		"""
 
-		## gewinnt 4 bis 6 in an Größe.
-		heightDalu = height + 0.1 + 0.003125 * max(0, strength - 1) * max(0, stamina - 1)
+def speed( value, shape ):
+	"""
+	Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
+	"""
 
-		## gewinnt 2 bis 3 ft an Größe.
-		heightGauru = height + 0.61 + 0.0381 * max(0, strength - 1) * max(0, stamina - 1)
+	if shape == Config.SHAPES_WEREWOLF[1]:
+		return value + 1
+	elif shape == Config.SHAPES_WEREWOLF[2]:
+		return value + 4
+	elif shape == Config.SHAPES_WEREWOLF[3]:
+		return value + 7
+	elif shape == Config.SHAPES_WEREWOLF[4]:
+		return value + 5
+	else:
+		return value
 
-		## 3 bis 5 ft Schulterhöhe. Hishu-Größe hat Einfluß, indem Durchschnittsgröße 1.7 m angenommen wird.
-		heightUrshul = (height - .7) * 0.9144 + 0.038125 * max(0, strength - 1) * max(0, stamina - 1)
 
+def defense( wits, dex, shape ):
+	"""
+	Berechnet die Verteidigung des Charakters abhängig von den unterschiedlichen Gestalten.
+	"""
+
+	return min( wits, dexterity( dex, shape ) )
+
+
+def health( value, shape ):
+	"""
+	Berechnet die Geschwindigkeit des Charakters abhängig von den unterschiedlichen Gestalten.
+	"""
+
+	if shape == Config.SHAPES_WEREWOLF[1]:
+		return value + 2
+	elif shape == Config.SHAPES_WEREWOLF[2]:
+		return value + 4
+	elif shape == Config.SHAPES_WEREWOLF[3]:
+		return value + 3
+	else:
+		return value
+
+
+def height( value, strength, stamina, shape ):
+	"""
+	Berechnet die Körpergröße der jeweiligen Gestalt aus der Größe Hishu-Gestalt und den körperlichen Attributen.
+
+	\todo Möglicherweise noch einen Hauch Zufall einfügen, der aber bei einem Charakter immer gleich sein sollte, also vielleicht mit dem Namen seeden oder so ähnlich.
+
+	\todo Geschlecht berücksichtigen? Weibchen sind um 2 bis 12 % kleiner als die Rüden und 20 bis 25 % leichter.
+	"""
+
+	result = value
+
+	if shape == Config.SHAPES_WEREWOLF[1]:
+		## gewinnt 4 bis 6 in an Größe
+		result = value + ( 4 + min(10, strength + stamina) / 5 ) * Config.INCH_IN_METER
+	elif shape == Config.SHAPES_WEREWOLF[2]:
+		## gewinnt 2 bis 3 ft an Größe
+		result = value + ( 2 + min(10, strength + stamina) / 10 ) * Config.FOOT_IN_METER
+	elif shape == Config.SHAPES_WEREWOLF[3]:
+		## 3 bis 5 ft Schulterhöhe. Hishu-Größe hat auch Einfluß. Große Charaktere ergeben größere Wölfe.
+		result = ( 3 + min( 10, strength + stamina ) / 10 + min( 2, value ) / 2 ) * Config.FOOT_IN_METER
+	elif shape == Config.SHAPES_WEREWOLF[4]:
 		## Wölfe haben Schulterhöhe von 70 bis 90 cm
-		heightUrhan = (height - .7) * 0.8
+		result = ( 7 + min( 10, strength + stamina ) / 10 + min( 2, value ) / 2 ) * 0.1
 
-		result =  [height, heightDalu, heightGauru, heightUrshul, heightUrhan]
-
-		for i in xrange(len(result)):
-			result[i] = round(result[i], 2)
-
-		return result
+	return round(result, 2)
 
 
-	@staticmethod
-	def werewolfWeight( weight, strength, stamina ):
-		"""
-		Berechnet das Körpergewicht der übrigen vier Werwolfgestalten aus der Hishu-Gestalt und den körperlichen Attributen.
+def weight( value, strength, stamina, shape ):
+	"""
+	Berechnet das Körpergewicht der jeweiligen Gestalt aus dem Gewicht Hishu-Gestalt und den körperlichen Attributen.
 
-		\todo Möglicherweise noch einen Hauch Zufall einfügen, der aber bei einem Charakter immer gleich sein sollte, also vielelicht mit dem Namen seeden oder so ähnlich.
+	\todo Möglicherweise noch einen Hauch Zufall einfügen, der aber bei einem Charakter immer gleich sein sollte, also vielelicht mit dem Namen seeden oder so ähnlich.
 
-		\todo GEschlecht berücksichtigen?
-		"""
+	\todo Geschlecht berücksichtigen?
+	"""
 
-		## gewinnt 12.5 bis 25 kg an Gewicht.
-		weightDalu = weight + 12.5 + 0.78125 * max(0, strength - 1) * max(0, stamina - 1)
+	result = value
 
-		## gewinnt 100 bis 125 kg an Gewicht.
-		weightGauru = weight + 100 + 1.5625 * max(0, strength - 1) * max(0, stamina - 1)
+	if shape == Config.SHAPES_WEREWOLF[1]:
+		## gewinnt 12.5 bis 25 kg an Gewicht
+		result = value + ( 1 + min(10, strength + stamina) / 10 ) * 12.5
+	elif shape == Config.SHAPES_WEREWOLF[2]:
+		## gewinnt 100 bis 125 kg an Gewicht
+		result = value + 100 + ( min(10, strength + stamina) / 10 ) * 25
+	elif shape == Config.SHAPES_WEREWOLF[3]:
+		## 90% des Gauru-Gewichts
+		result = .9 * weight( value, strength, stamina, Config.SHAPES_WEREWOLF[2] )
+	elif shape == Config.SHAPES_WEREWOLF[4]:
+		## Wölfe wiegen 35 bis 67 kg
+		result = 35 + ( min( 10, strength + stamina ) / 10 + min( 100, value ) / 100 ) * 16
 
-		weightUrshul = 0.9 * weightGauru
-
-		## Wölfe Wiegen 35 bis 67 kg
-		weightUrhan = 0.77 * weight
-
-		result =  [weight, weightDalu, weightGauru, weightUrshul, weightUrhan]
-
-		for i in xrange(len(result)):
-			result[i] = round(result[i], 2)
-
-		return result
-
-
+	return round(result, 2)
