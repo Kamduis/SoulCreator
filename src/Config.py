@@ -56,7 +56,7 @@ PROGRAM_AUTHOR = "Victor von Rhein"
 PROGRAM_AUTHOR_EMAIL = "victor@caern.de"
 PROGRAM_VERSION = {
 	"major": 0,
-	"minor": 12,
+	"minor": 13,
 	"change": 0,
 }
 PROGRAM_DESCRIPTION = "Charaktergenerator for the World of Darkness."
