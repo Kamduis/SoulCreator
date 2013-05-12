@@ -334,10 +334,10 @@ class AbstractTraitDots(QWidget):
 	def setAllowedValues( self, values ):
 		"""
 		Über diese Funktion wird eine Liste der erlaubten Werte gesetzt.
-		
-		Da es manchmal einfacher ist, erlaubte Werte einzugeben, müssen diese entsprechend Übersetzt werden, ehe sie in die self.__forbiddenList eingesetzt werden.
+
+		Da es manchmal einfacher ist, erlaubte Werte einzugeben, müssen diese entsprechend übersetzt werden, ehe sie in die self.__forbiddenList eingesetzt werden.
 		"""
-		
+
 		# Neue List erstellen und mit den Werten aus dem Argument fÜllen. Aber da Werte kleiner 0 nie erlaubt sind, werden diese garnicht erst übernommen.
 		tmpList = values
 

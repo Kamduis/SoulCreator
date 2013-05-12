@@ -408,11 +408,11 @@ class StorageTemplate(QObject):
 			self.__traits[typ][category][identifier] = data
 		elif (typ != "Subpower"):
 			#Debug.debug(data["name"])
-			specialties = self.__traits[typ][category][identifier]["specialty"]
-			specialties.extend(data["specialty"])
+			specialties = self.__traits[typ][category][identifier]["specialties"]
+			specialties.extend(data["specialties"])
 			specialties.sort()
 			self.__traits[typ][category][identifier] = data
-			self.__traits[typ][category][identifier]["specialty"] = specialties
+			self.__traits[typ][category][identifier]["specialties"] = specialties
 
 
 	def traitNames( self, typ, category, era=None, age=None ):

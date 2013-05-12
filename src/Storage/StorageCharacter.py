@@ -172,9 +172,9 @@ class StorageCharacter(QObject):
 
 		self.isLoading = False
 		self.__modified = False
-		self.__dateBirth = QDate(0, 0, 0)
-		self.__dateBecoming = QDate(0, 0, 0)
-		self.__dateGame = QDate(0, 0, 0)
+		self.__dateBirth = QDate(1, 1, 1)
+		self.__dateBecoming = QDate(1, 1, 1)
+		self.__dateGame = QDate(1, 1, 1)
 		self.__age = 0
 		self.__ageBecoming = 0
 		self.__species = ""
@@ -1243,18 +1243,22 @@ class StorageCharacter(QObject):
 
 		# Beim Löschen ist darauf zu achten, daß ich nicht aus der Liste löschen kann, über die ich iteriere. Sonst wird nicht alles gelöscht.
 		for category in self.__weapons:
+			## Kopie erstellen
 			weaponList = self.__weapons[category][:]
 			for weapon in weaponList:
 				self.deleteWeapon(category, weapon)
 		self.setArmor(name="")
+		## Kopie erstellen
 		eqipmentList = self.__equipment[:]
 		for item in eqipmentList:
 			self.deleteEquipment(item)
 		for category in self.__automobiles:
+			## Kopie erstellen
 			automobileList  = self.__automobiles[category][:]
 			for automobile in automobileList:
 				self.deleteAutomobile(category, automobile)
 		for typ in self.__extraordinaryItems:
+			## Kopie erstellen
 			extraordinaryItemList = self.__extraordinaryItems[typ][:]
 			for item in extraordinaryItemList:
 				self.deleteExtraordinaryItem(typ, item)

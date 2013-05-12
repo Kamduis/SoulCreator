@@ -97,6 +97,7 @@ class BonusTrait(StandardTrait):
 
 	@property
 	def totalspecialties(self):
+		## Kopie erstellen
 		result = self.specialties[:]
 		result.extend(self.bonusSpecialties)
 		return result

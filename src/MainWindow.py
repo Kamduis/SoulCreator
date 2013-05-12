@@ -234,7 +234,7 @@ class MainWindow(QMainWindow):
 
 		try:
 			reader.read()
-		except ErrXmlVersion as e:
+		except ( ErrXmlVersion, ErrXmlParsing, ErrFileNotOpened ) as e:
 			if e.critical:
 				text = "{}\nThis is a critical error and forces the program to abort.".format( str( e ) )
 				MessageBox.error( self, text, critical=e.critical )
@@ -338,11 +338,11 @@ class MainWindow(QMainWindow):
 		# Bei der Änderung gewisser Eigenschaften müssen die Advantages neu berechnet werden. Die Verknüpfung dazu werden hier festgelegt.
 		calc = CalcAdvantages( self.__character, self )
 		#Debug.debug(self.__character.traits[typ]["Mental"]["Resolve"].name)
-		self.__character.ageChanged.connect(calc.calcSize)
-		self.__character.traits["Merit"]["Physical"]["Giant"].totalvalueChanged.connect(calc.calcSize)
-		self.__character.traits["Merit"]["Physical"]["GiantKid"].totalvalueChanged.connect(calc.calcSize)
-		self.__character.traits["Merit"]["Physical"]["Tiny"].totalvalueChanged.connect(calc.calcSize)
-		self.__character.traits["Flaw"]["Physical"]["Dwarf"].totalvalueChanged.connect(calc.calcSize)
+		self.__character.ageChanged.connect(calc.calc_size)
+		self.__character.traits["Merit"]["Physical"]["Giant"].totalvalueChanged.connect(calc.calc_size)
+		self.__character.traits["Merit"]["Physical"]["GiantKid"].totalvalueChanged.connect(calc.calc_size)
+		self.__character.traits["Merit"]["Physical"]["Tiny"].totalvalueChanged.connect(calc.calc_size)
+		self.__character.traits["Flaw"]["Physical"]["Dwarf"].totalvalueChanged.connect(calc.calc_size)
 		self.__character.traits["Attribute"]["Physical"]["Dexterity"].totalvalueChanged.connect(calc.calcInitiative)
 		self.__character.traits["Attribute"]["Social"]["Composure"].totalvalueChanged.connect(calc.calcInitiative)
 		self.__character.traits["Merit"]["Physical"]["Fast Reflexes"].totalvalueChanged.connect(calc.calcInitiative)

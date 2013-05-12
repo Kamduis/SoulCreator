@@ -33,6 +33,7 @@ from PyQt4.QtGui import QWidget, QHBoxLayout, QLineEdit
 
 #import src.Config as Config
 #from src import Error
+import src.Calc.Calc as Calc
 from src.Calc.CalcAdvantages import CalcAdvantages
 from src.Widgets.Components.TraitDots import TraitDots
 #import src.Debug as Debug
@@ -120,7 +121,7 @@ class CompanionWidget(QWidget):
 		Berechnet die maximal zu verfügung stehende Essenz.
 		"""
 
-		rank = CalcAdvantages.calculateSpiritRank(
+		rank = Calc.calc_rank_spirit(
 			self.__character.companionPower,
 			self.__character.companionFinesse,
 			self.__character.companionResistance
@@ -134,7 +135,7 @@ class CompanionWidget(QWidget):
 		Berechnet die maximalen Attribute.
 		"""
 
-		rank = CalcAdvantages.calculateSpiritRank(
+		rank = Calc.calc_rank_spirit(
 			self.__character.companionPower,
 			self.__character.companionFinesse,
 			self.__character.companionResistance

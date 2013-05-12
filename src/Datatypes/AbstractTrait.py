@@ -31,7 +31,7 @@ from PyQt4.QtCore import QObject
 
 #import src.Config as Config
 #from ReadXml import ReadXml
-#import src.Debug as Debug
+import src.Debug as Debug
 #from src.Error import ErrTraitType
 
 
@@ -100,7 +100,7 @@ class AbstractTrait(QObject):
 		
 		if self.__value != value:
 			self.__value = value
-			#Debug.debug(u"Ändere Eigenschaft {} zu {}".format(self.name, self.__value))
+			Debug.debug( "Ändere Eigenschaft {} zu {}".format(self.name, self.__value), level=3 )
 			self.valueChanged.emit(self.__value)
 			self.traitChanged.emit(self)
 

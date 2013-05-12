@@ -53,6 +53,12 @@ def templates_include():
 
 
 
+# Pylint-Einstellungen
+# pylint: disable-msg=C0103
+
+
+
+
 if __name__ == "__main__":
 	"""
 	Erstellt eine ausführbare Datei in dem als obligatorisch anzugebenden Unterverzeichnis.

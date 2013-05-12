@@ -42,6 +42,7 @@ import src.Config as Config
 from src.Error import ErrFileNotOpened
 #import src.Random as Random
 from src.Datatypes.Identity import Identity
+import src.Calc.Calc as Calc
 from src.Calc.CalcAdvantages import CalcAdvantages
 import src.Calc.CalcShapes as CalcShapes
 #from src.Draw.CharacterSheetDocument import CharacterSheetDocument
@@ -687,7 +688,7 @@ class RenderSheet(QObject):
 				armor[1] = self.__storage.armor[self.__character.armor["name"]]["firearms"]
 
 			advantages = (
-				( self.tr("Size"), self.__calc.calcSize(), ),
+				( self.tr("Size"), self.__calc.calc_size(), ),
 				( self.tr("Initiative"), self.__calc.calcInitiative(), ),
 				( self.tr("Speed"), self.__calc.calcSpeed(), ),
 				( self.tr("Defense"), self.__calc.calcDefense(), ),
@@ -927,7 +928,7 @@ class RenderSheet(QObject):
 			armor[1] = self.__storage.armor[self.__character.armor["name"]]["firearms"]
 
 		advantages = (
-			( self.tr("Size"), self.__calc.calcSize(), ),
+			( self.tr("Size"), self.__calc.calc_size(), ),
 			( self.tr("Initiative"), self.__calc.calcInitiative(), ),
 			( self.tr("Speed"), self.__calc.calcSpeed(), ),
 			( self.tr("Defense"), self.__calc.calcDefense(), ),
@@ -1055,7 +1056,7 @@ class RenderSheet(QObject):
 
 		htmlText += self.htmlLabelRuleValue(label=self.tr("Name"), value="<span class='scriptFont'>{value}</span>".format(value=self.__character.companionName))
 
-		rank = CalcAdvantages.calculateSpiritRank(
+		rank = Calc.calc_rank_spirit(
 			self.__character.companionPower,
 			self.__character.companionFinesse,
 			self.__character.companionResistance
@@ -1066,24 +1067,40 @@ class RenderSheet(QObject):
 			( "Power", self.__character.companionPower, maxTrait, ),
 			( "Finesse", self.__character.companionFinesse, maxTrait, ),
 			( "Resistance", self.__character.companionResistance, maxTrait, ),
-			( "Willpower", CalcAdvantages.calculateWillpower(self.__character.companionResistance, self.__character.companionResistance), min(2 * maxTrait, Config.TRAIT_WILLPOWER_VALUE_MAX), ),
-			( "Corpus", CalcAdvantages.calculateHealth(self.__character.companionResistance, self.__character.companionSize), maxTrait + self.__character.companionSize, ),
+			(
+				"Willpower",
+				Calc.calc_willpower( self.__character.companionResistance, self.__character.companionResistance ),
+				min(2 * maxTrait, Config.TRAIT_WILLPOWER_VALUE_MAX),
+			),
+			(
+				"Corpus",
+				Calc.calc_health( self.__character.companionResistance, self.__character.companionSize ),
+				maxTrait + self.__character.companionSize,
+			),
 		)
 		companionAdvantages = (
 			( "Size", self.__character.companionSize, ),
-			( "Initiative", CalcAdvantages.calculateInitiative( [
+			(
+				"Initiative", Calc.calc_initiative( 
 					self.__character.companionFinesse,
-					self.__character.companionResistance
-				]), ),
-			( "Speed", CalcAdvantages.calculateSpeed( [
+					self.__character.companionResistance,
+				),
+			),
+			(
+				"Speed", Calc.calc_speed(
 					self.__character.companionPower,
 					self.__character.companionFinesse,
-					self.__character.companionSpeedFactor
-				] ), ),
-			( "Defense", CalcAdvantages.calculateDefense( [
+					self.__character.companionSpeedFactor,
+					monster=True,
+				),
+			),
+			(
+				"Defense", Calc.calc_defense(
 					self.__character.companionFinesse,
-					self.__character.companionFinesse
-				], True ), ),
+					self.__character.companionFinesse,
+					maximize=True,
+				),
+			),
 			( "Essence", self.__character.companionFuel ),
 		)
 
@@ -1338,8 +1355,8 @@ class RenderSheet(QObject):
 		htmlText += "</tr></table>"
 
 		if self.__character.species == "Werewolf":
-			werwolfHeights = CalcShapes.werewolfHeight(height=self.__character.height, strength=self.__character.traits["Attribute"]["Physical"]["Strength"].value, stamina=self.__character.traits["Attribute"]["Physical"]["Stamina"].value)
-			werwolfWeights = CalcShapes.werewolfWeight(weight=self.__character.weight, strength=self.__character.traits["Attribute"]["Physical"]["Strength"].value, stamina=self.__character.traits["Attribute"]["Physical"]["Stamina"].value)
+			werwolf_heights = [ CalcShapes.height( self.__character.height, self.__character.traits["Attribute"]["Physical"]["Strength"].value, self.__character.traits["Attribute"]["Physical"]["Stamina"].value, shape ) for shape in Config.SHAPES_WEREWOLF ]
+			werwolf_weights = [ CalcShapes.weight( self.__character.weight, self.__character.traits["Attribute"]["Physical"]["Strength"].value, self.__character.traits["Attribute"]["Physical"]["Stamina"].value, shape ) for shape in Config.SHAPES_WEREWOLF ]
 			shapeMeasurements = [
 				[ "", ],
 				[ self.tr("Height"), ],
@@ -1347,8 +1364,8 @@ class RenderSheet(QObject):
 			]
 			for i in range(len(Config.SHAPES_WEREWOLF)):
 				shapeMeasurements[0].append(Config.SHAPES_WEREWOLF[i])
-				shapeMeasurements[1].append("{:.2f} {}".format(werwolfHeights[i], "m"))
-				shapeMeasurements[2].append("{:.1f} {}".format(werwolfWeights[i], "kg"))
+				shapeMeasurements[1].append("{:.2f} {}".format(werwolf_heights[i], "m"))
+				shapeMeasurements[2].append("{:.1f} {}".format(werwolf_weights[i], "kg"))
 
 			htmlText += "</td></tr><tr><td class='layout'><!-- Vertikaler Zwischenraum --></td></tr><tr><td class='layout' style='height: 10%'>"
 
